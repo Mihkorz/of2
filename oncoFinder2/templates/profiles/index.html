@@ -1,0 +1,89 @@
+{% extends "base_profiles.html" %}
+
+{% block title %}{{ user.username }} | OncoFinder v2.0{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="col-md-3" >
+    <img src='{{user_profile.profile.get_picture}}' width="230" /><br/>
+    <h2>{{user_profile.username}}</h2>
+    {% if user_profile == user %}
+      <button class="btn btn-default" onClick="location.href='/settings/profile'">
+        <span class="glyphicon glyphicon-pencil"></span> &nbsp;Edit profile
+      </button><br/><br/>
+    {%endif%}
+    <div class="panel panel-default">
+        <div class="panel-heading">Users</div>
+        <div class="panel-body">
+          <ul>
+          {% for user in all_users %}
+          <li><a href="/user/{{user.username}}">{{user.username}}</a></li>
+          {% endfor %}
+          </ul>
+        </div>
+    </div>
+  </div>
+ <div class="col-md-9 " >
+      <div class="panel panel-default">
+        <div class="panel-heading">
+           {% if user_profile == user %}
+           <button class="btn btn-default btn-sm pull-right" onClick="location.href='/project/new'">
+               <span class="glyphicon glyphicon-plus"></span> &nbsp;Create new project
+           </button>
+           {% endif %} 
+           <h3 class="panel-title " style="padding: 6px 0">Projects </h3>
+             
+        </div>
+        <div class="panel-body">
+          <!-- Nav tabs -->
+		  <ul class="nav nav-tabs">
+		    <li class="active"><a href="#my_projects" data-toggle="tab">
+		                       <span class="glyphicon glyphicon-user"></span> My projects</a></li>
+		    <li><a href="#all_projects" data-toggle="tab">
+		        <span class="glyphicon glyphicon-globe"></span> All projects</a></li>
+		    <li><a href="#search_projects" data-toggle="tab">
+		    <span class="glyphicon glyphicon-search"></span> Search</a></li>
+		  </ul>
+		  <div class="tab-content">
+            <div class="tab-pane fade in active" id="my_projects">
+              <ul class="list-group">
+                {% for project in my_projects %}
+                  <li class="list-group-item">
+                    <span class="glyphicon glyphicon-folder-open" style="color:#ccc"></span>
+                    &nbsp;&nbsp; <a href="/project/{{project.name}}">{{ project.name }}</a>
+                     <button type="button" class="close pull-right" aria-hidden="true">&times;</button>
+                     <span class="badge" style="margin: 0 20px 0 0 ">42</span>
+                     <div class="text-muted"><small>Created at: {{project.created_at}}</small></div>
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+            <div class="tab-pane fade" id="all_projects">
+             <ul class="list-group">
+                {% for project in all_projects %}
+                  <li class="list-group-item">
+                    <span class="glyphicon glyphicon-folder-open" style="color:#ccc"></span>
+                    &nbsp;&nbsp; <a href="/project/{{project.name}}">{{ project.name }}</a>
+                     <button type="button" class="close pull-right" aria-hidden="true">&times;</button>
+                     <span class="badge" style="margin: 0 20px 0 0 ">42</span>
+                     <div class="text-muted"><small>Owner: <a href="/user/{{project.owner}}">{{project.owner}}</a></small></div>
+                     <div class="text-muted"><small>Created at: {{project.created_at}}</small></div>
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+            <div class="tab-pane fade" id="search_projects">
+            <h4>Sorry. Currently under construction...</h4>
+            </div>
+          </div> 
+        
+
+        </div>
+      </div>
+ </div>
+  
+ 
+
+</div>
+
+{% endblock %}

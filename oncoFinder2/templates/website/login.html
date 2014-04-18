@@ -1,0 +1,44 @@
+{% extends "base_website.html" %}
+
+{% block title %}OncoFinder login{% endblock %}
+
+{% block content %}
+<div class="container">
+
+  {% if form.errors %}
+  <div class="alert alert-danger">
+    <i class="glyphicon glyphicon-warning-sign"></i>
+    Your username and password didn't match. Please try again.
+  </div>
+  {% endif %}
+    
+  <div class="panel panel-primary login_panel">
+    <div class="panel-heading">
+      <h3 class="panel-title">Sign in</h3>
+    </div>
+    <div class="panel-body">
+       <form action="{% url 'django.contrib.auth.views.login' %}" method="post" enctype="multipart/form-data" id="login_form">
+          {% csrf_token %}       
+
+          {{ form.username.label_tag }}
+          {{ form.username }}
+
+          {{ form.password.label_tag }}
+          {{ form.password }}
+          <a href="#">Forgot password?</a>
+          
+           <input type="hidden" name="next" value="/" />
+
+ 
+    </div>
+    <div class="panel-footer">
+      <button class="btn btn-default">Sign in</button>
+    </div>
+  </div>
+</div>
+<script>
+$(function() {
+               $("#login_form > input").addClass("form-control");
+});
+</script>
+{% endblock %}

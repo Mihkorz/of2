@@ -1,0 +1,105 @@
+{% extends "base_profiles.html" %}
+
+{% block title %}{{ project.name }} | OncoFinder v2.0{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h2>
+    <span class="glyphicon glyphicon-user"></span>
+    <a href="/user/{{project.owner}}">{{project.owner}}</a> /
+     <span class="glyphicon glyphicon-folder-open"></span>&nbsp; 
+     <a href="">{{project.name}}</a> <span class="text-muted">| <small>{{project.get_status_display}}</small></span>
+  </h2>
+  <span class="text-muted">Created at: {{project.created_at}}</span>
+  <hr/>
+  <h5>{% if project.description %}
+                               {{project.description}}
+      {%else%}No description avaliable for this project.
+      {%endif%}</h5>
+
+  <div class="panel panel-default">
+        <div class="panel-heading">
+        <button class="btn btn-default btn-sm pull-right" data-toggle="modal" data-target="#uploadFormModal">
+               <span class="glyphicon glyphicon-upload"></span> &nbsp;Upload new document
+           </button>
+          <h3 class="panel-title " style="padding: 6px 0">Documents </h3>
+        </div>
+        <div class="panel-body">
+        
+          <table id="project_doc_table" class="table table-hover of-table">
+            <tr class="info">
+              <th>Document</th><th>Type</th><th>Parameters</th><th>Date</th>
+              <th>Sample number</th><th>Description</th><th></th>
+            </tr>
+            
+            {% for doc in documents %}
+            <tr
+            {% if doc.get_doc_type_display == 'input' %}
+            class="warning"
+            {% else %}
+            class="success"
+            {% endif %}
+            >
+              <td>
+              <span class="glyphicon glyphicon-file"></span>
+              <strong><a href="/document/doc{{doc.id}}/">{{doc.get_filename}}</a></strong><br/><br/>
+                  Created by: <strong>{{doc.created_by}}</strong></td>
+              <td>{{doc.get_doc_type_display}}</td>
+              <td>{{doc.parameters}}</td>
+              <td>Created at: <strong>{{doc.created_at}}</strong><br/>
+                  Last calculated at: <strong>{{doc.calculated_at}}</strong><br/>
+                  Last calculated by: <strong>{{doc.calculated_by}}</strong></td>
+              <td>Samples: {{doc.sample_num}}<br/>
+                  Norms: {{doc.norm_num}}<br/>
+                  Rows: {{doc.row_num}}</td>
+              <td>{{doc.description}}</td>
+              <td><button type="button" class="close " aria-hidden="true">&times;</button></td>
+            
+            </tr>           
+            {% empty %}
+            <tr><td>No documents found</td></tr>
+            {% endfor %}
+            
+          
+          </table>
+        
+        
+        </div>
+  </div>
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="uploadFormModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Upload new document</h4>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-warning">
+         <h4>Important!</h4>
+	      Accepted file formats are: <b>CSV, TXT, XLS, XLSX</b> with delimeters <b>\t , ;</b> <br/>
+	      Files should have names in English letters only! <br/>
+	      Preferable encoding is UTF-8 <br/>
+	      If an error occurs, please contact OncoFinder administration.
+        </div>
+        <form action="/document/new/" id="doc_create_form" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Upload</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+$(function(){
+	$("#doc_create_form > input[type=text], textarea").addClass("form-control");
+});
+</script>
+{% endblock %}

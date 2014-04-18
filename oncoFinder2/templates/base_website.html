@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+    <title>{% block title %}OF v2.0{% endblock %}</title>
+    
+    <link rel="stylesheet" href="/media/css/bootstrap.css" type='text/css' />
+    <link rel="stylesheet" href="/media/css/style.css" type='text/css' />    
+    <link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src="/media/js/jquery-2.1.0.min.js"></script>
+</head>
+
+<body>
+  <!-- Fixed navbar -->
+  <div class="navbar  ws_navbar " role="navigation">
+    <div class="container">
+      <div class="navbar-header" id="ws_nav">
+        <a class="" href="/">
+        <img src='/media/images/oncofinderLogo.png' alt='OncoFinder v2.0' title='OncoFinder v2.0'/>
+        Onco<span id="ws_finder">Finder</span></a>
+      </div>
+      <div class="navbar-right ws_signin_but">
+       <button type="submit" class="btn btn-default" onClick="location.href='/login'">Sign in</button>
+     </div>
+      <ul class="nav navbar-nav navbar-right ws_upp_menu">
+            <li><a href="/">Home</a></li>
+            <li><a href="/ws/about/">About</a></li>
+            <li><a href="/ws/blog/">Blog</a></li>
+            <li><a href="/ws/contact/">Contact</a></li>
+     </ul>
+     
+    </div>
+  </div>
+     {% block content %}{% endblock %}
+  <!-- FOOTER -->
+    <div id="footer">
+      <div class="container">
+        <p class="pull-left">Footer.</p>
+        <p class="pull-right"><a href="#">Back to top</a></p>
+      </div>
+    </div>
+    
+    <script src="/media/js/bootstrap.js"></script>
+ </body>
+ </html>

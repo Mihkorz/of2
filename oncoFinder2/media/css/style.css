@@ -1,0 +1,125 @@
+/* prefix ws = website */
+
+.ws_navbar{
+	margin-bottom:0px;
+	border-bottom: 2px solid #e7e7e7;
+}
+#ws_nav {}
+#ws_nav a {
+	color: #aa2b8b;
+	
+	font-size: 28px;
+    line-height: 30px;
+}
+#ws_nav a:hover{
+	text-decoration: none;
+}
+#ws_nav a #ws_finder{
+	color: #08C
+}
+#ws_nav a #ws_version {
+	
+}
+#ws_nav a img {
+	width: 50px;
+	margin: 5px 0;
+}
+.ws_upp_menu{
+	margin: 5px 0 0 0;
+}
+.ws_signin_but{
+	margin: 14px 0 0 50px;
+}
+
+.ws_banner{
+	background: url(/media/images/black_thread.png) repeat;
+	color: #fff;
+}
+.ws_banner_form_div {
+	text-align: center;
+	float: right;
+	width: 350px;
+}
+.ws_banner_form_div p{
+	font-size: 12px;
+	line-height: 14px;	
+}
+.ws_banner_form input{
+	margin: 15px 0;
+}
+
+.login_panel {
+	width: 400px;
+    margin: 60px auto;
+}
+#login_form input[type="text"] {
+	margin: 0 0 10px 0 ;
+	
+}
+
+
+
+/****************** PROFILES APP ******************/
+.of-table {
+	font-size: 12px;
+}
+.of-table a {
+	font-size: 14px;
+}
+.pr_navbar{
+	background-color: #f3f3f3;
+    background-image: -moz-linear-gradient(#f9f9f9, #f3f3f3);
+    background-image: -webkit-linear-gradient(#f9f9f9, #f3f3f3); 
+    background-image: linear-gradient(#f9f9f9, #f3f3f3); 
+    background-repeat: repeat-x;
+    border-bottom: 1px solid #e5e5e5;
+}
+.pr_upp_menu {
+	border-left: 1px solid #e5e5e5;
+	border-right: 1px solid #e5e5e5;
+	height: 60px;
+	margin: 0 0 0 50px;
+} 
+
+.pr_header_menu{
+	
+}
+.pr_header_menu span{
+	color: ##428bca;
+	margin: 20px 0 0 15px;
+	height: 20px;
+}
+.pr_header_menu span:hover{
+	color: #428bca;
+	cursor: pointer;
+	
+}
+#current_user_link {
+	color: #000;
+}
+#current_user_link:hover {
+	text-decoration: none;
+}
+
+#profile_form label, #create_project_form label{
+	margin: 15px 0 5px 0 ;
+}
+
+#create_project_form {
+	
+}
+#create_project_form textarea, #doc_create_form textarea  {
+	height: 100px;
+}
+
+ /*************************/
+#footer{
+	position: absolute;
+    bottom: 0;
+    width: 100%;
+	background: url(/media/images/black_thread.png) repeat;
+	margin: 30px 0 0 0 ;
+	padding: 30px 0 ;
+	color: #fff;
+	height: 100px;
+}

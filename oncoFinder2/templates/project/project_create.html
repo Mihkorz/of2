@@ -1,0 +1,26 @@
+{% extends "base_profiles.html" %}
+
+{% block title %}Create new project | OncoFinder v2.0{% endblock %}
+
+{% block content %}
+<div class="container">
+
+  <h1>Create new project</h1>
+  <hr/>
+  <div class="center-block col-sm-6 " style="float:none;" >
+  <form method="post" id="create_project_form" role="form" class="form-horizontal">
+    {% csrf_token %}
+        {% for hidden in form.hidden_fields %}
+                {{ hidden }}
+        {% endfor %}
+    {{form}}
+    <button type="submit" class="btn btn-success " style="margin: 0 0 20px 0;"> Create project </button>
+  </form>
+</div>
+</div>
+<script>
+$(function(){
+	$("#create_project_form > input[type=text], textarea").addClass("form-control");
+});
+</script>
+{% endblock %}

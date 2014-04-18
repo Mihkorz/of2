@@ -1,0 +1,53 @@
+{% extends "base_profiles.html" %}
+
+{% block title %}{{ user.username }} | Settings{% endblock %}
+
+{% block content %}
+<div class="container">
+
+  <div class="row">
+    
+    {% include 'profiles/_settings_right_bar.html' %}
+    
+    <div class="col-md-8 " >
+      <div class="panel panel-default">
+        <div class="panel-heading">
+           <h3 class="panel-title">Profile </h3>
+        </div>
+        <div class="panel-body">
+        <form method="post" action="/settings/profile/" enctype="multipart/form-data" id="profile_form">
+        
+        {% csrf_token %}
+        {% for hidden in form.hidden_fields %}
+                {{ hidden }}
+        {% endfor %}
+        
+        
+        <label for="id_last_name">Name:</label>
+        {{ form.last_name }}
+        {{ form.last_name.errors }}
+        <label for="id_email">Email:</label>
+        {{ form.email }}
+        {{ form.email.errors }}
+        
+        
+         {{profile_form}}
+        
+        
+        <button type="submit" class="btn btn-success " style="margin: 20px 0 0 0;"> Update Profile </button>
+        
+         </form>
+       </div>
+</div>
+    </div>
+  </div>
+
+</div>
+<script>
+
+$(function(){
+	$("#profile_form > input[type=text], input[type=email]").addClass("form-control");
+});
+
+</script>
+{% endblock %}
