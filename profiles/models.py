@@ -49,6 +49,9 @@ class Project(models.Model):
         
     def __unicode__(self):
         return self.name
+    
+    def get_documents_number(self):
+        return self.document_set.count()
 
 
 def get_document_upload_path(instance, file_name):

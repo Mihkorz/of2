@@ -157,6 +157,6 @@ class DocumentDetail(DetailView):
         
         tumor_cols = [col for col in df.columns if 'Nor' in col]
         
-        context['test'] = tumor_cols
+        context['test'] = df[:50].to_html()
         return context  
     

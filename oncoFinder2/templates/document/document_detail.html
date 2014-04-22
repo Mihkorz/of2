@@ -16,9 +16,29 @@
   <span class="text-muted">Created at: {{document.created_at}}<br/>
   By: {{document.created_by}}</span>
   <hr/>
-  {%for ss in test%}
-  {{ss}}<br/>
-  {%endfor%}
+  <div class="wrapper1">
+    <div class="upper_scroll"></div>
+  </div>
+  <div class="wrapper2">
+  {{test|safe}}
+  </div>
+ 
   
 </div>
+<script>
+
+$(function(){
+	$("table.dataframe").attr("border", "0").addClass("table table-hover of-table");
+});
+$(function(){
+	$(".upper_scroll").width($(".wrapper2 > table").width());
+	  $(".wrapper1").scroll(function(){
+	    $(".wrapper2").scrollLeft($(".wrapper1").scrollLeft());
+	  });
+	  $(".wrapper2").scroll(function(){
+	    $(".wrapper1").scrollLeft($(".wrapper2").scrollLeft());
+	  });
+	});
+
+</script>
 {% endblock %}

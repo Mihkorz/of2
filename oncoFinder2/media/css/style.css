@@ -112,6 +112,20 @@
 	height: 100px;
 }
 
+.wrapper1, .wrapper2 {
+  
+  overflow-x: scroll;
+  overflow-y:hidden;
+}
+
+.wrapper1 {height: 20px; }
+.wrapper2 { }
+.upper_scroll {
+ 
+  height: 20px;
+}
+
+
  /*************************/
 #footer{
 	position: absolute;
