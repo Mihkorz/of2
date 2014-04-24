@@ -128,6 +128,7 @@ INSTALLED_APPS = (
     #internal apps
     'website',
     'profiles',
+    'database'
 
 )
 

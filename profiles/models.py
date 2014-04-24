@@ -50,6 +50,10 @@ class Project(models.Model):
     def __unicode__(self):
         return self.name
     
+    def clean(self):
+        super(Project, self).clean()
+        self.name = self.name.strip(" \t").replace(" ", "-")
+    
     def get_documents_number(self):
         return self.document_set.count()
 

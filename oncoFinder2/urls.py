@@ -10,6 +10,8 @@ admin.autodiscover()
 from website.views import IndexPage, LoginPage, Logout
 from profiles.views import ProfileIndex, SettingsProfile, SettingsBilling, CreateProject, \
                            ProjectDetail, CreateDocument, DocumentDetail
+                           
+from core.views import CoreParameters
 
 urlpatterns = patterns('',
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
@@ -33,7 +35,11 @@ urlpatterns = patterns('',
     url(r'^project/(?P<slug>[-\w]+)/$', ProjectDetail.as_view(), name="project_detail"),
     
     url(r'^document/new/$', CreateDocument.as_view(), name="document_create"),
-    url(r'^document/doc(?P<pk>\d+)/$', DocumentDetail.as_view()),
+    url(r'^document/doc(?P<pk>\d+)/$', DocumentDetail.as_view(), name="document_detail"),
+    
+    ################### Core App ##############################
+    url(r'^core-parameters/doc(?P<pk>\d+)/$', CoreParameters.as_view(), name="core_parameters"),
+    
 
    
 )

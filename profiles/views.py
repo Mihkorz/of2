@@ -14,7 +14,7 @@ from .forms import SettingsUserForm, UserProfileFormSet, CreateProjectForm, \
                    UploadDocumentForm
 from .models import Project, Document
 
-from pandas import DataFrame, read_csv
+from pandas import read_csv
 
 
 class ProfileIndex(DetailView):
@@ -155,7 +155,7 @@ class DocumentDetail(DetailView):
         filename = settings.MEDIA_ROOT+"/"+self.object.document.name 
         df = read_csv(filename, sep='\t')
         
-        tumor_cols = [col for col in df.columns if 'Nor' in col]
+        #tumor_cols = [col for col in df.columns if 'Nor' in col]
         
         context['test'] = df[:50].to_html()
         return context  

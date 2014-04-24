@@ -1,0 +1,10 @@
+eclipse.preferences.version=1
+encoding//core/views.py=utf-8
+encoding//database/admin.py=utf-8
+encoding//database/forms.py=utf-8
+encoding//database/models.py=utf-8
+encoding//database/utils.py=utf-8
+encoding//oncoFinder2/settings.py=utf-8
+encoding//oncoFinder2/urls.py=utf-8
+encoding//profiles/forms.py=utf-8
+encoding//profiles/views.py=utf-8
