@@ -3589,3 +3589,2513 @@ Traceback (most recent call last):
   File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 70, in get_queryset
     'cls': self.__class__.__name__
 ImproperlyConfigured: SettingsBilling is missing a queryset. Define SettingsBilling.model, SettingsBilling.queryset, or override SettingsBilling.get_queryset().
+2014-04-25 14:18:58,321 ERROR base 7457 -1272091840 Internal Server Error: /document/doc8/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 139, in get_response
+    response = response.render()
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 105, in render
+    self.content = self.rendered_content
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 80, in rendered_content
+    template = self.resolve_template(self.template_name)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 56, in resolve_template
+    return loader.select_template(template)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader.py", line 180, in select_template
+    return get_template(template_name)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader.py", line 138, in get_template
+    template, origin = find_template(template_name)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader.py", line 127, in find_template
+    source, display_name = loader(name, dirs)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader.py", line 43, in __call__
+    return self.load_template(template_name, template_dirs)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader.py", line 49, in load_template
+    template = get_template_from_string(source, origin, template_name)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader.py", line 149, in get_template_from_string
+    return Template(source, origin, name)
+  File "/usr/local/lib/python2.7/dist-packages/debug_toolbar/panels/templates/panel.py", line 71, in new_template_init
+    old_template_init(self, template_string, origin, name)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 125, in __init__
+    self.nodelist = compile_string(template_string, origin)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 153, in compile_string
+    return parser.parse()
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 278, in parse
+    compiled_result = compile_func(self, token)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 215, in do_extends
+    nodelist = parser.parse()
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 278, in parse
+    compiled_result = compile_func(self, token)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 190, in do_block
+    nodelist = parser.parse(('endblock',))
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 254, in parse
+    filter_expression = self.compile_filter(token.contents)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 360, in compile_filter
+    return FilterExpression(token, self)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 577, in __init__
+    "from '%s'" % (token[upto:], token))
+TemplateSyntaxError: Could not parse the remainder: ' core_set_calculation_parameters' from 'url core_set_calculation_parameters'
+2014-04-25 14:19:28,808 ERROR base 7457 -1324352704 Internal Server Error: /document/doc8/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 139, in get_response
+    response = response.render()
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 105, in render
+    self.content = self.rendered_content
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 82, in rendered_content
+    content = template.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/test/utils.py", line 85, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/test/utils.py", line 85, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 62, in render
+    result = block.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/defaulttags.py", line 424, in render
+    raise NoReverseMatch("'url' requires a non-empty first argument. "
+NoReverseMatch: 'url' requires a non-empty first argument. The syntax changed in Django 1.5, see the docs.
+2014-04-25 14:28:07,850 ERROR base 7457 -1282409664 Internal Server Error: /core-parameters/doc8/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 201, in get
+    return super(BaseCreateView, self).get(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 159, in get
+    form_class = self.get_form_class()
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 111, in get_form_class
+    model = self.get_queryset().model
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 70, in get_queryset
+    'cls': self.__class__.__name__
+ImproperlyConfigured: CoreSetCalculationParameters is missing a queryset. Define CoreSetCalculationParameters.model, CoreSetCalculationParameters.queryset, or override CoreSetCalculationParameters.get_queryset().
+2014-04-25 14:29:51,717 ERROR base 7756 -1324352704 Internal Server Error: /core-preprocess/doc8/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 201, in get
+    return super(BaseCreateView, self).get(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 159, in get
+    form_class = self.get_form_class()
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 111, in get_form_class
+    model = self.get_queryset().model
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 70, in get_queryset
+    'cls': self.__class__.__name__
+ImproperlyConfigured: CoreSetCalculationParameters is missing a queryset. Define CoreSetCalculationParameters.model, CoreSetCalculationParameters.queryset, or override CoreSetCalculationParameters.get_queryset().
+2014-04-25 14:31:12,946 ERROR base 7787 -1272534208 Internal Server Error: /calculation-parameters/doc8/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 201, in get
+    return super(BaseCreateView, self).get(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 159, in get
+    form_class = self.get_form_class()
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 111, in get_form_class
+    model = self.get_queryset().model
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 70, in get_queryset
+    'cls': self.__class__.__name__
+ImproperlyConfigured: CoreSetCalculationParameters is missing a queryset. Define CoreSetCalculationParameters.model, CoreSetCalculationParameters.queryset, or override CoreSetCalculationParameters.get_queryset().
+2014-04-25 14:38:03,018 ERROR base 7887 -1272878272 Internal Server Error: /calculation-parameters/doc8/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 201, in get
+    return super(BaseCreateView, self).get(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 160, in get
+    form = self.get_form(form_class)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 44, in get_form
+    return form_class(**self.get_form_kwargs())
+TypeError: __init__() got an unexpected keyword argument 'instance'
+2014-04-25 14:39:33,376 ERROR base 7956 -1272878272 Internal Server Error: /calculation-parameters/doc8/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 18, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 201, in get
+    return super(BaseCreateView, self).get(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 160, in get
+    form = self.get_form(form_class)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 44, in get_form
+    return form_class(**self.get_form_kwargs())
+TypeError: __init__() got an unexpected keyword argument 'instance'
+2014-04-25 14:40:32,707 ERROR base 8013 -1272038592 Internal Server Error: /calculation-parameters/doc8/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 139, in get_response
+    response = response.render()
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 105, in render
+    self.content = self.rendered_content
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 80, in rendered_content
+    template = self.resolve_template(self.template_name)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 56, in resolve_template
+    return loader.select_template(template)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader.py", line 186, in select_template
+    raise TemplateDoesNotExist(', '.join(not_found))
+TemplateDoesNotExist: core_calculation_parameters.html
+2014-04-25 15:57:46,318 ERROR base 10460 -1324352704 Internal Server Error: /calculation-parameters/doc8/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 22, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 34, in form_valid
+    input_document = context['profile_form']
+KeyError: 'profile_form'
+2014-04-25 15:59:04,043 ERROR base 10499 -1324352704 Internal Server Error: /calculation-parameters/doc8/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 22, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 41, in form_valid
+    output_doc.document = os.path.join('users', str(self.request.user), str(input_document.project),'output', output_file_name)
+  File "/usr/lib/python2.7/posixpath.py", line 75, in join
+    if b.startswith('/'):
+AttributeError: 'function' object has no attribute 'startswith'
+2014-04-25 16:20:44,588 ERROR base 3294 -1272419520 Internal Server Error: /calculation-parameters/doc8/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 22, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 161, in get
+    return self.render_to_response(self.get_context_data(form=form))
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 27, in get_context_data
+    input_document = Document.objects.get(pk=self.kwargs['pk'])
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/manager.py", line 151, in get
+    return self.get_queryset().get(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 301, in get
+    num = len(clone)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 77, in __len__
+    self._fetch_all()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 854, in _fetch_all
+    self._result_cache = list(self.iterator())
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 230, in iterator
+    obj = model(*row_data)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/base.py", line 347, in __init__
+    setattr(self, field.attname, val)
+  File "/usr/local/lib/python2.7/dist-packages/jsonfield/subclassing.py", line 41, in __set__
+    obj.__dict__[self.field.name] = self.field.pre_init(value, obj)
+  File "/usr/local/lib/python2.7/dist-packages/jsonfield/fields.py", line 77, in pre_init
+    raise ValidationError(_("Enter valid JSON"))
+ValidationError: [u'Enter valid JSON']
+2014-04-25 16:21:13,405 ERROR base 3294 -1292895424 Internal Server Error: /calculation-parameters/doc8/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 22, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 161, in get
+    return self.render_to_response(self.get_context_data(form=form))
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 27, in get_context_data
+    input_document = Document.objects.get(pk=self.kwargs['pk'])
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/manager.py", line 151, in get
+    return self.get_queryset().get(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 301, in get
+    num = len(clone)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 77, in __len__
+    self._fetch_all()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 854, in _fetch_all
+    self._result_cache = list(self.iterator())
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 230, in iterator
+    obj = model(*row_data)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/base.py", line 347, in __init__
+    setattr(self, field.attname, val)
+  File "/usr/local/lib/python2.7/dist-packages/jsonfield/subclassing.py", line 41, in __set__
+    obj.__dict__[self.field.name] = self.field.pre_init(value, obj)
+  File "/usr/local/lib/python2.7/dist-packages/jsonfield/fields.py", line 77, in pre_init
+    raise ValidationError(_("Enter valid JSON"))
+ValidationError: [u'Enter valid JSON']
+2014-04-25 16:29:42,723 ERROR base 3684 -1324352704 Internal Server Error: /document/doc11/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/views.py", line 151, in dispatch
+    return super(DocumentDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/views.py", line 156, in get_context_data
+    df = read_csv(filename, sep='\t')
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/io/parsers.py", line 421, in parser_f
+    return _read(filepath_or_buffer, kwds)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/io/parsers.py", line 219, in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/io/parsers.py", line 503, in __init__
+    self._make_engine(self.engine)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/io/parsers.py", line 610, in _make_engine
+    self._engine = CParserWrapper(self.f, **self.options)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/io/parsers.py", line 972, in __init__
+    self._reader = _parser.TextReader(src, **kwds)
+  File "parser.pyx", line 330, in pandas.parser.TextReader.__cinit__ (pandas/parser.c:3212)
+  File "parser.pyx", line 557, in pandas.parser.TextReader._setup_parser_source (pandas/parser.c:5571)
+IOError: File /home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/media/users/admin/admin/output/GSE31715_GSE28511.normalized_1.txt does not exist
+2014-04-25 17:39:23,173 ERROR base 5257 -1272992960 Internal Server Error: /calculation-parameters/doc4/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 28, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 71, in form_valid
+    dataFrame.to_csv(new_file, sep='\t', encoding='utf-8')
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/util/decorators.py", line 60, in wrapper
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 1139, in to_csv
+    formatter.save()
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/format.py", line 1157, in save
+    encoding=self.encoding)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/common.py", line 2347, in _get_handle
+    f = open(path, mode)
+IOError: [Errno 2] No such file or directory: '/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/media/users/admin/admin/output/OUT_GSE31715_GSE28511.normalized_1_1.txt'
+2014-04-25 17:55:19,967 ERROR base 5492 -1282409664 Internal Server Error: /calculation-parameters/doc4/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 28, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 70, in form_valid
+    dataFrame = dataFrame.div(mean_norm, axis='index')
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/ops.py", line 761, in f
+    return self._combine_series(other, na_op, fill_value, axis, level)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 2796, in _combine_series
+    return self._combine_match_index(other, func, level=level, fill_value=fill_value)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 2826, in _combine_match_index
+    return self._constructor(func(left.values.T, right.values).T,
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/ops.py", line 737, in na_op
+    mask = notnull(xrav) & notnull(yrav)
+ValueError: operands could not be broadcast together with shapes (503160,) (25158,) 
+2014-04-25 17:57:50,430 ERROR base 5582 -1324352704 Internal Server Error: /calculation-parameters/doc4/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 28, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 71, in form_valid
+    dataFrame = dataFrame.div(dataFrame['divide_norm'], axis='index')
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/ops.py", line 761, in f
+    return self._combine_series(other, na_op, fill_value, axis, level)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 2796, in _combine_series
+    return self._combine_match_index(other, func, level=level, fill_value=fill_value)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 2826, in _combine_match_index
+    return self._constructor(func(left.values.T, right.values).T,
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/ops.py", line 737, in na_op
+    mask = notnull(xrav) & notnull(yrav)
+ValueError: operands could not be broadcast together with shapes (528318,) (25158,) 
+2014-04-25 17:58:35,017 ERROR base 5609 -1272730816 Internal Server Error: /calculation-parameters/doc4/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 28, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 71, in form_valid
+    dataFrame = dataFrame.div(dataFrame.divide_norm, axis='index')
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/ops.py", line 761, in f
+    return self._combine_series(other, na_op, fill_value, axis, level)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 2796, in _combine_series
+    return self._combine_match_index(other, func, level=level, fill_value=fill_value)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 2826, in _combine_match_index
+    return self._constructor(func(left.values.T, right.values).T,
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/ops.py", line 737, in na_op
+    mask = notnull(xrav) & notnull(yrav)
+ValueError: operands could not be broadcast together with shapes (528318,) (25158,) 
+2014-04-25 17:58:58,428 ERROR base 5609 -1282409664 Internal Server Error: /calculation-parameters/doc4/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 28, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 71, in form_valid
+    dataFrame = dataFrame.div(dataFrame.divide_norm, axis='index')
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/ops.py", line 761, in f
+    return self._combine_series(other, na_op, fill_value, axis, level)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 2796, in _combine_series
+    return self._combine_match_index(other, func, level=level, fill_value=fill_value)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 2826, in _combine_match_index
+    return self._constructor(func(left.values.T, right.values).T,
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/ops.py", line 737, in na_op
+    mask = notnull(xrav) & notnull(yrav)
+ValueError: operands could not be broadcast together with shapes (528318,) (25158,) 
+2014-04-25 18:07:57,264 ERROR base 5913 -1272419520 Internal Server Error: /calculation-parameters/doc4/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 28, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 161, in get
+    return self.render_to_response(self.get_context_data(form=form))
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 33, in get_context_data
+    input_document = Document.objects.get(pk=self.kwargs['pk'])
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/manager.py", line 151, in get
+    return self.get_queryset().get(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 307, in get
+    self.model._meta.object_name)
+DoesNotExist: Document matching query does not exist.
+2014-04-25 18:08:27,154 ERROR base 5913 -1282409664 Internal Server Error: /calculation-parameters/doc1/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 28, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 71, in form_valid
+    dataFrame = dataFrame[[sam / dataFrame.Mean_norm for sam in dataFrame.columns if 'Tum' in sam]]
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/ops.py", line 503, in wrapper
+    return left._constructor(wrap_results(na_op(lvalues, rvalues)),
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/ops.py", line 453, in na_op
+    result[mask] = op(x[mask], y)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/ops.py", line 74, in <lambda>
+    rtruediv=arith_method(lambda x, y: operator.truediv(y, x),
+TypeError: unsupported operand type(s) for /: 'str' and 'numpy.ndarray'
+2014-04-25 18:09:01,377 ERROR base 5958 -1272210624 Internal Server Error: /calculation-parameters/doc1/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 28, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 71, in form_valid
+    dataFrame = dataFrame[[dataFrame.sam / dataFrame.Mean_norm for sam in dataFrame.columns if 'Tum' in sam]]
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/generic.py", line 1851, in __getattr__
+    (type(self).__name__, name))
+AttributeError: 'DataFrame' object has no attribute 'sam'
+2014-04-25 18:09:24,542 ERROR base 5988 -1272628416 Internal Server Error: /calculation-parameters/doc1/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 28, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 71, in form_valid
+    dataFrame = dataFrame[[dataFrame[sam] / dataFrame.Mean_norm for sam in dataFrame.columns if 'Tum' in sam]]
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 1652, in __getitem__
+    return self._getitem_array(key)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 1696, in _getitem_array
+    indexer = self.ix._convert_to_indexer(key, axis=1)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/indexing.py", line 1053, in _convert_to_indexer
+    indexer = check = labels.get_indexer(objarr)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/index.py", line 1259, in get_indexer
+    indexer = self._engine.get_indexer(target.values)
+  File "index.pyx", line 267, in pandas.index.IndexEngine.get_indexer (pandas/index.c:5282)
+  File "hashtable.pyx", line 754, in pandas.hashtable.PyObjectHashTable.lookup (pandas/hashtable.c:12702)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/generic.py", line 630, in __hash__
+    ' hashed'.format(self.__class__.__name__))
+TypeError: 'Series' objects are mutable, thus they cannot be hashed
+2014-04-25 18:10:37,156 ERROR base 6109 -1272534208 Internal Server Error: /calculation-parameters/doc1/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 28, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 71, in form_valid
+    dataFrame = dataFrame.div(dataFrame.Mean_norm, axis='index')
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/ops.py", line 761, in f
+    return self._combine_series(other, na_op, fill_value, axis, level)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 2796, in _combine_series
+    return self._combine_match_index(other, func, level=level, fill_value=fill_value)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 2826, in _combine_match_index
+    return self._constructor(func(left.values.T, right.values).T,
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/ops.py", line 737, in na_op
+    mask = notnull(xrav) & notnull(yrav)
+ValueError: operands could not be broadcast together with shapes (528318,) (25158,) 
+2014-04-25 18:12:19,351 ERROR base 6140 -1272878272 Internal Server Error: /calculation-parameters/doc1/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 28, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 71, in form_valid
+    dataFrame = dataFrame.div(dataFrame.Mean_norm, axis=0)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/ops.py", line 761, in f
+    return self._combine_series(other, na_op, fill_value, axis, level)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 2796, in _combine_series
+    return self._combine_match_index(other, func, level=level, fill_value=fill_value)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 2826, in _combine_match_index
+    return self._constructor(func(left.values.T, right.values).T,
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/ops.py", line 737, in na_op
+    mask = notnull(xrav) & notnull(yrav)
+ValueError: operands could not be broadcast together with shapes (528318,) (25158,) 
+2014-04-25 18:12:36,650 ERROR base 6140 -1354433728 Internal Server Error: /calculation-parameters/doc1/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 28, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 71, in form_valid
+    dataFrame = dataFrame.div(dataFrame.Mean_norm, axis=0)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/ops.py", line 761, in f
+    return self._combine_series(other, na_op, fill_value, axis, level)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 2796, in _combine_series
+    return self._combine_match_index(other, func, level=level, fill_value=fill_value)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 2826, in _combine_match_index
+    return self._constructor(func(left.values.T, right.values).T,
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/ops.py", line 737, in na_op
+    mask = notnull(xrav) & notnull(yrav)
+ValueError: operands could not be broadcast together with shapes (528318,) (25158,) 
+2014-04-25 18:16:07,162 ERROR base 6223 -1272157376 Internal Server Error: /calculation-parameters/doc1/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 28, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 71, in form_valid
+    dataFrame = (dataFrame.T / dataFrame.Mean_norm).T
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/ops.py", line 761, in f
+    return self._combine_series(other, na_op, fill_value, axis, level)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 2799, in _combine_series
+    return self._combine_series_infer(other, func, level=level, fill_value=fill_value)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 2819, in _combine_series_infer
+    return self._combine_match_columns(other, func, level=level, fill_value=fill_value)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 2837, in _combine_match_columns
+    func=func, other=right, axes=[left.columns, self.index])
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 2466, in eval
+    return self.apply('eval', **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 2446, in apply
+    applied = getattr(blk, f)(**kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 1051, in eval
+    result = get_result(other)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 1035, in get_result
+    return self._try_coerce_result(func(values, other))
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/ops.py", line 737, in na_op
+    mask = notnull(xrav) & notnull(yrav)
+ValueError: operands could not be broadcast together with shapes (528318,) (25158,) 
+2014-04-25 18:23:37,197 ERROR base 6402 -1272272064 Internal Server Error: /calculation-parameters/doc1/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 28, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 71, in form_valid
+    df = df.div(df.MN)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/ops.py", line 761, in f
+    return self._combine_series(other, na_op, fill_value, axis, level)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 2798, in _combine_series
+    return self._combine_match_columns(other, func, level=level, fill_value=fill_value)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 2831, in _combine_match_columns
+    left, right = self.align(other, join='outer', axis=1, level=level, copy=False)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/generic.py", line 2955, in align
+    fill_axis=fill_axis)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/generic.py", line 3041, in _align_series
+    fdata = fdata.reindex_indexer(join_index, lidx, axis=0)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 3329, in reindex_indexer
+    return self._reindex_indexer_items(new_axis, indexer, fill_value)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 3402, in _reindex_indexer_items
+    fill_value=fill_value)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 3483, in _make_na_block
+    block_values = np.empty(block_shape, dtype=dtype)
+ValueError: array is too big.
+2014-04-25 18:25:49,293 ERROR base 6453 -1272992960 Internal Server Error: /calculation-parameters/doc1/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 28, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 71, in form_valid
+    df = df.div(df.MN, axis=0)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/ops.py", line 761, in f
+    return self._combine_series(other, na_op, fill_value, axis, level)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 2796, in _combine_series
+    return self._combine_match_index(other, func, level=level, fill_value=fill_value)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 2826, in _combine_match_index
+    return self._constructor(func(left.values.T, right.values).T,
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/ops.py", line 737, in na_op
+    mask = notnull(xrav) & notnull(yrav)
+ValueError: operands could not be broadcast together with shapes (528318,) (25158,) 
+2014-04-25 18:28:02,185 ERROR base 6480 -1272878272 Internal Server Error: /calculation-parameters/doc1/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 28, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 71, in form_valid
+    df = df.div(df.MN, axis=1)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/ops.py", line 761, in f
+    return self._combine_series(other, na_op, fill_value, axis, level)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 2798, in _combine_series
+    return self._combine_match_columns(other, func, level=level, fill_value=fill_value)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 2831, in _combine_match_columns
+    left, right = self.align(other, join='outer', axis=1, level=level, copy=False)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/generic.py", line 2955, in align
+    fill_axis=fill_axis)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/generic.py", line 3041, in _align_series
+    fdata = fdata.reindex_indexer(join_index, lidx, axis=0)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 3329, in reindex_indexer
+    return self._reindex_indexer_items(new_axis, indexer, fill_value)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 3402, in _reindex_indexer_items
+    fill_value=fill_value)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 3483, in _make_na_block
+    block_values = np.empty(block_shape, dtype=dtype)
+ValueError: array is too big.
+2014-04-25 18:29:08,402 ERROR base 6499 -1272304832 Internal Server Error: /calculation-parameters/doc1/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 28, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 71, in form_valid
+    df = df.div(df.MN, axis='columns')
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/ops.py", line 761, in f
+    return self._combine_series(other, na_op, fill_value, axis, level)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 2798, in _combine_series
+    return self._combine_match_columns(other, func, level=level, fill_value=fill_value)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 2831, in _combine_match_columns
+    left, right = self.align(other, join='outer', axis=1, level=level, copy=False)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/generic.py", line 2955, in align
+    fill_axis=fill_axis)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/generic.py", line 3041, in _align_series
+    fdata = fdata.reindex_indexer(join_index, lidx, axis=0)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 3329, in reindex_indexer
+    return self._reindex_indexer_items(new_axis, indexer, fill_value)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 3402, in _reindex_indexer_items
+    fill_value=fill_value)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 3483, in _make_na_block
+    block_values = np.empty(block_shape, dtype=dtype)
+ValueError: array is too big.
+2014-04-25 18:32:06,030 ERROR base 6609 -1272628416 Internal Server Error: /calculation-parameters/doc1/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 28, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 72, in form_valid
+    df = df[norm] / df.MN
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/series.py", line 480, in __getitem__
+    result = self.index.get_value(self, key)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/index.py", line 1159, in get_value
+    return self._engine.get_value(s, k)
+  File "index.pyx", line 97, in pandas.index.IndexEngine.get_value (pandas/index.c:2987)
+  File "index.pyx", line 105, in pandas.index.IndexEngine.get_value (pandas/index.c:2802)
+  File "index.pyx", line 151, in pandas.index.IndexEngine.get_loc (pandas/index.c:3577)
+KeyError: 'Normal.GSM706245.AVG_Signal'
+2014-04-25 18:34:19,464 ERROR base 6646 -1272366272 Internal Server Error: /calculation-parameters/doc1/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 28, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 71, in form_valid
+    df = df.div(5, axis='index')
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/ops.py", line 793, in f
+    return self._combine_const(other, na_op)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 2844, in _combine_const
+    new_data = self._data.eval(func=func, other=other, raise_on_error=raise_on_error)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 2466, in eval
+    return self.apply('eval', **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 2446, in apply
+    applied = getattr(blk, f)(**kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 1058, in eval
+    result = handle_error()
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 1042, in handle_error
+    % (repr(other), str(detail)))
+TypeError: Could not operate 5 with block values unsupported operand type(s) for /: 'str' and 'int'
+2014-04-25 18:35:26,806 ERROR base 6679 -1272992960 Internal Server Error: /calculation-parameters/doc1/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 28, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 71, in form_valid
+    df = df.div(5, axis='columns')
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/ops.py", line 793, in f
+    return self._combine_const(other, na_op)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 2844, in _combine_const
+    new_data = self._data.eval(func=func, other=other, raise_on_error=raise_on_error)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 2466, in eval
+    return self.apply('eval', **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 2446, in apply
+    applied = getattr(blk, f)(**kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 1058, in eval
+    result = handle_error()
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 1042, in handle_error
+    % (repr(other), str(detail)))
+TypeError: Could not operate 5 with block values unsupported operand type(s) for /: 'str' and 'int'
+2014-04-25 18:36:07,102 ERROR base 6704 -1272304832 Internal Server Error: /calculation-parameters/doc1/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 28, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 71, in form_valid
+    df = df.div(1, axis=0)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/ops.py", line 793, in f
+    return self._combine_const(other, na_op)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 2844, in _combine_const
+    new_data = self._data.eval(func=func, other=other, raise_on_error=raise_on_error)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 2466, in eval
+    return self.apply('eval', **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 2446, in apply
+    applied = getattr(blk, f)(**kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 1058, in eval
+    result = handle_error()
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 1042, in handle_error
+    % (repr(other), str(detail)))
+TypeError: Could not operate 1 with block values unsupported operand type(s) for /: 'str' and 'int'
+2014-04-25 18:39:29,826 ERROR base 6805 -1272366272 Internal Server Error: /calculation-parameters/doc1/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 28, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 71, in form_valid
+    df = df.div(mean_norm.length(), axis='index')
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/generic.py", line 1851, in __getattr__
+    (type(self).__name__, name))
+AttributeError: 'Series' object has no attribute 'length'
+2014-04-25 18:43:18,688 ERROR base 6830 -1272366272 Internal Server Error: /calculation-parameters/doc1/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 28, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 71, in form_valid
+    df = df.div(mean_norm, axis='index')
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/ops.py", line 761, in f
+    return self._combine_series(other, na_op, fill_value, axis, level)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 2796, in _combine_series
+    return self._combine_match_index(other, func, level=level, fill_value=fill_value)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 2826, in _combine_match_index
+    return self._constructor(func(left.values.T, right.values).T,
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/ops.py", line 737, in na_op
+    mask = notnull(xrav) & notnull(yrav)
+ValueError: operands could not be broadcast together with shapes (528318,) (25158,) 
+2014-04-25 18:44:06,953 ERROR base 6859 -1272366272 Internal Server Error: /calculation-parameters/doc1/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 28, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 71, in form_valid
+    df.div(mean_norm, axis='index')
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/ops.py", line 761, in f
+    return self._combine_series(other, na_op, fill_value, axis, level)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 2796, in _combine_series
+    return self._combine_match_index(other, func, level=level, fill_value=fill_value)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 2826, in _combine_match_index
+    return self._constructor(func(left.values.T, right.values).T,
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/ops.py", line 737, in na_op
+    mask = notnull(xrav) & notnull(yrav)
+ValueError: operands could not be broadcast together with shapes (528318,) (25158,) 
+2014-04-25 18:45:18,908 ERROR base 6888 -1272157376 Internal Server Error: /calculation-parameters/doc1/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 28, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 71, in form_valid
+    df = df.div(df.count, axis='index')
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/ops.py", line 793, in f
+    return self._combine_const(other, na_op)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 2844, in _combine_const
+    new_data = self._data.eval(func=func, other=other, raise_on_error=raise_on_error)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 2466, in eval
+    return self.apply('eval', **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 2446, in apply
+    applied = getattr(blk, f)(**kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 1058, in eval
+    result = handle_error()
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 1042, in handle_error
+    % (repr(other), str(detail)))
+TypeError: Could not operate <bound method DataFrame.count of       SYMBOL  Tumour.GSM787521_BV0.AVG_Signal  \
+0        7A5                        13.998615   
+1       A1BG                        15.829421   
+2       A1CF                        14.411763   
+3      A26A1                        15.926794   
+4      A26B1                        14.825506   
+5     A26C1B                        16.273485   
+6      A26C3                        14.929556   
+7      A2BP1                        14.850488   
+8        A2M                       371.609217   
+9      A2ML1                        13.256129   
+10   A3GALT2                        14.401504   
+11    A4GALT                        40.315500   
+12     A4GNT                        14.666267   
+13      AAA1                        14.907617   
+14      AAAS                        20.430731   
+15      AACS                        21.826972   
+16     AACSL                        16.575975   
+17     AADAC                        16.017942   
+18   AADACL1                        30.377066   
+19   AADACL2                        17.120751   
+20   AADACL3                        14.572217   
+21   AADACL4                        15.515677   
+22     AADAT                        16.166193   
+23      AAK1                        18.499045   
+24      AAMP                        27.721759   
+25     AANAT                        13.139711   
+26      AARS                       223.144303   
+27     AARS2                        24.078248   
+28    AARSD1                        29.626973   
+29     AASDH                        26.563510   
+30  AASDHPPT                        43.706388   
+31      AASS                        21.150050   
+32      AATF                        52.294268   
+33      AATK                        14.331937   
+34      ABAT                        16.196648   
+35     ABCA1                       264.424546   
+36    ABCA10                        18.906065   
+37    ABCA11                        17.658379   
+38    ABCA12                        15.604376   
+39    ABCA13                        14.255505   
+40     ABCA2                        17.763033   
+41     ABCA3                        18.185952   
+42     ABCA4                        16.859581   
+43     ABCA5                        17.725396   
+44     ABCA6                        78.223921   
+45     ABCA7                        15.954873   
+46     ABCA8                        45.361533   
+47     ABCA9                        31.348758   
+48     ABCB1                        18.788524   
+49    ABCB10                        32.759553   
+50    ABCB11                        14.564382   
+51     ABCB4                        16.731288   
+52     ABCB5                        14.703637   
+53     ABCB6                        32.948376   
+54     ABCB7                        44.178821   
+55     ABCB8                        19.176742   
+56     ABCB9                        18.294920   
+57     ABCC1                        17.527176   
+58    ABCC10                        17.505747   
+59    ABCC11                        15.104824   
+         ...                              ...   
+
+    Tumour.GSM787522_BV0.AVG_Signal  Tumour.GSM787523_BV1.AVG_Signal  \
+0                         14.491797                        15.623008   
+1                         16.499863                        15.688862   
+2                         15.258917                        15.671890   
+3                         15.292226                        16.254044   
+4                         15.665653                        14.816166   
+5                         16.129417                        15.357620   
+6                         15.275066                        14.702277   
+7                         14.599458                        14.899935   
+8                       1069.986253                       110.375236   
+9                         13.521818                        13.736731   
+10                        14.941322                        13.821777   
+11                        36.779736                        17.908262   
+12                        14.584878                        16.020649   
+13                        15.097569                        14.558017   
+14                        19.083354                        19.841920   
+15                        20.844936                        20.189013   
+16                        16.257670                        15.904574   
+17                        14.472135                        16.247278   
+18                        25.701782                        34.875844   
+19                        15.257144                        15.345633   
+20                        14.751639                        12.811452   
+21                        13.725729                        15.546740   
+22                        17.335609                        17.845927   
+23                        18.406997                        18.928373   
+24                        27.524981                        23.891261   
+25                        13.904178                        11.807924   
+26                       397.308689                       332.950576   
+27                        25.725691                        29.206689   
+28                        34.707162                        32.478304   
+29                        24.787172                        25.095936   
+30                        36.743986                        37.736762   
+31                        19.897487                        20.067043   
+32                        73.174814                        60.891459   
+33                        15.017970                        14.990187   
+34                        18.175394                        16.231679   
+35                       196.720908                       101.014599   
+36                        16.659311                        14.776894   
+37                        18.343181                        17.493238   
+38                        16.072876                        14.560924   
+39                        15.605391                        15.860534   
+40                        18.044130                        18.105537   
+41                        24.433233                        16.672262   
+42                        17.584144                        17.281071   
+43                        14.024526                        15.595438   
+44                        18.138417                        16.720489   
+45                        16.675145                        16.142977   
+46                        21.187605                        15.806709   
+47                        17.156737                        16.418954   
+48                        17.736842                        15.884998   
+49                        57.275444                        27.431087   
+50                        15.547772                        14.083128   
+51                        17.102854                        17.017061   
+52                        12.752270                        13.898907   
+53                        37.220217                        36.645364   
+54                        47.528094                        50.988722   
+55                        15.080532                        17.424069   
+56                        20.806308                        18.277549   
+57                        16.639138                        17.119761   
+58                        17.517226                        18.751940   
+59                        15.914003                        15.806480   
+                                ...                              ...   
+
+    Tumour.GSM787524_BV1.AVG_Signal  Tumour.GSM787525_BV1.AVG_Signal  \
+0                         14.712618                        14.547441   
+1                         14.924951                        15.049403   
+2                         15.207003                        15.956247   
+3                         15.377296                        15.608675   
+4                         16.303730                        15.436909   
+5                         15.917554                        16.093163   
+6                         16.138628                        14.672594   
+7                         15.320901                        20.277496   
+8                        291.355073                       368.021989   
+9                         13.894298                        12.987613   
+10                        13.774837                        15.217171   
+11                        43.256784                        36.469021   
+12                        14.298156                        15.330150   
+13                        15.933517                        15.688862   
+14                        20.772298                        18.992319   
+15                        19.214149                        23.781876   
+16                        16.530619                        14.418957   
+17                        15.899319                        15.827509   
+18                        53.017366                        28.524794   
+19                        15.720234                        15.699271   
+20                        13.462978                        13.389286   
+21                        14.678594                        15.077082   
+22                        17.430159                        16.770677   
+23                        19.517251                        18.844126   
+24                        28.462341                        28.489185   
+25                        12.499837                        13.096030   
+26                       493.539642                       218.322791   
+27                        25.187901                        24.152586   
+28                        46.041509                        42.351209   
+29                        29.600867                        25.398899   
+30                        38.070325                        51.989566   
+31                        18.346540                        18.508053   
+32                       128.718479                        48.405425   
+33                        14.558017                        14.254741   
+34                        15.791646                        14.876817   
+35                       382.718778                       233.291543   
+36                        16.880558                        16.436150   
+37                        17.128622                        17.523499   
+38                        14.933049                        14.812136   
+39                        14.289945                        13.999862   
+40                        15.441880                        17.374736   
+41                        18.194647                        18.192974   
+42                        16.826973                        17.430892   
+43                        14.012514                        16.836189   
+44                        47.735092                        24.411312   
+45                        16.226871                        16.564333   
+46                        22.738813                        23.127764   
+47                        19.841920                        18.084961   
+48                        17.612525                        16.832465   
+49                        39.186676                        36.046831   
+50                        15.201215                        15.591807   
+51                        16.061093                        15.687972   
+52                        12.542684                        15.453109   
+53                        43.458425                        48.859322   
+54                        50.294538                        41.565818   
+55                        17.925424                        17.825889   
+56                        20.052848                        18.942854   
+57                        17.595514                        16.765829   
+58                        18.045543                        17.772367   
+59                        15.940892                        16.246495   
+                                ...                              ...   
+
+    Tumour.GSM787526_BV0.AVG_Signal  Tumour.GSM787527_BV0.AVG_Signal  \
+0                         14.584842                        13.209989   
+1                         15.752272                        15.394672   
+2                         15.696875                        14.862902   
+3                         16.137555                        16.481528   
+4                         15.209506                        14.437618   
+5                         16.187241                        15.469515   
+6                         15.528684                        15.301726   
+7                         14.556835                        14.400753   
+8                        173.479829                       398.246678   
+9                         14.347884                        14.836442   
+10                        13.802935                        14.908885   
+11                        21.425868                        39.683981   
+12                        14.825819                        14.668039   
+13                        15.220065                        14.889641   
+14                        23.060118                        18.553822   
+15                        27.147151                        26.925897   
+16                        15.974017                        16.324498   
+17                        16.343593                        18.139069   
+18                        25.368827                        23.177080   
+19                        16.166484                        18.788340   
+20                        12.942465                        13.694255   
+21                        16.197731                        16.197943   
+22                        17.585464                        16.550339   
+23                        20.233271                        19.010233   
+24                        29.316227                        26.898204   
+25                        12.639210                        12.240795   
+26                       278.774742                       246.679390   
+27                        34.735803                        25.414467   
+28                        47.143809                        35.176226   
+29                        37.060294                        24.692793   
+30                        47.006181                        34.251411   
+31                        16.623619                        19.846087   
+32                        68.479406                        50.083511   
+33                        15.685628                        15.454965   
+34                        17.419889                        15.043724   
+35                       268.718138                       203.232944   
+36                        15.995681                        17.304675   
+37                        17.570200                        16.996094   
+38                        14.360763                        16.045087   
+39                        14.339881                        18.815492   
+40                        19.063250                        18.518022   
+41                        49.807397                        18.803438   
+42                        22.575724                        17.602504   
+43                        14.875434                        15.776066   
+44                        21.911825                        22.303613   
+45                        15.661756                        16.168635   
+46                        18.302384                        19.088838   
+47                        18.453974                        17.782363   
+48                        17.107135                        19.387784   
+49                        53.183627                        30.793159   
+50                        15.471288                        15.922704   
+51                        14.250595                        16.689125   
+52                        10.991466                        17.009723   
+53                        46.067696                        45.487496   
+54                        40.005094                        35.727249   
+55                        16.597897                        18.129601   
+56                        21.839686                        17.623892   
+57                        17.032754                        17.626337   
+58                        18.046071                        17.969221   
+59                        16.295321                        15.852588   
+                                ...                              ...   
+
+    Tumour.GSM787528_BV0.AVG_Signal  Tumour.GSM787529_BV0.AVG_Signal  \
+0                         15.889357                        15.764077   
+1                         15.250913                        15.743939   
+2                         14.870469                        15.366032   
+3                         16.167142                        16.140128   
+4                         13.566782                        16.580562   
+5                         22.161680                        15.778817   
+6                         17.292416                        15.066536   
+7                         14.939200                        15.367398   
+8                        442.149490                       692.069809   
+9                         13.634043                        14.326374   
+10                        14.362231                        13.722455   
+11                        23.583083                        52.518244   
+12                        14.513051                        14.439061   
+13                        15.397525                        15.114487   
+14                        20.730383                        20.485530   
+15                        51.204548                        25.482766   
+16                        16.519979                        15.385732   
+17                        12.750396                        16.899924   
+18                        21.438108                        27.184603   
+19                        14.919297                        15.968138   
+20                        14.899354                        15.310629   
+21                        12.327996                        14.845801   
+22                        17.069635                        16.898124   
+23                        17.692326                        17.945826   
+24                        35.706759                        27.993105   
+25                        15.149216                        13.423169   
+26                       134.242404                       252.264402   
+27                        27.158322                        24.657276   
+28                        46.087611                        39.834042   
+29                        32.409852                        25.368379   
+30                        43.814867                        36.469021   
+31                        21.670483                        20.310856   
+32                        43.765488                        47.898646   
+33                        15.939631                        14.926114   
+34                        15.431500                        15.806709   
+35                       218.891731                       286.764547   
+36                        17.336827                        18.973310   
+37                        17.539237                        16.515132   
+38                        15.404240                        14.876946   
+39                        14.568479                        12.813575   
+40                        18.451026                        18.280446   
+41                        22.408534                        20.499303   
+42                        17.519422                        17.687353   
+43                        15.991781                        17.045350   
+44                        27.016538                        77.710900   
+45                        15.763501                        16.617484   
+46                        23.247339                        46.555997   
+47                        17.741013                        21.518755   
+48                        16.298715                        19.571066   
+49                        38.979972                        40.193262   
+50                        16.677020                        15.502790   
+51                        14.455719                        17.065125   
+52                        14.687580                        13.881414   
+53                        90.080593                        39.787825   
+54                        52.288627                        52.315698   
+55                        17.949698                        16.901845   
+56                        19.627970                        18.252588   
+57                        15.735897                        16.400451   
+58                        17.927595                        18.585269   
+59                        16.598222                        16.154280   
+                                ...                              ...   
+
+    Tumour.GSM787530_BV1.AVG_Signal  Tumour.GSM787531_BV0.AVG_Signal  \
+0                         13.996870                        13.002974   
+1                         15.424172                        15.564084   
+2                         15.215038                        14.414609   
+3                         16.494593                        15.899010   
+4                         16.499070                        15.286893   
+5                         15.757166                        16.126876   
+6                         15.631354                        15.298509   
+7                         14.762770                        14.518766   
+8                        261.596173                       396.215778   
+9                         14.280845                        14.345449   
+10                        14.335934                        14.875434   
+11                        27.768634                        37.245894   
+12                        14.262504                        12.959179   
+13                        14.924982                        15.279940   
+14                        21.059391                        19.777396   
+15                        18.661811                        25.625362   
+16                        16.383380                        16.296607   
+17                        15.805483                        19.132107   
+18                        19.857748                        26.145629   
+19                        14.464388                        22.266962   
+20                        14.061471                        14.239116   
+21                        14.884676                        13.724870   
+22                        16.882740                        18.574919   
+23                        18.867144                        18.904068   
+24                        27.840173                        28.962227   
+25                        14.239407                        14.843335   
+26                       303.775802                       216.999928   
+27                        31.604897                        27.147151   
+28                        47.338089                        32.233892   
+29                        20.572340                        29.057870   
+30                        41.085129                        37.243731   
+31                        20.289676                        21.735743   
+32                        66.439492                        67.714391   
+33                        16.002623                        15.396537   
+34                        15.642592                        15.544933   
+35                       152.835885                       331.368243   
+36                        17.051003                        18.756100   
+37                        18.593804                        17.542804   
+38                        16.113615                        14.767863   
+39                        22.363089                        17.449734   
+40                        15.220065                        15.873580   
+41                        14.338182                        17.097303   
+42                        16.727122                        16.944007   
+43                        16.514712                        15.905528   
+44                        15.972280                        25.484703   
+45                        15.589183                        15.583931   
+46                        17.296740                        20.913274   
+47                        16.596359                        18.843445   
+48                        17.481990                        17.298971   
+49                        28.127157                        38.196015   
+50                        14.150568                        15.173990   
+51                        17.306866                        16.650011   
+52                        13.680062                        13.722455   
+53                        35.906571                        40.619350   
+54                        49.747206                        55.961103   
+55                        17.887150                        17.455521   
+56                        18.676238                        19.216625   
+57                        16.183608                        16.905545   
+58                        20.024648                        17.848259   
+59                        15.728174                        15.198521   
+                                ...                              ...   
+
+    Tumour.GSM787532_BV0.AVG_Signal  Tumour.GSM787533_BV1.AVG_Signal  \
+0                         14.067309                        13.946528   
+1                         16.293528                        15.806760   
+2                         14.224553                        15.288581   
+3                         16.455258                        16.303071   
+4                         13.363528                        14.689598   
+5                         14.876918                        15.180750   
+6                         14.477556                        15.106011   
+7                         14.056855                        18.475440   
+8                        698.428814                        64.795441   
+9                         15.427426                        14.333637   
+10                        15.156610                        13.641188   
+11                        46.688010                        20.765081   
+12                        15.216967                        16.025550   
+13                        15.264193                        15.131155   
+14                        21.586477                        23.899804   
+15                        24.383051                        20.022494   
+16                        16.222241                        16.983978   
+17                        13.719922                        16.236195   
+18                        27.621188                        31.532138   
+19                        14.258665                        14.289913   
+20                        14.275963                        15.016102   
+21                        12.830432                        13.460080   
+22                        17.402559                        16.322343   
+23                        19.139870                        15.868725   
+24                        25.725691                        31.884037   
+25                        13.734917                        13.384090   
+26                      2483.222673                       361.902079   
+27                        28.061146                        31.526560   
+28                        47.881067                        49.807397   
+29                        25.830519                        23.845965   
+30                        30.622174                        34.843241   
+31                        21.007455                        17.243694   
+32                        66.759539                        79.177732   
+33                        15.693998                        15.440084   
+34                        16.026546                        15.546301   
+35                       164.282899                       169.377213   
+36                        16.479751                        15.348049   
+37                        17.616695                        17.178902   
+38                        15.447714                        15.527053   
+39                        13.356092                        16.064921   
+40                        19.764075                        18.274060   
+41                        22.309374                        18.168121   
+42                        17.042709                        18.046563   
+43                        14.433915                        16.476205   
+44                        14.216123                        18.936251   
+45                        16.053101                        18.441692   
+46                        18.966283                        18.942854   
+47                        16.304592                        17.040571   
+48                        16.421677                        18.085636   
+49                        36.613670                        26.722680   
+50                        14.375409                        14.489200   
+51                        16.648300                        17.146446   
+52                        16.679141                        14.531593   
+53                        52.492664                        48.487333   
+54                        58.842649                        37.485223   
+55                        17.615284                        18.874508   
+56                        26.482967                        18.093181   
+57                        17.874853                        17.009723   
+58                        17.793250                        27.817392   
+59                        15.473089                        15.428461   
+                                ...                              ...   
+
+    Tumour.GSM787534_BV1.AVG_Signal  Tumour.GSM787535_BV1.AVG_Signal  \
+0                         14.355843                        14.573356   
+1                         16.090021                        16.120186   
+2                         15.624551                        14.767863   
+3                         16.412508                        16.790407   
+4                         15.480475                        15.572130   
+5                         15.875811                        15.114497   
+6                         15.487894                        16.356379   
+7                         14.587377                        15.898104   
+8                        101.515740                        51.245027   
+9                         12.860588                        14.962688   
+10                        13.160616                        13.498074   
+11                        35.346149                        38.663316   
+12                        15.895104                        16.681666   
+13                        14.931892                        14.549162   
+14                        22.706888                        29.677030   
+15                        23.849539                        23.345241   
+16                        16.886072                        17.590844   
+17                        17.578372                        14.543564   
+18                        29.930826                        20.766581   
+19                        13.774861                        14.250595   
+20                        14.852894                        14.868731   
+21                        15.205070                        15.531390   
+22                        16.859369                        17.694832   
+23                        16.283311                        16.120132   
+24                        33.249554                        29.537009   
+25                        12.860588                        12.867346   
+26                       204.959048                       165.613403   
+27                        27.526332                        36.923795   
+28                        45.652372                        48.640941   
+29                        25.661246                        26.386290   
+30                        27.379855                        28.781582   
+31                        16.786531                        19.560695   
+32                       100.119766                        87.880881   
+33                        15.943256                        15.477496   
+34                        15.922704                        15.242458   
+35                       199.535207                       128.471785   
+36                        15.309191                        14.256977   
+37                        17.314957                        16.968987   
+38                        15.914684                        16.237754   
+39                        13.861443                        13.092773   
+40                        17.459210                        15.869594   
+41                        18.879997                        16.952176   
+42                        18.122229                        17.236533   
+43                        15.422923                        14.676107   
+44                        18.980147                        16.891161   
+45                        17.187873                        17.315662   
+46                        18.106243                        17.919371   
+47                        17.238954                        16.414579   
+48                        17.642187                        16.349512   
+49                        35.108865                        29.788289   
+50                        15.782723                        14.351281   
+51                        16.234079                        17.609139   
+52                        14.751623                        14.208698   
+53                        37.606010                        37.043510   
+54                        36.864248                        27.175494   
+55                        18.773681                        17.181383   
+56                        19.810334                        23.052355   
+57                        17.695603                        16.541524   
+58                        21.122920                        21.374822   
+59                        15.612023                        15.359413   
+                                ...                              ...   
+
+    Tumour.GSM787536_BV1.AVG_Signal  Normal.GSM706244.AVG_Signal  \
+0                         14.025535                    15.646851   
+1                         16.361538                    20.465264   
+2                         15.215436                    15.035168   
+3                         16.326878                    16.231235   
+4                         14.607175                    14.073833   
+5                         15.945966                    22.208408   
+6                         15.027594                    21.486061   
+7                         15.016056                    33.177515   
+8                         37.962094                    67.315626   
+9                         13.097328                    15.817127   
+10                        14.126450                    14.980352   
+11                        20.974604                    29.106346   
+12                        16.056780                    17.307621   
+13                        15.191261                    15.606694   
+14                        26.048125                    29.592797   
+15                        21.169278                    29.569020   
+16                        17.062954                    14.771950   
+17                        14.751623                    14.931282   
+18                        32.663059                    26.291708   
+19                        14.816129                    20.890137   
+20                        14.352926                    14.671669   
+21                        14.096915                    14.688301   
+22                        17.345130                    18.006037   
+23                        15.961645                    17.411161   
+24                        31.853378                    23.434655   
+25                        14.316850                    15.026154   
+26                       301.188310                   225.538011   
+27                        29.734539                    56.476652   
+28                        42.228349                    74.036964   
+29                        23.531492                    26.059205   
+30                        34.847834                    40.906986   
+31                        15.177268                    16.288024   
+32                        96.574722                    36.841646   
+33                        15.027719                    15.327583   
+34                        14.561499                    13.567025   
+35                        99.804900                   106.876545   
+36                        14.941354                    15.459469   
+37                        17.581167                    16.322066   
+38                        16.049363                    13.727240   
+39                        18.720517                    14.416322   
+40                        16.290085                    14.587377   
+41                        16.067735                    18.837959   
+42                        16.887863                    24.578609   
+43                        13.450269                    23.166911   
+44                        16.648300                    34.246076   
+45                        18.255174                    16.380722   
+46                        15.738268                    35.176226   
+47                        16.467032                    20.093286   
+48                        16.037047                    16.806566   
+49                        31.967707                    34.221391   
+50                        15.238901                    17.660622   
+51                        15.582186                    23.583083   
+52                        17.778489                    14.474010   
+53                        50.342209                    34.808567   
+54                        39.434926                    47.094509   
+55                        17.122215                    12.464180   
+56                        19.507811                    17.903224   
+57                        16.541570                    16.068929   
+58                        24.944977                    14.282887   
+59                        15.692797                    18.749806   
+                                ...                          ...   
+
+    Normal.GSM706245.AVG_Signal  Normal.GSM706246.AVG_Signal      
+0                     14.339899                    13.448979 ...  
+1                     16.703669                    17.307497 ...  
+2                     16.640743                    17.312721 ...  
+3                     15.903590                    14.788067 ...  
+4                     15.290354                    16.365694 ...  
+5                     19.501223                    17.660819 ...  
+6                     19.431742                    17.173029 ...  
+7                     34.297119                    35.288658 ...  
+8                     60.506990                    59.065466 ...  
+9                     17.343922                    16.149473 ...  
+10                    15.527585                    18.307453 ...  
+11                    27.076176                    28.796190 ...  
+12                    15.057942                    13.786598 ...  
+13                    16.274819                    15.960870 ...  
+14                    21.397020                    19.871094 ...  
+15                    28.812771                    29.561722 ...  
+16                    13.392270                    15.235706 ...  
+17                    17.512634                    14.068992 ...  
+18                    27.059019                    27.137539 ...  
+19                    16.832293                    16.398245 ...  
+20                    15.818840                    14.185667 ...  
+21                    19.415065                    13.684587 ...  
+22                    16.687670                    15.076183 ...  
+23                    17.642390                    16.035677 ...  
+24                    20.714193                    20.980719 ...  
+25                    13.409986                    15.914722 ...  
+26                   216.787415                   216.141541 ...  
+27                    55.946366                    54.937757 ...  
+28                    71.819626                    71.531937 ...  
+29                    28.114364                    29.490198 ...  
+30                    37.406430                    40.971481 ...  
+31                    18.740280                    17.395145 ...  
+32                    41.566409                    39.501845 ...  
+33                    15.943256                    16.316239 ...  
+34                    15.914449                    15.307336 ...  
+35                   106.825621                   109.345748 ...  
+36                    16.284259                    16.341303 ...  
+37                    15.028855                    15.420091 ...  
+38                    13.619400                    13.739721 ...  
+39                    15.701053                    17.977816 ...  
+40                    15.265372                    15.132101 ...  
+41                    17.411925                    19.923364 ...  
+42                    24.935940                    17.273095 ...  
+43                    24.943987                    25.308229 ...  
+44                    29.504216                    34.584173 ...  
+45                    15.215102                    16.696804 ...  
+46                    35.108865                    40.593252 ...  
+47                    21.015277                    20.049303 ...  
+48                    15.439078                    16.079090 ...  
+49                    34.709484                    33.382521 ...  
+50                    23.127122                    16.689181 ...  
+51                    20.730383                    18.562432 ...  
+52                    12.929443                    14.517003 ...  
+53                    31.285548                    44.143462 ...  
+54                    38.564693                    38.262892 ...  
+55                    13.510971                    13.438554 ...  
+56                    17.578853                    18.758650 ...  
+57                    15.463939                    16.399236 ...  
+58                    13.778901                    15.042051 ...  
+59                    14.913081                    15.239502 ...  
+                            ...                          ...      
+
+[25158 rows x 21 columns]> with block values unsupported operand type(s) for /: 'float' and 'instancemethod'
+2014-04-25 18:47:10,574 ERROR base 6920 -1272210624 Internal Server Error: /calculation-parameters/doc1/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 28, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 72, in form_valid
+    df = df.div(a, axis='index')
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/ops.py", line 793, in f
+    return self._combine_const(other, na_op)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 2844, in _combine_const
+    new_data = self._data.eval(func=func, other=other, raise_on_error=raise_on_error)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 2466, in eval
+    return self.apply('eval', **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 2446, in apply
+    applied = getattr(blk, f)(**kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 1058, in eval
+    result = handle_error()
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 1042, in handle_error
+    % (repr(other), str(detail)))
+TypeError: Could not operate <bound method DataFrame.count of       SYMBOL  Tumour.GSM787521_BV0.AVG_Signal  \
+0        7A5                        13.998615   
+1       A1BG                        15.829421   
+2       A1CF                        14.411763   
+3      A26A1                        15.926794   
+4      A26B1                        14.825506   
+5     A26C1B                        16.273485   
+6      A26C3                        14.929556   
+7      A2BP1                        14.850488   
+8        A2M                       371.609217   
+9      A2ML1                        13.256129   
+10   A3GALT2                        14.401504   
+11    A4GALT                        40.315500   
+12     A4GNT                        14.666267   
+13      AAA1                        14.907617   
+14      AAAS                        20.430731   
+15      AACS                        21.826972   
+16     AACSL                        16.575975   
+17     AADAC                        16.017942   
+18   AADACL1                        30.377066   
+19   AADACL2                        17.120751   
+20   AADACL3                        14.572217   
+21   AADACL4                        15.515677   
+22     AADAT                        16.166193   
+23      AAK1                        18.499045   
+24      AAMP                        27.721759   
+25     AANAT                        13.139711   
+26      AARS                       223.144303   
+27     AARS2                        24.078248   
+28    AARSD1                        29.626973   
+29     AASDH                        26.563510   
+30  AASDHPPT                        43.706388   
+31      AASS                        21.150050   
+32      AATF                        52.294268   
+33      AATK                        14.331937   
+34      ABAT                        16.196648   
+35     ABCA1                       264.424546   
+36    ABCA10                        18.906065   
+37    ABCA11                        17.658379   
+38    ABCA12                        15.604376   
+39    ABCA13                        14.255505   
+40     ABCA2                        17.763033   
+41     ABCA3                        18.185952   
+42     ABCA4                        16.859581   
+43     ABCA5                        17.725396   
+44     ABCA6                        78.223921   
+45     ABCA7                        15.954873   
+46     ABCA8                        45.361533   
+47     ABCA9                        31.348758   
+48     ABCB1                        18.788524   
+49    ABCB10                        32.759553   
+50    ABCB11                        14.564382   
+51     ABCB4                        16.731288   
+52     ABCB5                        14.703637   
+53     ABCB6                        32.948376   
+54     ABCB7                        44.178821   
+55     ABCB8                        19.176742   
+56     ABCB9                        18.294920   
+57     ABCC1                        17.527176   
+58    ABCC10                        17.505747   
+59    ABCC11                        15.104824   
+         ...                              ...   
+
+    Tumour.GSM787522_BV0.AVG_Signal  Tumour.GSM787523_BV1.AVG_Signal  \
+0                         14.491797                        15.623008   
+1                         16.499863                        15.688862   
+2                         15.258917                        15.671890   
+3                         15.292226                        16.254044   
+4                         15.665653                        14.816166   
+5                         16.129417                        15.357620   
+6                         15.275066                        14.702277   
+7                         14.599458                        14.899935   
+8                       1069.986253                       110.375236   
+9                         13.521818                        13.736731   
+10                        14.941322                        13.821777   
+11                        36.779736                        17.908262   
+12                        14.584878                        16.020649   
+13                        15.097569                        14.558017   
+14                        19.083354                        19.841920   
+15                        20.844936                        20.189013   
+16                        16.257670                        15.904574   
+17                        14.472135                        16.247278   
+18                        25.701782                        34.875844   
+19                        15.257144                        15.345633   
+20                        14.751639                        12.811452   
+21                        13.725729                        15.546740   
+22                        17.335609                        17.845927   
+23                        18.406997                        18.928373   
+24                        27.524981                        23.891261   
+25                        13.904178                        11.807924   
+26                       397.308689                       332.950576   
+27                        25.725691                        29.206689   
+28                        34.707162                        32.478304   
+29                        24.787172                        25.095936   
+30                        36.743986                        37.736762   
+31                        19.897487                        20.067043   
+32                        73.174814                        60.891459   
+33                        15.017970                        14.990187   
+34                        18.175394                        16.231679   
+35                       196.720908                       101.014599   
+36                        16.659311                        14.776894   
+37                        18.343181                        17.493238   
+38                        16.072876                        14.560924   
+39                        15.605391                        15.860534   
+40                        18.044130                        18.105537   
+41                        24.433233                        16.672262   
+42                        17.584144                        17.281071   
+43                        14.024526                        15.595438   
+44                        18.138417                        16.720489   
+45                        16.675145                        16.142977   
+46                        21.187605                        15.806709   
+47                        17.156737                        16.418954   
+48                        17.736842                        15.884998   
+49                        57.275444                        27.431087   
+50                        15.547772                        14.083128   
+51                        17.102854                        17.017061   
+52                        12.752270                        13.898907   
+53                        37.220217                        36.645364   
+54                        47.528094                        50.988722   
+55                        15.080532                        17.424069   
+56                        20.806308                        18.277549   
+57                        16.639138                        17.119761   
+58                        17.517226                        18.751940   
+59                        15.914003                        15.806480   
+                                ...                              ...   
+
+    Tumour.GSM787524_BV1.AVG_Signal  Tumour.GSM787525_BV1.AVG_Signal  \
+0                         14.712618                        14.547441   
+1                         14.924951                        15.049403   
+2                         15.207003                        15.956247   
+3                         15.377296                        15.608675   
+4                         16.303730                        15.436909   
+5                         15.917554                        16.093163   
+6                         16.138628                        14.672594   
+7                         15.320901                        20.277496   
+8                        291.355073                       368.021989   
+9                         13.894298                        12.987613   
+10                        13.774837                        15.217171   
+11                        43.256784                        36.469021   
+12                        14.298156                        15.330150   
+13                        15.933517                        15.688862   
+14                        20.772298                        18.992319   
+15                        19.214149                        23.781876   
+16                        16.530619                        14.418957   
+17                        15.899319                        15.827509   
+18                        53.017366                        28.524794   
+19                        15.720234                        15.699271   
+20                        13.462978                        13.389286   
+21                        14.678594                        15.077082   
+22                        17.430159                        16.770677   
+23                        19.517251                        18.844126   
+24                        28.462341                        28.489185   
+25                        12.499837                        13.096030   
+26                       493.539642                       218.322791   
+27                        25.187901                        24.152586   
+28                        46.041509                        42.351209   
+29                        29.600867                        25.398899   
+30                        38.070325                        51.989566   
+31                        18.346540                        18.508053   
+32                       128.718479                        48.405425   
+33                        14.558017                        14.254741   
+34                        15.791646                        14.876817   
+35                       382.718778                       233.291543   
+36                        16.880558                        16.436150   
+37                        17.128622                        17.523499   
+38                        14.933049                        14.812136   
+39                        14.289945                        13.999862   
+40                        15.441880                        17.374736   
+41                        18.194647                        18.192974   
+42                        16.826973                        17.430892   
+43                        14.012514                        16.836189   
+44                        47.735092                        24.411312   
+45                        16.226871                        16.564333   
+46                        22.738813                        23.127764   
+47                        19.841920                        18.084961   
+48                        17.612525                        16.832465   
+49                        39.186676                        36.046831   
+50                        15.201215                        15.591807   
+51                        16.061093                        15.687972   
+52                        12.542684                        15.453109   
+53                        43.458425                        48.859322   
+54                        50.294538                        41.565818   
+55                        17.925424                        17.825889   
+56                        20.052848                        18.942854   
+57                        17.595514                        16.765829   
+58                        18.045543                        17.772367   
+59                        15.940892                        16.246495   
+                                ...                              ...   
+
+    Tumour.GSM787526_BV0.AVG_Signal  Tumour.GSM787527_BV0.AVG_Signal  \
+0                         14.584842                        13.209989   
+1                         15.752272                        15.394672   
+2                         15.696875                        14.862902   
+3                         16.137555                        16.481528   
+4                         15.209506                        14.437618   
+5                         16.187241                        15.469515   
+6                         15.528684                        15.301726   
+7                         14.556835                        14.400753   
+8                        173.479829                       398.246678   
+9                         14.347884                        14.836442   
+10                        13.802935                        14.908885   
+11                        21.425868                        39.683981   
+12                        14.825819                        14.668039   
+13                        15.220065                        14.889641   
+14                        23.060118                        18.553822   
+15                        27.147151                        26.925897   
+16                        15.974017                        16.324498   
+17                        16.343593                        18.139069   
+18                        25.368827                        23.177080   
+19                        16.166484                        18.788340   
+20                        12.942465                        13.694255   
+21                        16.197731                        16.197943   
+22                        17.585464                        16.550339   
+23                        20.233271                        19.010233   
+24                        29.316227                        26.898204   
+25                        12.639210                        12.240795   
+26                       278.774742                       246.679390   
+27                        34.735803                        25.414467   
+28                        47.143809                        35.176226   
+29                        37.060294                        24.692793   
+30                        47.006181                        34.251411   
+31                        16.623619                        19.846087   
+32                        68.479406                        50.083511   
+33                        15.685628                        15.454965   
+34                        17.419889                        15.043724   
+35                       268.718138                       203.232944   
+36                        15.995681                        17.304675   
+37                        17.570200                        16.996094   
+38                        14.360763                        16.045087   
+39                        14.339881                        18.815492   
+40                        19.063250                        18.518022   
+41                        49.807397                        18.803438   
+42                        22.575724                        17.602504   
+43                        14.875434                        15.776066   
+44                        21.911825                        22.303613   
+45                        15.661756                        16.168635   
+46                        18.302384                        19.088838   
+47                        18.453974                        17.782363   
+48                        17.107135                        19.387784   
+49                        53.183627                        30.793159   
+50                        15.471288                        15.922704   
+51                        14.250595                        16.689125   
+52                        10.991466                        17.009723   
+53                        46.067696                        45.487496   
+54                        40.005094                        35.727249   
+55                        16.597897                        18.129601   
+56                        21.839686                        17.623892   
+57                        17.032754                        17.626337   
+58                        18.046071                        17.969221   
+59                        16.295321                        15.852588   
+                                ...                              ...   
+
+    Tumour.GSM787528_BV0.AVG_Signal  Tumour.GSM787529_BV0.AVG_Signal  \
+0                         15.889357                        15.764077   
+1                         15.250913                        15.743939   
+2                         14.870469                        15.366032   
+3                         16.167142                        16.140128   
+4                         13.566782                        16.580562   
+5                         22.161680                        15.778817   
+6                         17.292416                        15.066536   
+7                         14.939200                        15.367398   
+8                        442.149490                       692.069809   
+9                         13.634043                        14.326374   
+10                        14.362231                        13.722455   
+11                        23.583083                        52.518244   
+12                        14.513051                        14.439061   
+13                        15.397525                        15.114487   
+14                        20.730383                        20.485530   
+15                        51.204548                        25.482766   
+16                        16.519979                        15.385732   
+17                        12.750396                        16.899924   
+18                        21.438108                        27.184603   
+19                        14.919297                        15.968138   
+20                        14.899354                        15.310629   
+21                        12.327996                        14.845801   
+22                        17.069635                        16.898124   
+23                        17.692326                        17.945826   
+24                        35.706759                        27.993105   
+25                        15.149216                        13.423169   
+26                       134.242404                       252.264402   
+27                        27.158322                        24.657276   
+28                        46.087611                        39.834042   
+29                        32.409852                        25.368379   
+30                        43.814867                        36.469021   
+31                        21.670483                        20.310856   
+32                        43.765488                        47.898646   
+33                        15.939631                        14.926114   
+34                        15.431500                        15.806709   
+35                       218.891731                       286.764547   
+36                        17.336827                        18.973310   
+37                        17.539237                        16.515132   
+38                        15.404240                        14.876946   
+39                        14.568479                        12.813575   
+40                        18.451026                        18.280446   
+41                        22.408534                        20.499303   
+42                        17.519422                        17.687353   
+43                        15.991781                        17.045350   
+44                        27.016538                        77.710900   
+45                        15.763501                        16.617484   
+46                        23.247339                        46.555997   
+47                        17.741013                        21.518755   
+48                        16.298715                        19.571066   
+49                        38.979972                        40.193262   
+50                        16.677020                        15.502790   
+51                        14.455719                        17.065125   
+52                        14.687580                        13.881414   
+53                        90.080593                        39.787825   
+54                        52.288627                        52.315698   
+55                        17.949698                        16.901845   
+56                        19.627970                        18.252588   
+57                        15.735897                        16.400451   
+58                        17.927595                        18.585269   
+59                        16.598222                        16.154280   
+                                ...                              ...   
+
+    Tumour.GSM787530_BV1.AVG_Signal  Tumour.GSM787531_BV0.AVG_Signal  \
+0                         13.996870                        13.002974   
+1                         15.424172                        15.564084   
+2                         15.215038                        14.414609   
+3                         16.494593                        15.899010   
+4                         16.499070                        15.286893   
+5                         15.757166                        16.126876   
+6                         15.631354                        15.298509   
+7                         14.762770                        14.518766   
+8                        261.596173                       396.215778   
+9                         14.280845                        14.345449   
+10                        14.335934                        14.875434   
+11                        27.768634                        37.245894   
+12                        14.262504                        12.959179   
+13                        14.924982                        15.279940   
+14                        21.059391                        19.777396   
+15                        18.661811                        25.625362   
+16                        16.383380                        16.296607   
+17                        15.805483                        19.132107   
+18                        19.857748                        26.145629   
+19                        14.464388                        22.266962   
+20                        14.061471                        14.239116   
+21                        14.884676                        13.724870   
+22                        16.882740                        18.574919   
+23                        18.867144                        18.904068   
+24                        27.840173                        28.962227   
+25                        14.239407                        14.843335   
+26                       303.775802                       216.999928   
+27                        31.604897                        27.147151   
+28                        47.338089                        32.233892   
+29                        20.572340                        29.057870   
+30                        41.085129                        37.243731   
+31                        20.289676                        21.735743   
+32                        66.439492                        67.714391   
+33                        16.002623                        15.396537   
+34                        15.642592                        15.544933   
+35                       152.835885                       331.368243   
+36                        17.051003                        18.756100   
+37                        18.593804                        17.542804   
+38                        16.113615                        14.767863   
+39                        22.363089                        17.449734   
+40                        15.220065                        15.873580   
+41                        14.338182                        17.097303   
+42                        16.727122                        16.944007   
+43                        16.514712                        15.905528   
+44                        15.972280                        25.484703   
+45                        15.589183                        15.583931   
+46                        17.296740                        20.913274   
+47                        16.596359                        18.843445   
+48                        17.481990                        17.298971   
+49                        28.127157                        38.196015   
+50                        14.150568                        15.173990   
+51                        17.306866                        16.650011   
+52                        13.680062                        13.722455   
+53                        35.906571                        40.619350   
+54                        49.747206                        55.961103   
+55                        17.887150                        17.455521   
+56                        18.676238                        19.216625   
+57                        16.183608                        16.905545   
+58                        20.024648                        17.848259   
+59                        15.728174                        15.198521   
+                                ...                              ...   
+
+    Tumour.GSM787532_BV0.AVG_Signal  Tumour.GSM787533_BV1.AVG_Signal  \
+0                         14.067309                        13.946528   
+1                         16.293528                        15.806760   
+2                         14.224553                        15.288581   
+3                         16.455258                        16.303071   
+4                         13.363528                        14.689598   
+5                         14.876918                        15.180750   
+6                         14.477556                        15.106011   
+7                         14.056855                        18.475440   
+8                        698.428814                        64.795441   
+9                         15.427426                        14.333637   
+10                        15.156610                        13.641188   
+11                        46.688010                        20.765081   
+12                        15.216967                        16.025550   
+13                        15.264193                        15.131155   
+14                        21.586477                        23.899804   
+15                        24.383051                        20.022494   
+16                        16.222241                        16.983978   
+17                        13.719922                        16.236195   
+18                        27.621188                        31.532138   
+19                        14.258665                        14.289913   
+20                        14.275963                        15.016102   
+21                        12.830432                        13.460080   
+22                        17.402559                        16.322343   
+23                        19.139870                        15.868725   
+24                        25.725691                        31.884037   
+25                        13.734917                        13.384090   
+26                      2483.222673                       361.902079   
+27                        28.061146                        31.526560   
+28                        47.881067                        49.807397   
+29                        25.830519                        23.845965   
+30                        30.622174                        34.843241   
+31                        21.007455                        17.243694   
+32                        66.759539                        79.177732   
+33                        15.693998                        15.440084   
+34                        16.026546                        15.546301   
+35                       164.282899                       169.377213   
+36                        16.479751                        15.348049   
+37                        17.616695                        17.178902   
+38                        15.447714                        15.527053   
+39                        13.356092                        16.064921   
+40                        19.764075                        18.274060   
+41                        22.309374                        18.168121   
+42                        17.042709                        18.046563   
+43                        14.433915                        16.476205   
+44                        14.216123                        18.936251   
+45                        16.053101                        18.441692   
+46                        18.966283                        18.942854   
+47                        16.304592                        17.040571   
+48                        16.421677                        18.085636   
+49                        36.613670                        26.722680   
+50                        14.375409                        14.489200   
+51                        16.648300                        17.146446   
+52                        16.679141                        14.531593   
+53                        52.492664                        48.487333   
+54                        58.842649                        37.485223   
+55                        17.615284                        18.874508   
+56                        26.482967                        18.093181   
+57                        17.874853                        17.009723   
+58                        17.793250                        27.817392   
+59                        15.473089                        15.428461   
+                                ...                              ...   
+
+    Tumour.GSM787534_BV1.AVG_Signal  Tumour.GSM787535_BV1.AVG_Signal  \
+0                         14.355843                        14.573356   
+1                         16.090021                        16.120186   
+2                         15.624551                        14.767863   
+3                         16.412508                        16.790407   
+4                         15.480475                        15.572130   
+5                         15.875811                        15.114497   
+6                         15.487894                        16.356379   
+7                         14.587377                        15.898104   
+8                        101.515740                        51.245027   
+9                         12.860588                        14.962688   
+10                        13.160616                        13.498074   
+11                        35.346149                        38.663316   
+12                        15.895104                        16.681666   
+13                        14.931892                        14.549162   
+14                        22.706888                        29.677030   
+15                        23.849539                        23.345241   
+16                        16.886072                        17.590844   
+17                        17.578372                        14.543564   
+18                        29.930826                        20.766581   
+19                        13.774861                        14.250595   
+20                        14.852894                        14.868731   
+21                        15.205070                        15.531390   
+22                        16.859369                        17.694832   
+23                        16.283311                        16.120132   
+24                        33.249554                        29.537009   
+25                        12.860588                        12.867346   
+26                       204.959048                       165.613403   
+27                        27.526332                        36.923795   
+28                        45.652372                        48.640941   
+29                        25.661246                        26.386290   
+30                        27.379855                        28.781582   
+31                        16.786531                        19.560695   
+32                       100.119766                        87.880881   
+33                        15.943256                        15.477496   
+34                        15.922704                        15.242458   
+35                       199.535207                       128.471785   
+36                        15.309191                        14.256977   
+37                        17.314957                        16.968987   
+38                        15.914684                        16.237754   
+39                        13.861443                        13.092773   
+40                        17.459210                        15.869594   
+41                        18.879997                        16.952176   
+42                        18.122229                        17.236533   
+43                        15.422923                        14.676107   
+44                        18.980147                        16.891161   
+45                        17.187873                        17.315662   
+46                        18.106243                        17.919371   
+47                        17.238954                        16.414579   
+48                        17.642187                        16.349512   
+49                        35.108865                        29.788289   
+50                        15.782723                        14.351281   
+51                        16.234079                        17.609139   
+52                        14.751623                        14.208698   
+53                        37.606010                        37.043510   
+54                        36.864248                        27.175494   
+55                        18.773681                        17.181383   
+56                        19.810334                        23.052355   
+57                        17.695603                        16.541524   
+58                        21.122920                        21.374822   
+59                        15.612023                        15.359413   
+                                ...                              ...   
+
+    Tumour.GSM787536_BV1.AVG_Signal  Normal.GSM706244.AVG_Signal  \
+0                         14.025535                    15.646851   
+1                         16.361538                    20.465264   
+2                         15.215436                    15.035168   
+3                         16.326878                    16.231235   
+4                         14.607175                    14.073833   
+5                         15.945966                    22.208408   
+6                         15.027594                    21.486061   
+7                         15.016056                    33.177515   
+8                         37.962094                    67.315626   
+9                         13.097328                    15.817127   
+10                        14.126450                    14.980352   
+11                        20.974604                    29.106346   
+12                        16.056780                    17.307621   
+13                        15.191261                    15.606694   
+14                        26.048125                    29.592797   
+15                        21.169278                    29.569020   
+16                        17.062954                    14.771950   
+17                        14.751623                    14.931282   
+18                        32.663059                    26.291708   
+19                        14.816129                    20.890137   
+20                        14.352926                    14.671669   
+21                        14.096915                    14.688301   
+22                        17.345130                    18.006037   
+23                        15.961645                    17.411161   
+24                        31.853378                    23.434655   
+25                        14.316850                    15.026154   
+26                       301.188310                   225.538011   
+27                        29.734539                    56.476652   
+28                        42.228349                    74.036964   
+29                        23.531492                    26.059205   
+30                        34.847834                    40.906986   
+31                        15.177268                    16.288024   
+32                        96.574722                    36.841646   
+33                        15.027719                    15.327583   
+34                        14.561499                    13.567025   
+35                        99.804900                   106.876545   
+36                        14.941354                    15.459469   
+37                        17.581167                    16.322066   
+38                        16.049363                    13.727240   
+39                        18.720517                    14.416322   
+40                        16.290085                    14.587377   
+41                        16.067735                    18.837959   
+42                        16.887863                    24.578609   
+43                        13.450269                    23.166911   
+44                        16.648300                    34.246076   
+45                        18.255174                    16.380722   
+46                        15.738268                    35.176226   
+47                        16.467032                    20.093286   
+48                        16.037047                    16.806566   
+49                        31.967707                    34.221391   
+50                        15.238901                    17.660622   
+51                        15.582186                    23.583083   
+52                        17.778489                    14.474010   
+53                        50.342209                    34.808567   
+54                        39.434926                    47.094509   
+55                        17.122215                    12.464180   
+56                        19.507811                    17.903224   
+57                        16.541570                    16.068929   
+58                        24.944977                    14.282887   
+59                        15.692797                    18.749806   
+                                ...                          ...   
+
+    Normal.GSM706245.AVG_Signal  Normal.GSM706246.AVG_Signal      
+0                     14.339899                    13.448979 ...  
+1                     16.703669                    17.307497 ...  
+2                     16.640743                    17.312721 ...  
+3                     15.903590                    14.788067 ...  
+4                     15.290354                    16.365694 ...  
+5                     19.501223                    17.660819 ...  
+6                     19.431742                    17.173029 ...  
+7                     34.297119                    35.288658 ...  
+8                     60.506990                    59.065466 ...  
+9                     17.343922                    16.149473 ...  
+10                    15.527585                    18.307453 ...  
+11                    27.076176                    28.796190 ...  
+12                    15.057942                    13.786598 ...  
+13                    16.274819                    15.960870 ...  
+14                    21.397020                    19.871094 ...  
+15                    28.812771                    29.561722 ...  
+16                    13.392270                    15.235706 ...  
+17                    17.512634                    14.068992 ...  
+18                    27.059019                    27.137539 ...  
+19                    16.832293                    16.398245 ...  
+20                    15.818840                    14.185667 ...  
+21                    19.415065                    13.684587 ...  
+22                    16.687670                    15.076183 ...  
+23                    17.642390                    16.035677 ...  
+24                    20.714193                    20.980719 ...  
+25                    13.409986                    15.914722 ...  
+26                   216.787415                   216.141541 ...  
+27                    55.946366                    54.937757 ...  
+28                    71.819626                    71.531937 ...  
+29                    28.114364                    29.490198 ...  
+30                    37.406430                    40.971481 ...  
+31                    18.740280                    17.395145 ...  
+32                    41.566409                    39.501845 ...  
+33                    15.943256                    16.316239 ...  
+34                    15.914449                    15.307336 ...  
+35                   106.825621                   109.345748 ...  
+36                    16.284259                    16.341303 ...  
+37                    15.028855                    15.420091 ...  
+38                    13.619400                    13.739721 ...  
+39                    15.701053                    17.977816 ...  
+40                    15.265372                    15.132101 ...  
+41                    17.411925                    19.923364 ...  
+42                    24.935940                    17.273095 ...  
+43                    24.943987                    25.308229 ...  
+44                    29.504216                    34.584173 ...  
+45                    15.215102                    16.696804 ...  
+46                    35.108865                    40.593252 ...  
+47                    21.015277                    20.049303 ...  
+48                    15.439078                    16.079090 ...  
+49                    34.709484                    33.382521 ...  
+50                    23.127122                    16.689181 ...  
+51                    20.730383                    18.562432 ...  
+52                    12.929443                    14.517003 ...  
+53                    31.285548                    44.143462 ...  
+54                    38.564693                    38.262892 ...  
+55                    13.510971                    13.438554 ...  
+56                    17.578853                    18.758650 ...  
+57                    15.463939                    16.399236 ...  
+58                    13.778901                    15.042051 ...  
+59                    14.913081                    15.239502 ...  
+                            ...                          ...      
+
+[25158 rows x 21 columns]> with block values unsupported operand type(s) for /: 'float' and 'instancemethod'
+2014-04-25 18:47:58,505 ERROR base 6933 -1272878272 Internal Server Error: /calculation-parameters/doc1/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 28, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 72, in form_valid
+    df = df.div(a, axis='index')
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/ops.py", line 761, in f
+    return self._combine_series(other, na_op, fill_value, axis, level)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 2796, in _combine_series
+    return self._combine_match_index(other, func, level=level, fill_value=fill_value)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 2826, in _combine_match_index
+    return self._constructor(func(left.values.T, right.values).T,
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/ops.py", line 737, in na_op
+    mask = notnull(xrav) & notnull(yrav)
+ValueError: operands could not be broadcast together with shapes (528759,) (25179,) 
+2014-04-25 18:48:52,676 ERROR base 6951 -1272366272 Internal Server Error: /calculation-parameters/doc1/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 28, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 71, in form_valid
+    a = df[0].count()
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 1658, in __getitem__
+    return self._getitem_column(key)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 1665, in _getitem_column
+    return self._get_item_cache(key)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/generic.py", line 1044, in _get_item_cache
+    values = self._data.get(item)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 2956, in get
+    _, block = self._find_block(item)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 3268, in _find_block
+    self._check_have(item)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 3275, in _check_have
+    raise KeyError('no item named %s' % com.pprint_thing(item))
+KeyError: u'no item named 0'
+2014-04-25 18:55:32,080 ERROR base 6993 -1272353984 Internal Server Error: /calculation-parameters/doc1/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 28, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 72, in form_valid
+    df = df.div(5, axis='index')
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/ops.py", line 793, in f
+    return self._combine_const(other, na_op)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 2844, in _combine_const
+    new_data = self._data.eval(func=func, other=other, raise_on_error=raise_on_error)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 2466, in eval
+    return self.apply('eval', **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 2446, in apply
+    applied = getattr(blk, f)(**kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 1058, in eval
+    result = handle_error()
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 1042, in handle_error
+    % (repr(other), str(detail)))
+TypeError: Could not operate 5 with block values unsupported operand type(s) for /: 'str' and 'int'
+2014-04-25 18:57:33,011 ERROR base 7034 -1272730816 Internal Server Error: /calculation-parameters/doc1/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 28, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 73, in form_valid
+    df = df.div(5, axis='index')
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/ops.py", line 793, in f
+    return self._combine_const(other, na_op)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 2844, in _combine_const
+    new_data = self._data.eval(func=func, other=other, raise_on_error=raise_on_error)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 2466, in eval
+    return self.apply('eval', **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 2446, in apply
+    applied = getattr(blk, f)(**kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 1058, in eval
+    result = handle_error()
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 1042, in handle_error
+    % (repr(other), str(detail)))
+TypeError: Could not operate 5 with block values unsupported operand type(s) for /: 'str' and 'int'

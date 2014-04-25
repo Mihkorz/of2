@@ -132,7 +132,7 @@ class CreateDocument(CreateView):
         filename = settings.MEDIA_ROOT+"/"+document.document.name
         df = read_csv(filename, sep='\t')
         tumour_cols = [col for col in df.columns if 'Tumour' in col]
-        norm_cols = [col for col in df.columns if 'Normal' in col]
+        norm_cols = [col for col in df.columns if 'Norm' in col]
         document.sample_num = len(tumour_cols)
         document.norm_num = len(norm_cols)
         document.row_num = len(df)

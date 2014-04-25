@@ -73,7 +73,7 @@ class Document(models.Model):
     doc_type = models.IntegerField(verbose_name="Document type", choices=DOC_TYPES, default=DOCUMENT_INPUT)
     structure = JSONField(verbose_name = "Document structure")
     description = models.TextField(verbose_name="Description", blank=True)
-    parameters = models.TextField(verbose_name="Calculation parameters", blank=True)
+    parameters = JSONField(verbose_name="Calculation parameters", blank=True)
     sample_num = models.IntegerField(verbose_name="Sample ammount", blank=True, default=0)
     norm_num = models.IntegerField(verbose_name="Norm ammount", blank=True, default=0)
     row_num = models.IntegerField(verbose_name="Number of rows", blank=True, default=0)

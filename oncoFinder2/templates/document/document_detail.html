@@ -16,9 +16,9 @@
   <span class="text-muted">Created at: {{document.created_at}}<br/>
   By: {{document.created_by}}</span>
   
-  <button class="btn btn-default btn-sm pull-right" >
+  <a class="btn btn-default btn-sm pull-right" href="{% url 'core_set_calculation_parameters' document.id %}">
                <span class="glyphicon glyphicon-play"></span> &nbsp;<b>Start calculation</b>
-           </button>
+           </a>
            
   <hr/>
   <div class="wrapper1">
