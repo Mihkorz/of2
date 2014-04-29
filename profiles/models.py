@@ -61,6 +61,9 @@ class Project(models.Model):
 def get_document_upload_path(instance, file_name):
     return os.path.join('users', str(instance.created_by.username), instance.project.name ,'input', file_name)
 
+def get_process_document_upload_path(instance, file_name):
+    return os.path.join('users', str(instance.created_by.username), instance.project.name ,'process', file_name)
+
 DOCUMENT_INPUT = 1
 DOCUMENT_OUTPUT = 2
 DOC_TYPES = (
@@ -91,3 +94,12 @@ class Document(models.Model):
     
     def get_filename(self):
         return os.path.basename(self.document.name)
+    
+class ProcessDocument(models.Model):
+    document = models.FileField(upload_to=get_process_document_upload_path)
+    parameters = JSONField(verbose_name="Calculation parameters", blank=True)
+    input_doc = models.ForeignKey(Document, related_name="input_doc")
+    output_doc = models.ForeignKey(Document, related_name="output_doc")
+    created_by = models.ForeignKey(User, blank=True, null=True, related_name='created')
+    created_at = models.DateTimeField(auto_now=True)
+    

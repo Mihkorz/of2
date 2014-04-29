@@ -1,1 +1,13 @@
-doc create
+{% extends "base_profiles.html" %}
+
+{% block title %}Error uploading file | OncoFinder v2.0{% endblock %}
+
+{% block content %}
+<div class="container">
+<div class="alert alert-danger">
+         <h4>Error!</h4>
+	      Error uploading file! <br/><br/>
+	      <a href="JavaScript:history.back(0)">Go back >> </a>
+        </div>
+</div>
+{% endblock %}

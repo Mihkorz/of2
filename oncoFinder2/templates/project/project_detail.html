@@ -92,7 +92,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Upload</button>
+        <button type="submit" class="btn btn-primary" data-loading-text="Uploading..." id="uploadButton">Upload</button>
         </form>
       </div>
     </div>
@@ -101,6 +101,13 @@
 <script>
 $(function(){
 	$("#doc_create_form > input[type=text], textarea").addClass("form-control");
+	$('#uploadButton').click(function () {
+	    var btn = $(this)
+	    btn.button('loading');
+	  
+	    
+
+	  });
 });
 </script>
 {% endblock %}

@@ -38,13 +38,25 @@
           
     </div>
     <div class="panel-footer">
-      <button class="btn btn-default">Start Calculation</button>
+      <button class="btn btn-default" data-loading-text="Calculating..." id="startButton">Start Calculation</button>
+      
+          <img src="/media/images/ajax-loader.gif" id="loader" style="margin: 10px 0 0 0; display:none" class="pull-right" />
+     
     </div>
   </div>
 </div>
 
 <script>
 $(function() {
+	
+	$('#startButton').click(function () {
+	    var btn = $(this)
+	    btn.button('loading');
+	    $("#loader").fadeIn();
+	    
+
+	  });
+	
                //$("#calculation_parameters_form > input[type=number]").addClass("form-control").width("50px");
 });
 </script>
