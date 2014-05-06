@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import os
+
 #from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.detail import DetailView
@@ -12,9 +14,9 @@ from django.conf import settings
 
 from .forms import SettingsUserForm, UserProfileFormSet, CreateProjectForm, \
                    UploadDocumentForm
-from .models import Project, Document
+from .models import Project, Document, ProcessDocument
 
-from pandas import read_csv
+from pandas import read_csv, Series, DataFrame
 
 
 class ProfileIndex(DetailView):
@@ -136,7 +138,45 @@ class CreateDocument(CreateView):
         document.sample_num = len(tumour_cols)
         document.norm_num = len(norm_cols)
         document.row_num = len(df)
-        document.save() 
+        document.save()
+        
+        """ Use PANDAS to preprocess input file(calculate Mean_norm CNR and STD) and save to process folder 
+            Create ProcessDocument instance to store the file in database"""
+            
+        path = os.path.join('users', str(document.project.owner),
+                                            str(document.project),'process', 'new_'+str(document.get_filename()))
+        if not os.path.exists(settings.MEDIA_ROOT+'/'+os.path.join('users', str(document.project.owner),
+                                            str(document.project),'process')):
+            os.mkdir(settings.MEDIA_ROOT+'/'+os.path.join('users', str(document.project.owner),
+                                            str(document.project),'process'))
+        
+        process_doc = ProcessDocument()
+        process_doc.document = path
+        process_doc.input_doc = document
+        process_doc.created_by = self.request.user
+        process_doc.save()
+        
+        new_file = settings.MEDIA_ROOT+"/"+path
+                
+        df = df.set_index('SYMBOL') #create index by SYMBOL column   
+        df = df.groupby(df.index, level=0).mean() #deal with duplicate genes by taking mean value
+        
+        mean_norm = df[[norm for norm in norm_cols]].mean(axis=1)
+        df1 = DataFrame(df[[norm for norm in norm_cols]], index=df.index)
+        
+        df1 = df1.std(axis=1)
+                
+        df['Mean_norm'] = mean_norm
+               
+        df = df.div(df.Mean_norm, axis='index')
+       
+        df['Mean_norm'] = mean_norm
+        df['std'] = df1
+                
+        
+        df.to_csv(new_file, sep='\t', encoding='utf-8')
+    
+         
         return HttpResponseRedirect(self.success_url+project.name)
         
     def form_invalid(self, form):
@@ -154,6 +194,7 @@ class DocumentDetail(DetailView):
         context = super(DocumentDetail, self).get_context_data(**kwargs)
         filename = settings.MEDIA_ROOT+"/"+self.object.document.name 
         df = read_csv(filename, sep='\t')
+        df = df.set_index('SYMBOL')
         
         #tumor_cols = [col for col in df.columns if 'Nor' in col]
         

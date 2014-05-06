@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="container">
-<h2>
+  <h2>
     <span class="glyphicon glyphicon-user"></span>
     <a href="/user/{{document.project.owner}}">{{document.project.owner}}</a> /
      <span class="glyphicon glyphicon-folder-open"></span>&nbsp; 
@@ -13,14 +13,24 @@
      <small><a href="">{{document.get_filename}}</a></small>
      <span class="text-muted">| <small>{{document.get_doc_type_display}}</small></span> 
   </h2>
-  <span class="text-muted">Created at: {{document.created_at}}<br/>
-  By: {{document.created_by}}</span>
+  <span class="text-muted">
+    Created at: {{document.created_at}}<br/>
+    By: {{document.created_by}}<br/>
+    <span>Samples: </span><span>{{document.sample_num}}</span> | 
+    <span>Norms: </span><span>{{document.norm_num}}</span> | 
+    <span>Rows: </span><span>{{document.row_num}}</span>  
+   </span>
   
   <a class="btn btn-default btn-sm pull-right" href="{% url 'core_set_calculation_parameters' document.id %}">
                <span class="glyphicon glyphicon-play"></span> &nbsp;<b>Start calculation</b>
            </a>
            
   <hr/>
+  <div>
+   
+
+  </div>
+  
   <div class="wrapper1">
     <div class="upper_scroll"></div>
   </div>

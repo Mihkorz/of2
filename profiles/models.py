@@ -98,8 +98,8 @@ class Document(models.Model):
 class ProcessDocument(models.Model):
     document = models.FileField(upload_to=get_process_document_upload_path)
     parameters = JSONField(verbose_name="Calculation parameters", blank=True)
-    input_doc = models.ForeignKey(Document, related_name="input_doc")
-    output_doc = models.ForeignKey(Document, related_name="output_doc")
+    input_doc = models.OneToOneField(Document, related_name="input_doc", blank=True, null=True)
+    output_doc = models.ForeignKey(Document, related_name="output_doc", blank=True, null=True)
     created_by = models.ForeignKey(User, blank=True, null=True, related_name='created')
     created_at = models.DateTimeField(auto_now=True)
     
