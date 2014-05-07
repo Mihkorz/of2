@@ -16,7 +16,7 @@ from .forms import SettingsUserForm, UserProfileFormSet, CreateProjectForm, \
                    UploadDocumentForm
 from .models import Project, Document, ProcessDocument
 
-from pandas import read_csv, Series, DataFrame
+from pandas import read_csv, read_excel, DataFrame
 
 
 class ProfileIndex(DetailView):
@@ -144,7 +144,7 @@ class CreateDocument(CreateView):
             Create ProcessDocument instance to store the file in database"""
             
         path = os.path.join('users', str(document.project.owner),
-                                            str(document.project),'process', 'new_'+str(document.get_filename()))
+                                            str(document.project),'process', 'process_'+str(document.get_filename()))
         if not os.path.exists(settings.MEDIA_ROOT+'/'+os.path.join('users', str(document.project.owner),
                                             str(document.project),'process')):
             os.mkdir(settings.MEDIA_ROOT+'/'+os.path.join('users', str(document.project.owner),
@@ -193,11 +193,13 @@ class DocumentDetail(DetailView):
     def get_context_data(self, **kwargs):
         context = super(DocumentDetail, self).get_context_data(**kwargs)
         filename = settings.MEDIA_ROOT+"/"+self.object.document.name 
-        df = read_csv(filename, sep='\t')
-        df = df.set_index('SYMBOL')
+        if self.object.doc_type == 1:
+            df = read_csv(filename, sep='\t')
+            context['test'] = df[:50].to_html()
+        else:
+            df = read_excel(filename, sheetname="PMS")
+            context['test'] = df.to_html()
         
-        #tumor_cols = [col for col in df.columns if 'Nor' in col]
         
-        context['test'] = df[:50].to_html()
         return context  
     

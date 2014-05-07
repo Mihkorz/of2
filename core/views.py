@@ -2,7 +2,7 @@
 import os
 import math
 from datetime import datetime
-from pandas import read_csv, DataFrame
+from pandas import read_csv, DataFrame, ExcelWriter
 
 from django.views.generic.edit import FormView #CreateView , UpdateView
 from django.views.generic.detail import DetailView
@@ -14,8 +14,7 @@ from django.conf import settings
 
 from .forms import  CalculationParametersForm
 from profiles.models import Document, ProcessDocument
-from database.models import Pathway, Gene 
-
+from database.models import Pathway, Gene, Drug
 
 
 class CoreSetCalculationParameters(FormView):
@@ -40,7 +39,15 @@ class CoreSetCalculationParameters(FormView):
         return context
     
     def form_valid(self, form):
+        sigma_num = form.cleaned_data['sigma_num']
+        use_sigma = form.cleaned_data['use_sigma']
+        cnr_low =  form.cleaned_data['cnr_low']
+        cnr_up =  form.cleaned_data['cnr_up']
+        use_cnr = form.cleaned_data['use_cnr'] 
+        
+        
         context = self.get_context_data()
+        
         """ update current Input Document """
         input_document = context['document']
         input_document.calculated_by = self.request.user
@@ -54,41 +61,41 @@ class CoreSetCalculationParameters(FormView):
             os.mkdir(settings.MEDIA_ROOT+'/'+os.path.join('users', str(input_document.project.owner),
                                             str(input_document.project),'output'))
         
-        output_doc = Document()       
-        output_file_name = "OUT_" + str(input_document.get_filename())
-        output_doc.document = os.path.join('users', str(input_document.project.owner),
-                                            str(input_document.project),'output', output_file_name)
+        output_doc = Document()        
         output_doc.doc_type = 2
-        output_doc.parameters = {'sigma_num': form.cleaned_data['sigma_num'],
-                                 'use_sigma': form.cleaned_data['use_sigma'],
-                                 'cnr_low': form.cleaned_data['cnr_low'],
-                                 'cnr_up': form.cleaned_data['cnr_up'],
-                                 'use_cnr': form.cleaned_data['use_cnr'] }
+        output_doc.parameters = {'sigma_num': sigma_num,
+                                 'use_sigma': use_sigma,
+                                 'cnr_low': cnr_low,
+                                 'cnr_up': cnr_up,
+                                 'use_cnr': use_cnr }
         output_doc.project = input_document.project
         output_doc.created_by = self.request.user
         output_doc.created_at = datetime.now()        
         output_doc.save()
-        
+                
         
         """ Calculating PMS and PMS1 """
          
+        def strip(text):
+            try:
+                return text.strip()
+            except AttributeError:
+                return text
+        
         process_doc_df = read_csv(settings.MEDIA_ROOT+"/"+input_document.input_doc.document.name,
-                                  sep='\t')
+                                  sep='\t', index_col='SYMBOL',  converters = {'SYMBOL' : strip})        
         
-        process_doc_df = process_doc_df.set_index('SYMBOL') #create index by SYMBOL column
+        tumour_columns = [col for col in process_doc_df.columns if 'Tumour' in col] #get sample columns
         
-        tumour_columns = [col for col in process_doc_df.columns if 'Tumour' in col] #get 
-        #output_columns = tumour_columns.append('Pathway')
+        pms_list = []
+        pms1_list = []
+        differential_genes = []
         
-        #output_pms_df = DataFrame(columns=output_columns) # dataframe to store PMS table
-        #output_pms1_df = DataFrame(columns=output_columns) # dataframe to store PMS1 table
-        
-        out_list = []
         for pathway in Pathway.objects.all():
             gene_name = []
             gene_arr = []
             for gene in pathway.gene_set.all():
-                gene_name.append(gene.name)
+                gene_name.append(gene.name.strip())
                 gene_arr.append(gene.arr)
             
             gene_data = {'SYMBOL': gene_name,
@@ -99,53 +106,123 @@ class CoreSetCalculationParameters(FormView):
             
             joined_df = gene_df.join(process_doc_df, how='inner')
             
-            out_dict = {}
-            out_dict['Pathway'] = pathway.name
+            pms_dict = {}
+            pms1_dict = {}
             
-            for tumour in tumour_columns: #loop thought samples columns
-                
+            pms_dict['Pathway'] = pms1_dict['Pathway'] = pathway.name.strip()
+            
+            
+            for tumour in tumour_columns: #loop thought samples columns                
                 summ = 0
                 for index, row in joined_df.iterrows():
-                    signum = 2
-                    cnr_up = 1.5
-                    cnr_low = 0.67
-                    if (row[tumour]*row['Mean_norm'] > (row['Mean_norm']+signum*row['std']) or  \
-                        row[tumour]*row['Mean_norm'] < (row['Mean_norm']-signum*row['std'])) and \
+                    if not use_sigma:
+                        sigma_num = 0
+                    if not use_cnr:
+                        cnr_up = cnr_low = 0
+                        
+                    if (row[tumour]*row['Mean_norm'] > (row['Mean_norm']+sigma_num*row['std']) or  \
+                        row[tumour]*row['Mean_norm'] < (row['Mean_norm']-sigma_num*row['std'])) and \
                        (row[tumour]>cnr_up or row[tumour]<cnr_low):
                         
-                        summ+= float(row['ARR'])*math.log(row[tumour]) # calculate PMS'
+                        summ+= float(row['ARR'])*math.log(row[tumour]) # ARR*ln(CNR)
+                        
+                        differential_genes.append(index) # store differential genes in a list
                 
-                out_dict[tumour] = summ
-            out_list.append(out_dict)
+                pms_dict[tumour] = float(pathway.amcf)*summ #PMS
+                pms1_dict[tumour] = summ #PMS1               
+                
+            pms_list.append(pms_dict)
+            pms1_list.append(pms1_dict)        
         
+        output_pms_df = DataFrame(pms_list)
+        output_pms_df = output_pms_df.set_index('Pathway')
+        output_pms1_df = DataFrame(pms1_list)
+        output_pms1_df = output_pms1_df.set_index('Pathway')
         
-        output_pms_df = DataFrame(out_list)
+        """ Calculating Drug Score """
+        
+        ds1_list = []
+        ds2_list = []
+        
+        for drug in Drug.objects.all(): #iterate trough all Drugs
+            ds1_dict = {}
+            ds2_dict = {}
+            ds1_dict['Drug'] = ds2_dict['Drug'] = drug.name.strip()
+            
+            DS1 = 0 # DrugScore 1
+            DS2 = 0 # DrugScore 2
+            
+            for tumour in tumour_columns: #loop thought samples columns
+            
+                for target in drug.target_set.all():
+                    target.name = target.name.strip()
+                    if target.name in differential_genes:
+                        pathways = Pathway.objects.filter(gene__name=target.name)
+                    
+                        for path in pathways:
+                            gene = Gene.objects.get(name = target.name ,pathway__name=path.name)
+                            ARR = float(gene.arr)
+                            CNR = process_doc_df.at[target.name, tumour]
+                            PMS = output_pms_df.at[path.name, tumour]
+                            AMCF = float(path.amcf)
+                            
+                            if drug.tip == 'inhibitor' and path.name!='Mab_targets':
+                                DS1 += PMS
+                                DS2 += AMCF*ARR*math.log10(CNR)
+                            if drug.tip == 'activator' and path.name!='Mab_targets':
+                                DS1 -= PMS
+                                DS2 -= AMCF*ARR*math.log10(CNR)
+                            if drug.tip == 'mab' and path.name!='Mab_targets':
+                                DS1 += PMS
+                                DS2 += AMCF*ARR*math.log10(CNR)
+                            if drug.tip == 'mab' and path.name=='Mab_targets':
+                                DS1 += PMS # WARNING CHANGE to PMS2!!!!
+                            if drug.tip == 'killermab' and path.name=='Mab_targets':
+                                DS1 += PMS # WARNING CHANGE to PMS2
+                                DS2 += math.log10(CNR)
+                            if drug.tip == 'multivalent' and path.name!='Mab_targets':
+                                DS1 += PMS
+                                if target.tip>0:
+                                    DS2 -= AMCF*ARR*math.log10(CNR)
+                                else:
+                                    DS2 += AMCF*ARR*math.log10(CNR)
+                                    
+                ds1_dict[tumour] = DS1
+                ds2_dict[tumour] = DS2
+            
+            ds1_list.append(ds1_dict)
+            ds2_list.append(ds2_dict)
+            
+        output_ds1_df = DataFrame(ds1_list)
+        output_ds1_df = output_ds1_df.set_index('Drug')
+        output_ds2_df = DataFrame(ds2_list)
+        output_ds2_df = output_ds2_df.set_index('Drug')
+                        
                         
                     
-            
-             
         
         
-       
         
-        
+        """ Saving results to Excel file and to database """
         path = os.path.join('users', str(input_document.project.owner),
-                                            str(input_document.project),'process', 'output_'+str(input_document.get_filename()))
-        new_file = settings.MEDIA_ROOT+"/"+path
+                                            str(input_document.project),'output', 'output_'+str(input_document.get_filename()+'.xlsx'))
+        output_file = settings.MEDIA_ROOT+"/"+path
         
-        path1 = os.path.join('users', str(input_document.project.owner),
-                                            str(input_document.project),'process', 'join_'+str(input_document.get_filename()))
-        new_file1 = settings.MEDIA_ROOT+"/"+path1
+        writer = ExcelWriter(output_file, index=False)
+        output_pms_df.to_excel(writer,'PMS')
+        output_pms1_df.to_excel(writer,'PMS1')
+        output_ds1_df.to_excel(writer, 'DS1')
+        output_ds2_df.to_excel(writer, 'DS2')
+        writer.save()
         
-        joined_df.to_csv(new_file1, sep='\t', encoding='utf-8')
+        output_doc.document = path
+        output_doc.save() 
+         
         
         
         
-        output_pms_df.to_csv(new_file, sep='\t', encoding='utf-8')
         
-        
-        
-        return HttpResponseRedirect(reverse('core_calculation', args=(output_doc.id,)))
+        return HttpResponseRedirect(reverse('document_detail', args=(output_doc.id,)))
     
         
     def form_invalid(self, form):
