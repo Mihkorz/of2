@@ -21,7 +21,7 @@ class Profile(models.Model):
         if self.picture:
             return "/media/"+str(self.picture)
         else:
-            return "/media/images/noPicture.jpg"
+            return "/static/images/noPicture.jpg"
     
     class Meta:
         ordering = ('user',)
