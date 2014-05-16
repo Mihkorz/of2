@@ -20,23 +20,85 @@
     <span>Norms: </span><span>{{document.norm_num}}</span> | 
     <span>Rows: </span><span>{{document.row_num}}</span>  
    </span>
-  
-  <a class="btn btn-default btn-sm pull-right" href="{% url 'core_set_calculation_parameters' document.id %}">
-               <span class="glyphicon glyphicon-play"></span> &nbsp;<b>Start calculation</b>
-           </a>
+  {% if document.doc_type == 1 %}
+    <a class="btn btn-default btn-sm pull-right" href="{% url 'core_set_calculation_parameters' document.id %}">
+      <span class="glyphicon glyphicon-play"></span> &nbsp;<b>Start calculation</b>
+     </a>
+   {% else %}
+   <a class="btn btn-default btn-sm pull-right" style="margin-left: 20px;" href="{{MEDIA_URL}}{{document.document}}">
+      <span class="glyphicon glyphicon-download"></span> &nbsp;<b>Download PMS-DS file</b>
+     </a>
+     <a class="btn btn-default btn-sm pull-right" href="{{MEDIA_URL}}{{document.related_doc.input_doc.document}}">
+      <span class="glyphicon glyphicon-download-alt"></span> &nbsp;<b>Download CNR file</b>
+     </a>
+     
+   {% endif %}
            
   <hr/>
-  <div>
-   
+  <div>  
 
   </div>
+{% if document.doc_type == 1%}
+<div class="wrapper1">
+        <div class="upper_scroll"></div>
+       </div>
+       <div class="wrapper2">
+          {{input|safe}}
+       </div>
+{% else %}  
+<!-- Nav tabs -->
+<ul class="nav nav-tabs">
+  <li class="active"><a href="#pms" data-toggle="tab">PMS</a></li>
+  <li><a href="#pms1" data-toggle="tab">PMS1</a></li>
+  <li><a href="#ds1" data-toggle="tab">DS1</a></li>
+  <li><a href="#ds2" data-toggle="tab">DS2</a></li>
+</ul>
+
+<div class="tab-content">
+  <div class="tab-pane fade in active" id="pms">
+      
+      <div class="wrapper1">
+        <div class="upper_scroll"></div>
+       </div>
+       <div class="wrapper2">
+          {{PMS|safe}}
+       </div>
   
-  <div class="wrapper1">
-    <div class="upper_scroll"></div>
   </div>
-  <div class="wrapper2">
-  {{test|safe}}
+  <div class="tab-pane fade" id="pms1">
+  
+     <div class="wrapper1">
+        <div class="upper_scroll"></div>
+       </div>
+       <div class="wrapper2">
+          {{PMS1|safe}}
+       </div>
+  
   </div>
+  <div class="tab-pane fade" id="ds1">
+  
+      <div class="wrapper1">
+        <div class="upper_scroll"></div>
+       </div>
+       <div class="wrapper2">
+          {{DS1|safe}}
+       </div>
+  
+  </div>
+  <div class="tab-pane fade" id="ds2">
+  
+      <div class="wrapper1">
+        <div class="upper_scroll"></div>
+       </div>
+       <div class="wrapper2">
+          {{DS2|safe}}
+       </div>
+  
+  </div>
+</div>
+{% endif %}
+  
+  
  
   
 </div>

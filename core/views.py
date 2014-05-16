@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 import math
+import csv
 from datetime import datetime
 from pandas import read_csv, DataFrame, ExcelWriter
 
@@ -71,7 +72,7 @@ class CoreSetCalculationParameters(FormView):
         output_doc.project = input_document.project
         output_doc.created_by = self.request.user
         output_doc.created_at = datetime.now()        
-        output_doc.save()
+        #output_doc.save()
                 
         
         """ Calculating PMS and PMS1 """
@@ -216,6 +217,7 @@ class CoreSetCalculationParameters(FormView):
         writer.save()
         
         output_doc.document = path
+        output_doc.related_doc = input_document
         output_doc.save() 
          
         

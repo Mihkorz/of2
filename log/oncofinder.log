@@ -7439,3 +7439,557 @@ Traceback (most recent call last):
   File "/usr/local/lib/python2.7/dist-packages/xlrd/__init__.py", line 394, in open_workbook
     f = open(filename, "rb")
 IOError: [Errno 2] No such file or directory: u'/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/media/users/admin/admin-project/output/output_1_3vs4_12_tab.csv.xlsx'
+2014-05-14 13:51:34,170 ERROR base 13058 -1273255104 Internal Server Error: /user/Misha/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 201, in get_response
+    response = middleware_method(request, response)
+  File "/usr/local/lib/python2.7/dist-packages/debug_toolbar/middleware.py", line 86, in process_response
+    new_response = panel.process_response(request, response)
+  File "/usr/local/lib/python2.7/dist-packages/debug_toolbar/panels/staticfiles.py", line 127, in process_response
+    'staticfiles_apps': self.get_staticfiles_apps(),
+  File "/usr/local/lib/python2.7/dist-packages/debug_toolbar/panels/staticfiles.py", line 169, in get_staticfiles_apps
+    for finder in finders.get_finders():
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/staticfiles/finders.py", line 253, in get_finders
+    yield get_finder(finder_path)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/functional.py", line 32, in wrapper
+    result = func(*args)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/staticfiles/finders.py", line 265, in _get_finder
+    return Finder()
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/staticfiles/finders.py", line 62, in __init__
+    "The STATICFILES_DIRS setting should "
+ImproperlyConfigured: The STATICFILES_DIRS setting should not contain the STATIC_ROOT setting
+2014-05-14 14:38:31,113 ERROR base 14113 -1272890560 Internal Server Error: /user/Misha/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 201, in get_response
+    response = middleware_method(request, response)
+  File "/usr/local/lib/python2.7/dist-packages/debug_toolbar/middleware.py", line 86, in process_response
+    new_response = panel.process_response(request, response)
+  File "/usr/local/lib/python2.7/dist-packages/debug_toolbar/panels/staticfiles.py", line 127, in process_response
+    'staticfiles_apps': self.get_staticfiles_apps(),
+  File "/usr/local/lib/python2.7/dist-packages/debug_toolbar/panels/staticfiles.py", line 169, in get_staticfiles_apps
+    for finder in finders.get_finders():
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/staticfiles/finders.py", line 253, in get_finders
+    yield get_finder(finder_path)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/functional.py", line 32, in wrapper
+    result = func(*args)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/staticfiles/finders.py", line 265, in _get_finder
+    return Finder()
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/staticfiles/finders.py", line 53, in __init__
+    "Your STATICFILES_DIRS setting is not a tuple or list; "
+ImproperlyConfigured: Your STATICFILES_DIRS setting is not a tuple or list; perhaps you forgot a trailing comma?
+2014-05-14 14:38:45,177 ERROR base 14132 -1273140416 Internal Server Error: /user/Misha/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 201, in get_response
+    response = middleware_method(request, response)
+  File "/usr/local/lib/python2.7/dist-packages/debug_toolbar/middleware.py", line 86, in process_response
+    new_response = panel.process_response(request, response)
+  File "/usr/local/lib/python2.7/dist-packages/debug_toolbar/panels/staticfiles.py", line 129, in process_response
+    'staticfiles_finders': self.get_staticfiles_finders(),
+  File "/usr/local/lib/python2.7/dist-packages/debug_toolbar/panels/staticfiles.py", line 140, in get_staticfiles_finders
+    for path, finder_storage in finder.list([]):
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/staticfiles/finders.py", line 106, in list
+    for path in utils.get_files(storage, ignore_patterns):
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/staticfiles/utils.py", line 25, in get_files
+    directories, files = storage.listdir(location)
+  File "/usr/local/lib/python2.7/dist-packages/django/core/files/storage.py", line 250, in listdir
+    for entry in os.listdir(path):
+OSError: [Errno 2] No such file or directory: '/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinser2/static'
+2014-05-14 14:39:00,292 ERROR base 14132 -1283458240 Internal Server Error: /user/Misha/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 201, in get_response
+    response = middleware_method(request, response)
+  File "/usr/local/lib/python2.7/dist-packages/debug_toolbar/middleware.py", line 86, in process_response
+    new_response = panel.process_response(request, response)
+  File "/usr/local/lib/python2.7/dist-packages/debug_toolbar/panels/staticfiles.py", line 129, in process_response
+    'staticfiles_finders': self.get_staticfiles_finders(),
+  File "/usr/local/lib/python2.7/dist-packages/debug_toolbar/panels/staticfiles.py", line 140, in get_staticfiles_finders
+    for path, finder_storage in finder.list([]):
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/staticfiles/finders.py", line 106, in list
+    for path in utils.get_files(storage, ignore_patterns):
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/staticfiles/utils.py", line 25, in get_files
+    directories, files = storage.listdir(location)
+  File "/usr/local/lib/python2.7/dist-packages/django/core/files/storage.py", line 250, in listdir
+    for entry in os.listdir(path):
+OSError: [Errno 2] No such file or directory: '/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinser2/static'
+2014-05-14 14:39:04,824 ERROR base 14132 -1273140416 Internal Server Error: /user/Misha/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 201, in get_response
+    response = middleware_method(request, response)
+  File "/usr/local/lib/python2.7/dist-packages/debug_toolbar/middleware.py", line 86, in process_response
+    new_response = panel.process_response(request, response)
+  File "/usr/local/lib/python2.7/dist-packages/debug_toolbar/panels/staticfiles.py", line 129, in process_response
+    'staticfiles_finders': self.get_staticfiles_finders(),
+  File "/usr/local/lib/python2.7/dist-packages/debug_toolbar/panels/staticfiles.py", line 140, in get_staticfiles_finders
+    for path, finder_storage in finder.list([]):
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/staticfiles/finders.py", line 106, in list
+    for path in utils.get_files(storage, ignore_patterns):
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/staticfiles/utils.py", line 25, in get_files
+    directories, files = storage.listdir(location)
+  File "/usr/local/lib/python2.7/dist-packages/django/core/files/storage.py", line 250, in listdir
+    for entry in os.listdir(path):
+OSError: [Errno 2] No such file or directory: '/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinser2/static'
+2014-05-14 14:39:07,763 ERROR base 14132 -1304429760 Internal Server Error: /user/Misha/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 201, in get_response
+    response = middleware_method(request, response)
+  File "/usr/local/lib/python2.7/dist-packages/debug_toolbar/middleware.py", line 86, in process_response
+    new_response = panel.process_response(request, response)
+  File "/usr/local/lib/python2.7/dist-packages/debug_toolbar/panels/staticfiles.py", line 129, in process_response
+    'staticfiles_finders': self.get_staticfiles_finders(),
+  File "/usr/local/lib/python2.7/dist-packages/debug_toolbar/panels/staticfiles.py", line 140, in get_staticfiles_finders
+    for path, finder_storage in finder.list([]):
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/staticfiles/finders.py", line 106, in list
+    for path in utils.get_files(storage, ignore_patterns):
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/staticfiles/utils.py", line 25, in get_files
+    directories, files = storage.listdir(location)
+  File "/usr/local/lib/python2.7/dist-packages/django/core/files/storage.py", line 250, in listdir
+    for entry in os.listdir(path):
+OSError: [Errno 2] No such file or directory: '/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinser2/static'
+2014-05-14 14:39:08,341 ERROR base 14132 -1314915520 Internal Server Error: /favicon.ico
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 201, in get_response
+    response = middleware_method(request, response)
+  File "/usr/local/lib/python2.7/dist-packages/debug_toolbar/middleware.py", line 86, in process_response
+    new_response = panel.process_response(request, response)
+  File "/usr/local/lib/python2.7/dist-packages/debug_toolbar/panels/staticfiles.py", line 129, in process_response
+    'staticfiles_finders': self.get_staticfiles_finders(),
+  File "/usr/local/lib/python2.7/dist-packages/debug_toolbar/panels/staticfiles.py", line 140, in get_staticfiles_finders
+    for path, finder_storage in finder.list([]):
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/staticfiles/finders.py", line 106, in list
+    for path in utils.get_files(storage, ignore_patterns):
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/staticfiles/utils.py", line 25, in get_files
+    directories, files = storage.listdir(location)
+  File "/usr/local/lib/python2.7/dist-packages/django/core/files/storage.py", line 250, in listdir
+    for entry in os.listdir(path):
+OSError: [Errno 2] No such file or directory: '/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinser2/static'
+2014-05-14 14:39:26,153 ERROR base 14173 -1272878272 Internal Server Error: /user/Misha/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 201, in get_response
+    response = middleware_method(request, response)
+  File "/usr/local/lib/python2.7/dist-packages/debug_toolbar/middleware.py", line 86, in process_response
+    new_response = panel.process_response(request, response)
+  File "/usr/local/lib/python2.7/dist-packages/debug_toolbar/panels/staticfiles.py", line 127, in process_response
+    'staticfiles_apps': self.get_staticfiles_apps(),
+  File "/usr/local/lib/python2.7/dist-packages/debug_toolbar/panels/staticfiles.py", line 169, in get_staticfiles_apps
+    for finder in finders.get_finders():
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/staticfiles/finders.py", line 253, in get_finders
+    yield get_finder(finder_path)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/functional.py", line 32, in wrapper
+    result = func(*args)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/staticfiles/finders.py", line 265, in _get_finder
+    return Finder()
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/staticfiles/finders.py", line 62, in __init__
+    "The STATICFILES_DIRS setting should "
+ImproperlyConfigured: The STATICFILES_DIRS setting should not contain the STATIC_ROOT setting
+2014-05-14 14:39:26,367 ERROR base 14173 -1282409664 Internal Server Error: /favicon.ico
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 201, in get_response
+    response = middleware_method(request, response)
+  File "/usr/local/lib/python2.7/dist-packages/debug_toolbar/middleware.py", line 86, in process_response
+    new_response = panel.process_response(request, response)
+  File "/usr/local/lib/python2.7/dist-packages/debug_toolbar/panels/staticfiles.py", line 127, in process_response
+    'staticfiles_apps': self.get_staticfiles_apps(),
+  File "/usr/local/lib/python2.7/dist-packages/debug_toolbar/panels/staticfiles.py", line 169, in get_staticfiles_apps
+    for finder in finders.get_finders():
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/staticfiles/finders.py", line 253, in get_finders
+    yield get_finder(finder_path)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/functional.py", line 32, in wrapper
+    result = func(*args)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/staticfiles/finders.py", line 265, in _get_finder
+    return Finder()
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/staticfiles/finders.py", line 62, in __init__
+    "The STATICFILES_DIRS setting should "
+ImproperlyConfigured: The STATICFILES_DIRS setting should not contain the STATIC_ROOT setting
+2014-05-14 15:28:04,154 ERROR base 14443 -1303643328 Internal Server Error: /document/new/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/views.py", line 128, in dispatch
+    return super(CreateDocument, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 205, in post
+    return super(BaseCreateView, self).post(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/views.py", line 161, in form_valid
+    df = df.set_index('SYMBOL') #create index by SYMBOL column
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 2229, in set_index
+    level = frame[col].values
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 1658, in __getitem__
+    return self._getitem_column(key)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 1665, in _getitem_column
+    return self._get_item_cache(key)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/generic.py", line 1044, in _get_item_cache
+    values = self._data.get(item)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 2956, in get
+    _, block = self._find_block(item)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 3268, in _find_block
+    self._check_have(item)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 3275, in _check_have
+    raise KeyError('no item named %s' % com.pprint_thing(item))
+KeyError: u'no item named SYMBOL'
+2014-05-14 15:32:44,107 ERROR base 14760 -1292895424 Internal Server Error: /document/doc1/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/views.py", line 191, in dispatch
+    return super(DocumentDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/views.py", line 197, in get_context_data
+    df = read_csv(filename, delim_whitespace=True)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/io/parsers.py", line 421, in parser_f
+    return _read(filepath_or_buffer, kwds)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/io/parsers.py", line 226, in _read
+    return parser.read()
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/io/parsers.py", line 626, in read
+    ret = self._engine.read(nrows)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/io/parsers.py", line 1070, in read
+    data = self._reader.read(nrows)
+  File "parser.pyx", line 727, in pandas.parser.TextReader.read (pandas/parser.c:7122)
+  File "parser.pyx", line 749, in pandas.parser.TextReader._read_low_memory (pandas/parser.c:7346)
+  File "parser.pyx", line 802, in pandas.parser.TextReader._read_rows (pandas/parser.c:7955)
+  File "parser.pyx", line 789, in pandas.parser.TextReader._tokenize_rows (pandas/parser.c:7829)
+  File "parser.pyx", line 1697, in pandas.parser.raise_parser_error (pandas/parser.c:19580)
+CParserError: Error tokenizing data. C error: Expected 20 fields in line 20822, saw 21
+
+2014-05-14 15:32:51,673 ERROR base 14760 -1292895424 Internal Server Error: /document/doc1/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/views.py", line 191, in dispatch
+    return super(DocumentDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/views.py", line 197, in get_context_data
+    df = read_csv(filename, delim_whitespace=True)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/io/parsers.py", line 421, in parser_f
+    return _read(filepath_or_buffer, kwds)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/io/parsers.py", line 226, in _read
+    return parser.read()
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/io/parsers.py", line 626, in read
+    ret = self._engine.read(nrows)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/io/parsers.py", line 1070, in read
+    data = self._reader.read(nrows)
+  File "parser.pyx", line 727, in pandas.parser.TextReader.read (pandas/parser.c:7122)
+  File "parser.pyx", line 749, in pandas.parser.TextReader._read_low_memory (pandas/parser.c:7346)
+  File "parser.pyx", line 802, in pandas.parser.TextReader._read_rows (pandas/parser.c:7955)
+  File "parser.pyx", line 789, in pandas.parser.TextReader._tokenize_rows (pandas/parser.c:7829)
+  File "parser.pyx", line 1697, in pandas.parser.raise_parser_error (pandas/parser.c:19580)
+CParserError: Error tokenizing data. C error: Expected 20 fields in line 20822, saw 21
+
+2014-05-14 15:33:06,131 ERROR base 14760 -1336706240 Internal Server Error: /document/doc1/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/views.py", line 191, in dispatch
+    return super(DocumentDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/views.py", line 197, in get_context_data
+    df = read_csv(filename)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/io/parsers.py", line 421, in parser_f
+    return _read(filepath_or_buffer, kwds)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/io/parsers.py", line 226, in _read
+    return parser.read()
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/io/parsers.py", line 626, in read
+    ret = self._engine.read(nrows)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/io/parsers.py", line 1070, in read
+    data = self._reader.read(nrows)
+  File "parser.pyx", line 727, in pandas.parser.TextReader.read (pandas/parser.c:7122)
+  File "parser.pyx", line 749, in pandas.parser.TextReader._read_low_memory (pandas/parser.c:7346)
+  File "parser.pyx", line 802, in pandas.parser.TextReader._read_rows (pandas/parser.c:7955)
+  File "parser.pyx", line 789, in pandas.parser.TextReader._tokenize_rows (pandas/parser.c:7829)
+  File "parser.pyx", line 1697, in pandas.parser.raise_parser_error (pandas/parser.c:19580)
+CParserError: Error tokenizing data. C error: Expected 20 fields in line 20822, saw 21
+
+2014-05-14 15:34:14,660 ERROR base 14810 -1272366272 Internal Server Error: /document/doc1/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/views.py", line 191, in dispatch
+    return super(DocumentDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/views.py", line 197, in get_context_data
+    df = read_csv(filename, delimiter=r"\s+")
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/io/parsers.py", line 421, in parser_f
+    return _read(filepath_or_buffer, kwds)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/io/parsers.py", line 226, in _read
+    return parser.read()
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/io/parsers.py", line 626, in read
+    ret = self._engine.read(nrows)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/io/parsers.py", line 1455, in read
+    alldata = self._rows_to_cols(content)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/io/parsers.py", line 1799, in _rows_to_cols
+    raise ValueError(msg)
+ValueError: Expected 20 fields in line 20822, saw 21
+2014-05-14 15:38:00,745 ERROR base 14810 -1272366272 Internal Server Error: /document/doc1/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 201, in get_response
+    response = middleware_method(request, response)
+  File "/usr/local/lib/python2.7/dist-packages/debug_toolbar/middleware.py", line 122, in process_response
+    response.content = insert_before.join(bits)
+MemoryError
+2014-05-14 15:45:01,052 ERROR base 3225 -1272890560 Internal Server Error: /document/doc1/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/views.py", line 191, in dispatch
+    return super(DocumentDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/views.py", line 197, in get_context_data
+    df = read_csv(filename, delimiter=r"\s+")
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/io/parsers.py", line 421, in parser_f
+    return _read(filepath_or_buffer, kwds)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/io/parsers.py", line 226, in _read
+    return parser.read()
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/io/parsers.py", line 626, in read
+    ret = self._engine.read(nrows)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/io/parsers.py", line 1455, in read
+    alldata = self._rows_to_cols(content)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/io/parsers.py", line 1799, in _rows_to_cols
+    raise ValueError(msg)
+ValueError: Expected 20 fields in line 20822, saw 21
+2014-05-14 15:46:49,442 ERROR base 3225 -1318061248 Internal Server Error: /document/doc1/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/views.py", line 191, in dispatch
+    return super(DocumentDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/views.py", line 197, in get_context_data
+    df = read_csv(filename, delimiter=r"\s+")
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/io/parsers.py", line 421, in parser_f
+    return _read(filepath_or_buffer, kwds)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/io/parsers.py", line 226, in _read
+    return parser.read()
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/io/parsers.py", line 626, in read
+    ret = self._engine.read(nrows)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/io/parsers.py", line 1455, in read
+    alldata = self._rows_to_cols(content)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/io/parsers.py", line 1799, in _rows_to_cols
+    raise ValueError(msg)
+ValueError: Expected 20 fields in line 20822, saw 21
+2014-05-14 15:57:28,417 ERROR base 3474 -1272300736 Internal Server Error: /document/doc1/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/views.py", line 193, in dispatch
+    return super(DocumentDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/views.py", line 202, in get_context_data
+    df = read_csv(filename, delimiter=dialect.delimeter)
+AttributeError: class dialect has no attribute 'delimeter'
+2014-05-14 18:10:26,250 ERROR base 4300 -1282409664 Internal Server Error: /project/delete/1
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 90, in get_response
+    response = middleware_method(request)
+  File "/usr/local/lib/python2.7/dist-packages/django/middleware/common.py", line 81, in process_request
+    "settings.") % (new_url[0], new_url[1]))
+RuntimeError: You called this URL via POST, but the URL doesn't end in a slash and you have APPEND_SLASH set. Django can't redirect to the slash URL while maintaining POST data. Change your form to point to 127.0.0.1:8000/project/delete/1/ (note the trailing slash), or set APPEND_SLASH=False in your Django settings.
+2014-05-14 18:12:43,682 ERROR base 4300 -1327498432 Internal Server Error: /project/delete/1
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 90, in get_response
+    response = middleware_method(request)
+  File "/usr/local/lib/python2.7/dist-packages/django/middleware/common.py", line 81, in process_request
+    "settings.") % (new_url[0], new_url[1]))
+RuntimeError: You called this URL via POST, but the URL doesn't end in a slash and you have APPEND_SLASH set. Django can't redirect to the slash URL while maintaining POST data. Change your form to point to 127.0.0.1:8000/project/delete/1/ (note the trailing slash), or set APPEND_SLASH=False in your Django settings.
+2014-05-14 18:21:20,543 ERROR base 4300 -1335891136 Internal Server Error: /calculation-parameters/doc5/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 32, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 175, in form_valid
+    DS2 -= AMCF*ARR*math.log10(CNR)
+ValueError: math domain error
+2014-05-16 15:37:51,141 ERROR base 3461 -1282409664 Internal Server Error: /document/new/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/views.py", line 154, in dispatch
+    return super(CreateDocument, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 205, in post
+    return super(BaseCreateView, self).post(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/views.py", line 163, in form_valid
+    df = read_csv(filename, delimiter=dialect.delimiter)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/io/parsers.py", line 421, in parser_f
+    return _read(filepath_or_buffer, kwds)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/io/parsers.py", line 226, in _read
+    return parser.read()
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/io/parsers.py", line 626, in read
+    ret = self._engine.read(nrows)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/io/parsers.py", line 1070, in read
+    data = self._reader.read(nrows)
+  File "parser.pyx", line 727, in pandas.parser.TextReader.read (pandas/parser.c:7122)
+  File "parser.pyx", line 749, in pandas.parser.TextReader._read_low_memory (pandas/parser.c:7346)
+  File "parser.pyx", line 802, in pandas.parser.TextReader._read_rows (pandas/parser.c:7955)
+  File "parser.pyx", line 789, in pandas.parser.TextReader._tokenize_rows (pandas/parser.c:7829)
+  File "parser.pyx", line 1697, in pandas.parser.raise_parser_error (pandas/parser.c:19580)
+CParserError: Error tokenizing data. C error: Expected 1 fields in line 10, saw 2
+
+2014-05-16 15:39:38,631 ERROR base 3461 -1272325312 Internal Server Error: /document/doc5/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/views.py", line 221, in dispatch
+    return super(DocumentDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/views.py", line 230, in get_context_data
+    df = read_csv(filename, delimiter=dialect.delimiter)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/io/parsers.py", line 421, in parser_f
+    return _read(filepath_or_buffer, kwds)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/io/parsers.py", line 226, in _read
+    return parser.read()
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/io/parsers.py", line 626, in read
+    ret = self._engine.read(nrows)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/io/parsers.py", line 1070, in read
+    data = self._reader.read(nrows)
+  File "parser.pyx", line 727, in pandas.parser.TextReader.read (pandas/parser.c:7122)
+  File "parser.pyx", line 749, in pandas.parser.TextReader._read_low_memory (pandas/parser.c:7346)
+  File "parser.pyx", line 802, in pandas.parser.TextReader._read_rows (pandas/parser.c:7955)
+  File "parser.pyx", line 789, in pandas.parser.TextReader._tokenize_rows (pandas/parser.c:7829)
+  File "parser.pyx", line 1697, in pandas.parser.raise_parser_error (pandas/parser.c:19580)
+CParserError: Error tokenizing data. C error: Expected 1 fields in line 10, saw 2
+
+2014-05-16 17:30:48,433 ERROR base 14483 -1343919296 Internal Server Error: /calculation-parameters/doc8/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 32, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 220, in form_valid
+    output_doc.related_doc = input_document.input_doc
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/fields/related.py", line 339, in __set__
+    self.field.name, self.field.rel.to._meta.object_name))
+ValueError: Cannot assign "<ProcessDocument: ProcessDocument object>": "Document.related_doc" must be a "Document" instance.

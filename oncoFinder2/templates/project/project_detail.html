@@ -45,7 +45,10 @@
               <strong><a href="/document/doc{{doc.id}}/">{{doc.get_filename}}</a></strong><br/><br/>
                   Created by: <strong>{{doc.created_by}}</strong></td>
               <td>{{doc.get_doc_type_display}}</td>
-              <td>{{doc.parameters}}</td>
+              <td>{% for key, value in doc.parameters.items%}
+                  {{key}} = {{value}} <br/>
+                  {%endfor%}
+              </td>
               <td>Created at: <strong>{{doc.created_at}}</strong><br/>
                   Last calculated at: <strong>{{doc.calculated_at}}</strong><br/>
                   Last calculated by: <strong>{{doc.calculated_by}}</strong></td>

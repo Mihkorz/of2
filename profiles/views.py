@@ -1,13 +1,16 @@
 # -*- coding: utf-8 -*-
 
 import os
+import csv
+import json
+from pandas import read_csv, read_excel, DataFrame
 
 #from django.views.generic.base import TemplateView
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.detail import DetailView
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 from django.conf import settings
@@ -15,8 +18,6 @@ from django.conf import settings
 from .forms import SettingsUserForm, UserProfileFormSet, CreateProjectForm, \
                    UploadDocumentForm
 from .models import Project, Document, ProcessDocument
-
-from pandas import read_csv, read_excel, DataFrame
 
 
 class ProfileIndex(DetailView):
@@ -101,6 +102,31 @@ class CreateProject(CreateView):
     def form_invalid(self, form):
             return self.render_to_response(self.get_context_data(form=form))
     
+class DeleteProject(DeleteView):
+    model = Project
+    template_name = 'project/project_confirm_delete.html'
+    success_url = '/'
+    
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        # maybe do some checks here for permissions ...
+
+        resp = super(DeleteProject, self).dispatch(*args, **kwargs)
+        if self.request.is_ajax():
+            response_data = {"result": "ok"}
+            return HttpResponse(json.dumps(response_data),
+                content_type="application/json")
+        else:
+            # POST request (not ajax) will do a redirect to success_url
+            return resp
+        
+    def get_object(self, queryset=None):
+        """ Hook to ensure project is owned by request.user. """
+        obj = super(DeleteProject, self).get_object()
+        if not obj.owner == self.request.user:
+            raise Http404
+        return obj
+
     
 class ProjectDetail(DetailView):
     model = Project
@@ -132,7 +158,9 @@ class CreateDocument(CreateView):
         project = form.cleaned_data['project']
         document.save()
         filename = settings.MEDIA_ROOT+"/"+document.document.name
-        df = read_csv(filename, sep='\t')
+        sniffer = csv.Sniffer()
+        dialect = sniffer.sniff(open(filename, 'r').read(), delimiters='\t,;') # defining the separator of the csv file
+        df = read_csv(filename, delimiter=dialect.delimiter)
         tumour_cols = [col for col in df.columns if 'Tumour' in col]
         norm_cols = [col for col in df.columns if 'Norm' in col]
         document.sample_num = len(tumour_cols)
@@ -183,6 +211,8 @@ class CreateDocument(CreateView):
             return self.render_to_response(self.get_context_data(form=form))
         
 class DocumentDetail(DetailView):
+    
+    
     model = Document
     template_name = "document/document_detail.html"
     
@@ -192,13 +222,22 @@ class DocumentDetail(DetailView):
     
     def get_context_data(self, **kwargs):
         context = super(DocumentDetail, self).get_context_data(**kwargs)
+        
         filename = settings.MEDIA_ROOT+"/"+self.object.document.name 
         if self.object.doc_type == 1:
-            df = read_csv(filename, sep='\t')
-            context['test'] = df[:50].to_html()
+            sniffer = csv.Sniffer()
+            dialect = sniffer.sniff(open(filename, 'r').read(), delimiters='\t,;') # defining the separator of the csv file
+            df = read_csv(filename, delimiter=dialect.delimiter)
+            context['input'] = df[:50].to_html()
         else:
             df = read_excel(filename, sheetname="PMS")
-            context['test'] = df.to_html()
+            context['PMS'] = df.to_html()
+            df = read_excel(filename, sheetname="PMS1")
+            context['PMS1'] = df.to_html()
+            df = read_excel(filename, sheetname="DS1")
+            context['DS1'] = df.to_html()
+            df = read_excel(filename, sheetname="DS2")
+            context['DS2'] = df.to_html()
         
         
         return context  

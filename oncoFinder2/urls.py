@@ -9,17 +9,15 @@ admin.autodiscover()
 
 from website.views import IndexPage, LoginPage, Logout
 from profiles.views import ProfileIndex, SettingsProfile, SettingsBilling, CreateProject, \
-                           ProjectDetail, CreateDocument, DocumentDetail
+                           DeleteProject, ProjectDetail, CreateDocument, DocumentDetail
                            
 from core.views import CoreSetCalculationParameters, CoreCalculation
 
 urlpatterns = patterns('',
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
-            'document_root': settings.MEDIA_ROOT,
-            'show_indexes': True}),
+            'document_root': settings.MEDIA_ROOT}),
     url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {
-            'document_root': settings.STATIC_ROOT,
-            'show_indexes': True}),
+            'document_root': settings.STATIC_ROOT}),
     url(r'^favicon\.ico$', RedirectView.as_view(url='/static/images/favicon.ico')),
     url(r'^admin/', include(admin.site.urls)),
                        
@@ -35,6 +33,7 @@ urlpatterns = patterns('',
     url(r'^settings/billing/$', SettingsBilling.as_view(), name="settings_billing"),
     
     url(r'^project/new/$', CreateProject.as_view(), name="project_create"),
+    url(r'^project/delete/(?P<pk>\d+)/$', DeleteProject.as_view(), name="project_delete"),
     url(r'^project/(?P<slug>[-\w]+)/$', ProjectDetail.as_view(), name="project_detail"),
     
     url(r'^document/new/$', CreateDocument.as_view(), name="document_create"),

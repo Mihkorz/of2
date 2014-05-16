@@ -40,7 +40,7 @@ class Project(models.Model):
     members =  models.ManyToManyField(User, related_name="members")
     description = models.TextField(verbose_name="Description(optional)", blank=True)
     status = models.IntegerField(choices = PROJECT_STATUSES, default=PROJECT_PUBLIC)
-    created_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     viewed_at = models.DateTimeField(verbose_name="Last viewed at", blank=True, null=True,)
     viewed_by = models.ForeignKey(User, blank=True, null=True, related_name='viewed')
     
@@ -81,8 +81,9 @@ class Document(models.Model):
     norm_num = models.IntegerField(verbose_name="Norm ammount", blank=True, default=0)
     row_num = models.IntegerField(verbose_name="Number of rows", blank=True, default=0)
     project = models.ForeignKey(Project)
+    related_doc = models.ForeignKey('self', related_name="process_doc", blank=True, null=True, default=None)
     created_by = models.ForeignKey(User, blank=True, null=True, related_name='created_by')
-    created_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     calculated_by = models.ForeignKey(User, blank=True, null=True, related_name='calculated_by')
     calculated_at = models.DateTimeField(blank=True, null=True)
     
@@ -101,5 +102,5 @@ class ProcessDocument(models.Model):
     input_doc = models.OneToOneField(Document, related_name="input_doc", blank=True, null=True)
     output_doc = models.ForeignKey(Document, related_name="output_doc", blank=True, null=True)
     created_by = models.ForeignKey(User, blank=True, null=True, related_name='created')
-    created_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     
