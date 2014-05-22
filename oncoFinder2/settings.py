@@ -250,7 +250,7 @@ LOGGING = {
 
 
 
-if socket.gethostname() == 'mikhail':
+if socket.gethostname() == 'mikhail' or socket.gethostname() == 'mikhailComp':
     try:
         from settings_local import *
     except ImportError:

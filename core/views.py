@@ -124,7 +124,8 @@ class CoreSetCalculationParameters(FormView):
                         
                     if (row[tumour]*row['Mean_norm'] > (row['Mean_norm']+sigma_num*row['std']) or  \
                         row[tumour]*row['Mean_norm'] < (row['Mean_norm']-sigma_num*row['std'])) and \
-                       (row[tumour]>cnr_up or row[tumour]<cnr_low):
+                       (row[tumour]>cnr_up or row[tumour]<cnr_low) and \
+                       row[tumour]>0:
                         
                         summ+= float(row['ARR'])*math.log(row[tumour]) # ARR*ln(CNR)
                         
@@ -165,6 +166,8 @@ class CoreSetCalculationParameters(FormView):
                             gene = Gene.objects.get(name = target.name ,pathway=path)
                             ARR = float(gene.arr)
                             CNR = process_doc_df.at[target.name, tumour]
+                            if CNR == 0:
+                                CNR = 1
                             PMS = output_pms_df.at[path.name, tumour]
                             AMCF = float(path.amcf)
                             
