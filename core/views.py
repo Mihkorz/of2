@@ -11,6 +11,7 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from django.core.files import File
 from django.conf import settings
 
 from .forms import  CalculationParametersForm
@@ -207,9 +208,9 @@ class CoreSetCalculationParameters(FormView):
         """ Saving results to Excel file and to database """
         path = os.path.join('users', str(input_document.project.owner),
                                             str(input_document.project),'output', 'output_'+str(input_document.get_filename()+'.xlsx'))
-        output_file = settings.MEDIA_ROOT+"/"+path
+        output_file = File(settings.MEDIA_ROOT+"/"+path)
         
-        writer = ExcelWriter(output_file, index=False)
+        writer = ExcelWriter(output_file.file, index=False)
         output_pms_df.to_excel(writer,'PMS')
         output_pms1_df.to_excel(writer,'PMS1')
         output_ds1_df.to_excel(writer, 'DS1')
