@@ -5,7 +5,11 @@
 {% block content %}
 <div class="container">
   <div class="col-md-3" >
+  {% if user_profile.profile %}
     <img src='{{user_profile.profile.get_picture}}' width="230" /><br/>
+  {% else %}
+  <img src='/static/images/noPicture.jpg' width="230" /><br/>
+  {% endif %}
     <h2>{{user_profile.username}}</h2>
     {% if user_profile == user %}
       <button class="btn btn-default" onClick="location.href='/settings/profile'">

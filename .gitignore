@@ -7,6 +7,8 @@
 # Packages
 *.egg
 *.egg-info
+media
+log
 dist
 build
 eggs

@@ -7,7 +7,7 @@ PROJECT_DIR = os.path.realpath(os.path.dirname(__file__))
 
 LOGIN_URL = "/login"
 
-if socket.gethostname() == 'ec2-54-82-13-84.compute-1.amazonaws.com':
+if socket.gethostname() == '127.0.0.1':
     DEBUG = False
 else:
     DEBUG = True   
@@ -250,7 +250,7 @@ LOGGING = {
 
 
 
-if DEBUG:
+if socket.gethostname() == 'mikhail':
     try:
         from settings_local import *
     except ImportError:

@@ -161,7 +161,7 @@ class CoreSetCalculationParameters(FormView):
                         pathways = Pathway.objects.filter(gene__name=target.name)
                     
                         for path in pathways:
-                            gene = Gene.objects.get(name = target.name ,pathway__name=path.name)
+                            gene = Gene.objects.get(name = target.name ,pathway=path)
                             ARR = float(gene.arr)
                             CNR = process_doc_df.at[target.name, tumour]
                             PMS = output_pms_df.at[path.name, tumour]
@@ -177,9 +177,9 @@ class CoreSetCalculationParameters(FormView):
                                 DS1 += PMS
                                 DS2 += AMCF*ARR*math.log10(CNR)
                             if drug.tip == 'mab' and path.name=='Mab_targets':
-                                DS1 += PMS # WARNING CHANGE to PMS2!!!!
+                                DS1 += abs(PMS) # PMS2
                             if drug.tip == 'killermab' and path.name=='Mab_targets':
-                                DS1 += PMS # WARNING CHANGE to PMS2
+                                DS1 += abs(PMS)# PMS2
                                 DS2 += math.log10(CNR)
                             if drug.tip == 'multivalent' and path.name!='Mab_targets':
                                 DS1 += PMS
