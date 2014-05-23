@@ -11,7 +11,7 @@ from website.views import IndexPage, LoginPage, Logout
 from profiles.views import ProfileIndex, SettingsProfile, SettingsBilling, CreateProject, \
                            DeleteProject, ProjectDetail, CreateDocument, DocumentDetail
                            
-from core.views import CoreSetCalculationParameters, CoreCalculation
+from core.views import CoreSetCalculationParameters, CoreCalculation, Test
 
 urlpatterns = patterns('',
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
@@ -42,6 +42,8 @@ urlpatterns = patterns('',
     ################### Core App ##############################
     url(r'^calculation-parameters/doc(?P<pk>\d+)/$', CoreSetCalculationParameters.as_view(), name="core_set_calculation_parameters"),
     url(r'^calculation/doc(?P<pk>\d+)/$', CoreCalculation.as_view(), name="core_calculation"),
+    
+    url(r'^test/$', Test.as_view()),
     
 
    

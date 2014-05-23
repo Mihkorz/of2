@@ -3,10 +3,11 @@ import os
 import math
 import csv
 from datetime import datetime
-from pandas import read_csv, DataFrame, ExcelWriter
+from pandas import read_csv, read_excel, DataFrame, ExcelWriter
 
 from django.views.generic.edit import FormView #CreateView , UpdateView
 from django.views.generic.detail import DetailView
+from django.views.generic.base import TemplateView
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
@@ -129,7 +130,7 @@ class CoreSetCalculationParameters(FormView):
                         
                         summ+= float(row['ARR'])*math.log(row[tumour]) # ARR*ln(CNR)
                         
-                        differential_genes.append(index) # store differential genes in a list
+                        differential_genes.append(index.strip()) # store differential genes in a list
                 
                 pms_dict[tumour] = float(pathway.amcf)*summ #PMS
                 pms1_dict[tumour] = summ #PMS1               
@@ -152,18 +153,20 @@ class CoreSetCalculationParameters(FormView):
             ds2_dict = {}
             ds1_dict['Drug'] = ds2_dict['Drug'] = drug.name.strip()
             
-            DS1 = 0 # DrugScore 1
-            DS2 = 0 # DrugScore 2
+            
             
             for tumour in tumour_columns: #loop thought samples columns
+                DS1 = 0 # DrugScore 1
+                DS2 = 0 # DrugScore 2
             
                 for target in drug.target_set.all():
+                    
                     target.name = target.name.strip()
                     if target.name in differential_genes:
                         pathways = Pathway.objects.filter(gene__name=target.name)
                     
                         for path in pathways:
-                            gene = Gene.objects.get(name = target.name ,pathway=path)
+                            gene = Gene.objects.get(name = target.name, pathway=path)
                             ARR = float(gene.arr)
                             CNR = process_doc_df.at[target.name, tumour]
                             if CNR == 0:
@@ -247,4 +250,61 @@ class CoreCalculation(DetailView):
               
         context = super(CoreCalculation, self).get_context_data(**kwargs)
         return context
+    
+class Test(TemplateView):
+    """
+    Just Testing Playground
+    """
+    template_name = 'core/test.html'
+    
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        #messages.warning(request,  'Hello world.')
+        return super(Test, self).dispatch(request, *args, **kwargs)
+    
+    def get_context_data(self, **kwargs):
+              
+        context = super(Test, self).get_context_data(**kwargs)
+        
+        pathways = Pathway.objects.filter(gene__name='VEGFA')               
+        
+        filename = settings.MEDIA_ROOT+"/users/Mikhail/project-mik/output/output_u219_test2.txt.xlsx"
+        
+        df = read_excel(filename, sheetname="PMS")
+        
+        tumour_columns = [col for col in df.columns if 'Tumour' in col]            
+        
+        DS = 0
+        for path in pathways:
+            PMS = df.at[path.name, 'Tumour_GEP_Affy_U219_CTG.0899_P2_2.flc']
+            DS += PMS
+            
+        
+        context['test'] = pathways
+        context['PMS'] = df.to_html()
+        
+        context['varr'] = DS
+        
+        return context
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
         
