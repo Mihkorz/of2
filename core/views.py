@@ -92,7 +92,7 @@ class CoreSetCalculationParameters(FormView):
         
         pms_list = []
         pms1_list = []
-        differential_genes = []
+        differential_genes = {}
         
         for pathway in Pathway.objects.all():
             gene_name = []
@@ -117,21 +117,33 @@ class CoreSetCalculationParameters(FormView):
             
             for tumour in tumour_columns: #loop thought samples columns                
                 summ = 0
+                diff_genes_for_tumor = []
                 for index, row in joined_df.iterrows():
                     if not use_sigma:
                         sigma_num = 0
                     if not use_cnr:
                         cnr_up = cnr_low = 0
                         
-                    if (row[tumour]*row['Mean_norm'] > (row['Mean_norm']+sigma_num*row['std']) or  \
-                        row[tumour]*row['Mean_norm'] < (row['Mean_norm']-sigma_num*row['std'])) and \
-                       (row[tumour]>cnr_up or row[tumour]<cnr_low) and \
-                       row[tumour]>0:
+                    CNR = row[tumour]
+                    EXPRESSION_LEVEL = CNR*row['Mean_norm']
                         
-                        summ+= float(row['ARR'])*math.log(row[tumour]) # ARR*ln(CNR)
+                    if (
+                        (
+                           (EXPRESSION_LEVEL > (row['Mean_norm'] + sigma_num*row['std'])) or 
+                           (EXPRESSION_LEVEL < (row['Mean_norm'] - sigma_num*row['std']))
+                         ) and 
+                        (CNR > cnr_up or CNR < cnr_low) and 
+                        (CNR > 0)
+                       ):
                         
-                        differential_genes.append(index.strip()) # store differential genes in a list
-                
+                        summ+= float(row['ARR'])*math.log(CNR) # ARR*ln(CNR)
+                        
+                        diff_genes_for_tumor.append(index.strip()) # store differential genes in a list
+                if differential_genes.has_key(tumour):
+                    differential_genes[tumour].extend(diff_genes_for_tumor)
+                else:
+                    differential_genes[tumour] = diff_genes_for_tumor
+                    
                 pms_dict[tumour] = float(pathway.amcf)*summ #PMS
                 pms1_dict[tumour] = summ #PMS1               
                 
@@ -162,7 +174,7 @@ class CoreSetCalculationParameters(FormView):
                 for target in drug.target_set.all():
                     
                     target.name = target.name.strip()
-                    if target.name in differential_genes:
+                    if target.name in differential_genes[tumour]:
                         pathways = Pathway.objects.filter(gene__name=target.name)
                     
                         for path in pathways:
@@ -205,12 +217,9 @@ class CoreSetCalculationParameters(FormView):
         output_ds1_df = output_ds1_df.set_index('Drug')
         output_ds2_df = DataFrame(ds2_list)
         output_ds2_df = output_ds2_df.set_index('Drug')
-                        
-                        
+        
+               
                     
-        
-        
-        
         """ Saving results to Excel file and to database """
         path = os.path.join('users', str(input_document.project.owner),
                                             str(input_document.project),'output', 'output_'+str(input_document.get_filename()+'.xlsx'))
@@ -266,9 +275,9 @@ class Test(TemplateView):
               
         context = super(Test, self).get_context_data(**kwargs)
         
-        pathways = Pathway.objects.filter(gene__name='VEGFA')               
+        pathways = Pathway.objects.filter(gene__name='PGF')               
         
-        filename = settings.MEDIA_ROOT+"/users/Mikhail/project-mik/output/output_u219_test2.txt.xlsx"
+        filename = settings.MEDIA_ROOT+"/users/Mikhail/project-mik/output/output_u219_5_12_onesample.csv.xlsx"
         
         df = read_excel(filename, sheetname="PMS")
         
@@ -284,6 +293,21 @@ class Test(TemplateView):
         context['PMS'] = df.to_html()
         
         context['varr'] = DS
+        
+        if (
+                        (
+                           (1 > (3)) or 
+                           (1 < (3))
+                         ) and 
+                        (1 > 1.5 or 1 < 0.67) and 
+                        (1 > 0)
+                       ):
+            a = 'yes'
+        else:
+            a = 'no'
+            
+        
+        context['a'] = a
         
         return context
     
