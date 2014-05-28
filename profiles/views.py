@@ -187,7 +187,7 @@ class CreateDocument(CreateView):
         new_file = settings.MEDIA_ROOT+"/"+path
                 
         df = df.set_index('SYMBOL') #create index by SYMBOL column   
-        df = df.groupby(df.index, level=0).mean() #deal with duplicate genes by taking mean value
+        #df = df.groupby(df.index, level=0).mean() #deal with duplicate genes by taking mean value
         
         mean_norm = df[[norm for norm in norm_cols]].mean(axis=1)
         df1 = DataFrame(df[[norm for norm in norm_cols]], index=df.index)
@@ -196,7 +196,7 @@ class CreateDocument(CreateView):
                 
         df['Mean_norm'] = mean_norm
                
-        df = df.div(df.Mean_norm, axis='index')
+        #df = df.div(df.Mean_norm, axis='index')
        
         df['Mean_norm'] = mean_norm
         df['std'] = df1
@@ -209,6 +209,32 @@ class CreateDocument(CreateView):
         
     def form_invalid(self, form):
             return self.render_to_response(self.get_context_data(form=form))
+
+
+class DeleteDocument(DeleteView):
+    model = Document
+    template_name = 'document/document_confirm_delete.html'
+    success_url = '/'
+    
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        # maybe do some checks here for permissions ...
+
+        resp = super(DeleteDocument, self).dispatch(*args, **kwargs)
+        if self.request.is_ajax():
+            response_data = {"result": "ok"}
+            return HttpResponse(json.dumps(response_data),
+                content_type="application/json")
+        else:
+            # POST request (not ajax) will do a redirect to success_url
+            return resp
+        
+    def get_object(self, queryset=None):
+        """ Make some additional filtering with object """
+        obj = super(DeleteDocument, self).get_object()
+        #if not obj.owner == self.request.user:
+        #    raise Http404
+        return obj
         
 class DocumentDetail(DetailView):
     

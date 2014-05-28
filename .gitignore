@@ -1,5 +1,6 @@
 *.py[cod]
 *.log
+*~
 
 # C extensions
 *.so
@@ -8,7 +9,7 @@
 *.egg
 *.egg-info
 media
-log
+log/*
 dist
 build
 eggs

@@ -66,6 +66,9 @@
 .of-table a {
 	font-size: 14px;
 }
+.of-table tbody tr:hover th {
+	background-color: #428bca;
+}
 .pr_navbar{
 	background-color: #f3f3f3;
     background-image: -moz-linear-gradient(#f9f9f9, #f3f3f3);

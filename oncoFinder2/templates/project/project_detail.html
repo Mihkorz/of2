@@ -27,37 +27,69 @@
         <div class="panel-body">
         
           <table id="project_doc_table" class="table table-hover of-table">
-            <tr class="info">
-              <th>Document</th><th>Type</th><th>Parameters</th><th>Date</th>
-              <th>Sample number</th><th>Description</th><th></th>
+            <tr class="bg-primary">
+              <th>Document</th><th>Type</th><th>Information</th><th>Date</th>
+              <th>Description</th><th></th>
             </tr>
             
             {% for doc in documents %}
-            <tr
+            <tr  id="doc{{doc.id}}"
             {% if doc.get_doc_type_display == 'input' %}
-            class="warning"
+            class="info"
             {% else %}
             class="success"
             {% endif %}
             >
               <td>
               <span class="glyphicon glyphicon-file"></span>
-              <strong><a href="/document/doc{{doc.id}}/">{{doc.get_filename}}</a></strong><br/><br/>
-                  Created by: <strong>{{doc.created_by}}</strong></td>
-              <td>{{doc.get_doc_type_display}}</td>
-              <td>{% for key, value in doc.parameters.items%}
-                  {{key}} = {{value}} <br/>
-                  {%endfor%}
+              <strong><a href="/document/doc{{doc.id}}/">{{doc.get_filename}}</a></strong>
+                  <br/><br/>
+                  Created by: <strong><i>{{doc.created_by}}</i></strong></td>
+              <td>
+                 {% if doc.get_doc_type_display == 'input' %}
+                 <span class="glyphicon glyphicon-log-in"></span>
+                 {% else %}
+                 <span class="glyphicon glyphicon-log-out"></span>
+                 {% endif %} 
+                 <strong><i>
+                 {{doc.get_doc_type_display}}
+                 </i></strong>
+              </td>
+              <td>
+                  {% if doc.get_doc_type_display == 'input' %}
+                     Samples: <strong>{{doc.sample_num}}</strong><br/>
+                     Norms: <strong>{{doc.norm_num}}</strong><br/>
+                     Rows: <strong>{{doc.row_num}}</strong>
+              </td>
+                  {% else %}
+                      Use sigma = <strong>{{doc.parameters.use_sigma}}</strong> <br/>
+                      {% if doc.parameters.use_sigma %}
+                        &nbsp;&nbsp;&nbsp;Sigma amount = <strong>{{doc.parameters.sigma_num}}</strong> <br/>
+                      {% endif %}
+                      Use CNR = <strong>{{doc.parameters.use_cnr}}</strong>
+                      {% if doc.parameters.use_sigma %}
+                        <br/>&nbsp;&nbsp;&nbsp; CNR lower = <strong>{{doc.parameters.cnr_low}}</strong>
+                        <br/>&nbsp;&nbsp;&nbsp; CNR upper = <strong>{{doc.parameters.cnr_up}}</strong>
+                      {% endif %}
+                  {% endif %}
+                 
+              
+              
               </td>
               <td>Created at: <strong>{{doc.created_at}}</strong><br/>
-                  Last calculated at: <strong>{{doc.calculated_at}}</strong><br/>
-                  Last calculated by: <strong>{{doc.calculated_by}}</strong></td>
-              <td>Samples: {{doc.sample_num}}<br/>
-                  Norms: {{doc.norm_num}}<br/>
-                  Rows: {{doc.row_num}}</td>
+                  {% if doc.get_doc_type_display == 'input' %}
+                      Last calculated at: <strong>{{doc.calculated_at}}</strong><br/>
+                      Last calculated by: <strong>{{doc.calculated_by}}</strong></td>
+                  {% endif %}
               <td>{{doc.description}}</td>
-              <td><button type="button" class="close pull-right with-tooltip" aria-hidden="true" data-toggle="tooltip"  data-placement="bottom" 
-                                             title="Delete" style="margin: 0 20px 0 0 ">&times;</button></td>
+              <td><button type="button" class="close pull-right with-tooltip" 
+                     aria-hidden="true"   data-placement="bottom" 
+                     data-toggle="modal"  title="Delete"
+                     doc-name="{{doc.get_filename}}" doc-id="{{doc.id}}" 
+                     data-target="#deleteModal"
+                     style="margin: 0 20px 0 0 ">&times;
+                   </button>
+              </td>
             
             </tr>           
             {% empty %}
@@ -73,7 +105,7 @@
 
 </div>
 
-<!-- Modal -->
+<!-- Upload new file Modal -->
 <div class="modal fade" id="uploadFormModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -101,6 +133,29 @@
     </div>
   </div>
 </div>
+
+
+<!-- Delete project Modal -->
+<div class="modal fade bs-example-modal-sm" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Delete document</h4>
+      </div>
+      <div class="modal-body alert alert-danger">
+        Are you sure you want to delete <strong id="doc_name">test</strong> document? 
+       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger" id="confirm_doc_delete">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <script>
 $(function(){
 	$("#doc_create_form > input[type=text], textarea").addClass("form-control");
@@ -111,6 +166,52 @@ $(function(){
 	    
 
 	  });
+});
+
+<!-- DELETE file Dialog show event handler -->
+$('#deleteModal').on('show.bs.modal', function (e) {
+
+    $doc_name = $(e.relatedTarget).attr('doc-name');
+    $(this).find('.modal-body #doc_name').text($doc_name);
+    $doc_id = $(e.relatedTarget).attr('doc-id');
+    
+    
+    $(this).find('.modal-footer #confirm_doc_delete').data('doc_id', $doc_id);
+});
+
+<!-- Form confirm (yes/ok) handler, submits form -->
+$('#deleteModal').find('.modal-footer #confirm_doc_delete').on('click', function(){
+	  
+	  var csrftoken = getCookie('csrftoken');
+
+
+    $.ajaxSetup({
+        crossDomain: false, // obviates need for sameOrigin test
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type)) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
+    
+    var doc_id = $('#deleteModal').find('.modal-footer #confirm_doc_delete').data('doc_id');
+    
+    $.post('/document/delete/'+doc_id+'/', function(data) {
+        if (data.result == "ok"){
+            
+      	  $('#deleteModal').modal('hide');
+      	  $('#doc'+doc_id).fadeOut('slow');
+      	  
+        } else {
+            // handle error processed by server here
+            alert("smth goes wrong");
+        }
+    }).fail(function() {
+        // handle unexpected error here
+        alert("error");
+    });
+    return false;
+    
 });
 </script>
 {% endblock %}

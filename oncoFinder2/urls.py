@@ -7,11 +7,13 @@ from django.views.generic.base import  RedirectView
 from django.contrib import admin
 admin.autodiscover()
 
-from website.views import IndexPage, LoginPage, Logout
+from website.views import IndexPage, Logout
 from profiles.views import ProfileIndex, SettingsProfile, SettingsBilling, CreateProject, \
-                           DeleteProject, ProjectDetail, CreateDocument, DocumentDetail
+                           DeleteProject, ProjectDetail, CreateDocument, DeleteDocument, \
+                           DocumentDetail
                            
 from core.views import CoreSetCalculationParameters, CoreCalculation, Test
+from database.views import PathwayList, PathwayDetail
 
 urlpatterns = patterns('',
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
@@ -37,6 +39,7 @@ urlpatterns = patterns('',
     url(r'^project/(?P<slug>[-\w]+)/$', ProjectDetail.as_view(), name="project_detail"),
     
     url(r'^document/new/$', CreateDocument.as_view(), name="document_create"),
+    url(r'^document/delete/(?P<pk>\d+)/$', DeleteDocument.as_view(), name="document_delete"),
     url(r'^document/doc(?P<pk>\d+)/$', DocumentDetail.as_view(), name="document_detail"),
     
     ################### Core App ##############################
@@ -44,6 +47,11 @@ urlpatterns = patterns('',
     url(r'^calculation/doc(?P<pk>\d+)/$', CoreCalculation.as_view(), name="core_calculation"),
     
     url(r'^test/$', Test.as_view()),
+    
+    ################### DataBase App ##############################
+    url(r'^db/pathways/$', PathwayList.as_view(), name="pathway_list"),
+    url(r'^db/pathways/[-\w]+/(?P<pk>\d+)/$', PathwayDetail.as_view(), name="pathway_detail"),
+    
     
 
    

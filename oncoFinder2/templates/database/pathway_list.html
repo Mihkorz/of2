@@ -1,0 +1,42 @@
+{% extends "base_profiles.html" %}
+
+{% block title %}Pathway database | OncoFinder v2.0{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Pathways DataBase </h1>
+    <span class="text-muted">
+    Total ammount = <strong>210</strong>
+    </span>
+    <hr/>
+
+    <ul>
+        {% for path in pathways %}
+          <li>
+              <div class="well">
+                <a href='{{path.name|slugify}}/{{path.id}}'>{{ path.name }}</a>
+              </div>
+          </li>
+        {% endfor %}
+    </ul>
+    
+     {% if is_paginated %}
+        <div class="pagination">
+            <span class="page-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
+                <span class="page-current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">next</a>
+                {% endif %}
+            </span>
+        </div>
+    {% endif %}
+
+</div>
+
+
+{% endblock %}

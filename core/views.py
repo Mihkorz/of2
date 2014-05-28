@@ -275,39 +275,32 @@ class Test(TemplateView):
               
         context = super(Test, self).get_context_data(**kwargs)
         
-        pathways = Pathway.objects.filter(gene__name='PGF')               
+        #pathways = Pathway.objects.filter(gene__name='PGF')               
         
-        filename = settings.MEDIA_ROOT+"/users/Mikhail/project-mik/output/output_u219_5_12_onesample.csv.xlsx"
+        filename = settings.MEDIA_ROOT+"/users/Mikhail/project-mik/input/w2.2.txt"
         
-        df = read_excel(filename, sheetname="PMS")
+        sniffer = csv.Sniffer()
+        dialect = sniffer.sniff(open(filename, 'r').read(), delimiters='\t,;') # defining the separator of the csv file
         
-        tumour_columns = [col for col in df.columns if 'Tumour' in col]            
+        df = read_csv(filename, delimiter=dialect.delimiter)
         
-        DS = 0
-        for path in pathways:
-            PMS = df.at[path.name, 'Tumour_GEP_Affy_U219_CTG.0899_P2_2.flc']
-            DS += PMS
-            
         
-        context['test'] = pathways
-        context['PMS'] = df.to_html()
+        filename1 = settings.MEDIA_ROOT+"/users/Mikhail/project-mik/process/process_w2.2.txt"
+        df1 = read_csv(filename1, delimiter='\t')
         
-        context['varr'] = DS
         
-        if (
-                        (
-                           (1 > (3)) or 
-                           (1 < (3))
-                         ) and 
-                        (1 > 1.5 or 1 < 0.67) and 
-                        (1 > 0)
-                       ):
-            a = 'yes'
-        else:
-            a = 'no'
-            
         
-        context['a'] = a
+        tumour_columns = [col for col in df.columns if 'Tumour' in col]
+        
+        tumour_columns1 = [col for col in df1.columns if 'Tumour' in col]
+        
+        
+        context['a'] = len(tumour_columns)
+        context['b'] = len(tumour_columns1)
+        
+        
+        
+        
         
         return context
     
