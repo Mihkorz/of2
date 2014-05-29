@@ -88,3 +88,460 @@ Traceback (most recent call last):
   File "/usr/lib/python2.7/encodings/utf_8.py", line 16, in decode
     return codecs.utf_8_decode(input, errors, True)
 UnicodeDecodeError: 'utf8' codec can't decode byte 0xd1 in position 33491: invalid continuation byte
+2014-05-29 14:35:21,592 ERROR base 5157 -1272857792 Internal Server Error: /document/new/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/views.py", line 154, in dispatch
+    return super(CreateDocument, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 205, in post
+    return super(BaseCreateView, self).post(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/views.py", line 206, in form_valid
+    df.to_csv(new_file, sep='\t', encoding='utf-8')
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/util/decorators.py", line 60, in wrapper
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 1139, in to_csv
+    formatter.save()
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/format.py", line 1182, in save
+    self._save()
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/format.py", line 1282, in _save
+    self._save_chunk(start_i, end_i)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/format.py", line 1305, in _save_chunk
+    lib.write_csv_rows(self.data, ix, self.nlevels, self.cols, self.writer)
+  File "lib.pyx", line 858, in pandas.lib.write_csv_rows (pandas/lib.c:15047)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/common.py", line 2430, in writerows
+    data = data.decode("utf-8")
+  File "/usr/lib/python2.7/encodings/utf_8.py", line 16, in decode
+    return codecs.utf_8_decode(input, errors, True)
+UnicodeDecodeError: 'utf8' codec can't decode byte 0xd1 in position 33491: invalid continuation byte
+2014-05-29 14:45:29,449 ERROR base 5508 -1282409664 Internal Server Error: /document/new/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/views.py", line 154, in dispatch
+    return super(CreateDocument, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 205, in post
+    return super(BaseCreateView, self).post(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/views.py", line 200, in form_valid
+    df = df.div(df.Mean_norm, axis='index')
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/ops.py", line 761, in f
+    return self._combine_series(other, na_op, fill_value, axis, level)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 2796, in _combine_series
+    return self._combine_match_index(other, func, level=level, fill_value=fill_value)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 2826, in _combine_match_index
+    return self._constructor(func(left.values.T, right.values).T,
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/ops.py", line 737, in na_op
+    mask = notnull(xrav) & notnull(yrav)
+ValueError: operands could not be broadcast together with shapes (598976,) (18718,) 
+2014-05-29 14:57:17,766 ERROR base 5508 -1282409664 Internal Server Error: /document/new/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/views.py", line 154, in dispatch
+    return super(CreateDocument, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 205, in post
+    return super(BaseCreateView, self).post(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/views.py", line 200, in form_valid
+    df = df.div(df.Mean_norm, axis='index')
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/ops.py", line 761, in f
+    return self._combine_series(other, na_op, fill_value, axis, level)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 2796, in _combine_series
+    return self._combine_match_index(other, func, level=level, fill_value=fill_value)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 2826, in _combine_match_index
+    return self._constructor(func(left.values.T, right.values).T,
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/ops.py", line 737, in na_op
+    mask = notnull(xrav) & notnull(yrav)
+ValueError: operands could not be broadcast together with shapes (598976,) (18718,) 
+2014-05-29 15:30:49,343 ERROR base 5964 -1272325312 Internal Server Error: /test/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 272, in dispatch
+    return super(Test, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 289, in get_context_data
+    df1 = read_csv(filename1, delimiter='\t')
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/io/parsers.py", line 421, in parser_f
+    return _read(filepath_or_buffer, kwds)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/io/parsers.py", line 219, in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/io/parsers.py", line 503, in __init__
+    self._make_engine(self.engine)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/io/parsers.py", line 610, in _make_engine
+    self._engine = CParserWrapper(self.f, **self.options)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/io/parsers.py", line 972, in __init__
+    self._reader = _parser.TextReader(src, **kwds)
+  File "parser.pyx", line 330, in pandas.parser.TextReader.__cinit__ (pandas/parser.c:3212)
+  File "parser.pyx", line 557, in pandas.parser.TextReader._setup_parser_source (pandas/parser.c:5571)
+IOError: File /home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/media/users/Mikhail/project-mik/process/process_w2.2.txt does not exist
+2014-05-29 15:46:23,783 ERROR base 6376 -1283458240 Internal Server Error: /test/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 272, in dispatch
+    return super(Test, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 306, in get_context_data
+    summ += df.at[path.name, 'Tumour.GSM1186545_PP4_32_047A_U133p2_100ng_SD.AVG_Signal']
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/indexing.py", line 1393, in __getitem__
+    return self.obj.get_value(*key, takeable=self._takeable)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 1525, in get_value
+    return engine.get_value(series.values, index)
+  File "index.pyx", line 97, in pandas.index.IndexEngine.get_value (pandas/index.c:2987)
+  File "index.pyx", line 105, in pandas.index.IndexEngine.get_value (pandas/index.c:2802)
+  File "index.pyx", line 151, in pandas.index.IndexEngine.get_loc (pandas/index.c:3577)
+KeyError: u'AKT_Pathway'
+2014-05-29 15:47:03,872 ERROR base 6427 -1273124032 Internal Server Error: /test/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 272, in dispatch
+    return super(Test, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 283, in get_context_data
+    dialect = sniffer.sniff(open(filename, 'r').read(), delimiters='\t,;') # defining the separator of the csv file
+IOError: [Errno 2] No such file or directory: '/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/media/users/Mikhail/project-mik/input/process_GSE48905_GSE10780.normalized.test'
+2014-05-29 15:47:14,651 ERROR base 6427 -1314915520 Internal Server Error: /test/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 272, in dispatch
+    return super(Test, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 283, in get_context_data
+    dialect = sniffer.sniff(open(filename, 'r').read(), delimiters='\t,;') # defining the separator of the csv file
+IOError: [Errno 2] No such file or directory: '/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/media/users/Mikhail/project-mik/input/process_GSE48905_GSE10780.normalized.test'
+2014-05-29 15:47:16,565 ERROR base 6427 -1283458240 Internal Server Error: /test/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 272, in dispatch
+    return super(Test, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 283, in get_context_data
+    dialect = sniffer.sniff(open(filename, 'r').read(), delimiters='\t,;') # defining the separator of the csv file
+IOError: [Errno 2] No such file or directory: '/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/media/users/Mikhail/project-mik/input/process_GSE48905_GSE10780.normalized.test'
+2014-05-29 15:47:41,247 ERROR base 6461 -1272767680 Internal Server Error: /test/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 272, in dispatch
+    return super(Test, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 306, in get_context_data
+    summ += df.at[path.name, 'Tumour.GSM1186545_PP4_32_047A_U133p2_100ng_SD.AVG_Signal']
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/indexing.py", line 1393, in __getitem__
+    return self.obj.get_value(*key, takeable=self._takeable)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 1525, in get_value
+    return engine.get_value(series.values, index)
+  File "index.pyx", line 97, in pandas.index.IndexEngine.get_value (pandas/index.c:2987)
+  File "index.pyx", line 105, in pandas.index.IndexEngine.get_value (pandas/index.c:2802)
+  File "index.pyx", line 151, in pandas.index.IndexEngine.get_loc (pandas/index.c:3577)
+KeyError: u'AKT_Pathway'
+2014-05-29 15:48:20,751 ERROR base 6486 -1273029824 Internal Server Error: /test/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 272, in dispatch
+    return super(Test, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 283, in get_context_data
+    dialect = sniffer.sniff(open(filename, 'r').read(), delimiters='\t,;') # defining the separator of the csv file
+  File "/usr/lib/python2.7/csv.py", line 188, in sniff
+    raise Error, "Could not determine delimiter"
+Error: Could not determine delimiter
+2014-05-29 15:48:24,468 ERROR base 6486 -1314915520 Internal Server Error: /test/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 272, in dispatch
+    return super(Test, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 283, in get_context_data
+    dialect = sniffer.sniff(open(filename, 'r').read(), delimiters='\t,;') # defining the separator of the csv file
+  File "/usr/lib/python2.7/csv.py", line 188, in sniff
+    raise Error, "Could not determine delimiter"
+Error: Could not determine delimiter
+2014-05-29 15:48:38,275 ERROR base 6523 -1272652992 Internal Server Error: /test/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 272, in dispatch
+    return super(Test, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 283, in get_context_data
+    dialect = sniffer.sniff(open(filename, 'r').read(), delimiters='\t,;') # defining the separator of the csv file
+  File "/usr/lib/python2.7/csv.py", line 188, in sniff
+    raise Error, "Could not determine delimiter"
+Error: Could not determine delimiter
+2014-05-29 15:48:40,144 ERROR base 6523 -1313866944 Internal Server Error: /test/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 272, in dispatch
+    return super(Test, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 283, in get_context_data
+    dialect = sniffer.sniff(open(filename, 'r').read(), delimiters='\t,;') # defining the separator of the csv file
+  File "/usr/lib/python2.7/csv.py", line 188, in sniff
+    raise Error, "Could not determine delimiter"
+Error: Could not determine delimiter
+2014-05-29 15:48:53,017 ERROR base 6523 -1272652992 Internal Server Error: /test/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 272, in dispatch
+    return super(Test, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 283, in get_context_data
+    #dialect = sniffer.sniff(open(filename, 'r').read(), delimiters='\t,;') # defining the separator of the csv file
+  File "/usr/lib/python2.7/csv.py", line 188, in sniff
+    raise Error, "Could not determine delimiter"
+Error: Could not determine delimiter
+2014-05-29 15:49:02,455 ERROR base 6523 -1313866944 Internal Server Error: /test/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 272, in dispatch
+    return super(Test, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 283, in get_context_data
+    #dialect = sniffer.sniff(open(filename, 'r').read(), delimiters='\t,;') # defining the separator of the csv file
+  File "/usr/lib/python2.7/csv.py", line 188, in sniff
+    raise Error, "Could not determine delimiter"
+Error: Could not determine delimiter
+2014-05-29 15:49:10,592 ERROR base 6523 -1272652992 Internal Server Error: /test/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 272, in dispatch
+    return super(Test, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 283, in get_context_data
+    
+  File "/usr/lib/python2.7/csv.py", line 188, in sniff
+    raise Error, "Could not determine delimiter"
+Error: Could not determine delimiter
+2014-05-29 15:49:14,685 ERROR base 6523 -1313866944 Internal Server Error: /test/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 272, in dispatch
+    return super(Test, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 283, in get_context_data
+    
+  File "/usr/lib/python2.7/csv.py", line 188, in sniff
+    raise Error, "Could not determine delimiter"
+Error: Could not determine delimiter
+2014-05-29 16:06:48,964 ERROR base 6928 -1272923328 Internal Server Error: /calculation-parameters/doc174/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 34, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 233, in form_valid
+    writerrr.save()
+NameError: global name 'writerrr' is not defined

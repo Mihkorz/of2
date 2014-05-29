@@ -129,7 +129,7 @@ class CoreSetCalculationParameters(FormView):
                         
                     if (
                         (
-                           (EXPRESSION_LEVEL > (row['Mean_norm'] + sigma_num*row['std'])) or 
+                           (EXPRESSION_LEVEL >= (row['Mean_norm'] + sigma_num*row['std'])) or 
                            (EXPRESSION_LEVEL < (row['Mean_norm'] - sigma_num*row['std']))
                          ) and 
                         (CNR > cnr_up or CNR < cnr_low) and 
@@ -275,16 +275,14 @@ class Test(TemplateView):
               
         context = super(Test, self).get_context_data(**kwargs)
         
-        #pathways = Pathway.objects.filter(gene__name='PGF')               
+        pathways = Pathway.objects.filter(gene__name='SRC')               
         
-        filename = settings.MEDIA_ROOT+"/users/Mikhail/project-mik/input/w2.2.txt"
-        
-        sniffer = csv.Sniffer()
-        dialect = sniffer.sniff(open(filename, 'r').read(), delimiters='\t,;') # defining the separator of the csv file
-        
-        df = read_csv(filename, delimiter=dialect.delimiter)
+        filename = settings.MEDIA_ROOT+"/users/Mikhail/project-mik/output/output_GSE48905_GSE10780.normalized.test.xlsx"
         
         
+        df = read_excel(filename, sheetname="PMS")
+        
+        """
         filename1 = settings.MEDIA_ROOT+"/users/Mikhail/project-mik/process/process_w2.2.txt"
         df1 = read_csv(filename1, delimiter='\t')
         
@@ -297,8 +295,32 @@ class Test(TemplateView):
         
         context['a'] = len(tumour_columns)
         context['b'] = len(tumour_columns1)
+        """
+        context['pathways'] = pathways
         
+        tumour_columns = [col for col in df.columns if 'Tumour' in col]
+        summ = 0
+        for path in pathways:
+            summ += df.at[path.name, 'Tumour.GSM1186545_PP4_32_047A_U133p2_100ng_SD.AVG_Signal']
         
+        cnr_up = cnr_low = 0
+        CNR = 1
+        EXPRESSION_LEVEL = 4
+        Mean_norm = 4
+        if (
+                        (
+                           (EXPRESSION_LEVEL > Mean_norm) or 
+                           (EXPRESSION_LEVEL < Mean_norm) or
+                           (EXPRESSION_LEVEL == Mean_norm)
+                         ) and 
+                        (CNR > cnr_up or CNR < cnr_low) and 
+                        (CNR > 0)
+                       ):
+            summ = "yes"
+        else:
+            summ = "no"
+            
+        context['summ'] = summ
         
         
         

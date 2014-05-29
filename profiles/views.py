@@ -186,8 +186,9 @@ class CreateDocument(CreateView):
         
         new_file = settings.MEDIA_ROOT+"/"+path
                 
-        df = df.set_index('SYMBOL') #create index by SYMBOL column   
-        #df = df.groupby(df.index, level=0).mean() #deal with duplicate genes by taking mean value
+        df = df.set_index('SYMBOL') #create index by SYMBOL column
+          
+        df = df.groupby(df.index, level=0).mean() #deal with duplicate genes by taking mean value
         
         mean_norm = df[[norm for norm in norm_cols]].mean(axis=1)
         df1 = DataFrame(df[[norm for norm in norm_cols]], index=df.index)
@@ -196,13 +197,13 @@ class CreateDocument(CreateView):
                 
         df['Mean_norm'] = mean_norm
                
-        #df = df.div(df.Mean_norm, axis='index')
+        df = df.div(df.Mean_norm, axis='index')
        
         df['Mean_norm'] = mean_norm
         df['std'] = df1
                 
         
-        df.to_csv(new_file, sep='\t', encoding='utf-8')
+        df.to_csv(new_file, sep='\t')
     
          
         return HttpResponseRedirect(self.success_url+project.name)
