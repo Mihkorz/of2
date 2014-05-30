@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import logging
 
 from django import forms
 from django.forms.models import inlineformset_factory
@@ -8,6 +9,8 @@ from .widgets import AdminImageWidget
 from django.contrib.auth.models import User
 from .models import Profile, Project, Document
 from .utils import validate_file
+
+logger = logging.getLogger('oncoFinder')
 
 class SettingsUserForm(forms.ModelForm):
     class Meta(object):
@@ -54,7 +57,7 @@ class UploadDocumentForm(forms.ModelForm):
             temp_doc.close()            
   
         except forms.ValidationError:
-            #logger.error(u'User was trying to upload file with wrong format.')
+            logger.error(u'User was trying to upload file with wrong format.')
             raise 
 
         return uploaded_file

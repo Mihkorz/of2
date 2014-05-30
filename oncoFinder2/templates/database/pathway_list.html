@@ -9,12 +9,17 @@
     Total ammount = <strong>210</strong>
     </span>
     <hr/>
-
-    <ul>
+   <div class="well">
+    <ul class="pathway_list_ul">
         {% for path in pathways %}
           <li>
               <div class="well">
                 <a href='{{path.name|slugify}}/{{path.id}}'>{{ path.name }}</a>
+                 <div class="text-muted small">
+                 Genes: <strong>{{path.gene_set.count}}</strong> <br/>
+                 Nodes: <strong>{{path.node_set.count}}</strong> <br/>
+                 <!--  Components: <strong>40</strong> <br/>-->
+                 </div>
               </div>
           </li>
         {% endfor %}
@@ -35,7 +40,7 @@
             </span>
         </div>
     {% endif %}
-
+   </div>
 </div>
 
 

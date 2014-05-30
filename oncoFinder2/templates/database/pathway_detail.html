@@ -4,12 +4,61 @@
 
 {% block content %}
 <div class="container">
-        <h1>"{{pathway.name}}"</h1>
+        <h1>{{pathway.name}}</h1>
     <span class='pull-right'>
        <a href='/db/pathways/'><<< back to pathways list</a>
     </span>
     <hr/>
- 
+   <div id="tabs">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#fragment-1" data-toggle="tab"><span>Genes </span></a></li>
+        <li><a href="#fragment-2" data-toggle="tab"><span>Nodes and Components</span></a></li>
+        <li><a href="#fragment-3" data-toggle="tab"><span>Graphic Scheme</span></a></li>
+    </ul>
+<div id="tabContent" class="tab-content">
+<div id="fragment-1" class="tab-pane fade in active well">
+Total = {{pathway.gene_set.count}}
+<table class='table table-bordered table table-striped' style='width:500px;'>
+<thead >
+  <tr valign="top">
+    <th>#</th>
+    <th>SYMBOL</th>
+    <th>ARR</th>
+  </tr>
+</thead>
+
+    {% for gene in pathway.gene_set.all %}
+      <tr valign="top">
+        <td width='40'>{{ forloop.counter }}</td>
+        <td>{{ gene.name }}</td> 
+        <td>{{gene.arr}}</td>
+      </tr>
+    {% endfor %}
+</table>
+</div>
+<div id="fragment-2" class="tab-pane fade well">
+Total = {{pathway.node_set.count}}
+    <div id='nodesAndComponents'>
+    <ul class='pathList'>
+    {% for node in pathway.node_set.all %}
+      <li><b>{{ node.name }}</b> 
+        <ul >
+          {% for component in node.component_set.all %}
+      <li>{{ component.name }}</li>
+          {% endfor %}
+        </ul></li>
+    {% endfor %}
+    </ul>
+    </div>
+</div> 
+<div id="fragment-3" class="tab-pane fade">
+
+
+<div id="chart2" class="chart">
+              <div class="description">Scheme of "{{pathway.name}}" pathway</div>
+          </div>
+   
+</div> 
 
 </div>
 

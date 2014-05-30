@@ -5,6 +5,8 @@ import csv
 from django import forms
 from django.conf import settings
 
+from pandas import read_csv, read_excel, DataFrame
+
 
 
 def validate_file(file_, content_types=None, max_upload_size=None):
@@ -23,16 +25,46 @@ def validate_file(file_, content_types=None, max_upload_size=None):
         
         sniffer = csv.Sniffer()
         dialect = sniffer.sniff(file_.read(), delimiters='\t,;')
+        
         file_.seek(0)
+        
+        df = read_csv(file_, delimiter=dialect.delimiter)
+        symbol = [col for col in df.columns if 'SYMBOL' in col]
+        tumour_cols = [col for col in df.columns if 'Tumour' in col]
+        norm_cols = [col for col in df.columns if 'Norm' in col]
+        
+        if not symbol:
+            raise forms.ValidationError(u"Document doesn't contain SYMBOL column.\
+                                         Please check your document and try uploading it again.")
+            
+        
+        for tumour in tumour_cols:
+            try:
+                df[tumour].astype(float)
+            except ValueError as e:
+                raise forms.ValidationError(u'Document contains Sample with non float value in column %s. Error: %s'
+                                        %  (tumour, e))
+                
+        for norm in norm_cols:
+            try:
+                df[norm].astype(float)
+            except :
+                raise forms.ValidationError(u'Document contains Norm with non float value in column %s.'
+                                        % norm)
+                
+        
+        
+        """
         allrows = csv.reader(file_, dialect='excel', delimiter=dialect.delimiter)
 
         for row in allrows:
             if not any(row): # if not all(row)
                 raise forms.ValidationError(u'File contains an empty row! \
-                                              Presumably row number %s \
+                                              Presumably row number %s. \
                                               Please check your file and try \
                                               uploading it again.'
                                         % allrows.line_num)
+        """
                 
         
                 

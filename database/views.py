@@ -17,7 +17,8 @@ class PathwayList(ListView):
     paginate_by = 20
         
     def get_context_data(self, **kwargs):
-        context = super(PathwayList, self).get_context_data(**kwargs)        
+        context = super(PathwayList, self).get_context_data(**kwargs)
+               
         return context
         
     @method_decorator(login_required)

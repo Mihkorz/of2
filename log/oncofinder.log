@@ -545,3 +545,259 @@ Traceback (most recent call last):
   File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 233, in form_valid
     writerrr.save()
 NameError: global name 'writerrr' is not defined
+2014-05-30 13:22:57,101 ERROR base 2992 -1334838464 Internal Server Error: /document/new/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/views.py", line 154, in dispatch
+    return super(CreateDocument, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 205, in post
+    return super(BaseCreateView, self).post(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/views.py", line 189, in form_valid
+    df = df.set_index('SYMBOL') #create index by SYMBOL column
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 2229, in set_index
+    level = frame[col].values
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 1658, in __getitem__
+    return self._getitem_column(key)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 1665, in _getitem_column
+    return self._get_item_cache(key)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/generic.py", line 1044, in _get_item_cache
+    values = self._data.get(item)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 2956, in get
+    _, block = self._find_block(item)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 3268, in _find_block
+    self._check_have(item)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 3275, in _check_have
+    raise KeyError('no item named %s' % com.pprint_thing(item))
+KeyError: u'no item named SYMBOL'
+2014-05-30 13:23:25,702 ERROR base 2992 -1334838464 Internal Server Error: /document/new/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/views.py", line 154, in dispatch
+    return super(CreateDocument, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 205, in post
+    return super(BaseCreateView, self).post(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/views.py", line 193, in form_valid
+    mean_norm = df[[norm for norm in norm_cols]].mean(axis=1)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 1652, in __getitem__
+    return self._getitem_array(key)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 1696, in _getitem_array
+    indexer = self.ix._convert_to_indexer(key, axis=1)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/indexing.py", line 1067, in _convert_to_indexer
+    raise KeyError('%s not in index' % objarr[mask])
+KeyError: "['Norma*GSM1214940_NORMAL_E514_Occipital*AVG_Signal'\n 'Norma*GSM1214947_NORMAL_E605_Parietal*AVG_Signal'] not in index"
+2014-05-30 13:37:07,685 ERROR forms 4442 -1272767680 User was trying to upload file with wrong format.
+2014-05-30 13:38:30,915 ERROR forms 4442 -1294206144 User was trying to upload file with wrong format.
+2014-05-30 13:46:24,326 ERROR forms 4725 -1272595648 User was trying to upload file with wrong format.
+2014-05-30 13:48:52,824 ERROR forms 4746 -1272652992 User was trying to upload file with wrong format.
+2014-05-30 13:48:52,862 ERROR base 4746 -1272652992 Internal Server Error: /document/new/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 139, in get_response
+    response = response.render()
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 105, in render
+    self.content = self.rendered_content
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 80, in rendered_content
+    template = self.resolve_template(self.template_name)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 56, in resolve_template
+    return loader.select_template(template)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader.py", line 186, in select_template
+    raise TemplateDoesNotExist(', '.join(not_found))
+TemplateDoesNotExist: profiles/document_create.html
+2014-05-30 13:49:07,338 ERROR forms 4784 -1272419520 User was trying to upload file with wrong format.
+2014-05-30 13:57:38,700 ERROR forms 4784 -1292895424 User was trying to upload file with wrong format.
+2014-05-30 14:01:15,111 ERROR forms 4784 -1313866944 User was trying to upload file with wrong format.
+2014-05-30 14:04:58,204 ERROR forms 4784 -1334838464 User was trying to upload file with wrong format.
+2014-05-30 14:17:13,287 ERROR forms 4784 -1313866944 User was trying to upload file with wrong format.
+2014-05-30 14:17:54,051 ERROR forms 5224 -1272440000 User was trying to upload file with wrong format.
+2014-05-30 14:30:07,575 ERROR base 5421 -1304429760 Internal Server Error: /document/new/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/views.py", line 154, in dispatch
+    return super(CreateDocument, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 205, in post
+    return super(BaseCreateView, self).post(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 170, in post
+    if form.is_valid():
+  File "/usr/local/lib/python2.7/dist-packages/django/forms/forms.py", line 129, in is_valid
+    return self.is_bound and not bool(self.errors)
+  File "/usr/local/lib/python2.7/dist-packages/django/forms/forms.py", line 121, in errors
+    self.full_clean()
+  File "/usr/local/lib/python2.7/dist-packages/django/forms/forms.py", line 273, in full_clean
+    self._clean_fields()
+  File "/usr/local/lib/python2.7/dist-packages/django/forms/forms.py", line 291, in _clean_fields
+    value = getattr(self, 'clean_%s' % name)()
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/forms.py", line 55, in clean_document
+    validate_file(temp_doc)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/utils.py", line 28, in validate_file
+    dialect = sniffer.sniff(open(file_, 'r').read(), delimiters='\t,;') # defining the separator of the csv file
+TypeError: coercing to Unicode: need string or buffer, instance found
+2014-05-30 14:31:11,185 ERROR base 5499 -1273251008 Internal Server Error: /document/new/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/views.py", line 154, in dispatch
+    return super(CreateDocument, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 205, in post
+    return super(BaseCreateView, self).post(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/views.py", line 193, in form_valid
+    mean_norm = df[[norm for norm in norm_cols]].mean(axis=1)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 1652, in __getitem__
+    return self._getitem_array(key)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 1696, in _getitem_array
+    indexer = self.ix._convert_to_indexer(key, axis=1)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/indexing.py", line 1067, in _convert_to_indexer
+    raise KeyError('%s not in index' % objarr[mask])
+KeyError: "['Norma*GSM1214940_NORMAL_E514_Occipital*AVG_Signal'\n 'Norma*GSM1214947_NORMAL_E605_Parietal*AVG_Signal'] not in index"
+2014-05-30 14:35:37,240 ERROR forms 5761 -1272534208 User was trying to upload file with wrong format.
+2014-05-30 14:39:27,472 ERROR base 5851 -1272534208 Internal Server Error: /document/new/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/views.py", line 154, in dispatch
+    return super(CreateDocument, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 205, in post
+    return super(BaseCreateView, self).post(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 170, in post
+    if form.is_valid():
+  File "/usr/local/lib/python2.7/dist-packages/django/forms/forms.py", line 129, in is_valid
+    return self.is_bound and not bool(self.errors)
+  File "/usr/local/lib/python2.7/dist-packages/django/forms/forms.py", line 121, in errors
+    self.full_clean()
+  File "/usr/local/lib/python2.7/dist-packages/django/forms/forms.py", line 273, in full_clean
+    self._clean_fields()
+  File "/usr/local/lib/python2.7/dist-packages/django/forms/forms.py", line 291, in _clean_fields
+    value = getattr(self, 'clean_%s' % name)()
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/forms.py", line 55, in clean_document
+    validate_file(temp_doc)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/utils.py", line 37, in validate_file
+    df.tumour.astype(float)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/generic.py", line 1851, in __getattr__
+    (type(self).__name__, name))
+AttributeError: 'DataFrame' object has no attribute 'tumour'
+2014-05-30 14:40:04,488 ERROR base 5875 -1273185472 Internal Server Error: /document/new/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/views.py", line 154, in dispatch
+    return super(CreateDocument, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 205, in post
+    return super(BaseCreateView, self).post(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 170, in post
+    if form.is_valid():
+  File "/usr/local/lib/python2.7/dist-packages/django/forms/forms.py", line 129, in is_valid
+    return self.is_bound and not bool(self.errors)
+  File "/usr/local/lib/python2.7/dist-packages/django/forms/forms.py", line 121, in errors
+    self.full_clean()
+  File "/usr/local/lib/python2.7/dist-packages/django/forms/forms.py", line 273, in full_clean
+    self._clean_fields()
+  File "/usr/local/lib/python2.7/dist-packages/django/forms/forms.py", line 291, in _clean_fields
+    value = getattr(self, 'clean_%s' % name)()
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/forms.py", line 55, in clean_document
+    validate_file(temp_doc)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/utils.py", line 40, in validate_file
+    %  e.strerror)
+AttributeError: 'exceptions.ValueError' object has no attribute 'strerror'
+2014-05-30 14:40:23,531 ERROR forms 5891 -1273251008 User was trying to upload file with wrong format.
+2014-05-30 14:41:19,045 ERROR base 5942 -1272652992 Internal Server Error: /document/new/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/views.py", line 154, in dispatch
+    return super(CreateDocument, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 205, in post
+    return super(BaseCreateView, self).post(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 170, in post
+    if form.is_valid():
+  File "/usr/local/lib/python2.7/dist-packages/django/forms/forms.py", line 129, in is_valid
+    return self.is_bound and not bool(self.errors)
+  File "/usr/local/lib/python2.7/dist-packages/django/forms/forms.py", line 121, in errors
+    self.full_clean()
+  File "/usr/local/lib/python2.7/dist-packages/django/forms/forms.py", line 273, in full_clean
+    self._clean_fields()
+  File "/usr/local/lib/python2.7/dist-packages/django/forms/forms.py", line 291, in _clean_fields
+    value = getattr(self, 'clean_%s' % name)()
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/forms.py", line 55, in clean_document
+    validate_file(temp_doc)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/utils.py", line 40, in validate_file
+    %  tumour, e)
+TypeError: not enough arguments for format string
+2014-05-30 14:41:38,792 ERROR forms 5960 -1272419520 User was trying to upload file with wrong format.
+2014-05-30 14:50:09,684 ERROR forms 6242 -1272988864 User was trying to upload file with wrong format.
