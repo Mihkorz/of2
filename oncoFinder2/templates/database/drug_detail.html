@@ -1,0 +1,68 @@
+{% extends "base_profiles.html" %}
+
+{% block title %}{{ drug.name }} | OncoFinder v2.0{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Information for "{{ drug.name }}" </h1>
+        <span class='pull-right'>
+       <a href='/db/drugs/'><<< back to Drugs list</a>
+    </span>
+    <hr/>
+    
+    
+    <div class='well'>
+
+<table class="table table-bordered table-striped">
+  <tr>
+    <td>Name:</td>
+    <td>{{drug.name}}</td>
+  </tr>
+  <tr>
+    <td>Type:</td>
+    <td>{{drug.tip}}</td>
+  </tr>
+  <tr>
+    <td>Substance:</td>
+    <td>{{drug.substance}}</td>
+  </tr>
+  <tr>
+    <td>Targets:</td>
+    <td>{{drug.target_set.all|join:", "}}</td>
+  </tr>
+  <tr>
+    <td>morphology:</td>
+    <td>{{drug.morphology}}</td>
+  </tr>
+  <tr>
+    <td>price:</td>
+    <td>{{drug.price}}</td>
+  </tr>
+  <tr>
+    <td>side Effect:</td>
+    <td>{{drug.sideEffect}}</td>
+  </tr>
+  <tr>
+    <td>contraindication:</td>
+    <td>{{drug.contraindication}}</td>
+  </tr>
+  <tr>
+    <td>compatibility:</td>
+    <td>{{drug.compatibility}}</td>
+  </tr>
+  <tr>
+    <td>experience:</td>
+    <td>{{drug.experience}}</td>
+  </tr>
+  <tr>
+    <td>info:</td>
+    <td>{{drug.info}}</td>
+  </tr>
+  </table>
+
+</div>
+    
+    
+</div>
+{%endblock%}    
+    

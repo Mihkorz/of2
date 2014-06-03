@@ -1,29 +1,28 @@
 {% extends "base_profiles.html" %}
 
-{% block title %}Pathway database | OncoFinder v2.0{% endblock %}
+{% block title %}Drugs database | OncoFinder v2.0{% endblock %}
 
 {% block content %}
 <div class="container">
-    <h1>Pathways DataBase </h1>
+    <h1>Drugs DataBase </h1>
     <span class="text-muted">
-    Total ammount = <strong>{{allPathways}}</strong>
+    Total ammount = <strong>{{allDrugs}}</strong>
     </span>
     <hr/>
    <div class="well">
-    <ul class="pathway_list_ul">
-        {% for path in pathways %}
-          <li>
-              <div class="well">
-                <a href='{{path.name|slugify}}/{{path.id}}'>{{ path.name }}</a>
-                 <div class="text-muted small">
-                 Genes: <strong>{{path.gene_set.count}}</strong> <br/>
-                 Nodes: <strong>{{path.node_set.count}}</strong> <br/>
-                 <!--  Components: <strong>40</strong> <br/>-->
-                 </div>
-              </div>
-          </li>
-        {% endfor %}
-    </ul>
+<ul class='drugList unstyled'>
+{% for drug in drugs %}
+  <li>
+     <div class='well'>
+       <h4 ><a href='/db/drugs/{{drug.name|slugify}}/{{drug.id}}/'>{{drug.name}}</a></h4>
+       <ul class='unstyled'>
+         <li><b>Type:</b> {{drug.tip}}</li>
+         <li><b>Targets:</b> {{drug.target_set.all|join:", "}}</li>
+       </ul> 
+     </div>
+  </li>
+{% endfor %}
+</ul>
     
      {% if is_paginated %}
         <div class="pagination">

@@ -5,7 +5,7 @@ from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
-from .models import Pathway
+from .models import Pathway, Drug
 
 class PathwayList(ListView):
     """
@@ -18,7 +18,7 @@ class PathwayList(ListView):
         
     def get_context_data(self, **kwargs):
         context = super(PathwayList, self).get_context_data(**kwargs)
-               
+        context['allPathways'] = Pathway.objects.count()        
         return context
         
     @method_decorator(login_required)
@@ -51,4 +51,42 @@ class PathwayDetail(DetailView):
                     relColor = 'red'
                 dRelations.append({ inrel.fromnode.name : [inrel.tonode.name, relColor] })      
         context['dRelations'] = dRelations
+        return context
+    
+class DrugList(ListView):
+    """
+    List of all Drugs in Drugs DB section
+    """
+    
+    model = Drug
+    template_name = 'database/drug_list.html'
+    context_object_name = 'drugs'
+    paginate_by = 20
+    
+    def get_context_data(self, **kwargs):
+        context = super(DrugList, self).get_context_data(**kwargs)
+        context['allDrugs'] = Drug.objects.count()       
+        return context
+        
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(DrugList, self).dispatch(request, *args, **kwargs) 
+
+ 
+class DrugDetail(DetailView):
+    """
+    Details page for particular Drug
+    """
+    
+    model = Drug
+    template_name = 'database/drug_detail.html'
+    context_object_name = 'drug'
+    
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(DrugDetail, self).dispatch(request, *args, **kwargs)
+    
+    def get_context_data(self, **kwargs):
+        context = super(DrugDetail, self).get_context_data(**kwargs)
+
         return context
