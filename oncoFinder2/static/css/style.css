@@ -136,6 +136,13 @@
 	padding: 0;
 }
 
+.chart {
+            border: 1px solid #999;
+            width: 950px;
+            height: 800px;
+            position: relative;
+            background-color: #FFF;
+}
  /*************************/
 #footer{
 	position: absolute;

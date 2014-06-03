@@ -54,13 +54,55 @@ Total = {{pathway.node_set.count}}
 <div id="fragment-3" class="tab-pane fade">
 
 
-<div id="chart2" class="chart">
-              <div class="description">Scheme of "{{pathway.name}}" pathway</div>
-          </div>
-   
-</div> 
+    <div id="chart2" class="chart">
+              <div class="description">Scheme of "{{pathway.name}}" pathway</div>        
+    </div> 
+
+    <script>
+    var G2 = jsnx.DiGraph();
+
+    G2.add_nodes_from([
+                       {% for node in pathway.node_set.all %}
+                       '{{node.name}}',
+                       {% endfor%}
+                       ], {color: '#ccc', strwidth: 1});
+
+    G2.add_edges_from([
+            {% for dict in dRelations %}
+            
+    		{% for key, value in  dict.items %}
+    		['{{key}}','{{value.0}}', {color: '{{value.1}}'}],
+    		{% endfor %}
+    		{% endfor %}
+    ], {color: "grey"});
+
+    //G2.add_edges_from([[1,9], [9,1]]);
+
+    jsnx.draw(G2, {
+        element: '#chart2', 
+        with_labels: true,
+        'layout_attr': {
+            'charge': -250,
+            'linkDistance': 100
+         },
+         node_style: {
+             fill: function(d) { 
+                 return d.data.color; 
+             },
+             'stroke-width':  function(d){ return d.data.strwidth; }
+         },
+         node_attr: {
+        	 r: 11,
+        	 title: function(d) { return d.label;}
+         },
+        edge_style: { fill: function(d){ return d.data.color; }, 'stroke-width': 5 },
+        label_style: {fill: 'black', 'font-size':'12px', 'text-anchor': 'middle',
+            'dominant-baseline': 'top', },
+        
+    }, true);
+    </script>
 
 </div>
-
-
+</div>
+</div></div>
 {% endblock %}
