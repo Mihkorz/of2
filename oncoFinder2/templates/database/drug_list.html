@@ -4,20 +4,27 @@
 
 {% block content %}
 <div class="container">
-    <h1>Drugs DataBase </h1>
+    <h1><img src='/static/images/pharmacy.png' style="width: 100px;"/>Drugs DataBase </h1>
     <span class="text-muted">
-    Total ammount = <strong>{{allDrugs}}</strong>
+    Total ammount = <strong>{{allDrugs}}</strong> drugs
     </span>
+     <div class="input-group col-lg-4 pull-right">
+        <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+        <input type="text" class="form-control" placeholder="Drug name" id="drug_search" >
+        <span class="input-group-btn">
+            <button class="btn btn-default" type="button">Go!</button>
+        </span>
+     </div>   
     <hr/>
-   <div class="well">
-<ul class='drugList unstyled'>
+   <div class="well" id="drug_list_container">
+<ul class='pathway_list_ul'>
 {% for drug in drugs %}
   <li>
      <div class='well'>
-       <h4 ><a href='/db/drugs/{{drug.name|slugify}}/{{drug.id}}/'>{{drug.name}}</a></h4>
-       <ul class='unstyled'>
-         <li><b>Type:</b> {{drug.tip}}</li>
-         <li><b>Targets:</b> {{drug.target_set.all|join:", "}}</li>
+       <h5><a href='/db/drugs/{{drug.name|slugify}}/{{drug.id}}/'>{{drug.name}}</a></h5>
+       <ul class='small text-muted'>
+         <li>Type: <strong>{{drug.tip}}</strong></li>
+         <li>Targets: <strong>{{drug.target_set.all|join:", "}}</strong></li>
        </ul> 
      </div>
   </li>
@@ -42,5 +49,15 @@
    </div>
 </div>
 
+<script>
+$(function(){
+	$("#drug_search").keyup(function(){ 
+		autocompleteAjaxSearch(this, $("#drug_list_container"), "drugs");
+	});
+	
+});
+
+
+</script>
 
 {% endblock %}

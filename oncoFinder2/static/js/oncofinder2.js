@@ -29,3 +29,25 @@
      // these HTTP methods do not require CSRF protection
      return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
  }
+ 
+ function autocompleteAjaxSearch(searchObj, loadObj, url){
+	 var query = $(searchObj).val();
+	 
+	 if (query.length == 0) {
+		 //alert($(location).attr('href') + "#"+$(loadObj).attr('id'))
+		 $(loadObj).load($(location).attr('href') + " #"+$(loadObj).attr('id'));
+	 }
+	 
+	 if (query.length >= 3){
+		 
+		 $(loadObj).fadeOut('slow', function(){
+			                 $(loadObj).load("/db/"+url+"/search/?q="+query, function(){
+			                	 $(loadObj).fadeIn('slow');
+			                  });
+			                  
+		 });
+		 
+	 }
+	
+	 
+ }

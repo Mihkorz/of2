@@ -1,0 +1,18 @@
+<ul class="pathway_list_ul">
+        {% for path in pathways %}
+          <li>
+              <div class="well">
+              <div class="pull-left path_list_picture">
+              <img src='/static/images/pathlist.jpg' alt='{{ path.name }}' title='{{ path.name }}'/>
+              </div>
+                <h5><a href='{{path.name|slugify}}/{{path.id}}'>{{ path.name }}</a></h5>
+                 <div class="text-muted small">
+                 Genes: <strong>{{path.gene_set.count}}</strong> <br/>
+                 Nodes: <strong>{{path.node_set.count}}</strong> <br/>
+                 <!--  Components: <strong>40</strong> <br/>-->
+                 </div>
+                 
+              </div>
+          </li>
+        {% endfor %}
+    </ul>

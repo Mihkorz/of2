@@ -4,22 +4,36 @@
 
 {% block content %}
 <div class="container">
-    <h1>Pathways DataBase </h1>
+    <h1> <img src='/static/images/laboratory_info.png' style="width: 100px;"/>Biochem DataBase </h1>
     <span class="text-muted">
-    Total ammount = <strong>{{allPathways}}</strong>
+    Total ammount = <strong>{{allPathways}}</strong>  pathways
     </span>
+    
+        <div class="input-group col-lg-4 pull-right">
+        <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+        <input type="text" class="form-control" placeholder="Pathway name" id="pathway_search" >
+        <span class="input-group-btn">
+            <button class="btn btn-default" type="button">Go!</button>
+        </span>
+    </div>
+    
     <hr/>
-   <div class="well">
+  
+   <div class="well" id="path_list_container">
     <ul class="pathway_list_ul">
         {% for path in pathways %}
           <li>
               <div class="well">
-                <a href='{{path.name|slugify}}/{{path.id}}'>{{ path.name }}</a>
+              <div class="pull-left path_list_picture">
+              <img src='/static/images/pathlist.jpg' alt='{{ path.name }}' title='{{ path.name }}'/>
+              </div>
+                <h5><a href='{{path.name|slugify}}/{{path.id}}'>{{ path.name }}</a></h5>
                  <div class="text-muted small">
                  Genes: <strong>{{path.gene_set.count}}</strong> <br/>
                  Nodes: <strong>{{path.node_set.count}}</strong> <br/>
                  <!--  Components: <strong>40</strong> <br/>-->
                  </div>
+                 
               </div>
           </li>
         {% endfor %}
@@ -43,5 +57,15 @@
    </div>
 </div>
 
+<script>
+$(function(){
+	$("#pathway_search").keyup(function(){ 
+		autocompleteAjaxSearch(this, $("#path_list_container"), "pathways");
+	});
+	
+});
+
+
+</script>
 
 {% endblock %}

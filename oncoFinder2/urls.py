@@ -13,7 +13,8 @@ from profiles.views import ProfileIndex, SettingsProfile, SettingsBilling, Creat
                            DocumentDetail
                            
 from core.views import CoreSetCalculationParameters, CoreCalculation, Test
-from database.views import PathwayList, PathwayDetail, DrugList, DrugDetail
+from database.views import PathwayList, PathwayDetail, PathwayAjaxSearch, \
+                           DrugList, DrugDetail, DrugAjaxSearch
 
 urlpatterns = patterns('',
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
@@ -51,8 +52,10 @@ urlpatterns = patterns('',
     ################### DataBase App ##############################
     url(r'^db/pathways/$', PathwayList.as_view(), name="pathway_list"),
     url(r'^db/pathways/[-\w]+/(?P<pk>\d+)/$', PathwayDetail.as_view(), name="pathway_detail"),
+    url(r'^db/pathways/search/$', PathwayAjaxSearch.as_view(), name="pathway_ajax_search"),
     url(r'^db/drugs/$', DrugList.as_view(), name="drug_list"),
     url(r'^db/drugs/[-\w]+/(?P<pk>\d+)/$', DrugDetail.as_view(), name="drug_detail"),
+    url(r'^db/drugs/search/$', DrugAjaxSearch.as_view(), name="drug_ajax_search"),
     
     
 

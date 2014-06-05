@@ -6,7 +6,7 @@
 <div class="container">
     <h1>Information for "{{ drug.name }}" </h1>
         <span class='pull-right'>
-       <a href='/db/drugs/'><<< back to Drugs list</a>
+       <a href='{{ request.META.HTTP_REFERER }}'><<< back to Drugs list</a>
     </span>
     <hr/>
     

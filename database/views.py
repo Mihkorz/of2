@@ -52,6 +52,19 @@ class PathwayDetail(DetailView):
                 dRelations.append({ inrel.fromnode.name : [inrel.tonode.name, relColor] })      
         context['dRelations'] = dRelations
         return context
+
+class PathwayAjaxSearch(ListView):
+    """
+    Renders objects for Ajax Search
+    """
+    model = Pathway
+    template_name = 'database/pathway_ajax_search.html'
+    context_object_name = 'pathways'
+    
+    def get_queryset(self):
+        q = self.request.GET.get('q', '')
+        return Pathway.objects.filter(name__icontains=q)
+    
     
 class DrugList(ListView):
     """
@@ -90,3 +103,17 @@ class DrugDetail(DetailView):
         context = super(DrugDetail, self).get_context_data(**kwargs)
 
         return context
+
+class DrugAjaxSearch(ListView):
+    """
+    List of all Drugs in Drugs DB section
+    """
+    
+    model = Drug
+    template_name = 'database/drug_ajax_search.html'
+    context_object_name = 'drugs'
+    
+    def get_queryset(self):
+        q = self.request.GET.get('q', '')
+        return Drug.objects.filter(name__icontains=q)
+    

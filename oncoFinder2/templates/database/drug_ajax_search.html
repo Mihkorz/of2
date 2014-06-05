@@ -1,0 +1,13 @@
+<ul class='pathway_list_ul'>
+{% for drug in drugs %}
+  <li>
+     <div class='well'>
+       <h5><a href='/db/drugs/{{drug.name|slugify}}/{{drug.id}}/'>{{drug.name}}</a></h5>
+       <ul class='small text-muted'>
+         <li>Type: <strong>{{drug.tip}}</strong></li>
+         <li>Targets: <strong>{{drug.target_set.all|join:", "}}</strong></li>
+       </ul> 
+     </div>
+  </li>
+{% endfor %}
+</ul>
