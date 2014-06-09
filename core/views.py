@@ -13,6 +13,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.core.files import File
+from  django.core.exceptions import MultipleObjectsReturned
 from django.conf import settings
 
 from .forms import  CalculationParametersForm
@@ -178,7 +179,10 @@ class CoreSetCalculationParameters(FormView):
                         pathways = Pathway.objects.filter(gene__name=target.name)
                     
                         for path in pathways:
-                            gene = Gene.objects.get(name = target.name, pathway=path)
+                            try:
+                                gene = Gene.objects.get(name = target.name, pathway=path)
+                            except MultipleObjectsReturned:
+                                gene = Gene.objects.filter(name = target.name, pathway=path)[0]
                             ARR = float(gene.arr)
                             CNR = process_doc_df.at[target.name, tumour]
                             if CNR == 0:
