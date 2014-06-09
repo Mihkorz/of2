@@ -30,7 +30,7 @@ class RealtionForm(forms.ModelForm):
 class GeneForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(GeneForm, self).__init__(*args, **kwargs)
-        self.fields['node'].choices = nodes_by_pathway()
+        #self.fields['node'].choices = nodes_by_pathway()
     
 def nodes_by_pathway():
     choices = []
