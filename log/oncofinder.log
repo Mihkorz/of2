@@ -1528,3 +1528,823 @@ Traceback (most recent call last):
   File "/usr/local/lib/python2.7/dist-packages/django/db/models/sql/compiler.py", line 1108, in results_iter
     raise ValueError("Database returned an invalid value "
 ValueError: Database returned an invalid value in QuerySet.datetimes(). Are time zone definitions for your database and pytz installed?
+2014-06-20 14:47:14,226 ERROR base 9993 -1293423808 Internal Server Error: /admin/database/drug/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 139, in get_response
+    response = response.render()
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 105, in render
+    self.content = self.rendered_content
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 82, in rendered_content
+    content = template.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/test/utils.py", line 85, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/test/utils.py", line 85, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/test/utils.py", line 85, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 62, in render
+    result = block.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 62, in render
+    result = block.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 1196, in render
+    _dict = func(*resolved_args, **resolved_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 288, in result_list
+    'results': list(results(cl))}
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 266, in results
+    yield ResultList(None, items_for_result(cl, res, None))
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 258, in __init__
+    super(ResultList, self).__init__(*items)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 185, in items_for_result
+    f, attr, value = lookup_field(field_name, result, cl.model_admin)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/util.py", line 254, in lookup_field
+    value = attr(obj)
+TypeError: targets_list() takes exactly 1 argument (2 given)
+2014-06-20 14:47:50,303 ERROR base 10206 -1242563776 Internal Server Error: /admin/database/drug/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 139, in get_response
+    response = response.render()
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 105, in render
+    self.content = self.rendered_content
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 82, in rendered_content
+    content = template.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/test/utils.py", line 85, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/test/utils.py", line 85, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/test/utils.py", line 85, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 62, in render
+    result = block.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 62, in render
+    result = block.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 1196, in render
+    _dict = func(*resolved_args, **resolved_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 288, in result_list
+    'results': list(results(cl))}
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 266, in results
+    yield ResultList(None, items_for_result(cl, res, None))
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 258, in __init__
+    super(ResultList, self).__init__(*items)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 185, in items_for_result
+    f, attr, value = lookup_field(field_name, result, cl.model_admin)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/util.py", line 254, in lookup_field
+    value = attr(obj)
+TypeError: targets_list() takes exactly 1 argument (2 given)
+2014-06-20 14:48:22,240 ERROR base 10388 -1242563776 Internal Server Error: /admin/database/drug/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 139, in get_response
+    response = response.render()
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 105, in render
+    self.content = self.rendered_content
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 82, in rendered_content
+    content = template.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/test/utils.py", line 85, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/test/utils.py", line 85, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/test/utils.py", line 85, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 62, in render
+    result = block.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 62, in render
+    result = block.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 1196, in render
+    _dict = func(*resolved_args, **resolved_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 288, in result_list
+    'results': list(results(cl))}
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 266, in results
+    yield ResultList(None, items_for_result(cl, res, None))
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 258, in __init__
+    super(ResultList, self).__init__(*items)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 185, in items_for_result
+    f, attr, value = lookup_field(field_name, result, cl.model_admin)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/util.py", line 254, in lookup_field
+    value = attr(obj)
+TypeError: targets_list() takes exactly 1 argument (2 given)
+2014-06-20 14:49:17,167 ERROR base 10805 -1242563776 Internal Server Error: /admin/database/drug/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 139, in get_response
+    response = response.render()
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 105, in render
+    self.content = self.rendered_content
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 82, in rendered_content
+    content = template.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/test/utils.py", line 85, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/test/utils.py", line 85, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/test/utils.py", line 85, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 62, in render
+    result = block.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 62, in render
+    result = block.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 1196, in render
+    _dict = func(*resolved_args, **resolved_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 288, in result_list
+    'results': list(results(cl))}
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 266, in results
+    yield ResultList(None, items_for_result(cl, res, None))
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 258, in __init__
+    super(ResultList, self).__init__(*items)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 185, in items_for_result
+    f, attr, value = lookup_field(field_name, result, cl.model_admin)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/util.py", line 250, in lookup_field
+    value = attr(obj)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/database/admin.py", line 20, in targets_list
+    return self.target_set.join(',')
+AttributeError: 'RelatedManager' object has no attribute 'join'
+2014-06-20 14:49:30,653 ERROR base 10888 -1242563776 Internal Server Error: /admin/database/drug/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 139, in get_response
+    response = response.render()
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 105, in render
+    self.content = self.rendered_content
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 82, in rendered_content
+    content = template.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/test/utils.py", line 85, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/test/utils.py", line 85, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/test/utils.py", line 85, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 62, in render
+    result = block.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 62, in render
+    result = block.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 1196, in render
+    _dict = func(*resolved_args, **resolved_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 288, in result_list
+    'results': list(results(cl))}
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 266, in results
+    yield ResultList(None, items_for_result(cl, res, None))
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 258, in __init__
+    super(ResultList, self).__init__(*items)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 185, in items_for_result
+    f, attr, value = lookup_field(field_name, result, cl.model_admin)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/util.py", line 250, in lookup_field
+    value = attr(obj)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/database/admin.py", line 20, in targets_list
+    return self.target_list.join(',')
+AttributeError: 'Drug' object has no attribute 'target_list'
+2014-06-20 14:49:41,088 ERROR base 10957 -1241515200 Internal Server Error: /admin/database/drug/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 139, in get_response
+    response = response.render()
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 105, in render
+    self.content = self.rendered_content
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 82, in rendered_content
+    content = template.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/test/utils.py", line 85, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/test/utils.py", line 85, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/test/utils.py", line 85, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 62, in render
+    result = block.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 62, in render
+    result = block.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 1196, in render
+    _dict = func(*resolved_args, **resolved_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 288, in result_list
+    'results': list(results(cl))}
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 266, in results
+    yield ResultList(None, items_for_result(cl, res, None))
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 258, in __init__
+    super(ResultList, self).__init__(*items)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 185, in items_for_result
+    f, attr, value = lookup_field(field_name, result, cl.model_admin)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/util.py", line 250, in lookup_field
+    value = attr(obj)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/database/admin.py", line 20, in targets_list
+    return self.target_set.join(',')
+AttributeError: 'RelatedManager' object has no attribute 'join'
+2014-06-20 14:51:44,559 ERROR base 11640 -1241515200 Internal Server Error: /admin/database/drug/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 139, in get_response
+    response = response.render()
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 105, in render
+    self.content = self.rendered_content
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 82, in rendered_content
+    content = template.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/test/utils.py", line 85, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/test/utils.py", line 85, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/test/utils.py", line 85, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 62, in render
+    result = block.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 62, in render
+    result = block.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 1196, in render
+    _dict = func(*resolved_args, **resolved_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 288, in result_list
+    'results': list(results(cl))}
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 266, in results
+    yield ResultList(None, items_for_result(cl, res, None))
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 258, in __init__
+    super(ResultList, self).__init__(*items)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 185, in items_for_result
+    f, attr, value = lookup_field(field_name, result, cl.model_admin)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/util.py", line 250, in lookup_field
+    value = attr(obj)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/database/admin.py", line 20, in targets_list
+    return list(self.target_set).join(',')
+TypeError: 'RelatedManager' object is not iterable
+2014-06-20 14:51:46,994 ERROR base 11640 -1241515200 Internal Server Error: /admin/database/drug/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 139, in get_response
+    response = response.render()
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 105, in render
+    self.content = self.rendered_content
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 82, in rendered_content
+    content = template.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/test/utils.py", line 85, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/test/utils.py", line 85, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/test/utils.py", line 85, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 62, in render
+    result = block.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 62, in render
+    result = block.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 1196, in render
+    _dict = func(*resolved_args, **resolved_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 288, in result_list
+    'results': list(results(cl))}
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 266, in results
+    yield ResultList(None, items_for_result(cl, res, None))
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 258, in __init__
+    super(ResultList, self).__init__(*items)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 185, in items_for_result
+    f, attr, value = lookup_field(field_name, result, cl.model_admin)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/util.py", line 250, in lookup_field
+    value = attr(obj)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/database/admin.py", line 20, in targets_list
+    return list(self.target_set).join(',')
+TypeError: 'RelatedManager' object is not iterable
+2014-06-20 14:51:57,700 ERROR base 11749 -1241515200 Internal Server Error: /admin/database/drug/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 139, in get_response
+    response = response.render()
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 105, in render
+    self.content = self.rendered_content
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 82, in rendered_content
+    content = template.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/test/utils.py", line 85, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/test/utils.py", line 85, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/test/utils.py", line 85, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 62, in render
+    result = block.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 62, in render
+    result = block.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 1196, in render
+    _dict = func(*resolved_args, **resolved_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 288, in result_list
+    'results': list(results(cl))}
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 266, in results
+    yield ResultList(None, items_for_result(cl, res, None))
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 258, in __init__
+    super(ResultList, self).__init__(*items)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 185, in items_for_result
+    f, attr, value = lookup_field(field_name, result, cl.model_admin)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/util.py", line 250, in lookup_field
+    value = attr(obj)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/database/admin.py", line 20, in targets_list
+    return list(self.target_set.all()).join(',')
+AttributeError: 'list' object has no attribute 'join'
+2014-06-20 14:52:11,497 ERROR base 11841 -1241515200 Internal Server Error: /admin/database/drug/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 139, in get_response
+    response = response.render()
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 105, in render
+    self.content = self.rendered_content
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 82, in rendered_content
+    content = template.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/test/utils.py", line 85, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/test/utils.py", line 85, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/test/utils.py", line 85, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 62, in render
+    result = block.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 62, in render
+    result = block.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 1196, in render
+    _dict = func(*resolved_args, **resolved_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 288, in result_list
+    'results': list(results(cl))}
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 266, in results
+    yield ResultList(None, items_for_result(cl, res, None))
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 258, in __init__
+    super(ResultList, self).__init__(*items)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 185, in items_for_result
+    f, attr, value = lookup_field(field_name, result, cl.model_admin)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/util.py", line 250, in lookup_field
+    value = attr(obj)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/database/admin.py", line 20, in targets_list
+    return self.target_set.all().join(',')
+AttributeError: 'QuerySet' object has no attribute 'join'
+2014-06-20 14:53:28,436 ERROR base 12281 -1241515200 Internal Server Error: /admin/database/drug/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 139, in get_response
+    response = response.render()
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 105, in render
+    self.content = self.rendered_content
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 82, in rendered_content
+    content = template.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/test/utils.py", line 85, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/test/utils.py", line 85, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/test/utils.py", line 85, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 62, in render
+    result = block.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 62, in render
+    result = block.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 1196, in render
+    _dict = func(*resolved_args, **resolved_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 288, in result_list
+    'results': list(results(cl))}
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 266, in results
+    yield ResultList(None, items_for_result(cl, res, None))
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 258, in __init__
+    super(ResultList, self).__init__(*items)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 185, in items_for_result
+    f, attr, value = lookup_field(field_name, result, cl.model_admin)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/util.py", line 250, in lookup_field
+    value = attr(obj)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/database/admin.py", line 20, in targets_list
+    return ", ".join(list(self.target_set.all()))
+TypeError: sequence item 0: expected string, Target found
+2014-06-20 14:56:59,533 ERROR base 13497 -1241515200 Internal Server Error: /admin/database/drug/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 139, in get_response
+    response = response.render()
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 105, in render
+    self.content = self.rendered_content
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 82, in rendered_content
+    content = template.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/test/utils.py", line 85, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/test/utils.py", line 85, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/test/utils.py", line 85, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 62, in render
+    result = block.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 62, in render
+    result = block.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 1196, in render
+    _dict = func(*resolved_args, **resolved_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 288, in result_list
+    'results': list(results(cl))}
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 266, in results
+    yield ResultList(None, items_for_result(cl, res, None))
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 258, in __init__
+    super(ResultList, self).__init__(*items)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 185, in items_for_result
+    f, attr, value = lookup_field(field_name, result, cl.model_admin)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/util.py", line 250, in lookup_field
+    value = attr(obj)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/database/admin.py", line 20, in targets_list
+    return self.targets_set.all()
+AttributeError: 'Drug' object has no attribute 'targets_set'
+2014-06-20 14:59:19,928 ERROR base 14356 -1241515200 Internal Server Error: /admin/database/drug/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 139, in get_response
+    response = response.render()
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 105, in render
+    self.content = self.rendered_content
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 82, in rendered_content
+    content = template.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/test/utils.py", line 85, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/test/utils.py", line 85, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/test/utils.py", line 85, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 62, in render
+    result = block.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 62, in render
+    result = block.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 1196, in render
+    _dict = func(*resolved_args, **resolved_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 288, in result_list
+    'results': list(results(cl))}
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 266, in results
+    yield ResultList(None, items_for_result(cl, res, None))
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 258, in __init__
+    super(ResultList, self).__init__(*items)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 185, in items_for_result
+    f, attr, value = lookup_field(field_name, result, cl.model_admin)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/util.py", line 250, in lookup_field
+    value = attr(obj)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/database/admin.py", line 21, in targets_list
+    return ", ".join(list(self.target_set.all()))
+TypeError: sequence item 0: expected string, Target found
+2014-06-20 14:59:22,107 ERROR base 14356 -1285555392 Internal Server Error: /admin/database/drug/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 139, in get_response
+    response = response.render()
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 105, in render
+    self.content = self.rendered_content
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 82, in rendered_content
+    content = template.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/test/utils.py", line 85, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/test/utils.py", line 85, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/test/utils.py", line 85, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 62, in render
+    result = block.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 62, in render
+    result = block.nodelist.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 840, in render
+    bit = self.render_node(node, context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/debug.py", line 78, in render_node
+    return node.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 1196, in render
+    _dict = func(*resolved_args, **resolved_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 288, in result_list
+    'results': list(results(cl))}
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 266, in results
+    yield ResultList(None, items_for_result(cl, res, None))
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 258, in __init__
+    super(ResultList, self).__init__(*items)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/templatetags/admin_list.py", line 185, in items_for_result
+    f, attr, value = lookup_field(field_name, result, cl.model_admin)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/util.py", line 250, in lookup_field
+    value = attr(obj)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/database/admin.py", line 21, in targets_list
+    return ", ".join(list(self.target_set.all()))
+TypeError: sequence item 0: expected string, Target found

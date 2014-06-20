@@ -16,7 +16,10 @@ class TargetInline(admin.TabularInline):
     model = Target
      
 class DrugAdmin(admin.ModelAdmin):
-    list_display = ('name', 'tip', 'targets')
+    def targets_list(self):
+        #return self.target_set.all()
+        return ", ".join(target.name for target in self.target_set.all())
+    list_display = ('name', 'db', 'tip', targets_list)
     search_fields = ['name']
     exclude = ('targets',)
         
