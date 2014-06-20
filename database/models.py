@@ -124,10 +124,14 @@ DRUG_TYPES = (
     ('multivalent', 'multivalent'),
    
 )
-        
+DRUG_DATABASE = (
+    ('genego', 'genego'),
+    ('drugbank', 'drugbank'),
+)        
 class Drug(models.Model):
     name = models.CharField(verbose_name='Drug name', max_length=250, blank=False)
     tip  = models.CharField(max_length=250, verbose_name=u'Drug type', blank=True, choices=DRUG_TYPES)
+    db = models.CharField(max_length=250, verbose_name=u'Database', blank=True, choices = DRUG_DATABASE)
     substance = models.CharField(max_length=250, blank=True)
     targets = models.CharField(max_length=350, blank=True)
     morphology = models.CharField(max_length=250, blank=True)

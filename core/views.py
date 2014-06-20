@@ -279,52 +279,12 @@ class Test(TemplateView):
               
         context = super(Test, self).get_context_data(**kwargs)
         
-        pathways = Pathway.objects.filter(gene__name='SRC')               
-        
-        filename = settings.MEDIA_ROOT+"/users/Mikhail/project-mik/output/output_GSE48905_GSE10780.normalized.test.xlsx"
-        
-        
-        df = read_excel(filename, sheetname="PMS")
-        
-        """
-        filename1 = settings.MEDIA_ROOT+"/users/Mikhail/project-mik/process/process_w2.2.txt"
-        df1 = read_csv(filename1, delimiter='\t')
-        
-        
-        
-        tumour_columns = [col for col in df.columns if 'Tumour' in col]
-        
-        tumour_columns1 = [col for col in df1.columns if 'Tumour' in col]
-        
-        
-        context['a'] = len(tumour_columns)
-        context['b'] = len(tumour_columns1)
-        """
-        context['pathways'] = pathways
-        
-        tumour_columns = [col for col in df.columns if 'Tumour' in col]
-        summ = 0
-        for path in pathways:
-            summ += df.at[path.name, 'Tumour.GSM1186545_PP4_32_047A_U133p2_100ng_SD.AVG_Signal']
-        
-        cnr_up = cnr_low = 0
-        CNR = 1
-        EXPRESSION_LEVEL = 4
-        Mean_norm = 4
-        if (
-                        (
-                           (EXPRESSION_LEVEL > Mean_norm) or 
-                           (EXPRESSION_LEVEL < Mean_norm) or
-                           (EXPRESSION_LEVEL == Mean_norm)
-                         ) and 
-                        (CNR > cnr_up or CNR < cnr_low) and 
-                        (CNR > 0)
-                       ):
-            summ = "yes"
-        else:
-            summ = "no"
+        drugs = Drug.objects.all()
+        for drug in drugs:
+            drug.db = 'drugbank'
+            drug.save()
             
-        context['summ'] = summ
+        context['summ'] = "summ"
         
         
         
