@@ -47,7 +47,8 @@ class CoreSetCalculationParameters(FormView):
         use_sigma = form.cleaned_data['use_sigma']
         cnr_low =  form.cleaned_data['cnr_low']
         cnr_up =  form.cleaned_data['cnr_up']
-        use_cnr = form.cleaned_data['use_cnr'] 
+        use_cnr = form.cleaned_data['use_cnr']
+        norm_choice = form.cleaned_data['norm_choice'] 
         
         
         context = self.get_context_data()
@@ -71,7 +72,8 @@ class CoreSetCalculationParameters(FormView):
                                  'use_sigma': use_sigma,
                                  'cnr_low': cnr_low,
                                  'cnr_up': cnr_up,
-                                 'use_cnr': use_cnr }
+                                 'use_cnr': use_cnr,
+                                 'norm_algirothm': 'geometric' if norm_choice>1 else 'arithmetic' }
         output_doc.project = input_document.project
         output_doc.created_by = self.request.user
         output_doc.created_at = datetime.now()        
@@ -126,12 +128,19 @@ class CoreSetCalculationParameters(FormView):
                         cnr_up = cnr_low = 0
                         
                     CNR = row[tumour]
-                    EXPRESSION_LEVEL = CNR*row['Mean_norm']
+                    if int(norm_choice) == 1:
+                        mean = row['Mean_norm']
+                        EXPRESSION_LEVEL = CNR*row['Mean_norm']
+                         
+                    if int(norm_choice) == 2:
+                        mean = row['gMean_norm']
+                        EXPRESSION_LEVEL = CNR*row['gMean_norm']
+                        
                         
                     if (
                         (
-                           (EXPRESSION_LEVEL >= (row['Mean_norm'] + sigma_num*row['std'])) or 
-                           (EXPRESSION_LEVEL < (row['Mean_norm'] - sigma_num*row['std']))
+                           (EXPRESSION_LEVEL >= (mean + sigma_num*row['std'])) or 
+                           (EXPRESSION_LEVEL < (mean - sigma_num*row['std']))
                          ) and 
                         (CNR > cnr_up or CNR < cnr_low) and 
                         (CNR > 0)

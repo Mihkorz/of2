@@ -191,6 +191,8 @@ class CreateDocument(CreateView):
         df = df.groupby(df.index, level=0).mean() #deal with duplicate genes by taking mean value
         
         mean_norm = df[[norm for norm in norm_cols]].mean(axis=1)
+        gmean_norm = df[[norm for norm in norm_cols]].apply(scipy.stats.mstats.gmean, axis=1)
+        
         df1 = DataFrame(df[[norm for norm in norm_cols]], index=df.index)
         
         df1 = df1.std(axis=1)
@@ -200,6 +202,7 @@ class CreateDocument(CreateView):
         df = df.div(df.Mean_norm, axis='index')
        
         df['Mean_norm'] = mean_norm
+        df['gMean_norm'] = gmean_norm
         df['std'] = df1
                 
         
