@@ -2348,3 +2348,499 @@ Traceback (most recent call last):
   File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/database/admin.py", line 21, in targets_list
     return ", ".join(list(self.target_set.all()))
 TypeError: sequence item 0: expected string, Target found
+2014-06-25 17:08:49,764 ERROR base 5682 -1272325312 Internal Server Error: /document/doc61/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/views.py", line 248, in dispatch
+    return super(DocumentDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/views.py", line 260, in get_context_data
+    df = read_excel(filename, sheetname="PMS")
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/io/excel.py", line 107, in read_excel
+    return ExcelFile(io, engine=engine).parse(sheetname=sheetname, **kwds)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/io/excel.py", line 140, in __init__
+    self.book = xlrd.open_workbook(io)
+  File "/usr/local/lib/python2.7/dist-packages/xlrd/__init__.py", line 394, in open_workbook
+    f = open(filename, "rb")
+IOError: [Errno 2] No such file or directory: u'/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/media/users/admin/project-name/output/output_GSE31715.txt.xlsx'
+2014-06-25 17:08:55,277 ERROR base 5682 -1282409664 Internal Server Error: /document/doc60/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/views.py", line 248, in dispatch
+    return super(DocumentDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/views.py", line 260, in get_context_data
+    df = read_excel(filename, sheetname="PMS")
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/io/excel.py", line 107, in read_excel
+    return ExcelFile(io, engine=engine).parse(sheetname=sheetname, **kwds)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/io/excel.py", line 140, in __init__
+    self.book = xlrd.open_workbook(io)
+  File "/usr/local/lib/python2.7/dist-packages/xlrd/__init__.py", line 394, in open_workbook
+    f = open(filename, "rb")
+IOError: [Errno 2] No such file or directory: u'/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/media/users/admin/project-name/output/output_GSE31715.txt.xlsx'
+2014-06-25 17:09:02,688 ERROR base 5682 -1282409664 Internal Server Error: /document/doc66/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/views.py", line 248, in dispatch
+    return super(DocumentDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/views.py", line 260, in get_context_data
+    df = read_excel(filename, sheetname="PMS")
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/io/excel.py", line 107, in read_excel
+    return ExcelFile(io, engine=engine).parse(sheetname=sheetname, **kwds)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/io/excel.py", line 140, in __init__
+    self.book = xlrd.open_workbook(io)
+  File "/usr/local/lib/python2.7/dist-packages/xlrd/__init__.py", line 394, in open_workbook
+    f = open(filename, "rb")
+IOError: [Errno 2] No such file or directory: u'/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/media/users/admin/admin-project/output/output_GSE31715.txt.xlsx'
+2014-06-25 17:32:50,438 ERROR base 6274 -1273185472 Internal Server Error: /test/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 276, in dispatch
+    return super(Test, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 286, in get_context_data
+    output_file.save()
+AttributeError: 'File' object has no attribute 'save'
+2014-06-25 17:33:22,164 ERROR base 6295 -1272923328 Internal Server Error: /test/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 276, in dispatch
+    return super(Test, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 286, in get_context_data
+    output_file.open()
+  File "/usr/local/lib/python2.7/dist-packages/django/core/files/base.py", line 121, in open
+    if not self.closed:
+  File "/usr/local/lib/python2.7/dist-packages/django/core/files/base.py", line 59, in _get_closed
+    return not self.file or self.file.closed
+AttributeError: 'str' object has no attribute 'closed'
+2014-06-25 17:34:07,000 ERROR base 6317 -1273124032 Internal Server Error: /test/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 276, in dispatch
+    return super(Test, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 286, in get_context_data
+    output_file.read()
+  File "/usr/local/lib/python2.7/dist-packages/django/core/files/utils.py", line 16, in <lambda>
+    read = property(lambda self: self.file.read)
+AttributeError: 'str' object has no attribute 'read'
+2014-06-25 17:34:09,155 ERROR base 6317 -1314915520 Internal Server Error: /test/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 276, in dispatch
+    return super(Test, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 286, in get_context_data
+    output_file.read()
+  File "/usr/local/lib/python2.7/dist-packages/django/core/files/utils.py", line 16, in <lambda>
+    read = property(lambda self: self.file.read)
+AttributeError: 'str' object has no attribute 'read'
+2014-06-25 17:34:09,772 ERROR base 6317 -1283458240 Internal Server Error: /test/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 276, in dispatch
+    return super(Test, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 286, in get_context_data
+    output_file.read()
+  File "/usr/local/lib/python2.7/dist-packages/django/core/files/utils.py", line 16, in <lambda>
+    read = property(lambda self: self.file.read)
+AttributeError: 'str' object has no attribute 'read'
+2014-06-25 17:35:17,602 ERROR base 6376 -1272472768 Internal Server Error: /test/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 276, in dispatch
+    return super(Test, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 285, in get_context_data
+    file = open(settings.MEDIA_ROOT+"/"+path)
+IOError: [Errno 2] No such file or directory: '/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/media/users/Misha/newnewnew/output_test.xlsx'
+2014-06-25 17:35:42,375 ERROR base 6396 -1272419520 Internal Server Error: /test/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 276, in dispatch
+    return super(Test, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 286, in get_context_data
+    output_file = File( open(settings.MEDIA_ROOT+"/"+path))
+IOError: [Errno 2] No such file or directory: '/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/media/users/Misha/newnewnew/output_test.xlsx'
+2014-06-25 17:35:43,285 ERROR base 6396 -1313866944 Internal Server Error: /test/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 276, in dispatch
+    return super(Test, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 286, in get_context_data
+    output_file = File( open(settings.MEDIA_ROOT+"/"+path))
+IOError: [Errno 2] No such file or directory: '/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/media/users/Misha/newnewnew/output_test.xlsx'
+2014-06-25 17:37:34,717 ERROR base 6449 -1272493248 Internal Server Error: /test/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 276, in dispatch
+    return super(Test, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 288, in get_context_data
+    output_file = File( open(settings.MEDIA_ROOT+"/"+path))
+IOError: [Errno 2] No such file or directory: u'/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/media//home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/media/users/Misha/newnewnew/output_test.xlsx'
+2014-06-25 17:37:55,369 ERROR base 6477 -1272501440 Internal Server Error: /test/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 276, in dispatch
+    return super(Test, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 288, in get_context_data
+    output_file = File()
+TypeError: __init__() takes at least 2 arguments (1 given)
+2014-06-25 17:42:11,568 ERROR base 6631 -1273185472 Internal Server Error: /test/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 276, in dispatch
+    return super(Test, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 287, in get_context_data
+    path = default_storage.save(settings.MEDIA_ROOT+"/"+path)
+TypeError: save() takes exactly 3 arguments (2 given)
+2014-07-01 14:57:42,298 ERROR base 4588 -1292895424 Internal Server Error: /document/doc61/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/views.py", line 248, in dispatch
+    return super(DocumentDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/profiles/views.py", line 260, in get_context_data
+    df = read_excel(filename, sheetname="PMS")
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/io/excel.py", line 107, in read_excel
+    return ExcelFile(io, engine=engine).parse(sheetname=sheetname, **kwds)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/io/excel.py", line 140, in __init__
+    self.book = xlrd.open_workbook(io)
+  File "/usr/local/lib/python2.7/dist-packages/xlrd/__init__.py", line 394, in open_workbook
+    f = open(filename, "rb")
+IOError: [Errno 2] No such file or directory: u'/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/media/users/admin/project-name/output/output_GSE31715.txt.xlsx'
+2014-07-01 15:02:30,533 ERROR base 4712 -1303381184 Internal Server Error: /calculation-parameters/doc178/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 35, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 164, in form_valid
+    for drug in Drug.objects.all(): #iterate trough all Drugs
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 96, in __iter__
+    self._fetch_all()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 854, in _fetch_all
+    self._result_cache = list(self.iterator())
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 220, in iterator
+    for row in compiler.results_iter():
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/sql/compiler.py", line 713, in results_iter
+    for rows in self.execute_sql(MULTI):
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/sql/compiler.py", line 786, in execute_sql
+    cursor.execute(sql, params)
+  File "/usr/local/lib/python2.7/dist-packages/debug_toolbar/panels/sql/tracking.py", line 174, in execute
+    return self._record(self.cursor.execute, sql, params)
+  File "/usr/local/lib/python2.7/dist-packages/debug_toolbar/panels/sql/tracking.py", line 104, in _record
+    return method(sql, params)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/util.py", line 69, in execute
+    return super(CursorDebugWrapper, self).execute(sql, params)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/util.py", line 53, in execute
+    return self.cursor.execute(sql, params)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/utils.py", line 99, in __exit__
+    six.reraise(dj_exc_type, dj_exc_value, traceback)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/util.py", line 53, in execute
+    return self.cursor.execute(sql, params)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/mysql/base.py", line 124, in execute
+    return self.cursor.execute(query, args)
+  File "/usr/lib/python2.7/dist-packages/MySQLdb/cursors.py", line 174, in execute
+    self.errorhandler(self, exc, value)
+  File "/usr/lib/python2.7/dist-packages/MySQLdb/connections.py", line 36, in defaulterrorhandler
+    raise errorclass, errorvalue
+OperationalError: (1054, "Unknown column 'drug.db' in 'field list'")
+2014-07-01 15:04:33,970 ERROR base 4791 -1272652992 Internal Server Error: /calculation-parameters/doc178/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 35, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 164, in form_valid
+    for drug in Drug.objects.all(): #iterate trough all Drugs
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 96, in __iter__
+    self._fetch_all()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 854, in _fetch_all
+    self._result_cache = list(self.iterator())
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 220, in iterator
+    for row in compiler.results_iter():
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/sql/compiler.py", line 713, in results_iter
+    for rows in self.execute_sql(MULTI):
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/sql/compiler.py", line 786, in execute_sql
+    cursor.execute(sql, params)
+  File "/usr/local/lib/python2.7/dist-packages/debug_toolbar/panels/sql/tracking.py", line 174, in execute
+    return self._record(self.cursor.execute, sql, params)
+  File "/usr/local/lib/python2.7/dist-packages/debug_toolbar/panels/sql/tracking.py", line 104, in _record
+    return method(sql, params)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/util.py", line 69, in execute
+    return super(CursorDebugWrapper, self).execute(sql, params)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/util.py", line 53, in execute
+    return self.cursor.execute(sql, params)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/utils.py", line 99, in __exit__
+    six.reraise(dj_exc_type, dj_exc_value, traceback)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/util.py", line 53, in execute
+    return self.cursor.execute(sql, params)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/mysql/base.py", line 124, in execute
+    return self.cursor.execute(query, args)
+  File "/usr/lib/python2.7/dist-packages/MySQLdb/cursors.py", line 174, in execute
+    self.errorhandler(self, exc, value)
+  File "/usr/lib/python2.7/dist-packages/MySQLdb/connections.py", line 36, in defaulterrorhandler
+    raise errorclass, errorvalue
+OperationalError: (1054, "Unknown column 'drug.db' in 'field list'")
+2014-07-01 15:05:29,947 ERROR base 4791 -1303381184 Internal Server Error: /admin/database/drug/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/options.py", line 432, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 99, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/decorators/cache.py", line 52, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/sites.py", line 198, in inner
+    return view(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 99, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/options.py", line 1411, in changelist_view
+    'selection_note': _('0 of %(cnt)s selected') % {'cnt': len(cl.result_list)},
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 77, in __len__
+    self._fetch_all()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 854, in _fetch_all
+    self._result_cache = list(self.iterator())
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 220, in iterator
+    for row in compiler.results_iter():
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/sql/compiler.py", line 713, in results_iter
+    for rows in self.execute_sql(MULTI):
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/sql/compiler.py", line 786, in execute_sql
+    cursor.execute(sql, params)
+  File "/usr/local/lib/python2.7/dist-packages/debug_toolbar/panels/sql/tracking.py", line 174, in execute
+    return self._record(self.cursor.execute, sql, params)
+  File "/usr/local/lib/python2.7/dist-packages/debug_toolbar/panels/sql/tracking.py", line 104, in _record
+    return method(sql, params)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/util.py", line 69, in execute
+    return super(CursorDebugWrapper, self).execute(sql, params)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/util.py", line 53, in execute
+    return self.cursor.execute(sql, params)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/utils.py", line 99, in __exit__
+    six.reraise(dj_exc_type, dj_exc_value, traceback)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/util.py", line 53, in execute
+    return self.cursor.execute(sql, params)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/mysql/base.py", line 124, in execute
+    return self.cursor.execute(query, args)
+  File "/usr/lib/python2.7/dist-packages/MySQLdb/cursors.py", line 174, in execute
+    self.errorhandler(self, exc, value)
+  File "/usr/lib/python2.7/dist-packages/MySQLdb/connections.py", line 36, in defaulterrorhandler
+    raise errorclass, errorvalue
+OperationalError: (1054, "Unknown column 'drug.db' in 'field list'")

@@ -165,6 +165,8 @@ class CoreSetCalculationParameters(FormView):
             ds1_dict = {}
             ds2_dict = {}
             ds1_dict['Drug'] = ds2_dict['Drug'] = drug.name.strip()
+            ds1_dict['DataBase'] = ds2_dict['DataBase'] = drug.db
+            ds1_dict['Type'] = ds2_dict['Type'] = drug.tip
             
             
             
@@ -279,12 +281,15 @@ class Test(TemplateView):
               
         context = super(Test, self).get_context_data(**kwargs)
         
-        drugs = Drug.objects.all()
-        for drug in drugs:
-            drug.db = 'drugbank'
-            drug.save()
-            
-        context['summ'] = "summ"
+        path = os.path.join('users', "Misha",
+                                            "newnewnew", 'output_test.xlsx')
+        
+        from django.core.files.storage import default_storage
+        from django.core.files.base import ContentFile
+        path = default_storage.save(settings.MEDIA_ROOT+"/"+path, ContentFile(''))
+        #output_file = File()
+        #output_file.read()    
+        context['summ'] = path
         
         
         
