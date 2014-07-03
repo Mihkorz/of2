@@ -130,11 +130,11 @@ class CoreSetCalculationParameters(FormView):
                     CNR = row[tumour]
                     if int(norm_choice) == 1:
                         mean = row['Mean_norm']
-                        EXPRESSION_LEVEL = CNR*row['Mean_norm']
+                        EXPRESSION_LEVEL = CNR*float(row['Mean_norm'])
                          
                     if int(norm_choice) == 2:
                         mean = row['gMean_norm']
-                        EXPRESSION_LEVEL = CNR*row['gMean_norm']
+                        EXPRESSION_LEVEL = CNR*float(row['gMean_norm'])
                         
                         
                     if (
