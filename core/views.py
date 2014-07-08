@@ -130,17 +130,17 @@ class CoreSetCalculationParameters(FormView):
                     CNR = row[tumour]
                     if int(norm_choice) == 1:
                         mean = row['Mean_norm']
-                        EXPRESSION_LEVEL = CNR*float(row['Mean_norm'])
+                        EXPRESSION_LEVEL = CNR*float(mean)
                          
                     if int(norm_choice) == 2:
                         mean = row['gMean_norm']
-                        EXPRESSION_LEVEL = CNR*float(row['gMean_norm'])
+                        EXPRESSION_LEVEL = CNR*float(mean)
                         
-                        
+                    std = row['std'] if float(row['std'])>0 else 0   
                     if (
                         (
-                           (EXPRESSION_LEVEL >= (mean + sigma_num*row['std'])) or 
-                           (EXPRESSION_LEVEL < (mean - sigma_num*row['std']))
+                           (EXPRESSION_LEVEL >= (mean + sigma_num*std)) or 
+                           (EXPRESSION_LEVEL < (mean - sigma_num*std))
                          ) and 
                         (CNR > cnr_up or CNR < cnr_low) and 
                         (CNR > 0)
@@ -293,12 +293,24 @@ class Test(TemplateView):
         path = os.path.join('users', "Misha",
                                             "newnewnew", 'output_test.xlsx')
         
-        from django.core.files.storage import default_storage
-        from django.core.files.base import ContentFile
-        path = default_storage.save(settings.MEDIA_ROOT+"/"+path, ContentFile(''))
-        #output_file = File()
-        #output_file.read()    
-        context['summ'] = path
+        #from django.core.files.storage import default_storage
+        #from django.core.files.base import ContentFile
+        #path = default_storage.save(settings.MEDIA_ROOT+"/"+path, ContentFile(''))
+        
+        filename = settings.MEDIA_ROOT+"/users/admin/test-project/data_gcrma.txt"
+        sniffer = csv.Sniffer()
+        dialect = sniffer.sniff(open(filename, 'r').read(), delimiters='\t,;') # defining the separator of the csv file
+        df = read_csv(filename, delimiter=dialect.delimiter)
+       
+        from scipy.stats.mstats import gmean
+        norm_cols = ['Tumour_SM_142CM1_.PrimeView..CEL', 'Tumour_SM_142CM2_.PrimeView..CEL', 'Tumour_SM_142CM3_.PrimeView..CEL']
+        gmean_norm = df[[norm for norm in norm_cols]].apply(gmean, axis=1)
+        
+        df['gMean_norm'] = gmean_norm
+        new_file = settings.MEDIA_ROOT+"/users/admin/test-project/data_gcrma_new.csv"
+        df.to_csv(new_file, sep='\t')
+       
+        context['summ'] = filename
         
         
         
