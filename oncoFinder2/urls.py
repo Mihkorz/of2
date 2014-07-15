@@ -15,6 +15,8 @@ from profiles.views import ProfileIndex, SettingsProfile, SettingsBilling, Creat
 from core.views import CoreSetCalculationParameters, CoreCalculation, Test
 from database.views import PathwayList, PathwayDetail, PathwayAjaxSearch, \
                            DrugList, DrugDetail, DrugAjaxSearch
+from metabolism.views import MetabolismPathwayList, MetabolismPathwayDetail, \
+                             MetabolismPathwayAjaxSearch
 
 urlpatterns = patterns('',
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
@@ -56,6 +58,12 @@ urlpatterns = patterns('',
     url(r'^db/drugs/$', DrugList.as_view(), name="drug_list"),
     url(r'^db/drugs/[-\w]+/(?P<pk>\d+)/$', DrugDetail.as_view(), name="drug_detail"),
     url(r'^db/drugs/search/$', DrugAjaxSearch.as_view(), name="drug_ajax_search"),
+    
+    ################### Metabolism App ##############################
+    url(r'^metabolism/pathways/$', MetabolismPathwayList.as_view(), name="metabolism_pathway_list"),
+    url(r'^metabolism/pathways/[-\w]+/(?P<pk>\d+)/$', MetabolismPathwayDetail.as_view(), name="metabolism_pathway_detail"),
+    url(r'^metabolism/pathways/search/$', MetabolismPathwayAjaxSearch.as_view(), name="metabolism_pathway_ajax_search"),
+
     
     
 

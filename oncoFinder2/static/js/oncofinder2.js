@@ -41,7 +41,7 @@
 	 if (query.length >= 3){
 		 
 		 $(loadObj).fadeOut('slow', function(){
-			                 $(loadObj).load("/db/"+url+"/search/?q="+query, function(){
+			                 $(loadObj).load(url+"/search/?q="+query, function(){
 			                	 $(loadObj).fadeIn('slow');
 			                  });
 			                  

@@ -1,0 +1,39 @@
+{% extends "base_profiles.html" %}
+
+{% block title %}{{pathway.name}} | OncoFinder v2.0{% endblock %}
+
+{% block content %}
+<div class="container">
+        <h1>{{pathway.name}}</h1>
+    <span class='pull-right'>
+       <a href='{{ request.META.HTTP_REFERER }}'><<< back to pathways list</a>
+    </span>
+    <hr/>
+   <div id="tabs">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#fragment-1" data-toggle="tab"><span>Genes </span></a></li>
+    </ul>
+<div id="tabContent" class="tab-content">
+<div id="fragment-1" class="tab-pane fade in active well">
+Total = {{pathway.gene_set.count}}
+<table class='table table-bordered table table-striped' style='width:500px;'>
+<thead >
+  <tr valign="top">
+    <th>#</th>
+    <th>SYMBOL</th>
+    <th>ARR</th>
+  </tr>
+</thead>
+
+    {% for gene in pathway.metabolismgene_set.all %}
+      <tr valign="top">
+        <td width='40'>{{ forloop.counter }}</td>
+        <td>{{ gene.name }}</td> 
+        <td>{{gene.arr}}</td>
+      </tr>
+    {% endfor %}
+</table>
+</div>
+
+</div></div></div>
+{% endblock %}

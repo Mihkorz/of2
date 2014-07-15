@@ -1,14 +1,14 @@
 {% extends "base_profiles.html" %}
 
-{% block title %}Pathway database | OncoFinder v2.0{% endblock %}
+{% block title %}Metabolism Pathway database | OncoFinder v2.0{% endblock %}
 
 {% block content %}
 <div class="container">
     <h1> <img src='/static/images/laboratory_info.png' style="width: 100px;"/>Biochem DataBase 
-    <button class="btn btn-active" >
+    <button class="btn btn-default" onClick="location.href='/db/pathways/'" >
          &nbsp;OncoFinder Pathways
     </button>
-     <button class="btn btn-default" onClick="location.href='/metabolism/pathways/'">
+     <button class="btn btn-active" >
          &nbsp;Metabolism Pathways
       </button>
      </h1>
@@ -32,12 +32,11 @@
           <li>
               <div class="well">
               <div class="pull-left path_list_picture">
-              <img src='/static/images/pathlist.jpg' alt='{{ path.name }}' title='{{ path.name }}'/>
+              <img src='/static/images/metabolism_pathway.png' alt='{{ path.name }}' title='{{ path.name }}'/>
               </div>
                 <h5><a href='{{path.name|slugify}}/{{path.id}}'>{{ path.name }}</a></h5>
                  <div class="text-muted small">
-                 Genes: <strong>{{path.gene_set.count}}</strong> <br/>
-                 Nodes: <strong>{{path.node_set.count}}</strong> <br/>
+                 Genes: <strong>{{path.metabolismgene_set.count}}</strong> <br/>
                  <!--  Components: <strong>40</strong> <br/>-->
                  </div>
                  
@@ -67,7 +66,7 @@
 <script>
 $(function(){
 	$("#pathway_search").keyup(function(){ 
-		autocompleteAjaxSearch(this, $("#path_list_container"), "/db/pathways");
+		autocompleteAjaxSearch(this, $("#path_list_container"), "/metabolism/pathways");
 	});
 	
 });

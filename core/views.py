@@ -290,27 +290,47 @@ class Test(TemplateView):
               
         context = super(Test, self).get_context_data(**kwargs)
         
-        path = os.path.join('users', "Misha",
-                                            "newnewnew", 'output_test.xlsx')
+        #path = os.path.join('users', "Misha",
+                                            #"newnewnew", 'output_test.xlsx')
         
         #from django.core.files.storage import default_storage
         #from django.core.files.base import ContentFile
         #path = default_storage.save(settings.MEDIA_ROOT+"/"+path, ContentFile(''))
-        
-        filename = settings.MEDIA_ROOT+"/users/admin/test-project/data_gcrma.txt"
-        sniffer = csv.Sniffer()
-        dialect = sniffer.sniff(open(filename, 'r').read(), delimiters='\t,;') # defining the separator of the csv file
-        df = read_csv(filename, delimiter=dialect.delimiter)
-       
-        from scipy.stats.mstats import gmean
-        norm_cols = ['Tumour_SM_142CM1_.PrimeView..CEL', 'Tumour_SM_142CM2_.PrimeView..CEL', 'Tumour_SM_142CM3_.PrimeView..CEL']
-        gmean_norm = df[[norm for norm in norm_cols]].apply(gmean, axis=1)
-        
-        df['gMean_norm'] = gmean_norm
-        new_file = settings.MEDIA_ROOT+"/users/admin/test-project/data_gcrma_new.csv"
-        df.to_csv(new_file, sep='\t')
-       
-        context['summ'] = filename
+        """
+        path=settings.MEDIA_ROOT+"/Metabolism"  # insert the path to your directory   
+        file_list =os.listdir(path)   
+        from metabolism.models import MetabolismPathway, MetabolismGene
+        from django.core.exceptions import ObjectDoesNotExist
+        for meta_file in file_list:
+            filename = settings.MEDIA_ROOT+"/Metabolism/"+meta_file
+            path_name = meta_file.replace(".csv", "")
+            try:
+                try_path =  MetabolismPathway.objects.get(name = path_name )
+                path_name+="_1"
+            except:
+                pass
+            
+            new_path = MetabolismPathway(name = path_name)            
+            new_path.save()
+            
+            sniffer = csv.Sniffer()
+            dialect = sniffer.sniff(open(filename, 'r').read(), delimiters='\t,;') # defining the separator of the csv file
+            df = read_csv(filename, delimiter=dialect.delimiter)
+            
+            for index, row in df.iterrows():
+                try:
+                    if row['ARR'] != 'NaN':
+                        try_gene =  MetabolismGene.objects.get(name = row['Gene name'], arr=row['ARR'], pathway=new_path)
+                except ObjectDoesNotExist:
+                    if row['ARR'] != 'NaN':
+                        new_gene =  MetabolismGene(name = row['Gene name'], arr=row['ARR'], pathway=new_path)
+                        new_gene.save()
+                    
+                
+         """   
+            
+            
+        context['summ'] = "filename"
         
         
         
