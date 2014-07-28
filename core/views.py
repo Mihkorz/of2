@@ -296,40 +296,20 @@ class Test(TemplateView):
         #from django.core.files.storage import default_storage
         #from django.core.files.base import ContentFile
         #path = default_storage.save(settings.MEDIA_ROOT+"/"+path, ContentFile(''))
-        """
-        path=settings.MEDIA_ROOT+"/Metabolism"  # insert the path to your directory   
-        file_list =os.listdir(path)   
-        from metabolism.models import MetabolismPathway, MetabolismGene
-        from django.core.exceptions import ObjectDoesNotExist
-        for meta_file in file_list:
-            filename = settings.MEDIA_ROOT+"/Metabolism/"+meta_file
-            path_name = meta_file.replace(".csv", "")
-            try:
-                try_path =  MetabolismPathway.objects.get(name = path_name )
-                path_name+="_1"
-            except:
-                pass
-            
-            new_path = MetabolismPathway(name = path_name)            
-            new_path.save()
-            
-            sniffer = csv.Sniffer()
-            dialect = sniffer.sniff(open(filename, 'r').read(), delimiters='\t,;') # defining the separator of the csv file
-            df = read_csv(filename, delimiter=dialect.delimiter)
-            
-            for index, row in df.iterrows():
-                try:
-                    if row['ARR'] != 'NaN':
-                        try_gene =  MetabolismGene.objects.get(name = row['Gene name'], arr=row['ARR'], pathway=new_path)
-                except ObjectDoesNotExist:
-                    if row['ARR'] != 'NaN':
-                        new_gene =  MetabolismGene(name = row['Gene name'], arr=row['ARR'], pathway=new_path)
-                        new_gene.save()
+        
+        dictDrugs = {}  
+        for drug in Drug.objects.all():
+            path_by_target = {}
+            for target in drug.target_set.all():
+                path_list = []
+                for path in Pathway.objects.filter(gene__name=target.name):
+                    path_list.append(path)
+                path_by_target[target] = path_list
+            dictDrugs[drug.name] = path_by_target
                     
-                
-         """   
+              
             
-            
+        context['drugs'] =  dictDrugs 
         context['summ'] = "filename"
         
         

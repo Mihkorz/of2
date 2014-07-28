@@ -9,11 +9,30 @@
 
 
 <h5>{{summ}}</h5>
-
-{% for item in input%}
-{{item}}<br/>
+<table border=1>
+{% for drug, dicttar in drugs.items%}
+<tr>
+<td>{{drug}}</td>
+<td>
+<table border=1>
+{%for target, pathways in dicttar.items %}
+<tr><td>{{target}}</td>
+<td><ul>
+{%for path in pathways%}
+<li>{{path.name}}</li>
 {%endfor%}
+</ul>
+</td></tr>
 
+{%endfor%}
+</table>
+</td>
+
+</tr>
+
+
+{%endfor%}
+</table>
 
 
 

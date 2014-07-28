@@ -150,6 +150,19 @@ class Drug(models.Model):
     def clean(self):
         super(Drug, self).clean()
         self.name = self.name.strip(" \t")
+        
+    def pathways_by_target(self):
+        path_by_target = {}
+        
+        for target in self.target_set.all():
+            path_list = []
+            for path in Pathway.objects.filter(gene__name=target.name):
+               
+                path_list.append(path)
+            path_by_target[target] = path_list
+            
+            
+        return path_by_target 
     
     class Meta(object):
         db_table = 'drug'

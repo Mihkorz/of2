@@ -12,7 +12,6 @@
     
     
     <div class='well'>
-
 <table class="table table-bordered table-striped">
   <tr>
     <td width="200px">Name:</td>
@@ -32,9 +31,29 @@
   </tr>
   <tr>
     <td>Targets:</td>
-    <td>{{drug.target_set.all|join:", "}}</td>
+    <td><small>
+        <table class="table table-bordered table-striped">
+        <tr>
+        <th>Target</th>
+        <th>Pathways which include target</th>
+        </tr>
+        {% for target, pathways in drug.pathways_by_target.items %}
+        <tr>
+           <th>{{target}}</th>
+           <td> <small>Total: {{pathways|length}}</small>
+               <ul>
+               {% for path in pathways %}
+               <li><a href="/db/pathways/{{path.name}}/{{path.id}}/" target="_blanc">{{path.name}}</a></li>
+               {%endfor%}
+               </ul>
+           </td>
+        </tr>
+        {%endfor%}
+        </table>
+    </small>
+    </td>
   </tr>
-  <tr>
+  <tr> 
     <td>morphology:</td>
     <td>{{drug.morphology}}</td>
   </tr>
