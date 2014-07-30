@@ -50,8 +50,12 @@
 <ul class="nav nav-tabs">
   <li class="active"><a href="#pms" data-toggle="tab">PMS</a></li>
   <li><a href="#pms1" data-toggle="tab">PMS1</a></li>
+  {%if DS1 %}
   <li><a href="#ds1" data-toggle="tab">DS1</a></li>
+  {%endif%}
+  {%if DS2%}
   <li><a href="#ds2" data-toggle="tab">DS2</a></li>
+  {%endif%}
 </ul>
 
 <div class="tab-content">
@@ -75,6 +79,7 @@
        </div>
   
   </div>
+  {%if DS1 %}
   <div class="tab-pane fade" id="ds1">
   
       <div class="wrapper1">
@@ -85,6 +90,8 @@
        </div>
   
   </div>
+  {%endif%}
+  {%if DS1 %}
   <div class="tab-pane fade" id="ds2">
   
       <div class="wrapper1">
@@ -95,6 +102,7 @@
        </div>
   
   </div>
+  {%endif%}
 </div>
 {% endif %}
   

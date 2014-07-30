@@ -261,14 +261,26 @@ class DocumentDetail(DetailView):
             df = read_csv(filename, delimiter=dialect.delimiter)
             context['input'] = df[:50].to_html()
         else:
-            df = read_excel(filename, sheetname="PMS")
-            context['PMS'] = df.to_html()
-            df = read_excel(filename, sheetname="PMS1")
-            context['PMS1'] = df.to_html()
-            df = read_excel(filename, sheetname="DS1")
-            context['DS1'] = df.to_html()
-            df = read_excel(filename, sheetname="DS2")
-            context['DS2'] = df.to_html()
+            try:
+                df = read_excel(filename, sheetname="PMS")
+                context['PMS'] = df.to_html()
+            except:
+                pass
+            try:
+                df = read_excel(filename, sheetname="PMS1")
+                context['PMS1'] = df.to_html()
+            except:
+                pass
+            try:
+                df = read_excel(filename, sheetname="DS1")
+                context['DS1'] = df.to_html()
+            except:
+                pass
+            try:
+                df = read_excel(filename, sheetname="DS2")
+                context['DS2'] = df.to_html()
+            except:
+                pass
         
         
         return context  

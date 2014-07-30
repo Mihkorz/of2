@@ -79,13 +79,31 @@
                 {{ form.use_cnr }}
             </div>
           </div>
-           
           
-          </small>
+          <div class="form-group form-group-sm">
+            <div class="col-sm-10">
+              <label>Include in the report following values:</label>
+              <div>
+                {{ form.calculate_pms.label_tag }}&nbsp; 
+                {{ form.calculate_pms }} &nbsp;&nbsp;
+                {{ form.calculate_pms1.label_tag }}&nbsp; 
+                {{ form.calculate_pms1 }}&nbsp;&nbsp;
+                {{ form.calculate_ds1.label_tag }}&nbsp; 
+                {{ form.calculate_ds1 }}&nbsp;&nbsp;
+                {{ form.calculate_ds2.label_tag }}&nbsp; 
+                {{ form.calculate_ds2 }}&nbsp;&nbsp;&nbsp;&nbsp;
+      </small>
+                <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip"  data-placement="top" 
+                                             title="Here will be description of what PMS and DS means"  onClick="location.href='/project/new/'"></span>
+              </div>                                   
+            </div>
+          </div> 
+          
+          
           
     </div>
     <div class="panel-footer">
-      <button class="btn btn-default" data-loading-text="Calculating..." id="startButton">Start Calculation</button>
+      <button class="btn btn-primary" data-loading-text="Calculating..." id="startButton">Start Calculation</button>
       
           <img src="/static/images/ajax-loader.gif" id="loader" style="margin: 10px 0 0 0; display:none" class="pull-right" />
      
@@ -104,7 +122,18 @@ $(function() {
 
 	  });
 	
-               //$("#calculation_parameters_form > input[type=number]").addClass("form-control").width("50px");
+	// disable DS1 and DS2 if Metabolism DB was selected
+    $("#calculation_parameters_form").click(function(){ 
+    	var checked = $("input[type='radio'][name='db_choice']:checked");
+    	if(checked.val() == 2){ 
+    		$("#id_calculate_ds1").prop('checked', false).prop('disabled', true);
+    		$("#id_calculate_ds2").prop('checked', false).prop('disabled', true);
+    	}
+    	else{
+    		$("#id_calculate_ds1").prop('disabled', false);
+    		$("#id_calculate_ds2").prop('disabled', false);
+    	}
+    });
 });
 </script>
 

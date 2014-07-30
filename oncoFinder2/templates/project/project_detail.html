@@ -56,26 +56,30 @@
                  </i></strong>
               </td>
               <td>
+              <small>
                   {% if doc.get_doc_type_display == 'input' %}
                      Samples: <strong>{{doc.sample_num}}</strong><br/>
                      Norms: <strong>{{doc.norm_num}}</strong><br/>
                      Rows: <strong>{{doc.row_num}}</strong>
+              </small>
               </td>
                   {% else %}
-                      Use sigma = <strong>{{doc.parameters.use_sigma}}</strong> <br/>
+                       Pathway DataBase: <strong>{{doc.parameters.db}}</strong>
+                       <br/> Normal algorithm: <strong>{{doc.parameters.norm_algirothm}}</strong>
+                      <br/>Use sigma: <strong>{{doc.parameters.use_sigma}}</strong> <br/>
                       {% if doc.parameters.use_sigma %}
                         &nbsp;&nbsp;&nbsp;Sigma amount = <strong>{{doc.parameters.sigma_num}}</strong> <br/>
                       {% endif %}
-                      Use CNR = <strong>{{doc.parameters.use_cnr}}</strong>
-                      {% if doc.parameters.use_sigma %}
+                      Use CNR: <strong>{{doc.parameters.use_cnr}}</strong>
+                      {% if doc.parameters.use_cnr %}
                         <br/>&nbsp;&nbsp;&nbsp; CNR lower = <strong>{{doc.parameters.cnr_low}}</strong>
                         <br/>&nbsp;&nbsp;&nbsp; CNR upper = <strong>{{doc.parameters.cnr_up}}</strong>
-                        <br/> Normal algorithm = <strong>{{doc.parameters.norm_algirothm}}</strong>
+                       
                       {% endif %}
                   {% endif %}
                  
               
-              
+              </small>
               </td>
               <td>Created at: <strong>{{doc.created_at}}</strong><br/>
                   {% if doc.get_doc_type_display == 'input' %}

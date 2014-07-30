@@ -19,6 +19,7 @@ from django.conf import settings
 from .forms import  CalculationParametersForm
 from profiles.models import Document, ProcessDocument
 from database.models import Pathway, Gene, Drug
+from metabolism.models import MetabolismPathway
 
 
 class CoreSetCalculationParameters(FormView):
@@ -48,7 +49,12 @@ class CoreSetCalculationParameters(FormView):
         cnr_low =  form.cleaned_data['cnr_low']
         cnr_up =  form.cleaned_data['cnr_up']
         use_cnr = form.cleaned_data['use_cnr']
-        norm_choice = form.cleaned_data['norm_choice'] 
+        norm_choice = form.cleaned_data['norm_choice']
+        db_choice = form.cleaned_data['db_choice']
+        calculate_pms = form.cleaned_data['calculate_pms']
+        calculate_pms1 = form.cleaned_data['calculate_pms1']
+        calculate_ds1 = form.cleaned_data['calculate_ds1']
+        calculate_ds2 = form.cleaned_data['calculate_ds2'] 
         
         
         context = self.get_context_data()
@@ -73,7 +79,8 @@ class CoreSetCalculationParameters(FormView):
                                  'cnr_low': cnr_low,
                                  'cnr_up': cnr_up,
                                  'use_cnr': use_cnr,
-                                 'norm_algirothm': 'geometric' if norm_choice>1 else 'arithmetic' }
+                                 'norm_algirothm': 'geometric' if norm_choice>1 else 'arithmetic',
+                                 'db': 'metabolism' if db_choice>1 else 'oncoFinder' }
         output_doc.project = input_document.project
         output_doc.created_by = self.request.user
         output_doc.created_at = datetime.now()        
@@ -97,10 +104,14 @@ class CoreSetCalculationParameters(FormView):
         pms1_list = []
         differential_genes = {}
         
-        for pathway in Pathway.objects.all():
+        pathway_objects = MetabolismPathway.objects.all() if db_choice>1 else Pathway.objects.all() # get Pathways from required DB (OF or Metabolism)
+        
+        for pathway in pathway_objects:
             gene_name = []
             gene_arr = []
-            for gene in pathway.gene_set.all():
+            
+            gene_objects = pathway.metabolismgene_set.all() if db_choice>1 else pathway.gene_set.all() # get Genes from required DB (OF or Metabolism)
+            for gene in gene_objects:
                 gene_name.append(gene.name.strip())
                 gene_arr.append(gene.arr)
             
@@ -166,72 +177,74 @@ class CoreSetCalculationParameters(FormView):
         output_pms1_df = output_pms1_df.set_index('Pathway')
         
         """ Calculating Drug Score """
+        output_ds1_df = output_ds2_df = DataFrame()
         
-        ds1_list = []
-        ds2_list = []
+        if (calculate_ds1 or calculate_ds2) and db_choice==1:
+            ds1_list = []
+            ds2_list = []
         
-        for drug in Drug.objects.all(): #iterate trough all Drugs
-            ds1_dict = {}
-            ds2_dict = {}
-            ds1_dict['Drug'] = ds2_dict['Drug'] = drug.name.strip()
-            ds1_dict['DataBase'] = ds2_dict['DataBase'] = drug.db
-            ds1_dict['Type'] = ds2_dict['Type'] = drug.tip
+            for drug in Drug.objects.all(): #iterate trough all Drugs
+                ds1_dict = {}
+                ds2_dict = {}
+                ds1_dict['Drug'] = ds2_dict['Drug'] = drug.name.strip()
+                ds1_dict['DataBase'] = ds2_dict['DataBase'] = drug.db
+                ds1_dict['Type'] = ds2_dict['Type'] = drug.tip
             
             
             
-            for tumour in tumour_columns: #loop thought samples columns
-                DS1 = 0 # DrugScore 1
-                DS2 = 0 # DrugScore 2
+                for tumour in tumour_columns: #loop thought samples columns
+                    DS1 = 0 # DrugScore 1
+                    DS2 = 0 # DrugScore 2
             
-                for target in drug.target_set.all():
+                    for target in drug.target_set.all():
                     
-                    target.name = target.name.strip()
-                    if target.name in differential_genes[tumour]:
-                        pathways = Pathway.objects.filter(gene__name=target.name)
+                        target.name = target.name.strip()
+                        if target.name in differential_genes[tumour]:
+                            pathways = Pathway.objects.filter(gene__name=target.name)
                     
-                        for path in pathways:
-                            try:
-                                gene = Gene.objects.get(name = target.name, pathway=path)
-                            except MultipleObjectsReturned:
-                                gene = Gene.objects.filter(name = target.name, pathway=path)[0]
-                            ARR = float(gene.arr)
-                            CNR = process_doc_df.at[target.name, tumour]
-                            if CNR == 0:
-                                CNR = 1
-                            PMS = output_pms_df.at[path.name, tumour]
-                            AMCF = float(path.amcf)
+                            for path in pathways:
+                                try:
+                                    gene = Gene.objects.get(name = target.name, pathway=path)
+                                except MultipleObjectsReturned:
+                                    gene = Gene.objects.filter(name = target.name, pathway=path)[0]
+                                ARR = float(gene.arr)
+                                CNR = process_doc_df.at[target.name, tumour]
+                                if CNR == 0:
+                                    CNR = 1
+                                PMS = output_pms_df.at[path.name, tumour]
+                                AMCF = float(path.amcf)
                             
-                            if drug.tip == 'inhibitor' and path.name!='Mab_targets':
-                                DS1 += PMS
-                                DS2 += AMCF*ARR*math.log10(CNR)
-                            if drug.tip == 'activator' and path.name!='Mab_targets':
-                                DS1 -= PMS
-                                DS2 -= AMCF*ARR*math.log10(CNR)
-                            if drug.tip == 'mab' and path.name!='Mab_targets':
-                                DS1 += PMS
-                                DS2 += AMCF*ARR*math.log10(CNR)
-                            if drug.tip == 'mab' and path.name=='Mab_targets':
-                                DS1 += abs(PMS) # PMS2
-                            if drug.tip == 'killermab' and path.name=='Mab_targets':
-                                DS1 += abs(PMS)# PMS2
-                                DS2 += math.log10(CNR)
-                            if drug.tip == 'multivalent' and path.name!='Mab_targets':
-                                DS1 += PMS
-                                if target.tip>0:
-                                    DS2 -= AMCF*ARR*math.log10(CNR)
-                                else:
+                                if drug.tip == 'inhibitor' and path.name!='Mab_targets':
+                                    DS1 += PMS
                                     DS2 += AMCF*ARR*math.log10(CNR)
+                                if drug.tip == 'activator' and path.name!='Mab_targets':
+                                    DS1 -= PMS
+                                    DS2 -= AMCF*ARR*math.log10(CNR)
+                                if drug.tip == 'mab' and path.name!='Mab_targets':
+                                    DS1 += PMS
+                                    DS2 += AMCF*ARR*math.log10(CNR)
+                                if drug.tip == 'mab' and path.name=='Mab_targets':
+                                    DS1 += abs(PMS) # PMS2
+                                if drug.tip == 'killermab' and path.name=='Mab_targets':
+                                    DS1 += abs(PMS)# PMS2
+                                    DS2 += math.log10(CNR)
+                                if drug.tip == 'multivalent' and path.name!='Mab_targets':
+                                    DS1 += PMS
+                                    if target.tip>0:
+                                        DS2 -= AMCF*ARR*math.log10(CNR)
+                                    else:
+                                        DS2 += AMCF*ARR*math.log10(CNR)
                                     
-                ds1_dict[tumour] = DS1
-                ds2_dict[tumour] = DS2
+                    ds1_dict[tumour] = DS1
+                    ds2_dict[tumour] = DS2
             
-            ds1_list.append(ds1_dict)
-            ds2_list.append(ds2_dict)
+                ds1_list.append(ds1_dict)
+                ds2_list.append(ds2_dict)
             
-        output_ds1_df = DataFrame(ds1_list)
-        output_ds1_df = output_ds1_df.set_index('Drug')
-        output_ds2_df = DataFrame(ds2_list)
-        output_ds2_df = output_ds2_df.set_index('Drug')
+            output_ds1_df = DataFrame(ds1_list)
+            output_ds1_df = output_ds1_df.set_index('Drug')
+            output_ds2_df = DataFrame(ds2_list)
+            output_ds2_df = output_ds2_df.set_index('Drug')
         
                
                     
@@ -241,10 +254,14 @@ class CoreSetCalculationParameters(FormView):
         output_file = File(settings.MEDIA_ROOT+"/"+path)
         
         writer = ExcelWriter(output_file.file, index=False)
-        output_pms_df.to_excel(writer,'PMS')
-        output_pms1_df.to_excel(writer,'PMS1')
-        output_ds1_df.to_excel(writer, 'DS1')
-        output_ds2_df.to_excel(writer, 'DS2')
+        if calculate_pms:
+            output_pms_df.to_excel(writer,'PMS')
+        if calculate_pms1:     
+            output_pms1_df.to_excel(writer,'PMS1')
+        if calculate_ds1:
+            output_ds1_df.to_excel(writer, 'DS1')
+        if calculate_ds2:
+            output_ds2_df.to_excel(writer, 'DS2')
         writer.save()
         
         output_doc.document = path
