@@ -79,8 +79,8 @@ class CoreSetCalculationParameters(FormView):
                                  'cnr_low': cnr_low,
                                  'cnr_up': cnr_up,
                                  'use_cnr': use_cnr,
-                                 'norm_algirothm': 'geometric' if norm_choice>1 else 'arithmetic',
-                                 'db': 'metabolism' if db_choice>1 else 'oncoFinder' }
+                                 'norm_algirothm': 'geometric' if int(norm_choice)>1 else 'arithmetic',
+                                 'db': 'metabolism' if int(db_choice)>1 else 'oncoFinder' }
         output_doc.project = input_document.project
         output_doc.created_by = self.request.user
         output_doc.created_at = datetime.now()        
@@ -104,13 +104,13 @@ class CoreSetCalculationParameters(FormView):
         pms1_list = []
         differential_genes = {}
         
-        pathway_objects = MetabolismPathway.objects.all() if db_choice>1 else Pathway.objects.all() # get Pathways from required DB (OF or Metabolism)
+        pathway_objects = MetabolismPathway.objects.all() if int(db_choice)>1 else Pathway.objects.all() # get Pathways from required DB (OF or Metabolism)
         
         for pathway in pathway_objects:
             gene_name = []
             gene_arr = []
             
-            gene_objects = pathway.metabolismgene_set.all() if db_choice>1 else pathway.gene_set.all() # get Genes from required DB (OF or Metabolism)
+            gene_objects = pathway.metabolismgene_set.all() if int(db_choice)>1 else pathway.gene_set.all() # get Genes from required DB (OF or Metabolism)
             for gene in gene_objects:
                 gene_name.append(gene.name.strip())
                 gene_arr.append(gene.arr)
@@ -179,7 +179,7 @@ class CoreSetCalculationParameters(FormView):
         """ Calculating Drug Score """
         output_ds1_df = output_ds2_df = DataFrame()
         
-        if (calculate_ds1 or calculate_ds2) and db_choice==1:
+        if (calculate_ds1 or calculate_ds2):
             ds1_list = []
             ds2_list = []
         
