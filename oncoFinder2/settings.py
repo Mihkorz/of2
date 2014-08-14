@@ -143,7 +143,8 @@ INSTALLED_APPS = (
     'website',
     'profiles',
     'database',
-    'metabolism'
+    'metabolism',
+    'mouse'
 
 )
 

@@ -1,0 +1,70 @@
+{% extends "base_profiles.html" %}
+
+{% block title %}Huma-mouse gene mapping | OncoFinder v2.0{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1> <img src='/static/images/laboratory_info.png' style="width: 100px;"/>Biochem DataBase 
+    <div class="btn-group">
+        <button type="button" class="btn btn-primary"  onClick="location.href='/db/pathways/'">Human Pathways</button>
+        <button type="button" class="btn btn-active"   >Mouse Pathways</button>
+        <button type="button" class="btn btn-primary"   onClick="location.href='/metabolism/pathways/'">Metabolism Pathways</button>
+    </div> 
+     </h1>
+    <a href="/mouse/pathways/"><< back to Mouse pathways</a>
+        <div class="input-group col-lg-4 pull-right">
+        <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+        <input type="text" class="form-control" placeholder="Gene name" id="pathway_search" >
+        <span class="input-group-btn">
+            <button class="btn btn-default" type="button" disabled="disabled">Go!</button>
+        </span>
+    </div>
+    
+    <hr/>
+  
+   <div class="well" id="path_list_container">
+<table class="table table-hover small ">
+<tr>
+<th>N</th>
+<th>Human gene symbol</th>
+<th>Mouse gene symbol</th>
+</tr>
+{% for map in mappings %}
+<tr>
+  <td>{{map.id}}</td>
+  <td>{{map.human_gene_symbol}}</td>
+  <td>{{map.mouse_gene_symbol}}</td>
+</tr>
+{% endfor %}
+</table>
+    
+     {% if is_paginated %}
+        <div class="pagination">
+            <span class="page-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
+                <span class="page-current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">next</a>
+                {% endif %}
+            </span>
+        </div>
+    {% endif %}
+   </div>
+</div>
+
+<script>
+$(function(){
+	$("#pathway_search").keyup(function(){ 
+		autocompleteAjaxSearch(this, $("#path_list_container"), "/mouse/pathways");
+	});
+	
+});
+
+
+</script>
+
+{% endblock %}

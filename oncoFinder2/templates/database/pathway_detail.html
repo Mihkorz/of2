@@ -5,6 +5,9 @@
 {% block content %}
 <div class="container">
         <h1>{{pathway.name}}</h1>
+        <div class="text-muted">
+        DataBase: Human Pathways | AMCF = {{pathway.amcf}}
+        </div>
     <span class='pull-right'>
        <a href='{{ request.META.HTTP_REFERER }}'><<< back to pathways list</a>
     </span>
@@ -18,6 +21,7 @@
 <div id="tabContent" class="tab-content">
 <div id="fragment-1" class="tab-pane fade in active well">
 Total = {{pathway.gene_set.count}}
+<small>
 <table class='table table-bordered table table-striped' style='width:500px;'>
 <thead >
   <tr valign="top">
@@ -35,10 +39,12 @@ Total = {{pathway.gene_set.count}}
       </tr>
     {% endfor %}
 </table>
+</small>
 </div>
 <div id="fragment-2" class="tab-pane fade well">
 Total = {{pathway.node_set.count}}
     <div id='nodesAndComponents'>
+    <small>
     <ul class='pathList'>
     {% for node in pathway.node_set.all %}
       <li><b>{{ node.name }}</b> 
@@ -49,6 +55,7 @@ Total = {{pathway.node_set.count}}
         </ul></li>
     {% endfor %}
     </ul>
+    </small>
     </div>
 </div> 
 <div id="fragment-3" class="tab-pane fade">

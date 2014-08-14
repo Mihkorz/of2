@@ -17,6 +17,8 @@ from database.views import PathwayList, PathwayDetail, PathwayAjaxSearch, \
                            DrugList, DrugDetail, DrugAjaxSearch
 from metabolism.views import MetabolismPathwayList, MetabolismPathwayDetail, \
                              MetabolismPathwayAjaxSearch
+from mouse.views import MousePathwayList, MousePathwayDetail, \
+                             MousePathwayAjaxSearch, MouseTest, MouseMapping
 
 urlpatterns = patterns('',
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
@@ -63,6 +65,13 @@ urlpatterns = patterns('',
     url(r'^metabolism/pathways/$', MetabolismPathwayList.as_view(), name="metabolism_pathway_list"),
     url(r'^metabolism/pathways/[-\w]+/(?P<pk>\d+)/$', MetabolismPathwayDetail.as_view(), name="metabolism_pathway_detail"),
     url(r'^metabolism/pathways/search/$', MetabolismPathwayAjaxSearch.as_view(), name="metabolism_pathway_ajax_search"),
+    
+    ################### Mouse App ##############################
+    url(r'^mouse/pathways/$', MousePathwayList.as_view(), name="mouse_pathway_list"),
+    url(r'^mouse/pathways/[-\w]+/(?P<pk>\d+)/$', MousePathwayDetail.as_view(), name="mouse_pathway_detail"),
+    url(r'^mouse/pathways/search/$', MousePathwayAjaxSearch.as_view(), name="mouse_pathway_ajax_search"),
+    url(r'^mouse/mapping/$', MouseMapping.as_view(), name="mouse_mapping"),
+    url(r'^mouse/test/$', MouseTest.as_view(), name="mouse_test"),
 
     
     

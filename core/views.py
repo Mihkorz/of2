@@ -313,20 +313,32 @@ class Test(TemplateView):
         #from django.core.files.storage import default_storage
         #from django.core.files.base import ContentFile
         #path = default_storage.save(settings.MEDIA_ROOT+"/"+path, ContentFile(''))
+        """
+        path = Pathway.objects.using('old').get(name="Wnt_Pathway_Ctnn-b_Degradation")
         
-        dictDrugs = {}  
-        for drug in Drug.objects.all():
-            path_by_target = {}
-            for target in drug.target_set.all():
-                path_list = []
-                for path in Pathway.objects.filter(gene__name=target.name):
-                    path_list.append(path)
-                path_by_target[target] = path_list
-            dictDrugs[drug.name] = path_by_target
-                    
-              
+        path1 = Pathway.objects.using('old').get(name="Wnt_Pathway_Ctnn-b_Degradation")
+        
+        
+        path.save(using="default")
+        
+        for gene in path1.gene_set.all():
+            gene.save(using="default")
             
-        context['drugs'] =  dictDrugs 
+        for node in path1.node_set.all():
+            node.save(using="default")
+            
+        for node in path1.node_set.all():
+            for component in node.component_set.all():
+                component.save(using="default")
+                
+        for node in path1.node_set.all():
+            for inrel in node.inrelations.all():
+                inrel.save(using="default")
+            
+        
+        
+        """
+        
         context['summ'] = "filename"
         
         

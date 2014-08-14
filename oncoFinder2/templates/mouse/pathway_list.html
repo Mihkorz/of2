@@ -1,22 +1,20 @@
 {% extends "base_profiles.html" %}
 
-{% block title %}Metabolism Pathway database | OncoFinder v2.0{% endblock %}
+{% block title %}Mouse Pathway database | OncoFinder v2.0{% endblock %}
 
 {% block content %}
 <div class="container">
-    <h1> <img src='/static/images/laboratory_info.png' style="width: 100px;"/>Biochem DataBase
-    
+    <h1> <img src='/static/images/laboratory_info.png' style="width: 100px;"/>Biochem DataBase 
     <div class="btn-group">
-        <button type="button" class="btn btn-primary"  onClick="location.href='/db/pathways/'" >Human Pathways</button>
-        <button type="button" class="btn btn-primary"  onClick="location.href='/mouse/pathways/'" >Mouse Pathways</button>
-        <button type="button" class="btn btn-active"  >Metabolism Pathways</button>
+        <button type="button" class="btn btn-primary"  onClick="location.href='/db/pathways/'">Human Pathways</button>
+        <button type="button" class="btn btn-active"   >Mouse Pathways</button>
+        <button type="button" class="btn btn-primary"   onClick="location.href='/metabolism/pathways/'">Metabolism Pathways</button>
     </div> 
-
      </h1>
     <span class="text-muted">
-    Total ammount = <strong>{{allPathways}}</strong>  pathways
+    Total ammount = <strong>{{allPathways}}</strong>  pathways | 
     </span>
-    
+    <a href="/mouse/mapping/">Human-mouse genes mapping</a>
         <div class="input-group col-lg-4 pull-right">
         <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
         <input type="text" class="form-control" placeholder="Pathway name" id="pathway_search" >
@@ -33,12 +31,12 @@
           <li>
               <div class="well">
               <div class="pull-left path_list_picture">
-              <img src='/static/images/metabolism_pathway.png' alt='{{ path.name }}' title='{{ path.name }}'/>
+              <img src='/static/images/mousepath.jpg' alt='{{ path.name }}' title='{{ path.name }}'/>
               </div>
                 <h5><a href='{{path.name|slugify}}/{{path.id}}'>{{ path.name }}</a></h5>
                  <div class="text-muted small">
                  AMCF:  <strong>{{path.amcf}}</strong><br/>
-                 Genes: <strong>{{path.metabolismgene_set.count}}</strong> <br/>
+                 Genes: <strong>{{path.mousegene_set.count}}</strong> <br/>
                  <!--  Components: <strong>40</strong> <br/>-->
                  </div>
                  
@@ -68,7 +66,7 @@
 <script>
 $(function(){
 	$("#pathway_search").keyup(function(){ 
-		autocompleteAjaxSearch(this, $("#path_list_container"), "/metabolism/pathways");
+		autocompleteAjaxSearch(this, $("#path_list_container"), "/mouse/pathways");
 	});
 	
 });

@@ -6,7 +6,7 @@
 <div class="container">
         <h1>{{pathway.name}}</h1>
         <div class="text-muted">
-        DataBase: Metabolism Pathways | AMCF = {{pathway.amcf}}
+        DataBase: Mouse Pathways | AMCF = {{pathway.amcf}}
         </div>
     <span class='pull-right'>
        <a href='{{ request.META.HTTP_REFERER }}'><<< back to pathways list</a>
@@ -18,7 +18,7 @@
     </ul>
 <div id="tabContent" class="tab-content">
 <div id="fragment-1" class="tab-pane fade in active well">
-Total = {{pathway.metabolismgene_set.count}}
+Total = {{pathway.mousegene_set.count}}
 <small>
 <table class='table table-bordered table table-striped' style='width:500px;'>
 <thead >
@@ -29,7 +29,7 @@ Total = {{pathway.metabolismgene_set.count}}
   </tr>
 </thead>
 
-    {% for gene in pathway.metabolismgene_set.all %}
+    {% for gene in pathway.mousegene_set.all %}
       <tr valign="top">
         <td width='40'>{{ forloop.counter }}</td>
         <td>{{ gene.name }}</td> 
