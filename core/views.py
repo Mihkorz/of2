@@ -19,7 +19,8 @@ from django.conf import settings
 from .forms import  CalculationParametersForm
 from profiles.models import Document, ProcessDocument
 from database.models import Pathway, Gene, Drug
-from metabolism.models import MetabolismPathway
+from metabolism.models import MetabolismPathway, MetabolismGene
+from mouse.models import MousePathway, MouseGene
 
 
 class CoreSetCalculationParameters(FormView):
@@ -74,13 +75,19 @@ class CoreSetCalculationParameters(FormView):
         
         output_doc = Document()        
         output_doc.doc_type = 2
+        if int(db_choice) == 1:
+            json_db = 'Human'
+        elif int(db_choice) == 2:
+            json_db = 'Mouse'
+        elif int(db_choice) == 3:
+            json_db = 'Metabolism'
         output_doc.parameters = {'sigma_num': sigma_num,
                                  'use_sigma': use_sigma,
                                  'cnr_low': cnr_low,
                                  'cnr_up': cnr_up,
                                  'use_cnr': use_cnr,
                                  'norm_algirothm': 'geometric' if int(norm_choice)>1 else 'arithmetic',
-                                 'db': 'metabolism' if int(db_choice)>1 else 'oncoFinder' }
+                                 'db': json_db }
         output_doc.project = input_document.project
         output_doc.created_by = self.request.user
         output_doc.created_at = datetime.now()        
@@ -91,7 +98,7 @@ class CoreSetCalculationParameters(FormView):
          
         def strip(text):
             try:
-                return text.strip()
+                return text.strip().upper()
             except AttributeError:
                 return text
         
@@ -104,15 +111,28 @@ class CoreSetCalculationParameters(FormView):
         pms1_list = []
         differential_genes = {}
         
-        pathway_objects = MetabolismPathway.objects.all() if int(db_choice)>1 else Pathway.objects.all() # get Pathways from required DB (OF or Metabolism)
+        if int(db_choice) == 1:
+            pathway_objects = Pathway.objects.all() # Human DB
+        elif int(db_choice) == 2:
+            pathway_objects = MetabolismPathway.objects.all() # Metabolism DB
+        elif int(db_choice) == 3:
+            pathway_objects = MousePathway.objects.all() # Mouse DB
+        
+        
         
         for pathway in pathway_objects:
             gene_name = []
             gene_arr = []
             
-            gene_objects = pathway.metabolismgene_set.all() if int(db_choice)>1 else pathway.gene_set.all() # get Genes from required DB (OF or Metabolism)
+            if int(db_choice) == 1:
+                gene_objects = pathway.gene_set.all() # get Genes from Human DB
+            elif int(db_choice) == 2:
+                gene_objects = pathway.metabolismgene_set.all() # get Genes from Metabolism DB
+            elif int(db_choice) == 3:
+                gene_objects = pathway.mousegene_set.all() # get Genes from Mouse DB
+                
             for gene in gene_objects:
-                gene_name.append(gene.name.strip())
+                gene_name.append(gene.name.strip().upper())
                 gene_arr.append(gene.arr)
             
             gene_data = {'SYMBOL': gene_name,
@@ -198,15 +218,34 @@ class CoreSetCalculationParameters(FormView):
             
                     for target in drug.target_set.all():
                     
-                        target.name = target.name.strip()
+                        target.name = target.name.strip().upper()
                         if target.name in differential_genes[tumour]:
-                            pathways = Pathway.objects.filter(gene__name=target.name)
+                            if int(db_choice) == 1:
+                                pathways = Pathway.objects.filter(gene__name=target.name) # Human DB
+                            elif int(db_choice) == 2:
+                                pathways = MetabolismPathway.objects.filter(metabolismgene__name=target.name)# Metabolism DB
+                            elif int(db_choice) == 3:
+                                pathways = MousePathway.objects.filter(mousegene__name=target.name) # Mouse DB
+                            
                     
                             for path in pathways:
                                 try:
-                                    gene = Gene.objects.get(name = target.name, pathway=path)
+                                    
+                                    if int(db_choice) == 1:
+                                        gene = Gene.objects.get(name = target.name, pathway=path) # get Genes from Human DB
+                                    elif int(db_choice) == 2:
+                                        gene = MetabolismGene.objects.get(name = target.name, pathway=path) # get Genes from Metabolism DB
+                                    elif int(db_choice) == 3:
+                                        gene = MouseGene.objects.get(name = target.name, pathway=path) # get Genes from Mouse DB
+                                    
                                 except MultipleObjectsReturned:
-                                    gene = Gene.objects.filter(name = target.name, pathway=path)[0]
+                                    if int(db_choice) == 1:
+                                        gene = Gene.objects.filter(name = target.name, pathway=path)[0] # get Genes from Human DB
+                                    elif int(db_choice) == 2:
+                                        gene = MetabolismGene.objects.filter(name = target.name, pathway=path)[0] # get Genes from Metabolism DB
+                                    elif int(db_choice) == 3:
+                                        gene = MouseGene.objects.filter(name = target.name, pathway=path)[0] # get Genes from Mouse DB
+                                        
                                 ARR = float(gene.arr)
                                 CNR = process_doc_df.at[target.name, tumour]
                                 if CNR == 0:

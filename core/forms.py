@@ -4,10 +4,11 @@ from django import forms
 
 class CalculationParametersForm(forms.Form):
     
-    NORM_CHOICES = (('1', 'Arithmetic',),
-                    ('2', 'Geometric',))
+    NORM_CHOICES = (('2', 'Geometric',),
+                    ('1', 'Arithmetic',))
     
-    DB_CHOICES = (('1', 'OncoFinder',),
+    DB_CHOICES = (('1', 'Human',),
+                  ('3', 'Mouse'),
                   ('2', 'Metabolism',))
     
     sigma_num = forms.FloatField( label="Sigma amount", initial=2, required=False)
@@ -18,7 +19,7 @@ class CalculationParametersForm(forms.Form):
     db_choice = forms.ChoiceField(label="Pathway DataBase",
                                      widget=forms.RadioSelect, choices=DB_CHOICES, initial=1)
     norm_choice = forms.ChoiceField(label="Calculation algorithm for normal values",
-                                     widget=forms.RadioSelect, choices=NORM_CHOICES, initial=1)
+                                     widget=forms.RadioSelect, choices=NORM_CHOICES, initial=2)
     calculate_pms = forms.BooleanField(label="PMS", initial=True, required=False)
     calculate_pms1 = forms.BooleanField(label="PMS1", initial=True, required=False)
     calculate_ds1 = forms.BooleanField(label="DS1", initial=True, required=False)
