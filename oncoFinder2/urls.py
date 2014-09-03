@@ -7,12 +7,12 @@ from django.views.generic.base import  RedirectView
 from django.contrib import admin
 admin.autodiscover()
 
-from website.views import IndexPage, Logout
+from website.views import IndexPage, AboutPage, Logout
 from profiles.views import ProfileIndex, SettingsProfile, SettingsBilling, CreateProject, \
                            DeleteProject, ProjectDetail, CreateDocument, DeleteDocument, \
                            DocumentDetail
                            
-from core.views import CoreSetCalculationParameters, CoreCalculation, Test
+from core.views import CoreSetCalculationParameters, CoreCalculation, Test, TaskStatus
 from database.views import PathwayList, PathwayDetail, PathwayAjaxSearch, \
                            DrugList, DrugDetail, DrugAjaxSearch
 from metabolism.views import MetabolismPathwayList, MetabolismPathwayDetail, \
@@ -30,6 +30,7 @@ urlpatterns = patterns('',
                        
     ################### Website App ##############################                
     url(r'^$', IndexPage.as_view(), name="website_index"),
+    url(r'^ws/about/$', AboutPage.as_view(), name="website_about"),
     url(r'^login$', 'django.contrib.auth.views.login', {'template_name': 'website/login.html'}),
     url(r'^logout$', Logout.as_view(), name="logout"),
     
@@ -52,6 +53,7 @@ urlpatterns = patterns('',
     url(r'^calculation/doc(?P<pk>\d+)/$', CoreCalculation.as_view(), name="core_calculation"),
     
     url(r'^test/$', Test.as_view()),
+    url(r'^task_status/$', TaskStatus.as_view()),
     
     ################### DataBase App ##############################
     url(r'^db/pathways/$', PathwayList.as_view(), name="pathway_list"),

@@ -5,6 +5,12 @@ import socket
 
 PROJECT_DIR = os.path.realpath(os.path.dirname(__file__))
 
+
+# Celery settings
+BROKER_URL = 'amqp://guest:guest@localhost//'
+CELERY_RESULT_BACKEND = 'amqp'
+CELERY_TASK_RESULT_EXPIRES = 18000  # 5 hours.
+
 LOGIN_URL = "/login"
 
 if socket.gethostname() == '127.0.0.1':
@@ -142,6 +148,7 @@ INSTALLED_APPS = (
     #internal apps
     'website',
     'profiles',
+    'core',
     'database',
     'metabolism',
     'mouse'

@@ -1,0 +1,65 @@
+{% extends "base_website.html" %}
+
+{% block title %}OncoFinder - a new biomathematical method for both quantitative and qualitative
+analysis of the intracellular signaling pathway activation using
+transcriptomic data {% endblock %}
+
+{% block content %}
+<br/>
+<div class="container well">
+  <h1>About</h1>
+  <p>OncoFinder is a tool to analyze the gene expression data from microarray datasets by measuring
+     the activation of intracellular signaling pathways. It allows you to compare data obtained using 
+     multiple platforms and minimize the errors introduced by high-throughput sequencing. This makes it 
+     possible to analyze the features of intracellular regulation on a mathematical basis and perform data 
+     analysis independently of different microarray types. The ability of OncoFinder to characterize the functional 
+     states of transcriptomes and interactomes more accurately than before makes it a method of choice for genetics, physiology, 
+     biomedicine, molecular diagnostics, and many other applications.</p>
+
+
+<h2>How it works</h2>
+<p>OncoFinder maps the gene expression data onto known and custom intracellular signaling pathways. 
+   These pathways regulate numerous processes involved in normal and pathological conditions including 
+   development, growth, aging, and cancer. Analysis of these signaling pathways makes it possible to measure 
+   differences in physiological state such as aging, disease, or chemical exposure among individual samples 
+   using microarray data. The difference in gene expression among signaling pathways can be used to predict 
+   which drugs and other interventions will be most effective for improving health. For example, OncoFinder 
+   can be used by clinicians to analyze the effectiveness of drugs for cancer treatment or used by researchers 
+   to determine pathways involved in age-related diseases.</p>
+
+
+<p>OncoFinder is distinguished by its unique algorithm that quantifies perturbations for each signaling pathway. 
+   This makes it possible to quantitatively estimate the extent of each signaling pathway activation in a given 
+   sample relative to the control sample or a set of control samples. The algorithm separates the positive/activator 
+   and negative/repressor role of each gene in the pathway to determine the role of each gene in signal transduction 
+   and calculate the pathway activation strength. The pathway activation strength measures the degree of functional 
+   changes in the regulation of a signaling pathway, with positive or negative values indicating if the pathway is up- 
+   or down-regulated, respectively. Using the pathway activation strength, OncoFinder scores drugs based on their involvement 
+   in each signaling pathway and the ability of the drug to restore healthy gene expression.</p>
+
+<p>OncoFinder currently features more than 250 pathways in the Biochem Database, with pathways for intracellular 
+   cell signaling and metabolism in humans. It also features mouse signaling pathways. The database contains over 150 drugs.</p>
+
+
+<p>To learn more about how OncoFinder works, please read the following papers:
+<ul>
+<li><a href='http://www.nature.com/leu/journal/vaop/naam/abs/leu2014130a.html'>http://www.nature.com/leu/journal/vaop/naam/abs/leu2014130a.html</a>
+</li>
+<li><a href='http://journal.frontiersin.org/Journal/10.3389/fgene.2014.00049/abstract'>http://journal.frontiersin.org/Journal/10.3389/fgene.2014.00049/abstract</a>
+</li>
+<li><a href='http://journal.frontiersin.org/Journal/10.3389/fgene.2014.00055/abstract'>http://journal.frontiersin.org/Journal/10.3389/fgene.2014.00055/abstract</a>
+</li>
+<li><a href='http://journal.frontiersin.org/Journal/10.3389/fmolb.2014.00008/full'>http://journal.frontiersin.org/Journal/10.3389/fmolb.2014.00008/full</a>
+</li>
+</ul>
+</p>
+
+<h2>Using OncoFinder</h2>
+
+<p>OncoFinder gives you a personal workspace that allows you to manage your projects easily. You may access your data 
+   anywhere by uploading it to the website, and you may organize your workspace into multiple projects so that related 
+   datasets may be kept together. Once your files are uploaded, you may perform calculation of signaling pathway activation 
+   strength at any time and download full reports in a single file. OncoFinder gives you the option to create a public 
+   project that you may share with other users or create a private project that only you may see.</p>
+</div>
+{% endblock %}

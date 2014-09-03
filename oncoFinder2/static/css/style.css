@@ -21,7 +21,7 @@
 	
 }
 #ws_nav a img {
-	width: 50px;
+	height: 50px;
 	margin: 5px 0;
 }
 .ws_upp_menu{
@@ -155,7 +155,7 @@
     bottom: 0;
     width: 100%;
 	background: url(/static/images/black_thread.png) repeat;
-	margin: 30px 0 0 0 ;
+	margin: 50px 0 0 0 ;
 	padding: 30px 0 ;
 	color: #fff;
 	height: 100px;

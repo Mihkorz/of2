@@ -337,14 +337,20 @@ class Test(TemplateView):
     """
     template_name = 'core/test.html'
     
+    
+    
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        #messages.warning(request,  'Hello world.')
         return super(Test, self).dispatch(request, *args, **kwargs)
+        
     
     def get_context_data(self, **kwargs):
               
         context = super(Test, self).get_context_data(**kwargs)
+        
+        from .tasks import add
+        
+        #res = add.delay(1,1)
         
         #path = os.path.join('users', "Misha",
                                             #"newnewnew", 'output_test.xlsx')
@@ -378,11 +384,47 @@ class Test(TemplateView):
         
         """
         
-        context['summ'] = "filename"
+        #context['task_id'] = res.id
         
         
         
         return context
+    
+class TaskStatus(TemplateView):
+    """ Testing Celery task status via Ajax"""
+    
+    template_name = 'core/test.html'
+    
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        
+        if self.request.is_ajax():
+            import json
+            from django.http import HttpResponse
+            from celery.result import AsyncResult
+            
+            task_id = self.request.POST.get('task_id')
+            task = AsyncResult(task_id)
+            state = task.state
+            result = task.result if task.result else 'not done'
+            
+            data = {'state': state,
+                    'result': result}
+            
+            
+            return HttpResponse(json.dumps(data), content_type="application/json")
+        else:
+        
+            return super(TaskStatus, self).dispatch(request, *args, **kwargs)
+    
+    
+    def get_context_data(self, **kwargs):
+              
+        context = super(TaskStatus, self).get_context_data(**kwargs)
+        
+        return context
+    
+    
     
     
     

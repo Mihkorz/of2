@@ -30,6 +30,14 @@
      return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
  }
  
+ $.ajaxSetup({
+	    beforeSend: function(xhr, settings) {
+	        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+	            xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+	        }
+	    }
+	});
+ 
  function autocompleteAjaxSearch(searchObj, loadObj, url){
 	 var query = $(searchObj).val();
 	 
