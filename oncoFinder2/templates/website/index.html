@@ -40,7 +40,7 @@ transcriptomic data {% endblock %}
           <p>View pathways for cell signaling and metabolism in humans, as well as mouse signaling
               pathways. Determine the genes that are related to each signaling pathway and create 
               diagrams of the nodes and components of each pathway.</p>
-          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+          <p><a class="btn btn-default" data-toggle="modal" data-target="#Modal1">View details &raquo;</a></p>
         </div><!-- /.col-lg-4 -->
         <div class="col-lg-4">
           <p style="text-align:center;">
@@ -50,7 +50,7 @@ transcriptomic data {% endblock %}
           <p>Get a personal workspace that allows you to access your data anywhere. Organize your
              datasets into multiple projects so that related documents are kept together. Quantify your data
              by calculating pathway activation strength and drug score.</p>
-          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+          <p><a class="btn btn-default" data-toggle="modal" data-target="#Modal2">View details &raquo;</a></p>
         </div><!-- /.col-lg-4 -->
         <div class="col-lg-4">
           <p style="text-align:center;">
@@ -60,7 +60,7 @@ transcriptomic data {% endblock %}
           <p>View the gene targets and signaling pathways of each drug to determine effects on gene
              expression. Learn the typical dosage, side effects, and contraindications of a drug for
              information about their clinical use.</p>
-          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+          <p><a class="btn btn-default" data-toggle="modal" data-target="#Modal3">View details &raquo;</a></p>
         </div><!-- /.col-lg-4 -->
       </div><!-- /.row --> 
       
@@ -94,4 +94,90 @@ transcriptomic data {% endblock %}
         </div>
       </div>     
 </div>
+
+<!-- Modals for "View details" -->
+
+  <!-- More than 800 Pathways in Biochem Database -->
+<div class="modal fade" id="Modal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">More than 800 Pathways in Biochem Database</h4>
+      </div>
+      <div class="modal-body">
+        <p><b>The BioChem database</b> maps biological signaling pathways to the genes and nodes that they
+affect. Each gene in the pathway is distinguished by whether it has a <i>positive/activator</i> or
+<i>negative/repressor</i> role on the activation of other genes and nodes.</p>
+<p> Since many diseases are
+the result of network interactions among multiple regulatory genes, these signaling pathways
+provide important insight about which genetic factors contribute to health effects.</p>
+<p> OncoFinder
+allows you to quantitatively measure the differences in signaling pathway activation between
+different groups to determine which biological pathways are affected by disease. Pathways
+are available for cell signaling and metabolism in humans, as well as mouse signaling
+pathways.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <!-- Create and manage your Projects easily -->
+<div class="modal fade" id="Modal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Create and manage your Projects easily</h4>
+      </div>
+      <div class="modal-body">
+        <p>OncoFinder simplifies your data management. Instead of having files scattered around your
+computer for different projects, OncoFinder gives you a workspace that allows you to create
+individual projects where you can store multiple related datasets in one place.</p>
+<p> Once you upload your documents to the website, you can view them at any time in spreadsheet format.
+Performing calculations is as simple as uploading files, and the results of the calculations are
+stored as well.</p>
+<p>You also have the ability to see projects created by other users. If you wish to
+share a project with other users then you may create a public project, otherwise to make it so
+that only you can view it you may create a private project.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <!-- More than 200 Drugs and increasing -->
+<div class="modal fade" id="Modal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">More than 200 Drugs and increasing</h4>
+      </div>
+      <div class="modal-body">
+        <p>OncoFinder allows you to analyze the effect of drugs at the molecular level by mapping
+drugs to their target genes.</p>
+<p>You also have the ability to see which signaling pathways are
+affected by drugs. Drugs are categorized based on whether they have an <i>activator, inhibitor,
+or multivalent</i> effect on genes to determine the effects of drugs on signaling pathways.</p>
+<p>Using calculations for signaling pathway activation, OncoFinder allows you to quantitatively
+score drugs based on whether or not they can potentially restore normal gene expression in
+diseased cells. This makes it possible to recommend drugs to patients on an personalized
+basis to improve drug therapy for diseases such as cancer that vary on an indiviudal basis.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>  
+
+  
 {% endblock %}
