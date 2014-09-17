@@ -3,7 +3,7 @@ import os
 import math
 import csv
 from datetime import datetime
-from pandas import read_csv, read_excel, DataFrame, ExcelWriter
+from pandas import read_csv, read_excel, DataFrame, Series, ExcelWriter
 
 from django.views.generic.edit import FormView #CreateView , UpdateView
 from django.views.generic.detail import DetailView
@@ -13,7 +13,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.core.files import File
-from  django.core.exceptions import MultipleObjectsReturned
+from django.core.exceptions import MultipleObjectsReturned
 from django.conf import settings
 
 from .forms import  CalculationParametersForm
@@ -289,21 +289,26 @@ class CoreSetCalculationParameters(FormView):
                     
         """ Saving results to Excel file and to database """
         path = os.path.join('users', str(input_document.project.owner),
-                                            str(input_document.project),'output', 'output_'+str(input_document.get_filename()+'.xlsx'))
-        output_file = File(settings.MEDIA_ROOT+"/"+path)
+                                            str(input_document.project),'output')
+        file_name = 'output_'+str(input_document.get_filename()+'.xlsx')
         
-        writer = ExcelWriter(output_file.file, index=False)
-        if calculate_pms:
-            output_pms_df.to_excel(writer,'PMS')
-        if calculate_pms1:     
-            output_pms1_df.to_excel(writer,'PMS1')
-        if calculate_ds1:
-            output_ds1_df.to_excel(writer, 'DS1')
-        if calculate_ds2:
-            output_ds2_df.to_excel(writer, 'DS2')
-        writer.save()
+        from django.core.files.storage import default_storage
+        from django.core.files.base import ContentFile
         
-        output_doc.document = path
+        output_file = default_storage.save(settings.MEDIA_ROOT+"/"+path+"/"+file_name, ContentFile(''))
+                
+        with ExcelWriter(output_file, index=False) as writer:
+            if calculate_pms:
+                output_pms_df.to_excel(writer,'PMS')
+            if calculate_pms1:     
+                output_pms1_df.to_excel(writer,'PMS1')
+            if calculate_ds1:
+                output_ds1_df.to_excel(writer, 'DS1')
+            if calculate_ds2:
+                output_ds2_df.to_excel(writer, 'DS2')
+        
+        
+        output_doc.document = path+"/"+os.path.basename(output_file)
         output_doc.related_doc = input_document
         output_doc.save() 
          
@@ -348,16 +353,33 @@ class Test(TemplateView):
               
         context = super(Test, self).get_context_data(**kwargs)
         
-        from .tasks import add
+        #from .tasks import add
         
         #res = add.delay(1,1)
         
-        #path = os.path.join('users', "Misha",
-                                            #"newnewnew", 'output_test.xlsx')
+        path = os.path.join('users', "Misha",
+                                            "newnewnew", 'output_test.xlsx')
         
-        #from django.core.files.storage import default_storage
-        #from django.core.files.base import ContentFile
-        #path = default_storage.save(settings.MEDIA_ROOT+"/"+path, ContentFile(''))
+        
+        d = {'one' : Series([1., 2., 3.], index=['a', 'b', 'c']),
+             'two' : Series([1., 2., 3., 4.], index=['a', 'b', 'c', 'd'])}
+        
+        df = DataFrame(d)
+        
+        from django.core.files.storage import default_storage
+        from django.core.files.base import ContentFile      
+      
+        
+        path1 = default_storage.save(settings.MEDIA_ROOT+"/"+path, ContentFile(''))
+        
+        writer = ExcelWriter(path1, index=False)
+        
+        df.to_excel(path1,'PMS')
+        
+        
+        
+        
+        
         """
         path = Pathway.objects.using('old').get(name="Wnt_Pathway_Ctnn-b_Degradation")
         
@@ -384,7 +406,7 @@ class Test(TemplateView):
         
         """
         
-        #context['task_id'] = res.id
+        context['task_id'] = path1
         
         
         

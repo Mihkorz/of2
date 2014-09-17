@@ -10,7 +10,7 @@ admin.autodiscover()
 from website.views import IndexPage, AboutPage, Logout
 from profiles.views import ProfileIndex, SettingsProfile, SettingsBilling, CreateProject, \
                            DeleteProject, ProjectDetail, CreateDocument, DeleteDocument, \
-                           DocumentDetail
+                           DocumentDetail, SampleDetail
                            
 from core.views import CoreSetCalculationParameters, CoreCalculation, Test, TaskStatus
 from database.views import PathwayList, PathwayDetail, PathwayAjaxSearch, \
@@ -47,6 +47,7 @@ urlpatterns = patterns('',
     url(r'^document/new/$', CreateDocument.as_view(), name="document_create"),
     url(r'^document/delete/(?P<pk>\d+)/$', DeleteDocument.as_view(), name="document_delete"),
     url(r'^document/doc(?P<pk>\d+)/$', DocumentDetail.as_view(), name="document_detail"),
+    url(r'^document/doc(?P<pk>\d+)/(?P<sample_name>.*)/$', SampleDetail.as_view(), name="sample_detail"),
     
     ################### Core App ##############################
     url(r'^calculation-parameters/doc(?P<pk>\d+)/$', CoreSetCalculationParameters.as_view(), name="core_set_calculation_parameters"),

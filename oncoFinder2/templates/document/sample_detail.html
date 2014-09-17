@@ -1,0 +1,340 @@
+{% extends "base_profiles.html" %}
+
+{% block title %}Sample {{sample_name}} Detail | OncoFinder v2.0{% endblock %}
+
+{% block content %}
+
+
+<div class="container">
+{% if error %}
+ <div class="alert alert-danger">
+    <i class="glyphicon glyphicon-warning-sign"></i>
+    {{error}}
+  </div>
+{% endif %}
+
+  <h2>
+    <span class="glyphicon glyphicon-user"></span>
+    <a href="/user/{{document.project.owner}}">{{document.project.owner}}</a> /
+     <span class="glyphicon glyphicon-folder-open"></span>&nbsp; 
+     <a href="/project/{{document.project}}">{{document.project}}</a> /
+     <span class="glyphicon glyphicon-file"></span>
+     <small><a href="/document/doc{{document.id}}/">{{document.get_filename}}</a></small>
+     <small>{{sample_name}}</small>
+  </h2>
+  
+  <hr/>
+
+	<!-- Nav tabs -->
+	<ul class="nav nav-tabs" role="tablist">
+	  <li class="active"><a href="#genes" role="tab" data-toggle="tab">Gene Expression</a></li>
+	  <li><a href="#pas" role="tab" data-toggle="tab">Pathway Activation Score</a></li>
+	  <li><a href="#ds" role="tab" data-toggle="tab">Drug Score</a></li>
+	  <li><a href="#picture" role="tab" data-toggle="tab">Picture</a></li>
+	</ul>
+	
+	<!-- Tab panes -->
+	<div class="tab-content">
+	  <!-- DIFFERENRIAL GENES TAB-->
+	  <div class="tab-pane fade in  active " id="genes" style="padding: 10px 0 0 0;">
+	  
+	  <table class="table table-striped table-bordered" cellspacing="0" width="100%" id="genes_table">
+	    <thead>
+	      <tr>
+	        <th>SYMBOL</th>
+	        <th>CNR</th>
+	        <th>Mean norm</th>
+	        <th>STD</th>
+	     </tr>
+	    </thead>
+	    <tbody>
+	    {% for genename, gene_values in genes.items%}
+	    <tr>
+	    <td>{{genename}}</td>
+	    {%for value in gene_values%}
+	    <td>{{value}}</td>
+	    {%endfor%}
+	    </tr>
+	    {% endfor %}
+	    </tbody>
+	    </table>
+	  
+	  </div>
+	  
+	  <!-- PMS TAB -->
+	  <div class="tab-pane fade  " id="pas" style="padding: 10px 0 0 0 ;"> 
+	    <table class="table table-striped table-bordered" cellspacing="0" width="100%" id="pms_table">
+	    <thead>
+	      <tr>
+	        <th>Pathway</th>
+	        <th>PMS</th>
+	        <th>PMS1</th>
+	     </tr>
+	    </thead>
+	    <tbody>
+	    {% for pathname, pms_values in PMS.items%}
+	    <tr>
+	    <td>{{pathname}}</td>
+	    {%for pms in pms_values%}
+	    <td>{{pms}}</td>
+	    {%endfor%}
+	    </tr>
+	    {% endfor %}
+	    </tbody>
+	    </table>
+	  
+	  
+	  </div>
+	  
+	  <!-- DS TAB -->
+	  <div class="tab-pane fade " id="ds" style="padding: 10px 0 0 0;">
+	    <table class="table table-striped table-bordered" cellspacing="0" width="100%" id="ds_table">
+	    <thead>
+	      <tr>
+	        <th>Drug</th>
+	        <th>DataBase</th>
+	        <th>DS1</th>
+	        <th>DS2</th>
+	      </tr>
+	      </thead>
+	      <tbody>
+	      {% for drug, ds_values in DS.items%}
+	      <tr>
+	      <td>{{drug}}</td>
+	      {%for ds in ds_values%}
+	      <td>{{ds}}</td>
+	      {%endfor%}
+	      </tr>
+	      {% endfor %}
+	     </tbody>
+	    </table>
+	  
+	  </div>
+	  
+	  <!-- PICTURE TAB -->
+	  <div class="tab-pane fade " id="picture" style="padding:10px 0 0 0 ;">
+	  
+	  
+	  <button class='btn btn-primary' id='downloadCanvas'>Download Picture</button>
+<br/>
+<canvas id='pathCanvas' width='1000px' height='800px' style='background:#fff;'>
+
+Sorry, but your browser doesn't seem to support HTML5. Please contact site adminnistration. 
+</canvas>
+<script >
+$(function(){
+	
+	
+	var canvas = document.getElementById('pathCanvas');
+    var ctx = canvas.getContext('2d');
+    
+    ctx.translate(0.5, 0.5); // * Move the canvas by 0.5px to fix blurring
+    
+    var normalCell = ctx.createRadialGradient(145,365,10,150,370,50); //Normal Cell
+    normalCell.addColorStop(0, '#A7D30C');
+    normalCell.addColorStop(0.9, '#019F62');
+    normalCell.addColorStop(1, 'rgba(1,159,98,0)');
+     
+    var cancerCell = ctx.createRadialGradient(840,360,20,850,370,50); //Cancer Cell
+    cancerCell.addColorStop(0, '#FF5F98');
+    cancerCell.addColorStop(0.75, '#FF0188');
+    cancerCell.addColorStop(1, 'rgba(255,1,136,0)');
+   
+    ctx.beginPath();
+    
+    ctx.shadowOffsetX = 2;
+    ctx.shadowOffsetY = 2;
+    ctx.shadowBlur = 2;
+    ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
+    
+    ctx.fillStyle = normalCell;
+    ctx.fillRect(100,320,200,420); //Normal Cell
+   
+    
+    ctx.fillStyle = cancerCell; // Cancer Cell
+    ctx.fillRect(800,320,900,420);
+    ctx.stroke();
+    
+    ctx.beginPath();    
+    ctx.shadowColor = "transparent";
+    ctx.fillStyle = "#000";
+    ctx.font = "italic 14px Ubuntu";
+    ctx.fillText("Normal Cell", 112, 377);
+    
+    
+    ctx.fillStyle = "#000";
+    ctx.font = "italic 14px Ubuntu";
+    ctx.fillText("Cancer Cell", 813, 377);
+    
+    ctx.shadowOffsetX = 2;
+    ctx.shadowOffsetY = 2;
+    ctx.shadowBlur = 2;
+    ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
+    
+    ctx.moveTo(150, 40); // Left Upper Line
+    ctx.lineTo(150, 325);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(150,325,1,0,2*Math.PI); // line-sphere penetration point
+    ctx.fill();
+    ctx.moveTo(150, 420); // Left Lower Line
+    ctx.lineTo(150, 701);
+        
+    ctx.moveTo(850, 40);  // Right Upper Line
+    ctx.lineTo(850, 325);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(850,325,1,0,2*Math.PI); // line-sphere penetration point
+    ctx.fill();
+    ctx.moveTo(850, 420); // Right Lower Line
+    ctx.lineTo(850, 701);   
+    ctx.stroke();
+    
+ // Links
+    var Links = new Array(); // Links information
+    var hoverLink = ""; // Href of the link which cursor points at
+    ctx.fillStyle = "#000"; // Default blue link color
+    ctx.font = "bold 12px Ubuntu"; // Monospace font for links
+    ctx.textBaseline = "top"; // Makes left top point a start point for rendering text
+	
+	function drawLink(x, y, title, pId, lineColor, lineWidth, marker){
+    	// defaults if not defined
+    	x = (typeof x === "undefined") ? "1" : x;
+		lineColor = (typeof lineColor === "undefined") ? "#000000" : lineColor;
+		lineWidth = (typeof lineWidth === "undefined") ? "1" : lineWidth;
+		marker = (typeof lineWidth === "undefined") ? "rect" : marker;
+		
+		var pathTitle = title,
+		    linkX = x,
+		    linkY = y,
+		    linkWidth = ctx.measureText(pathTitle).width,
+            linkHeight = parseInt(ctx.font); // Get lineheight out of fontsize
+            
+            // Draw the link
+		    ctx.shadowColor = "transparent";
+		    ctx.fillStyle = "#000000";
+            ctx.fillText(pathTitle, linkX, linkY);
+            ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
+            
+            // Draw line 
+            ctx.beginPath();
+            ctx.moveTo(150, y+20);  
+            ctx.lineTo(850, y+20);
+            ctx.strokeStyle = lineColor;
+            ctx.lineWidth = lineWidth;
+            ctx.stroke();
+            
+            if(marker == "triangle") drawTriangle(y+20, lineWidth, lineColor);
+            if(marker == "rect")     drawRectangle(y+20, lineWidth, lineColor);
+            
+            // Add mouse listeners
+            canvas.addEventListener("mousemove", on_mousemove, false);
+            canvas.addEventListener("click", on_click, false);
+
+            // Add link params to array
+            Links.push(x + ";" + y + ";" + linkWidth + ";" + linkHeight + ";" + pId);
+	}
+    
+	// Link hover
+    function on_mousemove (ev) {
+        var x, y;
+
+        // Get the mouse position relative to the canvas element
+        if (ev.layerX || ev.layerX == 0) { // For Firefox
+            x = ev.layerX;
+            y = ev.layerY;
+        }
+         x-=canvas.offsetLeft;
+         y-=canvas.offsetTop;
+
+        // Link hover
+        for (var i = Links.length - 1; i >= 0; i--) {
+            var params = new Array();
+
+            // Get link params back from array
+            params = Links[i].split(";");
+
+            var linkX = parseInt(params[0]),
+                linkY = parseInt(params[1]),
+                linkWidth = parseInt(params[2]),
+                linkHeight = parseInt(params[3]),
+                linkHref = params[4];
+
+            // Check if cursor is in the link area
+            if (x >= linkX && x <= (linkX + linkWidth) && y >= linkY && y <= (linkY + linkHeight)){
+                document.body.style.cursor = "pointer";
+                hoverLink = linkHref;
+                break;
+            }
+            else {
+                document.body.style.cursor = "";
+                hoverLink = "";
+            }
+        };
+    }
+
+    // Link click
+    function on_click(e) {
+        if (hoverLink){
+            showDialog(hoverLink); // Use this to open in new tab
+            //window.location = hoverLink; // Use this to open in current window
+        }
+    }
+       
+    {% for draw in lDrawPathCanvas %}
+    {% autoescape off %}
+    {{draw}}
+    {% endautoescape %}
+    {% endfor %}
+    
+    
+    function drawTriangle( y, scale, color){
+    	  ctx.beginPath();
+    	  ctx.fillStyle = color;
+    	  scaledX = 10+scale;
+    	  scaledYup = y+5+scale;
+    	  scaledYdown = y-5 - scale;
+    	  ctx.moveTo(600, scaledYup);
+    	  ctx.lineTo(600 + scaledX, y);
+    	  ctx.lineTo(600, scaledYdown);
+    	  ctx.fill();
+    }
+    
+    function drawRectangle( y, scale, color){
+  	  ctx.beginPath();
+  	  ctx.fillStyle = color;
+  	  scaledX = 3+scale;
+  	  scaledYup = y+5+scale;
+  	  scaledYdown = y-5 - scale;
+  	  ctx.rect(600, scaledYdown, scaledX, (5+scale)*2 );
+  	  ctx.fill();
+  }  
+    
+    
+    // DOWNLOAD Picture Button
+    $('#downloadCanvas').click(function(){window.open(canvas.toDataURL("image/png"));});
+    
+}
+		
+);
+</script>
+	  
+	  
+	  
+	  </div>
+	</div>
+
+  
+</div>
+
+<script>
+
+$(document).ready( function () {
+	$('#genes_table').DataTable({ "lengthMenu": [[ 50, 100, -1], [50, 100, "All"]]});
+    $('#pms_table').DataTable({ "lengthMenu": [[ 50, 100, -1], [50, 100, "All"]]});
+    $('#ds_table').DataTable({ "lengthMenu": [[ 50, 100, -1], [50, 100, "All"]]});
+} );
+</script>
+
+
+{% endblock %}

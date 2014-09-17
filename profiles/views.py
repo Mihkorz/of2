@@ -3,11 +3,13 @@
 import os
 import csv
 import json
+import math
 from pandas import read_csv, read_excel, DataFrame
 
 #from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.detail import DetailView
+from django.views.generic.base import TemplateView
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponse, Http404
@@ -18,6 +20,7 @@ from django.conf import settings
 from .forms import SettingsUserForm, UserProfileFormSet, CreateProjectForm, \
                    UploadDocumentForm
 from .models import Project, Document, ProcessDocument
+from database.models import Pathway
 
 
 class ProfileIndex(DetailView):
@@ -259,7 +262,7 @@ class DocumentDetail(DetailView):
             sniffer = csv.Sniffer()
             dialect = sniffer.sniff(open(filename, 'r').read(), delimiters='\t,;') # defining the separator of the csv file
             df = read_csv(filename, delimiter=dialect.delimiter)
-            context['input'] = df[:50].to_html()
+            context['input'] = df[:50].to_html()            
         else:
             try:
                 df = read_excel(filename, sheetname="PMS")
@@ -281,7 +284,237 @@ class DocumentDetail(DetailView):
                 context['DS2'] = df.to_html()
             except:
                 pass
+            
+            tumour_cols = [col for col in df.columns if 'Tumour' in col]
+            context['tumour_cols'] = tumour_cols
         
+        
+        return context
+    
+class SampleDetail(DeleteView):
+    """
+    Details for current Sample
+    """
+    model = Document
+    template_name = 'document/sample_detail.html'
+    
+    
+    
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(SampleDetail, self).dispatch(request, *args, **kwargs)
+        
+    
+    def get_context_data(self, **kwargs):
+        context = super(SampleDetail, self).get_context_data(**kwargs)
+        
+        sample = self.kwargs['sample_name']
+        errors = []
+        
+        output_filename = settings.MEDIA_ROOT+"/"+self.object.document.name
+        process_filename = settings.MEDIA_ROOT+"/"+self.object.related_doc.input_doc.document.name
+        calc_params = self.object.parameters
+        
+        try: # searching for differential genes once again. Don't forget to change in case of main calculation filter changes!
+            df_file_genes = read_csv(process_filename, sep='\t', index_col='SYMBOL')
+            df_genes = df_file_genes[[ sample, 'Mean_norm', 'gMean_norm', 'std']]
+            
+            diff_genes_for_sample = []
+            for gene_name, row in df_genes.iterrows():
+                if not calc_params['use_sigma']:
+                    sigma_num = 0
+                else:
+                    sigma_num = calc_params['sigma_num']
+                if not calc_params['use_cnr']:
+                    cnr_up = cnr_low = 0
+                else:
+                    cnr_up = calc_params['cnr_up']
+                    cnr_low = calc_params['cnr_low']
+                        
+                CNR = row[sample]
+                if calc_params['norm_algirothm'] == 'arithmetic':
+                    mean = row['Mean_norm']
+                    column_name = 'Mean_norm'
+                    EXPRESSION_LEVEL = CNR*float(mean)
+                         
+                if calc_params['norm_algirothm'] == 'geometric':
+                    mean = row['gMean_norm']
+                    column_name = 'gMean_norm'
+                    EXPRESSION_LEVEL = CNR*float(mean)
+                        
+                std = row['std'] if float(row['std'])>0 else 0   
+                if (
+                    (
+                       (EXPRESSION_LEVEL >= (mean + sigma_num*std)) or 
+                       (EXPRESSION_LEVEL < (mean - sigma_num*std))
+                     ) and 
+                    (CNR > cnr_up or CNR < cnr_low) and 
+                    (CNR > 0)
+                   ):
+                        
+                    diff_genes_for_sample.append(gene_name) # store differential genes in a list
+            
+            dict_diff_genes = {'SYMBOL': diff_genes_for_sample}
+            
+            dif_genes_df = DataFrame(dict_diff_genes)
+            dif_genes_df = dif_genes_df.set_index('SYMBOL')
+            
+            joined_df = dif_genes_df.join(df_genes, how='inner')
+            
+            joined_df = joined_df[[sample, column_name, 'std']]
+            joined_df.columns =  ['CNR', 'Mean norm', 'STD']
+            
+            dict_genes = joined_df.to_dict(outtype="dict")
+            
+            output_genes = {}
+            
+            for gene in dict_genes['CNR']:
+                output_genes[gene] = [d[gene] for d in (dict_genes['CNR'], dict_genes['Mean norm'], dict_genes['STD'])] 
+            
+             
+            context['genes'] = output_genes   
+        except:
+            errors.append("Error while determining differential genes!")
+        
+        try: # reading data from file
+            df_file_pms = read_excel(output_filename, sheetname="PMS")
+            df_file_pms1 = read_excel(output_filename, sheetname="PMS1")
+            df_file_ds1 = read_excel(output_filename, sheetname="DS1")
+            df_file_ds2 =  read_excel(output_filename, sheetname="DS2")
+        except:
+            errors.append("Error reading file and converting it to Pandas DataFrame!")
+        
+        try: # constructing PMS dictionary for displaying
+            df_pms = df_file_pms[[sample]]
+            df_pms.columns = ['PMS']
+            df_pms1 = df_file_pms1[[sample]]
+            df_pms1.columns = ['PMS1']
+            df_pms = df_pms.join(df_pms1, how="inner")
+            pms_dict =  df_pms.to_dict(outtype="dict")
+            
+            output_pms = {}
+            
+            for path in pms_dict['PMS']:
+                output_pms[path] = [d[path] for d in (pms_dict['PMS'], pms_dict['PMS1'])]
+                
+            # drawing Normal-Cancer cell picture 
+            lPaths = []
+            for pathname, pms_values in output_pms.iteritems():
+                try:
+                    objPath = Pathway.objects.get(name=pathname)
+                    objPath.pms = pms_values[0]
+                    objPath.pms1 = pms_values[1]
+                    lPaths.append(objPath)
+                except:
+                    pass
+            
+            lUp = []
+            lDown = []
+            lCenter = []
+            lDrawCanvas = []
+            lDrawSVG = []
+            
+            for pathway in lPaths:
+                if((pathway.amcf == -1 and pathway.pms1 <0) or (pathway.amcf == 1 and pathway.pms1 >0)):
+                    lUp.append(pathway)
+                elif((pathway.amcf == -1 and pathway.pms1 >0) or (pathway.amcf == 1 and pathway.pms1 <0)):
+                    lDown.append(pathway)
+                elif(pathway.pms == 0):
+                    lCenter.append(pathway)
+                    
+            
+            up = 0
+            sortUp = sorted(lUp, key=lambda x: x.pms, reverse=True)
+            sortUpR = sortUp[:10]
+            sortUpR.reverse()
+            for path in sortUpR:
+                if path.pms1 >0:
+                    color = "green"
+                else:
+                    color = "red"
+                if path.amcf ==1:
+                    markerSVG = 'marker-mid="url(#arrow)"'
+                    markerCanvas = 'triangle'
+                else:
+                    markerSVG = 'marker-mid="url(#box)"'
+                    markerCanvas = 'rect'
+                
+                height = 160-up*25
+                thickness = 1*math.log(math.fabs(path.pms))
+                lDrawSVG.append('<path id = "pathup'+str(path.id)+'" d = "M 200 200 Q 362,'+str(height)+'  525, '+str(height)+' Q 688,'+str(height)+' 850,200" \
+                                 '+ markerSVG +' stroke = "'+ color +'" stroke-width = "'+str(thickness)+'" fill = "none"  />\
+                                 <text x="10" y="100" style="stroke: #000000; font-size: 9pt; cursor: pointer" onclick="showDialog('+str(path.id)+')">\
+                                 <textPath xlink:href="#pathup'+str(path.id)+'" startOffset="25%" >\
+                                '+ path.name +'\
+                                </textPath>\
+                                </text>')
+            
+                canvasY = 270 - up*30+20
+                lDrawCanvas.append('drawLink(200,'+str(canvasY)+',"'+ path.name +'", "'+ str(path.id) +'", "'+color+'", '+str(thickness)+', "'+markerCanvas+'");')
+            
+                up+=1
+        
+            down = 0
+            sortDown = sorted(lDown, key=lambda x: x.pms, reverse=False)
+            sortDownR = sortDown[:10]
+            sortDownR.reverse()
+            for path in sortDownR:
+                if path.pms1 >0:
+                    color = "green"
+                else:
+                    color = "red"
+                if path.amcf ==1:
+                    markerSVG = 'marker-mid="url(#arrow)"'
+                    markerCanvas = 'triangle'
+                else:
+                    markerSVG = 'marker-mid="url(#box)"'
+                    markerCanvas = 'rect'
+                height = 250+down*25
+                thickness = 1*math.log(math.fabs(path.pms))
+                lDrawSVG.append('<path id = "pathdown'+str(down)+'"    d = "M 200 200 Q 362,'+str(height)+'  525, '+str(height)+' Q 688,'+str(height)+' 850,200" \
+                                '+ markerSVG +' stroke = "'+ color +'" stroke-width = "'+str(thickness)+'" fill = "none"/>\
+                                <text x="10" y="100" style="stroke: #000000; font-size: 9pt;cursor: pointer" onclick="showDialog('+str(path.id)+')">\
+                                 <textPath xlink:href="#pathdown'+str(down)+'" startOffset="25%" >\
+                                '+ path.name +'\
+                                </textPath>\
+                                </text>')
+            
+                canvasY = 410 + down*30
+                lDrawCanvas.append('drawLink(200,'+str(canvasY)+',"'+ path.name +'", "'+ str(path.id) +'", "'+color+'", '+str(thickness)+', "'+markerCanvas+'");')
+            
+                down+=1
+        
+            for path in lCenter:
+                if path.pms1 >= 0:
+                    color = "green"
+                else:
+                    color = "red"
+            
+                           
+            context['PMS'] = output_pms
+            context['lDrawPathCanvas'] = lDrawCanvas
+
+        except:
+            raise#errors.append("Error processing PMS and PMS1 DataFrames!")
+            
+        try: # constructing DS dictionary for displaying
+            df_ds1 = df_file_ds1[[sample, 'DataBase']]
+            df_ds1.columns = ['DS1', 'DataBase']
+            df_ds2 = df_file_ds2[[sample]]
+            df_ds2.columns = ['DS2']
+            df_ds1 = df_ds1.join(df_ds2, how="inner")
+            ds_dict =  df_ds1.to_dict(outtype="dict")
+            
+            output_ds = {}
+            for drug in ds_dict['DS1']:
+                output_ds[drug] = [d[drug] for d in (ds_dict['DataBase'], ds_dict['DS1'], ds_dict['DS2'] )]
+            
+            context['DS'] = output_ds
+        except:
+            errors.append("Error processing DS and DS2 DataFrames!")     
+        
+        context['error'] = errors
+        context['sample_name'] = self.kwargs['sample_name']
         
         return context  
     

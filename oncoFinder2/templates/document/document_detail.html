@@ -16,15 +16,18 @@
   <span class="text-muted">
     Created at: {{document.created_at}}<br/>
     By: {{document.created_by}}<br/>
+    {% if document.doc_type == 1 %}
     <span>Samples: </span><span>{{document.sample_num}}</span> | 
     <span>Norms: </span><span>{{document.norm_num}}</span> | 
-    <span>Rows: </span><span>{{document.row_num}}</span>  
+    <span>Rows: </span><span>{{document.row_num}}</span>
+    {%endif%}  
    </span>
   {% if document.doc_type == 1 %}
     <a class="btn btn-default btn-sm pull-right" href="{% url 'core_set_calculation_parameters' document.id %}">
       <span class="glyphicon glyphicon-play"></span> &nbsp;<b>Start calculation</b>
      </a>
    {% else %}
+   
    <a class="btn btn-default btn-sm pull-right" style="margin-left: 20px;" href="{{MEDIA_URL}}{{document.document}}">
       <span class="glyphicon glyphicon-download"></span> &nbsp;<b>Download PMS-DS file</b>
      </a>
@@ -33,7 +36,7 @@
      </a>
      
    {% endif %}
-           
+  <br/>         
   <hr/>
   <div>  
 
@@ -45,65 +48,86 @@
        <div class="wrapper2">
           {{input|safe}}
        </div>
-{% else %}  
-<!-- Nav tabs -->
-<ul class="nav nav-tabs">
-  <li class="active"><a href="#pms" data-toggle="tab">PMS</a></li>
-  <li><a href="#pms1" data-toggle="tab">PMS1</a></li>
-  {%if DS1 %}
-  <li><a href="#ds1" data-toggle="tab">DS1</a></li>
-  {%endif%}
-  {%if DS2%}
-  <li><a href="#ds2" data-toggle="tab">DS2</a></li>
-  {%endif%}
+{% else %}
+
+<div class="btn-group ">
+       <button type="button" class="btn btn-default" id="btn_all_path" ><span class="glyphicon glyphicon-th-list"></span></button>
+       <button type="button" class="btn btn-default"  id="btn_all_tumour" ><span class="glyphicon glyphicon-th"></span> </button>
+   </div>
+<div id="all_paths" class="out_doc_container"> 
+	<!-- Nav tabs -->
+	<ul class="nav nav-tabs">
+	  <li class="active"><a href="#pms" data-toggle="tab">PMS</a></li>
+	  <li><a href="#pms1" data-toggle="tab">PMS1</a></li>
+	  {%if DS1 %}
+	  <li><a href="#ds1" data-toggle="tab">DS1</a></li>
+	  {%endif%}
+	  {%if DS2%}
+	  <li><a href="#ds2" data-toggle="tab">DS2</a></li>
+	  {%endif%}
+	</ul>
+	
+	<div class="tab-content">
+	  <div class="tab-pane fade in active" id="pms">
+	      
+	      <div class="wrapper1">
+	        <div class="upper_scroll"></div>
+	       </div>
+	       <div class="wrapper2">
+	          {{PMS|safe}}
+	       </div>
+	  
+	  </div>
+	  <div class="tab-pane fade" id="pms1">
+	  
+	     <div class="wrapper1">
+	        <div class="upper_scroll"></div>
+	       </div>
+	       <div class="wrapper2">
+	          {{PMS1|safe}}
+	       </div>
+	  
+	  </div>
+	  {%if DS1 %}
+	  <div class="tab-pane fade" id="ds1">
+	  
+	      <div class="wrapper1">
+	        <div class="upper_scroll"></div>
+	       </div>
+	       <div class="wrapper2">
+	          {{DS1|safe}}
+	       </div>
+	  
+	  </div>
+	  {%endif%}
+	  {%if DS1 %}
+	  <div class="tab-pane fade" id="ds2">
+	  
+	      <div class="wrapper1">
+	        <div class="upper_scroll"></div>
+	       </div>
+	       <div class="wrapper2">
+	          {{DS2|safe}}
+	       </div>
+	  
+	  </div>
+	  {%endif%}
+	</div>
+</div>
+<div id="all_tumours" class="out_doc_container" >
+
+<ul class="list-group">
+{% for tumour in tumour_cols %}
+    <li class="list-group-item""> 
+      <a href="{{tumour}}/">{{tumour}}</a>
+    </li>
+{% endfor %} 
+
 </ul>
 
-<div class="tab-content">
-  <div class="tab-pane fade in active" id="pms">
-      
-      <div class="wrapper1">
-        <div class="upper_scroll"></div>
-       </div>
-       <div class="wrapper2">
-          {{PMS|safe}}
-       </div>
-  
-  </div>
-  <div class="tab-pane fade" id="pms1">
-  
-     <div class="wrapper1">
-        <div class="upper_scroll"></div>
-       </div>
-       <div class="wrapper2">
-          {{PMS1|safe}}
-       </div>
-  
-  </div>
-  {%if DS1 %}
-  <div class="tab-pane fade" id="ds1">
-  
-      <div class="wrapper1">
-        <div class="upper_scroll"></div>
-       </div>
-       <div class="wrapper2">
-          {{DS1|safe}}
-       </div>
-  
-  </div>
-  {%endif%}
-  {%if DS1 %}
-  <div class="tab-pane fade" id="ds2">
-  
-      <div class="wrapper1">
-        <div class="upper_scroll"></div>
-       </div>
-       <div class="wrapper2">
-          {{DS2|safe}}
-       </div>
-  
-  </div>
-  {%endif%}
-</div>
+
+</div> 
+
 {% endif %}
   
   
@@ -111,6 +135,27 @@
   
 </div>
 <script>
+
+$(function(){
+	
+	$("#btn_all_path").click(function(){
+		if($("#all_paths").not(":visible") ) {
+			$("#all_tumours").fadeOut("fast", function(){
+				$("#all_paths").fadeIn("slow");
+			});
+		}		
+	});
+	
+	$("#btn_all_tumour").click(function(){
+		if($("#all_tumours").not(":visible") ) {
+			$("#all_paths").fadeOut("fast", function(){
+				$("#all_tumours").fadeIn("slow");
+			});
+			
+		}
+	});
+	
+});
 
 $(function(){
 	$("table.dataframe").attr("border", "0").addClass("table table-hover of-table");

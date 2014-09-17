@@ -130,6 +130,26 @@
   height: 20px;
 }
 
+/***************** DOCUMENT */
+
+.out_doc_container {
+	margin:10px 0 0 0;
+}
+#all_tumours {
+	display: none;
+}
+#tumour-list {
+	list-style: none;
+	padding: 0;
+}
+.single_tumour_li{
+	border: 1px solid #ccc;
+	padding: 5px;
+	margin: 5px; 
+	
+	
+}
+
 /***************** DATABASE */
 
 .pathway_list_ul {
