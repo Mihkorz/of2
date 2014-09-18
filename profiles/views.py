@@ -20,7 +20,7 @@ from django.conf import settings
 from .forms import SettingsUserForm, UserProfileFormSet, CreateProjectForm, \
                    UploadDocumentForm
 from .models import Project, Document, ProcessDocument
-from database.models import Pathway
+from database.models import Pathway, Component, Gene
 
 
 class ProfileIndex(DetailView):
@@ -315,11 +315,14 @@ class SampleDetail(DeleteView):
         process_filename = settings.MEDIA_ROOT+"/"+self.object.related_doc.input_doc.document.name
         calc_params = self.object.parameters
         
+        context['path_db'] = calc_params['db']
+        
         try: # searching for differential genes once again. Don't forget to change in case of main calculation filter changes!
             df_file_genes = read_csv(process_filename, sep='\t', index_col='SYMBOL')
             df_genes = df_file_genes[[ sample, 'Mean_norm', 'gMean_norm', 'std']]
             
             diff_genes_for_sample = []
+            dict_diff_genes_for_sample = {}
             for gene_name, row in df_genes.iterrows():
                 if not calc_params['use_sigma']:
                     sigma_num = 0
@@ -353,6 +356,7 @@ class SampleDetail(DeleteView):
                    ):
                         
                     diff_genes_for_sample.append(gene_name) # store differential genes in a list
+                    dict_diff_genes_for_sample[gene_name] = CNR # dictionary gene_name: CNR for Show Details window
             
             dict_diff_genes = {'SYMBOL': diff_genes_for_sample}
             
@@ -371,7 +375,7 @@ class SampleDetail(DeleteView):
             for gene in dict_genes['CNR']:
                 output_genes[gene] = [d[gene] for d in (dict_genes['CNR'], dict_genes['Mean norm'], dict_genes['STD'])] 
             
-             
+            context['json_diff_genes'] = json.dumps(dict_diff_genes_for_sample) 
             context['genes'] = output_genes   
         except:
             errors.append("Error while determining differential genes!")
@@ -491,7 +495,7 @@ class SampleDetail(DeleteView):
                     color = "red"
             
                            
-            context['PMS'] = output_pms
+            context['PMS'] = lPaths
             context['lDrawPathCanvas'] = lDrawCanvas
 
         except:
@@ -515,6 +519,97 @@ class SampleDetail(DeleteView):
         
         context['error'] = errors
         context['sample_name'] = self.kwargs['sample_name']
+        
+        return context
+    
+class AjaxPathDetail(TemplateView):
+    template_name = 'document/ajax_pathway_detail.html'
+    
+    def post(self, request, **kwargs):
+        return self.render_to_response(self.get_context_data( request, **kwargs), **kwargs)
+    
+    
+    
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(AjaxPathDetail, self).dispatch(request, *args, **kwargs)
+    
+    def get_context_data(self, request, **kwargs):
+        context = super(AjaxPathDetail, self).get_context_data(**kwargs)
+        
+        #path_db = request.POST['path_db']
+        
+        pathway = Pathway.objects.get(pk = int(request.POST['pathway']))
+        dDifGenes = json.loads(request.POST['jsonGenes'])
+        
+        
+        nComp = []
+        dif_genes = {}
+        for gName, gCnr in dDifGenes.iteritems():
+            
+            try:
+                gene = Gene.objects.get(name = gName, pathway = pathway)
+                dif_genes[gName] = [gCnr, gene.arr]
+            except:
+                pass
+                
+            
+            loComp = Component.objects.filter(name = gName)
+            
+            for comp in loComp:
+                if comp.node in pathway.node_set.all():
+                    comp.cnr = gCnr
+                    nComp.append(comp)
+                    
+        lNodes = []
+        
+        for node in pathway.node_set.all():
+            node.nel = 0.0
+            node.numDiffComp = 0
+            node.sumDiffComp = 0.0
+            node.color = "grey"
+            node.strokeWidth = 1
+            for component in nComp:
+                if component in node.component_set.all():
+                    if component.cnr != 0:
+                        node.numDiffComp += 1
+                        node.sumDiffComp += float(component.cnr)
+            if node.numDiffComp >0 :
+                node.nel = node.sumDiffComp / node.numDiffComp
+            lNodes.append(node)
+        
+        
+               
+        
+        finalNodes = []
+        for nod in lNodes:
+            if nod.nel > 1:
+                nod.color = "green"
+                nod.strokeWidth = math.log(nod.nel, 2)
+            if nod.nel <= 1 and nod.nel > 0:
+                nod.color = "red"
+                nod.strokeWidth = math.log(nod.nel, 2)
+            finalNodes.append(nod)            
+        
+        context['colorNodes'] = finalNodes   
+        
+              
+        
+        dRelations = []
+        for node in pathway.node_set.all():
+            for inrel in node.inrelations.all():
+                relColor = 'black'
+                if inrel.reltype == '1':
+                    relColor = 'green'
+                if inrel.reltype == '0':
+                    relColor = 'red'
+                dRelations.append({ inrel.fromnode.name : [inrel.tonode.name, relColor] })      
+        context['dRelations'] = dRelations 
+        
+        context['pathway'] = pathway
+        context['diff_genes'] = dif_genes
+           
+        
         
         return context  
     

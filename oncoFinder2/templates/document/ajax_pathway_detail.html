@@ -1,0 +1,107 @@
+<div class="ajax_path">
+AMCF = {{pathway.amcf}}
+
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#fragment-1" data-toggle="tab"><span>Differential Genes </span></a></li>
+        <li><a href="#fragment-2" data-toggle="tab"><span>Nodes and Components</span></a></li>
+        <li><a href="#fragment-3" data-toggle="tab"><span>Graphic Scheme</span></a></li>
+    </ul>
+    <div id="tabContent" class="tab-content">
+		<div id="fragment-1" class="tab-pane fade in active well">
+		Total = {{diff_genes|length}}
+		<small>
+		<table class='table table-bordered table table-striped' style='width:500px;'>
+		<thead >
+		  <tr valign="top">
+		    <th>#</th>
+		    <th>SYMBOL</th>
+		    <th>CNR</th>
+		    <th>ARR</th>
+		  </tr>
+		</thead>
+		
+		    {% for gene_name, gene_vals in diff_genes.items %}
+		      <tr valign="top">
+		        <td width='40'>{{ forloop.counter }}</td>
+		        <td>{{ gene_name }}</td>
+		        {%for vals in gene_vals%} 
+		        <td>{{vals}}</td>
+		        {%endfor%}
+		      </tr>
+		    {% endfor %}
+		</table>
+		</small>
+		</div>
+		<div id="fragment-2" class="tab-pane fade well">
+		Total = {{pathway.node_set.count}}
+		    <div id='nodesAndComponents'>
+		    <small>
+		    <ul class='pathList'>
+		    {% for node in pathway.node_set.all %}
+		      <li><b>{{ node.name }}</b> 
+		        <ul >
+		          {% for component in node.component_set.all %}
+		      <li>{{ component.name }}</li>
+		          {% endfor %}
+		        </ul></li>
+		    {% endfor %}
+		    </ul>
+		    </small>
+		    </div>
+		</div> 
+		<div id="fragment-3" class="tab-pane fade">
+		<div id="chart2" class="chart" style="width:860px;">
+              <div class="description">Scheme of "{{pathway.name}}" pathway</div>        
+    </div> 
+
+    <script>
+    var G2 = jsnx.DiGraph();
+
+    G2.add_nodes_from([
+                       {% for node in colorNodes %}
+                       ['{{node.name}}', {color: '{{node.color}}', strwidth: {{node.strokeWidth}} }],
+                       {% endfor%}
+                       ]);
+
+    G2.add_edges_from([
+            {% for dict in dRelations %}
+            
+    		{% for key, value in  dict.items %}
+    		['{{key}}','{{value.0}}', {color: '{{value.1}}'}],
+    		{% endfor %}
+    		{% endfor %}
+    ], {color: "grey"});
+
+    //G2.add_edges_from([[1,9], [9,1]]);
+
+    jsnx.draw(G2, {
+        element: '#chart2', 
+        with_labels: true,
+        'layout_attr': {
+            'charge': -250,
+            'linkDistance': 60
+         },
+         node_style: {
+             fill: function(d) { 
+                 return d.data.color; 
+             },
+             'stroke-width':  function(d){ return d.data.strwidth; },
+             stroke: '#000'
+         },
+         edge_style: { fill: function(d){ return d.data.color; }, 'stroke-width': 5 },
+         label_style: {fill: 'black', 'font-size':'12px', 'text-anchor': 'middle',
+             'dominant-baseline': 'top', 'font-weight': 'bold' },
+        
+    }, true);
+    </script>
+ <div style="">
+ <table class="table table-bordered  table-striped">
+ <tr><th>Node</th><th>NEL <span style='color:#fff'>= 1\n * &#931 CNR</span></th><th>Color</th></tr>
+ {% for node in colorNodes %}
+ <tr><td>{{node.name}}</th><td>{{node.nel}}</td><td style="color:{{node.color}}">{{node.color}}</td></tr>
+ {% endfor %}
+ </table>
+		</div>
+</div>
+    
+</div>

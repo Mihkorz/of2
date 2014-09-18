@@ -4,6 +4,8 @@
 
 {% block content %}
 
+<!-- Input with DB name -->
+<input type="hidden" value="{{path_db}}" id="path_db"/>
 
 <div class="container">
 {% if error %}
@@ -37,7 +39,7 @@
 	<div class="tab-content">
 	  <!-- DIFFERENRIAL GENES TAB-->
 	  <div class="tab-pane fade in  active " id="genes" style="padding: 10px 0 0 0;">
-	  
+	  <small>
 	  <table class="table table-striped table-bordered" cellspacing="0" width="100%" id="genes_table">
 	    <thead>
 	      <tr>
@@ -58,11 +60,12 @@
 	    {% endfor %}
 	    </tbody>
 	    </table>
-	  
+	  </small>
 	  </div>
 	  
 	  <!-- PMS TAB -->
 	  <div class="tab-pane fade  " id="pas" style="padding: 10px 0 0 0 ;"> 
+	  <small>
 	    <table class="table table-striped table-bordered" cellspacing="0" width="100%" id="pms_table">
 	    <thead>
 	      <tr>
@@ -72,22 +75,48 @@
 	     </tr>
 	    </thead>
 	    <tbody>
-	    {% for pathname, pms_values in PMS.items%}
+	    {% for path in PMS%}
 	    <tr>
-	    <td>{{pathname}}</td>
-	    {%for pms in pms_values%}
-	    <td>{{pms}}</td>
-	    {%endfor%}
+	    <td>
+	      {{path.name}}
+	      <button class="btn btn-info btn-sm pull-right" data-toggle="modal" 
+	              data-target=".bs-example-modal-lg" 
+	              onClick="fetchPathwayDetails({{path.id}}, '{{path.name}}')">
+	        <span class="glyphicon glyphicon-eye-open"></span>
+	         &nbsp;Show details
+	      </button>
+	    </td>	    
+	    <td>{{path.pms}}</td>
+	    <td>{{path.pms1}}</td>	    
 	    </tr>
 	    {% endfor %}
 	    </tbody>
 	    </table>
-	  
+	  </small>
 	  
 	  </div>
 	  
+	  <!-- Modal for Pathway Show details button  -->
+	  <div class="modal fade bs-example-modal-lg"  tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                  <p  class="text-center">
+                   Data is loading. Please wait<br/>
+                    <img src="/static/images/ajax-loader.gif" />
+                  </p>
+                </div>
+             </div>
+         </div>
+      </div>
+	  
 	  <!-- DS TAB -->
 	  <div class="tab-pane fade " id="ds" style="padding: 10px 0 0 0;">
+	  <small>
 	    <table class="table table-striped table-bordered" cellspacing="0" width="100%" id="ds_table">
 	    <thead>
 	      <tr>
@@ -108,7 +137,7 @@
 	      {% endfor %}
 	     </tbody>
 	    </table>
-	  
+	  </small>
 	  </div>
 	  
 	  <!-- PICTURE TAB -->
@@ -333,7 +362,31 @@ $(document).ready( function () {
 	$('#genes_table').DataTable({ "lengthMenu": [[ 50, 100, -1], [50, 100, "All"]]});
     $('#pms_table').DataTable({ "lengthMenu": [[ 50, 100, -1], [50, 100, "All"]]});
     $('#ds_table').DataTable({ "lengthMenu": [[ 50, 100, -1], [50, 100, "All"]]});
+    
+    $('.bs-example-modal-lg').on('hidden.bs.modal', function (e) {
+    	$(".modal-body").html('<p  class="text-center">Data is loading. Please wait<br/><img src="/static/images/ajax-loader.gif" /></p>');
+    	})
+    
 } );
+
+function fetchPathwayDetails(pathId, path_name)
+{
+	$(".modal-title").text(path_name);
+	
+	$.post("/document/ajaxpathdetail/",
+			{
+		     pathway: pathId,
+		     path_db: '{{path_db}}',
+		     jsonGenes: '{{json_diff_genes|safe}}'		
+			},
+			function(data){
+				$(".modal-body").html(data);
+			}
+			);
+	
+	
+	}
+
 </script>
 
 
