@@ -92,6 +92,7 @@ class CoreSetCalculationParameters(FormView):
         output_doc.created_by = self.request.user
         output_doc.created_at = datetime.now()        
         #output_doc.save()
+        
                 
         
         """ Calculating PMS and PMS1 """
@@ -102,6 +103,43 @@ class CoreSetCalculationParameters(FormView):
             except AttributeError:
                 return text
         
+        calculate_p_value = False # Flag for p-value calculatuion 
+         
+        if input_document.norm_num >= 4:
+            calculate_p_value = True        
+            filename = settings.MEDIA_ROOT+"/"+input_document.document.name
+            sniffer = csv.Sniffer()
+            dialect = sniffer.sniff(open(filename, 'r').read(), delimiters='\t,;') # defining the separator of the csv file
+            input_doc_df = read_csv(filename, delimiter=dialect.delimiter, index_col='SYMBOL',
+                                                                   converters = {'SYMBOL' : strip})
+                
+            input_doc_df = input_doc_df.groupby(input_doc_df.index, level=0).mean()
+        
+            norm_columns = [col for col in input_doc_df.columns if 'Norm' in col] #get normal columns
+            dNormDf = {}
+            for norm in norm_columns:
+                local_norms = [n for n in norm_columns if n!=norm]
+                
+                if int(norm_choice) == 1:
+                    local_mean_norm = input_doc_df[[norm for norm in local_norms]].mean(axis=1)
+                else:
+                    from scipy.stats.mstats import gmean
+                    local_mean_norm = input_doc_df[[norm for norm in local_norms]].apply(gmean, axis=1)
+                    
+                df1 = DataFrame(input_doc_df[[norm for norm in norm_columns]], index=input_doc_df.index)
+        
+                df1 = df1.std(axis=1)
+                
+                input_doc_df['Mean_norm'] = local_mean_norm
+               
+                input_doc_df = input_doc_df.div(input_doc_df.Mean_norm, axis='index')
+       
+                input_doc_df['Mean_norm'] = local_mean_norm
+                input_doc_df['std'] = df1
+                
+                dNormDf[norm] = input_doc_df
+                
+        raise
         process_doc_df = read_csv(settings.MEDIA_ROOT+"/"+input_document.input_doc.document.name,
                                   sep='\t', index_col='SYMBOL',  converters = {'SYMBOL' : strip})        
         
@@ -117,9 +155,7 @@ class CoreSetCalculationParameters(FormView):
             pathway_objects = MetabolismPathway.objects.all() # Metabolism DB
         elif int(db_choice) == 3:
             pathway_objects = MousePathway.objects.all() # Mouse DB
-        
-        
-        
+                
         for pathway in pathway_objects:
             gene_name = []
             gene_arr = []
@@ -147,6 +183,9 @@ class CoreSetCalculationParameters(FormView):
             pms1_dict = {}
             
             pms_dict['Pathway'] = pms1_dict['Pathway'] = pathway.name.strip()
+            
+            """ Calculating PAS for Normal Values. All genes are assumed to be differential """
+                  
             
             
             for tumour in tumour_columns: #loop thought samples columns                
