@@ -4,6 +4,7 @@ import math
 import csv
 from datetime import datetime
 from pandas import read_csv, read_excel, DataFrame, Series, ExcelWriter
+import numpy as np
 
 from django.views.generic.edit import FormView #CreateView , UpdateView
 from django.views.generic.detail import DetailView
@@ -103,7 +104,7 @@ class CoreSetCalculationParameters(FormView):
             except AttributeError:
                 return text
         
-        calculate_p_value = False # Flag for p-value calculatuion 
+        calculate_p_value = False # Flag for p-value calculation 
          
         if input_document.norm_num >= 4:
             calculate_p_value = True        
@@ -115,31 +116,21 @@ class CoreSetCalculationParameters(FormView):
                 
             input_doc_df = input_doc_df.groupby(input_doc_df.index, level=0).mean()
         
-            norm_columns = [col for col in input_doc_df.columns if 'Norm' in col] #get normal columns
-            dNormDf = {}
-            for norm in norm_columns:
-                local_norms = [n for n in norm_columns if n!=norm]
+           
+            norms_df = input_doc_df[[col for col in input_doc_df.columns if 'Norm' in col]]
+            
+            
+            def calculate_norms_cnr(x, df):
+                only_norms_df = df.drop(x.name, axis=1) # exclude current column from new DatFrame
+                mean_df = only_norms_df.mean(axis=1)
+                output = x.div(mean_df, axis='index')
+                return output
                 
-                if int(norm_choice) == 1:
-                    local_mean_norm = input_doc_df[[norm for norm in local_norms]].mean(axis=1)
-                else:
-                    from scipy.stats.mstats import gmean
-                    local_mean_norm = input_doc_df[[norm for norm in local_norms]].apply(gmean, axis=1)
-                    
-                df1 = DataFrame(input_doc_df[[norm for norm in norm_columns]], index=input_doc_df.index)
+            
+            norms_df = norms_df.apply(calculate_norms_cnr, axis=0, df=norms_df)   
+                
+                
         
-                df1 = df1.std(axis=1)
-                
-                input_doc_df['Mean_norm'] = local_mean_norm
-               
-                input_doc_df = input_doc_df.div(input_doc_df.Mean_norm, axis='index')
-       
-                input_doc_df['Mean_norm'] = local_mean_norm
-                input_doc_df['std'] = df1
-                
-                dNormDf[norm] = input_doc_df
-                
-        raise
         process_doc_df = read_csv(settings.MEDIA_ROOT+"/"+input_document.input_doc.document.name,
                                   sep='\t', index_col='SYMBOL',  converters = {'SYMBOL' : strip})        
         
@@ -169,15 +160,15 @@ class CoreSetCalculationParameters(FormView):
                 
             for gene in gene_objects:
                 gene_name.append(gene.name.strip().upper())
-                gene_arr.append(gene.arr)
+                gene_arr.append(float(gene.arr))
             
             gene_data = {'SYMBOL': gene_name,
                          'ARR': gene_arr}
             
-            gene_df = DataFrame(gene_data)
-            gene_df = gene_df.set_index('SYMBOL') #create index by SYMBOL column
+            gene_df = DataFrame(gene_data).set_index('SYMBOL')
             
             joined_df = gene_df.join(process_doc_df, how='inner')
+            
             
             pms_dict = {}
             pms1_dict = {}
@@ -185,8 +176,21 @@ class CoreSetCalculationParameters(FormView):
             pms_dict['Pathway'] = pms1_dict['Pathway'] = pathway.name.strip()
             
             """ Calculating PAS for Normal Values. All genes are assumed to be differential """
-                  
-            
+            if calculate_p_value:
+                joined_df_norms = gene_df.join(norms_df, how='inner')
+                def calculate_norms_pms(col, arr):
+                    if 'Norm' in col.name: 
+                        return np.log(col)*arr
+                    else:
+                        return col # in case it's ARR column
+                
+                pms_norms = joined_df_norms.apply(calculate_norms_pms, axis=0, arr=joined_df_norms['ARR'])
+                
+                for norm in [x for x in pms_norms.columns if 'Norm' in x]:
+                    pms_dict[norm] = float(pathway.amcf)*pms_norms[norm].sum()
+                    pms1_dict[norm] = pms_norms[norm].sum()
+                          
+            #raise
             
             for tumour in tumour_columns: #loop thought samples columns                
                 summ = 0
