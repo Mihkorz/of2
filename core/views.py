@@ -177,6 +177,7 @@ class CoreSetCalculationParameters(FormView):
             
             """ Calculating PAS for Normal Values. All genes are assumed to be differential """
             if calculate_p_value:
+                
                 joined_df_norms = gene_df.join(norms_df, how='inner')
                 def calculate_norms_pms(col, arr):
                     if 'Norm' in col.name: 
@@ -185,11 +186,18 @@ class CoreSetCalculationParameters(FormView):
                         return col # in case it's ARR column
                 
                 pms_norms = joined_df_norms.apply(calculate_norms_pms, axis=0, arr=joined_df_norms['ARR'])
-                
+                lnorms_p_value = []
                 for norm in [x for x in pms_norms.columns if 'Norm' in x]:
                     pms_dict[norm] = float(pathway.amcf)*pms_norms[norm].sum()
                     pms1_dict[norm] = pms_norms[norm].sum()
+                    lnorms_p_value.append(pms1_dict[norm])
+                
+                    
                           
+            
+            
+            
+            
             #raise
             
             for tumour in tumour_columns: #loop thought samples columns                
@@ -229,7 +237,11 @@ class CoreSetCalculationParameters(FormView):
                     differential_genes[tumour] = diff_genes_for_tumor
                     
                 pms_dict[tumour] = float(pathway.amcf)*summ #PMS
-                pms1_dict[tumour] = summ #PMS1               
+                pms1_dict[tumour] = summ #PMS1
+                if calculate_p_value:
+                    from scipy import stats  
+                    z_stat, p_val = stats.ranksums(lnorms_p_value, [summ])
+                    pms1_dict[tumour+'_p-value'] = p_val               
                 
             pms_list.append(pms_dict)
             pms1_list.append(pms1_dict)        
