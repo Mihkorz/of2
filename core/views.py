@@ -240,7 +240,7 @@ class CoreSetCalculationParameters(FormView):
                 pms1_dict[tumour] = summ #PMS1
                 if calculate_p_value:
                     from scipy import stats  
-                    z_stat, p_val = stats.ranksums(lnorms_p_value, [summ])
+                    z_stat, p_val = stats.ttest_1samp(lnorms_p_value, summ)
                     pms1_dict[tumour+'_p-value'] = p_val               
                 
             pms_list.append(pms_dict)
