@@ -56,7 +56,10 @@ class CoreSetCalculationParameters(FormView):
         calculate_pms = form.cleaned_data['calculate_pms']
         calculate_pms1 = form.cleaned_data['calculate_pms1']
         calculate_ds1 = form.cleaned_data['calculate_ds1']
-        calculate_ds2 = form.cleaned_data['calculate_ds2'] 
+        calculate_ds2 = form.cleaned_data['calculate_ds2']
+        calculate_norms_pas = form.cleaned_data['calculate_norms_pas']
+        calculate_pvalue_each = form.cleaned_data['calculate_pvalue_each']
+        calculate_pvalue_all = form.cleaned_data['calculate_pvalue_all'] 
         
         
         context = self.get_context_data()
@@ -176,7 +179,7 @@ class CoreSetCalculationParameters(FormView):
             pms_dict['Pathway'] = pms1_dict['Pathway'] = pathway.name.strip()
             
             """ Calculating PAS for Normal Values. All genes are assumed to be differential """
-            if calculate_p_value:
+            if calculate_p_value and (calculate_pvalue_each or calculate_pvalue_all):
                 
                 joined_df_norms = gene_df.join(norms_df, how='inner')
                 def calculate_norms_pms(col, arr):
@@ -188,9 +191,11 @@ class CoreSetCalculationParameters(FormView):
                 pms_norms = joined_df_norms.apply(calculate_norms_pms, axis=0, arr=joined_df_norms['ARR'])
                 lnorms_p_value = []
                 for norm in [x for x in pms_norms.columns if 'Norm' in x]:
-                    pms_dict[norm] = float(pathway.amcf)*pms_norms[norm].sum()
-                    pms1_dict[norm] = pms_norms[norm].sum()
-                    lnorms_p_value.append(pms1_dict[norm])
+                    pms1_value = pms_norms[norm].sum()
+                    if calculate_norms_pas:
+                        pms_dict[norm] = float(pathway.amcf)*pms_norms[norm].sum()
+                        pms1_dict[norm] = pms1_value
+                    lnorms_p_value.append(pms1_value)
                 
                     
                           
@@ -199,9 +204,10 @@ class CoreSetCalculationParameters(FormView):
             
             
             #raise
-            
+            pms1_all = []
             for tumour in tumour_columns: #loop thought samples columns                
                 summ = 0
+                
                 diff_genes_for_tumor = []
                 for index, row in joined_df.iterrows():
                     if not use_sigma:
@@ -238,10 +244,18 @@ class CoreSetCalculationParameters(FormView):
                     
                 pms_dict[tumour] = float(pathway.amcf)*summ #PMS
                 pms1_dict[tumour] = summ #PMS1
-                if calculate_p_value:
-                    from scipy import stats  
-                    z_stat, p_val = stats.ttest_1samp(lnorms_p_value, summ)
+                
+                pms1_all.append(summ)
+                
+                if calculate_p_value and calculate_pvalue_each:
+                    from scipy.stats import ttest_1samp  
+                    z_stat, p_val = ttest_1samp(lnorms_p_value, summ)
                     pms1_dict[tumour+'_p-value'] = p_val               
+            
+            if calculate_p_value and calculate_pvalue_all:
+                    from scipy.stats import ranksums  
+                    z_stat, p_val = ranksums(lnorms_p_value, pms1_all)
+                    pms1_dict['p-value_Mean'] = p_val 
                 
             pms_list.append(pms_dict)
             pms1_list.append(pms1_dict)        
