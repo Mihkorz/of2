@@ -170,6 +170,8 @@ class CoreSetCalculationParameters(FormView):
             
             gene_df = DataFrame(gene_data).set_index('SYMBOL')
             
+            gene_df = gene_df.groupby(gene_df.index, level=0).mean() # ignore duplicate genes if exist 
+            
             joined_df = gene_df.join(process_doc_df, how='inner')
             
             
@@ -190,7 +192,7 @@ class CoreSetCalculationParameters(FormView):
                     if 'Norm' in col.name:
                         
                         
-                        col = col[(col>cnr_up) | (col<cnr_low)] # CNR FILTER
+                        col = col[((col>cnr_up) | (col<cnr_low)) & (col>0)] # CNR FILTER
                         return np.log(col)*arr
                        
                     else:
@@ -198,9 +200,7 @@ class CoreSetCalculationParameters(FormView):
                 
                 
                 
-                pms_norms = joined_df_norms.apply(calculate_norms_pms, axis=0, 
-                                                  arr=joined_df_norms['ARR'], 
-                                                  cnr_low=cnr_low, cnr_up=cnr_up).fillna(0)
+                pms_norms = joined_df_norms.apply(calculate_norms_pms, axis=0, arr=joined_df_norms['ARR'], cnr_low=cnr_low, cnr_up=cnr_up).fillna(0)
                 
                 
                 lnorms_p_value = []
@@ -217,7 +217,7 @@ class CoreSetCalculationParameters(FormView):
             
             
             
-            raise
+            #raise
             pms1_all = []
             for tumour in tumour_columns: #loop thought samples columns                
                 summ = 0

@@ -3936,3 +3936,432 @@ Traceback (most recent call last):
   File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 220, in form_valid
     raise
 TypeError: exceptions must be old-style classes or derived from BaseException, not NoneType
+2014-10-02 16:19:41,332 ERROR base 9340 -1305478336 Internal Server Error: /calculation-parameters/doc1552/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 38, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 220, in form_valid
+    raise
+TypeError: exceptions must be old-style classes or derived from BaseException, not NoneType
+2014-10-02 16:20:45,260 ERROR base 9383 -1296041152 Internal Server Error: /calculation-parameters/doc1552/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 38, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 203, in form_valid
+    cnr_low=cnr_low, cnr_up=cnr_up).fillna(0)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 3329, in apply
+    return self._apply_standard(f, axis, reduce=reduce)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 3434, in _apply_standard
+    result = self._constructor(data=results, index=index)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 203, in __init__
+    mgr = self._init_dict(data, index, columns, dtype=dtype)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 325, in _init_dict
+    dtype=dtype)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 4488, in _arrays_to_mgr
+    arrays = _homogenize(arrays, index, dtype)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 4785, in _homogenize
+    v = v.reindex(index, copy=False)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/series.py", line 2002, in reindex
+    return super(Series, self).reindex(index=index, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/generic.py", line 1624, in reindex
+    method, fill_value, copy).__finalize__(self)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/generic.py", line 1646, in _reindex_axes
+    allow_dups=False)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/generic.py", line 1735, in _reindex_with_indexers
+    allow_dups=allow_dups)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 3323, in reindex_indexer
+    raise ValueError("cannot reindex from a duplicate axis")
+ValueError: cannot reindex from a duplicate axis
+2014-10-02 16:21:58,533 ERROR base 9434 -1306526912 Internal Server Error: /calculation-parameters/doc1552/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 38, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 203, in form_valid
+    cnr_low=cnr_low, cnr_up=cnr_up)#.fillna(0)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 3329, in apply
+    return self._apply_standard(f, axis, reduce=reduce)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 3434, in _apply_standard
+    result = self._constructor(data=results, index=index)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 203, in __init__
+    mgr = self._init_dict(data, index, columns, dtype=dtype)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 325, in _init_dict
+    dtype=dtype)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 4488, in _arrays_to_mgr
+    arrays = _homogenize(arrays, index, dtype)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 4785, in _homogenize
+    v = v.reindex(index, copy=False)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/series.py", line 2002, in reindex
+    return super(Series, self).reindex(index=index, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/generic.py", line 1624, in reindex
+    method, fill_value, copy).__finalize__(self)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/generic.py", line 1646, in _reindex_axes
+    allow_dups=False)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/generic.py", line 1735, in _reindex_with_indexers
+    allow_dups=allow_dups)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 3323, in reindex_indexer
+    raise ValueError("cannot reindex from a duplicate axis")
+ValueError: cannot reindex from a duplicate axis
+2014-10-02 16:25:10,776 ERROR base 9521 -1276118208 Internal Server Error: /calculation-parameters/doc1552/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 38, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 201, in form_valid
+    pms_norms = joined_df_norms.apply(calculate_norms_pms, axis=0, arr=joined_df_norms['ARR'], cnr_low=cnr_low, cnr_up=cnr_up).fillna(0)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 3329, in apply
+    return self._apply_standard(f, axis, reduce=reduce)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 3434, in _apply_standard
+    result = self._constructor(data=results, index=index)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 203, in __init__
+    mgr = self._init_dict(data, index, columns, dtype=dtype)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 325, in _init_dict
+    dtype=dtype)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 4488, in _arrays_to_mgr
+    arrays = _homogenize(arrays, index, dtype)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 4785, in _homogenize
+    v = v.reindex(index, copy=False)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/series.py", line 2002, in reindex
+    return super(Series, self).reindex(index=index, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/generic.py", line 1624, in reindex
+    method, fill_value, copy).__finalize__(self)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/generic.py", line 1646, in _reindex_axes
+    allow_dups=False)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/generic.py", line 1735, in _reindex_with_indexers
+    allow_dups=allow_dups)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 3323, in reindex_indexer
+    raise ValueError("cannot reindex from a duplicate axis")
+ValueError: cannot reindex from a duplicate axis
+2014-10-02 16:26:29,944 ERROR base 9581 -1275069632 Internal Server Error: /calculation-parameters/doc1552/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 38, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 201, in form_valid
+    pms_norms = joined_df_norms.apply(calculate_norms_pms, axis=0, arr=joined_df_norms['ARR'], cnr_low=cnr_low, cnr_up=cnr_up)#.fillna(0)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 3329, in apply
+    return self._apply_standard(f, axis, reduce=reduce)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 3434, in _apply_standard
+    result = self._constructor(data=results, index=index)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 203, in __init__
+    mgr = self._init_dict(data, index, columns, dtype=dtype)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 325, in _init_dict
+    dtype=dtype)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 4488, in _arrays_to_mgr
+    arrays = _homogenize(arrays, index, dtype)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 4785, in _homogenize
+    v = v.reindex(index, copy=False)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/series.py", line 2002, in reindex
+    return super(Series, self).reindex(index=index, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/generic.py", line 1624, in reindex
+    method, fill_value, copy).__finalize__(self)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/generic.py", line 1646, in _reindex_axes
+    allow_dups=False)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/generic.py", line 1735, in _reindex_with_indexers
+    allow_dups=allow_dups)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 3323, in reindex_indexer
+    raise ValueError("cannot reindex from a duplicate axis")
+ValueError: cannot reindex from a duplicate axis
+2014-10-02 16:28:03,169 ERROR base 9660 -1275069632 Internal Server Error: /calculation-parameters/doc1552/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 38, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 201, in form_valid
+    pms_norms = joined_df_norms.apply(calculate_norms_pms, axis=0, arr=joined_df_norms['ARR'], cnr_low=cnr_low, cnr_up=cnr_up)#.fillna(0)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 3329, in apply
+    return self._apply_standard(f, axis, reduce=reduce)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 3434, in _apply_standard
+    result = self._constructor(data=results, index=index)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 203, in __init__
+    mgr = self._init_dict(data, index, columns, dtype=dtype)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 325, in _init_dict
+    dtype=dtype)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 4488, in _arrays_to_mgr
+    arrays = _homogenize(arrays, index, dtype)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 4785, in _homogenize
+    v = v.reindex(index, copy=False)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/series.py", line 2002, in reindex
+    return super(Series, self).reindex(index=index, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/generic.py", line 1624, in reindex
+    method, fill_value, copy).__finalize__(self)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/generic.py", line 1646, in _reindex_axes
+    allow_dups=False)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/generic.py", line 1735, in _reindex_with_indexers
+    allow_dups=allow_dups)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 3323, in reindex_indexer
+    raise ValueError("cannot reindex from a duplicate axis")
+ValueError: cannot reindex from a duplicate axis
+2014-10-02 16:33:53,406 ERROR base 9852 -1275069632 Internal Server Error: /calculation-parameters/doc1552/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 38, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 201, in form_valid
+    pms_norms = joined_df_norms.apply(calculate_norms_pms, axis=0, arr=joined_df_norms['ARR'], cnr_low=cnr_low, cnr_up=cnr_up).fillna(0)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 3329, in apply
+    return self._apply_standard(f, axis, reduce=reduce)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 3434, in _apply_standard
+    result = self._constructor(data=results, index=index)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 203, in __init__
+    mgr = self._init_dict(data, index, columns, dtype=dtype)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 325, in _init_dict
+    dtype=dtype)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 4488, in _arrays_to_mgr
+    arrays = _homogenize(arrays, index, dtype)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 4785, in _homogenize
+    v = v.reindex(index, copy=False)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/series.py", line 2002, in reindex
+    return super(Series, self).reindex(index=index, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/generic.py", line 1624, in reindex
+    method, fill_value, copy).__finalize__(self)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/generic.py", line 1646, in _reindex_axes
+    allow_dups=False)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/generic.py", line 1735, in _reindex_with_indexers
+    allow_dups=allow_dups)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 3323, in reindex_indexer
+    raise ValueError("cannot reindex from a duplicate axis")
+ValueError: cannot reindex from a duplicate axis
+2014-10-02 16:40:48,167 ERROR base 9852 -1348048064 Internal Server Error: /calculation-parameters/doc1552/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 38, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 201, in form_valid
+    pms_norms = joined_df_norms.apply(calculate_norms_pms, axis=0, arr=joined_df_norms['ARR'], cnr_low=cnr_low, cnr_up=cnr_up).fillna(0)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 3329, in apply
+    return self._apply_standard(f, axis, reduce=reduce)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 3434, in _apply_standard
+    result = self._constructor(data=results, index=index)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 203, in __init__
+    mgr = self._init_dict(data, index, columns, dtype=dtype)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 325, in _init_dict
+    dtype=dtype)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 4488, in _arrays_to_mgr
+    arrays = _homogenize(arrays, index, dtype)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 4785, in _homogenize
+    v = v.reindex(index, copy=False)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/series.py", line 2002, in reindex
+    return super(Series, self).reindex(index=index, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/generic.py", line 1624, in reindex
+    method, fill_value, copy).__finalize__(self)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/generic.py", line 1646, in _reindex_axes
+    allow_dups=False)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/generic.py", line 1735, in _reindex_with_indexers
+    allow_dups=allow_dups)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 3323, in reindex_indexer
+    raise ValueError("cannot reindex from a duplicate axis")
+ValueError: cannot reindex from a duplicate axis
+2014-10-02 16:41:16,127 ERROR base 10010 -1285555392 Internal Server Error: /calculation-parameters/doc1552/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 38, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 218, in form_valid
+    raise
+TypeError: exceptions must be old-style classes or derived from BaseException, not NoneType
+2014-10-02 16:43:08,188 ERROR base 10066 -1275069632 Internal Server Error: /calculation-parameters/doc1552/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 38, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 201, in form_valid
+    pms_norms = joined_df_norms.apply(calculate_norms_pms, axis=0, arr=joined_df_norms['ARR'], cnr_low=cnr_low, cnr_up=cnr_up).fillna(0)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 3329, in apply
+    return self._apply_standard(f, axis, reduce=reduce)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 3434, in _apply_standard
+    result = self._constructor(data=results, index=index)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 203, in __init__
+    mgr = self._init_dict(data, index, columns, dtype=dtype)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 325, in _init_dict
+    dtype=dtype)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 4488, in _arrays_to_mgr
+    arrays = _homogenize(arrays, index, dtype)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 4785, in _homogenize
+    v = v.reindex(index, copy=False)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/series.py", line 2002, in reindex
+    return super(Series, self).reindex(index=index, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/generic.py", line 1624, in reindex
+    method, fill_value, copy).__finalize__(self)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/generic.py", line 1646, in _reindex_axes
+    allow_dups=False)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/generic.py", line 1735, in _reindex_with_indexers
+    allow_dups=allow_dups)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 3323, in reindex_indexer
+    raise ValueError("cannot reindex from a duplicate axis")
+ValueError: cannot reindex from a duplicate axis
+2014-10-02 16:47:43,737 ERROR base 10166 -1276118208 Internal Server Error: /calculation-parameters/doc1552/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 38, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/core/views.py", line 201, in form_valid
+    pms_norms = joined_df_norms.apply(calculate_norms_pms, axis=0, arr=joined_df_norms['ARR'], cnr_low=cnr_low, cnr_up=cnr_up).fillna(0)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 3329, in apply
+    return self._apply_standard(f, axis, reduce=reduce)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 3434, in _apply_standard
+    result = self._constructor(data=results, index=index)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 203, in __init__
+    mgr = self._init_dict(data, index, columns, dtype=dtype)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 325, in _init_dict
+    dtype=dtype)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 4488, in _arrays_to_mgr
+    arrays = _homogenize(arrays, index, dtype)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/frame.py", line 4785, in _homogenize
+    v = v.reindex(index, copy=False)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/series.py", line 2002, in reindex
+    return super(Series, self).reindex(index=index, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/generic.py", line 1624, in reindex
+    method, fill_value, copy).__finalize__(self)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/generic.py", line 1646, in _reindex_axes
+    allow_dups=False)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/generic.py", line 1735, in _reindex_with_indexers
+    allow_dups=allow_dups)
+  File "/usr/local/lib/python2.7/dist-packages/pandas-0.13.1_674_g95090fd-py2.7-linux-i686.egg/pandas/core/internals.py", line 3323, in reindex_indexer
+    raise ValueError("cannot reindex from a duplicate axis")
+ValueError: cannot reindex from a duplicate axis
