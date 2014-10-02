@@ -181,14 +181,28 @@ class CoreSetCalculationParameters(FormView):
             """ Calculating PAS for Normal Values. All genes are assumed to be differential """
             if calculate_p_value and (calculate_pvalue_each or calculate_pvalue_all):
                 
+               
+                
                 joined_df_norms = gene_df.join(norms_df, how='inner')
-                def calculate_norms_pms(col, arr):
-                    if 'Norm' in col.name: 
+                
+                
+                def calculate_norms_pms(col, arr, cnr_low, cnr_up):
+                    if 'Norm' in col.name:
+                        
+                        
+                        col = col[(col>cnr_up) | (col<cnr_low)] # CNR FILTER
                         return np.log(col)*arr
+                       
                     else:
                         return col # in case it's ARR column
                 
-                pms_norms = joined_df_norms.apply(calculate_norms_pms, axis=0, arr=joined_df_norms['ARR'])
+                
+                
+                pms_norms = joined_df_norms.apply(calculate_norms_pms, axis=0, 
+                                                  arr=joined_df_norms['ARR'], 
+                                                  cnr_low=cnr_low, cnr_up=cnr_up).fillna(0)
+                
+                
                 lnorms_p_value = []
                 for norm in [x for x in pms_norms.columns if 'Norm' in x]:
                     pms1_value = pms_norms[norm].sum()
@@ -203,7 +217,7 @@ class CoreSetCalculationParameters(FormView):
             
             
             
-            #raise
+            raise
             pms1_all = []
             for tumour in tumour_columns: #loop thought samples columns                
                 summ = 0
