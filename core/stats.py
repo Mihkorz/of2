@@ -30,8 +30,11 @@ def _chk_asarray(a, axis):
     return a, outaxis
 
 def _ttest_finish(df,t):
-    
-    prob = 1 - distributions.t.cdf(np.abs(t), df) #* 2  # use np.abs to get upper tail
+    if t<0:
+        prob = distributions.t.cdf(t, df) 
+    else:
+        prob = 1 - distributions.t.cdf(t, df)
+        
     if t.ndim == 0:
         t = t[()]
 
