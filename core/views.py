@@ -55,6 +55,7 @@ class CoreSetCalculationParameters(FormView):
         db_choice = form.cleaned_data['db_choice']
         calculate_pms = form.cleaned_data['calculate_pms']
         calculate_pms1 = form.cleaned_data['calculate_pms1']
+        calculate_pms2 = form.cleaned_data['calculate_pms2'] 
         calculate_ds1 = form.cleaned_data['calculate_ds1']
         calculate_ds2 = form.cleaned_data['calculate_ds2']
         calculate_norms_pas = form.cleaned_data['calculate_norms_pas']
@@ -141,6 +142,7 @@ class CoreSetCalculationParameters(FormView):
         
         pms_list = []
         pms1_list = []
+        pms2_list = []
         differential_genes = {}
         
         if int(db_choice) == 1:
@@ -170,6 +172,9 @@ class CoreSetCalculationParameters(FormView):
             
             gene_df = DataFrame(gene_data).set_index('SYMBOL')
             
+            gene_df_abs = gene_df.abs()
+            summ_genes_arr = gene_df_abs['ARR'].sum() if gene_df_abs['ARR'].sum()>0 else 1
+            
             gene_df = gene_df.groupby(gene_df.index, level=0).mean() # ignore duplicate genes if exist 
             
             joined_df = gene_df.join(process_doc_df, how='inner')
@@ -177,8 +182,9 @@ class CoreSetCalculationParameters(FormView):
             
             pms_dict = {}
             pms1_dict = {}
+            pms2_dict = {}
             
-            pms_dict['Pathway'] = pms1_dict['Pathway'] = pathway.name.strip()
+            pms_dict['Pathway'] = pms1_dict['Pathway'] = pms2_dict['Pathway'] = pathway.name.strip()
             
             """ Calculating PAS for Normal Values. All genes are assumed to be differential """
             if calculate_p_value and (calculate_pvalue_each or calculate_pvalue_all):
@@ -258,12 +264,14 @@ class CoreSetCalculationParameters(FormView):
                     
                 pms_dict[tumour] = float(pathway.amcf)*summ #PMS
                 pms1_dict[tumour] = summ #PMS1
+                pms2_dict[tumour] = summ/summ_genes_arr
                 
                 pms1_all.append(summ)
                 
                 if calculate_p_value and calculate_pvalue_each:
-                    from scipy.stats import ttest_1samp  
-                    z_stat, p_val = ttest_1samp(lnorms_p_value, summ)
+                    #from scipy.stats import ttest_1samp
+                    from .stats import pseudo_ttest_1samp  
+                    z_stat, p_val = pseudo_ttest_1samp(lnorms_p_value, summ)
                     pms1_dict[tumour+'_p-value'] = p_val               
             
             if calculate_p_value and calculate_pvalue_all:
@@ -272,12 +280,15 @@ class CoreSetCalculationParameters(FormView):
                     pms1_dict['p-value_Mean'] = p_val 
                 
             pms_list.append(pms_dict)
-            pms1_list.append(pms1_dict)        
+            pms1_list.append(pms1_dict)
+            pms2_list.append(pms2_dict)        
         
         output_pms_df = DataFrame(pms_list)
         output_pms_df = output_pms_df.set_index('Pathway')
         output_pms1_df = DataFrame(pms1_list)
         output_pms1_df = output_pms1_df.set_index('Pathway')
+        output_pms2_df = DataFrame(pms2_list)
+        output_pms2_df = output_pms2_df.set_index('Pathway')
         
         """ Calculating Drug Score """
         output_ds1_df = output_ds2_df = DataFrame()
@@ -379,12 +390,14 @@ class CoreSetCalculationParameters(FormView):
         from django.core.files.base import ContentFile
         
         output_file = default_storage.save(settings.MEDIA_ROOT+"/"+path+"/"+file_name, ContentFile(''))
-                
+               
         with ExcelWriter(output_file, index=False) as writer:
             if calculate_pms:
                 output_pms_df.to_excel(writer,'PMS')
             if calculate_pms1:     
                 output_pms1_df.to_excel(writer,'PMS1')
+            if calculate_pms2:     
+                output_pms2_df.to_excel(writer,'PMS2')
             if calculate_ds1:
                 output_ds1_df.to_excel(writer, 'DS1')
             if calculate_ds2:
@@ -436,28 +449,10 @@ class Test(TemplateView):
               
         context = super(Test, self).get_context_data(**kwargs)
         
-        #from .tasks import add
+        context['paths'] =  MetabolismPathway.objects.all()
+            
         
-        #res = add.delay(1,1)
-        
-        path = os.path.join('users', "Misha",
-                                            "newnewnew", 'output_test.xlsx')
-        
-        
-        d = {'one' : Series([1., 2., 3.], index=['a', 'b', 'c']),
-             'two' : Series([1., 2., 3., 4.], index=['a', 'b', 'c', 'd'])}
-        
-        df = DataFrame(d)
-        
-        from django.core.files.storage import default_storage
-        from django.core.files.base import ContentFile      
-      
-        
-        path1 = default_storage.save(settings.MEDIA_ROOT+"/"+path, ContentFile(''))
-        
-        writer = ExcelWriter(path1, index=False)
-        
-        df.to_excel(path1,'PMS')
+       
         
         
         
@@ -489,12 +484,31 @@ class Test(TemplateView):
         
         """
         
-        context['task_id'] = path1
+        context['task_id'] = "path1"
         
         
         
         return context
+
+
+class Celery(TemplateView):
+    """
+    Testing Celery tasks
+    """
+    template_name = 'core/celery.html'
     
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(Celery, self).dispatch(request, *args, **kwargs)
+    
+    
+    def get_context_data(self, **kwargs):
+              
+        context = super(Celery, self).get_context_data(**kwargs)
+        
+        return context
+    
+        
 class TaskStatus(TemplateView):
     """ Testing Celery task status via Ajax"""
     

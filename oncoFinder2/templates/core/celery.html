@@ -1,28 +1,12 @@
 {% extends "base_profiles.html" %}
 
-{% block title %}TEST | OncoFinder v2.0{% endblock %}
+{% block title %}Celery | OncoFinder v2.0{% endblock %}
 
 {% block content %}
 <div class="container">
 
-<h1>Testing Playground</h1>
+<h1>Celery Testing</h1>
 
-<button class="btn btn-primary"> Select TAble</button>
-<table border="1">
-{%for path in paths%}
-<tr>
-<td>{{path.name}}</td>
-<td>
-{%for gene in path.metabolismgene_set.all%}
-{{gene.name}}<br/>
-{%endfor%}
-</td>
-
-</tr>
-{%endfor%}
-
-
-</table>
 
 
 <h5>task id = {{task_id}}</h5>

@@ -22,6 +22,7 @@ class CalculationParametersForm(forms.Form):
                                      widget=forms.RadioSelect, choices=NORM_CHOICES, initial=2)
     calculate_pms = forms.BooleanField(label="PMS", initial=True, required=False)
     calculate_pms1 = forms.BooleanField(label="PMS1", initial=True, required=False)
+    calculate_pms2 = forms.BooleanField(label="PMS2", initial=True, required=False)
     calculate_ds1 = forms.BooleanField(label="DS1", initial=True, required=False)
     calculate_ds2 = forms.BooleanField(label="DS2", initial=True, required=False)
     calculate_norms_pas = forms.BooleanField(label="PMS1 for Norms", initial=True, required=False)

@@ -1,5 +1,6 @@
 eclipse.preferences.version=1
 encoding//core/forms.py=utf-8
+encoding//core/stats.py=utf-8
 encoding//core/tasks.py=utf-8
 encoding//core/views.py=utf-8
 encoding//database/admin.py=utf-8

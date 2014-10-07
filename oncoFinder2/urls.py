@@ -12,7 +12,7 @@ from profiles.views import ProfileIndex, SettingsProfile, SettingsBilling, Creat
                            DeleteProject, ProjectDetail, CreateDocument, DeleteDocument, \
                            DocumentDetail, SampleDetail, AjaxPathDetail
                            
-from core.views import CoreSetCalculationParameters, CoreCalculation, Test, TaskStatus
+from core.views import CoreSetCalculationParameters, CoreCalculation, Test, Celery, TaskStatus
 from database.views import PathwayList, PathwayDetail, PathwayAjaxSearch, \
                            DrugList, DrugDetail, DrugAjaxSearch
 from metabolism.views import MetabolismPathwayList, MetabolismPathwayDetail, \
@@ -55,6 +55,7 @@ urlpatterns = patterns('',
     url(r'^calculation/doc(?P<pk>\d+)/$', CoreCalculation.as_view(), name="core_calculation"),
     
     url(r'^test/$', Test.as_view()),
+    url(r'^celery/$', Celery.as_view()),
     url(r'^task_status/$', TaskStatus.as_view()),
     
     ################### DataBase App ##############################
