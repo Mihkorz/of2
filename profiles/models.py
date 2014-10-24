@@ -2,6 +2,7 @@ import os
 
 from django.db import models
 from django.contrib.auth.models import User
+from medic.models import Nosology
 
 from jsonfield.fields import JSONField
 
@@ -32,6 +33,11 @@ PROJECT_STATUSES = (
     (PROJECT_PUBLIC, 'Public'),
     (PROJECT_PRIVATE, 'Private'),
 )
+
+PROJECT_FIELDS = (
+    ('sci', 'Scientific'),
+    ('med', 'Medical'),
+)
         
 class Project(models.Model):
     name = models.CharField(verbose_name="Project name", max_length=100, blank=False, unique=True,
@@ -40,6 +46,8 @@ class Project(models.Model):
     members =  models.ManyToManyField(User, related_name="members")
     description = models.TextField(verbose_name="Description(optional)", blank=True)
     status = models.IntegerField(choices = PROJECT_STATUSES, default=PROJECT_PUBLIC)
+    field = models.CharField(verbose_name="Project type", max_length=3, choices = PROJECT_FIELDS, default='sci')
+    nosology = models.ForeignKey(Nosology, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     viewed_at = models.DateTimeField(verbose_name="Last viewed at", blank=True, null=True,)
     viewed_by = models.ForeignKey(User, blank=True, null=True, related_name='viewed')
@@ -72,7 +80,7 @@ DOC_TYPES = (
 )
           
 class Document(models.Model):
-    document = models.FileField(upload_to=get_document_upload_path)
+    document = models.FileField(upload_to=get_document_upload_path, max_length=300)
     doc_type = models.IntegerField(verbose_name="Document type", choices=DOC_TYPES, default=DOCUMENT_INPUT)
     structure = JSONField(verbose_name = "Document structure")
     description = models.TextField(verbose_name="Description", blank=True)
@@ -97,7 +105,7 @@ class Document(models.Model):
         return os.path.basename(self.document.name)
     
 class ProcessDocument(models.Model):
-    document = models.FileField(upload_to=get_process_document_upload_path)
+    document = models.FileField(upload_to=get_process_document_upload_path, max_length=300)
     parameters = JSONField(verbose_name="Calculation parameters", blank=True)
     input_doc = models.OneToOneField(Document, related_name="input_doc", blank=True, null=True)
     output_doc = models.ForeignKey(Document, related_name="output_doc", blank=True, null=True)

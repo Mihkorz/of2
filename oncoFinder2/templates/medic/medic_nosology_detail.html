@@ -1,0 +1,34 @@
+{% extends "base_profiles.html" %}
+
+{% block title %}{{nosology.name}}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1> <img src='/static/images/laboratory_info.png' style="width: 100px;"/>{{nosology.name}}</h1>
+
+    
+
+    
+    <hr/>
+  
+   <div class="well" id="path_list_container">
+    <ul class="pathway_list_ul">
+        {% for treatment in nosology.treatment.all %}
+          <li>
+              <div class="well">
+              <!-- <div class="pull-left path_list_picture">
+             <img src='/static/images/pathlist.jpg' alt='{{ path.name }}' title='{{ path.name }}'/>
+              </div>  -->
+                <h5><a href='{{treatment.name|slugify}}/{{treatment.id}}'>{{ treatment.name }}</a></h5>
+                 
+              </div>
+          </li>
+        {% endfor %}
+    </ul>
+    
+
+   </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends "base_profiles.html" %}
+
+{% block title %}{{treatment.name}} | OncoFinder v2.0{% endblock %}
+
+{% block content %}
+<div class="container">
+        <h1>{{treatment.name}}</h1>
+        <div class="text-muted">
+        Nosology = {{treatment.nosology}}
+        </div>
+    <span class='pull-right'>
+       <a href='{{ request.META.HTTP_REFERER }}'><<< back to treatment methods list</a>
+    </span>
+    <hr/>
+   <div id="tabs">
+    <ul class="nav nav-tabs">
+        <li ><a href="#fragment-1" data-toggle="tab"><span>Probability Table </span></a></li>
+        <li><a href="#fragment-2" data-toggle="tab"><span>PAS1 Table</span></a></li>
+        <li class="active"><a href="#fragment-3" data-toggle="tab"><span>Graphic Scheme</span></a></li>
+    </ul>
+<div id="tabContent" class="tab-content">
+<div id="fragment-1" class="tab-pane fade  well">
+{{prob|safe}}
+</div>
+<div id="fragment-2" class="tab-pane fade well">
+{{PMS1|safe}}
+</div> 
+<div id="fragment-3" class="tab-pane in active fade">
+
+<div id="container" style="width:900px; height:400px;">
+columns = {{ncol}}
+{{test|safe}}
+
+</div>
+
+</div>
+</div>
+
+</div>
+
+
+</div>
+<script>
+
+
+
+</script>
+{% endblock %}

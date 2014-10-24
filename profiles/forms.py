@@ -30,8 +30,8 @@ UserProfileFormSet = inlineformset_factory(User, Profile, form=SettingsProfileFo
 class CreateProjectForm(forms.ModelForm):
     class Meta:
         model = Project
-        fields = ['name', 'description', 'status']
-        widgets = {'status': forms.RadioSelect()}
+        fields = ['name', 'description', 'field', 'nosology']
+        widgets = {'field': forms.RadioSelect()}
         
 class UploadDocumentForm(forms.ModelForm):
     

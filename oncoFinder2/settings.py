@@ -126,7 +126,7 @@ ROOT_URLCONF = 'oncoFinder2.urls'
 WSGI_APPLICATION = 'oncoFinder2.wsgi.application'
 
 TEMPLATE_DIRS = (
-    os.path.join(PROJECT_DIR, 'templates')
+    os.path.join(PROJECT_DIR, 'templates'),
 )
 
 INTERNAL_IPS = ('127.0.0.1',)
@@ -151,7 +151,8 @@ INSTALLED_APPS = (
     'core',
     'database',
     'metabolism',
-    'mouse'
+    'mouse',
+    'medic'
 
 )
 

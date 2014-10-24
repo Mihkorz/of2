@@ -7,26 +7,12 @@
 
 <h1>Testing Playground</h1>
 
-<button class="btn btn-primary"> Select TAble</button>
-<table border="1">
-{%for path in paths%}
-<tr>
-<td>{{path.name}}</td>
-<td>
-{%for gene in path.metabolismgene_set.all%}
-{{gene.name}}<br/>
-{%endfor%}
-</td>
-
-</tr>
-{%endfor%}
 
 
-</table>
 
-
-<h5>task id = {{task_id}}</h5>
-
+<h5>ontology = {{ontology}}</h5>
+<h5>pathname = {{pathname}} id={{pathname.id}}</h5>
+{{df|safe}}
 <button class="btn btn-primary" id="start">Start Celery job</button>
 <br/>
 <br/>

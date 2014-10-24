@@ -207,8 +207,17 @@ class CoreSetCalculationParameters(FormView):
                 
                 
                 pms_norms = joined_df_norms.apply(calculate_norms_pms, axis=0, arr=joined_df_norms['ARR'], cnr_low=cnr_low, cnr_up=cnr_up).fillna(0)
-                
-                
+                """
+                if pathway.name == "AKT_Pathway":
+                    from django.core.files.storage import default_storage
+                    from django.core.files.base import ContentFile
+                    output_file = default_storage.save(settings.MEDIA_ROOT+"/output_norms.xlsx", ContentFile(''))
+               
+                    with ExcelWriter(output_file, index=False) as writer:
+                      
+                        pms_norms.to_excel(writer,'PMS')
+                    raise
+                """
                 lnorms_p_value = []
                 for norm in [x for x in pms_norms.columns if 'Norm' in x]:
                     pms1_value = pms_norms[norm].sum()
@@ -448,12 +457,53 @@ class Test(TemplateView):
     def get_context_data(self, **kwargs):
               
         context = super(Test, self).get_context_data(**kwargs)
+        from database.models import GOEnrichment
+        for filename in os.listdir(settings.MEDIA_ROOT+"/GO/GO_enrichment"):
         
-        context['paths'] =  MetabolismPathway.objects.all()
+            try:
+                spp = os.path.basename(filename).split('_', 2)
+                pname=spp[2].split('.')[0]
+                pathname = Pathway.objects.get(name=pname)
+                ontology = spp[1]
             
+            
+                sniffer = csv.Sniffer()
+                dialect = sniffer.sniff(open(settings.MEDIA_ROOT+"/GO/GO_enrichment/"+filename, 'r').read(), delimiters='\t,;') # defining the separator of the csv file
         
-       
+                input_doc_df = read_csv(settings.MEDIA_ROOT+"/GO/GO_enrichment/"+filename, delimiter=dialect.delimiter)
+            
+                for row_index, row in input_doc_df.iterrows():
+                    newObj = GOEnrichment()
+                    newObj.human_pathway = pathname
+                    newObj.ontology = ontology
+                
+                    try:
+                        newObj.GOID = row['GOBPID']
+                    except:
+                        try:
+                            newObj.GOID = row['GOMFID']
+                        except:
+                            newObj.GOID = row['GOCCID']
+                        
+                    newObj.Pvalue = float(row['Pvalue'])
+                    newObj.OddsRatio = row['OddsRatio']
+                    newObj.ExpCount = float(row['ExpCount'])
+                    newObj.Count = int(row['Count'])
+                    newObj.Size = int(row['Size'])
+                    newObj.Term = row['Term']
+                
+                    newObj.save()
+            except:
+                raise
+                
+            
+            
+            
+            
+           
         
+            
+             
         
         
         
@@ -483,8 +533,9 @@ class Test(TemplateView):
         
         
         """
-        
-        context['task_id'] = "path1"
+        spp = os.path.basename(filename).split('_', 2)
+        context['ontology'] = spp[1]
+        context['pathname'] = Pathway.objects.get(name=spp[2].split('.')[0]) 
         
         
         

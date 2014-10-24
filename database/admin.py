@@ -136,7 +136,7 @@ class LogEntryAdmin(admin.ModelAdmin):
             .prefetch_related('content_type')
 
 
-admin.site.register(LogEntry, LogEntryAdmin) 
+#admin.site.register(LogEntry, LogEntryAdmin) 
 admin.site.register(Drug, DrugAdmin)     
 admin.site.register(Pathway, PathwayAdmin) 
 admin.site.register(Node, NodeAdmin)

@@ -1,0 +1,34 @@
+{% extends "base_profiles.html" %}
+
+{% block title %}Medical database | OncoFinder v2.0{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1> <img src='/static/images/laboratory_info.png' style="width: 100px;"/>Medical DataBase. Nosologies</h1>
+
+    
+
+    
+    <hr/>
+  
+   <div class="well" id="path_list_container">
+    <ul class="pathway_list_ul">
+        {% for nosol in nosologies %}
+          <li>
+              <div class="well">
+              <!-- <div class="pull-left path_list_picture">
+             <img src='/static/images/pathlist.jpg' alt='{{ path.name }}' title='{{ path.name }}'/>
+              </div>  -->
+                <h5><a href='{{nosol.name|slugify}}/{{nosol.id}}'>{{ nosol.name }}</a></h5>
+                 
+              </div>
+          </li>
+        {% endfor %}
+    </ul>
+    
+
+   </div>
+</div>
+
+
+{% endblock %}

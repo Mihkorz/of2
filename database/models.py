@@ -29,6 +29,24 @@ class Pathway(models.Model):
     def node_list(self):
         return link_to_object(self.node_set.all())
     node_list.allow_tags = True
+
+ONTOLOGY_TYPES = (
+    ('BP', 'Biological Process'),
+    ('MF', 'Molecular Function'),
+    ('CC', 'Cellular Component'),   
+)
+
+class GOEnrichment(models.Model):
+    ontology = models.CharField(max_length=100, verbose_name=u'Ontology', blank=False, choices = ONTOLOGY_TYPES)
+    GOID = models.CharField(max_length=11, verbose_name=u'GOID', null=True, blank=True)
+    Pvalue = models.FloatField(verbose_name="Pvalue")
+    OddsRatio = models.CharField(verbose_name="OddsRatio", max_length=100)
+    ExpCount = models.FloatField(verbose_name="ExpCount")
+    Count = models.IntegerField(verbose_name="Count")
+    Size = models.IntegerField(verbose_name="Size")
+    Term = models.CharField(max_length=300, verbose_name=u'Term', blank=False)
+    human_pathway = models.ForeignKey(Pathway, blank=False)
+    
     
 class Gene(models.Model):
     name = models.CharField(verbose_name='Gene name', max_length=250, blank=False)
