@@ -125,7 +125,7 @@ class CoreSetCalculationParameters(FormView):
             
             
             def calculate_norms_cnr(x, df):
-                only_norms_df = df.drop(x.name, axis=1) # exclude current column from new DatFrame
+                only_norms_df = df#.drop(x.name, axis=1) # exclude current column from new DatFrame
                 mean_df = only_norms_df.mean(axis=1)
                 output = x.div(mean_df, axis='index')
                 return output
