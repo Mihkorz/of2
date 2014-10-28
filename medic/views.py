@@ -66,17 +66,33 @@ class MedicTreatmentDetail(DetailView):
         sniffer = csv.Sniffer()
         dialect = sniffer.sniff(open(file_probability, 'r').read(), delimiters='\t,;') # defining the separator of the csv file
         df_prob = read_csv(file_probability, delimiter=dialect.delimiter)
-        grouped = df_prob.groupby('Sample')
+        grouped = df_prob.groupby('Sample', sort=True)
         
-        dictcount = {}
+        lResponders = []
+        lnonResponders = []
         for name, group in grouped:
             status = name.split('_')[1]
-            path_cols = [col for col in group.columns if col not in ['Sample']]
+            path_cols = [col for col in group.columns if col not in ['Sample', 'group']]
             path_df = group[path_cols]
             
-            raise
+            divided_df = path_df.T[path_df.index[0]] / path_df.T[path_df.index[1]]
+            nRcount = 0 # count nonResponders
+            for index, val in divided_df.iteritems():
+                if val>1:
+                    nRcount+= 1
+            ratio = float(nRcount)/float(len(path_cols))
+            len_p = len(path_cols)
+            if ratio >= 0.5: 
+                lnonResponders.append(2*nRcount - len(path_cols))
+            else:
+                lResponders.append(len(path_cols) - 2*nRcount )
+        from collections import Counter
+        nresponders = Counter(lnonResponders)
+        responders =  Counter(lResponders)   
+        context['nres'] = dict(nresponders)
+        context['res'] = dict(responders)
         
-        context['prob'] = grouped.groups
+        context['prob'] = df_prob.to_html()
         
         cols = [col for col in df_prob.columns if col not in ['Sample', 'group']]
         df_pathways = df_prob[cols]

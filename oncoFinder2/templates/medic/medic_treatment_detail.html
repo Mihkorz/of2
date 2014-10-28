@@ -28,10 +28,35 @@
 <div id="fragment-3" class="tab-pane in active fade">
 
 <div id="container" style="width:900px; height:400px;">
-columns = {{ncol}}
-{{test|safe}}
+
 
 </div>
+
+<table class="table pull-left" style="width: 300px;">
+<caption>NonResponders</caption>
+<tr><th>votes (yes - no)</th>
+    <th>ammount </th>
+</tr>
+{% for key, value in nres.items  %}
+<tr>
+               <td>{{key}}</td><td>{{value}}</td>
+</tr>
+               {%endfor%} 
+
+</table>
+
+<table class="table pull-right" style="width: 300px;">
+<caption>Responders</caption>
+<tr><th>votes (yes - no)</th>
+    <th>ammount </th>
+</tr>
+{% for key, value in res.items  %}
+<tr>
+               <td>{{key}}</td><td>{{value}}</td>
+</tr>
+               {%endfor%} 
+
+</table>
 
 </div>
 </div>
@@ -42,7 +67,35 @@ columns = {{ncol}}
 </div>
 <script>
 
+$(function () {
+    $('#container').highcharts({
+    	chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Responders-nonresponders histogram'
+        },
+        xAxis: {
+            minPadding: 0.05,
+            maxPadding: 0.05
+        },
 
+        series: [{
+        	name: 'NonResponders',
+            data: [
+               {% for key, value in nres.items  %}
+                [{{key}}, {{value}}],
+               {%endfor%} 
+            ]
+        },{
+        name: 'Responders',
+        data: [
+			{% for key, value in res.items  %}
+			[{{key}}, {{value}}],
+			{%endfor%} 
+               ]}]
+    });
+});
 
 </script>
 {% endblock %}
