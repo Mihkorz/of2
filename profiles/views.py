@@ -293,8 +293,11 @@ class DocumentDetail(DetailView):
                     df = read_excel(filename, sheetname="DS1")
                     context['DS1'] = df.to_html()
                 except:
-                    df = read_excel(filename, sheetname="DS1A")
-                    context['DS1'] = df.to_html()
+                    try:
+                        df = read_excel(filename, sheetname="DS1A")
+                        context['DS1'] = df.to_html()
+                    except:
+                        pass
                 try:
                     df = read_excel(filename, sheetname="DS2")
                     context['DS2'] = df.to_html()
