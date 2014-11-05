@@ -1,0 +1,119 @@
+{% extends "base_profiles.html" %}
+
+{% block title %}{{ document.get_filename }} | OncoFinder v2.0{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h2>
+    <span class="glyphicon glyphicon-user"></span>
+    <a href="/user/{{document.project.owner}}">{{document.project.owner}}</a> /
+     <span class="glyphicon glyphicon-folder-open"></span>&nbsp; 
+     <a href="/project/{{document.project}}">{{document.project}}</a> /
+     <span class="glyphicon glyphicon-file"></span>
+     <small><a href="">{{document.get_filename}}</a></small>
+     <span class="text-muted">| <small>{{document.get_doc_type_display}}</small></span> 
+  </h2>
+  <span class="text-muted">
+    Created at: {{document.created_at}}<br/>
+    By: {{document.created_by}}<br/> 
+   </span>
+   
+   <a class="btn btn-default btn-sm pull-right" style="margin-left: 20px;" href="{{MEDIA_URL}}{{document.document}}">
+      <span class="glyphicon glyphicon-download"></span> &nbsp;<b>Download PMS-DS file</b>
+     </a>
+     <a class="btn btn-default btn-sm pull-right" href="{{MEDIA_URL}}{{document.related_doc.input_doc.document}}">
+      <span class="glyphicon glyphicon-download-alt"></span> &nbsp;<b>Download CNR file</b>
+     </a>    
+  <br/>         
+  <hr/>
+  <div>  
+
+  </div>
+
+
+
+<div id="container" style="width:900px; height:400px;">
+</div>
+<script>
+
+$(function () {
+    $('#container').highcharts({
+    	chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Responders-nonresponders histogram'
+        },
+        xAxis: {
+            minPadding: 0.05,
+            maxPadding: 0.05
+        },
+
+        series: [{
+        	name: 'NonResponders',
+            data: [
+               {% for key, value in nres.items  %}
+                [{{key}}, {{value}}],
+               {%endfor%} 
+            ]
+        },{
+        name: 'Responders',
+        data: [
+			{% for key, value in res.items  %}
+			[{{key}}, {{value}}],
+			{%endfor%} 
+               ]}]
+    });
+});
+
+</script>
+
+
+
+
+
+  
+  
+ 
+  
+</div>
+<script>
+
+$(function(){
+	
+	$("#btn_all_path").click(function(){
+		if($("#all_paths").not(":visible") ) {
+			$("#all_tumours").fadeOut("fast", function(){
+				$("#all_paths").fadeIn("slow");
+			});
+		}		
+	});
+	
+	$("#btn_all_tumour").click(function(){
+		if($("#all_tumours").not(":visible") ) {
+			$("#all_paths").fadeOut("fast", function(){
+				$("#all_tumours").fadeIn("slow");
+			});
+			
+		}
+	});
+	
+});
+
+$(function(){
+	$("table.dataframe").attr("border", "0").addClass("table table-hover of-table");
+});
+$(function(){
+	$(".upper_scroll").width($(".wrapper2 > table").width());
+	  
+	$(".wrapper1").scroll(function(){ 
+	    $(".wrapper2").scrollLeft($(this).scrollLeft());
+	  });
+	  
+	$(".wrapper2").scroll(function(){
+	    $(".wrapper1").scrollLeft($(this).scrollLeft());
+	  });
+	});
+
+</script>
+{% endblock %}

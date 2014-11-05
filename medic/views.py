@@ -83,9 +83,9 @@ class MedicTreatmentDetail(DetailView):
             ratio = float(nRcount)/float(len(path_cols))
             len_p = len(path_cols)
             if ratio >= 0.5: 
-                lnonResponders.append(2*nRcount - len(path_cols))
+                lnonResponders.append(float(len_p-nRcount)/float(len_p))
             else:
-                lResponders.append(len(path_cols) - 2*nRcount )
+                lResponders.append(float(len_p- nRcount)/float(len_p) )
         from collections import Counter
         nresponders = Counter(lnonResponders)
         responders =  Counter(lResponders)   

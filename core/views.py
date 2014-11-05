@@ -58,6 +58,7 @@ class CoreSetCalculationParameters(FormView):
         calculate_pms2 = form.cleaned_data['calculate_pms2'] 
         calculate_ds1 = form.cleaned_data['calculate_ds1']
         calculate_ds2 = form.cleaned_data['calculate_ds2']
+        calculate_ds3 = form.cleaned_data['calculate_ds3']
         calculate_norms_pas = form.cleaned_data['calculate_norms_pas']
         calculate_pvalue_each = form.cleaned_data['calculate_pvalue_each']
         calculate_pvalue_all = form.cleaned_data['calculate_pvalue_all'] 
@@ -300,24 +301,27 @@ class CoreSetCalculationParameters(FormView):
         output_pms2_df = output_pms2_df.set_index('Pathway')
         
         """ Calculating Drug Score """
-        output_ds1_df = output_ds2_df = DataFrame()
+        output_ds1_df = output_ds2_df = output_ds3_df = DataFrame()
         
         if (calculate_ds1 or calculate_ds2):
             ds1_list = []
             ds2_list = []
+            ds3_list = []
         
             for drug in Drug.objects.all(): #iterate trough all Drugs
                 ds1_dict = {}
                 ds2_dict = {}
-                ds1_dict['Drug'] = ds2_dict['Drug'] = drug.name.strip()
-                ds1_dict['DataBase'] = ds2_dict['DataBase'] = drug.db
-                ds1_dict['Type'] = ds2_dict['Type'] = drug.tip
+                ds3_dict = {}
+                ds1_dict['Drug'] = ds2_dict['Drug'] = ds3_dict['Drug'] = drug.name.strip()
+                ds1_dict['DataBase'] = ds2_dict['DataBase'] = ds3_dict['DataBase'] = drug.db
+                ds1_dict['Type'] = ds2_dict['Type'] = ds3_dict['Type'] = drug.tip
             
             
             
                 for tumour in tumour_columns: #loop thought samples columns
                     DS1 = 0 # DrugScore 1
                     DS2 = 0 # DrugScore 2
+                    DS3 = 0
             
                     for target in drug.target_set.all():
                     
@@ -354,24 +358,31 @@ class CoreSetCalculationParameters(FormView):
                                 if CNR == 0:
                                     CNR = 1
                                 PMS = output_pms_df.at[path.name, tumour]
+                                PMS2 = output_pms2_df.at[path.name, tumour]
                                 AMCF = float(path.amcf)
                             
                                 if drug.tip == 'inhibitor' and path.name!='Mab_targets':
                                     DS1 += PMS
+                                    DS3 += PMS2
                                     DS2 += AMCF*ARR*math.log10(CNR)
                                 if drug.tip == 'activator' and path.name!='Mab_targets':
                                     DS1 -= PMS
+                                    DS3 -= PMS2
                                     DS2 -= AMCF*ARR*math.log10(CNR)
                                 if drug.tip == 'mab' and path.name!='Mab_targets':
                                     DS1 += PMS
+                                    DS3 += PMS2
                                     DS2 += AMCF*ARR*math.log10(CNR)
                                 if drug.tip == 'mab' and path.name=='Mab_targets':
                                     DS1 += abs(PMS) # PMS2
+                                    DS3 += abs(PMS2)
                                 if drug.tip == 'killermab' and path.name=='Mab_targets':
                                     DS1 += abs(PMS)# PMS2
+                                    DS3 += abs(PMS2)
                                     DS2 += math.log10(CNR)
                                 if drug.tip == 'multivalent' and path.name!='Mab_targets':
                                     DS1 += PMS
+                                    DS3 += PMS2
                                     if target.tip>0:
                                         DS2 -= AMCF*ARR*math.log10(CNR)
                                     else:
@@ -379,14 +390,18 @@ class CoreSetCalculationParameters(FormView):
                                     
                     ds1_dict[tumour] = DS1
                     ds2_dict[tumour] = DS2
+                    ds3_dict[tumour] = DS3
             
                 ds1_list.append(ds1_dict)
                 ds2_list.append(ds2_dict)
+                ds3_list.append(ds3_dict)
             
             output_ds1_df = DataFrame(ds1_list)
             output_ds1_df = output_ds1_df.set_index('Drug')
             output_ds2_df = DataFrame(ds2_list)
             output_ds2_df = output_ds2_df.set_index('Drug')
+            output_ds3_df = DataFrame(ds3_list)
+            output_ds3_df = output_ds3_df.set_index('Drug')
         
                
                     
@@ -408,9 +423,11 @@ class CoreSetCalculationParameters(FormView):
             if calculate_pms2:     
                 output_pms2_df.to_excel(writer,'PMS2')
             if calculate_ds1:
-                output_ds1_df.to_excel(writer, 'DS1')
+                output_ds1_df.to_excel(writer, 'DS1A')
             if calculate_ds2:
                 output_ds2_df.to_excel(writer, 'DS2')
+            if calculate_ds3:
+                output_ds3_df.to_excel(writer, 'DS1B')
         
         
         output_doc.document = path+"/"+os.path.basename(output_file)
@@ -457,9 +474,13 @@ class Test(TemplateView):
     def get_context_data(self, **kwargs):
               
         context = super(Test, self).get_context_data(**kwargs)
+        context["pathways"] = MetabolismGene.objects.values('name').distinct()
+        #raise
+        """
         from database.models import GOEnrichment
         for filename in os.listdir(settings.MEDIA_ROOT+"/GO/GO_enrichment"):
         
+           
             try:
                 spp = os.path.basename(filename).split('_', 2)
                 pname=spp[2].split('.')[0]
@@ -508,7 +529,7 @@ class Test(TemplateView):
         
         
         
-        """
+        
         path = Pathway.objects.using('old').get(name="Wnt_Pathway_Ctnn-b_Degradation")
         
         path1 = Pathway.objects.using('old').get(name="Wnt_Pathway_Ctnn-b_Degradation")
@@ -533,9 +554,7 @@ class Test(TemplateView):
         
         
         """
-        spp = os.path.basename(filename).split('_', 2)
-        context['ontology'] = spp[1]
-        context['pathname'] = Pathway.objects.get(name=spp[2].split('.')[0]) 
+        
         
         
         

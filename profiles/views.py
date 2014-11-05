@@ -210,8 +210,15 @@ class CreateDocument(CreateView):
         df['std'] = df1
                 
         
-        df.to_csv(new_file, sep='\t')
+            
+        if project.field == 'med':
+            
+            if len(tumour_cols) > 1:
+                from django import forms 
+                raise forms.ValidationError(u"There is more than one patient in the file!")                 
+                
     
+        df.to_csv(new_file, sep='\t')
          
         return HttpResponseRedirect(self.success_url+project.name)
         
@@ -264,34 +271,104 @@ class DocumentDetail(DetailView):
             df = read_csv(filename, delimiter=dialect.delimiter)
             context['input'] = df[:50].to_html()            
         else:
-            try:
-                df = read_excel(filename, sheetname="PMS")
-                context['PMS'] = df.to_html()
-            except:
-                pass
-            try:
-                df = read_excel(filename, sheetname="PMS1")
-                context['PMS1'] = df.to_html()
-            except:
-                pass
-            try:
-                df = read_excel(filename, sheetname="PMS2")
-                context['PMS2'] = df.to_html()
-            except:
-                pass
-            try:
-                df = read_excel(filename, sheetname="DS1")
-                context['DS1'] = df.to_html()
-            except:
-                pass
-            try:
-                df = read_excel(filename, sheetname="DS2")
-                context['DS2'] = df.to_html()
-            except:
-                pass
+            if self.object.project.field == 'sci':
             
-            tumour_cols = [col for col in df.columns if 'Tumour' in col]
-            context['tumour_cols'] = tumour_cols
+                #self.template_name = "document/medic_doc_detail.html"
+                try:
+                    df = read_excel(filename, sheetname="PMS")
+                    context['PMS'] = df.to_html()
+                except:
+                    pass
+                try:
+                    df = read_excel(filename, sheetname="PMS1")
+                    context['PMS1'] = df.to_html()
+                except:
+                    pass
+                try:
+                    df = read_excel(filename, sheetname="PMS2")
+                    context['PMS2'] = df.to_html()
+                except:
+                    pass
+                try:
+                    df = read_excel(filename, sheetname="DS1")
+                    context['DS1'] = df.to_html()
+                except:
+                    df = read_excel(filename, sheetname="DS1A")
+                    context['DS1'] = df.to_html()
+                try:
+                    df = read_excel(filename, sheetname="DS2")
+                    context['DS2'] = df.to_html()
+                except:
+                    pass
+                try:
+                    df = read_excel(filename, sheetname="DS1B")
+                    context['DS1B'] = df.to_html()
+                except:
+                    pass
+            
+                tumour_cols = [col for col in df.columns if 'Tumour' in col]
+                context['tumour_cols'] = tumour_cols
+            
+            """ MEDIC OUTPUT FILE """
+            if self.object.project.field == 'med':
+            
+                self.template_name = "document/medic_doc_detail.html"
+                from medic.models import TreatmentMethod
+                treatment = TreatmentMethod.objects.get(name="GSE23988")
+                
+                file_pms1 = settings.MEDIA_ROOT+"/"+treatment.file_pms1.name
+                file_probability = settings.MEDIA_ROOT+"/"+treatment.file_probability.name
+                
+                sniffer = csv.Sniffer()
+                dialect = sniffer.sniff(open(file_probability, 'r').read(), delimiters='\t,;')
+                df_prob = read_csv(file_probability, delimiter=dialect.delimiter)
+                grouped = df_prob.groupby('Sample', sort=True)
+                
+                lResponders = []
+                lnonResponders = []
+                path_cols = [col for col in df_prob.columns if col not in ['Sample', 'group']]
+                for name, group in grouped:
+                    status = name.split('_')[1]
+                    path_df = group[path_cols]
+            
+                    divided_df = path_df.T[path_df.index[0]] / path_df.T[path_df.index[1]]
+                    nRcount = 0 # count nonResponders
+                    for index, val in divided_df.iteritems():
+                        if val>1:
+                            nRcount+= 1
+                    ratio = float(nRcount)/float(len(path_cols))
+                    len_p = len(path_cols)
+                    if ratio >= 0.5: 
+                        lnonResponders.append(2*nRcount - len(path_cols))
+                    else:
+                        lResponders.append(len(path_cols) - 2*nRcount )
+                from collections import Counter
+                nresponders = Counter(lnonResponders)
+                responders =  Counter(lResponders)   
+                context['nres'] = dict(nresponders)
+                context['res'] = dict(responders)
+                
+                """ calculation for patient """
+                def get_only_NRES(row):
+                    if 'NRES' in row['Sample']:
+                        return row
+                df_nres = df_prob.apply(get_only_NRES, axis=1).dropna(axis=0)
+                df_Samples = df_nres.drop('group', axis=1)
+                df_Samples = df_Samples.groupby(df_Samples.Sample).mean() 
+                
+                sr_sample_names = df_Samples.index
+                
+                df_pms1 = read_excel(file_pms1, sheetname="PMS1", index_col="Pathway")
+                lpms_for_ssample = []
+                for sample in sr_sample_names:
+                    for path in path_cols:
+                        try:
+                            lpms_for_ssample.append(df_pms1.at[path, sample])
+                        except:
+                            pass
+                
+                raise
+                 
         
         
         return context

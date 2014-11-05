@@ -152,7 +152,7 @@ INSTALLED_APPS = (
     'database',
     'metabolism',
     'mouse',
-    'medic'
+    'medic',
 
 )
 
