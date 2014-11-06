@@ -247,6 +247,7 @@ class PatientTreatmentDetail(DetailView):
                
         context['nres'] = OrderedDict(sorted(nresponders.items()))
         context['res'] = OrderedDict(sorted(responders.items()))
+        context['flag_responder'] = flag_responder
         context['patient_votes'] = patient_votes
         
         

@@ -29,7 +29,7 @@
 <div id="fragment-3" class="tab-pane in active fade">
     <h4>
       <div style="float:left; width:15px; height:15px; background-color: red"></div>&nbsp; - 
-      This patient is nonresponder. Responce score = {{patient_votes}}
+      This patient is {%if flag_responder == 0%}non{%endif%}responder. Responce score = {{patient_votes}}
     </h4>
 <div id="container" style="width:900px; height:400px;">
 
@@ -103,7 +103,7 @@ $(function () {
         	name: 'NonResponders',
             data: [
                {% for key, value in nres.items  %}
-                {% if key == patient_votes %}
+                {% if key == patient_votes and flag_responder == 0%}
                 {x:{{key}}, y:{{value}}, color:'red'},
                 {% else %}
                 {x:{{key}}, y:{{value}}},
@@ -115,7 +115,11 @@ $(function () {
         name: 'Responders',
         data: [
 			{% for key, value in res.items  %}
-			[{{key}}, {{value}}],
+			{% if key == patient_votes and flag_responder == 1%}
+            {x:{{key}}, y:{{value}}, color:'red'},
+            {% else %}
+            {x:{{key}}, y:{{value}}},
+            {%endif%}
 			{%endfor%} 
                ]}]
     });
