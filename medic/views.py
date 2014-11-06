@@ -69,9 +69,9 @@ class MedicTreatmentDetail(DetailView):
         grouped = df_prob.groupby('Sample', sort=True)
         
         df_c = df_prob[df_prob['Sample'].str.contains("NRES")]
-        all_samples = len(df_prob.index)
+        all_samples = len(df_prob.index)/2
         num_nres_samples = len(df_c.index)/2
-        num_res_samples = (all_samples - num_nres_samples)/2
+        num_res_samples = (all_samples - num_nres_samples)
         
         lResponders = []
         lnonResponders = []

@@ -9317,3 +9317,66 @@ Traceback (most recent call last):
     responders[x]*=100
    ^
 IndentationError: unexpected indent
+2014-11-06 16:42:51,116 ERROR base 15073 -1250432192 Internal Server Error: /db/medic/breast-cancer/1/gse23988/2/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 57, in dispatch
+    return super(MedicTreatmentDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 101, in get_context_data
+    raise
+TypeError: exceptions must be old-style classes or derived from BaseException, not NoneType
+2014-11-06 16:44:11,288 ERROR base 15491 -1250952384 Internal Server Error: /db/medic/breast-cancer/1/gse23988/2/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 57, in dispatch
+    return super(MedicTreatmentDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 101, in get_context_data
+    raise
+TypeError: exceptions must be old-style classes or derived from BaseException, not NoneType
+2014-11-06 16:45:29,422 ERROR base 15845 -1249383616 Internal Server Error: /db/medic/breast-cancer/1/gse23988/2/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 57, in dispatch
+    return super(MedicTreatmentDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 75, in get_context_data
+    raise
+TypeError: exceptions must be old-style classes or derived from BaseException, not NoneType
