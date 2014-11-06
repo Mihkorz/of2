@@ -317,60 +317,75 @@ class DocumentDetail(DetailView):
             
                 self.template_name = "document/medic_doc_detail.html"
                 from medic.models import TreatmentMethod
-                treatment = TreatmentMethod.objects.get(name="GSE23988")
+                treatments = TreatmentMethod.objects.filter(nosology=self.object.project.nosology)
+                context['treatments'] = treatments
+                
+                treatment = TreatmentMethod.objects.get(name="GSE8465")
                 
                 file_pms1 = settings.MEDIA_ROOT+"/"+treatment.file_pms1.name
                 file_probability = settings.MEDIA_ROOT+"/"+treatment.file_probability.name
+                df_output = read_excel(filename, sheetname="PMS1")
                 
                 sniffer = csv.Sniffer()
                 dialect = sniffer.sniff(open(file_probability, 'r').read(), delimiters='\t,;')
                 df_prob = read_csv(file_probability, delimiter=dialect.delimiter)
-                grouped = df_prob.groupby('Sample', sort=True)
                 
-                lResponders = []
-                lnonResponders = []
                 path_cols = [col for col in df_prob.columns if col not in ['Sample', 'group']]
-                for name, group in grouped:
-                    status = name.split('_')[1]
-                    path_df = group[path_cols]
-            
-                    divided_df = path_df.T[path_df.index[0]] / path_df.T[path_df.index[1]]
-                    nRcount = 0 # count nonResponders
-                    for index, val in divided_df.iteritems():
-                        if val>1:
-                            nRcount+= 1
-                    ratio = float(nRcount)/float(len(path_cols))
-                    len_p = len(path_cols)
-                    if ratio >= 0.5: 
-                        lnonResponders.append(2*nRcount - len(path_cols))
+                
+                df_pms1 = read_excel(file_pms1, sheetname="PMS1", index_col="Pathway").transpose()
+                df_required_paths = df_pms1[path_cols]
+                df_required_paths.reset_index(inplace="True")
+                df_nres = df_required_paths[df_required_paths['index'].str.contains("NRES")]
+                df_res = df_required_paths[~df_required_paths['index'].str.contains("NRES")]
+                
+                patient_responder = {}
+                patient_nonresponder = {}
+                for path_name in path_cols:
+                    from scipy.stats import norm 
+                    if path_name in df_output.index:
+                        patient_pms1 = df_output.loc[path_name.strip()].item()
                     else:
-                        lResponders.append(len(path_cols) - 2*nRcount )
-                from collections import Counter
-                nresponders = Counter(lnonResponders)
-                responders =  Counter(lResponders)   
-                context['nres'] = dict(nresponders)
-                context['res'] = dict(responders)
+                        patient_pms1 = 0
+                    
+                    r_mean = df_res[path_name].mean(axis=1)
+                    r_std = df_res[path_name].std(axis=1)
+                    
+                    
+                    if patient_pms1 <= r_mean:
+                        r_probability = norm.cdf(patient_pms1, r_mean, r_std)
+                    else:
+                        r_probability = 1- norm.cdf(patient_pms1, r_mean, r_std)
+                    
+                    patient_responder[path_name] = r_probability      
+                     
+                    nr_mean = df_nres[path_name].mean(axis=1)
+                    nr_std = df_nres[path_name].std(axis=1)
+                    
+                    if patient_pms1 <= nr_mean:
+                        nr_probability = norm.cdf(patient_pms1, nr_mean, nr_std)
+                    else:
+                        nr_probability = 1- norm.cdf(patient_pms1, nr_mean, nr_std)
+                    
+                    patient_nonresponder[path_name] = nr_probability
+                    
+                    dict_for_df={}
+                    dict_for_df['Responder'] = patient_responder
+                    dict_for_df['Nonresponder'] = patient_nonresponder
+                    
+                    df_patient = DataFrame.from_dict(dict_for_df).transpose()
+                    
+                         
+                    
                 
-                """ calculation for patient """
-                def get_only_NRES(row):
-                    if 'NRES' in row['Sample']:
-                        return row
-                df_nres = df_prob.apply(get_only_NRES, axis=1).dropna(axis=0)
-                df_Samples = df_nres.drop('group', axis=1)
-                df_Samples = df_Samples.groupby(df_Samples.Sample).mean() 
+                    
                 
-                sr_sample_names = df_Samples.index
                 
-                df_pms1 = read_excel(file_pms1, sheetname="PMS1", index_col="Pathway")
-                lpms_for_ssample = []
-                for sample in sr_sample_names:
-                    for path in path_cols:
-                        try:
-                            lpms_for_ssample.append(df_pms1.at[path, sample])
-                        except:
-                            pass
+                    
                 
-                raise
+            
+                    
+                
+                
                  
         
         

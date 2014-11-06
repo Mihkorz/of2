@@ -19,7 +19,8 @@ from metabolism.views import MetabolismPathwayList, MetabolismPathwayDetail, \
                              MetabolismPathwayAjaxSearch
 from mouse.views import MousePathwayList, MousePathwayDetail, \
                              MousePathwayAjaxSearch, MouseTest, MouseMapping
-from medic.views import MedicNosologyList, MedicNosologyDetail, MedicTreatmentDetail
+from medic.views import MedicNosologyList, MedicNosologyDetail, MedicTreatmentDetail, \
+                        PatientTreatmentDetail
 
 urlpatterns = patterns('',
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
@@ -48,7 +49,10 @@ urlpatterns = patterns('',
     url(r'^document/new/$', CreateDocument.as_view(), name="document_create"),
     url(r'^document/delete/(?P<pk>\d+)/$', DeleteDocument.as_view(), name="document_delete"),
     url(r'^document/doc(?P<pk>\d+)/$', DocumentDetail.as_view(), name="document_detail"),
+    url(r'^document/doc(?P<pk>\d+)/treat(?P<treat_id>.*)/$', PatientTreatmentDetail.as_view(), name="patient_treatment_detail"),
     url(r'^document/doc(?P<pk>\d+)/(?P<sample_name>.*)/$', SampleDetail.as_view(), name="sample_detail"),
+    
+    
     url(r'^document/ajaxpathdetail/$', AjaxPathDetail.as_view(), name="ajax_path_detail"),
     
     ################### Core App ##############################

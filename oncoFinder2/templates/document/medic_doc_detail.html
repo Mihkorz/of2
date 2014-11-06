@@ -32,41 +32,16 @@
 
 
 
-<div id="container" style="width:900px; height:400px;">
-</div>
-<script>
+<h2>Treatment methods:</h2>
+<ul>
+    {%for treatment in treatments%}
+        <li>
+        <a href="treat{{treatment.id}}/" >{{treatment}}</a>
+        </li>
+{%endfor%}
+</ul>
 
-$(function () {
-    $('#container').highcharts({
-    	chart: {
-            type: 'column'
-        },
-        title: {
-            text: 'Responders-nonresponders histogram'
-        },
-        xAxis: {
-            minPadding: 0.05,
-            maxPadding: 0.05
-        },
 
-        series: [{
-        	name: 'NonResponders',
-            data: [
-               {% for key, value in nres.items  %}
-                [{{key}}, {{value}}],
-               {%endfor%} 
-            ]
-        },{
-        name: 'Responders',
-        data: [
-			{% for key, value in res.items  %}
-			[{{key}}, {{value}}],
-			{%endfor%} 
-               ]}]
-    });
-});
-
-</script>
 
 
 
