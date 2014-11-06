@@ -34,8 +34,8 @@
 
 <table class="table pull-left" style="width: 300px;">
 <caption>NonResponders</caption>
-<tr><th>votes (yes - no)</th>
-    <th>ammount </th>
+<tr><th>num Responder Votes / all votes</th>
+    <th>persantage of nonresponders </th>
 </tr>
 {% for key, value in nres.items  %}
 <tr>
@@ -47,8 +47,8 @@
 
 <table class="table pull-right" style="width: 300px;">
 <caption>Responders</caption>
-<tr><th>votes (yes - no)</th>
-    <th>ammount </th>
+<tr><th>num Responder Votes / all votes</th>
+    <th>persantage of responders </th>
 </tr>
 {% for key, value in res.items  %}
 <tr>
@@ -76,8 +76,17 @@ $(function () {
             text: 'Responders-nonresponders histogram'
         },
         xAxis: {
+        	title: {
+        		text: 'Success score'
+        	},
             minPadding: 0.05,
             maxPadding: 0.05
+        },
+        
+        yAxis:{
+        	 title: {
+                 text: "Ratio of patients(%)"
+             }
         },
 
         series: [{

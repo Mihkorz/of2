@@ -68,29 +68,42 @@ class MedicTreatmentDetail(DetailView):
         df_prob = read_csv(file_probability, delimiter=dialect.delimiter)
         grouped = df_prob.groupby('Sample', sort=True)
         
+        df_c = df_prob[df_prob['Sample'].str.contains("NRES")]
+        all_samples = len(df_prob.index)
+        num_nres_samples = len(df_c.index)/2
+        num_res_samples = (all_samples - num_nres_samples)/2
+        
         lResponders = []
         lnonResponders = []
         for name, group in grouped:
-            status = name.split('_')[1]
+            status = name.split('_')[1].strip()
             path_cols = [col for col in group.columns if col not in ['Sample', 'group']]
             path_df = group[path_cols]
-            
-            divided_df = path_df.T[path_df.index[0]] / path_df.T[path_df.index[1]]
-            nRcount = 0 # count nonResponders
+            #raise
+            divided_df = path_df.T[path_df.index[1]] / path_df.T[path_df.index[0]]
+            Rcount = 0 # count Responder votes
             for index, val in divided_df.iteritems():
                 if val>1:
-                    nRcount+= 1
-            ratio = float(nRcount)/float(len(path_cols))
+                    Rcount+= 1
+            
             len_p = len(path_cols)
-            if ratio >= 0.5: 
-                lnonResponders.append(float(len_p-nRcount)/float(len_p))
+            if status == 'NRES': 
+                lnonResponders.append(float(Rcount)/float(len_p))
             else:
-                lResponders.append(float(len_p- nRcount)/float(len_p) )
+                lResponders.append(float(Rcount)/float(len_p) )
         from collections import Counter
-        nresponders = Counter(lnonResponders)
-        responders =  Counter(lResponders)   
-        context['nres'] = dict(nresponders)
-        context['res'] = dict(responders)
+        
+        nresponders = dict(Counter(lnonResponders))
+        for x in nresponders:
+            nresponders[x]/=float(num_nres_samples)
+            nresponders[x]*=100
+        responders =  dict(Counter(lResponders))
+        for x in responders:
+            responders[x]/=float(num_res_samples)
+            responders[x]*=100
+               
+        context['nres'] = nresponders
+        context['res'] = responders
         
         context['prob'] = df_prob.to_html()
         
