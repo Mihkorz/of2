@@ -16,7 +16,8 @@
     <ul class="nav nav-tabs">
         <li ><a href="#fragment-1" data-toggle="tab"><span>Probability Table </span></a></li>
         <li><a href="#fragment-2" data-toggle="tab"><span>PAS1 Table</span></a></li>
-        <li class="active"><a href="#fragment-3" data-toggle="tab"><span>Graphic Scheme</span></a></li>
+        <li class="active"><a href="#fragment-3" data-toggle="tab"><span>Histogram</span></a></li>
+        <li ><a href="#fragment-4" data-toggle="tab"><span>Graphic Scheme</span></a></li>
     </ul>
 <div id="tabContent" class="tab-content">
 <div id="fragment-1" class="tab-pane fade  well">
@@ -59,8 +60,22 @@
 </table>
 
 </div>
+
+
+
+
+
+<div id="fragment-4" class="tab-pane in active fade">
+
+<div id="container4" style="width:900px; height:400px;">
+dsg
+
 </div>
 
+
+
+</div>
+</div>
 </div>
 
 
@@ -105,6 +120,48 @@ $(function () {
                ]}]
     });
 });
+
+
+
+$(function () {
+    $('#container4').highcharts({
+    	chart: {
+            type: 'area'
+        },
+        title: {
+            text: 'Responders-nonresponders histogram'
+        },
+        xAxis: {
+        	title: {
+        		text: 'Success score'
+        	},
+            minPadding: 0.05,
+            maxPadding: 0.05
+        },
+        
+        yAxis:{
+        	 title: {
+                 text: "Ratio of patients(%)"
+             }
+        },
+
+        series: [{
+        	name: 'NonResponders',
+            data: [
+               {% for key, value in nres.items  %}
+                [{{key}}, {{value}}],
+               {%endfor%} 
+            ]
+        },{
+        name: 'Responders',
+        data: [
+			{% for key, value in res.items  %}
+			[{{key}}, {{value}}],
+			{%endfor%} 
+               ]}]
+    });
+});
+
 
 </script>
 {% endblock %}

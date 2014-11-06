@@ -91,7 +91,7 @@ class MedicTreatmentDetail(DetailView):
                 lnonResponders.append(float(Rcount)/float(len_p))
             else:
                 lResponders.append(float(Rcount)/float(len_p) )
-        from collections import Counter
+        from collections import Counter, OrderedDict
         
         nresponders = dict(Counter(lnonResponders))
         for x in nresponders:
@@ -102,8 +102,8 @@ class MedicTreatmentDetail(DetailView):
             responders[x]/=float(num_res_samples)
             responders[x]*=100
                
-        context['nres'] = nresponders
-        context['res'] = responders
+        context['nres'] = OrderedDict(sorted(nresponders.items()))
+        context['res'] = OrderedDict(sorted(responders.items()))
         
         context['prob'] = df_prob.to_html()
         
