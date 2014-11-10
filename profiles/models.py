@@ -36,7 +36,9 @@ PROJECT_STATUSES = (
 
 PROJECT_FIELDS = (
     ('sci', 'Scientific'),
+    ('rna', 'miRNA'),
     ('med', 'Medical'),
+    
 )
         
 class Project(models.Model):
@@ -47,7 +49,7 @@ class Project(models.Model):
     description = models.TextField(verbose_name="Description(optional)", blank=True)
     status = models.IntegerField(choices = PROJECT_STATUSES, default=PROJECT_PUBLIC)
     field = models.CharField(verbose_name="Project type", max_length=3, choices = PROJECT_FIELDS, default='sci')
-    nosology = models.ForeignKey(Nosology, blank=True, null=True)
+    nosology = models.ForeignKey(Nosology, verbose_name="Cancer type", blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     viewed_at = models.DateTimeField(verbose_name="Last viewed at", blank=True, null=True,)
     viewed_by = models.ForeignKey(User, blank=True, null=True, related_name='viewed')

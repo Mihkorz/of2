@@ -21,6 +21,7 @@ from .forms import SettingsUserForm, UserProfileFormSet, CreateProjectForm, \
                    UploadDocumentForm
 from .models import Project, Document, ProcessDocument
 from database.models import Pathway, Component, Gene
+from mirna.views import TestView
 
 
 class ProfileIndex(DetailView):
@@ -138,6 +139,9 @@ class ProjectDetail(DetailView):
     
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
+        if self.get_object().field == 'rna':
+            view=TestView.as_view()
+            return view( request, *args, **kwargs )
         return super(ProjectDetail, self).dispatch(request, *args, **kwargs)
     
     def get_context_data(self, **kwargs):
@@ -320,59 +324,7 @@ class DocumentDetail(DetailView):
                 treatments = TreatmentMethod.objects.filter(nosology=self.object.project.nosology)
                 context['treatments'] = treatments
                 
-                treatment = TreatmentMethod.objects.get(name="GSE8465")
                 
-                file_pms1 = settings.MEDIA_ROOT+"/"+treatment.file_pms1.name
-                file_probability = settings.MEDIA_ROOT+"/"+treatment.file_probability.name
-                df_output = read_excel(filename, sheetname="PMS1")
-                
-                sniffer = csv.Sniffer()
-                dialect = sniffer.sniff(open(file_probability, 'r').read(), delimiters='\t,;')
-                df_prob = read_csv(file_probability, delimiter=dialect.delimiter)
-                
-                path_cols = [col for col in df_prob.columns if col not in ['Sample', 'group']]
-                
-                df_pms1 = read_excel(file_pms1, sheetname="PMS1", index_col="Pathway").transpose()
-                df_required_paths = df_pms1[path_cols]
-                df_required_paths.reset_index(inplace="True")
-                df_nres = df_required_paths[df_required_paths['index'].str.contains("NRES")]
-                df_res = df_required_paths[~df_required_paths['index'].str.contains("NRES")]
-                
-                patient_responder = {}
-                patient_nonresponder = {}
-                for path_name in path_cols:
-                    from scipy.stats import norm 
-                    if path_name in df_output.index:
-                        patient_pms1 = df_output.loc[path_name.strip()].item()
-                    else:
-                        patient_pms1 = 0
-                    
-                    r_mean = df_res[path_name].mean(axis=1)
-                    r_std = df_res[path_name].std(axis=1)
-                    
-                    
-                    if patient_pms1 <= r_mean:
-                        r_probability = norm.cdf(patient_pms1, r_mean, r_std)
-                    else:
-                        r_probability = 1- norm.cdf(patient_pms1, r_mean, r_std)
-                    
-                    patient_responder[path_name] = r_probability      
-                     
-                    nr_mean = df_nres[path_name].mean(axis=1)
-                    nr_std = df_nres[path_name].std(axis=1)
-                    
-                    if patient_pms1 <= nr_mean:
-                        nr_probability = norm.cdf(patient_pms1, nr_mean, nr_std)
-                    else:
-                        nr_probability = 1- norm.cdf(patient_pms1, nr_mean, nr_std)
-                    
-                    patient_nonresponder[path_name] = nr_probability
-                    
-                    dict_for_df={}
-                    dict_for_df['Responder'] = patient_responder
-                    dict_for_df['Nonresponder'] = patient_nonresponder
-                    
-                    df_patient = DataFrame.from_dict(dict_for_df).transpose()
                     
                          
                     
