@@ -61,6 +61,7 @@
                              data-target="#deleteModal">&times;</button>
                      <span class="badge with-tooltip" data-toggle="tooltip"  data-placement="bottom" 
                                              title="Documents" style="margin: 0 20px 0 0 ">{{project.get_documents_number}}</span>
+                     <div class="text-muted"><small>Type: {{project.get_field_display}}</small></div>
                      <div class="text-muted"><small>Created at: {{project.created_at}}</small></div>
                   </li>
                 {% endfor %}
@@ -71,10 +72,10 @@
                 {% for project in all_projects %}
                   <li class="list-group-item">
                     <span class="glyphicon glyphicon-folder-open" style="color:#ccc"></span>
-                    &nbsp;&nbsp; <a href="/project/{{project.name}}">{{ project.name }}</a>
-                     
+                    &nbsp;&nbsp; <a href="/project/{{project.name}}">{{ project.name }}</a> 
                      <span class="badge with-tooltip" data-toggle="tooltip"  data-placement="bottom" 
                                              title="Documents" style="margin: 0 20px 0 0 ">{{project.get_documents_number}}</span>
+                     <div class="text-muted"><small>Type: {{project.get_field_display}}</small></div>
                      <div class="text-muted"><small>Owner: <a href="/user/{{project.owner}}">{{project.owner}}</a></small></div>
                      <div class="text-muted"><small>Created at: {{project.created_at}}</small></div>
                   </li>

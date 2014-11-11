@@ -1,0 +1,122 @@
+{% extends "base_profiles.html" %}
+
+{% block title %}{{ document.get_filename }} | OncoFinder v2.0{% endblock %}
+
+{% block content %}
+<div class="container">
+
+  <h2>
+    <span class="glyphicon glyphicon-user"></span>
+    <a href="/user/{{document.project.owner}}">{{document.project.owner}}</a> /
+     <span class="glyphicon glyphicon-folder-open"></span>&nbsp; 
+     <a href="/project/{{document.project}}">{{document.project}}</a> /
+     <span class="glyphicon glyphicon-file"></span>
+     <small><a href="/document/doc{{document.id}}">{{document.get_filename}}</a></small>
+     <span class="text-muted">| <small>{{document.get_doc_type_display}}</small></span> 
+  </h2>
+
+  {% if form.errors %}
+  <div class="alert alert-danger">
+    <i class="glyphicon glyphicon-warning-sign"></i>
+    Your form has some errors. Please try again.
+  </div>
+  {% endif %}
+  
+  <div class="panel panel-primary login_panel">
+    <div class="panel-heading">
+      <h3 class="panel-title">Calculation parameters</h3>
+    </div>
+    <div class="panel-body">
+       <form class="form-horizontal" role="form" action="" method="post"  id="calculation_parameters_form">
+          {% csrf_token %}
+          <small>
+          
+          <div class="form-group form-group-sm">
+          <div class="col-sm-10">
+          {{ form.db_choice.label_tag }}
+          </div>
+          {% for db in form.db_choice %}
+	      <label for="{{ db.id_for_label }}" class="checkbox-inline">
+	        {{ db.tag }}
+	        {{ db.choice_label }}
+	      </label>
+	     {% endfor %}
+	     </div>
+          
+          <div class="form-group form-group-sm">
+          <div class="col-sm-10">
+          {{ form.norm_choice.label_tag }}
+          </div>
+          {% for radio in form.norm_choice %}
+	      <label for="{{ radio.id_for_label }}" class="checkbox-inline">
+	        {{ radio.tag }}
+	        {{ radio.choice_label }}
+	      </label>
+	     {% endfor %}
+	     </div>
+          
+                 
+          <div class="form-group form-group-sm">
+            <label for="{{ form.sigma_num.auto_id }}" class="col-sm-4 control-label">{{ form.sigma_num.label }}</label>            
+            <div class="col-sm-8">
+                {{ form.sigma_num }}
+                {{ form.use_sigma.label_tag }}&nbsp;&nbsp;
+                {{ form.use_sigma }}
+            </div>
+          </div>
+          
+          <div class="form-group form-group-sm">
+            <label for="{{ form.cnr_low.auto_id }}" class="col-sm-4 control-label">{{ form.cnr_low.label }}</label>            
+            <div class="col-sm-8">
+                {{ form.cnr_low }}
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label for="{{ form.cnr_up.auto_id }}" class="col-sm-4 control-label">{{ form.cnr_up.label }}</label>            
+            <div class="col-sm-8">
+                {{ form.cnr_up }}
+                {{ form.use_cnr.label_tag }}&nbsp;&nbsp; 
+                {{ form.use_cnr }}
+            </div>
+          </div>
+          </small>
+          
+          
+          
+    </div>
+    <div class="panel-footer">
+      <button class="btn btn-primary" data-loading-text="Calculating..." id="startButton">Start Calculation</button>
+      
+          <img src="/static/images/ajax-loader.gif" id="loader" style="margin: 10px 0 0 0; display:none" class="pull-right" />
+     
+    </div>
+  </div>
+</div>
+
+<script>
+$(function() {
+	
+	$('#startButton').click(function () {
+	    var btn = $(this)
+	    btn.button('loading');
+	    $("#loader").fadeIn();
+	    
+
+	  });
+	
+	// disable DS1 and DS2 if Metabolism DB was selected
+    $("#calculation_parameters_form").click(function(){ 
+    	var checked = $("input[type='radio'][name='db_choice']:checked");
+    	if(checked.val() == 2){ 
+    		$("#id_calculate_ds1").prop('checked', false).prop('disabled', true);
+    		$("#id_calculate_ds2").prop('checked', false).prop('disabled', true);
+    	}
+    	else{
+    		$("#id_calculate_ds1").prop('disabled', false);
+    		$("#id_calculate_ds2").prop('disabled', false);
+    	}
+    });
+});
+</script>
+
+{%endblock%}

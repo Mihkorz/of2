@@ -21,6 +21,7 @@ from mouse.views import MousePathwayList, MousePathwayDetail, \
                              MousePathwayAjaxSearch, MouseTest, MouseMapping
 from medic.views import MedicNosologyList, MedicNosologyDetail, MedicTreatmentDetail, \
                         PatientTreatmentDetail
+from mirna.views import MirnaSetCalculationParameters
 
 urlpatterns = patterns('',
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
@@ -88,6 +89,9 @@ urlpatterns = patterns('',
     url(r'^db/medic/[-\w]+/(?P<pk>\d+)/$', MedicNosologyDetail.as_view(), name="medic_nosology_detail"),
     url(r'^db/medic/[-\w]+/[-\w]+/[-\w]+/(?P<pk>\d+)/$', MedicTreatmentDetail.as_view(), name="medic_treatment_detail"),
     #url(r'^mouse/pathways/[-\w]+/(?P<pk>\d+)/$', MousePathwayDetail.as_view(), name="mouse_pathway_detail"),
+    
+    ################### miRNA App ##############################
+    url(r'^mirna-calculation-parameters/doc(?P<pk>\d+)/$', MirnaSetCalculationParameters.as_view(), name="mirna_set_calculation_parameters"),
 
 
     

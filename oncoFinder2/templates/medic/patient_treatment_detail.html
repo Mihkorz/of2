@@ -6,7 +6,7 @@
 <div class="container">
         <h1>{{treatment.name}}</h1>
         <div class="text-muted">
-        Nosology = {{treatment.nosology}}
+        Cancer type = {{treatment.nosology}}
         </div>
     <span class='pull-right'>
        <a href='{{ request.META.HTTP_REFERER }}'><<< back to treatment methods list</a>
@@ -29,7 +29,7 @@
 <div id="fragment-3" class="tab-pane in active fade">
     <h4>
       <div style="float:left; width:15px; height:15px; background-color: red"></div>&nbsp; - 
-      This patient is {%if flag_responder == 0%}non{%endif%}responder. Responce score = {{patient_votes}}
+      This patient is a {%if flag_responder == 0%}non-{%endif%}responder. Responce score = {{patient_votes}}
     </h4>
 <div id="container" style="width:900px; height:400px;">
 
@@ -37,9 +37,9 @@
 </div>
 
 <table class="table pull-left" style="width: 300px;">
-<caption>NonResponders</caption>
+<caption>Non-responders</caption>
 <tr><th>num Responder Votes / all votes</th>
-    <th>persentage of nonresponders </th>
+    <th>percentage of non-responders </th>
 </tr>
 {% for key, value in nres.items  %}
 <tr>
@@ -52,7 +52,7 @@
 <table class="table pull-right" style="width: 300px;">
 <caption>Responders</caption>
 <tr><th>num Responder Votes / all votes</th>
-    <th>persentage of responders </th>
+    <th>percentage of responders </th>
 </tr>
 {% for key, value in res.items  %}
 <tr>
@@ -82,7 +82,7 @@ $(function () {
             type: 'column'
         },
         title: {
-            text: 'Responders-nonresponders histogram'
+            text: 'Responders/non-responders histogram'
         },
         
         xAxis: {
@@ -100,7 +100,7 @@ $(function () {
         },
 
         series: [{
-        	name: 'NonResponders',
+        	name: 'Non-responders',
             data: [
                {% for key, value in nres.items  %}
                 {% if key == patient_votes and flag_responder == 0%}

@@ -11873,3 +11873,664 @@ Traceback (most recent call last):
   File "/usr/local/lib/python2.7/dist-packages/django/template/loader.py", line 186, in select_template
     raise TemplateDoesNotExist(', '.join(not_found))
 TemplateDoesNotExist: project/project_detailll.html
+2014-11-10 21:12:11,625 ERROR base 5059 -1287652544 Internal Server Error: /document/doc2518/treat2/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 126, in dispatch
+    return super(PatientTreatmentDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 147, in get_context_data
+    df_required_paths = df_pms1[path_cols]
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 1737, in __getitem__
+    return self._getitem_array(key)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 1781, in _getitem_array
+    indexer = self.ix._convert_to_indexer(key, axis=1)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/indexing.py", line 1135, in _convert_to_indexer
+    raise KeyError('%s not in index' % objarr[mask])
+KeyError: "['ATM_Pathway_G2.M_Checkpoint_Arrest'] not in index"
+2014-11-10 21:12:21,542 ERROR base 5059 -1287652544 Internal Server Error: /document/doc2518/treat1/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 126, in dispatch
+    return super(PatientTreatmentDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 147, in get_context_data
+    df_required_paths = df_pms1[path_cols]
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 1737, in __getitem__
+    return self._getitem_array(key)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 1781, in _getitem_array
+    indexer = self.ix._convert_to_indexer(key, axis=1)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/indexing.py", line 1135, in _convert_to_indexer
+    raise KeyError('%s not in index' % objarr[mask])
+KeyError: "['Androgen_receptor_Pathway_Cell_Survival_._Cell_Growth' 'BRCA1_Pathway'] not in index"
+2014-11-10 21:12:25,178 ERROR base 5059 -1250432192 Internal Server Error: /document/doc2518/treat7/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 126, in dispatch
+    return super(PatientTreatmentDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 147, in get_context_data
+    df_required_paths = df_pms1[path_cols]
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 1737, in __getitem__
+    return self._getitem_array(key)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 1781, in _getitem_array
+    indexer = self.ix._convert_to_indexer(key, axis=1)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/indexing.py", line 1135, in _convert_to_indexer
+    raise KeyError('%s not in index' % objarr[mask])
+KeyError: "['Androgen_receptor_Pathway_Cell_Survival_._Cell_Growth'] not in index"
+2014-11-10 21:18:25,632 ERROR base 5059 -1250432192 Internal Server Error: /document/doc2518/treat12/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 126, in dispatch
+    return super(PatientTreatmentDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 147, in get_context_data
+    df_required_paths = df_pms1[path_cols]
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 1737, in __getitem__
+    return self._getitem_array(key)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 1781, in _getitem_array
+    indexer = self.ix._convert_to_indexer(key, axis=1)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/indexing.py", line 1135, in _convert_to_indexer
+    raise KeyError('%s not in index' % objarr[mask])
+KeyError: "['ATM_Pathway_G2.M_Checkpoint_Arrest'] not in index"
+2014-11-11 20:20:12,187 ERROR base 8440 -1298138304 Internal Server Error: /project/mirna/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 139, in get_response
+    response = response.render()
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 105, in render
+    self.content = self.rendered_content
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 80, in rendered_content
+    template = self.resolve_template(self.template_name)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 56, in resolve_template
+    return loader.select_template(template)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader.py", line 186, in select_template
+    raise TemplateDoesNotExist(', '.join(not_found))
+TemplateDoesNotExist: project/project_detailll.html
+2014-11-11 20:26:57,959 ERROR base 12884 -1250952384 Internal Server Error: /project/mirna/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 144, in dispatch
+    return view( request, *args, **kwargs )
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/mirna/views.py", line 15, in dispatch
+    return super(TestView, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 110, in get
+    self.object = self.get_object()
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 42, in get_object
+    queryset = queryset.filter(**{slug_field: slug})
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 590, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 608, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/sql/query.py", line 1198, in add_q
+    clause = self._add_q(where_part, used_aliases)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/sql/query.py", line 1234, in _add_q
+    current_negated=current_negated)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/sql/query.py", line 1100, in build_filter
+    allow_explicit_fk=True)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/sql/query.py", line 1357, in setup_joins
+    names, opts, allow_many, allow_explicit_fk)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/sql/query.py", line 1277, in names_to_path
+    "Choices are: %s" % (name, ", ".join(available)))
+FieldError: Cannot resolve keyword u'slug' into field. Choices are: created_at, description, document, field, id, members, name, nosology, owner, status, viewed_at, viewed_by
+2014-11-11 20:27:14,475 ERROR base 12884 -1283458240 Internal Server Error: /project/mirna/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 144, in dispatch
+    return view( request, *args, **kwargs )
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/mirna/views.py", line 15, in dispatch
+    def dispatch(self, request, *args, **kwargs):
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 110, in get
+    self.object = self.get_object()
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 42, in get_object
+    queryset = queryset.filter(**{slug_field: slug})
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 590, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 608, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/sql/query.py", line 1198, in add_q
+    clause = self._add_q(where_part, used_aliases)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/sql/query.py", line 1234, in _add_q
+    current_negated=current_negated)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/sql/query.py", line 1100, in build_filter
+    allow_explicit_fk=True)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/sql/query.py", line 1357, in setup_joins
+    names, opts, allow_many, allow_explicit_fk)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/sql/query.py", line 1277, in names_to_path
+    "Choices are: %s" % (name, ", ".join(available)))
+FieldError: Cannot resolve keyword u'slug' into field. Choices are: created_at, description, document, field, id, members, name, nosology, owner, status, viewed_at, viewed_by
+2014-11-11 20:27:18,317 ERROR base 12884 -1261438144 Internal Server Error: /project/mirna/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 144, in dispatch
+    return view( request, *args, **kwargs )
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/mirna/views.py", line 15, in dispatch
+    def dispatch(self, request, *args, **kwargs):
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 110, in get
+    self.object = self.get_object()
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 42, in get_object
+    queryset = queryset.filter(**{slug_field: slug})
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 590, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 608, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/sql/query.py", line 1198, in add_q
+    clause = self._add_q(where_part, used_aliases)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/sql/query.py", line 1234, in _add_q
+    current_negated=current_negated)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/sql/query.py", line 1100, in build_filter
+    allow_explicit_fk=True)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/sql/query.py", line 1357, in setup_joins
+    names, opts, allow_many, allow_explicit_fk)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/sql/query.py", line 1277, in names_to_path
+    "Choices are: %s" % (name, ", ".join(available)))
+FieldError: Cannot resolve keyword u'slug' into field. Choices are: created_at, description, document, field, id, members, name, nosology, owner, status, viewed_at, viewed_by
+2014-11-11 23:11:30,499 ERROR base 3830 -1250432192 Internal Server Error: /document/doc2519/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 267, in dispatch
+    view=TestView.as_view()
+NameError: global name 'TestView' is not defined
+2014-11-11 23:12:16,956 ERROR base 4507 -1250432192 Internal Server Error: /document/doc2519/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 268, in dispatch
+    return view( request, *args, **kwargs )
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 110, in get
+    self.object = self.get_object()
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 31, in get_object
+    queryset = self.get_queryset()
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 70, in get_queryset
+    'cls': self.__class__.__name__
+ImproperlyConfigured: mirnaDocumentDetail is missing a queryset. Define mirnaDocumentDetail.model, mirnaDocumentDetail.queryset, or override mirnaDocumentDetail.get_queryset().
+2014-11-11 23:14:58,116 ERROR base 5075 -1249383616 Internal Server Error: /document/doc2519/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 139, in get_response
+    response = response.render()
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 105, in render
+    self.content = self.rendered_content
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 80, in rendered_content
+    template = self.resolve_template(self.template_name)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 56, in resolve_template
+    return loader.select_template(template)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader.py", line 186, in select_template
+    raise TemplateDoesNotExist(', '.join(not_found))
+TemplateDoesNotExist: mirna/document_detail.html
+2014-11-11 23:22:22,324 ERROR base 6931 -1250952384 Internal Server Error: /document/doc2519/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 90, in get_response
+    response = middleware_method(request)
+  File "/usr/local/lib/python2.7/dist-packages/django_debug_toolbar-0.9.4-py2.7.egg/debug_toolbar/middleware.py", line 80, in process_request
+    urlconf = import_module(getattr(request, 'urlconf', settings.ROOT_URLCONF))
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/importlib.py", line 40, in import_module
+    __import__(name)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/oncoFinder2/urls.py", line 24, in <module>
+    from mirna import MirnaSetCalculationParameters
+ImportError: cannot import name MirnaSetCalculationParameters
+2014-11-11 23:22:37,756 ERROR base 6931 -1250952384 Internal Server Error: /document/doc2519/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 90, in get_response
+    response = middleware_method(request)
+  File "/usr/local/lib/python2.7/dist-packages/django_debug_toolbar-0.9.4-py2.7.egg/debug_toolbar/middleware.py", line 80, in process_request
+    urlconf = import_module(getattr(request, 'urlconf', settings.ROOT_URLCONF))
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/importlib.py", line 40, in import_module
+    __import__(name)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/oncoFinder2/urls.py", line 24, in <module>
+    from mirna import MirnaSetCalculationParameters
+ImportError: cannot import name MirnaSetCalculationParameters
+2014-11-11 23:27:16,668 ERROR base 9879 -1250432192 Internal Server Error: /document/doc2519/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 139, in get_response
+    response = response.render()
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 105, in render
+    self.content = self.rendered_content
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 80, in rendered_content
+    template = self.resolve_template(self.template_name)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 56, in resolve_template
+    return loader.select_template(template)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader.py", line 186, in select_template
+    raise TemplateDoesNotExist(', '.join(not_found))
+TemplateDoesNotExist: mirna/document_detaill.html
+2014-11-11 23:27:23,967 ERROR base 9879 -1279268032 Internal Server Error: /document/doc2519/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 139, in get_response
+    response = response.render()
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 105, in render
+    self.content = self.rendered_content
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 80, in rendered_content
+    template = self.resolve_template(self.template_name)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 56, in resolve_template
+    return loader.select_template(template)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader.py", line 186, in select_template
+    raise TemplateDoesNotExist(', '.join(not_found))
+TemplateDoesNotExist: mirna/document_detaill.html
+2014-11-11 23:27:26,336 ERROR base 9879 -1260389568 Internal Server Error: /document/doc2519/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 139, in get_response
+    response = response.render()
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 105, in render
+    self.content = self.rendered_content
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 80, in rendered_content
+    template = self.resolve_template(self.template_name)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 56, in resolve_template
+    return loader.select_template(template)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader.py", line 186, in select_template
+    raise TemplateDoesNotExist(', '.join(not_found))
+TemplateDoesNotExist: mirna/document_detaill.html
+2014-11-11 23:27:27,792 ERROR base 9879 -1279268032 Internal Server Error: /document/doc2519/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 139, in get_response
+    response = response.render()
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 105, in render
+    self.content = self.rendered_content
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 80, in rendered_content
+    template = self.resolve_template(self.template_name)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 56, in resolve_template
+    return loader.select_template(template)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader.py", line 186, in select_template
+    raise TemplateDoesNotExist(', '.join(not_found))
+TemplateDoesNotExist: mirna/document_detaill.html
+2014-11-11 23:27:34,180 ERROR base 9879 -1260389568 Internal Server Error: /document/doc2519/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 139, in get_response
+    response = response.render()
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 105, in render
+    self.content = self.rendered_content
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 80, in rendered_content
+    template = self.resolve_template(self.template_name)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 56, in resolve_template
+    return loader.select_template(template)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader.py", line 186, in select_template
+    raise TemplateDoesNotExist(', '.join(not_found))
+TemplateDoesNotExist: mirna/document_detaill.html
+2014-11-11 23:27:36,285 ERROR base 9879 -1279268032 Internal Server Error: /document/doc2519/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 139, in get_response
+    response = response.render()
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 105, in render
+    self.content = self.rendered_content
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 80, in rendered_content
+    template = self.resolve_template(self.template_name)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 56, in resolve_template
+    return loader.select_template(template)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader.py", line 186, in select_template
+    raise TemplateDoesNotExist(', '.join(not_found))
+TemplateDoesNotExist: mirna/document_detaill.html
+2014-11-11 23:27:44,444 ERROR base 9879 -1260389568 Internal Server Error: /document/doc2519/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 139, in get_response
+    response = response.render()
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 105, in render
+    self.content = self.rendered_content
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 80, in rendered_content
+    template = self.resolve_template(self.template_name)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 56, in resolve_template
+    return loader.select_template(template)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader.py", line 186, in select_template
+    raise TemplateDoesNotExist(', '.join(not_found))
+TemplateDoesNotExist: mirna/document_detaill.html
+2014-11-11 23:29:21,092 ERROR base 10230 -1318069440 Internal Server Error: /mirna-calculation-parameters/doc2519/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 139, in get_response
+    response = response.render()
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 105, in render
+    self.content = self.rendered_content
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 80, in rendered_content
+    template = self.resolve_template(self.template_name)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 56, in resolve_template
+    return loader.select_template(template)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader.py", line 186, in select_template
+    raise TemplateDoesNotExist(', '.join(not_found))
+TemplateDoesNotExist: mirna/mirna_calculation_parameters.html
+2014-11-11 23:32:25,410 ERROR base 11195 -1250432192 Internal Server Error: /mirna-calculation-parameters/doc2519/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 139, in get_response
+    response = response.render()
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 105, in render
+    self.content = self.rendered_content
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 80, in rendered_content
+    template = self.resolve_template(self.template_name)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 56, in resolve_template
+    return loader.select_template(template)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader.py", line 186, in select_template
+    raise TemplateDoesNotExist(', '.join(not_found))
+TemplateDoesNotExist: mirna/mirna_calculation_parameters.html
+2014-11-11 23:32:29,908 ERROR base 11195 -1279268032 Internal Server Error: /mirna-calculation-parameters/doc2519/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 139, in get_response
+    response = response.render()
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 105, in render
+    self.content = self.rendered_content
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 80, in rendered_content
+    template = self.resolve_template(self.template_name)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 56, in resolve_template
+    return loader.select_template(template)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader.py", line 186, in select_template
+    raise TemplateDoesNotExist(', '.join(not_found))
+TemplateDoesNotExist: mirna/mirna_calculation_parameters.html
+2014-11-12 00:02:35,026 ERROR base 14158 -1320166592 Internal Server Error: /mirna-calculation-parameters/doc2519/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/mirna/views.py", line 68, in dispatch
+    return super(MirnaSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/mirna/views.py", line 152, in form_valid
+    raise
+TypeError: exceptions must be old-style classes or derived from BaseException, not NoneType
+2014-11-12 00:03:57,841 ERROR base 22505 -1252000960 Internal Server Error: /mirna-calculation-parameters/doc2519/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/mirna/views.py", line 68, in dispatch
+    return super(MirnaSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/mirna/views.py", line 156, in form_valid
+    raise
+TypeError: exceptions must be old-style classes or derived from BaseException, not NoneType
+2014-11-12 00:05:28,168 ERROR base 23003 -1249383616 Internal Server Error: /mirna-calculation-parameters/doc2519/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/mirna/views.py", line 68, in dispatch
+    return super(MirnaSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/mirna/views.py", line 156, in form_valid
+    raise
+TypeError: exceptions must be old-style classes or derived from BaseException, not NoneType
+2014-11-12 00:27:41,378 ERROR base 23430 -1249383616 Internal Server Error: /mirna-calculation-parameters/doc2519/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/mirna/views.py", line 71, in dispatch
+    return super(MirnaSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/mirna/views.py", line 181, in form_valid
+    (EXPRESSION_LEVEL >= (mean + sigma_num*std)) or
+TypeError: cannot concatenate 'str' and 'float' objects
+2014-11-12 00:30:22,452 ERROR base 31653 -1250432192 Internal Server Error: /mirna-calculation-parameters/doc2519/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/mirna/views.py", line 71, in dispatch
+    return super(MirnaSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/mirna/views.py", line 129, in form_valid
+    sep='\t', index_col='SYMBOL',  converters = {'SYMBOL' : strip}).fillna()
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/generic.py", line 2289, in fillna
+    raise ValueError('must specify a fill method or value')
+ValueError: must specify a fill method or value
+2014-11-12 00:30:58,554 ERROR base 31901 -1249383616 Internal Server Error: /mirna-calculation-parameters/doc2519/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/mirna/views.py", line 71, in dispatch
+    return super(MirnaSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/mirna/views.py", line 181, in form_valid
+    (EXPRESSION_LEVEL >= (mean + sigma_num*std)) or
+TypeError: cannot concatenate 'str' and 'float' objects
+2014-11-12 00:32:43,136 ERROR base 32511 -1252000960 Internal Server Error: /mirna-calculation-parameters/doc2519/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/mirna/views.py", line 71, in dispatch
+    return super(MirnaSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/mirna/views.py", line 175, in form_valid
+    mean = float(row['gMean_norm'])
+ValueError: could not convert string to float: --
+2014-11-12 00:51:09,904 ERROR base 5797 -1250952384 Internal Server Error: /document/doc2520/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 139, in get_response
+    response = response.render()
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 105, in render
+    self.content = self.rendered_content
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 80, in rendered_content
+    template = self.resolve_template(self.template_name)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 56, in resolve_template
+    return loader.select_template(template)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader.py", line 180, in select_template
+    return get_template(template_name)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader.py", line 138, in get_template
+    template, origin = find_template(template_name)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader.py", line 127, in find_template
+    source, display_name = loader(name, dirs)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader.py", line 43, in __call__
+    return self.load_template(template_name, template_dirs)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader.py", line 49, in load_template
+    template = get_template_from_string(source, origin, template_name)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader.py", line 149, in get_template_from_string
+    return Template(source, origin, name)
+  File "/usr/local/lib/python2.7/dist-packages/django_debug_toolbar-0.9.4-py2.7.egg/debug_toolbar/panels/template.py", line 37, in new_template_init
+    old_template_init(self, template_string, origin, name)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 125, in __init__
+    self.nodelist = compile_string(template_string, origin)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 153, in compile_string
+    return parser.parse()
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 278, in parse
+    compiled_result = compile_func(self, token)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 215, in do_extends
+    nodelist = parser.parse()
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 278, in parse
+    compiled_result = compile_func(self, token)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 190, in do_block
+    nodelist = parser.parse(('endblock',))
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 278, in parse
+    compiled_result = compile_func(self, token)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/defaulttags.py", line 956, in do_if
+    nodelist = parser.parse(('endif',))
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 278, in parse
+    compiled_result = compile_func(self, token)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/defaulttags.py", line 942, in do_if
+    nodelist = parser.parse(('elif', 'else', 'endif'))
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 254, in parse
+    filter_expression = self.compile_filter(token.contents)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 360, in compile_filter
+    return FilterExpression(token, self)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 550, in __init__
+    token[start:]))
+TemplateSyntaxError: Could not parse some characters: |#miPAS||safe

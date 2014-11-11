@@ -153,6 +153,7 @@ INSTALLED_APPS = (
     'metabolism',
     'mouse',
     'medic',
+    'mirna',
 
 )
 

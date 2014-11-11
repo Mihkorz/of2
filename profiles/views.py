@@ -21,7 +21,7 @@ from .forms import SettingsUserForm, UserProfileFormSet, CreateProjectForm, \
                    UploadDocumentForm
 from .models import Project, Document, ProcessDocument
 from database.models import Pathway, Component, Gene
-from mirna.views import TestView
+from mirna.views import mirnaProjectDetail, mirnaDocumentDetail
 
 
 class ProfileIndex(DetailView):
@@ -140,7 +140,7 @@ class ProjectDetail(DetailView):
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         if self.get_object().field == 'rna':
-            view=TestView.as_view()
+            view=mirnaProjectDetail.as_view()
             return view( request, *args, **kwargs )
         return super(ProjectDetail, self).dispatch(request, *args, **kwargs)
     
@@ -263,6 +263,9 @@ class DocumentDetail(DetailView):
     
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
+        if self.get_object().project.field == 'rna':
+            view=mirnaDocumentDetail.as_view()
+            return view( request, *args, **kwargs )
         return super(DocumentDetail, self).dispatch(request, *args, **kwargs)
     
     def get_context_data(self, **kwargs):
@@ -325,22 +328,6 @@ class DocumentDetail(DetailView):
                 context['treatments'] = treatments
                 
                 
-                    
-                         
-                    
-                
-                    
-                
-                
-                    
-                
-            
-                    
-                
-                
-                 
-        
-        
         return context
     
 class SampleDetail(DeleteView):
