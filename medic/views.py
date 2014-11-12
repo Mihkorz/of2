@@ -76,6 +76,8 @@ class MedicTreatmentDetail(DetailView):
         
         lResponders = []
         lnonResponders = []
+        num_responders = 0 # number of responders
+        num_guessed_rigth = 0 # number of responders that remained status after voting
         for name, group in grouped:
             status = name.split('_')[1].strip()
             path_cols = [col for col in group.columns if col not in ['Sample', 'group']]
@@ -86,6 +88,14 @@ class MedicTreatmentDetail(DetailView):
             for index, val in divided_df.iteritems():
                 if val>1:
                     Rcount+= 1
+            
+            ratio = float(Rcount)/float(len(path_cols))
+            if status == 'RES':
+                num_responders+=1
+            if ratio > 0.5 and status == 'RES':
+                num_guessed_rigth+=1
+                
+                
             
             len_p = len(path_cols)
             if status == 'NRES': 
@@ -107,6 +117,8 @@ class MedicTreatmentDetail(DetailView):
         context['res'] = OrderedDict(sorted(responders.items()))
         
         context['prob'] = df_prob.to_html()
+        
+        context['reliability'] = float(num_guessed_rigth)/float(num_responders)
         
         
         df_pms1 = read_excel(file_pms1, sheetname="PMS1")
@@ -217,7 +229,8 @@ class PatientTreatmentDetail(DetailView):
         num_nres_samples = len(df_c.index)/2 + len(lnonResponders)
         num_res_samples = (all_samples - num_nres_samples) +len(lResponders)
         
-        
+        num_responders = 0 # number of responders
+        num_guessed_rigth = 0 # number of responders that remained status after voting
         for name, group in grouped:
             status = name.split('_')[1].strip()
             path_cols = [col for col in group.columns if col not in ['Sample', 'group']]
@@ -228,6 +241,11 @@ class PatientTreatmentDetail(DetailView):
             for index, val in divided_df.iteritems():
                 if val>1:
                     Rcount+= 1
+            ratio = float(Rcount)/float(len(path_cols))
+            if status == 'RES':
+                num_responders+=1
+            if ratio > 0.5 and status == 'RES':
+                num_guessed_rigth+=1
             
             len_p = len(path_cols)
             if status == 'NRES': 
@@ -249,6 +267,7 @@ class PatientTreatmentDetail(DetailView):
         context['res'] = OrderedDict(sorted(responders.items()))
         context['flag_responder'] = flag_responder
         context['patient_votes'] = patient_votes
+        context['reliability'] = float(num_guessed_rigth)/float(num_responders)
         
         
         

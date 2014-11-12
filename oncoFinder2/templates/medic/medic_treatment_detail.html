@@ -45,7 +45,7 @@
 {{PMS1|safe}}
 </div> 
 <div id="fragment-4" class="tab-pane fade well">
-
+<h4>Reliability of the test = {{reliability|floatformat:"-2"}}</h4>
   <div id="container" style="width:900px; height:400px;">
 
 
@@ -58,7 +58,7 @@
   </tr>
   {% for key, value in nres.items  %}
   <tr>
-               <td>{{key}}</td><td>{{value}}</td>
+               <td>{{key|floatformat:"-2"}}</td><td>{{value|floatformat:"-2"}}</td>
   </tr>
                {%endfor%} 
 
@@ -71,7 +71,7 @@
   </tr>
   {% for key, value in res.items  %}
   <tr>
-               <td>{{key}}</td><td>{{value}}</td>
+               <td>{{key|floatformat:"-2"}}</td><td>{{value|floatformat:"-2"}}</td>
   </tr>
                {%endfor%} 
 
