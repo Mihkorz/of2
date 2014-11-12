@@ -33,10 +33,13 @@
 
 
 <h2>Treatment methods:</h2>
-<ul>
+<ul class="pathway_list_ul">
     {%for treatment in treatments%}
         <li>
-        <a href="treat{{treatment.id}}/" >{{treatment}}</a>
+          <div class="well">
+          <h5><a href="treat{{treatment.id}}/" >{{treatment}}</a></h5>
+           {{treatment.treatment}}
+          </div>
         </li>
 {%endfor%}
 </ul>

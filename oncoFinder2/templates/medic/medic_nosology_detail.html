@@ -20,7 +20,7 @@
              <img src='/static/images/pathlist.jpg' alt='{{ path.name }}' title='{{ path.name }}'/>
               </div>  -->
                 <h5><a href='{{treatment.name|slugify}}/{{treatment.id}}'>{{ treatment.name }}</a></h5>
-                 
+                 {{treatment.treatment}}
               </div>
           </li>
         {% endfor %}

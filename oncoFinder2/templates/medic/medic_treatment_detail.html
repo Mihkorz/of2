@@ -6,7 +6,7 @@
 <div class="container">
         <h1>{{treatment.name}}</h1>
         <div class="text-muted">
-        Nosology = {{treatment.nosology}}
+        Cancer type: {{treatment.nosology}}
         </div>
     <span class='pull-right'>
        <a href='{{ request.META.HTTP_REFERER }}'><<< back to treatment methods list</a>
@@ -14,65 +14,76 @@
     <hr/>
    <div id="tabs">
     <ul class="nav nav-tabs">
-        <li ><a href="#fragment-1" data-toggle="tab"><span>Probability Table </span></a></li>
-        <li><a href="#fragment-2" data-toggle="tab"><span>PAS1 Table</span></a></li>
-        <li class="active"><a href="#fragment-3" data-toggle="tab"><span>Histogram</span></a></li>
-        <li ><a href="#fragment-4" data-toggle="tab"><span>Graphic Scheme</span></a></li>
+        <li class="active"><a href="#fragment-1" data-toggle="tab"><span>Information </span></a></li>
+        <li ><a href="#fragment-2" data-toggle="tab"><span>Probability Table </span></a></li>
+        <li><a href="#fragment-3" data-toggle="tab"><span>PAS1 Table</span></a></li>
+        <li ><a href="#fragment-4" data-toggle="tab"><span>Histogram</span></a></li>
+        <li ><a href="#fragment-5" data-toggle="tab"><span>Graphic Scheme</span></a></li>
     </ul>
+
 <div id="tabContent" class="tab-content">
-<div id="fragment-1" class="tab-pane fade  well">
+<div id="fragment-1" class="tab-pane in active fade  well">
+
+      <div><strong>Name:</strong> {{treatment.name}}</div>
+      <div><strong>Number of patients:</strong> {{treatment.num_of_patients}}</div>
+      <div><strong>Histological type:</strong> {{treatment.histological_type}}</div>
+      <div><strong>Grade:</strong> {{treatment.grade}}</div>
+      <div><strong>Hormone receptor status:</strong> {{treatment.hormone_receptor_status}}</div>
+      <div><strong>HER2 status:</strong> {{treatment.her2_status}}</div>
+      <div><strong>Stage:</strong> {{treatment.stage}}</div>
+      <div><strong>Treatment:</strong> {{treatment.treatment}}</div>
+      <div><strong>Citation(s):</strong> {{treatment.citation}}</div>
+      <div><strong>Organization name:</strong> {{treatment.organization_name}}</div>
+      
+
+
+</div>
+<div id="fragment-2" class="tab-pane fade  well">
 {{prob|safe}}
 </div>
-<div id="fragment-2" class="tab-pane fade well">
+<div id="fragment-3" class="tab-pane fade well">
 {{PMS1|safe}}
 </div> 
-<div id="fragment-3" class="tab-pane in active fade">
+<div id="fragment-4" class="tab-pane fade well">
 
-<div id="container" style="width:900px; height:400px;">
+  <div id="container" style="width:900px; height:400px;">
 
 
-</div>
+  </div>
 
-<table class="table pull-left" style="width: 300px;">
-<caption>NonResponders</caption>
-<tr><th>num Responder Votes / all votes</th>
-    <th>persentage of nonresponders </th>
-</tr>
-{% for key, value in nres.items  %}
-<tr>
+  <table class="table pull-left" style="width: 300px;">
+  <caption>Non-responders</caption>
+  <tr><th>num Responder Votes / all votes</th>
+    <th>percentage of non-responders </th>
+  </tr>
+  {% for key, value in nres.items  %}
+  <tr>
                <td>{{key}}</td><td>{{value}}</td>
-</tr>
+  </tr>
                {%endfor%} 
 
-</table>
+  </table>
 
-<table class="table pull-right" style="width: 300px;">
-<caption>Responders</caption>
-<tr><th>num Responder Votes / all votes</th>
-    <th>persentage of responders </th>
-</tr>
-{% for key, value in res.items  %}
-<tr>
+  <table class="table pull-right" style="width: 300px;">
+  <caption>Responders</caption>
+  <tr><th>num Responder Votes / all votes</th>
+    <th>percentage of responders </th>
+  </tr>
+  {% for key, value in res.items  %}
+  <tr>
                <td>{{key}}</td><td>{{value}}</td>
-</tr>
+  </tr>
                {%endfor%} 
 
-</table>
+  </table>
 
 </div>
 
+<div id="fragment-5" class="tab-pane fade well">
 
+  <div id="container4" style="width:900px; height:400px;">
 
-
-
-<div id="fragment-4" class="tab-pane in active fade">
-
-<div id="container4" style="width:900px; height:400px;">
-dsg
-
-</div>
-
-
+  </div>
 
 </div>
 </div>
@@ -80,6 +91,10 @@ dsg
 
 
 </div>
+<style>
+#fragment-1 div {margin: 10px 0;}
+
+</style>
 <script>
 
 $(function () {
@@ -88,7 +103,7 @@ $(function () {
             type: 'column'
         },
         title: {
-            text: 'Responders-nonresponders histogram'
+            text: 'Responders/non-responders histogram'
         },
         xAxis: {
         	title: {
@@ -105,7 +120,7 @@ $(function () {
         },
 
         series: [{
-        	name: 'NonResponders',
+        	name: 'Non-responders',
             data: [
                {% for key, value in nres.items  %}
                 [{{key}}, {{value}}],
@@ -129,7 +144,7 @@ $(function () {
             type: 'area'
         },
         title: {
-            text: 'Responders-nonresponders histogram'
+            text: 'Responders/non-responders graph'
         },
         xAxis: {
         	title: {
@@ -146,7 +161,7 @@ $(function () {
         },
 
         series: [{
-        	name: 'NonResponders',
+        	name: 'Non-responders',
             data: [
                {% for key, value in nres.items  %}
                 [{{key}}, {{value}}],

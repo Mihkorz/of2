@@ -14,19 +14,32 @@
     <hr/>
    <div id="tabs">
     <ul class="nav nav-tabs">
-        <li ><a href="#fragment-1" data-toggle="tab"><span>Probability Table </span></a></li>
-        <li><a href="#fragment-2" data-toggle="tab"><span>PAS1 Table</span></a></li>
-        <li class="active"><a href="#fragment-3" data-toggle="tab"><span>Histogram</span></a></li>
+        <li ><a href="#fragment-1" data-toggle="tab"><span>Information </span></a></li>
+        <li ><a href="#fragment-2" data-toggle="tab"><span>Probability Table </span></a></li>
+        <li><a href="#fragment-3" data-toggle="tab"><span>PAS1 Table</span></a></li>
+        <li class="active"><a href="#fragment-4" data-toggle="tab"><span>Histogram</span></a></li>
         
     </ul>
 <div id="tabContent" class="tab-content">
 <div id="fragment-1" class="tab-pane fade  well">
+      <div><strong>Name:</strong> {{treatment.name}}</div>
+      <div><strong>Number of patients:</strong> {{treatment.num_of_patients}}</div>
+      <div><strong>Histological type:</strong> {{treatment.histological_type}}</div>
+      <div><strong>Grade:</strong> {{treatment.grade}}</div>
+      <div><strong>Hormone receptor status:</strong> {{treatment.hormone_receptor_status}}</div>
+      <div><strong>HER2 status:</strong> {{treatment.her2_status}}</div>
+      <div><strong>Stage:</strong> {{treatment.stage}}</div>
+      <div><strong>Treatment:</strong> {{treatment.treatment}}</div>
+      <div><strong>Citation(s):</strong> {{treatment.citation}}</div>
+      <div><strong>Organization name:</strong> {{treatment.organization_name}}</div>
+</div>
+<div id="fragment-2" class="tab-pane fade  well">
 {{prob|safe}}
 </div>
-<div id="fragment-2" class="tab-pane fade well">
+<div id="fragment-3" class="tab-pane fade well">
 {{PMS1|safe}}
 </div> 
-<div id="fragment-3" class="tab-pane in active fade">
+<div id="fragment-4" class="tab-pane in active fade">
     <h4>
       <div style="float:left; width:15px; height:15px; background-color: red"></div>&nbsp; - 
       This patient is a {%if flag_responder == 0%}non-{%endif%}responder. Responce score = {{patient_votes}}
@@ -74,6 +87,10 @@
 
 
 </div>
+<style>
+#fragment-1 div {margin: 10px 0;}
+
+</style>
 <script>
 
 $(function () {
