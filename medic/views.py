@@ -90,9 +90,9 @@ class MedicTreatmentDetail(DetailView):
                     Rcount+= 1
             
             ratio = float(Rcount)/float(len(path_cols))
-            if status == 'RES':
-                num_responders+=1
             if ratio > 0.5 and status == 'RES':
+                num_guessed_rigth+=1
+            if ratio <= 0.5 and status == 'NRES':
                 num_guessed_rigth+=1
                 
                 
@@ -118,7 +118,7 @@ class MedicTreatmentDetail(DetailView):
         
         context['prob'] = df_prob.to_html()
         
-        context['reliability'] = float(num_guessed_rigth)/float(num_responders)
+        context['reliability'] = float(num_guessed_rigth)/float(all_samples)
         
         
         df_pms1 = read_excel(file_pms1, sheetname="PMS1")
@@ -246,6 +246,8 @@ class PatientTreatmentDetail(DetailView):
                 num_responders+=1
             if ratio > 0.5 and status == 'RES':
                 num_guessed_rigth+=1
+            if ratio <= 0.5 and status == 'NRES':
+                num_guessed_rigth+=1
             
             len_p = len(path_cols)
             if status == 'NRES': 
@@ -267,7 +269,7 @@ class PatientTreatmentDetail(DetailView):
         context['res'] = OrderedDict(sorted(responders.items()))
         context['flag_responder'] = flag_responder
         context['patient_votes'] = patient_votes
-        context['reliability'] = float(num_guessed_rigth)/float(num_responders)
+        context['reliability'] = float(num_guessed_rigth)/float(all_samples)
         
         
         
