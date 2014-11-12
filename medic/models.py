@@ -29,6 +29,7 @@ class TreatmentMethod(models.Model):
     organization_name =  models.CharField(verbose_name="Organization name", max_length=250, blank=True)
     file_pms1 = models.FileField(upload_to=get_document_upload_path, max_length=350)
     file_probability = models.FileField(upload_to=get_document_upload_path, max_length=350)
+    accuracy = models.FloatField(verbose_name="Accuracy",  blank=True)
     
     class Meta:
         ordering = ('nosology',)
