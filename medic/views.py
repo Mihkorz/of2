@@ -278,7 +278,22 @@ class PatientTreatmentDetail(DetailView):
         context['PMS1'] = df_pms1.to_html()
         return context
     
+class PatientTreatmentPDF(DetailView):
+    """ 
+    Details for all treatments as pdf
+    """
+    model = Document
+    template_name = 'medic/patient_treatment_pdf.html'
     
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(PatientTreatmentPDF, self).dispatch(request, *args, **kwargs)
+    
+    def get_context_data(self, **kwargs):
+        context = super(PatientTreatmentPDF, self).get_context_data(**kwargs)
+        
+        context['treatments'] = TreatmentMethod.objects.filter(nosology=self.object.project.nosology)
+        return context    
     
     
     

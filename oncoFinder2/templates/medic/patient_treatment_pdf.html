@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+<script src="/static/js/jquery-2.1.0.min.js"></script>
+</head>
+<body>
+
+
+{%for treatment in treatments%}
+
+<div id="treatDiv{{treatment.id}}">{{treatment}}</div>
+<script>
+
+$(function(){
+	
+	$("#treatDiv{{treatment.id}}").load("/document/doc{{document.id}}/treat{{treatment.id}}/ #container1");
+	
+});
+
+
+</script>
+{%endfor%}
+
+</body>
+</html>

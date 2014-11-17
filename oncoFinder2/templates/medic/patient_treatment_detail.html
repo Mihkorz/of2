@@ -40,21 +40,93 @@
 {{PMS1|safe}}
 </div> 
 <div id="fragment-4" class="tab-pane in active fade">
+    Treatment: {{treatment.treatment}}
     <h4>
       <div style="float:left; width:15px; height:15px; background-color: red"></div>&nbsp; - 
-      This patient is a {%if flag_responder == 0%}non-{%endif%}responder. Response score = {{patient_votes|floatformat:"-2"}}.
-      Reliability = {{reliability|floatformat:"-2" }}.
+      This patient is a {%if flag_responder == 0%}non-{%endif%}responder. 
     </h4>
+<div id="container1">    
 <div id="container" style="width:900px; height:400px;">
 
 
 </div>
 
-<table class="table pull-left" style="width: 300px;">
+
+<script>
+
+$(function () {
+    $('#container').highcharts({
+    	chart: {
+            type: 'column'
+        },
+        title: {
+            text: '{{treatment.name}}.  Response score = {{patient_votes|floatformat:"-2"}}. Accuracy = {{reliability|floatformat:"-2" }}'
+        },
+        
+        xAxis: {
+        	title: {
+        		text: 'Response score'
+        	},
+            minPadding: 0.05,
+            maxPadding: 0.05
+        },
+        
+        yAxis:{
+        	 title: {
+                 text: "Ratio of patients(%)"
+             }
+        },
+
+        series: [{
+        	name: 'Non-responders',
+            data: [
+               {% for key, value in nres.items  %}
+                {% if key == patient_votes and flag_responder == 0%}
+                {x:{{key|floatformat:"-2"}}, y:{{value|floatformat:"-2"}}, color:'red'},
+                {% else %}
+                {x:{{key|floatformat:"-2"}}, y:{{value|floatformat:"-2"}}},
+                {%endif%}
+                
+               {%endfor%} 
+            ]
+        },{
+        name: 'Responders',
+        data: [
+			{% for key, value in res.items  %}
+			{% if key == patient_votes and flag_responder == 1%}
+            {x:{{key|floatformat:"-2"}}, y:{{value|floatformat:"-2"}}, color:'red'},
+            {% else %}
+            {x:{{key|floatformat:"-2"}}, y:{{value|floatformat:"-2"}}},
+            {%endif%}
+			{%endfor%} 
+               ]}]
+    });
+});
+
+
+
+
+
+</script>
+</div>
+
+
+
+
+<table class="table pull-left" style="width: 300px;" >
 <caption>Non-responders</caption>
 <tr><th>num Responder Votes / all votes</th>
     <th>percentage of non-responders </th>
 </tr>
+{% for key, value in nres.items  %}
+<tr>
+               <td>{{key|floatformat:"-2"}}</td><td>{{value|floatformat:"-2"}}</td>
+</tr>
+               {%endfor%} 
+
+</table>
+<table style="display:none" id="hiddenNres">
+
 {% for key, value in nres.items  %}
 <tr>
                <td>{{key|floatformat:"-2"}}</td><td>{{value|floatformat:"-2"}}</td>
@@ -68,6 +140,16 @@
 <tr><th>num Responder Votes / all votes</th>
     <th>percentage of responders </th>
 </tr>
+{% for key, value in res.items  %}
+<tr>
+               <td>{{key|floatformat:"-2"}}</td><td>{{value|floatformat:"-2"}}</td>
+</tr>
+               {%endfor%} 
+
+</table>
+
+<table style="display:none" id="hiddenRes">
+
 {% for key, value in res.items  %}
 <tr>
                <td>{{key|floatformat:"-2"}}</td><td>{{value|floatformat:"-2"}}</td>
@@ -92,60 +174,5 @@
 #fragment-1 div {margin: 10px 0;}
 
 </style>
-<script>
 
-$(function () {
-    $('#container').highcharts({
-    	chart: {
-            type: 'column'
-        },
-        title: {
-            text: 'Responders/non-responders histogram'
-        },
-        
-        xAxis: {
-        	title: {
-        		text: 'Response score'
-        	},
-            minPadding: 0.05,
-            maxPadding: 0.05
-        },
-        
-        yAxis:{
-        	 title: {
-                 text: "Ratio of patients(%)"
-             }
-        },
-
-        series: [{
-        	name: 'Non-responders',
-            data: [
-               {% for key, value in nres.items  %}
-                {% if key == patient_votes and flag_responder == 0%}
-                {x:{{key}}, y:{{value}}, color:'red'},
-                {% else %}
-                {x:{{key}}, y:{{value}}},
-                {%endif%}
-                
-               {%endfor%} 
-            ]
-        },{
-        name: 'Responders',
-        data: [
-			{% for key, value in res.items  %}
-			{% if key == patient_votes and flag_responder == 1%}
-            {x:{{key}}, y:{{value}}, color:'red'},
-            {% else %}
-            {x:{{key}}, y:{{value}}},
-            {%endif%}
-			{%endfor%} 
-               ]}]
-    });
-});
-
-
-
-
-
-</script>
 {% endblock %}

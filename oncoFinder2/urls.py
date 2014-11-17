@@ -20,7 +20,7 @@ from metabolism.views import MetabolismPathwayList, MetabolismPathwayDetail, \
 from mouse.views import MousePathwayList, MousePathwayDetail, \
                              MousePathwayAjaxSearch, MouseTest, MouseMapping
 from medic.views import MedicNosologyList, MedicNosologyDetail, MedicTreatmentDetail, \
-                        PatientTreatmentDetail
+                        PatientTreatmentDetail, PatientTreatmentPDF
 from mirna.views import MirnaSetCalculationParameters
 
 urlpatterns = patterns('',
@@ -50,6 +50,7 @@ urlpatterns = patterns('',
     url(r'^document/new/$', CreateDocument.as_view(), name="document_create"),
     url(r'^document/delete/(?P<pk>\d+)/$', DeleteDocument.as_view(), name="document_delete"),
     url(r'^document/doc(?P<pk>\d+)/$', DocumentDetail.as_view(), name="document_detail"),
+    url(r'^document/doc(?P<pk>\d+)/pdf/$', PatientTreatmentPDF.as_view(), name="patient_treatment_pdf"),
     url(r'^document/doc(?P<pk>\d+)/treat(?P<treat_id>.*)/$', PatientTreatmentDetail.as_view(), name="patient_treatment_detail"),
     url(r'^document/doc(?P<pk>\d+)/(?P<sample_name>.*)/$', SampleDetail.as_view(), name="sample_detail"),
     
