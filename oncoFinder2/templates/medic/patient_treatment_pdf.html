@@ -1,25 +1,178 @@
-<!doctype html>
-<html lang="en-US">
-<head>
-<script src="/static/js/jquery-2.1.0.min.js"></script>
-</head>
-<body>
+{% extends "base_profiles.html" %}
+
+{% block title %}{{treatment.name}} | OncoFinder v2.0{% endblock %}
+
+{% block content %}
 
 
+<div class="container">
+<h1>Full report</h1>
+<button type="button" id="export" class="btn btn-primary" style="display:none">Save report</button>
+<h2 id="wait">Please wait while the report is generated... 
+<img src="/static/images/ajax-loader.gif" id="loader" style="margin: 0px 0 0 0;"  />
+</h2>
+
+
+<div style="display: block" id="reportDiv" >
 {%for treatment in treatments%}
 
-<div id="treatDiv{{treatment.id}}">{{treatment}}</div>
+<div id="treatDiv{{treatment.id}}" style="margin: 30px; width:1000px;"></div>
 <script>
-
+var chart{{treatment.id}}
 $(function(){
 	
-	$("#treatDiv{{treatment.id}}").load("/document/doc{{document.id}}/treat{{treatment.id}}/ #container1");
+	chart{{treatment.id}} = new Highcharts.Chart({
+    	chart: {
+            type: 'column',
+            renderTo: 'treatDiv{{treatment.id}}',
+            events: {
+                load: requestData{{treatment.id}}
+            }
+        },
+        title: {
+            text: 'title'
+        },
+        subtitle: {
+            text: 'Patient is a . \
+                   Response score = \
+                   Accuracy = '
+        },
+        
+        legend: {
+        	   
+        	},
+        
+        xAxis: {
+        	title: {
+        		text: 'Response score'
+        	},
+            minPadding: 0.05,
+            maxPadding: 0.05
+        },
+        
+        yAxis:{
+        	 title: {
+                 text: "Ratio of patients(%)"
+             }
+        },
+
+        
+	
+        });
+	
+ 
+    
 	
 });
-
+function requestData{{treatment.id}}() {
+	   $.post('/document/doc{{document.id}}/treat{{treatment.id}}/',
+	    		{csrfmiddlewaretoken: '{{csrf_token}}'},
+	    		function(data){
+	    			
+	    			chart{{treatment.id}}.setTitle({text: data['treatment']},
+	    				   {text: 'Patient is a '+data['responder']+'. \
+ 		                   Response score = '+ data['patient_votes']+ ' \
+		                   Accuracy = '+data['reliability']} ,
+		                   0);
+	    			
+	    			chart{{treatment.id}}.addSeries({
+	    	              name: "Non-responders",
+	    	              data: data['nres']
+	    	            });
+	    			chart{{treatment.id}}.addSeries({
+	    	              name: "Responders",
+	    	              data: data['res']
+	    	            });
+	    			
+	    			
+	    			
+	    			
+	    		});
+}
 
 </script>
+
 {%endfor%}
 
-</body>
-</html>
+
+<script>
+
+/**
+ * Create a global getSVG method that takes an array of charts as an argument
+ */
+Highcharts.getSVG = function(charts) {
+    var svgArr = [],
+        top = 0,
+        width = 0;
+
+    $.each(charts, function(i, chart) {
+        var svg = chart.getSVG();
+        svg = svg.replace('<svg', '<g transform="translate(0,' + top + ')" ');
+        svg = svg.replace('</svg>', '</g>');
+
+        top += chart.chartHeight;
+        width = Math.max(width, chart.chartWidth);
+
+        svgArr.push(svg);
+    });
+
+    return '<svg height="'+ top +'" width="' + width + '" version="1.1" xmlns="http://www.w3.org/2000/svg">' + svgArr.join('') + '</svg>';
+};
+
+/**
+ * Create a global exportCharts method that takes an array of charts as an argument,
+ * and exporting options as the second argument
+ */
+Highcharts.exportCharts = function(charts, options) {
+    var form
+        svg = Highcharts.getSVG(charts);
+
+    // merge the options
+    options = Highcharts.merge(Highcharts.getOptions().exporting, options);
+
+    // create the form
+    form = Highcharts.createElement('form', {
+        method: 'post',
+        action: options.url
+    }, {
+        display: 'none'
+    }, document.body);
+
+    // add the values
+    Highcharts.each(['filename', 'type', 'width', 'svg'], function(name) {
+        Highcharts.createElement('input', {
+            type: 'hidden',
+            name: name,
+            value: {
+                filename: options.filename || 'chart',
+                type: options.type,
+                width: options.width,
+                svg: svg
+            }[name]
+        }, null, form);
+    });
+    //console.log(svg); return;
+    // submit
+    form.submit();
+
+    // clean up
+    form.parentNode.removeChild(form);
+};
+$(function(){
+$('#export').click(function() {
+    Highcharts.exportCharts([{%for treatment in treatments%}chart{{treatment.id}},{%endfor%}]);
+});
+});
+
+$( document ).ajaxStop(function() {
+	  $("#wait").fadeOut('slow', function(){
+		  $("#export").fadeIn('slow');
+	  });
+	});
+
+</script>
+</div>
+
+</div>
+
+{%endblock%}

@@ -17,21 +17,17 @@
     Created at: {{document.created_at}}<br/>
     By: {{document.created_by}}<br/> 
    </span>
-   
-   <a class="btn btn-default btn-sm pull-right" style="margin-left: 20px;" href="{{MEDIA_URL}}{{document.document}}">
-      <span class="glyphicon glyphicon-download"></span> &nbsp;<b>Download PMS-DS file</b>
-     </a>
-     <a class="btn btn-default btn-sm pull-right" href="{{MEDIA_URL}}{{document.related_doc.input_doc.document}}">
-      <span class="glyphicon glyphicon-download-alt"></span> &nbsp;<b>Download CNR file</b>
-     </a>    
-  <br/>         
+      
+           
   <hr/>
   <div>  
 
   </div>
 
 
-
+<a class="btn btn-default  pull-right" href="report/">
+      <span class="glyphicon glyphicon-play"></span> &nbsp;<b>Show full report</b>
+     </a>
 <h2>Treatment methods:</h2>
 <ul class="pathway_list_ul">
     {%for treatment in treatments%}

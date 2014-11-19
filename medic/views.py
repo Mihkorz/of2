@@ -1,6 +1,10 @@
+# -*- coding: utf-8 -*-
 import csv
+import json
+
 from pandas import read_csv, read_excel, DataFrame
 
+from django.http import HttpResponse
 from django.views.generic.detail import DetailView
 from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
@@ -212,13 +216,7 @@ class PatientTreatmentDetail(DetailView):
             lResponders.append(patient_votes )
         else:
             lnonResponders.append(patient_votes)
-            flag_responder = 0
-            
-        
-            
-            
-                
-        
+            flag_responder = 0       
                 
         
         """ DRAW HISTOGRAM"""
@@ -272,11 +270,57 @@ class PatientTreatmentDetail(DetailView):
         context['reliability'] = float(num_guessed_rigth)/float(all_samples)
         
         
+        treatment.treatment = treatment.treatment.replace('\n', ' ').replace('\r', '')
+        
         
         context['treatment'] = treatment
-        context['prob'] = df_prob.to_html()
-        context['PMS1'] = df_pms1.to_html()
+        
         return context
+    
+    def render_to_json_response(self, context, **response_kwargs):
+        data = json.dumps(context)
+        response_kwargs['content_type'] = 'application/json'
+        return HttpResponse(data, **response_kwargs)
+    
+    def post(self, request, *args, **kwargs):
+        if self.request.is_ajax():
+            self.object = self.get_object()
+            context = self.get_context_data(object=self.object)
+            lnres =  []
+            for key, value in context['nres'].items():
+                djson = {}
+                djson.clear()
+                djson['x']=key
+                djson['y']=value
+                if key == context['patient_votes'] and context['flag_responder']== 0:
+                    djson['color']='red'
+                lnres.append(djson)
+            lres = []    
+            for key, value in context['res'].items():
+                djson = {}
+                djson.clear()
+                djson['x']=key
+                djson['y']=value
+                if key == context['patient_votes'] and context['flag_responder']== 1:
+                    djson['color']='red'
+                lres.append(djson)
+                    
+                    
+            if context['flag_responder'] > 0:
+                responder = 'responder'
+            else:
+                responder = 'non-responder'
+                    
+            data = {
+                'nres': lnres,
+                'res': lres,
+                'treatment': context['treatment'].treatment,
+                'patient_votes': round(context['patient_votes'], 2),
+                'reliability': round(context['reliability'], 2),
+                'responder': responder
+                }
+        
+        return self.render_to_json_response(data)
     
 class PatientTreatmentPDF(DetailView):
     """ 

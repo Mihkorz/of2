@@ -15,8 +15,6 @@
    <div id="tabs">
     <ul class="nav nav-tabs">
         <li ><a href="#fragment-1" data-toggle="tab"><span>Information </span></a></li>
-        <li ><a href="#fragment-2" data-toggle="tab"><span>Probability Table </span></a></li>
-        <li><a href="#fragment-3" data-toggle="tab"><span>PAS1 Table</span></a></li>
         <li class="active"><a href="#fragment-4" data-toggle="tab"><span>Histogram</span></a></li>
         
     </ul>
@@ -33,20 +31,13 @@
       <div><strong>Citation(s):</strong> {{treatment.citation}}</div>
       <div><strong>Organization name:</strong> {{treatment.organization_name}}</div>
 </div>
-<div id="fragment-2" class="tab-pane fade  well">
-{{prob|safe}}
-</div>
-<div id="fragment-3" class="tab-pane fade well">
-{{PMS1|safe}}
-</div> 
 <div id="fragment-4" class="tab-pane in active fade">
-    Treatment: {{treatment.treatment}}
     <h4>
       <div style="float:left; width:15px; height:15px; background-color: red"></div>&nbsp; - 
-      This patient is a {%if flag_responder == 0%}non-{%endif%}responder. 
+      Patient is a {%if flag_responder == 0%}non-{%endif%}responder. 
     </h4>
 <div id="container1">    
-<div id="container" style="width:900px; height:400px;">
+<div id="container" style="width:900px; height:500px;">
 
 
 </div>
@@ -60,8 +51,17 @@ $(function () {
             type: 'column'
         },
         title: {
-            text: '{{treatment.name}}.  Response score = {{patient_votes|floatformat:"-2"}}. Accuracy = {{reliability|floatformat:"-2" }}'
+            text: '{{treatment.treatment|safe}}'
         },
+        subtitle: {
+            text: 'Patient is a {%if flag_responder == 0%}non-{%endif%}responder. \
+                   Response score = {{patient_votes|floatformat:"-2"}} \
+                   Accuracy = {{reliability|floatformat:"-2" }}'
+        },
+        
+        legend: {
+        	   
+        	},
         
         xAxis: {
         	title: {
