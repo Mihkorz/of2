@@ -6,6 +6,27 @@
 
 
 <div class="container">
+  <h2>
+    <span class="glyphicon glyphicon-user"></span>
+    <a href="/user/{{document.project.owner}}">{{document.project.owner}}</a> /
+     <span class="glyphicon glyphicon-folder-open"></span>&nbsp; 
+     <a href="/project/{{document.project}}">{{document.project}}</a> /
+     <span class="glyphicon glyphicon-file"></span>
+     <small><a href="">{{document.get_filename}}</a></small>
+     <span class="text-muted">| <small>{{document.get_doc_type_display}}</small></span> 
+  </h2>
+  <span class="text-muted">
+    Created at: {{document.created_at}}<br/>
+    By: {{document.created_by}}<br/> 
+   </span>
+      
+           
+  <hr/>
+
+<span class='pull-right'>
+       <a href='{{ request.META.HTTP_REFERER }}'><<< back to treatment methods list</a>
+    </span>
+
 <h1>Full report</h1>
 <button type="button" id="export" class="btn btn-primary" style="display:none">Save report</button>
 <h2 id="wait">Please wait while the report is generated... 
