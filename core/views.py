@@ -474,7 +474,24 @@ class Test(TemplateView):
     def get_context_data(self, **kwargs):
               
         context = super(Test, self).get_context_data(**kwargs)
-        context["pathways"] = MetabolismGene.objects.values('name').distinct()
+        context["pathways"] = Pathway.objects.all()
+        
+        dpath = {}
+        for path in MousePathway.objects.all():
+            lgenes = []
+            for gene in path.mousegene_set.all():
+                lgenes.append(gene.name)
+                
+            dpath[path.name] = lgenes
+            
+        df = DataFrame.from_dict(dpath, orient='index')
+        df = df.transpose().fillna('')
+        
+        new_file = settings.MEDIA_ROOT+"/mousegnes.csv"
+        df.to_csv(new_file, sep='\t')
+                
+        
+        
         #raise
         """
         from database.models import GOEnrichment

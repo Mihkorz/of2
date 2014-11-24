@@ -11,22 +11,36 @@
 {{pathways|length}}
 <table border="1">
 <tr>
-
-<th>Gene</th>
-</tr>
 {%for path in pathways %}
- 
- <tr>
- <td>{{path.name}}</td>
- </tr>
- {%endfor%}
 
+<td>{{path.name}}</td>
+
+{%endfor%}
+</tr>
+<tr>
+{%for path in pathways %}
+<td valign="top"> 
+<table border=1>
+{%for gene in path.gene_set.all%}
+
+ <tr><td>
+ {{gene.name}}
+ </td></tr>
+ 
+ {%endfor%}
+</table>
+</td>
+  {%endfor%}
+</tr>
+</table>
 
 
 
 </div>
 
 <script type="text/javascript">
+
+
 
 $(function(){
 	

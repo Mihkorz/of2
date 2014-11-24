@@ -1,11 +1,16 @@
 # -*- coding: utf-8 -*-
 import csv
 import json
+import cairosvg
 
 from pandas import read_csv, read_excel, DataFrame
+from docx import Document as pyDocx
+from docx.shared import Inches
+from cStringIO import StringIO
 
 from django.http import HttpResponse
 from django.views.generic.detail import DetailView
+from django.views.generic.base import TemplateView
 from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -317,7 +322,15 @@ class PatientTreatmentDetail(DetailView):
                 'treatment': context['treatment'].treatment,
                 'patient_votes': round(context['patient_votes'], 2),
                 'reliability': round(context['reliability'], 2),
-                'responder': responder
+                'responder': responder,
+                'num_of_patients': context['treatment'].num_of_patients,
+                'histological_type': context['treatment'].histological_type,
+                'grade': context['treatment'].grade,
+                'hormone_receptor_status': context['treatment'].hormone_receptor_status,
+                'her2_status': context['treatment'].her2_status,
+                'stage': context['treatment'].stage,
+                'citation': context['treatment'].citation,
+                'organization_name': context['treatment'].organization_name,
                 }
         
         return self.render_to_json_response(data)
@@ -340,8 +353,168 @@ class PatientTreatmentPDF(DetailView):
         return context    
     
     
+class MedicAjaxGenerateReport(TemplateView):
+    template_name = 'medic/patient_treatment_pdf.html'
     
+    def post(self, request, *args, **kwargs):
+        
+        t_name = request.POST.get('t_name')
+        t_n_patients = request.POST.get('t_n_patients')
+        t_hist = request.POST.get('t_hist')
+        t_grade = request.POST.get('t_grade')
+        t_hormone = request.POST.get('t_hormone')
+        t_her2 = request.POST.get('t_her2')
+        t_stage = request.POST.get('t_stage')
+        t_treatment = request.POST.get('t_treatment')
+        t_cit = request.POST.get('t_cit')
+        o_org = request.POST.get('o_org')
+        svg = request.POST.get('svg')
+        
+        
+        
+        fout = open(settings.MEDIA_ROOT+'/output.png','w')
+        
+        cairosvg.svg2png(bytestring=svg,write_to=fout)
+
+        fout.close()
+        
+        
+        document = pyDocx()
+        document.add_heading('Patient treatment report')
+        
+        document.add_page_break()
+        document.add_heading('Treatment description:', level=2)
+        
+        document.add_paragraph(t_treatment)
+        document.add_paragraph(t_n_patients)
+        document.add_paragraph(t_hist)
+        document.add_paragraph(t_grade)
+        document.add_paragraph(t_hormone)
+        document.add_paragraph(t_her2)
+        document.add_paragraph(t_stage)
+        document.add_paragraph(t_cit)
+        document.add_paragraph(o_org)       
+        document.add_picture(settings.MEDIA_ROOT+'/output.png', width=Inches(7.0))
+        
+        document.add_page_break()
+        
+        f = StringIO()
+        document.save(f)
+        
+        response = HttpResponse(f.getvalue(), mimetype='application/vnd.ms-word')
+        response['Content-Disposition'] = 'attachment; filename=PatientReport.docx'
+        return response 
+        
+
+
     
+    def render_to_json_response(self, context, **response_kwargs):
+        data = json.dumps(context)
+        response_kwargs['content_type'] = 'application/json'
+        return HttpResponse(data, **response_kwargs)
+    
+    def dispatch(self, request, *args, **kwargs):
+        
+        return super(MedicAjaxGenerateReport, self).dispatch(request, *args, **kwargs)
+    
+    def get_context_data(self, **kwargs):
+              
+        context = super(MedicAjaxGenerateReport, self).get_context_data(**kwargs)
+        
+        
+        context['test'] = "TEst"
+        
+        return context
+    
+       
+class MedicAjaxGenerateFullReport(TemplateView):
+    template_name = 'medic/patient_treatment_pdf.html'
+    
+    def post(self, request, *args, **kwargs):
+        
+        
+        document = pyDocx()
+        document.add_heading('Patient treatment report')
+        
+        table = document.add_table(1, 2)
+        # populate header row --------
+        heading_cells = table.rows[0].cells
+        heading_cells[0].text = 'Treatment'
+        heading_cells[1].text = 'Patient status'
+        
+        
+        
+        
+        for treat in TreatmentMethod.objects.filter(nosology = 1):
+            treat_id = str(treat.id)
+            cells = table.add_row().cells
+            cells[0].text = request.POST.get('t_treatment'+treat_id)
+            cells[1].text = request.POST.get('t_responder'+treat_id)
+            
+        document.add_page_break()
+        
+        for treat in TreatmentMethod.objects.filter(nosology = 1):
+            
+            treat_id = str(treat.id)
+            
+            t_n_patients = request.POST.get('t_n_patients'+treat_id)
+            t_hist = request.POST.get('t_hist'+treat_id)
+            t_grade = request.POST.get('t_grade'+treat_id)
+            t_hormone = request.POST.get('t_hormone'+treat_id)
+            t_her2 = request.POST.get('t_her2'+treat_id)
+            t_stage = request.POST.get('t_stage'+treat_id)
+            t_treatment = request.POST.get('t_treatment'+treat_id)
+            t_cit = request.POST.get('t_cit'+treat_id)
+            t_org = request.POST.get('t_org'+treat_id)
+            svg = request.POST.get('svg'+treat_id)
+            
+            fout = open(settings.MEDIA_ROOT+'/medic/output.png','w')
+        
+            cairosvg.svg2png(bytestring=svg,write_to=fout)
+
+            fout.close()
+            
+            document.add_heading('Treatment description:', level=2)
+        
+            document.add_paragraph('Treatment: '+t_treatment)
+            document.add_paragraph('Number of patients: '+t_n_patients)
+            document.add_paragraph('Histological type: '+t_hist)
+            document.add_paragraph('Grade: ' + t_grade)
+            document.add_paragraph('Hormone receptor status: '+t_hormone)
+            document.add_paragraph('HER2 status: '+t_her2)
+            document.add_paragraph('Stage: '+t_stage)
+            document.add_paragraph('Citation(s): '+t_cit)
+            document.add_paragraph('Organization name: '+t_org)       
+            document.add_picture(settings.MEDIA_ROOT+'/medic/output.png', width=Inches(7.0))
+        
+            document.add_page_break()
+            
+        f = StringIO()
+        document.save(f)
+        
+        response = HttpResponse(f.getvalue(), mimetype='application/vnd.ms-word')
+        response['Content-Disposition'] = 'attachment; filename=PatientReport.docx'
+        return response 
+            
+            
+    
+    def render_to_json_response(self, context, **response_kwargs):
+        data = json.dumps(context)
+        response_kwargs['content_type'] = 'application/json'
+        return HttpResponse(data, **response_kwargs)
+    
+    def dispatch(self, request, *args, **kwargs):
+        
+        return super(MedicAjaxGenerateFullReport, self).dispatch(request, *args, **kwargs)
+    
+    def get_context_data(self, **kwargs):
+              
+        context = super(MedicAjaxGenerateFullReport, self).get_context_data(**kwargs)
+        
+        
+        context['test'] = "TEst"
+        
+        return context    
     
     
     

@@ -11,6 +11,7 @@
     <span class='pull-right'>
        <a href='{{ request.META.HTTP_REFERER }}'><<< back to treatment methods list</a>
     </span>
+    <button type="button" id="export" class="btn btn-primary" >Save report</button>
     <hr/>
    <div id="tabs">
     <ul class="nav nav-tabs">
@@ -20,16 +21,16 @@
     </ul>
 <div id="tabContent" class="tab-content">
 <div id="fragment-1" class="tab-pane fade  well">
-      <div><strong>Name:</strong> {{treatment.name}}</div>
-      <div><strong>Number of patients:</strong> {{treatment.num_of_patients}}</div>
-      <div><strong>Histological type:</strong> {{treatment.histological_type}}</div>
-      <div><strong>Grade:</strong> {{treatment.grade}}</div>
-      <div><strong>Hormone receptor status:</strong> {{treatment.hormone_receptor_status}}</div>
-      <div><strong>HER2 status:</strong> {{treatment.her2_status}}</div>
-      <div><strong>Stage:</strong> {{treatment.stage}}</div>
-      <div><strong>Treatment:</strong> {{treatment.treatment}}</div>
-      <div><strong>Citation(s):</strong> {{treatment.citation}}</div>
-      <div><strong>Organization name:</strong> {{treatment.organization_name}}</div>
+      <div id="t_name"><strong>Name:</strong> {{treatment.name}}</div>
+      <div id="t_n_patients"><strong>Number of patients:</strong> {{treatment.num_of_patients}}</div>
+      <div id="t_hist"><strong>Histological type:</strong> {{treatment.histological_type}}</div>
+      <div id="t_grade"><strong>Grade:</strong> {{treatment.grade}}</div>
+      <div id="t_hormone"><strong>Hormone receptor status:</strong> {{treatment.hormone_receptor_status}}</div>
+      <div id="t_her2"><strong>HER2 status:</strong> {{treatment.her2_status}}</div>
+      <div id="t_stage"><strong>Stage:</strong> {{treatment.stage}}</div>
+      <div id="t_treatment"><strong>Treatment:</strong> {{treatment.treatment}}</div>
+      <div id="t_cit"><strong>Citation(s):</strong> {{treatment.citation}}</div>
+      <div id="t_org"><strong>Organization name:</strong> {{treatment.organization_name}}</div>
 </div>
 <div id="fragment-4" class="tab-pane in active fade">
     <h4>
@@ -44,10 +45,54 @@
 
 
 <script>
+var chart
+
+$(function(){
+	$('#export').click(function() {
+	    Highcharts.exportToDoc(chart);
+	});
+	});
+
+Highcharts.exportToDoc = function(chart, options){
+	var t_name = $("#t_name").text();
+	var t_n_patients = $("#t_n_patients").text();
+	var t_hist = $("#t_hist").text();
+	var t_grade = $("#t_grade").text();
+	var t_hormone = $("#t_hormone").text();
+	var t_her2 = $("#t_her2").text();
+	var t_stage = $("#t_stage").text();
+	var t_treatment = $("#t_treatment").text();
+	var t_cit = $("#t_cit").text();
+	var t_org = $("#t_org").text();
+	var svg = chart.getSVG();
+	
+	var url = '/medic/generatereport/'
+	
+	var inputs = '';
+	inputs+= '<input type="hidden" name="csrfmiddlewaretoken" value="{{csrf_token}}" />';
+	inputs+= '<input type="hidden" name="t_name" value="'+ t_name +'" />';
+	inputs+= '<input type="hidden" name="t_n_patients" value="'+ t_n_patients +'" />'; 
+	inputs+= '<input type="hidden" name="t_hist" value="'+ t_hist +'" />'; 
+	inputs+= '<input type="hidden" name="t_grade" value="'+ t_grade +'" />'; 
+	inputs+= '<input type="hidden" name="t_hormone" value="'+ t_hormone +'" />'; 
+	inputs+= '<input type="hidden" name="t_her2" value="'+ t_her2 +'" />'; 
+	inputs+= '<input type="hidden" name="t_stage" value="'+ t_stage +'" />'; 
+	inputs+= '<input type="hidden" name="t_treatment" value="'+ t_treatment +'" />'; 
+	inputs+= '<input type="hidden" name="t_cit" value="'+ t_cit +'" />'; 
+	inputs+= '<input type="hidden" name="t_org" value="'+ t_org +'" />';
+	inputs+= "<input type='hidden' name='svg' value='"+ svg.replace(/["]/g, "&quot;").replace(/[']/g, "&#39;") +"' />";
+	
+	//send request
+    jQuery('<form action="'+ url +'" method="post">'+inputs+'</form>')
+    .appendTo('body').submit().remove();
+	
+	
+};
 
 $(function () {
-    $('#container').highcharts({
+    chart =  new Highcharts.Chart({
     	chart: {
+    		renderTo: 'container',
             type: 'column'
         },
         title: {

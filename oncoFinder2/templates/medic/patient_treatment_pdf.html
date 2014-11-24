@@ -36,7 +36,7 @@
 
 <div style="display: block" id="reportDiv" >
 {%for treatment in treatments%}
-
+<div id="treatmentDetails{{treatment.id}}"></div>
 <div id="treatDiv{{treatment.id}}" style="margin: 30px; width:1000px;"></div>
 <script>
 var chart{{treatment.id}}
@@ -105,8 +105,34 @@ function requestData{{treatment.id}}() {
 	    	              data: data['res']
 	    	            });
 	    			
+	    			$("#treatmentDetails{{treatment.id}}").html(' \
+	    				      <div id="t_n_patients"><strong>Number of patients:</strong> '+ data["num_of_patients"]+'</div> \
+	    				      <div id="t_hist"><strong>Histological type:</strong> '+ data["histological_type"]+'</div> \
+	    				      <div id="t_grade"><strong>Grade:</strong> '+ data["grade"]+'</div> \
+	    				      <div id="t_hormone"><strong>Hormone receptor status:</strong>'+ data["hormone_receptor_status"]+'</div> \
+	    				      <div id="t_her2"><strong>HER2 status:</strong> '+ data["her2_status"]+'</div> \
+	    				      <div id="t_stage"><strong>Stage:</strong> '+ data["stage"]+'</div> \
+	    				      <div id="t_treatment"><strong>Treatment:</strong> '+ data["treatment"]+'</div> \
+	    				      <div id="t_cit"><strong>Citation(s):</strong> '+ data["citation"]+'</div> \
+	    				      <div id="t_org"><strong>Organization name:</strong> '+ data["organization_name"]+'</div> \
+	    					');
 	    			
+	    			var jsonArr = {
+	    					'num_of_patients': data['num_of_patients'],
+	    					'histological_type': data['histological_type'],
+	    					'grade': data['grade'],
+	    					'hormone_receptor_status': data['hormone_receptor_status'],
+	    					'her2_status': data['her2_status'],
+	    					'stage': data['stage'],
+	    					'treatment': data['treatment'],
+	    					'citation': data['citation'],
+	    					'organization_name': data['organization_name'],
+	    					'responder': data['responder']
+	    					
+	    			              }
 	    			
+	    			chart{{treatment.id}}.treat_details = jsonArr
+	    			chart{{treatment.id}}.t_id = {{treatment.id}}
 	    			
 	    		});
 }
@@ -119,69 +145,44 @@ function requestData{{treatment.id}}() {
 <script>
 
 /**
- * Create a global getSVG method that takes an array of charts as an argument
- */
-Highcharts.getSVG = function(charts) {
-    var svgArr = [],
-        top = 0,
-        width = 0;
-
-    $.each(charts, function(i, chart) {
-        var svg = chart.getSVG();
-        svg = svg.replace('<svg', '<g transform="translate(0,' + top + ')" ');
-        svg = svg.replace('</svg>', '</g>');
-
-        top += chart.chartHeight;
-        width = Math.max(width, chart.chartWidth);
-
-        svgArr.push(svg);
-    });
-
-    return '<svg height="'+ top +'" width="' + width + '" version="1.1" xmlns="http://www.w3.org/2000/svg">' + svgArr.join('') + '</svg>';
-};
-
-/**
  * Create a global exportCharts method that takes an array of charts as an argument,
  * and exporting options as the second argument
  */
 Highcharts.exportCharts = function(charts, options) {
-    var form
-        svg = Highcharts.getSVG(charts);
-
-    // merge the options
-    options = Highcharts.merge(Highcharts.getOptions().exporting, options);
-
-    // create the form
-    form = Highcharts.createElement('form', {
-        method: 'post',
-        action: options.url
-    }, {
-        display: 'none'
-    }, document.body);
+	var url = '/medic/generatefullreport/'
+    var inputs = '';
+    inputs+= '<input type="hidden" name="csrfmiddlewaretoken" value="{{csrf_token}}" />';
 
     // add the values
-    Highcharts.each(['filename', 'type', 'width', 'svg'], function(name) {
-        Highcharts.createElement('input', {
-            type: 'hidden',
-            name: name,
-            value: {
-                filename: options.filename || 'chart',
-                type: options.type,
-                width: options.width,
-                svg: svg
-            }[name]
-        }, null, form);
+    Highcharts.each(charts, function(chart, i) {
+    	
+    	
+    	
+    	var svg = chart.getSVG();
+    	
+    	svg = svg.replace(/["]/g, "&quot;").replace(/[']/g, "&#39;");
+    	
+    	inputs+= '<input type="hidden" name="t_n_patients'+chart.t_id+'" value="'+ chart.treat_details.num_of_patients +'" />';
+    	inputs+= '<input type="hidden" name="t_hist'+chart.t_id+'" value="'+ chart.treat_details.histological_type +'" />'; 
+    	inputs+= '<input type="hidden" name="t_grade'+chart.t_id+'" value="'+ chart.treat_details.grade +'" />'; 
+    	inputs+= '<input type="hidden" name="t_hormone'+chart.t_id+'" value="'+ chart.treat_details.hormone_receptor_status +'" />'; 
+    	inputs+= '<input type="hidden" name="t_her2'+chart.t_id+'" value="'+ chart.treat_details.her2_status +'" />'; 
+    	inputs+= '<input type="hidden" name="t_stage'+chart.t_id+'" value="'+ chart.treat_details.stage +'" />'; 
+    	inputs+= '<input type="hidden" name="t_treatment'+chart.t_id+'" value="'+ chart.treat_details.treatment +'" />'; 
+    	inputs+= '<input type="hidden" name="t_cit'+chart.t_id+'" value="'+ chart.treat_details.citation +'" />'; 
+    	inputs+= '<input type="hidden" name="t_org'+chart.t_id+'" value="'+ chart.treat_details.organization_name +'" />';
+    	inputs+= '<input type="hidden" name="t_responder'+chart.t_id+'" value="'+ chart.treat_details.responder +'" />';
+    	inputs+= '<input type="hidden" name="svg'+chart.t_id+'" value="'+ svg +'" />';
     });
-    //console.log(svg); return;
-    // submit
-    form.submit();
-
-    // clean up
-    form.parentNode.removeChild(form);
+    
+  //send request
+    jQuery('<form action="'+ url +'" method="post">'+inputs+'</form>')
+    .appendTo('body').submit().remove();
 };
 $(function(){
 $('#export').click(function() {
     Highcharts.exportCharts([{%for treatment in treatments%}chart{{treatment.id}},{%endfor%}]);
+
 });
 });
 

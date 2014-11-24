@@ -43,7 +43,7 @@ class ProfileIndex(DetailView):
         my_projects = Project.objects.filter(owner=self.get_object())
         context['my_projects'] = my_projects
         
-        all_projects = Project.objects.exclude(owner=self.get_object())
+        all_projects = Project.objects.exclude(owner=self.get_object())[:30]
         context['all_projects'] = all_projects
                 
         return context
