@@ -63,6 +63,7 @@ class CoreSetCalculationParameters(FormView):
         calculate_pvalue_each = form.cleaned_data['calculate_pvalue_each']
         calculate_pvalue_all = form.cleaned_data['calculate_pvalue_all'] 
         
+            
         
         context = self.get_context_data()
         
@@ -70,7 +71,20 @@ class CoreSetCalculationParameters(FormView):
         input_document = context['document']
         input_document.calculated_by = self.request.user
         input_document.calculated_at = datetime.now()
-        input_document.save()
+        input_document.save()        
+        
+        
+        """ In case it's medical project. TODO: Remove this and create new form and view """
+        if input_document.project.field == 'med':
+            calculate_pms = True
+            calculate_pms1 = True
+            calculate_pms2 = False
+            calculate_ds1 = False
+            calculate_ds2 = False
+            calculate_ds3 = False
+            calculate_norms_pas = False
+            calculate_pvalue_each = False
+            calculate_pvalue_all = False
         
         """ Create an empty Output Document  """
         
@@ -83,9 +97,9 @@ class CoreSetCalculationParameters(FormView):
         output_doc.doc_type = 2
         if int(db_choice) == 1:
             json_db = 'Human'
-        elif int(db_choice) == 2:
-            json_db = 'Mouse'
         elif int(db_choice) == 3:
+            json_db = 'Mouse'
+        elif int(db_choice) == 2:
             json_db = 'Metabolism'
         output_doc.parameters = {'sigma_num': sigma_num,
                                  'use_sigma': use_sigma,
@@ -137,7 +151,9 @@ class CoreSetCalculationParameters(FormView):
                 
         
         process_doc_df = read_csv(settings.MEDIA_ROOT+"/"+input_document.input_doc.document.name,
-                                  sep='\t', index_col='SYMBOL',  converters = {'SYMBOL' : strip})        
+                                  sep='\t', index_col='SYMBOL',  converters = {'SYMBOL' : strip}).fillna(0)        
+        
+        
         
         tumour_columns = [col for col in process_doc_df.columns if 'Tumour' in col] #get sample columns
         
@@ -225,10 +241,7 @@ class CoreSetCalculationParameters(FormView):
                     if calculate_norms_pas:
                         pms_dict[norm] = float(pathway.amcf)*pms_norms[norm].sum()
                         pms1_dict[norm] = pms1_value
-                    lnorms_p_value.append(pms1_value)
-                
-                    
-                          
+                    lnorms_p_value.append(pms1_value)   
             
             
             
@@ -247,11 +260,14 @@ class CoreSetCalculationParameters(FormView):
                         
                     CNR = row[tumour]
                     if int(norm_choice) == 1:
-                        mean = row['Mean_norm']
+                        mean = float(row['Mean_norm'])
                         EXPRESSION_LEVEL = CNR*float(mean)
                          
                     if int(norm_choice) == 2:
-                        mean = row['gMean_norm']
+                        try:
+                            mean = float(row['gMean_norm'])
+                        except:
+                            mean = 0 
                         EXPRESSION_LEVEL = CNR*float(mean)
                         
                     std = row['std'] if float(row['std'])>0 else 0   

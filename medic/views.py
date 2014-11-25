@@ -437,6 +437,7 @@ class MedicAjaxGenerateFullReport(TemplateView):
         document.add_heading('Patient treatment report')
         
         table = document.add_table(1, 2)
+        table.allow_autofit = True
         # populate header row --------
         heading_cells = table.rows[0].cells
         heading_cells[0].text = 'Treatment'
