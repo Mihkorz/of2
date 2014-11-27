@@ -1,6 +1,6 @@
 {% extends "base_profiles.html" %}
 
-{% block title %}{{treatment.name}} | OncoFinder v2.0{% endblock %}
+{% block title %}Full report | OncoFinder v2.0{% endblock %}
 
 {% block content %}
 
@@ -67,6 +67,8 @@ $(function(){
         	title: {
         		text: 'Response score'
         	},
+        	min: 0,
+        	max: 1,
             minPadding: 0.05,
             maxPadding: 0.05
         },
@@ -93,15 +95,17 @@ function requestData{{treatment.id}}() {
 	    			chart{{treatment.id}}.setTitle({text: data['treatment']},
 	    				   {text: 'Patient is a '+data['responder']+'. \
  		                   Response score = '+ data['patient_votes']+ ' \
-		                   Accuracy = '+data['reliability']} ,
+		                   Accuracy = '+data['reliability'], style:{'font-weight':'bold'}} ,
 		                   0);
 	    			
 	    			chart{{treatment.id}}.addSeries({
 	    	              name: "Non-responders",
+	    	              color: "#434348",
 	    	              data: data['nres']
 	    	            });
 	    			chart{{treatment.id}}.addSeries({
 	    	              name: "Responders",
+	    	              color: "#7cb5ec",
 	    	              data: data['res']
 	    	            });
 	    			

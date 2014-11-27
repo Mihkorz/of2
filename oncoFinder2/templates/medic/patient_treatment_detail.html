@@ -112,6 +112,10 @@ $(function () {
         	title: {
         		text: 'Response score'
         	},
+        	min: 0,
+        	max: 1,
+        	tickInterval: 0.1,
+        	gridLineWidth: 1,
             minPadding: 0.05,
             maxPadding: 0.05
         },
@@ -124,6 +128,7 @@ $(function () {
 
         series: [{
         	name: 'Non-responders',
+        	color: '#434348',
             data: [
                {% for key, value in nres.items  %}
                 {% if key == patient_votes and flag_responder == 0%}
@@ -136,6 +141,7 @@ $(function () {
             ]
         },{
         name: 'Responders',
+        color: '#7cb5ec',
         data: [
 			{% for key, value in res.items  %}
 			{% if key == patient_votes and flag_responder == 1%}

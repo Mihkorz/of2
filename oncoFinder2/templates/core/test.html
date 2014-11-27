@@ -8,7 +8,28 @@
 <h1>Testing Playground</h1>
 
 
-{{pathways|length}}
+{{drug.name}}
+
+
+<table class="table">
+<tr>
+<td>
+Pathway
+</td>
+<td>Frequency</td>
+</tr>
+{% for path, freq in ddd.items %}
+<tr>
+<td>{{path}}</td>
+<td>{{freq}}</td>
+</tr>
+{%endfor%}
+</table>
+
+
+
+
+
 <table border="1">
 <tr>
 {%for path in pathways %}
