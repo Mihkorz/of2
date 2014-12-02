@@ -47,7 +47,11 @@ class UploadDocumentForm(forms.ModelForm):
         
 class CalculationParametersForm(forms.Form):
     
+    DB_CHOICES = (('Diana TarBase', 'Diana TarBase',),
+                  ('miRTarBase', 'miRTarBase'))
     
+    db_choice = forms.ChoiceField(label="Target DataBase",
+                                     widget=forms.RadioSelect, choices=DB_CHOICES, initial='Diana TarBase')
     sigma_num = forms.FloatField( label="Sigma amount", initial=2, required=False)
     use_sigma = forms.BooleanField(label="Use sigma filter", initial=True, required=False)
     cnr_low = forms.FloatField(label="CNR lower limit", initial=0.67, required=False)

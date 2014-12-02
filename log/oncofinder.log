@@ -2943,3 +2943,562 @@ Traceback (most recent call last):
   File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 507, in get_context_data
     raise
 TypeError: exceptions must be old-style classes or derived from BaseException, not NoneType
+2014-11-27 19:52:41,441 ERROR base 26533 -1248855232 Internal Server Error: /
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/views.py", line 13, in dispatch
+    if request.user.is_authenticated():
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/functional.py", line 213, in inner
+    self._setup()
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/functional.py", line 298, in _setup
+    self._wrapped = self._setupfunc()
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/middleware.py", line 18, in <lambda>
+    request.user = SimpleLazyObject(lambda: get_user(request))
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/middleware.py", line 10, in get_user
+    request._cached_user = auth.get_user(request)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/__init__.py", line 140, in get_user
+    user_id = request.session[SESSION_KEY]
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/sessions/backends/base.py", line 47, in __getitem__
+    return self._session[key]
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/sessions/backends/base.py", line 173, in _get_session
+    self._session_cache = self.load()
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/sessions/backends/db.py", line 20, in load
+    expire_date__gt=timezone.now()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/manager.py", line 151, in get
+    return self.get_queryset().get(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 301, in get
+    num = len(clone)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 77, in __len__
+    self._fetch_all()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 854, in _fetch_all
+    self._result_cache = list(self.iterator())
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 220, in iterator
+    for row in compiler.results_iter():
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/sql/compiler.py", line 709, in results_iter
+    for rows in self.execute_sql(MULTI):
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/sql/compiler.py", line 781, in execute_sql
+    cursor = self.connection.cursor()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/__init__.py", line 157, in cursor
+    cursor = self.make_debug_cursor(self._cursor())
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/__init__.py", line 129, in _cursor
+    self.ensure_connection()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/__init__.py", line 124, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/utils.py", line 99, in __exit__
+    six.reraise(dj_exc_type, dj_exc_value, traceback)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/__init__.py", line 124, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/__init__.py", line 112, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/mysql/base.py", line 435, in get_new_connection
+    conn = Database.connect(**conn_params)
+  File "/usr/lib/python2.7/dist-packages/MySQLdb/__init__.py", line 81, in Connect
+    return Connection(*args, **kwargs)
+  File "/usr/lib/python2.7/dist-packages/MySQLdb/connections.py", line 187, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+OperationalError: (1045, "Access denied for user 'root'@'localhost' (using password: YES)")
+2014-11-27 19:52:41,437 ERROR base 26533 -1257247936 Internal Server Error: /
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/views.py", line 13, in dispatch
+    if request.user.is_authenticated():
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/functional.py", line 213, in inner
+    self._setup()
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/functional.py", line 298, in _setup
+    self._wrapped = self._setupfunc()
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/middleware.py", line 18, in <lambda>
+    request.user = SimpleLazyObject(lambda: get_user(request))
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/middleware.py", line 10, in get_user
+    request._cached_user = auth.get_user(request)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/__init__.py", line 140, in get_user
+    user_id = request.session[SESSION_KEY]
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/sessions/backends/base.py", line 47, in __getitem__
+    return self._session[key]
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/sessions/backends/base.py", line 173, in _get_session
+    self._session_cache = self.load()
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/sessions/backends/db.py", line 20, in load
+    expire_date__gt=timezone.now()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/manager.py", line 151, in get
+    return self.get_queryset().get(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 301, in get
+    num = len(clone)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 77, in __len__
+    self._fetch_all()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 854, in _fetch_all
+    self._result_cache = list(self.iterator())
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 220, in iterator
+    for row in compiler.results_iter():
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/sql/compiler.py", line 709, in results_iter
+    for rows in self.execute_sql(MULTI):
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/sql/compiler.py", line 781, in execute_sql
+    cursor = self.connection.cursor()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/__init__.py", line 157, in cursor
+    cursor = self.make_debug_cursor(self._cursor())
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/__init__.py", line 129, in _cursor
+    self.ensure_connection()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/__init__.py", line 124, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/utils.py", line 99, in __exit__
+    six.reraise(dj_exc_type, dj_exc_value, traceback)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/__init__.py", line 124, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/__init__.py", line 112, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/mysql/base.py", line 435, in get_new_connection
+    conn = Database.connect(**conn_params)
+  File "/usr/lib/python2.7/dist-packages/MySQLdb/__init__.py", line 81, in Connect
+    return Connection(*args, **kwargs)
+  File "/usr/lib/python2.7/dist-packages/MySQLdb/connections.py", line 187, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+OperationalError: (1045, "Access denied for user 'root'@'localhost' (using password: YES)")
+2014-11-27 19:53:01,141 ERROR base 26533 -1267729600 Internal Server Error: /
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/views.py", line 13, in dispatch
+    if request.user.is_authenticated():
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/functional.py", line 213, in inner
+    self._setup()
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/functional.py", line 298, in _setup
+    self._wrapped = self._setupfunc()
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/middleware.py", line 18, in <lambda>
+    request.user = SimpleLazyObject(lambda: get_user(request))
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/middleware.py", line 10, in get_user
+    request._cached_user = auth.get_user(request)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/__init__.py", line 140, in get_user
+    user_id = request.session[SESSION_KEY]
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/sessions/backends/base.py", line 47, in __getitem__
+    return self._session[key]
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/sessions/backends/base.py", line 173, in _get_session
+    self._session_cache = self.load()
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/sessions/backends/db.py", line 20, in load
+    expire_date__gt=timezone.now()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/manager.py", line 151, in get
+    return self.get_queryset().get(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 301, in get
+    num = len(clone)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 77, in __len__
+    self._fetch_all()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 854, in _fetch_all
+    self._result_cache = list(self.iterator())
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 220, in iterator
+    for row in compiler.results_iter():
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/sql/compiler.py", line 709, in results_iter
+    for rows in self.execute_sql(MULTI):
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/sql/compiler.py", line 781, in execute_sql
+    cursor = self.connection.cursor()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/__init__.py", line 157, in cursor
+    cursor = self.make_debug_cursor(self._cursor())
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/__init__.py", line 129, in _cursor
+    self.ensure_connection()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/__init__.py", line 124, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/utils.py", line 99, in __exit__
+    six.reraise(dj_exc_type, dj_exc_value, traceback)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/__init__.py", line 124, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/__init__.py", line 112, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/mysql/base.py", line 435, in get_new_connection
+    conn = Database.connect(**conn_params)
+  File "/usr/lib/python2.7/dist-packages/MySQLdb/__init__.py", line 81, in Connect
+    return Connection(*args, **kwargs)
+  File "/usr/lib/python2.7/dist-packages/MySQLdb/connections.py", line 187, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+OperationalError: (1045, "Access denied for user 'root'@'localhost' (using password: YES)")
+2014-11-27 19:53:31,682 ERROR base 26904 -1247806656 Internal Server Error: /
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/views.py", line 13, in dispatch
+    if request.user.is_authenticated():
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/functional.py", line 213, in inner
+    self._setup()
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/functional.py", line 298, in _setup
+    self._wrapped = self._setupfunc()
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/middleware.py", line 18, in <lambda>
+    request.user = SimpleLazyObject(lambda: get_user(request))
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/middleware.py", line 10, in get_user
+    request._cached_user = auth.get_user(request)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/__init__.py", line 140, in get_user
+    user_id = request.session[SESSION_KEY]
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/sessions/backends/base.py", line 47, in __getitem__
+    return self._session[key]
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/sessions/backends/base.py", line 173, in _get_session
+    self._session_cache = self.load()
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/sessions/backends/db.py", line 20, in load
+    expire_date__gt=timezone.now()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/manager.py", line 151, in get
+    return self.get_queryset().get(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 301, in get
+    num = len(clone)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 77, in __len__
+    self._fetch_all()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 854, in _fetch_all
+    self._result_cache = list(self.iterator())
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 220, in iterator
+    for row in compiler.results_iter():
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/sql/compiler.py", line 709, in results_iter
+    for rows in self.execute_sql(MULTI):
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/sql/compiler.py", line 781, in execute_sql
+    cursor = self.connection.cursor()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/__init__.py", line 157, in cursor
+    cursor = self.make_debug_cursor(self._cursor())
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/__init__.py", line 129, in _cursor
+    self.ensure_connection()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/__init__.py", line 124, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/utils.py", line 99, in __exit__
+    six.reraise(dj_exc_type, dj_exc_value, traceback)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/__init__.py", line 124, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/__init__.py", line 112, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/mysql/base.py", line 435, in get_new_connection
+    conn = Database.connect(**conn_params)
+  File "/usr/lib/python2.7/dist-packages/MySQLdb/__init__.py", line 81, in Connect
+    return Connection(*args, **kwargs)
+  File "/usr/lib/python2.7/dist-packages/MySQLdb/connections.py", line 187, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+OperationalError: (1045, "Access denied for user 'root'@'localhost' (using password: YES)")
+2014-11-27 19:53:36,118 ERROR base 26904 -1247806656 Internal Server Error: /
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/views.py", line 13, in dispatch
+    if request.user.is_authenticated():
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/functional.py", line 213, in inner
+    self._setup()
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/functional.py", line 298, in _setup
+    self._wrapped = self._setupfunc()
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/middleware.py", line 18, in <lambda>
+    request.user = SimpleLazyObject(lambda: get_user(request))
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/middleware.py", line 10, in get_user
+    request._cached_user = auth.get_user(request)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/__init__.py", line 140, in get_user
+    user_id = request.session[SESSION_KEY]
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/sessions/backends/base.py", line 47, in __getitem__
+    return self._session[key]
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/sessions/backends/base.py", line 173, in _get_session
+    self._session_cache = self.load()
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/sessions/backends/db.py", line 20, in load
+    expire_date__gt=timezone.now()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/manager.py", line 151, in get
+    return self.get_queryset().get(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 301, in get
+    num = len(clone)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 77, in __len__
+    self._fetch_all()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 854, in _fetch_all
+    self._result_cache = list(self.iterator())
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 220, in iterator
+    for row in compiler.results_iter():
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/sql/compiler.py", line 709, in results_iter
+    for rows in self.execute_sql(MULTI):
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/sql/compiler.py", line 781, in execute_sql
+    cursor = self.connection.cursor()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/__init__.py", line 157, in cursor
+    cursor = self.make_debug_cursor(self._cursor())
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/__init__.py", line 129, in _cursor
+    self.ensure_connection()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/__init__.py", line 124, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/utils.py", line 99, in __exit__
+    six.reraise(dj_exc_type, dj_exc_value, traceback)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/__init__.py", line 124, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/__init__.py", line 112, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/mysql/base.py", line 435, in get_new_connection
+    conn = Database.connect(**conn_params)
+  File "/usr/lib/python2.7/dist-packages/MySQLdb/__init__.py", line 81, in Connect
+    return Connection(*args, **kwargs)
+  File "/usr/lib/python2.7/dist-packages/MySQLdb/connections.py", line 187, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+OperationalError: (1045, "Access denied for user 'root'@'localhost' (using password: YES)")
+2014-11-27 19:53:51,791 ERROR base 26904 -1299186880 Internal Server Error: /
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/views.py", line 13, in dispatch
+    if request.user.is_authenticated():
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/functional.py", line 213, in inner
+    self._setup()
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/functional.py", line 298, in _setup
+    self._wrapped = self._setupfunc()
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/middleware.py", line 18, in <lambda>
+    request.user = SimpleLazyObject(lambda: get_user(request))
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/middleware.py", line 10, in get_user
+    request._cached_user = auth.get_user(request)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/__init__.py", line 140, in get_user
+    user_id = request.session[SESSION_KEY]
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/sessions/backends/base.py", line 47, in __getitem__
+    return self._session[key]
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/sessions/backends/base.py", line 173, in _get_session
+    self._session_cache = self.load()
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/sessions/backends/db.py", line 20, in load
+    expire_date__gt=timezone.now()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/manager.py", line 151, in get
+    return self.get_queryset().get(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 301, in get
+    num = len(clone)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 77, in __len__
+    self._fetch_all()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 854, in _fetch_all
+    self._result_cache = list(self.iterator())
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 220, in iterator
+    for row in compiler.results_iter():
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/sql/compiler.py", line 709, in results_iter
+    for rows in self.execute_sql(MULTI):
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/sql/compiler.py", line 781, in execute_sql
+    cursor = self.connection.cursor()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/__init__.py", line 157, in cursor
+    cursor = self.make_debug_cursor(self._cursor())
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/__init__.py", line 129, in _cursor
+    self.ensure_connection()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/__init__.py", line 124, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/utils.py", line 99, in __exit__
+    six.reraise(dj_exc_type, dj_exc_value, traceback)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/__init__.py", line 124, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/__init__.py", line 112, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/mysql/base.py", line 435, in get_new_connection
+    conn = Database.connect(**conn_params)
+  File "/usr/lib/python2.7/dist-packages/MySQLdb/__init__.py", line 81, in Connect
+    return Connection(*args, **kwargs)
+  File "/usr/lib/python2.7/dist-packages/MySQLdb/connections.py", line 187, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+OperationalError: (1045, "Access denied for user 'root'@'localhost' (using password: YES)")
+2014-11-27 19:53:53,109 ERROR base 26904 -1299186880 Internal Server Error: /
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/views.py", line 13, in dispatch
+    if request.user.is_authenticated():
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/functional.py", line 213, in inner
+    self._setup()
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/functional.py", line 298, in _setup
+    self._wrapped = self._setupfunc()
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/middleware.py", line 18, in <lambda>
+    request.user = SimpleLazyObject(lambda: get_user(request))
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/middleware.py", line 10, in get_user
+    request._cached_user = auth.get_user(request)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/__init__.py", line 140, in get_user
+    user_id = request.session[SESSION_KEY]
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/sessions/backends/base.py", line 47, in __getitem__
+    return self._session[key]
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/sessions/backends/base.py", line 173, in _get_session
+    self._session_cache = self.load()
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/sessions/backends/db.py", line 20, in load
+    expire_date__gt=timezone.now()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/manager.py", line 151, in get
+    return self.get_queryset().get(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 301, in get
+    num = len(clone)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 77, in __len__
+    self._fetch_all()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 854, in _fetch_all
+    self._result_cache = list(self.iterator())
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 220, in iterator
+    for row in compiler.results_iter():
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/sql/compiler.py", line 709, in results_iter
+    for rows in self.execute_sql(MULTI):
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/sql/compiler.py", line 781, in execute_sql
+    cursor = self.connection.cursor()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/__init__.py", line 157, in cursor
+    cursor = self.make_debug_cursor(self._cursor())
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/__init__.py", line 129, in _cursor
+    self.ensure_connection()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/__init__.py", line 124, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/utils.py", line 99, in __exit__
+    six.reraise(dj_exc_type, dj_exc_value, traceback)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/__init__.py", line 124, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/__init__.py", line 112, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/mysql/base.py", line 435, in get_new_connection
+    conn = Database.connect(**conn_params)
+  File "/usr/lib/python2.7/dist-packages/MySQLdb/__init__.py", line 81, in Connect
+    return Connection(*args, **kwargs)
+  File "/usr/lib/python2.7/dist-packages/MySQLdb/connections.py", line 187, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+OperationalError: (1045, "Access denied for user 'root'@'localhost' (using password: YES)")
+2014-11-27 19:54:03,257 ERROR base 27081 -1248855232 Internal Server Error: /
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/views.py", line 13, in dispatch
+    if request.user.is_authenticated():
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/functional.py", line 213, in inner
+    self._setup()
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/functional.py", line 298, in _setup
+    self._wrapped = self._setupfunc()
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/middleware.py", line 18, in <lambda>
+    request.user = SimpleLazyObject(lambda: get_user(request))
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/middleware.py", line 10, in get_user
+    request._cached_user = auth.get_user(request)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/__init__.py", line 140, in get_user
+    user_id = request.session[SESSION_KEY]
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/sessions/backends/base.py", line 47, in __getitem__
+    return self._session[key]
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/sessions/backends/base.py", line 173, in _get_session
+    self._session_cache = self.load()
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/sessions/backends/db.py", line 20, in load
+    expire_date__gt=timezone.now()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/manager.py", line 151, in get
+    return self.get_queryset().get(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 301, in get
+    num = len(clone)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 77, in __len__
+    self._fetch_all()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 854, in _fetch_all
+    self._result_cache = list(self.iterator())
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 220, in iterator
+    for row in compiler.results_iter():
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/sql/compiler.py", line 709, in results_iter
+    for rows in self.execute_sql(MULTI):
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/sql/compiler.py", line 781, in execute_sql
+    cursor = self.connection.cursor()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/__init__.py", line 157, in cursor
+    cursor = self.make_debug_cursor(self._cursor())
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/__init__.py", line 129, in _cursor
+    self.ensure_connection()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/__init__.py", line 124, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/utils.py", line 99, in __exit__
+    six.reraise(dj_exc_type, dj_exc_value, traceback)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/__init__.py", line 124, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/__init__.py", line 112, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/mysql/base.py", line 435, in get_new_connection
+    conn = Database.connect(**conn_params)
+  File "/usr/lib/python2.7/dist-packages/MySQLdb/__init__.py", line 81, in Connect
+    return Connection(*args, **kwargs)
+  File "/usr/lib/python2.7/dist-packages/MySQLdb/connections.py", line 187, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+OperationalError: (1045, "Access denied for user 'root'@'localhost' (using password: YES)")
+2014-11-27 19:54:04,933 ERROR base 27081 -1248855232 Internal Server Error: /
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/views.py", line 13, in dispatch
+    if request.user.is_authenticated():
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/functional.py", line 213, in inner
+    self._setup()
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/functional.py", line 298, in _setup
+    self._wrapped = self._setupfunc()
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/middleware.py", line 18, in <lambda>
+    request.user = SimpleLazyObject(lambda: get_user(request))
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/middleware.py", line 10, in get_user
+    request._cached_user = auth.get_user(request)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/__init__.py", line 140, in get_user
+    user_id = request.session[SESSION_KEY]
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/sessions/backends/base.py", line 47, in __getitem__
+    return self._session[key]
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/sessions/backends/base.py", line 173, in _get_session
+    self._session_cache = self.load()
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/sessions/backends/db.py", line 20, in load
+    expire_date__gt=timezone.now()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/manager.py", line 151, in get
+    return self.get_queryset().get(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 301, in get
+    num = len(clone)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 77, in __len__
+    self._fetch_all()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 854, in _fetch_all
+    self._result_cache = list(self.iterator())
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 220, in iterator
+    for row in compiler.results_iter():
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/sql/compiler.py", line 709, in results_iter
+    for rows in self.execute_sql(MULTI):
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/sql/compiler.py", line 781, in execute_sql
+    cursor = self.connection.cursor()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/__init__.py", line 157, in cursor
+    cursor = self.make_debug_cursor(self._cursor())
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/__init__.py", line 129, in _cursor
+    self.ensure_connection()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/__init__.py", line 124, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/utils.py", line 99, in __exit__
+    six.reraise(dj_exc_type, dj_exc_value, traceback)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/__init__.py", line 124, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/__init__.py", line 112, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/backends/mysql/base.py", line 435, in get_new_connection
+    conn = Database.connect(**conn_params)
+  File "/usr/lib/python2.7/dist-packages/MySQLdb/__init__.py", line 81, in Connect
+    return Connection(*args, **kwargs)
+  File "/usr/lib/python2.7/dist-packages/MySQLdb/connections.py", line 187, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+OperationalError: (1045, "Access denied for user 'root'@'localhost' (using password: YES)")
+2014-11-27 19:54:39,116 ERROR base 27316 -1248855232 Internal Server Error: /user/admin/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 201, in get_response
+    response = middleware_method(request, response)
+  File "/usr/local/lib/python2.7/dist-packages/django_debug_toolbar-0.9.4-py2.7.egg/debug_toolbar/middleware.py", line 139, in process_response
+    smart_unicode(toolbar.render_toolbar() + self.tag))
+  File "/usr/local/lib/python2.7/dist-packages/django_debug_toolbar-0.9.4-py2.7.egg/debug_toolbar/toolbar/loader.py", line 64, in render_toolbar
+    return render_to_string('debug_toolbar/base.html', context)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader.py", line 162, in render_to_string
+    t = get_template(template_name)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader.py", line 138, in get_template
+    template, origin = find_template(template_name)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader.py", line 131, in find_template
+    raise TemplateDoesNotExist(name)
+TemplateDoesNotExist: debug_toolbar/base.html
+2014-12-02 23:43:15,602 ERROR base 31212 -1280316608 Internal Server Error: /document/doc2585/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 268, in dispatch
+    return view( request, *args, **kwargs )
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/mirna/views.py", line 47, in dispatch
+    return super(mirnaDocumentDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/mirna/views.py", line 55, in get_context_data
+    dialect = sniffer.sniff(open(filename, 'r').read(), delimiters='\t,;') # defining the separator of the csv file
+IOError: [Errno 2] No such file or directory: u'/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/oncoFinder2/media/users/admin/test_mirna/input/test_input.csv'

@@ -95,6 +95,7 @@ class MirnaSetCalculationParameters(FormView):
         cnr_low =  form.cleaned_data['cnr_low']
         cnr_up =  form.cleaned_data['cnr_up']
         use_cnr = form.cleaned_data['use_cnr']
+        db_choice = form.cleaned_data['db_choice']
         
         
         context = self.get_context_data()
@@ -114,7 +115,7 @@ class MirnaSetCalculationParameters(FormView):
         
         output_doc = Document()        
         output_doc.doc_type = 2
-        json_db = 'Human'
+        json_db = db_choice
         output_doc.parameters = {'sigma_num': sigma_num,
                                  'use_sigma': use_sigma,
                                  'cnr_low': cnr_low,
@@ -151,7 +152,7 @@ class MirnaSetCalculationParameters(FormView):
             gene_objects = pathway.gene_set.all()
             
             for gene in gene_objects:
-                mapping_mirna_genes = MirnaMapping.objects.filter(Gene=gene.name)
+                mapping_mirna_genes = MirnaMapping.objects.filter(Gene=gene.name, Sourse=db_choice)
                 for mirna_gene in mapping_mirna_genes:
                     gene_name.append(mirna_gene.miRNA_ID.strip())
                     gene_arr.append(float(gene.arr))
