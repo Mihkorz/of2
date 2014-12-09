@@ -491,19 +491,11 @@ class Test(TemplateView):
               
         context = super(Test, self).get_context_data(**kwargs)
         
-        drug = Drug.objects.get(name="Pazopanib")
+        drug = Drug.objects.filter(db="genego")
         
-        context['drug'] = drug
-        lPaths = []
-        for target in drug.target_set.all():
-            for path in Pathway.objects.filter(gene__name=target.name):
-                lPaths.append(path.name)
-            
-                
-        
-        import collections
-        counter=collections.Counter(lPaths)
-        context['ddd'] = dict(counter)
+        for dr in drug:
+            dr.db = "primary"
+            dr.save() 
         #raise
         """
         from database.models import GOEnrichment

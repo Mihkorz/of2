@@ -143,7 +143,7 @@ DRUG_TYPES = (
    
 )
 DRUG_DATABASE = (
-    ('genego', 'genego'),
+    ('primary', 'primary'),
     ('drugbank', 'drugbank'),
 )        
 class Drug(models.Model):
