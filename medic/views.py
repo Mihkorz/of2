@@ -115,11 +115,11 @@ class MedicTreatmentDetail(DetailView):
         
         nresponders = dict(Counter(lnonResponders))
         for x in nresponders:
-            nresponders[x]/=float(num_nres_samples)
+            nresponders[x]/=float(all_samples)
             nresponders[x]*=100
         responders =  dict(Counter(lResponders))
         for x in responders:
-            responders[x]/=float(num_res_samples)
+            responders[x]/=float(all_samples)
             responders[x]*=100
                
         context['nres'] = OrderedDict(sorted(nresponders.items()))
@@ -261,11 +261,11 @@ class PatientTreatmentDetail(DetailView):
         
         nresponders = dict(Counter(lnonResponders))
         for x in nresponders:
-            nresponders[x]/=float(num_nres_samples)
+            nresponders[x]/=float(all_samples)
             nresponders[x]*=100
         responders =  dict(Counter(lResponders))
         for x in responders:
-            responders[x]/=float(num_res_samples)
+            responders[x]/=float(all_samples)
             responders[x]*=100
                
         context['nres'] = OrderedDict(sorted(nresponders.items()))

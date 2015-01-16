@@ -491,12 +491,15 @@ class Test(TemplateView):
               
         context = super(Test, self).get_context_data(**kwargs)
         
-        drug = Drug.objects.filter(db="genego")
+        paths = Pathway.objects.all()
+        lnum = []
+        for pth in paths:
+            lnum.append(pth.gene_set.count())
         
-        for dr in drug:
-            dr.db = "primary"
-            dr.save() 
-        #raise
+        summ = sum(lnum)
+        numel = len(lnum)
+        median = summ/numel    
+        raise
         """
         from database.models import GOEnrichment
         for filename in os.listdir(settings.MEDIA_ROOT+"/GO/GO_enrichment"):
