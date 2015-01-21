@@ -62,7 +62,7 @@ class CoreSetCalculationParameters(FormView):
         calculate_norms_pas = form.cleaned_data['calculate_norms_pas']
         calculate_pvalue_each = form.cleaned_data['calculate_pvalue_each']
         calculate_pvalue_all = form.cleaned_data['calculate_pvalue_all'] 
-        
+        new_pathway_names = form.cleaned_data['new_pathway_names']
             
         
         context = self.get_context_data()
@@ -202,6 +202,21 @@ class CoreSetCalculationParameters(FormView):
             pms2_dict = {}
             
             pms_dict['Pathway'] = pms1_dict['Pathway'] = pms2_dict['Pathway'] = pathway.name.strip()
+            
+            """ Inserting new pathway names if needed """
+            if new_pathway_names:
+                new_path_df = read_excel(settings.MEDIA_ROOT+"/TRpathways_update_final_updated2.xlsx",
+                                          index_col='Old Pathway Name')            
+                    
+                
+                try:                    
+                    new_path_name = new_path_df.loc[pathway.name.strip()][1] 
+                except KeyError:
+                    new_path_name = 'Unknown'
+                    pass
+                pms_dict['New pathway name'] = pms1_dict['New pathway name'] = pms2_dict['New pathway name'] = new_path_name
+                
+                
             
             """ Calculating PAS for Normal Values. All genes are assumed to be differential """
             if calculate_p_value and (calculate_pvalue_each or calculate_pvalue_all):
