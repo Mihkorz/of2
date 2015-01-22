@@ -349,7 +349,19 @@ class PatientTreatmentPDF(DetailView):
     def get_context_data(self, **kwargs):
         context = super(PatientTreatmentPDF, self).get_context_data(**kwargs)
         
-        context['treatments'] = TreatmentMethod.objects.filter(nosology=self.object.project.nosology)
+        hormone_status = self.object.parameters['hormone_status']
+        her2_status = self.object.parameters['her2_status']
+        
+        treatments = TreatmentMethod.objects.filter(nosology=self.object.project.nosology)
+        
+        if hormone_status!='0':
+                    treatments = treatments.filter(hormone_receptor_status=hormone_status)
+                    
+        if her2_status!='0':
+                    treatments = treatments.filter(her2_status=her2_status)
+        
+        context['treatments'] = treatments
+        
         return context    
     
     

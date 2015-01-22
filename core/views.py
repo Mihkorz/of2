@@ -17,7 +17,7 @@ from django.core.files import File
 from django.core.exceptions import MultipleObjectsReturned
 from django.conf import settings
 
-from .forms import  CalculationParametersForm
+from .forms import  CalculationParametersForm, MedicCalculationParametersForm
 from profiles.models import Document, ProcessDocument
 from database.models import Pathway, Gene, Drug
 from metabolism.models import MetabolismPathway, MetabolismGene
@@ -29,12 +29,18 @@ class CoreSetCalculationParameters(FormView):
     Processes the form with calculation parameters, creates empty output Document, 
     creates Document in Process directory with PANDAS column 'Mean_Norm' and CNR for each gene     
     """
-    form_class = CalculationParametersForm
+    
     template_name = 'core/core_calculation_parameters.html'
     success_url = '/success/'
     
     @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):        
+    def dispatch(self, request, *args, **kwargs):
+        input_document = Document.objects.get(pk=self.kwargs['pk'])
+        
+        if input_document.project.field == 'med':
+            self.form_class = MedicCalculationParametersForm
+        else:
+            self.form_class = CalculationParametersForm       
         return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
     
     def get_context_data(self, **kwargs):
@@ -42,27 +48,11 @@ class CoreSetCalculationParameters(FormView):
         
         input_document = Document.objects.get(pk=self.kwargs['pk'])
         
+        
         context['document'] = input_document
         return context
     
     def form_valid(self, form):
-        sigma_num = form.cleaned_data['sigma_num']
-        use_sigma = form.cleaned_data['use_sigma']
-        cnr_low =  form.cleaned_data['cnr_low']
-        cnr_up =  form.cleaned_data['cnr_up']
-        use_cnr = form.cleaned_data['use_cnr']
-        norm_choice = form.cleaned_data['norm_choice']
-        db_choice = form.cleaned_data['db_choice']
-        calculate_pms = form.cleaned_data['calculate_pms']
-        calculate_pms1 = form.cleaned_data['calculate_pms1']
-        calculate_pms2 = form.cleaned_data['calculate_pms2'] 
-        calculate_ds1 = form.cleaned_data['calculate_ds1']
-        calculate_ds2 = form.cleaned_data['calculate_ds2']
-        calculate_ds3 = form.cleaned_data['calculate_ds3']
-        calculate_norms_pas = form.cleaned_data['calculate_norms_pas']
-        calculate_pvalue_each = form.cleaned_data['calculate_pvalue_each']
-        calculate_pvalue_all = form.cleaned_data['calculate_pvalue_all'] 
-        new_pathway_names = form.cleaned_data['new_pathway_names']
             
         
         context = self.get_context_data()
@@ -76,6 +66,13 @@ class CoreSetCalculationParameters(FormView):
         
         """ In case it's medical project. TODO: Remove this and create new form and view """
         if input_document.project.field == 'med':
+            sigma_num = 2
+            use_sigma = True
+            cnr_low =  0.67
+            cnr_up =  1.5
+            use_cnr = True
+            norm_choice = 2 # geometric
+            db_choice = 1 #Human
             calculate_pms = True
             calculate_pms1 = True
             calculate_pms2 = False
@@ -85,6 +82,29 @@ class CoreSetCalculationParameters(FormView):
             calculate_norms_pas = False
             calculate_pvalue_each = False
             calculate_pvalue_all = False
+            new_pathway_names = False
+            
+            hormone_status = form.cleaned_data['hormone_status']
+            her2_status = form.cleaned_data['her2_status']
+        
+        else:
+            sigma_num = form.cleaned_data['sigma_num']
+            use_sigma = form.cleaned_data['use_sigma']
+            cnr_low =  form.cleaned_data['cnr_low']
+            cnr_up =  form.cleaned_data['cnr_up']
+            use_cnr = form.cleaned_data['use_cnr']
+            norm_choice = form.cleaned_data['norm_choice']
+            db_choice = form.cleaned_data['db_choice']
+            calculate_pms = form.cleaned_data['calculate_pms']
+            calculate_pms1 = form.cleaned_data['calculate_pms1']
+            calculate_pms2 = form.cleaned_data['calculate_pms2'] 
+            calculate_ds1 = form.cleaned_data['calculate_ds1']
+            calculate_ds2 = form.cleaned_data['calculate_ds2']
+            calculate_ds3 = form.cleaned_data['calculate_ds3']
+            calculate_norms_pas = form.cleaned_data['calculate_norms_pas']
+            calculate_pvalue_each = form.cleaned_data['calculate_pvalue_each']
+            calculate_pvalue_all = form.cleaned_data['calculate_pvalue_all'] 
+            new_pathway_names = form.cleaned_data['new_pathway_names']
         
         """ Create an empty Output Document  """
         
@@ -108,6 +128,12 @@ class CoreSetCalculationParameters(FormView):
                                  'use_cnr': use_cnr,
                                  'norm_algirothm': 'geometric' if int(norm_choice)>1 else 'arithmetic',
                                  'db': json_db }
+        
+        if input_document.project.field == 'med':
+            output_doc.parameters = {'hormone_status': hormone_status,
+                                     'her2_status': her2_status
+                                     }
+        
         output_doc.project = input_document.project
         output_doc.created_by = self.request.user
         output_doc.created_at = datetime.now()        

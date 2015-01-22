@@ -40,5 +40,20 @@ class CalculationParametersForm(forms.Form):
         self.fields['cnr_up'].widget.attrs.update({'class' : 'form-control input-sm'})
        
         
+class MedicCalculationParametersForm(forms.Form):
     
+    HORMONE_STASUS_CHOICES = (('0', 'Unspecified'),
+                    ('ER positive', 'ER positive',),
+                    ('ER negative', 'ER negative',))
+    
+    hormone_status = forms.ChoiceField(label="Hormone receptor status",
+                                     choices=HORMONE_STASUS_CHOICES, initial=0)
+    
+    HER2_STASUS_CHOICES = (('0', 'Unspecified'),
+                    ('positive', 'positive',),
+                    ('negative', 'negative',))
+    
+    her2_status = forms.ChoiceField(label="HER2 status",
+                                     choices=HER2_STASUS_CHOICES, initial=0)
+        
     

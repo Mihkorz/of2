@@ -13,7 +13,6 @@ from django.views.generic.base import TemplateView
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponse, Http404
-from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 from django.conf import settings
 
@@ -325,6 +324,17 @@ class DocumentDetail(DetailView):
                 self.template_name = "document/medic_doc_detail.html"
                 from medic.models import TreatmentMethod
                 treatments = TreatmentMethod.objects.filter(nosology=self.object.project.nosology)
+                
+                hormone_status = self.object.parameters['hormone_status']
+                her2_status = self.object.parameters['her2_status']
+                
+                if hormone_status!='0':
+                    treatments = treatments.filter(hormone_receptor_status=hormone_status)
+                    
+                if her2_status!='0':
+                    treatments = treatments.filter(her2_status=her2_status)
+                    
+                
                 context['treatments'] = treatments
                 
                 
