@@ -30,6 +30,9 @@ class TreatmentMethod(models.Model):
     file_pms1 = models.FileField(upload_to=get_document_upload_path, max_length=350)
     file_probability = models.FileField(upload_to=get_document_upload_path, max_length=350)
     accuracy = models.FloatField(verbose_name="Accuracy",  blank=True)
+    percentage_response = models.FloatField(verbose_name="Percentage of patients achieving response",  blank=True)
+    ref_clinical_trial = models.TextField(verbose_name="Reference for the clinical trial",  blank=True)
+    
     
     class Meta:
         ordering = ('nosology',)
