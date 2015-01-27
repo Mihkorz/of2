@@ -100,8 +100,11 @@ $(function () {
         },
         subtitle: {
             text: 'Patient is a {%if flag_responder == 0%}non-{%endif%}responder. \
-                   Response score = {{patient_votes|floatformat:"-2"}} \
-                   Accuracy = {{reliability|floatformat:"-2" }}'
+                   Response score={{patient_votes|floatformat:"-2"}} \
+                   Specificity={{specificity|floatformat:"-2"}} \
+                   Sensitivity={{sensitivity|floatformat:"-2"}} \
+                   AUC={{AUC|floatformat:"-2"}} \
+                   Accuracy={{accuracy|floatformat:"-2" }} ' 
         },
         
         legend: {

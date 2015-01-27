@@ -56,7 +56,7 @@ class MedicNosologyDetail(DetailView):
     
 class MedicTreatmentDetail(DetailView):
     """
-    Details page for particular nosology
+    Details page for particular treatment
     """
     model = TreatmentMethod
     template_name = 'medic/medic_treatment_detail.html'
@@ -77,16 +77,19 @@ class MedicTreatmentDetail(DetailView):
         dialect = sniffer.sniff(open(file_probability, 'r').read(), delimiters='\t,;') # defining the separator of the csv file
         df_prob = read_csv(file_probability, delimiter=dialect.delimiter)
         grouped = df_prob.groupby('Sample', sort=True)
-        
-        df_c = df_prob[df_prob['Sample'].str.contains("NRES")]
+                
         all_samples = len(df_prob.index)/2
-        num_nres_samples = len(df_c.index)/2
-        num_res_samples = (all_samples - num_nres_samples)
-        
+                
         lResponders = []
         lnonResponders = []
-        num_responders = 0 # number of responders
-        num_guessed_rigth = 0 # number of responders that remained status after voting
+        num_guessed_rigth = 0 # number of samples that remained status after voting
+        num_guessed_wrong = 0 # number of samples that changed status after voting
+        
+        true_positive = 0
+        true_negative = 0
+        false_positive = 0
+        false_negative = 0
+        
         for name, group in grouped:
             status = name.split('_')[1].strip()
             path_cols = [col for col in group.columns if col not in ['Sample', 'group']]
@@ -101,9 +104,16 @@ class MedicTreatmentDetail(DetailView):
             ratio = float(Rcount)/float(len(path_cols))
             if ratio > 0.5 and status == 'RES':
                 num_guessed_rigth+=1
+                true_positive+=1
+            if ratio > 0.5 and status == 'NRES':
+                num_guessed_wrong+=1
+                false_negative+=1
             if ratio <= 0.5 and status == 'NRES':
                 num_guessed_rigth+=1
-                
+                true_negative+=1
+            if ratio <= 0.5 and status == 'RES':
+                num_guessed_wrong+=1
+                false_positive+=1               
                 
             
             len_p = len(path_cols)
@@ -121,14 +131,21 @@ class MedicTreatmentDetail(DetailView):
         for x in responders:
             responders[x]/=float(all_samples)
             responders[x]*=100
+        
+        """ Statistical values """
+        specificity = (float(true_negative))/(false_positive+true_negative)
+        sensitivity = (float(true_positive))/(true_positive+false_negative)
+        AUC = (specificity+sensitivity)/2
+        accuracy = (true_positive+true_negative)/float(all_samples)
                
         context['nres'] = OrderedDict(sorted(nresponders.items()))
-        context['res'] = OrderedDict(sorted(responders.items()))
+        context['res'] = OrderedDict(sorted(responders.items()))        
+        context['prob'] = df_prob.to_html()        
         
-        context['prob'] = df_prob.to_html()
-        
-        context['reliability'] = float(num_guessed_rigth)/float(all_samples)
-        
+        context['specificity'] = specificity
+        context['sensitivity'] = sensitivity
+        context['AUC'] = AUC
+        context['accuracy'] = accuracy        
         
         df_pms1 = read_excel(file_pms1, sheetname="PMS1")
         context['PMS1'] = df_pms1.to_html()
@@ -234,6 +251,13 @@ class PatientTreatmentDetail(DetailView):
         
         num_responders = 0 # number of responders
         num_guessed_rigth = 0 # number of responders that remained status after voting
+        num_guessed_wrong = 0 # number of samples that changed status after voting
+        
+        true_positive = 0
+        true_negative = 0
+        false_positive = 0
+        false_negative = 0
+        
         for name, group in grouped:
             status = name.split('_')[1].strip()
             path_cols = [col for col in group.columns if col not in ['Sample', 'group']]
@@ -247,10 +271,19 @@ class PatientTreatmentDetail(DetailView):
             ratio = float(Rcount)/float(len(path_cols))
             if status == 'RES':
                 num_responders+=1
+            
             if ratio > 0.5 and status == 'RES':
                 num_guessed_rigth+=1
+                true_positive+=1
+            if ratio > 0.5 and status == 'NRES':
+                num_guessed_wrong+=1
+                false_negative+=1
             if ratio <= 0.5 and status == 'NRES':
                 num_guessed_rigth+=1
+                true_negative+=1
+            if ratio <= 0.5 and status == 'RES':
+                num_guessed_wrong+=1
+                false_positive+=1 
             
             len_p = len(path_cols)
             if status == 'NRES': 
@@ -268,11 +301,22 @@ class PatientTreatmentDetail(DetailView):
             responders[x]/=float(all_samples)
             responders[x]*=100
                
+        
+        """ Statistical values """
+        specificity = (float(true_negative))/(false_positive+true_negative)
+        sensitivity = (float(true_positive))/(true_positive+false_negative)
+        AUC = (specificity+sensitivity)/2
+        accuracy = (true_positive+true_negative)/float(all_samples)
+        
         context['nres'] = OrderedDict(sorted(nresponders.items()))
         context['res'] = OrderedDict(sorted(responders.items()))
         context['flag_responder'] = flag_responder
         context['patient_votes'] = patient_votes
-        context['reliability'] = float(num_guessed_rigth)/float(all_samples)
+        
+        context['specificity'] = specificity
+        context['sensitivity'] = sensitivity
+        context['AUC'] = AUC
+        context['accuracy'] = accuracy 
         
         
         treatment.treatment = treatment.treatment.replace('\n', ' ').replace('\r', '')
@@ -321,7 +365,10 @@ class PatientTreatmentDetail(DetailView):
                 'res': lres,
                 'treatment': context['treatment'].treatment,
                 'patient_votes': round(context['patient_votes'], 2),
-                'reliability': round(context['reliability'], 2),
+                'specificity': round(context['specificity'], 2),
+                'sensitivity': round(context['sensitivity'], 2),
+                'AUC': round(context['AUC'], 2),
+                'accuracy': round(context['accuracy'], 2),
                 'responder': responder,
                 'num_of_patients': context['treatment'].num_of_patients,
                 'histological_type': context['treatment'].histological_type,

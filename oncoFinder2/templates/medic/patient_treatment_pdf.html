@@ -95,7 +95,10 @@ function requestData{{treatment.id}}() {
 	    			chart{{treatment.id}}.setTitle({text: data['treatment']},
 	    				   {text: 'Patient is a '+data['responder']+'. \
  		                   Response score = '+ data['patient_votes']+ ' \
-		                   Accuracy = '+data['reliability'], style:{'font-weight':'bold'}} ,
+ 		                   Specificity='+ data['specificity']+ ' \
+ 		                   Sensitivity='+ data['sensitivity']+ ' \
+ 		                   AUC='+ data['AUC']+ ' \
+		                   Accuracy='+data['accuracy'], style:{'font-weight':'bold'}} ,
 		                   0);
 	    			
 	    			chart{{treatment.id}}.addSeries({
@@ -142,8 +145,9 @@ function requestData{{treatment.id}}() {
 }
 
 </script>
-
+<hr style="height:2px; border:none;color:#000;background-color:#000;"/>
 {%endfor%}
+
 
 
 <script>
