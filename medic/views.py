@@ -53,7 +53,14 @@ class MedicNosologyDetail(DetailView):
         context = super(MedicNosologyDetail, self).get_context_data(**kwargs)
         
         return context
+
+
+class Sample(object):
+    responce_score = 0
+    status_true = ''
+    status_by_voting = ''
     
+        
 class MedicTreatmentDetail(DetailView):
     """
     Details page for particular treatment
@@ -82,8 +89,7 @@ class MedicTreatmentDetail(DetailView):
                 
         lResponders = []
         lnonResponders = []
-        num_guessed_rigth = 0 # number of samples that remained status after voting
-        num_guessed_wrong = 0 # number of samples that changed status after voting
+        lAllRespScore = []
         
         true_positive = 0
         true_negative = 0
@@ -94,7 +100,7 @@ class MedicTreatmentDetail(DetailView):
             status = name.split('_')[1].strip()
             path_cols = [col for col in group.columns if col not in ['Sample', 'group']]
             path_df = group[path_cols]
-            #raise
+            
             divided_df = path_df.T[path_df.index[1]] / path_df.T[path_df.index[0]]
             Rcount = 0 # count Responder votes
             for index, val in divided_df.iteritems():
@@ -103,24 +109,20 @@ class MedicTreatmentDetail(DetailView):
             
             ratio = float(Rcount)/float(len(path_cols))
             if ratio > 0.5 and status == 'RES':
-                num_guessed_rigth+=1
                 true_positive+=1
             if ratio > 0.5 and status == 'NRES':
-                num_guessed_wrong+=1
                 false_negative+=1
             if ratio <= 0.5 and status == 'NRES':
-                num_guessed_rigth+=1
                 true_negative+=1
             if ratio <= 0.5 and status == 'RES':
-                num_guessed_wrong+=1
-                false_positive+=1               
-                
+                false_positive+=1                
             
-            len_p = len(path_cols)
+            lAllRespScore.append(ratio)
             if status == 'NRES': 
-                lnonResponders.append(float(Rcount)/float(len_p))
+                lnonResponders.append(ratio)
             else:
-                lResponders.append(float(Rcount)/float(len_p) )
+                lResponders.append(ratio )
+        
         from collections import Counter, OrderedDict
         
         nresponders = dict(Counter(lnonResponders))
@@ -132,6 +134,56 @@ class MedicTreatmentDetail(DetailView):
             responders[x]/=float(all_samples)
             responders[x]*=100
         
+        dAccur = {}
+        dSp = {}
+        dSn= {}
+        dBalnc={} 
+        for score in lAllRespScore:
+            true_positive = 0
+            true_negative = 0
+            false_positive = 0
+            false_negative = 0
+            for name, group in grouped:
+                status = name.split('_')[1].strip()
+                path_cols = [col for col in group.columns if col not in ['Sample', 'group']]
+                path_df = group[path_cols]
+            
+                divided_df = path_df.T[path_df.index[1]] / path_df.T[path_df.index[0]]
+                Rcount = 0 # count Responder votes
+                for index, val in divided_df.iteritems():
+                    if val>1:
+                        Rcount+= 1
+                ratio = float(Rcount)/float(len(path_cols))
+                if ratio > score and status == 'RES':
+                    true_positive+=1
+                if ratio > score and status == 'NRES':
+                    false_negative+=1
+                if ratio <= score and status == 'NRES':
+                    true_negative+=1
+                if ratio <= score and status == 'RES':
+                    false_positive+=1
+                try:    
+                    specificity = (float(true_negative))/(false_positive+true_negative)
+                except: 
+                    specificity = 0.0001
+                try:
+                    sensitivity = (float(true_positive))/(true_positive+false_negative)
+                except:
+                    sensitivity = 0.0001
+                try:
+                    AUC = (specificity+sensitivity)/2
+                except:
+                    AUC = 0
+                try:
+                    accuracy = (true_positive+true_negative)/float(all_samples)
+                except:
+                    accuracy = 0
+                dSp[score] = specificity
+                dSn[score] = sensitivity
+                dBalnc[score] = AUC
+                dAccur[score] = accuracy
+            
+        
         """ Statistical values """
         specificity = (float(true_negative))/(false_positive+true_negative)
         sensitivity = (float(true_positive))/(true_positive+false_negative)
@@ -139,17 +191,34 @@ class MedicTreatmentDetail(DetailView):
         accuracy = (true_positive+true_negative)/float(all_samples)
                
         context['nres'] = OrderedDict(sorted(nresponders.items()))
-        context['res'] = OrderedDict(sorted(responders.items()))        
-        context['prob'] = df_prob.to_html()        
+        context['res'] = OrderedDict(sorted(responders.items()))                
         
         context['specificity'] = specificity
         context['sensitivity'] = sensitivity
         context['AUC'] = AUC
-        context['accuracy'] = accuracy        
+        context['accuracy'] = accuracy
+        
+        """ getting best statistaical values for different score"""
+        import operator
+        bestSP = max(dSp.iteritems(), key=operator.itemgetter(1))[0]
+        bestSn = max(dSn.iteritems(), key=operator.itemgetter(1))[0]
+        bestBalanced = max(dBalnc.iteritems(), key=operator.itemgetter(1))[0]
+        bestAccur = max(dAccur.iteritems(), key=operator.itemgetter(1))[0]
+        
+        context['bSPkey'] = bestSP
+        context['bSPVal'] = dSp[bestSP]
+        context['bSnkey'] = bestSn
+        context['bSnVal'] = dSn[bestSn]
+        context['bBalkey'] = bestBalanced
+        context['bBalVal'] = dBalnc[bestBalanced]
+        context['bAcckey'] = bestAccur
+        context['bAccVal'] = dAccur[bestAccur]
+                
         
         df_pms1 = read_excel(file_pms1, sheetname="PMS1")
         context['PMS1'] = df_pms1.to_html()
-        
+        context['prob'] = df_prob.to_html()
+        #raise Exception("exp")
         return context
     
 class PatientTreatmentDetail(DetailView):

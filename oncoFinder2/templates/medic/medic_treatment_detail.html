@@ -45,10 +45,17 @@
 {{PMS1|safe}}
 </div> 
 <div id="fragment-4" class="tab-pane fade well">
+
 <p>Specificity = {{specificity|floatformat:"-2"}}</p>
 <p>Sensitivity = {{sensitivity|floatformat:"-2"}}</p>
-<p>AUC = {{AUC|floatformat:"-2"}}</p>
+<p>Balanced Accuracy = {{AUC|floatformat:"-2"}}</p>
 Accuracy = {{accuracy|floatformat:"-2"}}
+<hr/>
+<p>Best Specificity at {{bSPkey}} = {{bSPVal}}</p>
+<p>Best Sensitivity at {{bSnkey}} = {{bSnVal}}</p>
+<p>Best Balanced Accuracy at {{bBalkey}} = {{bBalVal}}</p>
+<p>Best Accuracy at {{bAcckey}} = {{bAccVal}}</p>
+
   <div id="container" style="width:900px; height:400px;">
 
 
@@ -124,6 +131,7 @@ $(function () {
 
         series: [{
         	name: 'Non-responders',
+        	color: '#434348',
             data: [
                {% for key, value in nres.items  %}
                 [{{key}}, {{value}}],
@@ -131,6 +139,7 @@ $(function () {
             ]
         },{
         name: 'Responders',
+        color: '#7cb5ec',
         data: [
 			{% for key, value in res.items  %}
 			[{{key}}, {{value}}],
