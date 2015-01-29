@@ -185,8 +185,13 @@ class MedicTreatmentDetail(DetailView):
             
         
         """ Statistical values """
-        specificity = (float(true_negative))/(false_positive+true_negative)
-        sensitivity = (float(true_positive))/(true_positive+false_negative)
+        try:
+            specificity = (float(true_negative))/(false_positive+true_negative)
+        except:
+            specificity = 0.00001
+        try:
+            sensitivity = (float(true_positive))/(true_positive+false_negative)
+        except: sensitivity = 0.00001
         AUC = (specificity+sensitivity)/2
         accuracy = (true_positive+true_negative)/float(all_samples)
                
@@ -204,6 +209,11 @@ class MedicTreatmentDetail(DetailView):
         bestSn = max(dSn.iteritems(), key=operator.itemgetter(1))[0]
         bestBalanced = max(dBalnc.iteritems(), key=operator.itemgetter(1))[0]
         bestAccur = max(dAccur.iteritems(), key=operator.itemgetter(1))[0]
+        
+        context['dSn'] = OrderedDict(sorted(dSn.items()))
+        context['dSp'] = OrderedDict(sorted(dSp.items()))
+        context['dBalnc'] = OrderedDict(sorted(dBalnc.items()))
+        context['dAccur'] = OrderedDict(sorted(dAccur.items()))
         
         context['bSPkey'] = bestSP
         context['bSPVal'] = dSp[bestSP]

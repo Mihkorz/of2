@@ -5784,3 +5784,90 @@ Traceback (most recent call last):
   File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 221, in get_context_data
     raise Exception("exp")
 Exception: exp
+2015-01-28 18:16:17,847 ERROR base 18936 -1251480768 Internal Server Error: /db/medic/breast-cancer/1/gse37946/10/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 74, in dispatch
+    return super(MedicTreatmentDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 189, in get_context_data
+    sensitivity = (float(true_positive))/(true_positive+false_negative)
+ZeroDivisionError: float division by zero
+2015-01-29 12:49:54,707 ERROR base 25671 -1251480768 Internal Server Error: /db/medic/breast-cancer/1/gse42822_tmb/13/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 139, in get_response
+    response = response.render()
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 105, in render
+    self.content = self.rendered_content
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 80, in rendered_content
+    template = self.resolve_template(self.template_name)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/response.py", line 56, in resolve_template
+    return loader.select_template(template)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader.py", line 180, in select_template
+    return get_template(template_name)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader.py", line 138, in get_template
+    template, origin = find_template(template_name)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader.py", line 127, in find_template
+    source, display_name = loader(name, dirs)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader.py", line 43, in __call__
+    return self.load_template(template_name, template_dirs)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader.py", line 49, in load_template
+    template = get_template_from_string(source, origin, template_name)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader.py", line 149, in get_template_from_string
+    return Template(source, origin, name)
+  File "/usr/local/lib/python2.7/dist-packages/django_debug_toolbar-0.9.4-py2.7.egg/debug_toolbar/panels/template.py", line 37, in new_template_init
+    old_template_init(self, template_string, origin, name)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 125, in __init__
+    self.nodelist = compile_string(template_string, origin)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 153, in compile_string
+    return parser.parse()
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 278, in parse
+    compiled_result = compile_func(self, token)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 215, in do_extends
+    nodelist = parser.parse()
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 278, in parse
+    compiled_result = compile_func(self, token)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/loader_tags.py", line 190, in do_block
+    nodelist = parser.parse(('endblock',))
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 278, in parse
+    compiled_result = compile_func(self, token)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/defaulttags.py", line 805, in do_for
+    sequence = parser.compile_filter(bits[in_index+1])
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 360, in compile_filter
+    return FilterExpression(token, self)
+  File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 577, in __init__
+    "from '%s'" % (token[upto:], token))
+TemplateSyntaxError: Could not parse the remainder: '()' from 'dSn.items()'
+2015-01-29 12:54:01,032 ERROR base 27782 -1271923904 Internal Server Error: /db/medic/breast-cancer/1/gse37946/10/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 74, in dispatch
+    return super(MedicTreatmentDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 189, in get_context_data
+    sensitivity = (float(true_positive))/(true_positive+false_negative)
+ZeroDivisionError: float division by zero

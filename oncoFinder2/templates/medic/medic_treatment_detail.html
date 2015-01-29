@@ -18,7 +18,8 @@
         <li ><a href="#fragment-2" data-toggle="tab"><span>Probability Table </span></a></li>
         <li><a href="#fragment-3" data-toggle="tab"><span>PAS1 Table</span></a></li>
         <li ><a href="#fragment-4" data-toggle="tab"><span>Histogram</span></a></li>
-        <li ><a href="#fragment-5" data-toggle="tab"><span>Graphic Scheme</span></a></li>
+        <li ><a href="#fragment-5" data-toggle="tab"><span>Statistical Tables</span></a></li>
+        <li ><a href="#fragment-6" data-toggle="tab"><span>Graphic Scheme</span></a></li>
     </ul>
 
 <div id="tabContent" class="tab-content">
@@ -90,6 +91,53 @@ Accuracy = {{accuracy|floatformat:"-2"}}
 </div>
 
 <div id="fragment-5" class="tab-pane fade well">
+Sensitivity:
+<table class="table" style="width: 200px">
+<tr><th>threshold</th><th>Value</th></tr>
+{% for threshold, value in dSn.items %}
+<tr>
+  <td>{{threshold}}</td>
+  <td>{{value}}</td>
+</tr>
+{%endfor%}
+</table>
+
+Specificity:
+<table class="table" style="width: 200px">
+<tr><th>threshold</th><th>Value</th></tr>
+{% for threshold, value in dSp.items %}
+<tr>
+  <td>{{threshold}}</td>
+  <td>{{value}}</td>
+</tr>
+{%endfor%}
+</table>
+
+Balanced accuracy:
+<table class="table" style="width: 200px">
+<tr><th>threshold</th><th>Value</th></tr>
+{% for threshold, value in dBalnc.items %}
+<tr>
+  <td>{{threshold}}</td>
+  <td>{{value}}</td>
+</tr>
+{%endfor%}
+</table>
+
+Accuracy:
+<table class="table" style="width: 200px">
+<tr><th>threshold</th><th>Value</th></tr>
+{% for threshold, value in dAccur.items %}
+<tr>
+  <td>{{threshold}}</td>
+  <td>{{value}}</td>
+</tr>
+{%endfor%}
+</table>
+
+</div> 
+
+<div id="fragment-6" class="tab-pane fade well">
 
   <div id="container4" style="width:900px; height:400px;">
 
