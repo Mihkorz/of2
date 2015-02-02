@@ -2,6 +2,7 @@
 import csv
 import json
 import cairosvg
+import numpy as np
 
 from pandas import read_csv, read_excel, DataFrame
 from docx import Document as pyDocx
@@ -57,8 +58,9 @@ class MedicNosologyDetail(DetailView):
 
 class Sample(object):
     responce_score = 0
-    status_true = ''
+    initial_status = ''
     status_by_voting = ''
+    status_by_window = ''
     
         
 class MedicTreatmentDetail(DetailView):
@@ -90,6 +92,7 @@ class MedicTreatmentDetail(DetailView):
         lResponders = []
         lnonResponders = []
         lAllRespScore = []
+        lSampleObjects = []
         
         true_positive = 0
         true_negative = 0
@@ -118,10 +121,16 @@ class MedicTreatmentDetail(DetailView):
                 false_positive+=1                
             
             lAllRespScore.append(ratio)
+            
+            sampleObj = Sample() # Create sample object to test 0.1 window method
+            sampleObj.responce_score = ratio
+            sampleObj.initial_status = status
+            lSampleObjects.append(sampleObj)
+            
             if status == 'NRES': 
                 lnonResponders.append(ratio)
             else:
-                lResponders.append(ratio )
+                lResponders.append(ratio)
         
         from collections import Counter, OrderedDict
         
@@ -223,6 +232,80 @@ class MedicTreatmentDetail(DetailView):
         context['bBalVal'] = dBalnc[bestBalanced]
         context['bAcckey'] = bestAccur
         context['bAccVal'] = dAccur[bestAccur]
+        
+        
+        """ 0.1 window method """
+        lnewResp = []
+        lnewNonResp = []
+        ttt = []
+        
+        for rangee in np.arange(0.1,1.1,0.1):
+            ttt.append(rangee)
+            count_responders = 0
+            count_nresponders = 0
+            filtered = [x for x in lSampleObjects if (x.responce_score>=rangee-0.1 and x.responce_score<=rangee)]
+            for s in filtered:
+                if s.initial_status == "RES":
+                    count_responders+=1
+                else:
+                    count_nresponders+=1
+            if count_nresponders>=count_responders:
+                for x in filtered:
+                    x.status_by_window = "NRES"
+                    lnewNonResp.append(x.responce_score) 
+            else:
+                for x in filtered:
+                    x.status_by_window = "RES"
+                    lnewResp.append(x.responce_score)
+                
+            
+        new_nresponders = dict(Counter(lnewNonResp))
+        for x in new_nresponders:
+            new_nresponders[x]/=float(all_samples)
+            new_nresponders[x]*=100
+        new_responders =  dict(Counter(lnewResp))
+        for x in new_responders:
+            new_responders[x]/=float(all_samples)
+            new_responders[x]*=100
+        
+        true_positive = 0
+        true_negative = 0
+        false_positive = 0
+        false_negative = 0    
+        for sample in lSampleObjects:
+            if sample.initial_status =='RES' and sample.status_by_window == 'RES':
+                    true_positive+=1
+            if sample.initial_status =='RES' and sample.status_by_window == 'NRES':
+                    false_negative+=1
+            if sample.initial_status =='NRES' and sample.status_by_window == 'NRES':
+                    true_negative+=1
+            if sample.initial_status =='NRES' and sample.status_by_window == 'RES':
+                    false_positive+=1
+                    
+        try:
+            new_specificity = (float(true_negative))/(false_positive+true_negative)
+        except: 
+            new_specificity = 0.0001
+        try:
+            new_sensitivity = (float(true_positive))/(true_positive+false_negative)
+        except:
+            new_sensitivity = 0.0001
+        try:
+            new_AUC = (specificity+sensitivity)/2
+        except:
+            new_AUC = 0
+        try:
+            new_accuracy = (true_positive+true_negative)/float(all_samples)
+        except:
+            new_accuracy = 0 
+            
+        context['new_nres'] = OrderedDict(sorted(new_nresponders.items()))
+        context['new_res'] = OrderedDict(sorted(new_responders.items()))      
+        
+        context['new_specificity'] = new_specificity
+        context['new_sensitivity'] = new_sensitivity
+        context['new_AUC'] = new_AUC
+        context['new_accuracy'] = new_accuracy
                 
         
         df_pms1 = read_excel(file_pms1, sheetname="PMS1")

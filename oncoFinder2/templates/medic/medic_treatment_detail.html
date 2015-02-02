@@ -19,7 +19,7 @@
         <li><a href="#fragment-3" data-toggle="tab"><span>PAS1 Table</span></a></li>
         <li ><a href="#fragment-4" data-toggle="tab"><span>Histogram</span></a></li>
         <li ><a href="#fragment-5" data-toggle="tab"><span>Statistical Tables</span></a></li>
-        <li ><a href="#fragment-6" data-toggle="tab"><span>Graphic Scheme</span></a></li>
+        <li ><a href="#fragment-6" data-toggle="tab"><span>10% window method</span></a></li>
     </ul>
 
 <div id="tabContent" class="tab-content">
@@ -138,7 +138,11 @@ Accuracy:
 </div> 
 
 <div id="fragment-6" class="tab-pane fade well">
-
+<p>Specificity = {{new_specificity|floatformat:"-2"}}</p>
+<p>Sensitivity = {{new_sensitivity|floatformat:"-2"}}</p>
+<p>Balanced Accuracy = {{new_AUC|floatformat:"-2"}}</p>
+Accuracy = {{new_accuracy|floatformat:"-2"}}
+<hr/>
   <div id="container4" style="width:900px; height:400px;">
 
   </div>
@@ -167,6 +171,9 @@ $(function () {
         	title: {
         		text: 'Response score'
         	},
+        	min: 0,
+        	max: 1,
+        	tickInterval: 0.1,
             minPadding: 0.05,
             maxPadding: 0.05
         },
@@ -201,7 +208,7 @@ $(function () {
 $(function () {
     $('#container4').highcharts({
     	chart: {
-            type: 'area'
+            type: 'column'
         },
         title: {
             text: 'Responders/non-responders graph'
@@ -210,6 +217,9 @@ $(function () {
         	title: {
         		text: 'Response score'
         	},
+        	min: 0,
+        	max: 1,
+        	tickInterval: 0.1,
             minPadding: 0.05,
             maxPadding: 0.05
         },
@@ -222,15 +232,17 @@ $(function () {
 
         series: [{
         	name: 'Non-responders',
+        	color: '#434348',
             data: [
-               {% for key, value in nres.items  %}
+               {% for key, value in new_nres.items  %}
                 [{{key}}, {{value}}],
                {%endfor%} 
             ]
         },{
         name: 'Responders',
+        color: '#7cb5ec',
         data: [
-			{% for key, value in res.items  %}
+			{% for key, value in new_res.items  %}
 			[{{key}}, {{value}}],
 			{%endfor%} 
                ]}]
