@@ -291,7 +291,7 @@ class MedicTreatmentDetail(DetailView):
         except:
             new_sensitivity = 0.0001
         try:
-            new_AUC = (specificity+sensitivity)/2
+            new_AUC = (new_specificity+new_sensitivity)/2
         except:
             new_AUC = 0
         try:
