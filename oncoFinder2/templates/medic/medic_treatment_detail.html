@@ -52,10 +52,10 @@
 <p>Balanced Accuracy = {{AUC|floatformat:"-2"}}</p>
 Accuracy = {{accuracy|floatformat:"-2"}}
 <hr/>
-<p>Best Specificity at {{bSPkey}} = {{bSPVal}}</p>
-<p>Best Sensitivity at {{bSnkey}} = {{bSnVal}}</p>
-<p>Best Balanced Accuracy at {{bBalkey}} = {{bBalVal}}</p>
-<p>Best Accuracy at {{bAcckey}} = {{bAccVal}}</p>
+<p>Best Specificity at {{bSPkey|floatformat:"-2"}} = {{bSPVal|floatformat:"-2"}}</p>
+<p>Best Sensitivity at {{bSnkey|floatformat:"-2"}} = {{bSnVal|floatformat:"-2"}}</p>
+<p>Best Balanced Accuracy at {{bBalkey|floatformat:"-2"}} = {{bBalVal|floatformat:"-2"}}</p>
+<p>Best Accuracy at {{bAcckey|floatformat:"-2"}} = {{bAccVal|floatformat:"-2"}}</p>
 
   <div id="container" style="width:900px; height:400px;">
 
@@ -96,8 +96,8 @@ Sensitivity:
 <tr><th>threshold</th><th>Value</th></tr>
 {% for threshold, value in dSn.items %}
 <tr>
-  <td>{{threshold}}</td>
-  <td>{{value}}</td>
+  <td>{{threshold|floatformat:"-2"}}</td>
+  <td>{{value|floatformat:"-2"}}</td>
 </tr>
 {%endfor%}
 </table>
@@ -107,8 +107,8 @@ Specificity:
 <tr><th>threshold</th><th>Value</th></tr>
 {% for threshold, value in dSp.items %}
 <tr>
-  <td>{{threshold}}</td>
-  <td>{{value}}</td>
+  <td>{{threshold|floatformat:"-2"}}</td>
+  <td>{{value|floatformat:"-2"}}</td>
 </tr>
 {%endfor%}
 </table>
@@ -118,8 +118,8 @@ Balanced accuracy:
 <tr><th>threshold</th><th>Value</th></tr>
 {% for threshold, value in dBalnc.items %}
 <tr>
-  <td>{{threshold}}</td>
-  <td>{{value}}</td>
+  <td>{{threshold|floatformat:"-2"}}</td>
+  <td>{{value|floatformat:"-2"}}</td>
 </tr>
 {%endfor%}
 </table>
@@ -129,8 +129,8 @@ Accuracy:
 <tr><th>threshold</th><th>Value</th></tr>
 {% for threshold, value in dAccur.items %}
 <tr>
-  <td>{{threshold}}</td>
-  <td>{{value}}</td>
+  <td>{{threshold|floatformat:"-2"}}</td>
+  <td>{{value|floatformat:"-2"}}</td>
 </tr>
 {%endfor%}
 </table>
@@ -189,7 +189,7 @@ $(function () {
         	color: '#434348',
             data: [
                {% for key, value in nres.items  %}
-                [{{key}}, {{value}}],
+                [{{key|floatformat:"-2"}}, {{value|floatformat:"-2"}}],
                {%endfor%} 
             ]
         },{
@@ -197,7 +197,7 @@ $(function () {
         color: '#7cb5ec',
         data: [
 			{% for key, value in res.items  %}
-			[{{key}}, {{value}}],
+			[{{key|floatformat:"-2"}}, {{value|floatformat:"-2"}}],
 			{%endfor%} 
                ]}]
     });
@@ -235,7 +235,7 @@ $(function () {
         	color: '#434348',
             data: [
                {% for key, value in new_nres.items  %}
-                [{{key}}, {{value}}],
+                [{{key|floatformat:"-2"}}, {{value|floatformat:"-2"}}],
                {%endfor%} 
             ]
         },{
@@ -243,7 +243,7 @@ $(function () {
         color: '#7cb5ec',
         data: [
 			{% for key, value in new_res.items  %}
-			[{{key}}, {{value}}],
+			[{{key|floatformat:"-2"}}, {{value|floatformat:"-2"}}],
 			{%endfor%} 
                ]}]
     });
