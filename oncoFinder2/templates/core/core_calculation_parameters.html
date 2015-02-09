@@ -30,6 +30,7 @@
        <form class="form-horizontal" role="form" action="" method="post"  id="calculation_parameters_form">
           {% csrf_token %}
           <small>
+         <!-- MEDICAL FORM -->
           {% if document.project.field = 'med' %}
           {{form.hormone_status.label_tag}} &nbsp;&nbsp;&nbsp;
           {{form.hormone_status}}
@@ -37,6 +38,7 @@
           {{form.her2_status.label_tag}} &nbsp;&nbsp;&nbsp;
           {{form.her2_status}}
           {% else %}
+          <!-- OF GENE EXPRESSION -->
           <div class="form-group form-group-sm">
           <div class="col-sm-10">
           {{ form.db_choice.label_tag }}
@@ -61,7 +63,7 @@
 	     {% endfor %}
 	     </div>
           
-                 
+          {% if document.doc_format != 'OF_cnr' %}
           <div class="form-group form-group-sm">
             <label for="{{ form.sigma_num.auto_id }}" class="col-sm-4 control-label">{{ form.sigma_num.label }}</label>            
             <div class="col-sm-8">
@@ -70,6 +72,7 @@
                 {{ form.use_sigma }}
             </div>
           </div>
+          {% endif %}
           
           <div class="form-group form-group-sm">
             <label for="{{ form.cnr_low.auto_id }}" class="col-sm-4 control-label">{{ form.cnr_low.label }}</label>            

@@ -55,6 +55,9 @@
                  <strong><i>
                  {{doc.get_doc_type_display}}
                  </i></strong>
+                 {% if doc.get_doc_type_display == 'input' %}
+                 <br/><br/>{{doc.get_doc_format_display}}
+                 {%endif%}
               </td>
               <td>
               <small>

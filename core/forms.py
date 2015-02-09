@@ -20,13 +20,13 @@ class CalculationParametersForm(forms.Form):
                                      widget=forms.RadioSelect, choices=DB_CHOICES, initial=1)
     norm_choice = forms.ChoiceField(label="Calculation algorithm for normal values",
                                      widget=forms.RadioSelect, choices=NORM_CHOICES, initial=2)
-    calculate_pms = forms.BooleanField(label="PMS", initial=True, required=False)
-    calculate_pms1 = forms.BooleanField(label="PMS1", initial=True, required=False)
-    calculate_pms2 = forms.BooleanField(label="PMS2", initial=True, required=False)
+    calculate_pms = forms.BooleanField(label="PAS", initial=True, required=False)
+    calculate_pms1 = forms.BooleanField(label="PAS1", initial=True, required=False)
+    calculate_pms2 = forms.BooleanField(label="PAS2", initial=True, required=False)
     calculate_ds1 = forms.BooleanField(label="DS1A", initial=False, required=False)
     calculate_ds2 = forms.BooleanField(label="DS2", initial=False, required=False)
     calculate_ds3 = forms.BooleanField(label="DS1B", initial=False, required=False)
-    calculate_norms_pas = forms.BooleanField(label="PMS1 for Norms", initial=True, required=False)
+    calculate_norms_pas = forms.BooleanField(label="PAS1 for Norms(requires at least 3 norms)", initial=True, required=False)
     calculate_pvalue_each = forms.BooleanField(label="P-value for each sample(parametric test)", initial=True, required=False)
     calculate_pvalue_all = forms.BooleanField(label="P-value for each pathway(non-parametric test)", initial=True, required=False)
     

@@ -163,7 +163,7 @@ class CreateDocument(CreateView):
         if doc_format == 'OF_cnr':
             view = OfCnrPreprocess.as_view()
             return view(request, *args, **kwargs)
-        raise Exception(request.POST['doc_format'])
+        
         return super(CreateDocument, self).dispatch(request, *args, **kwargs)
         
     def form_valid(self, form):
