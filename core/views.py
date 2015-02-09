@@ -158,7 +158,7 @@ class CoreSetCalculationParameters(FormView):
         tumour_columns = [col for col in process_doc_df.columns if 'Tumour' in col] #get sample columns 
         
          
-        if input_document.norm_num >= 4:
+        if input_document.norm_num >= 3:
             calculate_p_value = True                
            
             norms_df = process_doc_df[[col for col in process_doc_df.columns 

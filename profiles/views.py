@@ -20,6 +20,7 @@ from django.conf import settings
 from .forms import SettingsUserForm, UserProfileFormSet, CreateProjectForm, \
                    UploadDocumentForm
 from .models import Project, Document, ProcessDocument
+from .preprocess_views import OfCnrPreprocess
 from database.models import Pathway, Component, Gene
 from mirna.views import mirnaProjectDetail, mirnaDocumentDetail
 
@@ -158,6 +159,11 @@ class CreateDocument(CreateView):
     
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
+        doc_format = request.POST['doc_format']
+        if doc_format == 'OF_cnr':
+            view = OfCnrPreprocess.as_view()
+            return view(request, *args, **kwargs)
+        raise Exception(request.POST['doc_format'])
         return super(CreateDocument, self).dispatch(request, *args, **kwargs)
         
     def form_valid(self, form):

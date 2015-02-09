@@ -30,6 +30,7 @@ class Pathway(models.Model):
         return link_to_object(self.node_set.all())
     node_list.allow_tags = True
 
+"""
 ONTOLOGY_TYPES = (
     ('BP', 'Biological Process'),
     ('MF', 'Molecular Function'),
@@ -46,7 +47,7 @@ class GOEnrichment(models.Model):
     Size = models.IntegerField(verbose_name="Size")
     Term = models.CharField(max_length=300, verbose_name=u'Term', blank=False)
     human_pathway = models.ForeignKey(Pathway, blank=False)
-    
+"""    
     
 class Gene(models.Model):
     name = models.CharField(verbose_name='Gene name', max_length=250, blank=False)

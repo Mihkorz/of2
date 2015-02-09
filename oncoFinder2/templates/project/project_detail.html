@@ -168,9 +168,32 @@
 $(function(){
 	$("#doc_create_form > input[type=text], textarea").addClass("form-control");
 	$('#uploadButton').click(function () {
-	    var btn = $(this)
-	    btn.button('loading');
-	  
+	    	    
+	    var errors = 0;
+	    var arErrors = []
+	    
+	    var doc_format = $("#id_doc_format"); 
+	    var doc_file = $("#id_document");
+	    if (doc_format.val() == ''){
+	    	errors++;
+	    	arErrors.push("Please choose file format.");
+	    }
+	    if(doc_file.val()==''){
+	    	errors++;
+	    	arErrors.push("Please select file to upload.");	    	
+	    }
+	    
+	    if(errors>0){
+	    	alert(arErrors.join('\n'));
+	    	return false;
+	    }
+	    else{
+	    	var btn = $(this)
+		    btn.button('loading');
+	    	return true;
+	    }
+	    
+	    
 	    
 
 	  });

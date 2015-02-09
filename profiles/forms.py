@@ -64,4 +64,4 @@ class UploadDocumentForm(forms.ModelForm):
     
     class Meta(object):
         model = Document
-        fields = ['document', 'description', 'created_by', 'project', ]
+        fields = ['doc_format', 'document', 'description', 'created_by', 'project', ]

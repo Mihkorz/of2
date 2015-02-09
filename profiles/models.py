@@ -80,10 +80,20 @@ DOC_TYPES = (
     (DOCUMENT_INPUT, 'input'),
     (DOCUMENT_OUTPUT, 'output'),
 )
+
+DOC_FORMATS = (
+    ('OF_gene', 'OncoFinder gene expression file'),
+    ('OF_cnr', 'OncoFinder CNR file'),
+    ('Illumina', 'Illumina file (with marked Tumour and Normal columns)'),
+    ('CustomArray', 'CustomArray file (currently under development)'),
+)
           
 class Document(models.Model):
     document = models.FileField(upload_to=get_document_upload_path, max_length=300)
-    doc_type = models.IntegerField(verbose_name="Document type", choices=DOC_TYPES, default=DOCUMENT_INPUT)
+    doc_type = models.IntegerField(verbose_name="Document type", choices=DOC_TYPES, 
+                                   default=DOCUMENT_INPUT)
+    doc_format = models.CharField(verbose_name="Document format", max_length=100, 
+                                  choices=DOC_FORMATS, blank=True, default='')
     structure = JSONField(verbose_name = "Document structure")
     description = models.TextField(verbose_name="Description", blank=True)
     parameters = JSONField(verbose_name="Calculation parameters", blank=True)
