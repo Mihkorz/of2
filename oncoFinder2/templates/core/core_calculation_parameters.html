@@ -67,9 +67,11 @@
           <div class="form-group form-group-sm">
             <label for="{{ form.pvalue_num.auto_id }}" class="col-sm-4 control-label">{{ form.pvalue_num.label }}</label>            
             <div class="col-sm-8">
-                {{ form.pvalue_num }}
+                
                 {{ form.use_ttest.label_tag }}&nbsp;&nbsp;
                 {{ form.use_ttest }}
+                {{ form.use_ttest_1sam.label_tag }}&nbsp;&nbsp;
+                {{ form.use_ttest_1sam }}
             </div>
           </div>
           {% endif %}

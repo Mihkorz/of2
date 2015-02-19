@@ -5,7 +5,7 @@ from datetime import datetime
 from pandas import  DataFrame, Series, read_csv, read_excel,  ExcelWriter
 import numpy as np
 from scipy.stats.mstats import gmean
-from scipy.stats import ttest_1samp
+from scipy.stats import ttest_1samp, ttest_ind
 
 from django.views.generic.edit import FormView #CreateView , UpdateView
 from django.views.generic.detail import DetailView
@@ -66,7 +66,8 @@ class CoreSetCalculationParameters(FormView):
         variable = form.cleaned_data.get('name of field in form', 'Default value if not found in form')  
         """
         #filters
-        use_ttest = form.cleaned_data.get('use_ttest', True)  
+        use_ttest = form.cleaned_data.get('use_ttest', True)
+        use_ttest_1sam = form.cleaned_data.get('use_ttest_1sam', True) 
         pvalue_num = form.cleaned_data.get('pvalue_num', 0.05)        
         use_cnr = form.cleaned_data.get('use_cnr', True)
         cnr_low = form.cleaned_data.get('cnr_low', 0.67)
@@ -141,7 +142,23 @@ class CoreSetCalculationParameters(FormView):
                
         tumour_columns = [col for col in process_doc_df.columns if 'Tumour' in col] #get sample columns 
         
+        """ Standard T-test for genes """
+        if use_ttest:
+
+            def calculate_ttest(row):
+                tumours = row[[t for t in row.index if 'Tumour' in t]]
+                norms = row[[n for n in row.index if 'Norm' in n]]
+                       
+                _, p_val = ttest_ind(tumours, norms)
+            
+                return p_val
         
+            series_p_values = process_doc_df.apply(calculate_ttest, axis=1)
+            process_doc_df['p_value'] = series_p_values
+         
+            process_doc_df = process_doc_df[process_doc_df['p_value']<0.05]
+        
+        """ end of calculating horizontal p-values for genes """
          
         if input_document.norm_num >= 3:
             calculate_p_value = True                                
@@ -157,7 +174,8 @@ class CoreSetCalculationParameters(FormView):
             pathway_objects = MetabolismPathway.objects.all() # Metabolism DB
         elif int(db_choice) == 3:
             pathway_objects = MousePathway.objects.all() # Mouse DB
-                
+        #raise Exception('yoyoyo')
+        """ START CYCLE """        
         for pathway in pathway_objects:
             gene_name = []
             gene_arr = []
@@ -208,7 +226,6 @@ class CoreSetCalculationParameters(FormView):
             """ Calculating PAS for samples and norms using filter(s)  """
             
             norms_df = joined_df[[norm for norm in [col for col in joined_df.columns if 'Norm' in col]]]
-            
             log_norms_df = np.log(norms_df)#use this for t-test, assuming log(norm) is distributed normally
             
             """ get Series of mean norms for selected algorithm and std """
@@ -223,15 +240,15 @@ class CoreSetCalculationParameters(FormView):
                     
                     col_CNR = col/s_mean_norm #convert column from GENE EXPRESSION to CNR
                     
-                    if use_ttest: # two-sided T-test filter
+                    if use_ttest_1sam: # two-sided 1sample T-test filter
                         _, p_value = ttest_1samp(log_norms_df, np.log(col), axis=1)
                         s_p_value = Series(p_value, index = col.index)
-                        col_CNR = col_CNR[(s_p_value<pvalue_num)]
+                        col_CNR = col_CNR[(s_p_value<0.05)]
                                        
                     if use_cnr: # CNR FILTER
                         col_CNR = col_CNR[((col_CNR>cnr_up) | (col_CNR<cnr_low)) & (col_CNR>0)] 
                         
-                    if use_sigma: # Sigma FILTER                           
+                    if use_sigma: # Sigma FILTER  !!! deprecated !!!                         
                         col_CNR = col_CNR[((col>=(s_mean_norm+sigma_num*std)) |
                                        (col<(s_mean_norm-sigma_num*std)))] 
                     
@@ -488,11 +505,11 @@ class CoreSetCalculationParameters(FormView):
         output_doc.related_doc = input_document
         output_doc.save() 
         
-        """Create CNR file avaliable for downloading """
+        """Create CNR file avaliable for downloading 
         cnr_doc_df = process_doc_df
         cnr_norms_df = cnr_doc_df[[norm for norm in [col for col in cnr_doc_df.columns if 'Norm' in col]]]
                     
-        """ get Series of mean norms for selected algorithm and std """
+        
         cnr_gMean_norm = cnr_norms_df.apply(gmean, axis=1)
         cnr_mean_norm = cnr_norms_df.mean(axis=1)
         std=cnr_norms_df.std(axis=1) # standard deviation
@@ -507,7 +524,7 @@ class CoreSetCalculationParameters(FormView):
         cnr_doc_df['gMean_norm'] = cnr_gMean_norm
         cnr_doc_df['std'] = std
         
-        """ Saving CNR results to Excel file """
+         Saving CNR results to Excel file 
         path = os.path.join('users', str(input_document.project.owner),
                                             str(input_document.project),'process')
         file_name = 'cnr_'+str(output_doc.get_filename())
@@ -519,7 +536,7 @@ class CoreSetCalculationParameters(FormView):
       
         with ExcelWriter(output_file, index=False) as writer:
             cnr_doc_df.to_excel(writer,'CNR')  
-        
+        """
         
         
         

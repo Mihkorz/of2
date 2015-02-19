@@ -16,9 +16,11 @@ class CalculationParametersForm(forms.Form):
     use_cnr = forms.BooleanField(label="Use CNR filter", initial=True, required=False)
     cnr_low = forms.FloatField(label="CNR lower limit", initial=0.67, required=False)
     cnr_up = forms.FloatField(label="CNR upper limit", initial=1.5, required=False)
-    use_ttest = forms.BooleanField(label="Use two-sided T-test ",
+    use_ttest = forms.BooleanField(label="Use T-test for gene distribution ",
                                    initial=True, required=False)
-    pvalue_num = forms.FloatField( label="P-value threshold", initial=0.05, required=False)
+    use_ttest_1sam = forms.BooleanField(label="Use 1 sample T-test for each gene ",
+                                   initial=True, required=False)
+    pvalue_num = forms.FloatField( label="P-value filter", initial=0.05, required=False)
     #DB and norm algorithm selection
     db_choice = forms.ChoiceField(label="Pathway DataBase",
                                      widget=forms.RadioSelect, choices=DB_CHOICES, initial=1)
