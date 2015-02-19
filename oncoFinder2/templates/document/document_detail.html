@@ -29,9 +29,9 @@
    {% else %}
    
    <a class="btn btn-default btn-sm pull-right" style="margin-left: 20px;" href="{{MEDIA_URL}}{{document.document}}">
-      <span class="glyphicon glyphicon-download"></span> &nbsp;<b>Download PMS-DS file</b>
+      <span class="glyphicon glyphicon-download"></span> &nbsp;<b>Download PAS-DS file</b>
      </a>
-     <a class="btn btn-default btn-sm pull-right" href="{{MEDIA_URL}}{{document.related_doc.input_doc.document}}">
+     <a class="btn btn-default btn-sm pull-right" href="{{MEDIA_URL}}users/{{document.project.owner}}/{{document.project}}/process/cnr_{{document.get_filename}}">
       <span class="glyphicon glyphicon-download-alt"></span> &nbsp;<b>Download CNR file</b>
      </a>
      
@@ -57,14 +57,14 @@
 <div id="all_paths" class="out_doc_container"> 
 	<!-- Nav tabs -->
 	<ul class="nav nav-tabs">
-	  {% if PMS %}
-	  <li class="active"><a href="#pms" data-toggle="tab">PMS</a></li>
+	  {% if PAS %}
+	  <li ><a href="#pas" data-toggle="tab">PAS</a></li>
 	  {% endif %}
-	  {% if PMS1 %}
-	  <li><a href="#pms1" data-toggle="tab">PMS1</a></li>
+	  {% if PAS1 %}
+	  <li class="active"><a href="#pas1" data-toggle="tab">PAS1</a></li>
 	  {% endif %}
-	  {% if PMS2 %}
-	  <li><a href="#pms2" data-toggle="tab">PMS2</a></li>
+	  {% if PAS2 %}
+	  <li ><a href="#pas2" data-toggle="tab">PAS2</a></li>
 	  {% endif %}
 	  {%if DS1 %}
 	  <li><a href="#ds1" data-toggle="tab">DS1A</a></li>
@@ -78,38 +78,38 @@
 	</ul>
 	
 	<div class="tab-content">
-	{% if PMS %}
-	  <div class="tab-pane fade in active" id="pms">
+	{% if PAS %}
+	  <div class="tab-pane fade " id="pas">
 	      
 	      <div class="wrapper1">
 	        <div class="upper_scroll"></div>
 	       </div>
 	       <div class="wrapper2">
-	          {{PMS|safe}}
+	          {{PAS|safe}}
 	       </div>
 	  
 	  </div>
 	  {% endif %}
-	  {% if PMS1 %}
-	  <div class="tab-pane fade" id="pms1">
+	  {% if PAS1 %}
+	  <div class="tab-pane fade in active" id="pas1">
 	  
 	     <div class="wrapper1">
 	        <div class="upper_scroll"></div>
 	       </div>
 	       <div class="wrapper2">
-	          {{PMS1|safe}}
+	          {{PAS1|safe}}
 	       </div>
 	  
 	  </div>
 	  {% endif %}
-	  {% if PMS2 %}
-	  <div class="tab-pane fade" id="pms2">
+	  {% if PAS2 %}
+	  <div class="tab-pane fade" id="pas2">
 	  
 	     <div class="wrapper1">
 	        <div class="upper_scroll"></div>
 	       </div>
 	       <div class="wrapper2">
-	          {{PMS2|safe}}
+	          {{PAS2|safe}}
 	       </div>
 	  
 	  </div>
@@ -199,7 +199,7 @@ $(function(){
 	$("table.dataframe").attr("border", "0").addClass("table table-hover of-table");
 });
 $(function(){
-	$(".upper_scroll").width($(".wrapper2 > table").width());
+	$(".upper_scroll").width($("#pas1 > div.wrapper2 > table").width());
 	  
 	$(".wrapper1").scroll(function(){ 
 	    $(".wrapper2").scrollLeft($(this).scrollLeft());

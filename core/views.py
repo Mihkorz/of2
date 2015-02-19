@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 import os
 import math
-import csv
 from datetime import datetime
-from pandas import concat, read_csv, read_excel, DataFrame, Series, ExcelWriter
+from pandas import  DataFrame, Series, read_csv, read_excel,  ExcelWriter
 import numpy as np
+from scipy.stats.mstats import gmean
+from scipy.stats import ttest_1samp
 
 from django.views.generic.edit import FormView #CreateView , UpdateView
 from django.views.generic.detail import DetailView
@@ -13,7 +14,6 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from django.core.files import File
 from django.core.exceptions import MultipleObjectsReturned
 from django.conf import settings
 
@@ -47,14 +47,12 @@ class CoreSetCalculationParameters(FormView):
         context = super(CoreSetCalculationParameters, self).get_context_data(**kwargs)
         
         input_document = Document.objects.get(pk=self.kwargs['pk'])
-        
-        
+                
         context['document'] = input_document
         return context
     
     def form_valid(self, form):
-            
-        
+                
         context = self.get_context_data()
         
         """ update current Input Document """
@@ -62,49 +60,39 @@ class CoreSetCalculationParameters(FormView):
         input_document.calculated_by = self.request.user
         input_document.calculated_at = datetime.now()
         input_document.save()        
+                
+        """ 
+        Assigning values from Calculation parameters form and controlling defaults.
+        variable = form.cleaned_data.get('name of field in form', 'Default value if not found in form')  
+        """
+        #filters
+        use_ttest = form.cleaned_data.get('use_ttest', True)  
+        pvalue_num = form.cleaned_data.get('pvalue_num', 0.05)        
+        use_cnr = form.cleaned_data.get('use_cnr', True)
+        cnr_low = form.cleaned_data.get('cnr_low', 0.67)
+        cnr_up =  form.cleaned_data.get('cnr_up', 1.5)
+        use_sigma = form.cleaned_data.get('use_sigma', False) # !!! deprecated !!! 
+        sigma_num = form.cleaned_data.get('sigma_num', 2) # !!! deprecated !!!
         
+        #database and normal choice
+        norm_choice = form.cleaned_data.get('norm_choice', 2) #default=geometric
+        db_choice = form.cleaned_data.get('db_choice', 1) #default=Human 
         
-        """ In case it's medical project. TODO: Remove this and create new form and view """
-        if input_document.project.field == 'med':
-            sigma_num = 2
-            use_sigma = True
-            cnr_low =  0.67
-            cnr_up =  1.5
-            use_cnr = True
-            norm_choice = 2 # geometric
-            db_choice = 1 #Human
-            calculate_pms = True
-            calculate_pms1 = True
-            calculate_pms2 = False
-            calculate_ds1 = False
-            calculate_ds2 = False
-            calculate_ds3 = False
-            calculate_norms_pas = False
-            calculate_pvalue_each = False
-            calculate_pvalue_all = False
-            new_pathway_names = False
-            
-            hormone_status = form.cleaned_data['hormone_status']
-            her2_status = form.cleaned_data['her2_status']
+        #what to calculate and include in output report
+        calculate_pas = form.cleaned_data.get('calculate_pas', False)
+        calculate_pas1 = form.cleaned_data.get('calculate_pas1', True)
+        calculate_pas2 = form.cleaned_data.get('calculate_pas2', False)
+        calculate_ds1 = False #form.cleaned_data.get('calculate_ds1', False)
+        calculate_ds2 = False #form.cleaned_data.get('calculate_ds2', False)
+        calculate_ds3 = False #form.cleaned_data.get('calculate_ds3', False)
+        calculate_norms_pas = form.cleaned_data.get('calculate_norms_pas', False)
+        calculate_pvalue_each = form.cleaned_data.get('calculate_pvalue_each', False)
+        calculate_pvalue_all = form.cleaned_data.get('calculate_pvalue_all', False) 
+        new_pathway_names = form.cleaned_data.get('new_pathway_names', False)
         
-        else:
-            sigma_num = form.cleaned_data['sigma_num']
-            use_sigma = form.cleaned_data['use_sigma']
-            cnr_low =  form.cleaned_data['cnr_low']
-            cnr_up =  form.cleaned_data['cnr_up']
-            use_cnr = form.cleaned_data['use_cnr']
-            norm_choice = form.cleaned_data['norm_choice']
-            db_choice = form.cleaned_data['db_choice']
-            calculate_pms = form.cleaned_data['calculate_pms']
-            calculate_pms1 = form.cleaned_data['calculate_pms1']
-            calculate_pms2 = form.cleaned_data['calculate_pms2'] 
-            calculate_ds1 = form.cleaned_data['calculate_ds1']
-            calculate_ds2 = form.cleaned_data['calculate_ds2']
-            calculate_ds3 = form.cleaned_data['calculate_ds3']
-            calculate_norms_pas = form.cleaned_data['calculate_norms_pas']
-            calculate_pvalue_each = form.cleaned_data['calculate_pvalue_each']
-            calculate_pvalue_all = form.cleaned_data['calculate_pvalue_all'] 
-            new_pathway_names = form.cleaned_data['new_pathway_names']
+        #From medical form. TODO: consider moving whole medical calculations to another view
+        hormone_status = form.cleaned_data.get('hormone_status', False)
+        her2_status = form.cleaned_data.get('her2_status', False)
         
         """ Create an empty Output Document  """
         
@@ -127,21 +115,17 @@ class CoreSetCalculationParameters(FormView):
                                  'cnr_up': cnr_up,
                                  'use_cnr': use_cnr,
                                  'norm_algirothm': 'geometric' if int(norm_choice)>1 else 'arithmetic',
-                                 'db': json_db }
-        
-        if input_document.project.field == 'med':
-            output_doc.parameters = {'hormone_status': hormone_status,
-                                     'her2_status': her2_status
-                                     }
+                                 'db': json_db,
+                                 'hormone_status': hormone_status,
+                                 'her2_status': her2_status }
         
         output_doc.project = input_document.project
         output_doc.created_by = self.request.user
         output_doc.created_at = datetime.now()        
         #output_doc.save()
+                        
         
-                
-        
-        """ Calculating PMS and PMS1 """
+        """ Start Calculations"""
          
         def strip(text):
             try:
@@ -151,24 +135,20 @@ class CoreSetCalculationParameters(FormView):
         
         calculate_p_value = False # Flag for p-value calculation
         
-        
         process_doc_df = read_csv(settings.MEDIA_ROOT+"/"+input_document.input_doc.document.name,
                                   sep='\t', index_col='SYMBOL',  converters = {'SYMBOL' : strip}).fillna(0)        
         
+               
         tumour_columns = [col for col in process_doc_df.columns if 'Tumour' in col] #get sample columns 
+        
         
          
         if input_document.norm_num >= 3:
-            calculate_p_value = True                
-           
-            norms_df = process_doc_df[[col for col in process_doc_df.columns 
-                                       if 'Norm' in col or 
-                                          'norm' in col or 
-                                          'std' in col]]                  
+            calculate_p_value = True                                
         
-        pms_list = []
-        pms1_list = []
-        pms2_list = []
+        pas_list = []
+        pas1_list = []
+        pas2_list = []
         differential_genes = {}
         
         if int(db_choice) == 1:
@@ -198,70 +178,110 @@ class CoreSetCalculationParameters(FormView):
             
             gene_df = DataFrame(gene_data).set_index('SYMBOL')
             
-            gene_df_abs = gene_df.abs()
-            summ_genes_arr = gene_df_abs['ARR'].sum() if gene_df_abs['ARR'].sum()>0 else 1
+            gene_df_abs = gene_df.abs() #for PAS2 calculation
+            summ_genes_arr = (gene_df_abs['ARR'].sum() 
+                              if gene_df_abs['ARR'].sum()>0 else 1) #for PAS2 calculation
             
-            gene_df = gene_df.groupby(gene_df.index, level=0).mean() # ignore duplicate genes if exist 
+            gene_df = gene_df.groupby(gene_df.index, level=0).mean() # take average value for duplicate genes 
             
-            joined_df = gene_df.join(process_doc_df, how='inner')
+            joined_df = gene_df.join(process_doc_df, how='inner') #intersect DataFrames to acquire only genes in current pathway
+  
+            pas_dict = {}
+            pas1_dict = {}
+            pas2_dict = {}
             
-            
-            pms_dict = {}
-            pms1_dict = {}
-            pms2_dict = {}
-            
-            pms_dict['Pathway'] = pms1_dict['Pathway'] = pms2_dict['Pathway'] = pathway.name.strip()
+            pas_dict['Pathway'] = pas1_dict['Pathway'] = pas2_dict['Pathway'] = pathway.name.strip()
             
             """ Inserting new pathway names if needed """
             if new_pathway_names:
                 new_path_df = read_excel(settings.MEDIA_ROOT+"/TRpathways_update_final_updated2.xlsx",
                                           index_col='Old Pathway Name')            
-                    
-                
                 try:                    
                     new_path_name = new_path_df.loc[pathway.name.strip()][1] 
                 except KeyError:
                     new_path_name = 'Unknown'
                     pass
-                pms_dict['New pathway name'] = pms1_dict['New pathway name'] = pms2_dict['New pathway name'] = new_path_name
+                pas_dict['New pathway name'] = pas1_dict['New pathway name'] = pas2_dict['New pathway name'] = new_path_name
                 
                 
             
-            """ Calculating PAS for Normal Values. All genes are assumed to be differential """
-            if calculate_p_value and (calculate_pvalue_each or calculate_pvalue_all):
-                
-                joined_df_norms = gene_df.join(norms_df, how='inner')
-                
-                def calculate_norms_pms(col, arr, cnr_low, cnr_up, gMean_norm, std):
-                    if 'Norm' in col.name:
+            """ Calculating PAS for samples and norms using filter(s)  """
+            
+            norms_df = joined_df[[norm for norm in [col for col in joined_df.columns if 'Norm' in col]]]
+            
+            log_norms_df = np.log(norms_df)#use this for t-test, assuming log(norm) is distributed normally
+            
+            """ get Series of mean norms for selected algorithm and std """
+            if norm_choice>1: #geometric norms
+                s_mean_norm = norms_df.apply(gmean, axis=1)
+            else:             #arithmetic norms
+                s_mean_norm = norms_df.mean(axis=1)
+            std=norms_df.std(axis=1) # standard deviation
+             
+            def PAS1_calculation(col, arr):
+                if ('Tumour' in col.name) or ('Norm' in col.name):
+                    
+                    col_CNR = col/s_mean_norm #convert column from GENE EXPRESSION to CNR
+                    
+                    if use_ttest: # two-sided T-test filter
+                        _, p_value = ttest_1samp(log_norms_df, np.log(col), axis=1)
+                        s_p_value = Series(p_value, index = col.index)
+                        col_CNR = col_CNR[(s_p_value<pvalue_num)]
+                                       
+                    if use_cnr: # CNR FILTER
+                        col_CNR = col_CNR[((col_CNR>cnr_up) | (col_CNR<cnr_low)) & (col_CNR>0)] 
                         
-                        if use_cnr:
-                            col = col[((col>cnr_up) | (col<cnr_low)) & (col>0)] # CNR FILTER
-                        
-                        if use_sigma:
-                            col = col[((col*gMean_norm>=(gMean_norm+sigma_num*std)) |
-                                       (col*gMean_norm<(gMean_norm-sigma_num*std)))] # Sigma FILTER
-                        
-                        return np.log(col)*arr
+                    if use_sigma: # Sigma FILTER                           
+                        col_CNR = col_CNR[((col>=(s_mean_norm+sigma_num*std)) |
+                                       (col<(s_mean_norm-sigma_num*std)))] 
+                    
+                    return np.log(col_CNR)*arr # PAS1=ARR*log(CNR)
                        
-                    else:
-                        return col # in case it's not Norm column
+                else:
+                    return col # in case it's not Tumour or Norm column
                 
-                pms_norms = joined_df_norms.apply(calculate_norms_pms, axis=0, 
-                                                  arr=joined_df_norms['ARR'],
-                                                  cnr_low=cnr_low, cnr_up=cnr_up,
-                                                  gMean_norm=joined_df_norms['gMean_norm'],
-                                                  std=joined_df_norms['std']).fillna(0)
-
-                lnorms_p_value = []
-                for norm in [x for x in pms_norms.columns if 'Norm' in x]:
-                    pms1_value = pms_norms[norm].sum()
+            pas_norms_samples = joined_df.apply(PAS1_calculation, axis=0, 
+                                                  arr=joined_df['ARR'],
+                                                ).fillna(0).sum()
+             
+            #raise Exception('exp') 
+            lnorms_all = []
+            lpas1_all = []
+            for index, pas1 in pas_norms_samples.iteritems():
+                if 'Norm' in index:
+                    if calculate_p_value and (calculate_pvalue_each or calculate_pvalue_all):
+                        lnorms_all.append(pas1)
                     if calculate_norms_pas:
-                        pms_dict[norm] = float(pathway.amcf)*pms_norms[norm].sum()
-                        pms1_dict[norm] = pms1_value
-                    lnorms_p_value.append(pms1_value)             
+                        pas_dict[index] = float(pathway.amcf)*pas1
+                        pas1_dict[index] = pas1
+                        pas2_dict[index] = pas1/summ_genes_arr
+                    
+                if 'Tumour' in index:
+                    if calculate_pas:
+                        pas_dict[index] = float(pathway.amcf)*pas1
+                    if calculate_pas1:
+                        pas1_dict[index] = pas1
+                    if calculate_pas2:
+                        pas2_dict[index] = pas1/summ_genes_arr
+                    if calculate_p_value and calculate_pvalue_all:
+                        lpas1_all.append(pas1)
+            
+            if calculate_p_value and calculate_pvalue_each:
+                from .stats import pseudo_ttest_1samp
+                for index, pas1 in pas_norms_samples.iteritems():
+                    if 'Tumour' in index:
+                        _, p_val = pseudo_ttest_1samp(lnorms_all, pas1)
+                        pas1_dict[index+'_p-value'] = p_val 
+                                       
+            
+            if calculate_p_value and calculate_pvalue_all:
+                    from scipy.stats import ranksums  
+                    _, p_val = ranksums(lnorms_all, lpas1_all)
+                    pas1_dict['p-value_Mean'] = p_val                
             
             #raise Exception('exp') 
+            """
+            
             pms1_all = []
             for tumour in tumour_columns: #loop thought samples columns                
                 summ = 0
@@ -319,17 +339,20 @@ class CoreSetCalculationParameters(FormView):
                     from scipy.stats import ranksums  
                     z_stat, p_val = ranksums(lnorms_p_value, pms1_all)
                     pms1_dict['p-value_Mean'] = p_val 
-                
-            pms_list.append(pms_dict)
-            pms1_list.append(pms1_dict)
-            pms2_list.append(pms2_dict)        
+        """        
+            pas_list.append(pas_dict)
+            pas1_list.append(pas1_dict)
+            pas2_list.append(pas2_dict)        
         
-        output_pms_df = DataFrame(pms_list)
-        output_pms_df = output_pms_df.set_index('Pathway')
-        output_pms1_df = DataFrame(pms1_list)
-        output_pms1_df = output_pms1_df.set_index('Pathway')
-        output_pms2_df = DataFrame(pms2_list)
-        output_pms2_df = output_pms2_df.set_index('Pathway')
+        if calculate_pas:
+            output_pas_df = DataFrame(pas_list)
+            output_pas_df = output_pas_df.set_index('Pathway')
+        if calculate_pas1:
+            output_pas1_df = DataFrame(pas1_list)
+            output_pas1_df = output_pas1_df.set_index('Pathway')
+        if calculate_pas2:
+            output_pas2_df = DataFrame(pas2_list)
+            output_pas2_df = output_pas2_df.set_index('Pathway')
         
         """ Calculating Drug Score """
         output_ds1_df = output_ds2_df = output_ds3_df = DataFrame()
@@ -388,8 +411,8 @@ class CoreSetCalculationParameters(FormView):
                                 CNR = process_doc_df.at[target.name, tumour]
                                 if CNR == 0:
                                     CNR = 1
-                                PMS = output_pms_df.at[path.name, tumour]
-                                PMS2 = output_pms2_df.at[path.name, tumour]
+                                PMS = output_pas_df.at[path.name, tumour]
+                                PMS2 = output_pas2_df.at[path.name, tumour]
                                 AMCF = float(path.amcf)
                             
                                 if drug.tip == 'inhibitor' and path.name!='Mab_targets':
@@ -447,12 +470,12 @@ class CoreSetCalculationParameters(FormView):
         output_file = default_storage.save(settings.MEDIA_ROOT+"/"+path+"/"+file_name, ContentFile(''))
                
         with ExcelWriter(output_file, index=False) as writer:
-            if calculate_pms:
-                output_pms_df.to_excel(writer,'PMS')
-            if calculate_pms1:     
-                output_pms1_df.to_excel(writer,'PMS1')
-            if calculate_pms2:     
-                output_pms2_df.to_excel(writer,'PMS2')
+            if calculate_pas:
+                output_pas_df.to_excel(writer,'PAS')
+            if calculate_pas1:     
+                output_pas1_df.to_excel(writer,'PAS1')
+            if calculate_pas2:     
+                output_pas2_df.to_excel(writer,'PAS2')
             if calculate_ds1:
                 output_ds1_df.to_excel(writer, 'DS1A')
             if calculate_ds2:
@@ -464,7 +487,38 @@ class CoreSetCalculationParameters(FormView):
         output_doc.document = path+"/"+os.path.basename(output_file)
         output_doc.related_doc = input_document
         output_doc.save() 
-         
+        
+        """Create CNR file avaliable for downloading """
+        cnr_doc_df = process_doc_df
+        cnr_norms_df = cnr_doc_df[[norm for norm in [col for col in cnr_doc_df.columns if 'Norm' in col]]]
+                    
+        """ get Series of mean norms for selected algorithm and std """
+        cnr_gMean_norm = cnr_norms_df.apply(gmean, axis=1)
+        cnr_mean_norm = cnr_norms_df.mean(axis=1)
+        std=cnr_norms_df.std(axis=1) # standard deviation
+        if norm_choice>1: #geometric norms
+            divide = cnr_gMean_norm
+        else:             #arithmetic norms
+            divide = cnr_mean_norm     
+        
+        cnr_doc_df = cnr_doc_df.div(divide, axis='index')
+        
+        cnr_doc_df['Mean_norm'] = cnr_mean_norm
+        cnr_doc_df['gMean_norm'] = cnr_gMean_norm
+        cnr_doc_df['std'] = std
+        
+        """ Saving CNR results to Excel file """
+        path = os.path.join('users', str(input_document.project.owner),
+                                            str(input_document.project),'process')
+        file_name = 'cnr_'+str(output_doc.get_filename())
+        
+        from django.core.files.storage import default_storage
+        from django.core.files.base import ContentFile
+        
+        output_file = default_storage.save(settings.MEDIA_ROOT+"/"+path+"/"+file_name, ContentFile(''))
+      
+        with ExcelWriter(output_file, index=False) as writer:
+            cnr_doc_df.to_excel(writer,'CNR')  
         
         
         
@@ -505,16 +559,44 @@ class Test(TemplateView):
     def get_context_data(self, **kwargs):
               
         context = super(Test, self).get_context_data(**kwargs)
+        from scipy.stats import ttest_1samp
+    
+        import numpy as np
         
-        paths = Pathway.objects.all()
-        lnum = []
-        for pth in paths:
-            lnum.append(pth.gene_set.count())
+        popmean = np.log(677.583249)
+        a=np.array([212.226597,
+           98.964291,
+           210.267198,
+           192.158336,
+           250.711585,
+           212.183150,
+           226.327190,
+           211.964368,
+           217.831440,
+           235.440940,
+           245.281362,
+           213.776852,
+           195.193613])
+        true_mean = sum(a) / float(len(a))
+        a = np.log(a)
+        from scipy.stats.mstats import gmean
+        import scipy
+        geom_Mean = gmean(a) 
         
-        summ = sum(lnum)
-        numel = len(lnum)
-        median = summ/numel    
-        raise
+        std = a.std()
+        
+        Zscore = (popmean-geom_Mean)/std
+        
+        
+        
+        p_values = scipy.stats.norm.pdf(Zscore)*2
+                
+        stat, pval = ttest_1samp(a, popmean)
+        
+        from .stats import pseudo_ttest_1samp  
+        z_stat, p_val = pseudo_ttest_1samp(a, popmean)
+           
+        raise Exception('test exception')
         """
         from database.models import GOEnrichment
         for filename in os.listdir(settings.MEDIA_ROOT+"/GO/GO_enrichment"):

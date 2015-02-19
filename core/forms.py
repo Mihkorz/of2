@@ -10,19 +10,24 @@ class CalculationParametersForm(forms.Form):
     DB_CHOICES = (('1', 'Human',),
                   ('3', 'Mouse'),
                   ('2', 'Metabolism',))
-    
-    sigma_num = forms.FloatField( label="Sigma amount", initial=2, required=False)
-    use_sigma = forms.BooleanField(label="Use sigma filter", initial=True, required=False)
+    #FILTERS
+    use_sigma = forms.BooleanField(label="Use sigma filter", initial=False, required=False)
+    sigma_num = forms.FloatField( label="Sigma amount \n (deprecated)", initial=2, required=False)
+    use_cnr = forms.BooleanField(label="Use CNR filter", initial=True, required=False)
     cnr_low = forms.FloatField(label="CNR lower limit", initial=0.67, required=False)
     cnr_up = forms.FloatField(label="CNR upper limit", initial=1.5, required=False)
-    use_cnr = forms.BooleanField(label="Use CNR filter", initial=True, required=False)
+    use_ttest = forms.BooleanField(label="Use two-sided T-test ",
+                                   initial=True, required=False)
+    pvalue_num = forms.FloatField( label="P-value threshold", initial=0.05, required=False)
+    #DB and norm algorithm selection
     db_choice = forms.ChoiceField(label="Pathway DataBase",
                                      widget=forms.RadioSelect, choices=DB_CHOICES, initial=1)
     norm_choice = forms.ChoiceField(label="Calculation algorithm for normal values",
                                      widget=forms.RadioSelect, choices=NORM_CHOICES, initial=2)
-    calculate_pms = forms.BooleanField(label="PAS", initial=True, required=False)
-    calculate_pms1 = forms.BooleanField(label="PAS1", initial=True, required=False)
-    calculate_pms2 = forms.BooleanField(label="PAS2", initial=True, required=False)
+    #values included into report
+    calculate_pas = forms.BooleanField(label="PAS", initial=True, required=False)
+    calculate_pas1 = forms.BooleanField(label="PAS1", initial=True, required=False)
+    calculate_pas2 = forms.BooleanField(label="PAS2", initial=True, required=False)
     calculate_ds1 = forms.BooleanField(label="DS1A", initial=False, required=False)
     calculate_ds2 = forms.BooleanField(label="DS2", initial=False, required=False)
     calculate_ds3 = forms.BooleanField(label="DS1B", initial=False, required=False)
@@ -36,6 +41,7 @@ class CalculationParametersForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super(CalculationParametersForm, self).__init__(*args, **kwargs)
         self.fields['sigma_num'].widget.attrs.update({'class' : 'form-control input-sm'})
+        self.fields['pvalue_num'].widget.attrs.update({'class' : 'form-control input-sm'})
         self.fields['cnr_low'].widget.attrs.update({'class' : 'form-control input-sm'})
         self.fields['cnr_up'].widget.attrs.update({'class' : 'form-control input-sm'})
        

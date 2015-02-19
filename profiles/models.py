@@ -123,4 +123,8 @@ class ProcessDocument(models.Model):
     output_doc = models.ForeignKey(Document, related_name="output_doc", blank=True, null=True)
     created_by = models.ForeignKey(User, blank=True, null=True, related_name='created')
     created_at = models.DateTimeField(auto_now_add=True)
-    
+
+class IlluminaProbeTarget(models.Model):
+    PROBE_ID = models.CharField(max_length=250, db_index=True, verbose_name=u'Probe ID', blank=False)
+    TargetID = models.CharField(max_length=250, verbose_name=u'Target ID', blank=False)
+    PROBE_SEQUENCE = models.CharField(max_length=250, verbose_name=u'Probe Sequance')    

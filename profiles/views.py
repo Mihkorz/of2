@@ -20,7 +20,7 @@ from django.conf import settings
 from .forms import SettingsUserForm, UserProfileFormSet, CreateProjectForm, \
                    UploadDocumentForm
 from .models import Project, Document, ProcessDocument
-from .preprocess_views import OfCnrPreprocess
+from .preprocess_views import OfCnrPreprocess, IlluminaPreprocess
 from database.models import Pathway, Component, Gene
 from mirna.views import mirnaProjectDetail, mirnaDocumentDetail
 
@@ -163,7 +163,9 @@ class CreateDocument(CreateView):
         if doc_format == 'OF_cnr':
             view = OfCnrPreprocess.as_view()
             return view(request, *args, **kwargs)
-        
+        if doc_format == 'Illumina':
+            view = IlluminaPreprocess.as_view()
+            return view(request, *args, **kwargs)
         return super(CreateDocument, self).dispatch(request, *args, **kwargs)
         
     def form_valid(self, form):
@@ -198,9 +200,10 @@ class CreateDocument(CreateView):
         process_doc.save()
         
         new_file = settings.MEDIA_ROOT+"/"+path
+        
                 
         df = df.set_index('SYMBOL') #create index by SYMBOL column
-          
+        """ 
         df = df.groupby(df.index, level=0).mean() #deal with duplicate genes by taking mean value
         
         mean_norm = df[[norm for norm in norm_cols]].mean(axis=1)
@@ -212,13 +215,14 @@ class CreateDocument(CreateView):
         df1 = df1.std(axis=1)
                 
         df['Mean_norm'] = mean_norm
+        df['gMean_norm'] = gmean_norm
                
         df = df.div(df.Mean_norm, axis='index')
        
         df['Mean_norm'] = mean_norm
         df['gMean_norm'] = gmean_norm
         df['std'] = df1
-                
+        """        
         
             
         if project.field == 'med':
@@ -285,23 +289,33 @@ class DocumentDetail(DetailView):
             context['input'] = df[:50].to_html()            
         else:
             if self.object.project.field == 'sci':
-            
-                #self.template_name = "document/medic_doc_detail.html"
                 try:
                     df = read_excel(filename, sheetname="PMS")
-                    context['PMS'] = df.to_html()
+                    context['PAS'] = df.to_html()
                 except:
-                    pass
+                    try:
+                        df = read_excel(filename, sheetname="PAS")
+                        context['PAS'] = df.to_html()
+                    except:
+                        pass
                 try:
                     df = read_excel(filename, sheetname="PMS1")
-                    context['PMS1'] = df.to_html()
+                    context['PAS1'] = df.to_html()
                 except:
-                    pass
+                    try:
+                        df = read_excel(filename, sheetname="PAS1")
+                        context['PAS1'] = df.to_html()
+                    except:
+                        pass
                 try:
                     df = read_excel(filename, sheetname="PMS2")
-                    context['PMS2'] = df.to_html()
+                    context['PAS2'] = df.to_html()
                 except:
-                    pass
+                    try:
+                        df = read_excel(filename, sheetname="PAS2")
+                        context['PAS2'] = df.to_html()
+                    except:
+                        pass
                 try:
                     df = read_excel(filename, sheetname="DS1")
                     context['DS1'] = df.to_html()
@@ -434,7 +448,7 @@ class SampleDetail(DeleteView):
             context['json_diff_genes'] = json.dumps(dict_diff_genes_for_sample) 
             context['genes'] = output_genes   
         except:
-            errors.append("Error while determining differential genes!")
+            raise#errors.append("Error while determining differential genes!")
         
         try: # reading data from file
             df_file_pms = read_excel(output_filename, sheetname="PMS")
@@ -444,13 +458,21 @@ class SampleDetail(DeleteView):
         except:
             errors.append("Error reading file and converting it to Pandas DataFrame!")
         
-        try: # constructing PMS dictionary for displaying
+        try:
             df_pms = df_file_pms[[sample]]
             df_pms.columns = ['PMS']
+            
+            pms_dict =  df_pms.to_dict(outtype="dict")
+        except:
+            pms_dict = {}
+                
+        
+        try: # constructing PMS dictionary for displaying
+            
+            
             df_pms1 = df_file_pms1[[sample]]
             df_pms1.columns = ['PMS1']
-            df_pms = df_pms.join(df_pms1, how="inner")
-            pms_dict =  df_pms.to_dict(outtype="dict")
+            
             
             output_pms = {}
             
@@ -555,7 +577,7 @@ class SampleDetail(DeleteView):
             context['lDrawPathCanvas'] = lDrawCanvas
 
         except:
-            raise#errors.append("Error processing PMS and PMS1 DataFrames!")
+            errors.append("Error processing PMS and PMS1 DataFrames!")
             
         try: # constructing DS dictionary for displaying
             df_ds1 = df_file_ds1[[sample, 'DataBase']]

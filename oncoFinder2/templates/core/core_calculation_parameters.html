@@ -62,14 +62,14 @@
 	      </label>
 	     {% endfor %}
 	     </div>
-          
+          <hr/>
           {% if document.doc_format != 'OF_cnr' %}
           <div class="form-group form-group-sm">
-            <label for="{{ form.sigma_num.auto_id }}" class="col-sm-4 control-label">{{ form.sigma_num.label }}</label>            
+            <label for="{{ form.pvalue_num.auto_id }}" class="col-sm-4 control-label">{{ form.pvalue_num.label }}</label>            
             <div class="col-sm-8">
-                {{ form.sigma_num }}
-                {{ form.use_sigma.label_tag }}&nbsp;&nbsp;
-                {{ form.use_sigma }}
+                {{ form.pvalue_num }}
+                {{ form.use_ttest.label_tag }}&nbsp;&nbsp;
+                {{ form.use_ttest }}
             </div>
           </div>
           {% endif %}
@@ -88,7 +88,17 @@
                 {{ form.use_cnr }}
             </div>
           </div>
-          
+          {% if document.doc_format != 'OF_cnr' %}
+          <div class="form-group form-group-sm">
+            <label for="{{ form.sigma_num.auto_id }}" class="col-sm-4 control-label">{{ form.sigma_num.label }}</label>            
+            <div class="col-sm-8">
+                {{ form.sigma_num }}
+                {{ form.use_sigma.label_tag|safe }}&nbsp;&nbsp;
+                {{ form.use_sigma }}
+            </div>
+          </div>
+          {%endif%}
+          <hr/>
           <div class="form-group form-group-sm">
             <div class="col-sm-10">
               <label>Include in the report following values: 
@@ -96,12 +106,12 @@
                                              title="Here will be description of what PMS and DS means"  ></span>
               </label>
               <div>
-                {{ form.calculate_pms.label_tag }}&nbsp; 
-                {{ form.calculate_pms }} &nbsp;&nbsp;
-                {{ form.calculate_pms1.label_tag }}&nbsp; 
-                {{ form.calculate_pms1 }}&nbsp;&nbsp;
-                {{ form.calculate_pms2.label_tag }}&nbsp; 
-                {{ form.calculate_pms2 }}&nbsp;&nbsp;<br/>
+                {{ form.calculate_pas.label_tag }}&nbsp; 
+                {{ form.calculate_pas }} &nbsp;&nbsp;
+                {{ form.calculate_pas1.label_tag }}&nbsp; 
+                {{ form.calculate_pas1 }}&nbsp;&nbsp;
+                {{ form.calculate_pas2.label_tag }}&nbsp; 
+                {{ form.calculate_pas2 }}&nbsp;&nbsp;<br/>
                 {{ form.calculate_ds1.label_tag }}&nbsp; 
                 {{ form.calculate_ds1 }}&nbsp;&nbsp;
                 {{ form.calculate_ds2.label_tag }}&nbsp; 
