@@ -155,7 +155,7 @@ class CoreSetCalculationParameters(FormView):
             
                 return p_val
             log_process_doc_df = np.log(process_doc_df).fillna(0)
-            series_p_values = log_process_doc_df.apply(calculate_ttest, axis=1)
+            series_p_values = log_process_doc_df.apply(calculate_ttest, axis=1).fillna(0)
             process_doc_df['p_value'] = series_p_values
             if use_fdr:
                 fdr_q_values = fdr_corr(series_p_values)
