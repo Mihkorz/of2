@@ -5,7 +5,7 @@ from datetime import datetime
 from pandas import  DataFrame, Series, read_csv, read_excel,  ExcelWriter
 import numpy as np
 from scipy.stats.mstats import gmean
-from scipy.stats import ttest_1samp, ttest_ind
+from scipy.stats import ttest_1samp, ttest_ind, ranksums
 
 from django.views.generic.edit import FormView #CreateView , UpdateView
 from django.views.generic.detail import DetailView
@@ -22,6 +22,7 @@ from profiles.models import Document, ProcessDocument
 from database.models import Pathway, Gene, Drug
 from metabolism.models import MetabolismPathway, MetabolismGene
 from mouse.models import MousePathway, MouseGene
+from .stats import pseudo_ttest_1samp, fdr_corr
 
 
 class CoreSetCalculationParameters(FormView):
@@ -67,7 +68,8 @@ class CoreSetCalculationParameters(FormView):
         """
         #filters
         use_ttest = form.cleaned_data.get('use_ttest', True)
-        use_ttest_1sam = form.cleaned_data.get('use_ttest_1sam', True) 
+        use_fdr = form.cleaned_data.get('use_fdr', True)
+        use_ttest_1sam = form.cleaned_data.get('use_ttest_1sam', False) 
         pvalue_num = form.cleaned_data.get('pvalue_num', 0.05)        
         use_cnr = form.cleaned_data.get('use_cnr', True)
         cnr_low = form.cleaned_data.get('cnr_low', 0.67)
@@ -155,8 +157,15 @@ class CoreSetCalculationParameters(FormView):
             log_process_doc_df = np.log(process_doc_df)
             series_p_values = log_process_doc_df.apply(calculate_ttest, axis=1)
             process_doc_df['p_value'] = series_p_values
-         
-            process_doc_df = process_doc_df[process_doc_df['p_value']<0.05]
+            if use_fdr:
+                fdr_q_values = fdr_corr(series_p_values)
+                fdr_df = DataFrame({'p' : series_p_values,
+                                    'q' : fdr_q_values
+                                    })
+                process_doc_df['q_value'] = fdr_df['q']
+                process_doc_df = process_doc_df[process_doc_df['q_value']<0.05]
+            else:
+                process_doc_df = process_doc_df[process_doc_df['p_value']<0.05]
         
         """ end of calculating horizontal p-values for genes """
          
@@ -284,7 +293,7 @@ class CoreSetCalculationParameters(FormView):
                         lpas1_all.append(pas1)
             
             if calculate_p_value and calculate_pvalue_each:
-                from .stats import pseudo_ttest_1samp
+                
                 for index, pas1 in pas_norms_samples.iteritems():
                     if 'Tumour' in index:
                         _, p_val = pseudo_ttest_1samp(lnorms_all, pas1)
@@ -292,7 +301,7 @@ class CoreSetCalculationParameters(FormView):
                                        
             
             if calculate_p_value and calculate_pvalue_all:
-                    from scipy.stats import ranksums  
+                     
                     _, p_val = ranksums(lnorms_all, lpas1_all)
                     pas1_dict['p-value_Mean'] = p_val                
             
