@@ -154,7 +154,7 @@ class CoreSetCalculationParameters(FormView):
                 _, p_val = ttest_ind(tumours, norms)
             
                 return p_val
-            log_process_doc_df = np.log(process_doc_df)
+            log_process_doc_df = np.log(process_doc_df).fillna(0)
             series_p_values = log_process_doc_df.apply(calculate_ttest, axis=1)
             process_doc_df['p_value'] = series_p_values
             if use_fdr:
