@@ -18,11 +18,12 @@ class CalculationParametersForm(forms.Form):
     cnr_up = forms.FloatField(label="CNR upper limit", initial=1.5, required=False)
     use_ttest = forms.BooleanField(label="Use T-test for gene distribution ",
                                    initial=True, required=False)
-    use_fdr = forms.BooleanField(label="False discovery rate (FDR) for T-test ",
+    use_fdr = forms.BooleanField(label="Use FDR for T-test ",
                                    initial=True, required=False)
-    use_ttest_1sam = forms.BooleanField(label="Use 1 sample T-test for each gene ",
+    use_ttest_1sam = forms.BooleanField(label="Use 1sample T-test ",
                                    initial=False, required=False)
-    pvalue_num = forms.FloatField( label="P-value filter", initial=0.05, required=False)
+    pvalue_threshold = forms.FloatField( label="p-value threshold", initial=0.05, required=False)
+    qvalue_threshold = forms.FloatField( label="q-value threshold", initial=0.05, required=False)
     #DB and norm algorithm selection
     db_choice = forms.ChoiceField(label="Pathway DataBase",
                                      widget=forms.RadioSelect, choices=DB_CHOICES, initial=1)
@@ -38,6 +39,8 @@ class CalculationParametersForm(forms.Form):
     calculate_norms_pas = forms.BooleanField(label="PAS1 for Norms(requires at least 3 norms)", initial=True, required=False)
     calculate_pvalue_each = forms.BooleanField(label="P-value for each sample(parametric test)", initial=True, required=False)
     calculate_pvalue_all = forms.BooleanField(label="P-value for each pathway(non-parametric test)", initial=True, required=False)
+    calculate_FDR_each = forms.BooleanField(label="q-value for each sample(parametric test)", initial=False, required=False)
+    calculate_FDR_all = forms.BooleanField(label="q-value for each pathway(non-parametric test)", initial=False, required=False)
     
     new_pathway_names = forms.BooleanField(label="New pathway names", initial=False, required=False)
     
@@ -45,7 +48,8 @@ class CalculationParametersForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super(CalculationParametersForm, self).__init__(*args, **kwargs)
         self.fields['sigma_num'].widget.attrs.update({'class' : 'form-control input-sm'})
-        self.fields['pvalue_num'].widget.attrs.update({'class' : 'form-control input-sm'})
+        self.fields['pvalue_threshold'].widget.attrs.update({'class' : 'form-control input-sm', 'style':'width:60px; display:inline'})
+        self.fields['qvalue_threshold'].widget.attrs.update({'class' : 'form-control input-sm', 'style':'width:60px; display:inline'})
         self.fields['cnr_low'].widget.attrs.update({'class' : 'form-control input-sm'})
         self.fields['cnr_up'].widget.attrs.update({'class' : 'form-control input-sm'})
        

@@ -70,7 +70,8 @@ class CoreSetCalculationParameters(FormView):
         use_ttest = form.cleaned_data.get('use_ttest', True)
         use_fdr = form.cleaned_data.get('use_fdr', True)
         use_ttest_1sam = form.cleaned_data.get('use_ttest_1sam', False) 
-        pvalue_num = form.cleaned_data.get('pvalue_num', 0.05)        
+        pvalue_threshold = form.cleaned_data.get('pvalue_threshold', 0.05)
+        qvalue_threshold = form.cleaned_data.get('qvalue_threshold', 0.05)        
         use_cnr = form.cleaned_data.get('use_cnr', True)
         cnr_low = form.cleaned_data.get('cnr_low', 0.67)
         cnr_up =  form.cleaned_data.get('cnr_up', 1.5)
@@ -90,7 +91,9 @@ class CoreSetCalculationParameters(FormView):
         calculate_ds3 = False #form.cleaned_data.get('calculate_ds3', False)
         calculate_norms_pas = form.cleaned_data.get('calculate_norms_pas', False)
         calculate_pvalue_each = form.cleaned_data.get('calculate_pvalue_each', False)
-        calculate_pvalue_all = form.cleaned_data.get('calculate_pvalue_all', False) 
+        calculate_pvalue_all = form.cleaned_data.get('calculate_pvalue_all', False)
+        calculate_FDR_each = form.cleaned_data.get('calculate_FDR_each', False)
+        calculate_FDR_all = form.cleaned_data.get('calculate_FDR_all', False)  
         new_pathway_names = form.cleaned_data.get('new_pathway_names', False)
         
         #From medical form. TODO: consider moving whole medical calculations to another view
@@ -163,9 +166,9 @@ class CoreSetCalculationParameters(FormView):
                                     'q' : fdr_q_values
                                     })
                 process_doc_df['q_value'] = fdr_df['q']
-                process_doc_df = process_doc_df[process_doc_df['q_value']<0.05]
+                process_doc_df = process_doc_df[process_doc_df['q_value']<qvalue_threshold]
             else:
-                process_doc_df = process_doc_df[process_doc_df['p_value']<0.05]
+                process_doc_df = process_doc_df[process_doc_df['p_value']<pvalue_threshold]
         
         """ end of calculating horizontal p-values for genes """
          
@@ -253,7 +256,7 @@ class CoreSetCalculationParameters(FormView):
                     if use_ttest_1sam: # two-sided 1sample T-test filter
                         _, p_value = ttest_1samp(log_norms_df, np.log(col), axis=1)
                         s_p_value = Series(p_value, index = col.index)
-                        col_CNR = col_CNR[(s_p_value<0.05)]
+                        col_CNR = col_CNR[(s_p_value<pvalue_threshold)]
                                        
                     if use_cnr: # CNR FILTER
                         col_CNR = col_CNR[((col_CNR>cnr_up) | (col_CNR<cnr_low)) & (col_CNR>0)] 
@@ -377,6 +380,16 @@ class CoreSetCalculationParameters(FormView):
         if calculate_pas1:
             output_pas1_df = DataFrame(pas1_list)
             output_pas1_df = output_pas1_df.set_index('Pathway')
+            
+            if calculate_FDR_all:
+                output_pas1_df['q-value_Mean'] = fdr_corr(np.array(output_pas1_df['p-value_Mean']))
+            if calculate_FDR_each:
+                col_p_val = [col for col in output_pas1_df.columns if '_p-value' in col]
+                for col in col_p_val:
+                    q_val_column_name = col.replace("_p-value", "_q-value");
+                    output_pas1_df[q_val_column_name] = fdr_corr(np.array(output_pas1_df[col]))
+                
+            
         if calculate_pas2:
             output_pas2_df = DataFrame(pas2_list)
             output_pas2_df = output_pas2_df.set_index('Pathway')

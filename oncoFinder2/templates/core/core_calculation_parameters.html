@@ -65,15 +65,23 @@
           <hr/>
           {% if document.doc_format != 'OF_cnr' %}
           <div class="form-group form-group-sm">
-            <label for="{{ form.pvalue_num.auto_id }}" class="col-sm-4 control-label">{{ form.pvalue_num.label }}</label>            
+            <label for="{{ form.pvalue_num.auto_id }}" class="col-sm-4 control-label">P-value filter</label>            
             <div class="col-sm-8">
                 
                 {{ form.use_ttest.label_tag }}&nbsp;&nbsp;
                 {{ form.use_ttest }}
-                {{ form.use_fdr.label_tag }}&nbsp;&nbsp;
+                {{ form.use_fdr.label_tag }} <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip"  data-placement="top" 
+                 title="False discovery rate "  ></span>&nbsp;&nbsp;
                 {{ form.use_fdr }}
                 {{ form.use_ttest_1sam.label_tag }}&nbsp;&nbsp;
                 {{ form.use_ttest_1sam }}
+                
+                {{ form.pvalue_threshold.label_tag }}
+                {{ form.pvalue_threshold }}
+                {{ form.qvalue_threshold.label_tag }}
+                {{ form.qvalue_threshold }}
+                
+                
             </div>
           </div>
           {% endif %}
@@ -104,7 +112,7 @@
           {%endif%}
           <hr/>
           <div class="form-group form-group-sm">
-            <div class="col-sm-10">
+            <div class="col-sm-12">
               <label>Include in the report following values: 
                      <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip"  data-placement="top" 
                                              title="Here will be description of what PMS and DS means"  ></span>
@@ -124,10 +132,10 @@
                 {{ form.calculate_ds3 }}<br/>
                 {{ form.calculate_norms_pas.label_tag }}&nbsp;
                 {{ form.calculate_norms_pas }}<br/>
-                {{ form.calculate_pvalue_each.label_tag }}&nbsp;
-                {{ form.calculate_pvalue_each }}<br/>
+                {{ form.calculate_pvalue_each.label_tag }}&nbsp; 
+                {{ form.calculate_pvalue_each }} &nbsp;with FDR {{ form.calculate_FDR_each }}<br/>
                 {{ form.calculate_pvalue_all.label_tag }}&nbsp;
-                {{ form.calculate_pvalue_all }}
+                {{ form.calculate_pvalue_all }} &nbsp;with FDR {{ form.calculate_FDR_all }}
                 {{ form.new_pathway_names.label_tag }}&nbsp;
                 {{ form.new_pathway_names }}
       
