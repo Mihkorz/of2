@@ -222,7 +222,8 @@ class CoreSetCalculationParameters(FormView):
             """ Inserting new pathway names if needed """
             if new_pathway_names:
                 new_path_df = read_excel(settings.MEDIA_ROOT+"/TRpathways_update_final_updated2.xlsx",
-                                          index_col='Old Pathway Name')            
+                                         sheetname=0,
+                                         index_col='Old Pathway Name')            
                 try:                    
                     new_path_name = new_path_df.loc[pathway.name.strip()][1] 
                 except KeyError:
