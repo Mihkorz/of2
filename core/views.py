@@ -144,7 +144,7 @@ class CoreSetCalculationParameters(FormView):
         process_doc_df = read_csv(settings.MEDIA_ROOT+"/"+input_document.input_doc.document.name,
                                   sep='\t', index_col='SYMBOL',  converters = {'SYMBOL' : strip}).fillna(0)        
         
-               
+        cnr_doc_df = process_doc_df # use to generate CNR file for downloading       
         tumour_columns = [col for col in process_doc_df.columns if 'Tumour' in col] #get sample columns 
         
         """ Standard T-test for genes """
@@ -160,12 +160,14 @@ class CoreSetCalculationParameters(FormView):
             log_process_doc_df = np.log(process_doc_df).fillna(0)
             series_p_values = log_process_doc_df.apply(calculate_ttest, axis=1).fillna(0)
             process_doc_df['p_value'] = series_p_values
+            cnr_doc_df['p_value'] = series_p_values
             if use_fdr:
                 fdr_q_values = fdr_corr(np.array(series_p_values))
                 fdr_df = DataFrame({'p' : series_p_values,
                                     'q' : fdr_q_values
                                     })
                 process_doc_df['q_value'] = fdr_df['q']
+                cnr_doc_df['q_value'] = fdr_df['q']
                 process_doc_df = process_doc_df[process_doc_df['q_value']<qvalue_threshold]
             else:
                 process_doc_df = process_doc_df[process_doc_df['p_value']<pvalue_threshold]
@@ -528,18 +530,16 @@ class CoreSetCalculationParameters(FormView):
         output_doc.related_doc = input_document
         output_doc.save() 
         
-        """Create CNR file avaliable for downloading 
-        cnr_doc_df = process_doc_df
-        cnr_norms_df = cnr_doc_df[[norm for norm in [col for col in cnr_doc_df.columns if 'Norm' in col]]]
-                    
+        """Create CNR file avaliable for downloading """
         
+        cnr_norms_df = cnr_doc_df[[norm for norm in [col for col in cnr_doc_df.columns if 'Norm' in col]]]
+        cnr_mean_norm =  cnr_norms_df.mean(axis=1)        
         cnr_gMean_norm = cnr_norms_df.apply(gmean, axis=1)
-        cnr_mean_norm = cnr_norms_df.mean(axis=1)
         std=cnr_norms_df.std(axis=1) # standard deviation
         if norm_choice>1: #geometric norms
             divide = cnr_gMean_norm
         else:             #arithmetic norms
-            divide = cnr_mean_norm     
+            divide = cnr_mean_norm  
         
         cnr_doc_df = cnr_doc_df.div(divide, axis='index')
         
@@ -547,7 +547,7 @@ class CoreSetCalculationParameters(FormView):
         cnr_doc_df['gMean_norm'] = cnr_gMean_norm
         cnr_doc_df['std'] = std
         
-         Saving CNR results to Excel file 
+        """ Saving CNR results to Excel file""" 
         path = os.path.join('users', str(input_document.project.owner),
                                             str(input_document.project),'process')
         file_name = 'cnr_'+str(output_doc.get_filename())
@@ -559,7 +559,7 @@ class CoreSetCalculationParameters(FormView):
       
         with ExcelWriter(output_file, index=False) as writer:
             cnr_doc_df.to_excel(writer,'CNR')  
-        """
+        
         
         
         
