@@ -4,7 +4,10 @@ import os
 import csv
 import json
 import math
+import numpy as np
 from pandas import read_csv, read_excel, DataFrame
+from scipy.stats.mstats import gmean
+from scipy.stats import ttest_1samp, ttest_ind, ranksums
 
 #from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -21,6 +24,7 @@ from .forms import SettingsUserForm, UserProfileFormSet, CreateProjectForm, \
                    UploadDocumentForm
 from .models import Project, Document, ProcessDocument
 from .preprocess_views import OfCnrPreprocess, IlluminaPreprocess
+from core.stats import pseudo_ttest_1samp, fdr_corr
 from database.models import Pathway, Component, Gene
 from mirna.views import mirnaProjectDetail, mirnaDocumentDetail
 
@@ -387,9 +391,57 @@ class SampleDetail(DeleteView):
         
         context['path_db'] = calc_params['db']
         
+        def strip(text):
+            try:
+                return text.strip().upper()
+            except AttributeError:
+                return text
+        
         try: # searching for differential genes once again. Don't forget to change in case of main calculation filter changes!
-            df_file_genes = read_csv(process_filename, sep='\t', index_col='SYMBOL')
-            df_genes = df_file_genes[[ sample, 'Mean_norm', 'gMean_norm', 'std']]
+            process_doc_df = read_csv(settings.MEDIA_ROOT+"/"+self.object.related_doc.input_doc.document.name,
+                                  sep='\t', index_col='SYMBOL',  converters = {'SYMBOL' : strip}).fillna(0)
+            
+            norms_doc_df = process_doc_df[[norm for norm in [col for col in process_doc_df.columns if 'Norm' in col]]]
+            cnr_mean_norm =  norms_doc_df.mean(axis=1)        
+            cnr_gMean_norm = norms_doc_df.apply(gmean, axis=1)
+            std=norms_doc_df.std(axis=1) # standard deviation
+            if calc_params['norm_algirothm']=='geometric': #geometric norms
+                divide = cnr_gMean_norm
+            else:             #arithmetic norms
+                divide = cnr_mean_norm  
+    
+            process_doc_df = process_doc_df.div(divide, axis='index')
+        
+            process_doc_df['Mean_norm'] = cnr_mean_norm
+            process_doc_df['gMean_norm'] = cnr_gMean_norm
+            process_doc_df['std'] = std
+            
+            if calc_params['use_ttest']:
+                def calculate_ttest(row):
+                    tumours = row[[t for t in row.index if 'Tumour' in t]]
+                    norms = row[[n for n in row.index if 'Norm' in n]]
+                       
+                    _, p_val = ttest_ind(tumours, norms)
+            
+                    return p_val
+                
+                log_process_doc_df = np.log(process_doc_df).fillna(0)
+                series_p_values = log_process_doc_df.apply(calculate_ttest, axis=1).fillna(0)
+                process_doc_df['p_value'] = series_p_values
+                if calc_params['use_fdr']:
+                    fdr_q_values = fdr_corr(np.array(series_p_values))
+                    fdr_df = DataFrame({'p' : series_p_values,
+                                        'q' : fdr_q_values
+                                       })
+                    process_doc_df['q_value'] = fdr_df['q']
+                    process_doc_df = process_doc_df[process_doc_df['q_value']<0.05]
+                else:
+                    process_doc_df = process_doc_df[process_doc_df['p_value']<0.05]
+            
+            df_genes = process_doc_df[[sample, 'Mean_norm', 'gMean_norm', 'std']]
+            
+            #raise Exception('yo')
+            
             
             diff_genes_for_sample = []
             dict_diff_genes_for_sample = {}
@@ -448,19 +500,24 @@ class SampleDetail(DeleteView):
             context['json_diff_genes'] = json.dumps(dict_diff_genes_for_sample) 
             context['genes'] = output_genes   
         except:
-            raise#errors.append("Error while determining differential genes!")
+            errors.append("Error while determining differential genes!")
         
         try: # reading data from file
-            df_file_pms = read_excel(output_filename, sheetname="PMS")
-            df_file_pms1 = read_excel(output_filename, sheetname="PMS1")
+            df_file_pms = read_excel(output_filename, sheetname="PAS")
+            df_file_pms1 = read_excel(output_filename, sheetname="PAS1")
+            
+        except:
+            errors.append("Error reading PAS from File!")
+        
+        try:
             df_file_ds1 = read_excel(output_filename, sheetname="DS1")
             df_file_ds2 =  read_excel(output_filename, sheetname="DS2")
         except:
-            errors.append("Error reading file and converting it to Pandas DataFrame!")
+            errors.append("Error reading Drug Scores!")
         
         try:
             df_pms = df_file_pms[[sample]]
-            df_pms.columns = ['PMS']
+            df_pms.columns = ['PAS']
             
             pms_dict =  df_pms.to_dict(outtype="dict")
         except:
@@ -471,13 +528,13 @@ class SampleDetail(DeleteView):
             
             
             df_pms1 = df_file_pms1[[sample]]
-            df_pms1.columns = ['PMS1']
-            
-            
+            df_pms1.columns = ['PAS1']
+            pms1_dict =  df_pms1.to_dict(outtype="dict")
+            #pms_dict['PAS1'] = df_pms1.to_dict(outtype="dict")
             output_pms = {}
             
-            for path in pms_dict['PMS']:
-                output_pms[path] = [d[path] for d in (pms_dict['PMS'], pms_dict['PMS1'])]
+            for path in pms_dict['PAS']:
+                output_pms[path] = [d[path] for d in (pms_dict['PAS'], pms1_dict['PAS1'])]
                 
             # drawing Normal-Cancer cell picture 
             lPaths = []
@@ -577,6 +634,7 @@ class SampleDetail(DeleteView):
             context['lDrawPathCanvas'] = lDrawCanvas
 
         except:
+            raise
             errors.append("Error processing PMS and PMS1 DataFrames!")
             
         try: # constructing DS dictionary for displaying
