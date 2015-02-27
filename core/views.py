@@ -258,8 +258,14 @@ class CoreSetCalculationParameters(FormView):
                     if use_ttest_1sam: # two-sided 1sample T-test filter
                         _, p_value = ttest_1samp(log_norms_df, np.log(col), axis=1)
                         s_p_value = Series(p_value, index = col.index)
-                        col_CNR = col_CNR[(s_p_value<pvalue_threshold)]
-                                       
+                        if use_fdr:
+                            fdr_q_values = fdr_corr(np.array(s_p_value))
+                            col_CNR = col_CNR[(fdr_q_values<qvalue_threshold)]
+                        else:
+                            col_CNR = col_CNR[(s_p_value<pvalue_threshold)]
+                        
+                        
+                                      
                     if use_cnr: # CNR FILTER
                         col_CNR = col_CNR[((col_CNR>cnr_up) | (col_CNR<cnr_low)) & (col_CNR>0)] 
                         
