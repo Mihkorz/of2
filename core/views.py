@@ -192,6 +192,8 @@ class CoreSetCalculationParameters(FormView):
         elif int(db_choice) == 3:
             pathway_objects = MousePathway.objects.all() # Mouse DB
         #raise Exception('yoyoyo')
+        
+        cccc = 0
         """ START CYCLE """        
         for pathway in pathway_objects:
             gene_name = []
@@ -252,15 +254,16 @@ class CoreSetCalculationParameters(FormView):
             else:             #arithmetic norms
                 s_mean_norm = norms_df.mean(axis=1)
             std=norms_df.std(axis=1) # standard deviation
-             
+            cccc+=1
             def PAS1_calculation(col, arr):
+  
                 if ('Tumour' in col.name) or ('Norm' in col.name):
                     
                     col_CNR = col/s_mean_norm #convert column from GENE EXPRESSION to CNR
                     
                     if use_ttest_1sam: # two-sided 1sample T-test filter
                         _, p_value = ttest_1samp(log_norms_df, np.log(col), axis=1)
-                        s_p_value = Series(p_value, index = col.index)
+                        s_p_value = Series(p_value, index = col.index).fillna(0)
                         if use_fdr:
                             fdr_q_values = fdr_corr(np.array(s_p_value))
                             col_CNR = col_CNR[(fdr_q_values<qvalue_threshold)]
