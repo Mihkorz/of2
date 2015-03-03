@@ -147,6 +147,9 @@ class CoreSetCalculationParameters(FormView):
         process_doc_df = read_csv(settings.MEDIA_ROOT+"/"+input_document.input_doc.document.name,
                                   sep='\t', index_col='SYMBOL',  converters = {'SYMBOL' : strip}).fillna(0)        
         
+        process_doc_df = process_doc_df.groupby(process_doc_df.index,
+                                                level=0).mean() #deal with duplicate genes by taking mean value
+        
         cnr_doc_df =  process_doc_df.copy() # use to generate CNR file for downloading
         cnr_norms_df = cnr_doc_df[[norm for norm in [col for col in cnr_doc_df.columns if 'Norm' in col]]]
         cnr_mean_norm =  cnr_norms_df.mean(axis=1)        

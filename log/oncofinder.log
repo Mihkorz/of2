@@ -13105,3 +13105,40 @@ Traceback (most recent call last):
   File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 613, in form_valid
     raise Exception('test')
 Exception: test
+2015-03-03 18:57:01,637 ERROR base 29754 -1335264448 Internal Server Error: /calculation-parameters/doc3623/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 45, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 606, in form_valid
+    output_ds3_df.to_excel(writer, 'DS1B')
+  File "/usr/local/lib/python2.7/dist-packages/pandas/io/excel.py", line 537, in __exit__
+    self.close()
+  File "/usr/local/lib/python2.7/dist-packages/pandas/io/excel.py", line 541, in close
+    return self.save()
+  File "/usr/local/lib/python2.7/dist-packages/pandas/io/excel.py", line 569, in save
+    return self.book.save(self.path)
+  File "/usr/local/lib/python2.7/dist-packages/openpyxl/workbook/workbook.py", line 281, in save
+    save_workbook(self, filename)
+  File "/usr/local/lib/python2.7/dist-packages/openpyxl/writer/excel.py", line 214, in save_workbook
+    writer.save(filename)
+  File "/usr/local/lib/python2.7/dist-packages/openpyxl/writer/excel.py", line 197, in save
+    self.write_data(archive)
+  File "/usr/local/lib/python2.7/dist-packages/openpyxl/writer/excel.py", line 88, in write_data
+    archive.writestr(ARC_WORKBOOK_RELS, write_workbook_rels(self.workbook))
+  File "/usr/local/lib/python2.7/dist-packages/openpyxl/writer/workbook.py", line 296, in write_workbook_rels
+    i += 1
+UnboundLocalError: local variable 'i' referenced before assignment
