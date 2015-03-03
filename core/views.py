@@ -147,7 +147,24 @@ class CoreSetCalculationParameters(FormView):
         process_doc_df = read_csv(settings.MEDIA_ROOT+"/"+input_document.input_doc.document.name,
                                   sep='\t', index_col='SYMBOL',  converters = {'SYMBOL' : strip}).fillna(0)        
         
-        cnr_doc_df = process_doc_df # use to generate CNR file for downloading       
+        cnr_doc_df =  process_doc_df.copy() # use to generate CNR file for downloading
+        cnr_norms_df = cnr_doc_df[[norm for norm in [col for col in cnr_doc_df.columns if 'Norm' in col]]]
+        cnr_mean_norm =  cnr_norms_df.mean(axis=1)        
+        cnr_gMean_norm = cnr_norms_df.apply(gmean, axis=1)
+        std=cnr_norms_df.std(axis=1) # standard deviation
+        if norm_choice>1: #geometric norms
+            divide = cnr_gMean_norm
+        else:             #arithmetic norms
+            divide = cnr_mean_norm  
+        
+        cnr_doc_df = cnr_doc_df.div(divide, axis='index')
+        
+        cnr_doc_df['Mean_norm'] = cnr_mean_norm
+        cnr_doc_df['gMean_norm'] = cnr_gMean_norm
+        cnr_doc_df['std'] = std
+        
+        cnr_unchanged_df = cnr_doc_df.copy()
+               
         tumour_columns = [col for col in process_doc_df.columns if 'Tumour' in col] #get sample columns 
         
         """ Standard T-test for genes """
@@ -161,7 +178,7 @@ class CoreSetCalculationParameters(FormView):
             
                 return p_val
             log_process_doc_df = np.log(process_doc_df).fillna(0)
-            series_p_values = log_process_doc_df.apply(calculate_ttest, axis=1).fillna(0)
+            series_p_values = log_process_doc_df.apply(calculate_ttest, axis=1).fillna(1)
             process_doc_df['p_value'] = series_p_values
             cnr_doc_df['p_value'] = series_p_values
             if use_fdr:
@@ -171,10 +188,59 @@ class CoreSetCalculationParameters(FormView):
                                     })
                 process_doc_df['q_value'] = fdr_df['q']
                 cnr_doc_df['q_value'] = fdr_df['q']
+                cnr_doc_df[process_doc_df['q_value']>=qvalue_threshold] = 1
                 process_doc_df = process_doc_df[process_doc_df['q_value']<qvalue_threshold]
+                
             else:
+                cnr_doc_df[process_doc_df['p_value']>=qvalue_threshold] = 1
                 process_doc_df = process_doc_df[process_doc_df['p_value']<pvalue_threshold]
         
+        
+        if use_ttest_1sam:
+            norms_df = process_doc_df[[norm for norm in [col for col in process_doc_df.columns if 'Norm' in col]]]
+            log_norms_df = np.log(norms_df)#use this for t-test, assuming log(norm) is distributed normally
+            
+            """ get Series of mean norms for selected algorithm and std """
+            if norm_choice>1: #geometric norms
+                s_mean_norm = norms_df.apply(gmean, axis=1)
+            else:             #arithmetic norms
+                s_mean_norm = norms_df.mean(axis=1)
+                
+            df_for_pq_val = DataFrame()
+            def cnr_diff_genes(col):
+                if ('Tumour' in col.name) or ('Norm' in col.name):
+                    
+                    col_CNR = col/s_mean_norm #convert column from GENE EXPRESSION to CNR
+                    
+                    if use_ttest_1sam: # two-sided 1sample T-test filter
+                        _, p_value = ttest_1samp(log_norms_df, np.log(col), axis=1)
+                        s_p_value = Series(p_value, index = col.index).fillna(1)
+                        df_for_pq_val[col.name+'_pval'] = s_p_value
+                        if use_fdr:
+                            fdr_q_values = fdr_corr(np.array(s_p_value))
+                            df_for_pq_val[col.name+'_qval'] = fdr_q_values
+                            col_CNR[fdr_q_values>=qvalue_threshold] = 1
+                        else:
+                            col_CNR[s_p_value>=pvalue_threshold] = 1               
+                        
+                                      
+                    if use_cnr: # CNR FILTER
+                        col_CNR[((col_CNR<=cnr_up) & (col_CNR>=cnr_low))] = 1 
+                        
+                    if use_sigma: # Sigma FILTER  !!! deprecated !!!                         
+                        col_CNR[((col<(s_mean_norm+sigma_num*std)) |
+                                       (col>=(s_mean_norm-sigma_num*std)))] = 1 
+                    
+                    return col_CNR
+                       
+                else:
+                    return col # in case it's not Tumour or Norm column
+            
+            prosecc_for_cnr = process_doc_df.copy()
+            cnr_df_diff_genes = prosecc_for_cnr.apply(cnr_diff_genes, axis=0)
+            cnr_doc_df = cnr_df_diff_genes.join(df_for_pq_val)
+            cnr_doc_df = cnr_doc_df.sort_index(axis=1)
+            
         """ end of calculating horizontal p-values for genes """
          
         if input_document.norm_num >= 3:
@@ -193,7 +259,6 @@ class CoreSetCalculationParameters(FormView):
             pathway_objects = MousePathway.objects.all() # Mouse DB
         #raise Exception('yoyoyo')
         
-        cccc = 0
         """ START CYCLE """        
         for pathway in pathway_objects:
             gene_name = []
@@ -254,7 +319,7 @@ class CoreSetCalculationParameters(FormView):
             else:             #arithmetic norms
                 s_mean_norm = norms_df.mean(axis=1)
             std=norms_df.std(axis=1) # standard deviation
-            cccc+=1
+            
             def PAS1_calculation(col, arr):
   
                 if ('Tumour' in col.name) or ('Norm' in col.name):
@@ -268,8 +333,7 @@ class CoreSetCalculationParameters(FormView):
                             fdr_q_values = fdr_corr(np.array(s_p_value))
                             col_CNR = col_CNR[(fdr_q_values<qvalue_threshold)]
                         else:
-                            col_CNR = col_CNR[(s_p_value<pvalue_threshold)]
-                        
+                            col_CNR = col_CNR[(s_p_value<pvalue_threshold)]               
                         
                                       
                     if use_cnr: # CNR FILTER
@@ -288,6 +352,7 @@ class CoreSetCalculationParameters(FormView):
                                                   arr=joined_df['ARR'],
                                                 ).fillna(0).sum()
              
+            
             #raise Exception('exp') 
             lnorms_all = []
             lpas1_all = []
@@ -542,35 +607,24 @@ class CoreSetCalculationParameters(FormView):
         output_doc.related_doc = input_document
         output_doc.save() 
         
-        """Create CNR file avaliable for downloading """
+        """Create CNR file available for downloading """
         
-        cnr_norms_df = cnr_doc_df[[norm for norm in [col for col in cnr_doc_df.columns if 'Norm' in col]]]
-        cnr_mean_norm =  cnr_norms_df.mean(axis=1)        
-        cnr_gMean_norm = cnr_norms_df.apply(gmean, axis=1)
-        std=cnr_norms_df.std(axis=1) # standard deviation
-        if norm_choice>1: #geometric norms
-            divide = cnr_gMean_norm
-        else:             #arithmetic norms
-            divide = cnr_mean_norm  
         
-        cnr_doc_df = cnr_doc_df.div(divide, axis='index')
-        
-        cnr_doc_df['Mean_norm'] = cnr_mean_norm
-        cnr_doc_df['gMean_norm'] = cnr_gMean_norm
-        cnr_doc_df['std'] = std
-        
+        #raise Exception('test')
         """ Saving CNR results to Excel file""" 
         path = os.path.join('users', str(input_document.project.owner),
                                             str(input_document.project),'process')
         file_name = 'cnr_'+str(output_doc.get_filename())
-        
+        file_name_unchanged = 'cnr_row_'+str(output_doc.get_filename()) 
         from django.core.files.storage import default_storage
         from django.core.files.base import ContentFile
         
         output_file = default_storage.save(settings.MEDIA_ROOT+"/"+path+"/"+file_name, ContentFile(''))
-      
+        output_file_row = default_storage.save(settings.MEDIA_ROOT+"/"+path+"/"+file_name_unchanged, ContentFile(''))
         with ExcelWriter(output_file, index=False) as writer:
-            cnr_doc_df.to_excel(writer,'CNR')  
+            cnr_doc_df.to_excel(writer,'CNR')
+        with ExcelWriter(output_file_row, index=False) as writer:
+            cnr_unchanged_df.to_excel(writer,'CNR')   
         
         
         

@@ -31,8 +31,12 @@
    <a class="btn btn-default btn-sm pull-right" style="margin-left: 20px;" href="{{MEDIA_URL}}{{document.document}}">
       <span class="glyphicon glyphicon-download"></span> &nbsp;<b>Download PAS-DS file</b>
      </a>
+     <a class="btn btn-default btn-sm pull-right" href="{{MEDIA_URL}}users/{{document.project.owner}}/{{document.project}}/process/cnr_row_{{document.get_filename}}">
+      <span class="glyphicon glyphicon-download-alt"></span> &nbsp;<b>Download row CNR file</b>
+     </a>
+     
      <a class="btn btn-default btn-sm pull-right" href="{{MEDIA_URL}}users/{{document.project.owner}}/{{document.project}}/process/cnr_{{document.get_filename}}">
-      <span class="glyphicon glyphicon-download-alt"></span> &nbsp;<b>Download CNR file</b>
+      <span class="glyphicon glyphicon-download-alt"></span> &nbsp;<b>Download CNR p-val file</b>
      </a>
      
    {% endif %}
