@@ -163,7 +163,7 @@ class CreateDocument(CreateView):
     
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        doc_format = request.POST['doc_format']
+        doc_format = request.POST.get('doc_format', False)
         if doc_format == 'OF_cnr':
             view = OfCnrPreprocess.as_view()
             return view(request, *args, **kwargs)
@@ -207,26 +207,31 @@ class CreateDocument(CreateView):
         
                 
         df = df.set_index('SYMBOL') #create index by SYMBOL column
-        """ 
-        df = df.groupby(df.index, level=0).mean() #deal with duplicate genes by taking mean value
         
-        mean_norm = df[[norm for norm in norm_cols]].mean(axis=1)
-        from scipy.stats.mstats import gmean
-        gmean_norm = df[[norm for norm in norm_cols]].apply(gmean, axis=1)
         
-        df1 = DataFrame(df[[norm for norm in norm_cols]], index=df.index)
+        if project.field == 'rna':
+         
+            df = df.groupby(df.index, level=0).mean() #deal with duplicate genes by taking mean value
         
-        df1 = df1.std(axis=1)
+            mean_norm = df[[norm for norm in norm_cols]].mean(axis=1)
+            from scipy.stats.mstats import gmean
+            gmean_norm = df[[norm for norm in norm_cols]].apply(gmean, axis=1)
+        
+            df1 = DataFrame(df[[norm for norm in norm_cols]], index=df.index)
+        
+            df1 = df1.std(axis=1)
                 
-        df['Mean_norm'] = mean_norm
-        df['gMean_norm'] = gmean_norm
+            df['Mean_norm'] = mean_norm
+            df['gMean_norm'] = gmean_norm
+            
+            df[df['Mean_norm'] == 0] = 1
                
-        df = df.div(df.Mean_norm, axis='index')
+            df = df.div(df.Mean_norm, axis='index')
        
-        df['Mean_norm'] = mean_norm
-        df['gMean_norm'] = gmean_norm
-        df['std'] = df1
-        """        
+            df['Mean_norm'] = mean_norm
+            df['gMean_norm'] = gmean_norm
+            df['std'] = df1
+            df = df.fillna(0)    
         
             
         if project.field == 'med':

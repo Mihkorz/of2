@@ -668,126 +668,81 @@ class Test(TemplateView):
     def get_context_data(self, **kwargs):
               
         context = super(Test, self).get_context_data(**kwargs)
-        from scipy.stats import ttest_1samp
-    
-        import numpy as np
+        from database.models import Relation
         
-        popmean = np.log(677.583249)
-        a=np.array([212.226597,
-           98.964291,
-           210.267198,
-           192.158336,
-           250.711585,
-           212.183150,
-           226.327190,
-           211.964368,
-           217.831440,
-           235.440940,
-           245.281362,
-           213.776852,
-           195.193613])
-        true_mean = sum(a) / float(len(a))
-        a = np.log(a)
-        from scipy.stats.mstats import gmean
-        import scipy
-        geom_Mean = gmean(a) 
-        
-        std = a.std()
-        
-        Zscore = (popmean-geom_Mean)/std
-        
-        
-        
-        p_values = scipy.stats.norm.pdf(Zscore)*2
-                
-        stat, pval = ttest_1samp(a, popmean)
-        
-        from .stats import pseudo_ttest_1samp  
-        z_stat, p_val = pseudo_ttest_1samp(a, popmean)
-           
-        raise Exception('test exception')
-        """
-        from database.models import GOEnrichment
-        for filename in os.listdir(settings.MEDIA_ROOT+"/GO/GO_enrichment"):
-        
-           
-            try:
-                spp = os.path.basename(filename).split('_', 2)
-                pname=spp[2].split('.')[0]
-                pathname = Pathway.objects.get(name=pname)
-                ontology = spp[1]
+        lpath = []
+   
+        new_path_df = read_excel(settings.MEDIA_ROOT+"/TRpathways_update_final_updated2.xlsx",
+                                         sheetname=0,
+                                         index_col='Old Pathway Name')
+        rel_path_df = read_excel(settings.MEDIA_ROOT+"/relpath2.xlsx",
+                                         sheetname=0,
+                                         )
+        for rel in rel_path_df.iterrows():
+            pathh = rel[1]['Paths']
             
-            
-                sniffer = csv.Sniffer()
-                dialect = sniffer.sniff(open(settings.MEDIA_ROOT+"/GO/GO_enrichment/"+filename, 'r').read(), delimiters='\t,;') # defining the separator of the csv file
-        
-                input_doc_df = read_csv(settings.MEDIA_ROOT+"/GO/GO_enrichment/"+filename, delimiter=dialect.delimiter)
-            
-                for row_index, row in input_doc_df.iterrows():
-                    newObj = GOEnrichment()
-                    newObj.human_pathway = pathname
-                    newObj.ontology = ontology
-                
-                    try:
-                        newObj.GOID = row['GOBPID']
-                    except:
-                        try:
-                            newObj.GOID = row['GOMFID']
-                        except:
-                            newObj.GOID = row['GOCCID']
                         
-                    newObj.Pvalue = float(row['Pvalue'])
-                    newObj.OddsRatio = row['OddsRatio']
-                    newObj.ExpCount = float(row['ExpCount'])
-                    newObj.Count = int(row['Count'])
-                    newObj.Size = int(row['Size'])
-                    newObj.Term = row['Term']
-                
-                    newObj.save()
+            try:                    
+                new_path_name = new_path_df.loc[pathh][1]
             except:
-                raise
+                new_path_name = 'Unknown'
+            
+            if ('Main' in new_path_name) and (pathh not in lpath):
+                lpath.append(pathh)
+        for path in lpath:
+            pathway = Pathway.objects.get(name=path)
+            gene_objects = pathway.gene_set.all()
+            gene_name = []
+            gene_arr = []
+            for gene in gene_objects:
+                gene_name.append(gene.name.strip().upper())
+                gene_arr.append(float(gene.arr))
+            
+            gene_data = {'SYMBOL': gene_name,
+                         'ARR': gene_arr}
+            
+            gene_df = DataFrame(gene_data).set_index('SYMBOL')
+            
+            
+            node_objects = pathway.node_set.all()
+            node_comp = {}
+            dRelations = []
+            for node in node_objects:
+                comps = []
                 
-            
-            
-            
-            
-           
-        
-            
-             
-        
-        
-        
-        
-        
-        path = Pathway.objects.using('old').get(name="Wnt_Pathway_Ctnn-b_Degradation")
-        
-        path1 = Pathway.objects.using('old').get(name="Wnt_Pathway_Ctnn-b_Degradation")
-        
-        
-        path.save(using="default")
-        
-        for gene in path1.gene_set.all():
-            gene.save(using="default")
-            
-        for node in path1.node_set.all():
-            node.save(using="default")
-            
-        for node in path1.node_set.all():
-            for component in node.component_set.all():
-                component.save(using="default")
+                for c in node.component_set.all():
+                    comps.append(c.name)
+                node_comp[node.name] = comps
                 
-        for node in path1.node_set.all():
-            for inrel in node.inrelations.all():
-                inrel.save(using="default")
+                #relations
+                for inrel in node.inrelations.all():
+                    if inrel.reltype == '1':
+                        relColor = 'activation'
+                    if inrel.reltype == '0':
+                        relColor = 'inhibition'
+                    dRelations.append({'From node': inrel.fromnode.name,
+                                   'To node' : inrel.tonode.name,
+                                   'type': relColor })
+                
+            node_df = DataFrame.from_dict(node_comp,  orient='index')
+            node_df = node_df.transpose().fillna('')
+            rel_df = DataFrame(dRelations)
             
+            
+            file_name = path+'.xlsx'
         
+            from django.core.files.storage import default_storage
+            from django.core.files.base import ContentFile
         
-        """
-        
-        
-        
-        
+            output_file = default_storage.save(settings.MEDIA_ROOT+"/path/"+file_name, ContentFile(''))
+               
+            with ExcelWriter(output_file, index=False) as writer:
+                    gene_df.to_excel(writer,'genes')
+                    node_df.to_excel(writer,'nodes')
+                    rel_df.to_excel(writer,'relations')
+            
+            #raise Exception('rel')
+        context['paths'] = lpath
         return context
 
 

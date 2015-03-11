@@ -192,7 +192,7 @@ class MedicTreatmentDetail(DetailView):
                 dBalnc[score] = AUC
                 dAccur[score] = accuracy
             
-        
+        #raise Exception('true')
         """ Statistical values """
         try:
             specificity = (float(true_negative))/(false_positive+true_negative)

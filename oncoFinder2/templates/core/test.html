@@ -6,54 +6,15 @@
 <div class="container">
 
 <h1>Testing Playground</h1>
-
-
-{{drug.name}}
-
-
-<table class="table">
-<tr>
-<td>
-Pathway
-</td>
-<td>Frequency</td>
-</tr>
-{% for path, freq in ddd.items %}
-<tr>
-<td>{{path}}</td>
-<td>{{freq}}</td>
-</tr>
+total paths = {{paths|length}}
+<table class="table" >
+{%for path in paths%}
+<tr><td>{{path}}</td></tr>
 {%endfor%}
 </table>
 
 
 
-
-
-<table border="1">
-<tr>
-{%for path in pathways %}
-
-<td>{{path.name}}</td>
-
-{%endfor%}
-</tr>
-<tr>
-{%for path in pathways %}
-<td valign="top"> 
-<table border=1>
-{%for gene in path.gene_set.all%}
-
- <tr><td>
- {{gene.name}}
- </td></tr>
- 
- {%endfor%}
-</table>
-</td>
-  {%endfor%}
-</tr>
-</table>
 
 
 

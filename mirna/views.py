@@ -188,7 +188,8 @@ class MirnaSetCalculationParameters(FormView):
                         mean = 0
                     EXPRESSION_LEVEL = CNR*float(mean)
                         
-                    std = float(row['std']) if float(row['std'])>0 else 0   
+                    std = float(row['std']) if float(row['std'])>0 else 0
+                      
                     if (
                         (
                            (EXPRESSION_LEVEL >= (mean + sigma_num*std)) or 
