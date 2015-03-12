@@ -86,9 +86,9 @@ class CoreSetCalculationParameters(FormView):
         calculate_pas = form.cleaned_data.get('calculate_pas', False)
         calculate_pas1 = form.cleaned_data.get('calculate_pas1', True)
         calculate_pas2 = form.cleaned_data.get('calculate_pas2', False)
-        calculate_ds1 = False #form.cleaned_data.get('calculate_ds1', False)
-        calculate_ds2 = False #form.cleaned_data.get('calculate_ds2', False)
-        calculate_ds3 = False #form.cleaned_data.get('calculate_ds3', False)
+        calculate_ds1 = form.cleaned_data.get('calculate_ds1', False)
+        calculate_ds2 = form.cleaned_data.get('calculate_ds2', False)
+        calculate_ds3 = form.cleaned_data.get('calculate_ds3', False)
         calculate_norms_pas = form.cleaned_data.get('calculate_norms_pas', False)
         calculate_pvalue_each = form.cleaned_data.get('calculate_pvalue_each', False)
         calculate_pvalue_all = form.cleaned_data.get('calculate_pvalue_all', False)
@@ -245,7 +245,7 @@ class CoreSetCalculationParameters(FormView):
             cnr_doc_df = cnr_doc_df.sort_index(axis=1)
             
         """ end of calculating horizontal p-values for genes """
-         
+        
         if input_document.norm_num >= 3:
             calculate_p_value = True                                
         
@@ -353,10 +353,20 @@ class CoreSetCalculationParameters(FormView):
                 
             pas_norms_samples = joined_df.apply(PAS1_calculation, axis=0, 
                                                   arr=joined_df['ARR'],
-                                                ).fillna(0).sum()
-             
+                                                ).fillna(0)#.sum()
+            if (calculate_ds1 or calculate_ds2 or calculate_ds3): 
+                for tumour in tumour_columns:
+                    diff_genes_for_tumor = []
+                    serie = pas_norms_samples[col]
+                    serie = serie[(serie>0) | (serie<0)]
+                    diff_genes_for_tumor.extend(serie.index.values.tolist()) # store differential genes in a list
+                    if differential_genes.has_key(tumour):
+                        differential_genes[tumour].extend(diff_genes_for_tumor)
+                    else:
+                        differential_genes[tumour] = diff_genes_for_tumor
             
-            #raise Exception('exp') 
+            pas_norms_samples = pas_norms_samples.sum()    
+             
             lnorms_all = []
             lpas1_all = []
             for index, pas1 in pas_norms_samples.iteritems():
@@ -391,7 +401,7 @@ class CoreSetCalculationParameters(FormView):
                     _, p_val = ranksums(lnorms_all, lpas1_all)
                     pas1_dict['p-value_Mean'] = p_val                
             
-            #raise Exception('exp') 
+             
             """
             
             pms1_all = []
@@ -477,9 +487,10 @@ class CoreSetCalculationParameters(FormView):
             output_pas2_df = output_pas2_df.set_index('Pathway')
         
         """ Calculating Drug Score """
+        #raise Exception('exppp')
         output_ds1_df = output_ds2_df = output_ds3_df = DataFrame()
         
-        if (calculate_ds1 or calculate_ds2):
+        if (calculate_ds1 or calculate_ds2 or calculate_ds3):
             ds1_list = []
             ds2_list = []
             ds3_list = []
