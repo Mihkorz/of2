@@ -1,0 +1,81 @@
+{% extends "base_profiles.html" %}
+
+{% block title %}XPN normalization | OncoFinder v2.0{% endblock %}
+
+{% block content %}
+<div class="container">
+
+  <h1>
+  <img src='/static/images/tablet.png' style="width: 100px;"/>
+    XPN normalization 
+  </h1>
+  <hr/>
+  {% if form.errors %}
+  <div class="alert alert-danger">
+    <i class="glyphicon glyphicon-warning-sign"></i>
+    Your form has some errors: <br/>
+    {% for field, errors in form.errors.items %}
+    {{field}}: {{errors}}
+    {%endfor%}
+  </div>
+  {% endif %}
+  
+  <div class="panel panel-primary login_panel">
+    <div class="panel-heading">
+      <h3 class="panel-title">XPN normalization parameters</h3>
+    </div>
+    <div class="panel-body">
+    <small>
+    To learn more about these parameters please 
+    follow the <a href="http://www.inside-r.org/packages/cran/CONOR/docs/qn" target="_blanc">link</a>
+    <br/><br/>
+    <form class="form-horizontal" role="form" action="" 
+          method="post" enctype="multipart/form-data"  id="xpn_parameters_form">
+          {% csrf_token %}
+          
+          
+          {{ form.pl1.label_tag }} {{ form.pl1 }} <br/>
+          {{ form.pl2.label_tag }} {{ form.pl2 }}<br/>
+          {{ form.log_scale.label_tag }}&nbsp;&nbsp;{{ form.log_scale }}<br/><br/>
+          
+          {{ form.p1_names.label_tag }} {{ form.p1_names }} 
+          {{ form.p2_names.label_tag }} {{ form.p2_names }}
+          
+          {{ form.k.label_tag }} {{ form.k }} 
+          {{ form.l.label_tag }} {{ form.l }} <br/><br/>
+          
+          {{ form.gene_cluster.label_tag }} {{ form.gene_cluster }} 
+          {{ form.assay_cluster.label_tag }} {{ form.assay_cluster }}    
+          {{ form.corr.label_tag }} {{ form.corr }}<br/>
+          
+          {{ form.iterations.label_tag }} {{ form.iterations }} <br/>
+          {{ form.skip_match.label_tag }}&nbsp;&nbsp;{{ form.skip_match }}
+          
+          
+          </small>
+ 
+          
+    </div>
+    <div class="panel-footer">
+      <button class="btn btn-primary" data-loading-text="Calculating..." id="startButton">Start normalization</button>
+      
+          <img src="/static/images/ajax-loader.gif" id="loader" style="margin: 10px 0 0 0; display:none" class="pull-right" />
+     
+    </div>
+  </div>
+</div>
+
+<script>
+$(function() {
+	$('#startButton').click(function () {
+	    var btn = $(this)
+	    btn.button('loading');
+	    $("#loader").fadeIn();
+	    
+
+	  });
+
+});
+</script>
+
+{%endblock%}

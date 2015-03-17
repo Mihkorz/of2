@@ -70,4 +70,46 @@ class MedicCalculationParametersForm(forms.Form):
     her2_status = forms.ChoiceField(label="HER2 status",
                                      choices=HER2_STASUS_CHOICES, initial=0)
         
+class XpnParametersForm(forms.Form):
+    pl1 = forms.FileField(label="pl1")
+    pl2 = forms.FileField(label="pl2")
+    log_scale = forms.BooleanField(label="log_scale", initial=True, required=False)
+    k = forms.IntegerField(label="K", initial=10)
+    l = forms.IntegerField(label="L", initial=4)
+    p1_names = forms.IntegerField(label="p1.names", initial=1)
+    p2_names = forms.IntegerField(label="p2.names", initial=1)
+    gene_cluster = forms.CharField(label="gene.cluster", initial="kmeans")
+    assay_cluster = forms.CharField(label="assay.cluster", initial="kmeans")
+    corr = forms.CharField(label="corr", initial="pearson")
+    iterations = forms.IntegerField(label="iterations", initial=30)
+    skip_match = forms.BooleanField(label="skip.match", initial=False, required=False)
+    
+    def __init__(self, *args, **kwargs):
+        super(XpnParametersForm, self).__init__(*args, **kwargs)
+        self.fields['pl1'].widget.attrs.update({'class' : 'form-control input-sm', 'style':'width:200px; display:inline'})
+        self.fields['pl2'].widget.attrs.update({'class' : 'form-control input-sm', 'style':'width:200px; display:inline'})
+        
+        self.fields['k'].widget.attrs.update({'class' : 'form-control input-sm', 'style':'width:50px; display:inline'})
+        self.fields['l'].widget.attrs.update({'class' : 'form-control input-sm', 'style':'width:50px; display:inline'})
+        self.fields['p1_names'].widget.attrs.update({'class' : 'form-control input-sm', 'style':'width:50px; display:inline'})
+        self.fields['p2_names'].widget.attrs.update({'class' : 'form-control input-sm', 'style':'width:50px; display:inline'})
+        self.fields['iterations'].widget.attrs.update({'class' : 'form-control input-sm', 'style':'width:50px; display:inline'})
+        
+        self.fields['gene_cluster'].widget.attrs.update({'class' : 'form-control input-sm'})
+        self.fields['assay_cluster'].widget.attrs.update({'class' : 'form-control input-sm'})
+        self.fields['corr'].widget.attrs.update({'class' : 'form-control input-sm'})
+        
+        #self.fields['pvalue_threshold'].widget.attrs.update({'class' : 'form-control input-sm', 'style':'width:60px; display:inline'})
+        #self.fields['qvalue_threshold'].widget.attrs.update({'class' : 'form-control input-sm', 'style':'width:60px; display:inline'})
+        #self.fields['cnr_low'].widget.attrs.update({'class' : 'form-control input-sm'})
+        #self.fields['cnr_up'].widget.attrs.update({'class' : 'form-control input-sm'})
+
+
+
+
+
+
+
+
+
     

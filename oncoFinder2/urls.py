@@ -13,6 +13,7 @@ from profiles.views import ProfileIndex, SettingsProfile, SettingsBilling, Creat
                            DocumentDetail, SampleDetail, AjaxPathDetail
                            
 from core.views import CoreSetCalculationParameters, CoreCalculation, Test, Celery, TaskStatus
+from core.xpn_views import XpnForm
 from database.views import PathwayList, PathwayDetail, PathwayAjaxSearch, \
                            DrugList, DrugDetail, DrugAjaxSearch
 from metabolism.views import MetabolismPathwayList, MetabolismPathwayDetail, \
@@ -96,7 +97,10 @@ urlpatterns = patterns('',
     
     ################### miRNA App ##############################
     url(r'^mirna-calculation-parameters/doc(?P<pk>\d+)/$', MirnaSetCalculationParameters.as_view(), name="mirna_set_calculation_parameters"),
-
+    
+    
+    ################### Different usefull stuff ##############################
+    url(r'^xpn/$', XpnForm.as_view(), name="xpn_form"),
 
     
     
