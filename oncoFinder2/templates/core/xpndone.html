@@ -1,0 +1,23 @@
+{% extends "base_profiles.html" %}
+
+{% block title %}XPN normalization done | OncoFinder v2.0{% endblock %}
+
+{% block content %}
+<div class="container">
+
+  <h1>
+  <img src='/static/images/tablet.png' style="width: 100px;"/>
+    XPN normalization done 
+  </h1>
+  <hr/>
+ 
+ Click to download file with results: <a href="{{MEDIA_URL}}XPN/{{output_file}}">{{output_file}}</a>
+ 
+ <br/><br/>
+ <a href="/xpn/" class="btn btn-primary">Normalize more datasets</a>
+
+</div>
+
+
+
+{%endblock%}

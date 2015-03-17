@@ -6,10 +6,13 @@ import pandas.rpy.common as com
 import csv
 import numpy as np
 
+from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormView
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse 
+from django.conf import settings
 
 from .forms import XpnParametersForm
 
@@ -82,14 +85,28 @@ class XpnForm(FormView):
         df_out_x.index.name = df_out_y.index.name = 'SYMBOL'
         
         df_output_all = df_out_x.join(df_out_y, lsuffix='_x', rsuffix='_y')
+        filename = pl1.name+pl2.name+".csv"
+        output_file = settings.MEDIA_ROOT+"/XPN/"+filename
         
-        response = HttpResponse(content_type='text/csv')
-        response['Content-Disposition'] = 'attachment; filename="'+pl1.name+pl2.name+'.csv"'
+        df_output_all.to_csv(output_file) 
         
-        df_output_all.to_csv(response)
-        
-        return response
+        return HttpResponseRedirect(reverse('xpn_done', args=[filename]))
         
     
     def form_invalid(self, form):
-            return self.render_to_response(self.get_context_data(form=form)) 
+            return self.render_to_response(self.get_context_data(form=form))
+        
+        
+class XpnDone(TemplateView):
+    template_name = 'core/xpndone.html'
+    
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(XpnDone, self).dispatch(request, *args, **kwargs)
+        
+    
+    def get_context_data(self, **kwargs):        
+        context = super(XpnDone, self).get_context_data(**kwargs)
+        output_file = self.args[0]
+        context['output_file'] = output_file
+        return context 

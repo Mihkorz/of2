@@ -1035,3 +1035,249 @@ Traceback (most recent call last):
   File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/xpn_views.py", line 60, in form_valid
     df_pl1 = np.log(df_pl1).fillna(0)
 AttributeError: log
+2015-03-17 16:22:40,496 ERROR base 15142 -1260389568 Internal Server Error: /xpn/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/xpn_views.py", line 28, in dispatch
+    return super(XpnForm, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/xpn_views.py", line 92, in form_valid
+    return HttpResponseRedirect(reverse(self.get_success_url(), kwargs={'f': filename}))
+  File "/usr/local/lib/python2.7/dist-packages/django/core/urlresolvers.py", line 509, in reverse
+    return iri_to_uri(resolver._reverse_with_prefix(view, prefix, *args, **kwargs))
+  File "/usr/local/lib/python2.7/dist-packages/django/core/urlresolvers.py", line 429, in _reverse_with_prefix
+    (lookup_view_s, args, kwargs, len(patterns), patterns))
+NoReverseMatch: Reverse for '/thanks/' with arguments '()' and keyword arguments '{'f': u'canada_GSE49972_normalized.txtrussia_GSE49972_normalized.txt.csv'}' not found. 0 pattern(s) tried: []
+2015-03-17 16:29:51,135 ERROR base 16996 -1251480768 Internal Server Error: /xpn/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/xpn_views.py", line 29, in dispatch
+    return super(XpnForm, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/xpn_views.py", line 93, in form_valid
+    return HttpResponseRedirect(reverse('xpn_done', args=[filename]))
+  File "/usr/local/lib/python2.7/dist-packages/django/core/urlresolvers.py", line 509, in reverse
+    return iri_to_uri(resolver._reverse_with_prefix(view, prefix, *args, **kwargs))
+  File "/usr/local/lib/python2.7/dist-packages/django/core/urlresolvers.py", line 429, in _reverse_with_prefix
+    (lookup_view_s, args, kwargs, len(patterns), patterns))
+NoReverseMatch: Reverse for 'xpn_done' with arguments '(u'canada_GSE49972_normalized.txtrussia_GSE49972_normalized.txt.csv',)' and keyword arguments '{}' not found. 1 pattern(s) tried: ['xpn/done/(?P<filename>\\d+)$']
+2015-03-17 16:31:06,137 ERROR base 18504 -1251480768 Internal Server Error: /xpn/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/xpn_views.py", line 29, in dispatch
+    return super(XpnForm, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/xpn_views.py", line 93, in form_valid
+    return HttpResponseRedirect(reverse('xpn_done', args=[filename]))
+  File "/usr/local/lib/python2.7/dist-packages/django/core/urlresolvers.py", line 509, in reverse
+    return iri_to_uri(resolver._reverse_with_prefix(view, prefix, *args, **kwargs))
+  File "/usr/local/lib/python2.7/dist-packages/django/core/urlresolvers.py", line 429, in _reverse_with_prefix
+    (lookup_view_s, args, kwargs, len(patterns), patterns))
+NoReverseMatch: Reverse for 'xpn_done' with arguments '(u'canada_GSE49972_normalized.txtrussia_GSE49972_normalized.txt.csv',)' and keyword arguments '{}' not found. 1 pattern(s) tried: ['xpn/done/(?P<filename>\\d+)/$']
+2015-03-17 16:32:14,367 ERROR base 18768 -1251480768 Internal Server Error: /xpn/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/xpn_views.py", line 29, in dispatch
+    return super(XpnForm, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/xpn_views.py", line 93, in form_valid
+    return HttpResponseRedirect(reverse('xpn_done', args=[filename]))
+  File "/usr/local/lib/python2.7/dist-packages/django/core/urlresolvers.py", line 509, in reverse
+    return iri_to_uri(resolver._reverse_with_prefix(view, prefix, *args, **kwargs))
+  File "/usr/local/lib/python2.7/dist-packages/django/core/urlresolvers.py", line 429, in _reverse_with_prefix
+    (lookup_view_s, args, kwargs, len(patterns), patterns))
+NoReverseMatch: Reverse for 'xpn_done' with arguments '(u'canada_GSE49972_normalized.txtrussia_GSE49972_normalized.txt.csv',)' and keyword arguments '{}' not found. 1 pattern(s) tried: ['xpn/done/(?P<filename>\\[-\\w]+)/$']
+2015-03-17 16:33:54,382 ERROR base 19626 -1250432192 Internal Server Error: /xpn/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/xpn_views.py", line 29, in dispatch
+    return super(XpnForm, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/xpn_views.py", line 93, in form_valid
+    return HttpResponseRedirect(reverse('xpn_done', kwargs={'filename': filename}))
+  File "/usr/local/lib/python2.7/dist-packages/django/core/urlresolvers.py", line 509, in reverse
+    return iri_to_uri(resolver._reverse_with_prefix(view, prefix, *args, **kwargs))
+  File "/usr/local/lib/python2.7/dist-packages/django/core/urlresolvers.py", line 429, in _reverse_with_prefix
+    (lookup_view_s, args, kwargs, len(patterns), patterns))
+NoReverseMatch: Reverse for 'xpn_done' with arguments '()' and keyword arguments '{'filename': u'canada_GSE49972_normalized.txtrussia_GSE49972_normalized.txt.csv'}' not found. 1 pattern(s) tried: ['xpn/done/(?P<filename>\\[-\\w]+)/$']
+2015-03-17 16:37:28,423 ERROR base 20905 -1251480768 Internal Server Error: /xpn/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/xpn_views.py", line 29, in dispatch
+    return super(XpnForm, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/xpn_views.py", line 93, in form_valid
+    return HttpResponseRedirect(reverse('xpn_done', kwargs={'filename': filename}))
+  File "/usr/local/lib/python2.7/dist-packages/django/core/urlresolvers.py", line 509, in reverse
+    return iri_to_uri(resolver._reverse_with_prefix(view, prefix, *args, **kwargs))
+  File "/usr/local/lib/python2.7/dist-packages/django/core/urlresolvers.py", line 429, in _reverse_with_prefix
+    (lookup_view_s, args, kwargs, len(patterns), patterns))
+NoReverseMatch: Reverse for 'xpn_done' with arguments '()' and keyword arguments '{'filename': u'canada_GSE49972_normalized.txtrussia_GSE49972_normalized.txt.csv'}' not found. 1 pattern(s) tried: ['xpn/done/$']
+2015-03-17 16:40:18,288 ERROR base 21823 -1250432192 Internal Server Error: /xpn/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/xpn_views.py", line 29, in dispatch
+    return super(XpnForm, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/xpn_views.py", line 93, in form_valid
+    return HttpResponseRedirect(reverse('xpn_done', args=[filename]))
+  File "/usr/local/lib/python2.7/dist-packages/django/core/urlresolvers.py", line 509, in reverse
+    return iri_to_uri(resolver._reverse_with_prefix(view, prefix, *args, **kwargs))
+  File "/usr/local/lib/python2.7/dist-packages/django/core/urlresolvers.py", line 429, in _reverse_with_prefix
+    (lookup_view_s, args, kwargs, len(patterns), patterns))
+NoReverseMatch: Reverse for 'xpn_done' with arguments '(u'canada_GSE49972_normalized.txtrussia_GSE49972_normalized.txt.csv',)' and keyword arguments '{}' not found. 1 pattern(s) tried: ['xpn/done/([-\\w]+)/$']
+2015-03-17 16:43:39,338 ERROR base 23175 -1251480768 Internal Server Error: /xpn/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/xpn_views.py", line 29, in dispatch
+    return super(XpnForm, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/xpn_views.py", line 93, in form_valid
+    return HttpResponseRedirect(reverse('xpn_done', args=[filename]))
+  File "/usr/local/lib/python2.7/dist-packages/django/core/urlresolvers.py", line 509, in reverse
+    return iri_to_uri(resolver._reverse_with_prefix(view, prefix, *args, **kwargs))
+  File "/usr/local/lib/python2.7/dist-packages/django/core/urlresolvers.py", line 429, in _reverse_with_prefix
+    (lookup_view_s, args, kwargs, len(patterns), patterns))
+NoReverseMatch: Reverse for 'xpn_done' with arguments '(u'canada_GSE49972_normalized.txtrussia_GSE49972_normalized.txt.csv',)' and keyword arguments '{}' not found. 1 pattern(s) tried: ['xpn/done/(?P<filename>\\.*)/$']
+2015-03-17 16:45:15,703 ERROR base 23880 -1250432192 Internal Server Error: /xpn/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/xpn_views.py", line 29, in dispatch
+    return super(XpnForm, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/xpn_views.py", line 93, in form_valid
+    return HttpResponseRedirect(reverse('xpn_done', kwargs={'filename': filename}))
+  File "/usr/local/lib/python2.7/dist-packages/django/core/urlresolvers.py", line 509, in reverse
+    return iri_to_uri(resolver._reverse_with_prefix(view, prefix, *args, **kwargs))
+  File "/usr/local/lib/python2.7/dist-packages/django/core/urlresolvers.py", line 429, in _reverse_with_prefix
+    (lookup_view_s, args, kwargs, len(patterns), patterns))
+NoReverseMatch: Reverse for 'xpn_done' with arguments '()' and keyword arguments '{'filename': u'canada_GSE49972_normalized.txtrussia_GSE49972_normalized.txt.csv'}' not found. 1 pattern(s) tried: ['xpn/done/(?P<filename>\\.*)/$']
+2015-03-17 16:49:51,816 ERROR base 25947 -1251480768 Internal Server Error: /xpn/done/canada_GSE49972_normalized.txtrussia_GSE49972_normalized.txt.csv/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/xpn_views.py", line 105, in dispatch
+    return super(XpnDone, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/xpn_views.py", line 111, in get_context_data
+    context['arg'] = self.request.args
+AttributeError: 'WSGIRequest' object has no attribute 'args'
