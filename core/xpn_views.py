@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from pandas import DataFrame, read_csv
-from rpy2.robjects.packages import importr
+import os
+import time
 import pandas.rpy.common as com
 import csv
 import numpy as np
+from pandas import DataFrame, read_csv
+from rpy2.robjects.packages import importr
 
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormView
@@ -109,4 +111,41 @@ class XpnDone(TemplateView):
         context = super(XpnDone, self).get_context_data(**kwargs)
         output_file = self.args[0]
         context['output_file'] = output_file
+        return context
+    
+class PrevFile:
+    pass
+
+class XpnPrevFiles(TemplateView):
+    template_name = 'core/xpnprevfiles.html'
+    
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(XpnPrevFiles, self).dispatch(request, *args, **kwargs)
+        
+    
+    def get_context_data(self, **kwargs):
+                
+        context = super(XpnPrevFiles, self).get_context_data(**kwargs)
+        path = settings.MEDIA_ROOT+"/XPN/"
+        dirs = os.listdir(path)
+        lFiles = []
+        for files in dirs:
+            f = PrevFile()
+            stat = os.stat(settings.MEDIA_ROOT+"/XPN/"+files)
+            f.name = files
+            f.created = time.ctime(stat.st_ctime)
+            f.size = stat.st_size/1048576
+            lFiles.append(f)
+            
+        lFiles.sort(key=lambda x: x.created, reverse=True)
+        context['filelist'] = lFiles       
+        
+        
+        
         return context 
+    
+    
+    
+    
+    

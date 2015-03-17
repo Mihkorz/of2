@@ -1281,3 +1281,150 @@ Traceback (most recent call last):
   File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/xpn_views.py", line 111, in get_context_data
     context['arg'] = self.request.args
 AttributeError: 'WSGIRequest' object has no attribute 'args'
+2015-03-17 21:05:23,609 ERROR base 22303 -1250952384 Internal Server Error: /xpn/prevfiles/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/xpn_views.py", line 119, in dispatch
+    return super(XpnPrevFiles, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/xpn_views.py", line 124, in get_context_data
+    output_file = self.args[0]
+IndexError: tuple index out of range
+2015-03-17 21:29:31,344 ERROR base 29219 -1249903808 Internal Server Error: /xpn/prevfiles/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/xpn_views.py", line 121, in dispatch
+    return super(XpnPrevFiles, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/xpn_views.py", line 132, in get_context_data
+    stat = os.stat(files)
+OSError: [Errno 2] No such file or directory: 'GSE5350_gpl2986_preprocessed_for_onco.txtGSE5350-GPL2895_processed_for_onco.txt.csv'
+2015-03-17 21:30:04,676 ERROR base 32455 -1250432192 Internal Server Error: /xpn/prevfiles/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/xpn_views.py", line 121, in dispatch
+    return super(XpnPrevFiles, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/xpn_views.py", line 133, in get_context_data
+    f.name = files
+AttributeError: 'object' object has no attribute 'name'
+2015-03-17 21:30:46,800 ERROR base 367 -1250432192 Internal Server Error: /xpn/prevfiles/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/xpn_views.py", line 121, in dispatch
+    return super(XpnPrevFiles, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/xpn_views.py", line 133, in get_context_data
+    f.name = files
+AttributeError: 'str' object has no attribute 'name'
+2015-03-17 21:31:08,609 ERROR base 496 -1249903808 Internal Server Error: /xpn/prevfiles/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/xpn_views.py", line 121, in dispatch
+    return super(XpnPrevFiles, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/xpn_views.py", line 133, in get_context_data
+    f.name = files
+AttributeError: 'str' object has no attribute 'name'
+2015-03-17 21:32:24,704 ERROR base 921 -1250432192 Internal Server Error: /xpn/prevfiles/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/xpn_views.py", line 124, in dispatch
+    return super(XpnPrevFiles, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/xpn_views.py", line 137, in get_context_data
+    f.modified = time.ctime(stat.mtime)
+AttributeError: 'posix.stat_result' object has no attribute 'mtime'
+2015-03-17 21:32:58,565 ERROR base 1319 -1250485440 Internal Server Error: /xpn/prevfiles/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/xpn_views.py", line 124, in dispatch
+    return super(XpnPrevFiles, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/xpn_views.py", line 138, in get_context_data
+    f.size = stat.size
+AttributeError: 'posix.stat_result' object has no attribute 'size'

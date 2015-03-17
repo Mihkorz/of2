@@ -1,0 +1,35 @@
+{% extends "base_profiles.html" %}
+
+{% block title %}XPN normalization | OncoFinder v2.0{% endblock %}
+
+{% block content %}
+<div class="container">
+
+  <h1>
+  <img src='/static/images/tablet.png' style="width: 100px;"/>
+    XPN normalization. Previously calculated files 
+  </h1>
+  <a href="/xpn/" class="btn btn-default pull-right">Normalize more datasets</a>
+  <br/>
+  <hr/>
+<table class="table">
+  <tr>
+    <th>File name</th>
+    <th>File size</th>
+    <th>Created at</th>
+  </tr>
+  {% for file in filelist %}
+  <tr>
+    <td><a href="{{MEDIA_URL}}XPN/{{file.name}}">{{ file.name }}</a></td>
+    <td>{{ file.size }}Mb</td>
+    <td>{{ file.created }}</td>
+  </tr>
+  {% endfor %} 
+</table> 
+ 
+
+</div>
+
+
+
+{%endblock%}
