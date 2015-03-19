@@ -679,81 +679,19 @@ class Test(TemplateView):
     def get_context_data(self, **kwargs):
               
         context = super(Test, self).get_context_data(**kwargs)
-        from database.models import Relation
-        
-        lpath = []
-   
-        new_path_df = read_excel(settings.MEDIA_ROOT+"/TRpathways_update_final_updated2.xlsx",
-                                         sheetname=0,
-                                         index_col='Old Pathway Name')
-        rel_path_df = read_excel(settings.MEDIA_ROOT+"/relpath2.xlsx",
-                                         sheetname=0,
-                                         )
-        for rel in rel_path_df.iterrows():
-            pathh = rel[1]['Paths']
-            
-                        
-            try:                    
-                new_path_name = new_path_df.loc[pathh][1]
-            except:
-                new_path_name = 'Unknown'
-            
-            if ('Main' in new_path_name) and (pathh not in lpath):
-                lpath.append(pathh)
-        for path in lpath:
-            pathway = Pathway.objects.get(name=path)
-            gene_objects = pathway.gene_set.all()
-            gene_name = []
-            gene_arr = []
-            for gene in gene_objects:
-                gene_name.append(gene.name.strip().upper())
-                gene_arr.append(float(gene.arr))
-            
-            gene_data = {'SYMBOL': gene_name,
-                         'ARR': gene_arr}
-            
-            gene_df = DataFrame(gene_data).set_index('SYMBOL')
-            
-            
-            node_objects = pathway.node_set.all()
-            node_comp = {}
-            dRelations = []
-            for node in node_objects:
-                comps = []
+        h_paths = Pathway.objects.all()
+        from mouse.models import MouseMapping
+        for h_p in h_paths:
+            new_m_path = MousePathway(name=h_p.name, amcf=h_p.amcf)
+            new_m_path.save()
+            for gene in h_p.gene_set.all():
+                try:
+                    mapp = MouseMapping.objects.filter(human_gene_symbol=gene.name)[0]
+                    new_m_gene = MouseGene(name=mapp.mouse_gene_symbol.upper(), arr=gene.arr, pathway=new_m_path)
+                except:
+                    new_m_gene = MouseGene(name=gene.name, arr=gene.arr, pathway=new_m_path) 
                 
-                for c in node.component_set.all():
-                    comps.append(c.name)
-                node_comp[node.name] = comps
-                
-                #relations
-                for inrel in node.inrelations.all():
-                    if inrel.reltype == '1':
-                        relColor = 'activation'
-                    if inrel.reltype == '0':
-                        relColor = 'inhibition'
-                    dRelations.append({'From node': inrel.fromnode.name,
-                                   'To node' : inrel.tonode.name,
-                                   'type': relColor })
-                
-            node_df = DataFrame.from_dict(node_comp,  orient='index')
-            node_df = node_df.transpose().fillna('')
-            rel_df = DataFrame(dRelations)
-            
-            
-            file_name = path+'.xlsx'
-        
-            from django.core.files.storage import default_storage
-            from django.core.files.base import ContentFile
-        
-            output_file = default_storage.save(settings.MEDIA_ROOT+"/path/"+file_name, ContentFile(''))
-               
-            with ExcelWriter(output_file, index=False) as writer:
-                    gene_df.to_excel(writer,'genes')
-                    node_df.to_excel(writer,'nodes')
-                    rel_df.to_excel(writer,'relations')
-            
-            #raise Exception('rel')
-        context['paths'] = lpath
+                new_m_gene.save()
         return context
 
 

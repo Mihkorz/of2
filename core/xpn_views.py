@@ -7,7 +7,9 @@ import csv
 import numpy as np
 from pandas import DataFrame, read_csv
 from rpy2.robjects.packages import importr
+from collections import defaultdict
 
+from django import forms
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormView
 from django.utils.decorators import method_decorator
@@ -37,6 +39,20 @@ class XpnForm(FormView):
         context['test'] = 'test'
         return context
     
+    def rename_df_columns(self, df):
+        
+        name_counts = defaultdict(int)
+        new_col_names = []
+            
+        for name in df.columns:
+            new_count = name_counts[name] + 1
+            new_col_names.append("{}.{}".format(name, new_count))
+            name_counts[name] = new_count 
+                
+            
+        df.columns = new_col_names
+        return df
+    
     def form_valid(self, form):
         
         pl1 = form.cleaned_data.get('pl1', False)
@@ -44,8 +60,8 @@ class XpnForm(FormView):
         k = form.cleaned_data.get('k', 10)
         l = form.cleaned_data.get('l', 4)
         log_scale = form.cleaned_data.get('log_scale', True)
-        p1_names = form.cleaned_data.get('p1_names', 1)
-        p2_names = form.cleaned_data.get('p2_names', 1)
+        p1_names = form.cleaned_data.get('p1_names', 0)
+        p2_names = form.cleaned_data.get('p2_names', 0)
         gene_cluster = form.cleaned_data.get('gene_cluster', 'kmeans')
         assay_cluster = form.cleaned_data.get('assay_cluster', 'kmeans')
         corr = form.cleaned_data.get('corr', 'pearson')
@@ -53,24 +69,48 @@ class XpnForm(FormView):
         skip_match = form.cleaned_data.get('skip_match', False) 
         
         sniffer = csv.Sniffer()
-        dialect_pl1 = sniffer.sniff(pl1.read(), delimiters='\t,;') # defining the separator of the csv file
+        dialect_pl1 = sniffer.sniff(pl1.read(), delimiters='\t,; ') # defining the separator of the csv file
         pl1.seek(0)
-        df_pl1 = read_csv(pl1, delimiter=dialect_pl1.delimiter)
+        df_pl1 = read_csv(pl1, delimiter=dialect_pl1.delimiter, index_col=0)
                 
-        dialect_pl2 = sniffer.sniff(pl2.read(), delimiters='\t,;') # defining the separator of the csv file
+        dialect_pl2 = sniffer.sniff(pl2.read(), delimiters='\t,; ') # defining the separator of the csv file
         pl2.seek(0)
-        df_pl2 = read_csv(pl2, delimiter=dialect_pl2.delimiter)
+        df_pl2 = read_csv(pl2, delimiter=dialect_pl2.delimiter, index_col=0)
         
         if log_scale:
-            def apply_log(col):
-                try:
-                    np.log(col)
-                except:
-                    pass
-                return col
-            df_pl1 = df_pl1.apply(apply_log, axis=0).fillna(0)
-            df_pl2 = df_pl2.apply(apply_log, axis=0).fillna(0)
+            df_pl1 = np.log(df_pl1).fillna(0)
+            df_pl2 = np.log(df_pl2).fillna(0)
         
+        len_col_pl1 = len(df_pl1.columns)
+        len_col_pl2 = len(df_pl2.columns)
+        
+        if abs(np.log2(len_col_pl1/len_col_pl2))>2:
+            raise forms.ValidationError(u"Error! Datasets can't be compared.\
+                                          Number of samples in one dataset is at least 4 \
+                                          times larger than in the other.")
+        
+        diff = abs(len_col_pl1-len_col_pl2)
+        
+        np.random.seed(5) #fix random number generator for the sake of reproducibility
+        
+        if len_col_pl1>len_col_pl2:
+            if abs(np.log2(len_col_pl1/len_col_pl2)<1):
+                choice = np.random.choice(len_col_pl2, diff, replace=False) #create random sample from df columns
+            else:
+                choice = np.random.choice(len_col_pl2, diff, replace=True)               
+            
+            adjusted_df = df_pl2[choice]
+            adjusted_df = self.rename_df_columns(adjusted_df)       
+            df_pl2 = df_pl2.join(adjusted_df)   
+            
+        else:
+            if abs(np.log2(len_col_pl1/len_col_pl2)<1):
+                choice = np.random.choice(len_col_pl1, diff, replace=False)
+            else:
+                choice = np.random.choice(len_col_pl1, diff, replace=True)
+            adjusted_df = df_pl2[choice]            
+            adjusted_df = self.rename_df_columns(adjusted_df)            
+            df_pl1 = df_pl1.join(adjusted_df)
         
         Rdf_pl1 = com.convert_to_r_dataframe(df_pl1)
         Rdf_pl2 = com.convert_to_r_dataframe(df_pl2)
