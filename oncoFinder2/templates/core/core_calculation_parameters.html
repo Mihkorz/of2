@@ -63,7 +63,7 @@
 	     {% endfor %}
 	     </div>
           <hr/>
-          {% if document.doc_format != 'OF_cnr' %}
+          {% if document.doc_format != 'OF_cnr' and document.doc_format != 'OF_cnr_stat' %}
           <div class="form-group form-group-sm">
             <label for="{{ form.pvalue_num.auto_id }}" class="col-sm-4 control-label">P-value filter</label>            
             <div class="col-sm-8">
@@ -86,6 +86,13 @@
           </div>
           {% endif %}
           
+          {% if document.doc_format == 'OF_cnr_stat'%}
+          {{ form.use_ttest_stat.label_tag }}
+                {{ form.use_ttest_stat }} &nbsp;&nbsp;&nbsp;
+          {{ form.use_fdr_stat.label_tag }}
+                {{ form.use_fdr_stat }}
+          {%endif%}
+          
           <div class="form-group form-group-sm">
             <label for="{{ form.cnr_low.auto_id }}" class="col-sm-4 control-label">{{ form.cnr_low.label }}</label>            
             <div class="col-sm-8">
@@ -100,7 +107,7 @@
                 {{ form.use_cnr }}
             </div>
           </div>
-          {% if document.doc_format != 'OF_cnr' %}
+          {% if document.doc_format != 'OF_cnr' and document.doc_format != 'OF_cnr_stat'  %}
           <div class="form-group form-group-sm">
             <label for="{{ form.sigma_num.auto_id }}" class="col-sm-4 control-label">{{ form.sigma_num.label }}</label>            
             <div class="col-sm-8">
@@ -130,12 +137,14 @@
                 {{ form.calculate_ds2 }}
                 {{ form.calculate_ds3.label_tag }}&nbsp; 
                 {{ form.calculate_ds3 }}<br/>
+            {% if document.doc_format != 'OF_cnr' and document.doc_format != 'OF_cnr_stat' %}
                 {{ form.calculate_norms_pas.label_tag }}&nbsp;
                 {{ form.calculate_norms_pas }}<br/>
                 {{ form.calculate_pvalue_each.label_tag }}&nbsp; 
                 {{ form.calculate_pvalue_each }} &nbsp;with FDR {{ form.calculate_FDR_each }}<br/>
                 {{ form.calculate_pvalue_all.label_tag }}&nbsp;
                 {{ form.calculate_pvalue_all }} &nbsp;with FDR {{ form.calculate_FDR_all }}
+            {% endif %}
                 {{ form.new_pathway_names.label_tag }}&nbsp;
                 {{ form.new_pathway_names }}
       

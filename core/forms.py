@@ -24,6 +24,13 @@ class CalculationParametersForm(forms.Form):
                                    initial=False, required=False)
     pvalue_threshold = forms.FloatField( label="p-value threshold", initial=0.05, required=False)
     qvalue_threshold = forms.FloatField( label="q-value threshold", initial=0.05, required=False)
+    
+    #For OF_cnr_stat files only!
+    use_ttest_stat = forms.BooleanField(label="Use p-values",
+                                   initial=True, required=False)
+    use_fdr_stat = forms.BooleanField(label="Use q-values",
+                                   initial=False, required=False)
+    
     #DB and norm algorithm selection
     db_choice = forms.ChoiceField(label="Pathway DataBase",
                                      widget=forms.RadioSelect, choices=DB_CHOICES, initial=1)

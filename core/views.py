@@ -69,6 +69,8 @@ class CoreSetCalculationParameters(FormView):
         #filters
         use_ttest = form.cleaned_data.get('use_ttest', True)
         use_fdr = form.cleaned_data.get('use_fdr', True)
+        use_ttest_stat = form.cleaned_data.get('use_ttest_stat', True) #for OF_cnr_stat files
+        use_fdr_stat = form.cleaned_data.get('use_fdr_stat', False) #for OF_cnr_stat files
         use_ttest_1sam = form.cleaned_data.get('use_ttest_1sam', False) 
         pvalue_threshold = form.cleaned_data.get('pvalue_threshold', 0.05)
         qvalue_threshold = form.cleaned_data.get('qvalue_threshold', 0.05)        
@@ -151,20 +153,22 @@ class CoreSetCalculationParameters(FormView):
                                                 level=0).mean() #deal with duplicate genes by taking mean value
         
         cnr_doc_df =  process_doc_df.copy() # use to generate CNR file for downloading
-        cnr_norms_df = cnr_doc_df[[norm for norm in [col for col in cnr_doc_df.columns if 'Norm' in col]]]
-        cnr_mean_norm =  cnr_norms_df.mean(axis=1)        
-        cnr_gMean_norm = cnr_norms_df.apply(gmean, axis=1)
-        std=cnr_norms_df.std(axis=1) # standard deviation
-        if norm_choice>1: #geometric norms
-            divide = cnr_gMean_norm
-        else:             #arithmetic norms
-            divide = cnr_mean_norm  
+        if input_document.doc_format!='OF_cnr' and input_document.doc_format!='OF_cnr_stat':
+            cnr_norms_df = cnr_doc_df[[norm for norm in [col for col in cnr_doc_df.columns if 'Norm' in col]]]
+            cnr_mean_norm =  cnr_norms_df.mean(axis=1)        
+            cnr_gMean_norm = cnr_norms_df.apply(gmean, axis=1)
+            std=cnr_norms_df.std(axis=1) # standard deviation
+            if norm_choice>1: #geometric norms
+                divide = cnr_gMean_norm
+            else:             #arithmetic norms
+                divide = cnr_mean_norm  
         
-        cnr_doc_df = cnr_doc_df.div(divide, axis='index')
+            cnr_doc_df = cnr_doc_df.div(divide, axis='index')
+            cnr_doc_df['Mean_norm'] = cnr_mean_norm
+            cnr_doc_df['gMean_norm'] = cnr_gMean_norm
+            cnr_doc_df['std'] = std
         
-        cnr_doc_df['Mean_norm'] = cnr_mean_norm
-        cnr_doc_df['gMean_norm'] = cnr_gMean_norm
-        cnr_doc_df['std'] = std
+        
         
         cnr_unchanged_df = cnr_doc_df.copy()
                
@@ -243,6 +247,27 @@ class CoreSetCalculationParameters(FormView):
             cnr_df_diff_genes = prosecc_for_cnr.apply(cnr_diff_genes, axis=0)
             cnr_doc_df = cnr_df_diff_genes.join(df_for_pq_val)
             cnr_doc_df = cnr_doc_df.sort_index(axis=1)
+        
+        
+        
+        
+        if input_document.doc_format=='OF_cnr_stat': #for OF_cnr_stat files only
+            def filter_from_file_stat(col):
+                if 'Tumour' in col.name:
+                    sample_name = col.name.replace("Tumour", "")
+                    p_val_col = "ttest_pv"+sample_name
+                    q_val_col = "ttest_fdr"+sample_name
+                    if use_ttest_stat:
+                        col = col[(process_doc_df[p_val_col]<0.05)]
+                    if use_fdr_stat:
+                        col = col[(process_doc_df[q_val_col]<0.05)]
+                    
+                    return col
+                else:
+                    return col    
+                
+            process_doc_df = process_doc_df.apply(filter_from_file_stat, axis=0,).fillna(1)
+            
             
         """ end of calculating horizontal p-values for genes """
         
@@ -326,9 +351,11 @@ class CoreSetCalculationParameters(FormView):
             def PAS1_calculation(col, arr):
   
                 if ('Tumour' in col.name) or ('Norm' in col.name):
-                    
-                    col_CNR = col/s_mean_norm #convert column from GENE EXPRESSION to CNR
-                    
+                    if input_document.doc_format!='OF_cnr' and input_document.doc_format!='OF_cnr_stat':
+                        col_CNR = col/s_mean_norm #convert column from GENE EXPRESSION to CNR
+                    else:
+                        col_CNR = col
+                        
                     if use_ttest_1sam: # two-sided 1sample T-test filter
                         _, p_value = ttest_1samp(log_norms_df, np.log(col), axis=1)
                         s_p_value = Series(p_value, index = col.index).fillna(0)

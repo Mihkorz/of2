@@ -84,6 +84,7 @@ DOC_TYPES = (
 DOC_FORMATS = (
     ('OF_gene', 'OncoFinder gene expression file'),
     ('OF_cnr', 'OncoFinder CNR file'),
+    ('OF_cnr_stat', 'OncoFinder CNR file with statistics (p-value and q-value)'),
     ('Illumina', 'Illumina file (with marked Tumour and Normal columns)'),
     ('CustomArray', 'CustomArray file (currently under development)'),
 )

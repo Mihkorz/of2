@@ -71,6 +71,53 @@ class OfCnrPreprocess(FormView):
     def form_invalid(self, form):
             return self.render_to_response(self.get_context_data(form=form))
     
+class OfCnrStatPreprocess(FormView):
+    
+    form_class = UploadDocumentForm
+    template_name = 'document/document_create.html'
+    success_url = '/project/'
+    
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(OfCnrStatPreprocess, self).dispatch(request, *args, **kwargs)
+    
+    def form_valid(self, form):
+        document = form.save(commit=False)
+        document.save()
+        filename = settings.MEDIA_ROOT+"/"+document.document.name
+        sniffer = csv.Sniffer()
+        dialect = sniffer.sniff(open(filename, 'r').read(), delimiters='\t,;') # defining the separator of the csv file
+        df = read_csv(filename, delimiter=dialect.delimiter)
+        tumour_cols = [col for col in df.columns if 'Tumour' in col]
+        
+        document.sample_num = len(tumour_cols)
+        document.norm_num = 0
+        document.row_num = len(df)
+        document.doc_format = 'OF_cnr_stat'
+        document.save()
+        
+        path = os.path.join('users', str(document.project.owner),
+                                            str(document.project),'process', 'process_'+str(document.get_filename()))
+        if not os.path.exists(settings.MEDIA_ROOT+'/'+os.path.join('users', str(document.project.owner),
+                                            str(document.project),'process')):
+            os.mkdir(settings.MEDIA_ROOT+'/'+os.path.join('users', str(document.project.owner),
+                                            str(document.project),'process'))
+        new_file = settings.MEDIA_ROOT+"/"+path
+         
+        process_doc = ProcessDocument()
+        process_doc.document = path
+        process_doc.input_doc = document
+        process_doc.created_by = self.request.user
+        process_doc.save()
+        
+        df.to_csv(new_file, sep='\t')
+        
+        return HttpResponseRedirect(self.success_url+document.project.name)
+    
+    
+    def form_invalid(self, form):
+            return self.render_to_response(self.get_context_data(form=form))
+
     
 class IlluminaPreprocess(FormView):
     

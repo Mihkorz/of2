@@ -23,7 +23,7 @@ from django.conf import settings
 from .forms import SettingsUserForm, UserProfileFormSet, CreateProjectForm, \
                    UploadDocumentForm
 from .models import Project, Document, ProcessDocument
-from .preprocess_views import OfCnrPreprocess, IlluminaPreprocess
+from .preprocess_views import OfCnrPreprocess, IlluminaPreprocess, OfCnrStatPreprocess
 from core.stats import pseudo_ttest_1samp, fdr_corr
 from database.models import Pathway, Component, Gene
 from mirna.views import mirnaProjectDetail, mirnaDocumentDetail
@@ -166,6 +166,9 @@ class CreateDocument(CreateView):
         doc_format = request.POST.get('doc_format', False)
         if doc_format == 'OF_cnr':
             view = OfCnrPreprocess.as_view()
+            return view(request, *args, **kwargs)
+        if doc_format == 'OF_cnr_stat':
+            view = OfCnrStatPreprocess.as_view()
             return view(request, *args, **kwargs)
         if doc_format == 'Illumina':
             view = IlluminaPreprocess.as_view()
