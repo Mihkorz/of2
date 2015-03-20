@@ -309,7 +309,7 @@ class MedicTreatmentDetail(DetailView):
                 
         
         df_pms1 = read_excel(file_pms1, sheetname="PMS1")
-        context['PMS1'] = df_pms1.to_html()
+        context['PAS1'] = df_pms1.to_html()
         context['prob'] = df_prob.to_html()
         #raise Exception("exp")
         return context
@@ -338,7 +338,7 @@ class PatientTreatmentDetail(DetailView):
         sniffer = csv.Sniffer()
         dialect = sniffer.sniff(open(file_probability, 'r').read(), delimiters='\t,;') # defining the separator of the csv file
         df_prob = read_csv(file_probability, delimiter=dialect.delimiter)
-        df_output = read_excel(filename, sheetname="PMS1")        
+        df_output = read_excel(filename, sheetname="PAS1")        
         
         path_cols = [col for col in df_prob.columns if col not in ['Sample', 'group']]
         path_num = len(path_cols)

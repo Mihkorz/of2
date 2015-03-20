@@ -3327,3 +3327,32 @@ Traceback (most recent call last):
   File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 270, in form_valid
     raise Exception('cnr')
 Exception: cnr
+2015-03-20 17:01:23,768 ERROR base 22014 -1376781504 Internal Server Error: /document/doc4887/treat10/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 326, in dispatch
+    return super(PatientTreatmentDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 346, in get_context_data
+    df_pms1 = read_excel(file_pms1, sheetname="PAS1", index_col="Pathway").transpose()
+  File "/usr/local/lib/python2.7/dist-packages/pandas/io/excel.py", line 127, in read_excel
+    return ExcelFile(io, engine=engine).parse(sheetname=sheetname, **kwds)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/io/excel.py", line 238, in parse
+    **kwds)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/io/excel.py", line 292, in _parse_excel
+    sheet = self.book.sheet_by_name(sheetname)
+  File "/usr/local/lib/python2.7/dist-packages/xlrd-0.9.2-py2.7.egg/xlrd/book.py", line 441, in sheet_by_name
+    raise XLRDError('No sheet named <%r>' % sheet_name)
+XLRDError: No sheet named <'PAS1'>
