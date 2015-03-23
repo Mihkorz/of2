@@ -384,13 +384,14 @@ class CoreSetCalculationParameters(FormView):
             if (calculate_ds1 or calculate_ds2 or calculate_ds3): 
                 for tumour in tumour_columns:
                     diff_genes_for_tumor = []
-                    serie = pas_norms_samples[col]
+                    serie = pas_norms_samples[tumour]
                     serie = serie[(serie>0) | (serie<0)]
                     diff_genes_for_tumor.extend(serie.index.values.tolist()) # store differential genes in a list
                     if differential_genes.has_key(tumour):
                         differential_genes[tumour].extend(diff_genes_for_tumor)
                     else:
                         differential_genes[tumour] = diff_genes_for_tumor
+                    
             
             pas_norms_samples = pas_norms_samples.sum()    
              
@@ -528,17 +529,16 @@ class CoreSetCalculationParameters(FormView):
                 ds3_dict = {}
                 ds1_dict['Drug'] = ds2_dict['Drug'] = ds3_dict['Drug'] = drug.name.strip()
                 ds1_dict['DataBase'] = ds2_dict['DataBase'] = ds3_dict['DataBase'] = drug.db
-                ds1_dict['Type'] = ds2_dict['Type'] = ds3_dict['Type'] = drug.tip
-            
+                ds1_dict['Type'] = ds2_dict['Type'] = ds3_dict['Type'] = drug.tip          
             
             
                 for tumour in tumour_columns: #loop thought samples columns
                     DS1 = 0 # DrugScore 1
                     DS2 = 0 # DrugScore 2
-                    DS3 = 0
+                    DS3 = 0                
             
                     for target in drug.target_set.all():
-                    
+                        
                         target.name = target.name.strip().upper()
                         if target.name in differential_genes[tumour]:
                             if int(db_choice) == 1:
@@ -548,24 +548,14 @@ class CoreSetCalculationParameters(FormView):
                             elif int(db_choice) == 3:
                                 pathways = MousePathway.objects.filter(mousegene__name=target.name) # Mouse DB
                             
-                    
+                            
                             for path in pathways:
-                                try:
-                                    
-                                    if int(db_choice) == 1:
-                                        gene = Gene.objects.get(name = target.name, pathway=path) # get Genes from Human DB
-                                    elif int(db_choice) == 2:
-                                        gene = MetabolismGene.objects.get(name = target.name, pathway=path) # get Genes from Metabolism DB
-                                    elif int(db_choice) == 3:
-                                        gene = MouseGene.objects.get(name = target.name, pathway=path) # get Genes from Mouse DB
-                                    
-                                except MultipleObjectsReturned:
-                                    if int(db_choice) == 1:
-                                        gene = Gene.objects.filter(name = target.name, pathway=path)[0] # get Genes from Human DB
-                                    elif int(db_choice) == 2:
-                                        gene = MetabolismGene.objects.filter(name = target.name, pathway=path)[0] # get Genes from Metabolism DB
-                                    elif int(db_choice) == 3:
-                                        gene = MouseGene.objects.filter(name = target.name, pathway=path)[0] # get Genes from Mouse DB
+                                if int(db_choice) == 1:
+                                    gene = Gene.objects.filter(name = target.name, pathway=path)[0] # get Genes from Human DB
+                                elif int(db_choice) == 2:
+                                    gene = MetabolismGene.objects.filter(name = target.name, pathway=path)[0] # get Genes from Metabolism DB
+                                elif int(db_choice) == 3:
+                                    gene = MouseGene.objects.filter(name = target.name, pathway=path)[0] # get Genes from Mouse DB
                                         
                                 ARR = float(gene.arr)
                                 CNR = process_doc_df.at[target.name, tumour]
@@ -601,6 +591,7 @@ class CoreSetCalculationParameters(FormView):
                                         DS2 -= AMCF*ARR*math.log10(CNR)
                                     else:
                                         DS2 += AMCF*ARR*math.log10(CNR)
+                                
                                     
                     ds1_dict[tumour] = DS1
                     ds2_dict[tumour] = DS2
@@ -609,7 +600,7 @@ class CoreSetCalculationParameters(FormView):
                 ds1_list.append(ds1_dict)
                 ds2_list.append(ds2_dict)
                 ds3_list.append(ds3_dict)
-            
+            #raise Exception('DS no drug')
             output_ds1_df = DataFrame(ds1_list)
             output_ds1_df = output_ds1_df.set_index('Drug')
             output_ds2_df = DataFrame(ds2_list)
