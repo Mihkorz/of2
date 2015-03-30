@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
+import os
+from datetime import datetime
 import csv
 import json
 import cairosvg
 import numpy as np
-
-from pandas import read_csv, read_excel, DataFrame
+from scipy.stats.mstats import gmean
+from scipy.stats import ttest_1samp
+from pandas import read_csv, read_excel, DataFrame, Series
 from docx import Document as pyDocx
 from docx.shared import Inches
 from cStringIO import StringIO
@@ -12,13 +15,21 @@ from cStringIO import StringIO
 from django.http import HttpResponse
 from django.views.generic.detail import DetailView
 from django.views.generic.base import TemplateView
+from django.views.generic.edit import FormView 
 from django.views.generic import ListView
+from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.conf import settings
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
 
 from .models import Nosology, TreatmentMethod
+from database.models import Pathway 
 from profiles.models import Document
+from core.forms import MedicCalculationParametersForm
+from core.stats import quantile_normalization, XPN_normalisation, fdr_corr
 
 
 class MedicNosologyList(ListView):
@@ -100,7 +111,7 @@ class MedicTreatmentDetail(DetailView):
         false_negative = 0
         
         for name, group in grouped:
-            status = name.split('_')[1].strip()
+            status = "NRES" if "NRES" in name else "RES"
             path_cols = [col for col in group.columns if col not in ['Sample', 'group']]
             path_df = group[path_cols]
             
@@ -153,7 +164,7 @@ class MedicTreatmentDetail(DetailView):
             false_positive = 0
             false_negative = 0
             for name, group in grouped:
-                status = name.split('_')[1].strip()
+                status = "NRES" if "NRES" in name else "RES"
                 path_cols = [col for col in group.columns if col not in ['Sample', 'group']]
                 path_df = group[path_cols]
             
@@ -163,7 +174,7 @@ class MedicTreatmentDetail(DetailView):
                     if val>1:
                         Rcount+= 1
                 ratio = float(Rcount)/float(len(path_cols))
-                if ratio > score and status == 'RES':
+                if ratio >= score and status == 'RES':
                     true_positive+=1
                 if ratio > score and status == 'NRES':
                     false_negative+=1
@@ -191,8 +202,9 @@ class MedicTreatmentDetail(DetailView):
                 dSn[score] = sensitivity
                 dBalnc[score] = AUC
                 dAccur[score] = accuracy
+            #raise Exception('true')
             
-        #raise Exception('true')
+        
         """ Statistical values """
         try:
             specificity = (float(true_negative))/(false_positive+true_negative)
@@ -308,7 +320,7 @@ class MedicTreatmentDetail(DetailView):
         context['new_accuracy'] = new_accuracy
                 
         
-        df_pms1 = read_excel(file_pms1, sheetname="PMS1")
+        df_pms1 = read_csv(file_pms1)
         context['PAS1'] = df_pms1.to_html()
         context['prob'] = df_prob.to_html()
         #raise Exception("exp")
@@ -328,9 +340,11 @@ class PatientTreatmentDetail(DetailView):
     def get_context_data(self, **kwargs):
         context = super(PatientTreatmentDetail, self).get_context_data(**kwargs)
         
-        filename = settings.MEDIA_ROOT+"/"+self.object.document.name 
-        
         treatment = TreatmentMethod.objects.get(pk=self.kwargs['treat_id'])
+        
+        filename = settings.MEDIA_ROOT+"/"+self.object.document.name
+        filename = filename.replace('patient_results', treatment.name)        
+        
         
         file_pms1 = settings.MEDIA_ROOT+"/"+treatment.file_pms1.name
         file_probability = settings.MEDIA_ROOT+"/"+treatment.file_probability.name
@@ -338,12 +352,13 @@ class PatientTreatmentDetail(DetailView):
         sniffer = csv.Sniffer()
         dialect = sniffer.sniff(open(file_probability, 'r').read(), delimiters='\t,;') # defining the separator of the csv file
         df_prob = read_csv(file_probability, delimiter=dialect.delimiter)
-        df_output = read_excel(filename, sheetname="PAS1")        
+        dialect = sniffer.sniff(open(filename, 'r').read(), delimiters='\t,;')
+        df_output = read_csv(filename, delimiter=dialect.delimiter)        
         
-        path_cols = [col for col in df_prob.columns if col not in ['Sample', 'group']]
+        path_cols = [col for col in df_prob.columns if col not in ['Sample', 'group', 'Unnamed: 0']]
         path_num = len(path_cols)
                 
-        df_pms1 = read_excel(file_pms1, sheetname="PMS1", index_col="Pathway").transpose()
+        df_pms1 = read_csv(file_pms1, index_col="Pathway").transpose()
         df_required_paths = df_pms1[path_cols]
         df_required_paths.reset_index(inplace="True")
         df_nres = df_required_paths[df_required_paths['index'].str.contains("NRES")]
@@ -421,8 +436,8 @@ class PatientTreatmentDetail(DetailView):
         false_negative = 0
         
         for name, group in grouped:
-            status = name.split('_')[1].strip()
-            path_cols = [col for col in group.columns if col not in ['Sample', 'group']]
+            status = "NRES" if "NRES" in name else "RES"
+            path_cols = [col for col in group.columns if col not in ['Sample', 'group', 'Unnamed: 0']]
             path_df = group[path_cols]
             #raise
             divided_df = path_df.T[path_df.index[1]] / path_df.T[path_df.index[0]]
@@ -465,8 +480,14 @@ class PatientTreatmentDetail(DetailView):
                
         
         """ Statistical values """
-        specificity = (float(true_negative))/(false_positive+true_negative)
-        sensitivity = (float(true_positive))/(true_positive+false_negative)
+        try:
+            specificity = (float(true_negative))/(false_positive+true_negative)
+        except:
+            specificity = 'Not difined.'
+        try:    
+            sensitivity = (float(true_positive))/(true_positive+false_negative)
+        except:
+            specificity = 'Not difined.'
         AUC = (specificity+sensitivity)/2
         accuracy = (true_positive+true_negative)/float(all_samples)
         
@@ -544,6 +565,126 @@ class PatientTreatmentDetail(DetailView):
         
         return self.render_to_json_response(data)
     
+class MedicPatientCalculation(FormView):
+    form_class = MedicCalculationParametersForm
+    
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(MedicPatientCalculation, self).dispatch(request, *args, **kwargs)
+    
+    def get_context_data(self, **kwargs):
+        context = super(MedicPatientCalculation, self).get_context_data(**kwargs)
+        
+        
+        return context
+    
+    def form_valid(self, form):
+                
+        
+        input_document = Document.objects.get(pk=int(self.request.POST.get('doc_id')))
+        hormone_status = form.cleaned_data.get('hormone_status', False)
+        her2_status = form.cleaned_data.get('her2_status', False)
+        
+        treatments = TreatmentMethod.objects.filter(nosology=input_document.project.nosology)
+        if hormone_status!='0':
+                    treatments = treatments.filter(hormone_receptor_status=hormone_status)
+        if her2_status!='0':
+                    treatments = treatments.filter(her2_status=her2_status)
+        
+        process_doc_df = read_csv(settings.MEDIA_ROOT+"/"+input_document.input_doc.document.name,
+                                  sep='\t', index_col='SYMBOL').fillna(0)
+        original_columns = process_doc_df.columns
+        
+        for treatment in treatments:
+            sniffer = csv.Sniffer()
+            res_file = treatment.file_res
+            dialect = sniffer.sniff(res_file.read(), delimiters='\t,;')
+            res_file.seek(0)
+            res_df = read_csv(res_file, delimiter=dialect.delimiter,
+                          index_col='SYMBOL') #create DataFrame for responders
+                
+            nres_file = treatment.file_nres
+            dialect = sniffer.sniff(nres_file.read(), delimiters='\t,;')
+            nres_file.seek(0)
+            nres_df = read_csv(nres_file, delimiter=dialect.delimiter,
+                           index_col='SYMBOL') #create DataFrame for non-responderss
+            
+            res_nres_joined = res_df.join(nres_df, how='inner')
+            
+            """ Performing XPN between norms and responders+non-responders """
+            try:
+                df_after_xpn = XPN_normalisation(res_nres_joined, process_doc_df, iterations=10)
+            except:
+                raise
+             
+            #df_after_xpn = read_csv(settings.MEDIA_ROOT+"/xpn_done.csv", index_col='SYMBOL')
+            
+            """ calculating PAS1 for each treatment """
+            
+            df_for_pas1 = df_after_xpn[original_columns]
+            norms_df = df_for_pas1[[norm for norm in [col for col in df_for_pas1.columns if 'Norm' in col]]]
+            log_norms_df = np.log(norms_df)#use this for t-test, assuming log(norm) is distributed normally
+            s_mean_norm = norms_df.apply(gmean, axis=1) #series of mean norms for CNR
+        
+            df_for_pas1.drop(norms_df.columns, axis=1, inplace=True)
+            
+            def apply_filter(col):
+                _, p_value = ttest_1samp(log_norms_df, np.log(col), axis=1)
+                s_p_value = Series(p_value, index = col.index).fillna(0)
+                fdr_q_values = fdr_corr(np.array(s_p_value))
+                col = col[(fdr_q_values<0.05)]
+                return col
+        
+            df_for_pas1 = df_for_pas1.apply(apply_filter, axis=0).fillna(0)
+        
+            df_for_pas1 = df_for_pas1.divide(s_mean_norm, axis=0).fillna(0) #acquire CNR values
+            df_for_pas1.replace(0, 1, inplace=True)
+            df_for_pas1 = np.log(df_for_pas1) # now we have log(CNR)
+        
+            pas1_all_paths = DataFrame()
+            
+            for pathway in Pathway.objects.all().prefetch_related('gene_set'):
+                genes = DataFrame(list(pathway.gene_set.all()
+                                      .values('name', 'arr'))).set_index('name')#fetch genes 
+            
+                genes.index.name = 'SYMBOL'
+                
+                joined = genes.join(df_for_pas1, how='inner').drop(['arr'], axis=1) 
+                pas1_for_pathway = joined.apply(lambda x: x*genes['arr'].astype('float')).sum()            
+                pas1_for_pathway = pas1_for_pathway.set_value('Pathway', pathway.name)
+                pas1_for_pathway = DataFrame(pas1_for_pathway).T.set_index('Pathway')
+            
+                pas1_all_paths = pas1_all_paths.append(pas1_for_pathway)
+                
+            """ save pas1 file as treatment name """
+            path = os.path.join('users', str(input_document.project.owner),
+                                            str(input_document.project),'output')
+            file_pas1 = default_storage.save(path+"/"+treatment.name+".csv", ContentFile(''))
+            pas1_all_paths.to_csv(settings.MEDIA_ROOT+"/"+file_pas1)                                           
+                       
+            
+            
+            
+            
+        output_doc = Document()
+        output_doc.doc_type = 2
+        json_db = 'Human'
+        output_doc.parameters = {
+                                 'use_fdr': True,
+                                 'use_ttest_1sam': True,
+                                 'norm_algirothm': 'geometric',
+                                 'db': json_db,
+                                 'hormone_status': hormone_status,
+                                 'her2_status': her2_status }
+        output_doc.project = input_document.project
+        output_doc.created_by = self.request.user
+        output_doc.created_at = datetime.now()     
+        output_doc.document = path+"/patient_results.csv"
+        output_doc.related_doc = input_document
+        output_doc.save()
+        return HttpResponseRedirect(reverse('document_detail', args=(output_doc.id,)))
+
+
 class PatientTreatmentPDF(DetailView):
     """ 
     Details for all treatments as pdf

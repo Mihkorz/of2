@@ -15,6 +15,8 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.core.exceptions import MultipleObjectsReturned
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
 from django.conf import settings
 
 from .forms import  CalculationParametersForm, MedicCalculationParametersForm
@@ -174,6 +176,8 @@ class CoreSetCalculationParameters(FormView):
                
         tumour_columns = [col for col in process_doc_df.columns if 'Tumour' in col] #get sample columns 
         
+        
+        
         """ Standard T-test for genes """
         if use_ttest:
 
@@ -280,12 +284,11 @@ class CoreSetCalculationParameters(FormView):
         differential_genes = {}
         
         if int(db_choice) == 1:
-            pathway_objects = Pathway.objects.all() # Human DB
+            pathway_objects = Pathway.objects.all().prefetch_related('gene_set') # Human DB
         elif int(db_choice) == 2:
             pathway_objects = MetabolismPathway.objects.all() # Metabolism DB
         elif int(db_choice) == 3:
             pathway_objects = MousePathway.objects.all() # Mouse DB
-        #raise Exception('yoyoyo')
         
         """ START CYCLE """        
         for pathway in pathway_objects:
@@ -305,6 +308,7 @@ class CoreSetCalculationParameters(FormView):
             
             gene_data = {'SYMBOL': gene_name,
                          'ARR': gene_arr}
+   
             
             gene_df = DataFrame(gene_data).set_index('SYMBOL')
             
@@ -355,7 +359,7 @@ class CoreSetCalculationParameters(FormView):
                         col_CNR = col/s_mean_norm #convert column from GENE EXPRESSION to CNR
                     else:
                         col_CNR = col
-                        
+                      
                     if use_ttest_1sam: # two-sided 1sample T-test filter
                         _, p_value = ttest_1samp(log_norms_df, np.log(col), axis=1)
                         s_p_value = Series(p_value, index = col.index).fillna(0)
@@ -367,12 +371,12 @@ class CoreSetCalculationParameters(FormView):
                         
                                       
                     if use_cnr: # CNR FILTER
-                        col_CNR = col_CNR[((col_CNR>cnr_up) | (col_CNR<cnr_low)) & (col_CNR>0)] 
-                        
+                        col_CNR = col_CNR[((col_CNR>cnr_up) | (col_CNR<cnr_low))] 
+                      
                     if use_sigma: # Sigma FILTER  !!! deprecated !!!                         
                         col_CNR = col_CNR[((col>=(s_mean_norm+sigma_num*std)) |
                                        (col<(s_mean_norm-sigma_num*std)))] 
-                    
+                     
                     return np.log(col_CNR)*arr # PAS1=ARR*log(CNR)
                        
                 else:
@@ -428,7 +432,6 @@ class CoreSetCalculationParameters(FormView):
                      
                     _, p_val = ranksums(lnorms_all, lpas1_all)
                     pas1_dict['p-value_Mean'] = p_val                
-            
              
             """
             
@@ -514,6 +517,7 @@ class CoreSetCalculationParameters(FormView):
             output_pas2_df = DataFrame(pas2_list)
             output_pas2_df = output_pas2_df.set_index('Pathway')
         
+         
         """ Calculating Drug Score """
         #raise Exception('exppp')
         output_ds1_df = output_ds2_df = output_ds3_df = DataFrame()
@@ -615,8 +619,6 @@ class CoreSetCalculationParameters(FormView):
                                             str(input_document.project),'output')
         file_name = 'output_'+str(input_document.get_filename()+'.xlsx')
         
-        from django.core.files.storage import default_storage
-        from django.core.files.base import ContentFile
         
         output_file = default_storage.save(settings.MEDIA_ROOT+"/"+path+"/"+file_name, ContentFile(''))
                
@@ -697,19 +699,39 @@ class Test(TemplateView):
     def get_context_data(self, **kwargs):
               
         context = super(Test, self).get_context_data(**kwargs)
-        h_paths = Pathway.objects.all()
-        from mouse.models import MouseMapping
-        for h_p in h_paths:
-            new_m_path = MousePathway(name=h_p.name, amcf=h_p.amcf)
-            new_m_path.save()
-            for gene in h_p.gene_set.all():
-                try:
-                    mapp = MouseMapping.objects.filter(human_gene_symbol=gene.name)[0]
-                    new_m_gene = MouseGene(name=mapp.mouse_gene_symbol.upper(), arr=gene.arr, pathway=new_m_path)
-                except:
-                    new_m_gene = MouseGene(name=gene.name, arr=gene.arr, pathway=new_m_path) 
-                
-                new_m_gene.save()
+        pathway = Pathway.objects.get(name="Interferon_Pathway")
+        from mouse.models import MouseMapping 
+        genes = DataFrame(list(MouseMapping.objects.values('human_gene_symbol', 'mouse_gene_symbol')
+                                      ))#fetch genes
+        genes.to_csv(settings.MEDIA_ROOT+'/human_mouse_mapping.csv')
+        raise Exception('genes')
+        """
+        lnodes = {}
+        drel = []
+        for node in pathway.node_set.all():
+            lg = []
+            for g in node.component_set.all():
+                lg.append(g.name)                
+            lnodes[node.name]= lg
+            
+            for inrel in node.inrelations.all():
+                drel.append({'From': inrel.fromnode.name,
+                             'To': inrel.tonode.name,
+                             'type': 'activation' if inrel.reltype == '1' else 'inhibition'})
+            
+            
+            
+        dfnodes = DataFrame(dict([ (k,Series(v)) for k,v in lnodes.iteritems() ])).fillna("")       
+        dfrel = DataFrame(drel)   
+        
+        output_file = default_storage.save(settings.MEDIA_ROOT+"/Interferon_Pathway.xlsx", ContentFile(''))
+               
+        with ExcelWriter(output_file, index=False) as writer:            
+            genes.to_excel(writer,'genes')
+            dfnodes.to_excel(writer,'nodes')
+            dfrel.to_excel(writer,'relations')
+        """
+        raise Exception('test')
         return context
 
 

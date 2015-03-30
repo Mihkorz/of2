@@ -27,17 +27,22 @@
       <h3 class="panel-title">Calculation parameters</h3>
     </div>
     <div class="panel-body">
-       <form class="form-horizontal" role="form" action="" method="post"  id="calculation_parameters_form">
-          {% csrf_token %}
-          <small>
+       
          <!-- MEDICAL FORM -->
           {% if document.project.field = 'med' %}
+          <form class="form-horizontal" role="form" action="/medic/calculate/" method="post"  id="calculation_parameters_form">
+          {% csrf_token %}
+          <small>
           {{form.hormone_status.label_tag}} &nbsp;&nbsp;&nbsp;
           {{form.hormone_status}}
+          <input type="hidden" name="doc_id" value="{{document.id}}" />
           <br/>
           {{form.her2_status.label_tag}} &nbsp;&nbsp;&nbsp;
           {{form.her2_status}}
           {% else %}
+          <form class="form-horizontal" role="form" action="" method="post"  id="calculation_parameters_form">
+          {% csrf_token %}
+          <small>
           <!-- OF GENE EXPRESSION -->
           <div class="form-group form-group-sm">
           <div class="col-sm-10">

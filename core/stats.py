@@ -1,12 +1,17 @@
 # -*- coding: utf-8 -*-
-
+import pandas as pd
+import pandas.rpy.common as com
+from rpy2.robjects.packages import importr
+from collections import defaultdict
 import numpy as np
 import scipy as sp
 import scipy.stats
 import scipy.interpolate
 
 def pseudo_ttest_1samp(a, popmean, axis=0):
-   
+    """
+    Corrected ttest_1samp by InSilico
+    """
     
     a, axis = _chk_asarray(a, axis)
     n = a.shape[axis]
@@ -109,3 +114,107 @@ def fdr_corr(pval, m = None, pi0 = None):
     qval = qval.reshape(pval.shape)
 
     return qval
+
+def quantile_normalization(df):
+    """
+    Performs quantile normalization. by InSilico
+    
+    input and output: Pandas DataFrame
+    IMPORTANT: doesn't store column names
+    """
+        
+    my_data = df.as_matrix() #convert DataFrame to numpy
+       
+    AA = np.zeros_like(my_data)
+
+    I = np.argsort(my_data,axis=0)
+
+    AA[I,np.arange(my_data.shape[1])] = np.mean(my_data[I,np.arange(my_data.shape[1])],axis=1)[:,np.newaxis]
+        
+    my_data = AA 
+    new_col = np.array(df.index.values, dtype='|S15')[...,None] # None keeps (n, 1) shape
+    new_col.shape
+        
+    all_data = np.append( new_col,my_data, 1)
+    all_data.shape
+        
+    result_df = pd.DataFrame(all_data)
+    result_df = result_df.convert_objects(convert_numeric=True)
+        
+    return result_df
+
+def XPN_normalisation(df_pl1, df_pl2, p1_names=0, p2_names=0,
+                                 iterations=30, K=10, L=4, log_scale=False):
+    """ Performs XPN normalisation """
+    
+    if log_scale:
+            df_pl1 = np.log(df_pl1).fillna(0)
+            df_pl2 = np.log(df_pl2).fillna(0)
+        
+    len_col_pl1 = len(df_pl1.columns)
+    len_col_pl2 = len(df_pl2.columns)
+        
+    if abs(np.log2(float(len_col_pl1)/len_col_pl2))>2:
+        raise Exception(u"Error! Datasets can't be compared.\
+                                          Number of samples in one dataset is at least 4 \
+                                          times larger than in the other."+
+                                          str(len_col_pl1)+" and "+str(len_col_pl2))
+        
+    diff = abs(len_col_pl1-len_col_pl2)
+        
+    np.random.seed(5) #fix random number generator for the sake of reproducibility
+    if len_col_pl1>len_col_pl2:
+        if abs(np.log2(float(len_col_pl1)/len_col_pl2)<1):
+            choice = np.random.choice(len_col_pl2, diff, replace=False) #create random sample from df columns
+        else:
+            choice = np.random.choice(len_col_pl2, diff, replace=True)               
+            
+        adjusted_df = df_pl2[choice]
+        adjusted_df = rename_df_columns(adjusted_df)       
+        df_pl2 = df_pl2.join(adjusted_df)
+    else:
+        if abs(np.log2(float(len_col_pl1)/len_col_pl2)<1):
+            choice = np.random.choice(len_col_pl1, diff, replace=False)
+        else:
+            choice = np.random.choice(len_col_pl1, diff, replace=True)
+        adjusted_df = df_pl1[choice]            
+        adjusted_df = rename_df_columns(adjusted_df)            
+        df_pl1 = df_pl1.join(adjusted_df)
+            
+    Rdf_pl1 = com.convert_to_r_dataframe(df_pl1)
+    Rdf_pl2 = com.convert_to_r_dataframe(df_pl2)
+        
+    try:
+        conor = importr("CONOR")
+        R_output = conor.xpn(Rdf_pl1, Rdf_pl2, p1_names=p1_names, p2_names=p2_names,
+                                 iterations=iterations, K=K, L=L )
+    except:
+        raise
+    py_output = com.convert_robj(R_output)
+
+    df_out_x = pd.DataFrame(py_output['x'])
+    df_out_y = pd.DataFrame(py_output['y'])        
+    df_out_x.index.name = df_out_y.index.name = 'SYMBOL'
+        
+    df_output_all = df_out_x.join(df_out_y, lsuffix='_x', rsuffix='_y')
+    #raise Exception("XPN Exception")
+    return df_output_all
+    
+def rename_df_columns(df):
+        
+        name_counts = defaultdict(int)
+        new_col_names = []
+            
+        for name in df.columns:
+            new_count = name_counts[name] + 1
+            new_col_names.append("{}.{}".format(name, new_count))
+            name_counts[name] = new_count 
+                
+            
+        df.columns = new_col_names
+        return df    
+    
+    
+    
+    
+    

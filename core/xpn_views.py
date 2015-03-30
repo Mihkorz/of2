@@ -108,7 +108,7 @@ class XpnForm(FormView):
                 choice = np.random.choice(len_col_pl1, diff, replace=False)
             else:
                 choice = np.random.choice(len_col_pl1, diff, replace=True)
-            adjusted_df = df_pl2[choice]            
+            adjusted_df = df_pl1[choice]            
             adjusted_df = self.rename_df_columns(adjusted_df)            
             df_pl1 = df_pl1.join(adjusted_df)
         

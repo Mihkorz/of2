@@ -23,7 +23,8 @@ from django.conf import settings
 from .forms import SettingsUserForm, UserProfileFormSet, CreateProjectForm, \
                    UploadDocumentForm
 from .models import Project, Document, ProcessDocument
-from .preprocess_views import OfCnrPreprocess, IlluminaPreprocess, OfCnrStatPreprocess
+from .preprocess_views import OfCnrPreprocess, IlluminaPreprocess, OfCnrStatPreprocess, \
+                              MedicPreprocess
 from core.stats import pseudo_ttest_1samp, fdr_corr
 from database.models import Pathway, Component, Gene
 from mirna.views import mirnaProjectDetail, mirnaDocumentDetail
@@ -163,6 +164,11 @@ class CreateDocument(CreateView):
     
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
+        project = Project.objects.get(pk=request.POST.get('project', False))
+        if project.field == 'med':
+            view = MedicPreprocess.as_view()
+            return view(request, *args, **kwargs)
+             
         doc_format = request.POST.get('doc_format', False)
         if doc_format == 'OF_cnr':
             view = OfCnrPreprocess.as_view()
