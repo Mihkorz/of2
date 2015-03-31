@@ -650,8 +650,6 @@ class CoreSetCalculationParameters(FormView):
                                             str(input_document.project),'process')
         file_name = 'cnr_'+str(output_doc.get_filename())
         file_name_unchanged = 'cnr_row_'+str(output_doc.get_filename()) 
-        from django.core.files.storage import default_storage
-        from django.core.files.base import ContentFile
         
         output_file = default_storage.save(settings.MEDIA_ROOT+"/"+path+"/"+file_name, ContentFile(''))
         output_file_row = default_storage.save(settings.MEDIA_ROOT+"/"+path+"/"+file_name_unchanged, ContentFile(''))
