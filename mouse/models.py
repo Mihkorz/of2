@@ -27,7 +27,7 @@ class MousePathway(models.Model):
         self.name = self.name.strip(" \t").replace(" ", "-")
     
     def gene_list(self):
-        return link_to_object(self.gene_set.all())
+        return link_to_object(self.mousegene_set.all())
     gene_list.allow_tags = True
     
     def node_list(self):
@@ -118,3 +118,42 @@ class MouseRelation(models.Model):
     
     def pathway(self):
         return self.fromnode.pathway
+    
+class MouseMetabolismPathway(models.Model):
+    name = models.CharField(verbose_name='Pathway name', max_length=250, blank=False, unique=True)
+    amcf = models.DecimalField(verbose_name='AMCF', max_digits=2, decimal_places=1, default=0)
+    info = models.TextField(verbose_name='Pathway information', blank=True)
+    comment = models.TextField(verbose_name='Comment', blank=True)
+    
+    class Meta(object):
+        
+        ordering = ['name',]
+        
+    def __unicode__(self):
+        return self.name
+    
+    def clean(self):
+        super(MouseMetabolismPathway, self).clean()
+        self.name = self.name.strip(" \t").replace(" ", "-")
+    
+    def gene_list(self):
+        return link_to_object(self.mousemetabolismgene_set.all())
+    gene_list.allow_tags = True
+    
+    
+class MouseMetabolismGene(models.Model):
+    name = models.CharField(verbose_name='Gene name', max_length=250, blank=False)
+    arr = models.DecimalField(verbose_name='ARR', max_digits=2, decimal_places=1, default=0)
+    comment = models.TextField(verbose_name='Comment', blank=True)
+    pathway = models.ForeignKey(MouseMetabolismPathway, blank=False)
+    
+    class Meta(object):
+        
+        ordering = ['name',]
+        
+    def __unicode__(self):
+        return self.name
+    
+    def clean(self):
+        super(MouseMetabolismGene, self).clean()
+        self.name = self.name.strip(" \t").replace(" ", "-")

@@ -7,9 +7,10 @@ class CalculationParametersForm(forms.Form):
     NORM_CHOICES = (('2', 'Geometric',),
                     ('1', 'Arithmetic',))
     
-    DB_CHOICES = (('1', 'Human',),
+    DB_CHOICES = (('1', 'Human'),
+                  ('2', 'Human Metabolism'),
                   ('3', 'Mouse'),
-                  ('2', 'Metabolism',))
+                  ('4', 'Mous Metabolism'))
     #FILTERS
     use_sigma = forms.BooleanField(label="Use sigma filter", initial=False, required=False)
     sigma_num = forms.FloatField( label="Sigma amount \n (deprecated)", initial=2, required=False)

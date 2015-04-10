@@ -18,8 +18,9 @@ from database.views import PathwayList, PathwayDetail, PathwayAjaxSearch, \
                            DrugList, DrugDetail, DrugAjaxSearch
 from metabolism.views import MetabolismPathwayList, MetabolismPathwayDetail, \
                              MetabolismPathwayAjaxSearch
-from mouse.views import MousePathwayList, MousePathwayDetail, \
-                             MousePathwayAjaxSearch, MouseTest, MouseMapping
+from mouse.views import MousePathwayList, MousePathwayDetail, MousePathwayAjaxSearch, \
+                        MouseTest, MouseMapping, MouseMetabolismPathwayList, \
+                        MouseMetabolismPathwayDetail, MouseMetabolismPathwayAjaxSearch
 from medic.views import MedicNosologyList, MedicNosologyDetail, MedicTreatmentDetail, \
                         PatientTreatmentDetail, PatientTreatmentPDF, MedicAjaxGenerateReport, \
                         MedicAjaxGenerateFullReport, MedicPatientCalculation
@@ -85,6 +86,11 @@ urlpatterns = patterns('',
     url(r'^mouse/pathways/[-\w]+/(?P<pk>\d+)/$', MousePathwayDetail.as_view(), name="mouse_pathway_detail"),
     url(r'^mouse/pathways/search/$', MousePathwayAjaxSearch.as_view(), name="mouse_pathway_ajax_search"),
     url(r'^mouse/mapping/$', MouseMapping.as_view(), name="mouse_mapping"),
+    
+    url(r'^mouse/metabolismpathways/$', MouseMetabolismPathwayList.as_view(), name="mouse_pathway_list"),
+    url(r'^mouse/metabolismpathways/[-\w]+/(?P<pk>\d+)/$', MouseMetabolismPathwayDetail.as_view(), name="mouse_pathway_detail"),
+    url(r'^mouse/metabolismpathways/search/$', MouseMetabolismPathwayAjaxSearch.as_view(), name="mouse_pathway_ajax_search"),
+    
     url(r'^mouse/test/$', MouseTest.as_view(), name="mouse_test"), 
 
     ################### Medic App ##############################

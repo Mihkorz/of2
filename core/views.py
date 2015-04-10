@@ -23,7 +23,7 @@ from .forms import  CalculationParametersForm, MedicCalculationParametersForm
 from profiles.models import Document, ProcessDocument
 from database.models import Pathway, Gene, Drug
 from metabolism.models import MetabolismPathway, MetabolismGene
-from mouse.models import MousePathway, MouseGene
+from mouse.models import MousePathway, MouseGene, MouseMetabolismPathway, MouseMetabolismGene, MouseMapping
 from .stats import pseudo_ttest_1samp, fdr_corr
 
 
@@ -115,10 +115,12 @@ class CoreSetCalculationParameters(FormView):
         output_doc.doc_type = 2
         if int(db_choice) == 1:
             json_db = 'Human'
+        elif int(db_choice) == 2:
+            json_db = 'Human Metabolism'
         elif int(db_choice) == 3:
             json_db = 'Mouse'
-        elif int(db_choice) == 2:
-            json_db = 'Metabolism'
+        elif int(db_choice) == 4:
+            json_db = 'Mouse Metabolism'
         output_doc.parameters = {'sigma_num': sigma_num,
                                  'use_sigma': use_sigma,
                                  'cnr_low': cnr_low,
@@ -289,6 +291,8 @@ class CoreSetCalculationParameters(FormView):
             pathway_objects = MetabolismPathway.objects.all() # Metabolism DB
         elif int(db_choice) == 3:
             pathway_objects = MousePathway.objects.all() # Mouse DB
+        elif int(db_choice) == 4:
+            pathway_objects = MouseMetabolismPathway.objects.all() # Mouse DB
         
         """ START CYCLE """        
         for pathway in pathway_objects:
@@ -301,6 +305,8 @@ class CoreSetCalculationParameters(FormView):
                 gene_objects = pathway.metabolismgene_set.all() # get Genes from Metabolism DB
             elif int(db_choice) == 3:
                 gene_objects = pathway.mousegene_set.all() # get Genes from Mouse DB
+            elif int(db_choice) == 4:
+                gene_objects = pathway.mousemetabolismgene_set.all() # get Genes from Mouse DB
                 
             for gene in gene_objects:
                 gene_name.append(gene.name.strip().upper())
@@ -697,38 +703,47 @@ class Test(TemplateView):
     def get_context_data(self, **kwargs):
               
         context = super(Test, self).get_context_data(**kwargs)
-        pathway = Pathway.objects.get(name="Interferon_Pathway")
-        from mouse.models import MouseMapping 
-        genes = DataFrame(list(MouseMapping.objects.values('human_gene_symbol', 'mouse_gene_symbol')
-                                      ))#fetch genes
-        genes.to_csv(settings.MEDIA_ROOT+'/human_mouse_mapping.csv')
-        raise Exception('genes')
-        """
-        lnodes = {}
-        drel = []
-        for node in pathway.node_set.all():
-            lg = []
-            for g in node.component_set.all():
-                lg.append(g.name)                
-            lnodes[node.name]= lg
-            
-            for inrel in node.inrelations.all():
-                drel.append({'From': inrel.fromnode.name,
-                             'To': inrel.tonode.name,
-                             'type': 'activation' if inrel.reltype == '1' else 'inhibition'})
-            
-            
-            
-        dfnodes = DataFrame(dict([ (k,Series(v)) for k,v in lnodes.iteritems() ])).fillna("")       
-        dfrel = DataFrame(drel)   
+        """ breast module statistics
+        import collections
+        for fn in os.listdir(settings.MEDIA_ROOT+"/statistics/"):
+            xpn_df = read_csv(settings.MEDIA_ROOT+"/statistics/"+fn, index_col=0).fillna('NONE')
+            lpath = []
+            for col in xpn_df.columns:
+                lpath+=xpn_df[col].values.tolist()
+            counter=collections.Counter(lpath)
+            most = counter.most_common(len(xpn_df.index)+1)
+            stat = []
+            for val in most:
+                if val[0]!='NONE':
+                    dstat = {'pathway': val[0],
+                             'repeat frequency': val[1]}
+                    stat.append(dstat)
+            result = DataFrame(stat)
+            result.to_csv(settings.MEDIA_ROOT+"/statProcessed/"+fn)          
         
-        output_file = default_storage.save(settings.MEDIA_ROOT+"/Interferon_Pathway.xlsx", ContentFile(''))
-               
-        with ExcelWriter(output_file, index=False) as writer:            
-            genes.to_excel(writer,'genes')
-            dfnodes.to_excel(writer,'nodes')
-            dfrel.to_excel(writer,'relations')
+        raise Exception('yoyyo')
         """
+        
+        mps = MetabolismPathway.objects.all()
+        for mp in mps:
+            
+            mmp = MouseMetabolismPathway(name=mp.name, amcf=mp.amcf)
+            mmp.save()
+            for gene in mp.metabolismgene_set.all():
+                mapping_genes = MouseMapping.objects.filter(human_gene_symbol = gene.name)
+                
+                if not mapping_genes:
+                    pass
+                else:
+                    for m_gene in mapping_genes:
+                        mouse_gene = MouseMetabolismGene(name=m_gene.mouse_gene_symbol.upper(), arr = gene.arr, comment = gene.comment, pathway=mmp)
+                        mouse_gene.save()
+        
+                
+               
+            
+             
+        
         raise Exception('test')
         return context
 

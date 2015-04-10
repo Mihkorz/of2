@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.conf import settings
 
-from .models import MousePathway, MouseMapping
+from .models import MousePathway, MouseMapping, MouseMetabolismPathway 
 #from database.models import Pathway, Gene
 
 class MousePathwayList(ListView):
@@ -79,7 +79,57 @@ class MouseMapping(ListView):
     def dispatch(self, request, *args, **kwargs):
         return super(MouseMapping, self).dispatch(request, *args, **kwargs)
         
+"""""""""""""""""""""""'  METABOLISM """"""""""""""
+"""
+
+class MouseMetabolismPathwayList(ListView):
+    """
+    List of Pathways in BioChem DB section
+    """    
+    model = MouseMetabolismPathway
+    template_name = 'mouse/meta_pathway_list.html'
+    context_object_name = 'pathways'
+    paginate_by = 20
+        
+    def get_context_data(self, **kwargs):
+        context = super(MouseMetabolismPathwayList, self).get_context_data(**kwargs)
+        context['allPathways'] = MouseMetabolismPathway.objects.count()        
+        return context
+        
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(MouseMetabolismPathwayList, self).dispatch(request, *args, **kwargs)
+      
     
+class MouseMetabolismPathwayDetail(DetailView):
+    """
+    Details page for particular pathway
+    """
+    model = MouseMetabolismPathway
+    template_name = 'mouse/meta_pathway_detail.html'
+    context_object_name = 'pathway'
+    
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(MouseMetabolismPathwayDetail, self).dispatch(request, *args, **kwargs)
+    
+    def get_context_data(self, **kwargs):
+        context = super(MouseMetabolismPathwayDetail, self).get_context_data(**kwargs)
+        return context
+
+class MouseMetabolismPathwayAjaxSearch(ListView):
+    """
+    Renders objects for Ajax Search
+    """
+    model = MouseMetabolismPathway
+    template_name = 'mouse/pathway_ajax_search.html'
+    context_object_name = 'pathways'
+    
+    def get_queryset(self):
+        q = self.request.GET.get('q', '')
+        return MouseMetabolismPathway.objects.filter(name__icontains=q)
+    
+     
 class MouseTest(TemplateView):
     """
     Just Testing Playground
