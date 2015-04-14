@@ -156,24 +156,42 @@ class CoreSetCalculationParameters(FormView):
         process_doc_df = process_doc_df.groupby(process_doc_df.index,
                                                 level=0).mean() #deal with duplicate genes by taking mean value
         
+        # DataBase choice
+        if int(db_choice) == 1:
+            pathway_objects = Pathway.objects.all().prefetch_related('gene_set') # Human DB
+            all_genes = DataFrame(list(Gene.objects.values_list('name', flat=True).distinct())).set_index(0)#fetch genes 
+            ccc = len(all_genes)
+        elif int(db_choice) == 2:
+            pathway_objects = MetabolismPathway.objects.all().prefetch_related('metabolismgene_set') # Human Metabolism DB
+            all_genes = DataFrame(list(MetabolismGene.objects.values_list('name', flat=True).distinct())).set_index(0)#fetch genes
+        elif int(db_choice) == 3:
+            pathway_objects = MousePathway.objects.all().prefetch_related('mousegene_set') # Mouse DB
+            all_genes = DataFrame(list(MouseGene.objects.values_list('name', flat=True).distinct())).set_index(0)#fetch genes
+        elif int(db_choice) == 4:
+            pathway_objects = MouseMetabolismPathway.objects.all().prefetch_related('mousemetabolismgene_set') # Mouse Metabolism DB
+            all_genes = DataFrame(list(MouseMetabolismGene.objects.values_list('name', flat=True).distinct())).set_index(0)#fetch genes
+            
+            
+        all_genes.index.name = 'SYMBOL'
+        process_doc_df = all_genes.join(process_doc_df, how='inner') # leave only genes that are in our DB
+        
         cnr_doc_df =  process_doc_df.copy() # use to generate CNR file for downloading
         if input_document.doc_format!='OF_cnr' and input_document.doc_format!='OF_cnr_stat':
             cnr_norms_df = cnr_doc_df[[norm for norm in [col for col in cnr_doc_df.columns if 'Norm' in col]]]
-            cnr_mean_norm =  cnr_norms_df.mean(axis=1)        
-            cnr_gMean_norm = cnr_norms_df.apply(gmean, axis=1)
             std=cnr_norms_df.std(axis=1) # standard deviation
             if norm_choice>1: #geometric norms
-                divide = cnr_gMean_norm
+                cnr_gMean_norm = cnr_norms_df.apply(gmean, axis=1)
+                cnr_doc_df = cnr_doc_df.div(cnr_gMean_norm, axis='index')
+                cnr_doc_df['gMean_norm'] = cnr_gMean_norm
             else:             #arithmetic norms
-                divide = cnr_mean_norm  
-        
-            cnr_doc_df = cnr_doc_df.div(divide, axis='index')
-            cnr_doc_df['Mean_norm'] = cnr_mean_norm
-            cnr_doc_df['gMean_norm'] = cnr_gMean_norm
+                cnr_mean_norm =  cnr_norms_df.mean(axis=1)
+                cnr_doc_df = cnr_doc_df.div(cnr_mean_norm, axis='index') 
+                cnr_doc_df['Mean_norm'] = cnr_mean_norm           
+            
             cnr_doc_df['std'] = std
         
         
-        
+        #raise Exception('haha')
         cnr_unchanged_df = cnr_doc_df.copy()
                
         tumour_columns = [col for col in process_doc_df.columns if 'Tumour' in col] #get sample columns 
@@ -285,14 +303,6 @@ class CoreSetCalculationParameters(FormView):
         pas2_list = []
         differential_genes = {}
         
-        if int(db_choice) == 1:
-            pathway_objects = Pathway.objects.all().prefetch_related('gene_set') # Human DB
-        elif int(db_choice) == 2:
-            pathway_objects = MetabolismPathway.objects.all() # Metabolism DB
-        elif int(db_choice) == 3:
-            pathway_objects = MousePathway.objects.all() # Mouse DB
-        elif int(db_choice) == 4:
-            pathway_objects = MouseMetabolismPathway.objects.all() # Mouse DB
         
         """ START CYCLE """        
         for pathway in pathway_objects:
@@ -349,7 +359,6 @@ class CoreSetCalculationParameters(FormView):
             """ Calculating PAS for samples and norms using filter(s)  """
             
             norms_df = joined_df[[norm for norm in [col for col in joined_df.columns if 'Norm' in col]]]
-            log_norms_df = np.log(norms_df)#use this for t-test, assuming log(norm) is distributed normally
             
             """ get Series of mean norms for selected algorithm and std """
             if norm_choice>1: #geometric norms
@@ -365,17 +374,7 @@ class CoreSetCalculationParameters(FormView):
                         col_CNR = col/s_mean_norm #convert column from GENE EXPRESSION to CNR
                     else:
                         col_CNR = col
-                      
-                    if use_ttest_1sam: # two-sided 1sample T-test filter
-                        _, p_value = ttest_1samp(log_norms_df, np.log(col), axis=1)
-                        s_p_value = Series(p_value, index = col.index).fillna(0)
-                        if use_fdr:
-                            fdr_q_values = fdr_corr(np.array(s_p_value))
-                            col_CNR = col_CNR[(fdr_q_values<qvalue_threshold)]
-                        else:
-                            col_CNR = col_CNR[(s_p_value<pvalue_threshold)]               
-                        
-                                      
+                
                     if use_cnr: # CNR FILTER
                         col_CNR = col_CNR[((col_CNR>cnr_up) | (col_CNR<cnr_low))] 
                       
@@ -440,65 +439,12 @@ class CoreSetCalculationParameters(FormView):
                     pas1_dict['p-value_Mean'] = p_val                
              
             """
-            
-            pms1_all = []
-            for tumour in tumour_columns: #loop thought samples columns                
-                summ = 0
-                
-                diff_genes_for_tumor = []
-                for index, row in joined_df.iterrows():
-                    if not use_sigma:
-                        sigma_num = 0
-                    if not use_cnr:
-                        cnr_up = cnr_low = 0
-                        
-                    CNR = row[tumour]
-                    if int(norm_choice) == 1:
-                        mean = float(row['Mean_norm'])
-                        EXPRESSION_LEVEL = CNR*float(mean)
-                         
-                    if int(norm_choice) == 2:
-                        try:
-                            mean = float(row['gMean_norm'])
-                        except:
-                            mean = 0 
-                        EXPRESSION_LEVEL = CNR*float(mean)
-                        
-                    std = row['std'] if float(row['std'])>0 else 0   
-                    if (
-                        (
-                           (EXPRESSION_LEVEL >= (mean + sigma_num*std)) or 
-                           (EXPRESSION_LEVEL < (mean - sigma_num*std))
-                         ) and 
-                        (CNR > cnr_up or CNR < cnr_low) and 
-                        (CNR > 0)
-                       ):
-                        
-                        summ+= float(row['ARR'])*math.log(CNR) # ARR*ln(CNR)
-                        
-                        diff_genes_for_tumor.append(index.strip()) # store differential genes in a list
-                if differential_genes.has_key(tumour):
-                    differential_genes[tumour].extend(diff_genes_for_tumor)
-                else:
-                    differential_genes[tumour] = diff_genes_for_tumor
+            HERE WAS
+            BIG 
+            OLD
+            COMMENT
+            """
                     
-                pms_dict[tumour] = float(pathway.amcf)*summ #PMS
-                pms1_dict[tumour] = summ #PMS1
-                pms2_dict[tumour] = summ/summ_genes_arr
-                
-                pms1_all.append(summ)
-                
-                if calculate_p_value and calculate_pvalue_each:
-                    #from scipy.stats import ttest_1samp
-                    from .stats import pseudo_ttest_1samp  
-                    z_stat, p_val = pseudo_ttest_1samp(lnorms_p_value, summ)
-                    pms1_dict[tumour+'_p-value'] = p_val               
-            
-            if calculate_p_value and calculate_pvalue_all:
-                    from scipy.stats import ranksums  
-                    z_stat, p_val = ranksums(lnorms_p_value, pms1_all)
-                    pms1_dict['p-value_Mean'] = p_val 
-        """        
             pas_list.append(pas_dict)
             pas1_list.append(pas1_dict)
             pas2_list.append(pas2_dict)        
@@ -724,26 +670,35 @@ class Test(TemplateView):
         raise Exception('yoyyo')
         """
         
-        mps = MetabolismPathway.objects.all()
-        for mp in mps:
-            
-            mmp = MouseMetabolismPathway(name=mp.name, amcf=mp.amcf)
-            mmp.save()
-            for gene in mp.metabolismgene_set.all():
-                mapping_genes = MouseMapping.objects.filter(human_gene_symbol = gene.name)
-                
-                if not mapping_genes:
-                    pass
-                else:
-                    for m_gene in mapping_genes:
-                        mouse_gene = MouseMetabolismGene(name=m_gene.mouse_gene_symbol.upper(), arr = gene.arr, comment = gene.comment, pathway=mmp)
-                        mouse_gene.save()
+        path_old = Pathway.objects.using('old').all()
+        path_new = Pathway.objects.all()
         
+        old = len(path_old)
+        new = len(path_new)
+        lpo = []
+        for po in path_old:
+            lpo.append(po.name)
+            
+        lpn = []
+        for pn in path_new:
+            lpn.append(pn.name)
+            
+        change = []
+        for oldp in lpo:
+            if oldp not in lpn:
+                change.append(oldp)
                 
-               
+           
+        oooo = len(change)      
+        
+        dictt = {'oncofinder': lpo,
+                 'oncoFinder2' : lpn,
+                 'path_differences' : change
+                 }
             
              
-        
+        df = DataFrame(dict([ (k,Series(v)) for k,v in dictt.iteritems() ]))
+        df.to_csv(settings.MEDIA_ROOT+"/old_new_oncofinder_pathways.csv")
         raise Exception('test')
         return context
 
