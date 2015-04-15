@@ -21,7 +21,7 @@ from django.conf import settings
 
 from .forms import  CalculationParametersForm, MedicCalculationParametersForm
 from profiles.models import Document, ProcessDocument
-from database.models import Pathway, Gene, Drug
+from database.models import Pathway, Gene, Drug, Node, Component
 from metabolism.models import MetabolismPathway, MetabolismGene
 from mouse.models import MousePathway, MouseGene, MouseMetabolismPathway, MouseMetabolismGene, MouseMapping
 from .stats import pseudo_ttest_1samp, fdr_corr
@@ -670,35 +670,22 @@ class Test(TemplateView):
         raise Exception('yoyyo')
         """
         
-        path_old = Pathway.objects.using('old').all()
-        path_new = Pathway.objects.all()
+        df_genes = read_excel(settings.MEDIA_ROOT+"/z_mTOR_Pathway.xls", sheetname="genes", header=None)
         
-        old = len(path_old)
-        new = len(path_new)
-        lpo = []
-        for po in path_old:
-            lpo.append(po.name)
-            
-        lpn = []
-        for pn in path_new:
-            lpn.append(pn.name)
-            
-        change = []
-        for oldp in lpo:
-            if oldp not in lpn:
-                change.append(oldp)
-                
-           
-        oooo = len(change)      
         
-        dictt = {'oncofinder': lpo,
-                 'oncoFinder2' : lpn,
-                 'path_differences' : change
-                 }
-            
-             
-        df = DataFrame(dict([ (k,Series(v)) for k,v in dictt.iteritems() ]))
-        df.to_csv(settings.MEDIA_ROOT+"/old_new_oncofinder_pathways.csv")
+        path = Pathway(name='z_mTOR_Pathway', amcf=0)
+        path.save()
+        arGenes = []
+        def add_gene(row):
+            gene = Gene(name=row[0], arr=row[1], pathway = path)
+            gene.save()
+            arGenes.append(gene)
+            #raise Exception('apply')
+        
+        df_genes.apply(add_gene, axis=1)
+        
+        
+        
         raise Exception('test')
         return context
 
