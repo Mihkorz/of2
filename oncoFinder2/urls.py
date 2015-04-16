@@ -23,7 +23,7 @@ from mouse.views import MousePathwayList, MousePathwayDetail, MousePathwayAjaxSe
                         MouseMetabolismPathwayDetail, MouseMetabolismPathwayAjaxSearch
 from medic.views import MedicNosologyList, MedicNosologyDetail, MedicTreatmentDetail, \
                         PatientTreatmentDetail, PatientTreatmentPDF, MedicAjaxGenerateReport, \
-                        MedicAjaxGenerateFullReport, MedicPatientCalculation
+                        MedicAjaxGenerateFullReport, MedicPatientCalculation, MedicTest
 from mirna.views import MirnaSetCalculationParameters
 
 urlpatterns = patterns('',
@@ -101,7 +101,7 @@ urlpatterns = patterns('',
     url(r'^db/medic/[-\w]+/(?P<pk>\d+)/$', MedicNosologyDetail.as_view(), name="medic_nosology_detail"),
     url(r'^db/medic/[-\w]+/[-\w]+/[-\w]+/(?P<pk>\d+)/$', MedicTreatmentDetail.as_view(), name="medic_treatment_detail"),
     
-    
+    url(r'^medic/test/$', MedicTest.as_view(), name="medic_test"),
     ################### miRNA App ##############################
     url(r'^mirna-calculation-parameters/doc(?P<pk>\d+)/$', MirnaSetCalculationParameters.as_view(), name="mirna_set_calculation_parameters"),
     

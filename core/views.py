@@ -236,7 +236,8 @@ class CoreSetCalculationParameters(FormView):
                 s_mean_norm = norms_df.apply(gmean, axis=1)
             else:             #arithmetic norms
                 s_mean_norm = norms_df.mean(axis=1)
-                
+            
+            
             df_for_pq_val = DataFrame()
             def cnr_diff_genes(col):
                 if ('Tumour' in col.name) or ('Norm' in col.name):
@@ -359,7 +360,7 @@ class CoreSetCalculationParameters(FormView):
             """ Calculating PAS for samples and norms using filter(s)  """
             
             norms_df = joined_df[[norm for norm in [col for col in joined_df.columns if 'Norm' in col]]]
-            
+            log_norms_df = np.log(norms_df)
             """ get Series of mean norms for selected algorithm and std """
             if norm_choice>1: #geometric norms
                 s_mean_norm = norms_df.apply(gmean, axis=1)
@@ -374,7 +375,17 @@ class CoreSetCalculationParameters(FormView):
                         col_CNR = col/s_mean_norm #convert column from GENE EXPRESSION to CNR
                     else:
                         col_CNR = col
+                    if use_ttest_1sam:
+                        _, p_value = ttest_1samp(log_norms_df, np.log(col), axis=1)
+                        s_p_value = Series(p_value, index = col.index).fillna(1)
                 
+                        if use_fdr:
+                            fdr_q_values = fdr_corr(np.array(s_p_value))
+                            col_CNR = col[(fdr_q_values<qvalue_threshold)] 
+                        else:
+                            col_CNR = col[(s_p_value<pvalue_threshold)]
+                        
+                        
                     if use_cnr: # CNR FILTER
                         col_CNR = col_CNR[((col_CNR>cnr_up) | (col_CNR<cnr_low))] 
                       
@@ -649,10 +660,10 @@ class Test(TemplateView):
     def get_context_data(self, **kwargs):
               
         context = super(Test, self).get_context_data(**kwargs)
-        """ breast module statistics
+        """ breast module statistics"""
         import collections
-        for fn in os.listdir(settings.MEDIA_ROOT+"/statistics/"):
-            xpn_df = read_csv(settings.MEDIA_ROOT+"/statistics/"+fn, index_col=0).fillna('NONE')
+        for fn in os.listdir(settings.MEDIA_ROOT+"/medtest/done/"):
+            xpn_df = read_csv(settings.MEDIA_ROOT+"/medtest/done/"+fn, index_col=0).fillna('NONE')
             lpath = []
             for col in xpn_df.columns:
                 lpath+=xpn_df[col].values.tolist()
@@ -665,24 +676,10 @@ class Test(TemplateView):
                              'repeat frequency': val[1]}
                     stat.append(dstat)
             result = DataFrame(stat)
-            result.to_csv(settings.MEDIA_ROOT+"/statProcessed/"+fn)          
+            result.to_csv(settings.MEDIA_ROOT+"/statProcessed/30/"+fn)          
         
         raise Exception('yoyyo')
-        """
         
-        df_genes = read_excel(settings.MEDIA_ROOT+"/z_mTOR_Pathway.xls", sheetname="genes", header=None)
-        
-        
-        path = Pathway(name='z_mTOR_Pathway', amcf=0)
-        path.save()
-        arGenes = []
-        def add_gene(row):
-            gene = Gene(name=row[0], arr=row[1], pathway = path)
-            gene.save()
-            arGenes.append(gene)
-            #raise Exception('apply')
-        
-        df_genes.apply(add_gene, axis=1)
         
         
         

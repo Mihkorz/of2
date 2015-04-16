@@ -881,5 +881,81 @@ class MedicAjaxGenerateFullReport(TemplateView):
         return context    
     
     
+class MedicTest(TemplateView):
+    """
+    Just Testing Playground
+    """
+    template_name = 'core/test.html'
     
+    
+    
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(MedicTest, self).dispatch(request, *args, **kwargs)
+        
+    
+    def get_context_data(self, **kwargs):
+        context = super(MedicTest, self).get_context_data(**kwargs)
+        from sklearn.metrics import roc_auc_score
+        
+        dict_marker = {}
+        for counter in range(100):
+            ifile = settings.MEDIA_ROOT+"/medtest/GSE50948_GSE42568_normalized_ERN_HER2P_TMB/xpn_iter_"+str(counter)+".csv"
+            pas_df = read_csv(ifile, index_col='Unnamed: 0')
+            original_res_columns = [col for col in pas_df.columns if '_RES' in col]#store original column names
+            len_o_r_c = len(original_res_columns)
+            original_nres_columns = [col for col in pas_df.columns if '_NRES' in col]
+            len_o_nr_c = len(original_nres_columns)
+            
+            marker_pathways = []
+            for index, row in pas_df.iterrows():
+                
+                s_res = row[original_res_columns]
+                s_nres = row[original_nres_columns]
+                
+                arScore = np.append(np.array(s_res.values, dtype='float64'), np.array(s_nres.values, dtype='float64'))            
+                arRes = np.ones(len_o_r_c)
+                arNRes = np.zeros(len_o_nr_c)
+                arTrue = np.append(arRes, arNRes)
+            
+                AUC = roc_auc_score(arTrue, arScore) #calculate AUC
+                
+                if AUC>0.7:
+                    marker_pathways.append(index)
+            dict_marker['iteration'+str(counter)] = marker_pathways
+            print "file number "+str(counter)+ " done\n"
+            
+        xpn_df = DataFrame(dict([ (k, Series(v)) for k,v in dict_marker.iteritems()])).fillna('')
+        
+        xpn_df.to_csv(settings.MEDIA_ROOT+"/medtest/done/GSE50948_GSE42568_normalized_ERN_HER2P_TMB.csv")
+        raise Exception('test')
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+        
+        
+        return context 
     

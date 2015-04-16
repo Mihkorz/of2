@@ -207,7 +207,7 @@ def rename_df_columns(df):
             
         for name in df.columns:
             new_count = name_counts[name] + 1
-            new_col_names.append("{}.{}".format(name, new_count))
+            new_col_names.append("{}_{}".format(name, new_count))
             name_counts[name] = new_count 
                 
             
