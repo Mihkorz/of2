@@ -381,9 +381,9 @@ class CoreSetCalculationParameters(FormView):
                 
                         if use_fdr:
                             fdr_q_values = fdr_corr(np.array(s_p_value))
-                            col_CNR = col[(fdr_q_values<qvalue_threshold)] 
+                            col_CNR = col_CNR[(fdr_q_values<qvalue_threshold)] 
                         else:
-                            col_CNR = col[(s_p_value<pvalue_threshold)]
+                            col_CNR = col_CNR[(s_p_value<pvalue_threshold)]
                         
                         
                     if use_cnr: # CNR FILTER
@@ -392,8 +392,8 @@ class CoreSetCalculationParameters(FormView):
                     if use_sigma: # Sigma FILTER  !!! deprecated !!!                         
                         col_CNR = col_CNR[((col>=(s_mean_norm+sigma_num*std)) |
                                        (col<(s_mean_norm-sigma_num*std)))] 
-                    ttt = np.log(col_CNR)*arr
-                    if ('Tumour' in col.name):
+                    if ('Normal_BC_23' in col.name) and (pathway.name=='AHR_Pathway_C_Myc_Expression'):
+                        rett = np.log(col_CNR)*arr
                         pass#raise Exception('1sample') 
                     return np.log(col_CNR)*arr # PAS1=ARR*log(CNR)
                        
