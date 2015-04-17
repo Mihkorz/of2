@@ -194,7 +194,7 @@ class CoreSetCalculationParameters(FormView):
         
         
         cnr_unchanged_df = cnr_doc_df.copy()
-        raise Exception('haha')      
+        #raise Exception('haha')      
         tumour_columns = [col for col in process_doc_df.columns if 'Tumour' in col] #get sample columns 
         
         
@@ -393,9 +393,13 @@ class CoreSetCalculationParameters(FormView):
                     if use_sigma: # Sigma FILTER  !!! deprecated !!!                         
                         col_CNR = col_CNR[((col>=(s_mean_norm+sigma_num*std)) |
                                        (col<(s_mean_norm-sigma_num*std)))] 
-                    if ('Normal_BC_23' in col.name) and (pathway.name=='AHR_Pathway_C_Myc_Expression'):
-                        rett = np.log(col_CNR)*arr
+                    
+                    col_CNR.replace(0,1, inplace=True) # to avoid log(0)
+                    if ('Tumour_MOLF_LZN_FPKM' in col.name) and (pathway.name=='AKT_Pathway'):
+                        
+                        #rett = np.log(col_CNR)*arr
                         pass#raise Exception('1sample') 
+                    
                     return np.log(col_CNR)*arr # PAS1=ARR*log(CNR)
                        
                 else:
