@@ -179,8 +179,8 @@ class CoreSetCalculationParameters(FormView):
         if input_document.doc_format!='OF_cnr' and input_document.doc_format!='OF_cnr_stat':
             cnr_norms_df = cnr_doc_df[[norm for norm in [col for col in cnr_doc_df.columns if 'Norm' in col]]]
             std=cnr_norms_df.std(axis=1) # standard deviation
-            if norm_choice>1: #geometric norms
-                cnr_gMean_norm = cnr_norms_df.apply(gmean, axis=1)
+            if int(norm_choice)>1: #geometric norms
+                cnr_gMean_norm = cnr_norms_df.apply(gmean, axis=1).fillna(1)
                 cnr_doc_df = cnr_doc_df.div(cnr_gMean_norm, axis='index')
                 cnr_doc_df['gMean_norm'] = cnr_gMean_norm
             else:             #arithmetic norms
@@ -191,9 +191,9 @@ class CoreSetCalculationParameters(FormView):
             cnr_doc_df['std'] = std
         
         
-        #raise Exception('haha')
+        
         cnr_unchanged_df = cnr_doc_df.copy()
-               
+        #raise Exception('haha')      
         tumour_columns = [col for col in process_doc_df.columns if 'Tumour' in col] #get sample columns 
         
         
@@ -232,7 +232,7 @@ class CoreSetCalculationParameters(FormView):
             log_norms_df = np.log(norms_df)#use this for t-test, assuming log(norm) is distributed normally
             
             """ get Series of mean norms for selected algorithm and std """
-            if norm_choice>1: #geometric norms
+            if int(norm_choice)>1: #geometric norms
                 s_mean_norm = norms_df.apply(gmean, axis=1)
             else:             #arithmetic norms
                 s_mean_norm = norms_df.mean(axis=1)
@@ -362,7 +362,7 @@ class CoreSetCalculationParameters(FormView):
             norms_df = joined_df[[norm for norm in [col for col in joined_df.columns if 'Norm' in col]]]
             log_norms_df = np.log(norms_df)
             """ get Series of mean norms for selected algorithm and std """
-            if norm_choice>1: #geometric norms
+            if int(norm_choice)>1: #geometric norms
                 s_mean_norm = norms_df.apply(gmean, axis=1)
             else:             #arithmetic norms
                 s_mean_norm = norms_df.mean(axis=1)
@@ -392,7 +392,9 @@ class CoreSetCalculationParameters(FormView):
                     if use_sigma: # Sigma FILTER  !!! deprecated !!!                         
                         col_CNR = col_CNR[((col>=(s_mean_norm+sigma_num*std)) |
                                        (col<(s_mean_norm-sigma_num*std)))] 
-                     
+                    ttt = np.log(col_CNR)*arr
+                    if ('Tumour' in col.name):
+                        pass#raise Exception('1sample') 
                     return np.log(col_CNR)*arr # PAS1=ARR*log(CNR)
                        
                 else:
