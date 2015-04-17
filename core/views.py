@@ -180,7 +180,8 @@ class CoreSetCalculationParameters(FormView):
             cnr_norms_df = cnr_doc_df[[norm for norm in [col for col in cnr_doc_df.columns if 'Norm' in col]]]
             std=cnr_norms_df.std(axis=1) # standard deviation
             if int(norm_choice)>1: #geometric norms
-                cnr_gMean_norm = cnr_norms_df.apply(gmean, axis=1).fillna(1)
+                cnr_gMean_norm = cnr_norms_df.apply(gmean, axis=1)
+                cnr_gMean_norm = cnr_gMean_norm.astype(np.float).fillna(1)
                 cnr_doc_df = cnr_doc_df.div(cnr_gMean_norm, axis='index')
                 cnr_doc_df['gMean_norm'] = cnr_gMean_norm
             else:             #arithmetic norms
@@ -193,7 +194,7 @@ class CoreSetCalculationParameters(FormView):
         
         
         cnr_unchanged_df = cnr_doc_df.copy()
-        #raise Exception('haha')      
+        raise Exception('haha')      
         tumour_columns = [col for col in process_doc_df.columns if 'Tumour' in col] #get sample columns 
         
         
@@ -609,7 +610,6 @@ class CoreSetCalculationParameters(FormView):
         """Create CNR file available for downloading """
         
         
-        #raise Exception('test')
         """ Saving CNR results to Excel file""" 
         path = os.path.join('users', str(input_document.project.owner),
                                             str(input_document.project),'process')
