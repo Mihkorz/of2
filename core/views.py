@@ -666,10 +666,10 @@ class Test(TemplateView):
     def get_context_data(self, **kwargs):
               
         context = super(Test, self).get_context_data(**kwargs)
-        """ breast module statistics"""
+        """ breast module statistics
         import collections
-        for fn in os.listdir(settings.MEDIA_ROOT+"/medtest/done/"):
-            xpn_df = read_csv(settings.MEDIA_ROOT+"/medtest/done/"+fn, index_col=0).fillna('NONE')
+        for fn in os.listdir(settings.MEDIA_ROOT+"/diffparams/"):
+            xpn_df = read_csv(settings.MEDIA_ROOT+"/diffparams/"+fn, index_col=0).fillna('NONE')
             lpath = []
             for col in xpn_df.columns:
                 lpath+=xpn_df[col].values.tolist()
@@ -682,7 +682,20 @@ class Test(TemplateView):
                              'repeat frequency': val[1]}
                     stat.append(dstat)
             result = DataFrame(stat)
-            result.to_csv(settings.MEDIA_ROOT+"/statProcessed/30/"+fn)          
+            result.to_csv(settings.MEDIA_ROOT+"/statProcessed/diffparams/"+fn)          
+        """
+        
+        for fn in os.listdir(settings.MEDIA_ROOT+"/newpaths/"):
+            pathname = "z_"+fn.split(".")[0]
+            p = Pathway(name=pathname, amcf=0)
+            p.save()
+            gene_df = read_excel(settings.MEDIA_ROOT+"/newpaths/"+fn )
+            
+            for index, row in gene_df.iterrows():
+                g = Gene(name = row['gene'], arr=row['arr'], pathway=p)
+                g.save()
+            
+            
         
         raise Exception('yoyyo')
         
