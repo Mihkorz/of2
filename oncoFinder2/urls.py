@@ -13,7 +13,7 @@ from profiles.views import ProfileIndex, SettingsProfile, SettingsBilling, Creat
                            DocumentDetail, SampleDetail, AjaxPathDetail
                            
 from core.views import CoreSetCalculationParameters, CoreCalculation, Test, Celery, TaskStatus
-from core.xpn_views import XpnForm, XpnDone, XpnPrevFiles
+from core.xpn_views import XpnForm, XpnDone, XpnPrevFiles, breastmodule
 from database.views import PathwayList, PathwayDetail, PathwayAjaxSearch, \
                            DrugList, DrugDetail, DrugAjaxSearch
 from metabolism.views import MetabolismPathwayList, MetabolismPathwayDetail, \
@@ -110,6 +110,7 @@ urlpatterns = patterns('',
     url(r'^xpn/$', XpnForm.as_view(), name="xpn_form"),
     url(r'^xpn/done/(.*)/$', XpnDone.as_view(), name="xpn_done"),
     url(r'^xpn/prevfiles/$', XpnPrevFiles.as_view(), name="xpn_prevfiles"),
+    url(r'^xpn/breastmodule/$', breastmodule.as_view(), name="breastmodule"),
 
     
     

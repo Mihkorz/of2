@@ -591,7 +591,7 @@ class CoreSetCalculationParameters(FormView):
         
         
         output_file = default_storage.save(settings.MEDIA_ROOT+"/"+path+"/"+file_name, ContentFile(''))
-               
+              
         with ExcelWriter(output_file, index=False) as writer:
             if calculate_pas:
                 output_pas_df.to_excel(writer,'PAS')
@@ -649,6 +649,67 @@ class CoreCalculation(DetailView):
               
         context = super(CoreCalculation, self).get_context_data(**kwargs)
         return context
+
+
+from mpl_toolkits.axes_grid1 import AxesGrid
+import csv
+import matplotlib.pyplot as plt
+import matplotlib.colors as colors
+import matplotlib.cm as cmx
+import matplotlib as mpl
+
+
+def shiftedColorMap(cmap, start=0, midpoint=0, stop=1.0, name='shiftedcmap'):
+    '''
+    Function to offset the "center" of a colormap. Useful for
+    data with a negative min and positive max and you want the
+    middle of the colormap's dynamic range to be at zero
+
+    Input
+    -----
+      cmap : The matplotlib colormap to be altered
+      start : Offset from lowest point in the colormap's range.
+          Defaults to 0.0 (no lower ofset). Should be between
+          0.0 and `midpoint`.
+      midpoint : The new center of the colormap. Defaults to 
+          0.5 (no shift). Should be between 0.0 and 1.0. In
+          general, this should be  1 - vmax/(vmax + abs(vmin))
+          For example if your data range from -15.0 to +5.0 and
+          you want the center of the colormap at 0.0, `midpoint`
+          should be set to  1 - 5/(5 + 15)) or 0.75
+      stop : Offset from highets point in the colormap's range.
+          Defaults to 1.0 (no upper ofset). Should be between
+          `midpoint` and 1.0.
+    '''
+    cdict = {
+        'red': [],
+        'green': [],
+        'blue': [],
+        'alpha': []
+    }
+
+    # regular index to compute the colors
+    reg_index = np.linspace(start, stop, 257)
+
+    # shifted index to match the data
+    shift_index = np.hstack([
+        np.linspace(0.0, midpoint, 128, endpoint=False), 
+        np.linspace(midpoint, 1.0, 129, endpoint=True)
+    ])
+
+    for ri, si in zip(reg_index, shift_index):
+        r, g, b, a = cmap(ri)
+
+        cdict['red'].append((si, r, r))
+        cdict['green'].append((si, g, g))
+        cdict['blue'].append((si, b, b))
+        cdict['alpha'].append((si, a, a))
+
+    newcmap = mpl.colors.LinearSegmentedColormap(name, cdict)
+    plt.register_cmap(cmap=newcmap)
+
+    return newcmap
+
     
 class Test(TemplateView):
     """
@@ -684,7 +745,7 @@ class Test(TemplateView):
             result = DataFrame(stat)
             result.to_csv(settings.MEDIA_ROOT+"/statProcessed/diffparams/"+fn)          
         """
-        
+        """ add new pathways for aliper 
         for fn in os.listdir(settings.MEDIA_ROOT+"/newpaths/"):
             pathname = "z_"+fn.split(".")[0]
             p = Pathway(name=pathname, amcf=0)
@@ -694,10 +755,207 @@ class Test(TemplateView):
             for index, row in gene_df.iterrows():
                 g = Gene(name = row['gene'], arr=row['arr'], pathway=p)
                 g.save()
-            
+        """
             
         
-        raise Exception('yoyyo')
+
+        
+        import networkx as nx
+        import struct
+       
+        
+        
+        
+        
+        def colormap(col, path):
+            if col.name=='V1':
+                col = col.fillna(0)
+                mmin = np.min(col)
+                mmax = np.max(col)
+                
+                if mmax<0 and mmin<0:
+                    
+                    shifted_cmap = plt.get_cmap('Blues_r')
+                else:
+                    mid = 1 - mmax/(mmax + abs(mmin))
+                    
+                    cmap = plt.get_cmap('coolwarm')
+                    shifted_cmap = shiftedColorMap(cmap, start=0.15, midpoint=mid, stop=0.85, name='shrunk')
+                fig = plt.figure(figsize=(8,3))
+                ax1 = fig.add_axes([0.05, 0.80, 0.9, 0.15])                          
+                
+                
+                cNormp  = colors.Normalize(vmin=mmin, vmax=mmax)
+                scalarMap = cmx.ScalarMappable(norm=cNormp, cmap=shifted_cmap)
+                
+                cb1 = mpl.colorbar.ColorbarBase(ax1, cmap=shifted_cmap,
+                                   norm=cNormp,
+                                   orientation='horizontal')
+                cb1.set_label('nodes activation')
+        
+                plt.savefig('nicolay/'+path.name+'/'+path.name+'_scale.png')  
+                 
+                G=nx.DiGraph()
+                 
+                for node, value in col.iteritems():
+                    if value!=0:
+                        ffil = "#"+struct.pack('BBB',*scalarMap.to_rgba(value, bytes=True)[:3]).encode('hex').upper()
+                    else:
+                        ffil="#ffffff"
+                    G.add_node(node, color='black',style='filled',
+                               fillcolor=ffil)
+                
+                for node in path.node_set.all():
+                    for inrel in node.inrelations.all():
+                        if inrel.reltype == '1':
+                            relColor = 'green'
+                        if inrel.reltype == '0':
+                            relColor = 'red'
+                        G.add_edge(inrel.fromnode.name.encode('ascii','ignore'), inrel.tonode.name.encode('ascii','ignore'), color=relColor)
+                 
+                nx.draw_graphviz(G)
+                nx.write_dot(G,'file.dot')
+                A=nx.to_agraph(G)
+                A.layout(prog='dot')
+                A.draw('nicolay/'+path.name+'/'+path.name+'_'+col.name+'.png')
+            
+                #raise Exception('color')
+        lpaths = ['Wnt_Pathway',
+                  'VEGF_Pathway',
+                  'Ubiquitin_Proteasome_Pathway',
+                  'TRAF_m_Pathway',
+                  'TNF_m_Pathway',
+                  'TGF_beta_Pathway',
+                  'STAT3_Pathway',
+                  'SMAD_m_Pathway',
+                  'RAS_Pathway',
+                  'RANK_Signaling_in_Osteoclast_Pathway',
+                  'PTEN_Pathway',
+                  'PAK_Pathway',
+                  'p38_m_Signaling_Pathway',
+                  'Notch_Pathway',
+                  'NGF_p_Pathway',
+                  'NGF_m_Pathway',
+                  'mTOR_Pathway',
+                  'Mitochondrial_Apopotosis_m_Pathway',
+                  'Mismatch_Repair_Pathway',
+                  'MAPK_Signaling_Pathway',
+                  'MAPK_Family_Pathway',
+                  'JNK_Pathway',
+                  'JAK_mStat_Pathway',
+                  'IP3_Pathway',
+                  'Interferon_Pathway',
+                  'ILK_Pathway',
+                  'IL_10_Pathway',
+                  'IL_6_Pathway',
+                  'IL_2_Pathway',
+                  'IGF1R_Signaling_Pathway',
+                  'HGF_Pathway',
+                  'Hedgehog_Pathway',
+                  'GSK3_Pathway',
+                  'Growth_Hormone_Pathway',
+                  'GPCR_Pathway',
+                  'Glucocorticoid_Receptor_Pathway',
+                  'FLT3_Signaling_Pathway',
+                  'Estrogen_Pathway',
+                  'Erythropoeitin_Pathway',
+                  'ERK_Signaling_Pathway',
+                  'ErbB_Family_Pathway',
+                  'EGFR1_Pathway',
+                  'Cytokine_Network_Pathway',
+                  'Circadian_Pathway',
+                  'Chemokine_Pathway',
+                  'cAMP_Pathway',
+                  'ATM_Pathway',
+                  'AKT_Pathway',
+                  'AHR_Pathway'
+                  ]
+        lpaths1 = ['p38_p_Signaling_Pathway', 'SMAD_p_Pathway'  ]
+        lfrag = ['AHR_Pathway',
+                 'AKT_Pathway',
+                 'ATM_Pathway',
+                 'cAMP_Pathway',
+                 'Caspase_Cascade',
+                 'CD40_Pathway',
+                 'Cellular_Anti_Apoptosis_Pathway',
+                 'Chemokine_Pathway',
+                 'Chromatin_Pathway',
+                 'Circadian_Pathway',
+                 'CREB_Pathway',
+                 'Cytokine_Network_Pathway',
+                 'EGFR1_Pathway',
+                 'ErbB_Family_Pathway',
+                 'ERK_Signaling_Pathway',
+                 'Erythropoeitin_Pathway',
+                 'Estrogen_Pathway',
+                 'FLT3_Signaling_Pathway',
+                 'Glucocorticoid_Receptor_Pathway',
+                 'GPCR_Pathway',
+                 'Growth_Hormone_Pathway',
+                 'GSK3_Pathway',
+                 'Hedgehog_Pathway',
+                 'HGF_Pathway',
+                 'HIF1Alpha_Pathway',
+                 'IGF1R_Signaling_Pathway',
+                 'IL_2_Pathway',
+                 'IL_6_Pathway',
+                 'IL_10_Pathway',
+                 'ILK_Pathway',
+                 'Interferon_Pathway',
+                 'IP3_Pathway',
+                 'JAK_mStat_Pathway',
+                 'JNK_Pathway',
+                 'MAPK_Family_Pathway',
+                 'MAPK_Signaling_Pathway',
+                 'Mismatch_Repair_Pathway',
+                 'Mitochondrial_Apopotosis_m_Pathway',
+                 'mTOR_Pathway',
+                 'NGF_m_Pathway',
+                 'NGF_p_Pathway',
+                 'Notch_Pathway',
+                 'p38_m_Signaling_Pathway',
+                 'p38_p_Signaling_Pathway',
+                 'p53_Signaling_m_Pathway',
+                 'PAK_Pathway',
+                 'PPAR_Pathway',
+                 'PTEN_Pathway',
+                 'RANK_Signaling_in_Osteoclast_Pathway',
+                 'RAS_Pathway',
+                 'SMAD_m_Pathway',
+                 'SMAD_p_Pathway',
+                 'STAT3_Pathway',
+                 'TGF_beta_Pathway',
+                 'TNF_m_Pathway',
+                 'TNF_p_Pathway',
+                 'TRAF_m_Pathway',
+                 'TRAF_p_Pathway',
+                 'Ubiquitin_Proteasome_Pathway',
+                 'VEGF_Pathway',
+                 'Wnt_Pathway']
+        for p in lpaths1:
+            path = Pathway.objects.get(name=p)
+           
+
+            filename = settings.MEDIA_ROOT+"/auc/"+p+"_nodes_act1.txt"
+        
+            df_my_nodes = read_excel(settings.MEDIA_ROOT+"/nodes/"+p+".xlsx", sheetname="nodes" )
+            nodes = list(df_my_nodes.columns.values)
+            
+            
+            
+            df_nicolay_nodes = read_csv(filename, delimiter=' ', index_col=0 )
+            df_nicolay_nodes.index.name = 'SYMBOL'
+            df_nicolay_nodes['nodes'] = nodes
+            df_nicolay_nodes = df_nicolay_nodes.set_index('nodes')
+            
+            #raise Exception('test')
+            
+            os.mkdir('nicolay/'+path.name)
+            df_nicolay_nodes.apply(colormap,path=path, axis=0)
+
+
+        
+        raise Exception('yoyyo1')
         
         
         
@@ -718,8 +976,11 @@ class Celery(TemplateView):
     
     
     def get_context_data(self, **kwargs):
-              
         context = super(Celery, self).get_context_data(**kwargs)
+        from .tasks import add
+        
+        a = add.delay(5, 1)
+        context ['result'] = a.get()
         
         return context
     

@@ -11,9 +11,7 @@ from celery import shared_task
 def add(self, x, y):
     self.update_state(state='PROGRESS')
     import time
-    time.sleep(30)
-    logger = logging.getLogger('oncoFinder')
-    logger.info( "add task executed")
+    time.sleep(5)
     return x + y
 
 

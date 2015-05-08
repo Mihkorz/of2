@@ -6,10 +6,11 @@ import socket
 PROJECT_DIR = os.path.realpath(os.path.dirname(__file__))
 
 
-# Celery settings
-BROKER_URL = 'amqp://guest:guest@localhost//'
-CELERY_RESULT_BACKEND = 'amqp'
-CELERY_TASK_RESULT_EXPIRES = 18000  # 5 hours.
+# CELERY SETTINGS
+BROKER_URL = 'redis://localhost:6379/0'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
 
 LOGIN_URL = "/login"
 
@@ -142,6 +143,7 @@ INSTALLED_APPS = (
     'gunicorn',
     'debug_toolbar',
     'south',
+    
     
     
     #internal apps

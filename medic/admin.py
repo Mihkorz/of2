@@ -121,7 +121,7 @@ class TreatmentMethodAdmin(admin.ModelAdmin):
             
             AUC = roc_auc_score(arTrue, arScore) #calculate AUC
             
-            if AUC>0.8:
+            if AUC>0.7:
                 marker_pathways.append(pathway.name)
                 
                 r_mean = df_res.mean(axis=1).values[0]
