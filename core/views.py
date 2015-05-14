@@ -363,7 +363,7 @@ class CoreSetCalculationParameters(FormView):
                 try:                    
                     new_path_name = new_path_df.loc[pathway.name.strip()][1] 
                 except KeyError:
-                    new_path_name = 'Unknown'
+                    new_path_name = pathway.name
                     pass
                 pas_dict['New pathway name'] = pas1_dict['New pathway name'] = pas2_dict['New pathway name'] = new_path_name
                 
@@ -603,6 +603,10 @@ class CoreSetCalculationParameters(FormView):
         
         
         output_file = default_storage.save(settings.MEDIA_ROOT+"/"+path+"/"+file_name, ContentFile(''))
+        
+        output_pas_df.sort('Database', inplace=True)
+        output_pas1_df.sort('Database', inplace=True)
+        output_pas2_df.sort('Database', inplace=True)
               
         with ExcelWriter(output_file, index=False) as writer:
             if calculate_pas:
