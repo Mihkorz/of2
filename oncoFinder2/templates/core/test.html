@@ -6,6 +6,8 @@
 <div class="container">
 
 <h1>Testing Playground</h1>
+<h2>{{testvar}}</h2>
+
 total paths = {{paths|length}}
 <table class="table" >
 {%for path in paths%}
@@ -13,7 +15,12 @@ total paths = {{paths|length}}
 {%endfor%}
 </table>
 
-
+SET FOREIGN_KEY_CHECKS = 0; 
+TRUNCATE core_pathway; 
+TRUNCATE core_gene; 
+TRUNCATE core_node; 
+TRUNCATE core_component; 
+SET FOREIGN_KEY_CHECKS = 1;
 
 
 

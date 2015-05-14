@@ -21,7 +21,8 @@ from django.conf import settings
 
 from .forms import  CalculationParametersForm, MedicCalculationParametersForm
 from profiles.models import Document, ProcessDocument
-from database.models import Pathway, Gene, Drug, Node, Component
+from .models import Pathway, Gene
+from database.models import Drug, Node, Component
 from metabolism.models import MetabolismPathway, MetabolismGene
 from mouse.models import MousePathway, MouseGene, MouseMetabolismPathway, MouseMetabolismGene, MouseMapping
 from .stats import pseudo_ttest_1samp, fdr_corr
@@ -83,8 +84,9 @@ class CoreSetCalculationParameters(FormView):
         sigma_num = form.cleaned_data.get('sigma_num', 2) # !!! deprecated !!!
         
         #database and normal choice
-        norm_choice = form.cleaned_data.get('norm_choice', 2) #default=geometric
-        db_choice = form.cleaned_data.get('db_choice', 1) #default=Human 
+        organism_choice = form.cleaned_data.get('organism_choice', 'human') #default=human
+        db_choice = form.cleaned_data.get('db_choice', ['primary_old']) #default=primary_old
+        norm_choice = form.cleaned_data.get('norm_choice', 2) #default=geometric 
         
         #what to calculate and include in output report
         calculate_pas = form.cleaned_data.get('calculate_pas', False)
@@ -113,14 +115,7 @@ class CoreSetCalculationParameters(FormView):
         
         output_doc = Document()        
         output_doc.doc_type = 2
-        if int(db_choice) == 1:
-            json_db = 'Human'
-        elif int(db_choice) == 2:
-            json_db = 'Human Metabolism'
-        elif int(db_choice) == 3:
-            json_db = 'Mouse'
-        elif int(db_choice) == 4:
-            json_db = 'Mouse Metabolism'
+        
         output_doc.parameters = {'sigma_num': sigma_num,
                                  'use_sigma': use_sigma,
                                  'cnr_low': cnr_low,
@@ -130,7 +125,8 @@ class CoreSetCalculationParameters(FormView):
                                  'use_fdr': use_fdr,
                                  'use_ttest_1sam': use_ttest_1sam,
                                  'norm_algirothm': 'geometric' if int(norm_choice)>1 else 'arithmetic',
-                                 'db': json_db,
+                                 'organism': organism_choice, 
+                                 'db': db_choice,
                                  'hormone_status': hormone_status,
                                  'her2_status': her2_status }
         
@@ -138,7 +134,20 @@ class CoreSetCalculationParameters(FormView):
         output_doc.created_by = self.request.user
         output_doc.created_at = datetime.now()        
         #output_doc.save()
-                        
+        
+        params_for_output = []
+        params_for_output.append({'Parameters': 'Organism: '+organism_choice})
+        params_for_output.append({'Parameters': 'Database(s): '+', '.join(db_choice) })
+        params_for_output.append({'Parameters': 'Calculation algorithm for normal values: '+ ('geometric' if int(norm_choice)>1 else 'arithmetic') })
+        
+        params_for_output.append({'Parameters': 'Used T-test for gene distribution: '+ ('Yes' if use_ttest else 'No') })
+        params_for_output.append({'Parameters': 'Used 1sample T-test: '+ ('Yes' if use_ttest_1sam else 'No') })
+        params_for_output.append({'Parameters': 'Used FDR for T-test: '+ ('Yes' if use_fdr else 'No') })
+        params_for_output.append({'Parameters': 'Used CNR filter: '+ ('Yes. Lower limit='+str(cnr_low)+'. Upper limit='+str(cnr_up) if use_cnr else 'No') })
+        params_for_output.append({'Parameters': 'Used Sigma filer: '+ ('Yes. Sigma number='+str(sigma_num) if use_sigma else 'No') })
+        
+        params_df = DataFrame(params_for_output)
+                
         
         """ Start Calculations"""
          
@@ -157,10 +166,10 @@ class CoreSetCalculationParameters(FormView):
                                                 level=0).mean() #deal with duplicate genes by taking mean value
         
         # DataBase choice
+        """
         if int(db_choice) == 1:
             pathway_objects = Pathway.objects.all().prefetch_related('gene_set') # Human DB
             all_genes = DataFrame(list(Gene.objects.values_list('name', flat=True).distinct())).set_index(0)#fetch genes 
-            ccc = len(all_genes)
         elif int(db_choice) == 2:
             pathway_objects = MetabolismPathway.objects.all().prefetch_related('metabolismgene_set') # Human Metabolism DB
             all_genes = DataFrame(list(MetabolismGene.objects.values_list('name', flat=True).distinct())).set_index(0)#fetch genes
@@ -171,8 +180,16 @@ class CoreSetCalculationParameters(FormView):
             pathway_objects = MouseMetabolismPathway.objects.all().prefetch_related('mousemetabolismgene_set') # Mouse Metabolism DB
             all_genes = DataFrame(list(MouseMetabolismGene.objects.values_list('name', flat=True).distinct())).set_index(0)#fetch genes
             
-            
+        """
+        
+        pathway_objects = Pathway.objects.filter(organism=organism_choice,
+                                                 database__in=db_choice
+                                                 ).prefetch_related('gene_set')
+        
+        all_genes = DataFrame(list(Gene.objects.values_list('name', flat=True).distinct())).set_index(0)#fetch genes    
         all_genes.index.name = 'SYMBOL'
+        
+        
         process_doc_df = all_genes.join(process_doc_df, how='inner') # leave only genes that are in our DB
         
         cnr_doc_df =  process_doc_df.copy() # use to generate CNR file for downloading
@@ -311,14 +328,8 @@ class CoreSetCalculationParameters(FormView):
             gene_name = []
             gene_arr = []
             
-            if int(db_choice) == 1:
-                gene_objects = pathway.gene_set.all() # get Genes from Human DB
-            elif int(db_choice) == 2:
-                gene_objects = pathway.metabolismgene_set.all() # get Genes from Metabolism DB
-            elif int(db_choice) == 3:
-                gene_objects = pathway.mousegene_set.all() # get Genes from Mouse DB
-            elif int(db_choice) == 4:
-                gene_objects = pathway.mousemetabolismgene_set.all() # get Genes from Mouse DB
+            gene_objects = pathway.gene_set.all()
+ 
                 
             for gene in gene_objects:
                 gene_name.append(gene.name.strip().upper())
@@ -357,6 +368,7 @@ class CoreSetCalculationParameters(FormView):
                 pas_dict['New pathway name'] = pas1_dict['New pathway name'] = pas2_dict['New pathway name'] = new_path_name
                 
                 
+            pas_dict['Database'] = pas1_dict['Database'] = pas2_dict['Database'] = pathway.database    
             
             """ Calculating PAS for samples and norms using filter(s)  """
             
@@ -605,6 +617,8 @@ class CoreSetCalculationParameters(FormView):
                 output_ds2_df.to_excel(writer, 'DS2')
             if calculate_ds3:
                 output_ds3_df.to_excel(writer, 'DS1B')
+                
+            params_df.to_excel(writer,'Parameters')
         
         
         output_doc.document = path+"/"+os.path.basename(output_file)
@@ -768,7 +782,7 @@ class Test(TemplateView):
         
         
         def colormap(col, path):
-            if col.name=='V1':
+            if col.name=='x':
                 col = col.fillna(0)
                 mmin = np.min(col)
                 mmax = np.max(col)
@@ -932,11 +946,14 @@ class Test(TemplateView):
                  'Ubiquitin_Proteasome_Pathway',
                  'VEGF_Pathway',
                  'Wnt_Pathway']
-        for p in lpaths1:
+        lpath2 = ['Circadian_Pathway', 
+                  'mel7_p53_Signaling_m_Pathway',
+                  'p53_Signaling_m_Pathway', 'TRAF_p_Pathway']
+        for p in lpath2:
             path = Pathway.objects.get(name=p)
            
 
-            filename = settings.MEDIA_ROOT+"/auc/"+p+"_nodes_act1.txt"
+            filename = settings.MEDIA_ROOT+"/denis/"+p+"_signed_AUC.txt"
         
             df_my_nodes = read_excel(settings.MEDIA_ROOT+"/nodes/"+p+".xlsx", sheetname="nodes" )
             nodes = list(df_my_nodes.columns.values)
@@ -977,10 +994,52 @@ class Celery(TemplateView):
     
     def get_context_data(self, **kwargs):
         context = super(Celery, self).get_context_data(**kwargs)
-        from .tasks import add
         
+        from .tasks import add
         a = add.delay(5, 1)
         context ['result'] = a.get()
+        
+        from os import listdir
+        
+        def nnodes(row):
+            lnodes = []
+            nname = row[1]
+            row.dropna(inplace=True)
+            for el in row:
+                lnodes.append(el)
+            
+            raise Exception('from nnodes')
+        
+        def rrels(row, sNodes):
+            fff = row['from']
+            
+            nname = sNodes[fff]
+            
+            raise Exception('from rrel')
+            
+            
+            
+        
+        path = settings.MEDIA_ROOT+'/microPaths/'
+        for ffile in listdir(path):
+            df_genes = read_excel(path+ffile, sheetname='genes', header=None)
+            df_genes.columns = ['gene', 'arr']
+            
+            df_nodes = read_excel(path+ffile, sheetname='nodes', header=None, index_col=0)
+            df_nodes_name = df_nodes[1]
+            #df_nodes.apply(nnodes, axis=1)
+            
+            df_rels = read_excel(path+ffile, sheetname='edges', header=None)
+            df_rels.columns = ['from', 'to', 'reltype']
+            df_rels.apply(rrels, axis=1, sNodes=df_nodes_name)
+            
+            
+            
+            raise Exception('test')
+          
+            
+            
+        
         
         return context
     

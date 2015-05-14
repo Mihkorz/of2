@@ -7,10 +7,12 @@ class CalculationParametersForm(forms.Form):
     NORM_CHOICES = (('2', 'Geometric',),
                     ('1', 'Arithmetic',))
     
-    DB_CHOICES = (('1', 'Human'),
-                  ('2', 'Human Metabolism'),
-                  ('3', 'Mouse'),
-                  ('4', 'Mouse Metabolism'))
+    ORGANISM_CHOICES = (('human', 'Human',),
+                       ('mouse', 'Mouse',))
+    
+    DB_CHOICES = (('primary_old', 'Primary Pathway Database (old)'),
+                  ('primary_new', 'Primary Pathway Database (new)'),
+                  ('metabolism', 'Metabolism Pathway Database'),)
     #FILTERS
     use_sigma = forms.BooleanField(label="Use sigma filter", initial=False, required=False)
     sigma_num = forms.FloatField( label="Sigma amount \n (deprecated)", initial=2, required=False)
@@ -32,9 +34,11 @@ class CalculationParametersForm(forms.Form):
     use_fdr_stat = forms.BooleanField(label="Use q-values",
                                    initial=False, required=False)
     
-    #DB and norm algorithm selection
-    db_choice = forms.ChoiceField(label="Pathway DataBase",
-                                     widget=forms.RadioSelect, choices=DB_CHOICES, initial=1)
+    #organism DB and norm algorithm selection
+    organism_choice = forms.ChoiceField(label="Organism",
+                                     widget=forms.RadioSelect, choices=ORGANISM_CHOICES, initial='human')
+    db_choice = forms.MultipleChoiceField(label="Pathway DataBase",
+                                     widget=forms.SelectMultiple, choices=DB_CHOICES, initial=['primary_old'])
     norm_choice = forms.ChoiceField(label="Calculation algorithm for normal values",
                                      widget=forms.RadioSelect, choices=NORM_CHOICES, initial=2)
     #values included into report
