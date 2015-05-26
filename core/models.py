@@ -13,6 +13,7 @@ PATHWAY_DATABASE = (
     ('primary_old', 'Primary Pathway Database (old)'),
     ('primary_new', 'Primary Pathway Database (new)'),
     ('metabolism', 'Metabolism Pathway Database'),
+    ('cytoskeleton', 'Cytoskeleton Pathway Database'),
 ) 
 
 PATHWAY_ORGANISM = (

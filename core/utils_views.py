@@ -27,7 +27,7 @@ class ConvertPath(TemplateView):
     
     def get_context_data(self, **kwargs):
         context = super(ConvertPath, self).get_context_data(**kwargs)
-        raise Exception('just stop exception. Check view!')
+        #raise Exception('just stop exception. Check view!')
         """
         #human metabolism
         for mpath in MetabolismPathway.objects.all():
@@ -116,8 +116,10 @@ class ConvertPath(TemplateView):
         """
            
         #human new
-        
+        """
         pathh = settings.MEDIA_ROOT+'/microPaths/'
+        
+        
         for ffile in os.listdir(pathh):
             df_genes = read_excel(pathh+ffile, sheetname='genes', header=None).fillna('mazafaka')
             df_genes.columns = ['gene', 'arr']
@@ -184,7 +186,49 @@ class ConvertPath(TemplateView):
             
             
             #raise Exception('human new')       
+        """
+        #cytoskeleton pathways 
+        """
+        def convertCytoskeleton(row):
+            path = oPath.objects.using('old').get(name=row['old'])
+            
+            npath = Pathway.objects.get(name=row['new'], amcf=path.amcf, info=path.info, comment=path.comment,
+                            organism='human', database='cytoskeleton')
+            
+            for onode in path.node_set.all():
+                nnode = Node(name=onode.name, comment=onode.comment, pathway=npath)
+                nnode.save()
                 
+                for ocomp in onode.component_set.all():
+                    ncomp = Component(name=ocomp.name, comment=ocomp.comment, node=nnode)
+                    ncomp.save()
+            
+            for onode in path.node_set.all():
+                for orel in onode.inrelations.all():
+                    ofrom = orel.fromnode
+                    oto = orel.tonode
+                    
+                    nfrom = Node.objects.get(name=ofrom.name, pathway=npath)
+                    nto = Node.objects.get(name=oto.name, pathway=npath)
+                    
+                    nrel = Relation(fromnode=nfrom, tonode=nto, reltype=orel.reltype, comment=orel.comment)
+                    nrel.save()
+            
+            
+            
+            
+            #raise Exception('from inside function')
+        
+        
+        df_p_names = read_excel(settings.MEDIA_ROOT+'/cytoskeleton_new_pathways_renamed.xlsx',
+                                sheetname='cytoskeleton_new_pathways', header=None)
+        df_p_names.columns = ['old', 'new']
+        
+        df_p_names.apply(convertCytoskeleton, axis=1)
+        
+        raise Exception('utils exp')
+        
+        """    
             
         """ COUNT DISTINCT GENES  
         lhuman =[]
