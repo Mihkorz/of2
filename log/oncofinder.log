@@ -6465,3 +6465,138 @@ Traceback (most recent call last):
   File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/utils_views.py", line 229, in get_context_data
     raise Exception('utils exp')
 Exception: utils exp
+2015-05-26 17:06:57,857 ERROR base 10699 -1387271360 Internal Server Error: /calculation-parameters/doc6015/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 48, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 370, in form_valid
+    new_path_name = new_path_df.loc[pathway.name.strip()][1]
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/series.py", line 514, in __getitem__
+    result = self.index.get_value(self, key)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/index.py", line 1466, in get_value
+    return tslib.get_value_box(s, key)
+  File "pandas/tslib.pyx", line 660, in pandas.tslib.get_value_box (pandas/tslib.c:14126)
+  File "pandas/tslib.pyx", line 676, in pandas.tslib.get_value_box (pandas/tslib.c:13893)
+IndexError: index out of bounds
+2015-05-26 17:09:00,626 ERROR base 11710 -1356784832 Internal Server Error: /calculation-parameters/doc6015/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 48, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 372, in form_valid
+    new_path_name = new_path_df.loc[pathway.name.strip()][1]
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/series.py", line 514, in __getitem__
+    result = self.index.get_value(self, key)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/index.py", line 1466, in get_value
+    return tslib.get_value_box(s, key)
+  File "pandas/tslib.pyx", line 660, in pandas.tslib.get_value_box (pandas/tslib.c:14126)
+  File "pandas/tslib.pyx", line 676, in pandas.tslib.get_value_box (pandas/tslib.c:13893)
+IndexError: index out of bounds
+2015-05-26 17:11:29,768 ERROR base 12672 -1356784832 Internal Server Error: /calculation-parameters/doc6015/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 48, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 373, in form_valid
+    raise Exception('name')
+Exception: name
+2015-05-26 17:14:51,031 ERROR base 13053 -1385174208 Internal Server Error: /calculation-parameters/doc6015/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 48, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 628, in form_valid
+    output_pas_df.to_excel(writer,'PAS')
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 1267, in to_excel
+    startrow=startrow, startcol=startcol)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/io/excel.py", line 763, in write_cells
+    xcell.value = _conv_value(cell.val)
+  File "/usr/local/lib/python2.7/dist-packages/openpyxl/cell/cell.py", line 353, in value
+    self.bind_value(value)
+  File "/usr/local/lib/python2.7/dist-packages/openpyxl/cell/cell.py", line 245, in bind_value
+    raise ValueError("Cannot convert {0} to Excel".format(value))
+ValueError: Cannot convert Pathway Name    AHR Main Pathway
+Name: AHR_Pathway, dtype: object to Excel
+2015-05-26 17:18:53,038 ERROR base 15303 -1357833408 Internal Server Error: /calculation-parameters/doc6015/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 48, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 633, in form_valid
+    output_pas_df.to_excel(writer,'PAS')
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 1267, in to_excel
+    startrow=startrow, startcol=startcol)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/io/excel.py", line 763, in write_cells
+    xcell.value = _conv_value(cell.val)
+  File "/usr/local/lib/python2.7/dist-packages/openpyxl/cell/cell.py", line 353, in value
+    self.bind_value(value)
+  File "/usr/local/lib/python2.7/dist-packages/openpyxl/cell/cell.py", line 245, in bind_value
+    raise ValueError("Cannot convert {0} to Excel".format(value))
+ValueError: Cannot convert Pathway Name    AHR Main Pathway
+Name: AHR_Pathway, dtype: object to Excel

@@ -357,11 +357,19 @@ class CoreSetCalculationParameters(FormView):
             
             """ Inserting new pathway names if needed """
             if new_pathway_names:
-                new_path_df = read_excel(settings.MEDIA_ROOT+"/TRpathways_update_final_updated2.xlsx",
+                 
+                if pathway.database == 'primary_new':
+                    new_path_df = read_excel(settings.MEDIA_ROOT+"/primary_new_pathways_renaming.xlsx",
+                                         sheetname=0, header=None)
+                    new_path_df.columns=['Old Pathway Name', 'Pathway Name']
+                    new_path_df.set_index('Old Pathway Name', inplace=True) 
+                else:                    
+                    new_path_df = read_excel(settings.MEDIA_ROOT+"/TRpathways_update_final_updated2.xlsx",
                                          sheetname=0,
                                          index_col='Old Pathway Name')            
                 try:                    
-                    new_path_name = new_path_df.loc[pathway.name.strip()][1] 
+                    new_path_name = new_path_df.loc[pathway.name.strip()]['Pathway Name']
+                   
                 except KeyError:
                     new_path_name = pathway.name
                     pass
