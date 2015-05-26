@@ -27,7 +27,7 @@ class ConvertPath(TemplateView):
     
     def get_context_data(self, **kwargs):
         context = super(ConvertPath, self).get_context_data(**kwargs)
-        
+        raise Exception('just stop exception. Check view!')
         """
         #human metabolism
         for mpath in MetabolismPathway.objects.all():
@@ -51,14 +51,14 @@ class ConvertPath(TemplateView):
         """
         for opath in oPath.objects.all():
             try: 
-                tpath = Pathway.objects.get(name=opath.name, organism='human', database='primary_old')
+                npath = Pathway.objects.get(name=opath.name, organism='human', database='primary_old')
             except:
                 npath = Pathway(name=opath.name, amcf=opath.amcf, info=opath.info, comment=opath.comment,
                             organism='human', database='primary_old')
-                npath.save()
+                #npath.save()
                 for ogene in opath.gene_set.all():
                     ngene = Gene(name=ogene.name, arr=ogene.arr, comment=ogene.comment, pathway=npath)
-                    ngene.save()
+                    #ngene.save()
               
             for onode in opath.node_set.all():
                 nnode = Node(name=onode.name, comment=onode.comment, pathway=npath)
@@ -90,7 +90,7 @@ class ConvertPath(TemplateView):
                 ngene.save()
         """
         #mouse new
-        
+        """
         for hpath in Pathway.objects.filter(organism='human', database='primary_new'):
             try:
                 npath = Pathway.objects.get(name=hpath.name, amcf=hpath.amcf, info=hpath.info, comment=hpath.comment,
@@ -113,10 +113,10 @@ class ConvertPath(TemplateView):
                     pass
             
         
-        
-             
-        #human new
         """
+           
+        #human new
+        
         pathh = settings.MEDIA_ROOT+'/microPaths/'
         for ffile in os.listdir(pathh):
             df_genes = read_excel(pathh+ffile, sheetname='genes', header=None).fillna('mazafaka')
@@ -124,25 +124,84 @@ class ConvertPath(TemplateView):
             
             pathname = ffile.replace('.xls', '')
             try:
-                trypath = Pathway.objects.get(name=pathname)
-            except:
-                 
+                npath = Pathway.objects.get(name=pathname, organism='human', database='primary_new' )               
+            except:                 
             
-                path = Pathway(name=pathname, amcf=0, organism='human', database='primary_new')
-                path.save()
+                npath = Pathway(name=pathname, amcf=0, organism='human', database='primary_new')
+                #path.save()
+                
+            def add_gene(row, path):
+                if row['arr']!='mazafaka':
+                    g = Gene(name=row['gene'], arr=row['arr'], pathway=path)
+                    g.save()                
             
-                def add_gene(row, path):
-                    if row['arr']!='mazafaka':
-                        g = Gene(name=row['gene'], arr=row['arr'], pathway=path)
-                        g.save()
+            #df_genes.apply(add_gene, axis=1, path=path)
+            def nnodes(row, path):
+                
+                nname = row[1]
+                try:
+                    nnode = Node.objects.get(name=nname, pathway=path)
+                except:
+                    nnode = Node(name=nname, pathway=path)
+                    nnode.save()
+                
+                row.dropna(inplace=True)
+                for el in row:
+                    mcomp = Component(name=el, node=nnode)
+                    mcomp.save()
+            
+                #raise Exception('from nnodes')
+        
+            def rrels(row, sNodes, path):
+                fff = row['from']
+                ttt = row['to']
+            
+                namefrom = sNodes[fff]
+                nameto = sNodes[ttt]#unknown activation inhibition
+                if row['reltype']=='activation':
+                    reltype = 1
+                if row['reltype']=='inhibition':
+                    reltype = 0
+                if row['reltype']=='unknown':
+                    reltype = 2
+                    
+                dbfrom = Node.objects.get(name=namefrom, pathway=path)
+                dbto = Node.objects.get(name=nameto, pathway=path)
+                
+                nrel = Relation(fromnode=dbfrom, tonode=dbto, reltype=reltype)
+                nrel.save()
+                     
+            
+                #raise Exception('from rrel')
+            
+            df_nodes = read_excel(pathh+ffile, sheetname='nodes', header=None, index_col=0)
+            df_nodes_name = df_nodes[1]
+            df_nodes.apply(nnodes, axis=1, path=npath)
+            
+            df_rels = read_excel(pathh+ffile, sheetname='edges', header=None)
+            df_rels.columns = ['from', 'to', 'reltype']
+            df_rels.apply(rrels, axis=1, sNodes=df_nodes_name, path=npath)    
+            
+            
+            #raise Exception('human new')       
                 
             
-                df_genes.apply(add_gene, axis=1, path=path)
-            
-            #raise Exception('new')       
-           """     
-            
-            
+        """ COUNT DISTINCT GENES  
+        lhuman =[]
+        lmouse = []
+        
+        for pp in Pathway.objects.filter(organism='human'):
+            for gg in pp.gene_set.all():
+                lhuman.append(gg.name)
+        
+        for ppp in Pathway.objects.filter(organism='mouse'):
+            for ggg in ppp.gene_set.all():
+                lmouse.append(ggg.name)
+        
+        numhuman = len(set(lhuman))
+        nummouse = len(set(lmouse))
+        raise Exception('count') 
+        """  
             
             
             

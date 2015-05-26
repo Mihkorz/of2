@@ -116,9 +116,11 @@ class Component(models.Model):
         
 RELATION_INHIBITOR = 0
 RELATION_ACTIVATOR = 1
+RELATION_UNKNOWN = 2
 RELATION_TYPES = (
     (RELATION_INHIBITOR, 'inhibition'),
     (RELATION_ACTIVATOR, 'activation'),
+    (RELATION_UNKNOWN, 'unknown'),
    
 )
     

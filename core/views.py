@@ -527,13 +527,17 @@ class CoreSetCalculationParameters(FormView):
                         
                         target.name = target.name.strip().upper()
                         if target.name in differential_genes[tumour]:
+                            
+                            pathways = Pathway.objects.filter(organism=organism_choice,
+                                                 database__in=db_choice, gene__name=target.name)
+                            """
                             if int(db_choice) == 1:
                                 pathways = Pathway.objects.filter(gene__name=target.name) # Human DB
                             elif int(db_choice) == 2:
                                 pathways = MetabolismPathway.objects.filter(metabolismgene__name=target.name)# Metabolism DB
                             elif int(db_choice) == 3:
                                 pathways = MousePathway.objects.filter(mousegene__name=target.name) # Mouse DB
-                            
+                            """
                             
                             for path in pathways:
                                 if int(db_choice) == 1:
@@ -811,7 +815,8 @@ class Test(TemplateView):
                                    orientation='horizontal')
                 cb1.set_label('nodes activation')
         
-                plt.savefig('nicolay/'+path.name+'/'+path.name+'_scale.png')  
+                #plt.savefig('nicolay/'+path.name+'/'+path.name+'_scale.png')
+                plt.savefig('denis/'+path.name+'/'+path.name+'_scale.png')    
                  
                 G=nx.DiGraph()
                  
@@ -832,10 +837,10 @@ class Test(TemplateView):
                         G.add_edge(inrel.fromnode.name.encode('ascii','ignore'), inrel.tonode.name.encode('ascii','ignore'), color=relColor)
                  
                 nx.draw_graphviz(G)
-                nx.write_dot(G,'file.dot')
+                nx.write_dot(G, 'denis/'+path.name+'/'+path.name+'.dot')
                 A=nx.to_agraph(G)
                 A.layout(prog='dot')
-                A.draw('nicolay/'+path.name+'/'+path.name+'_'+col.name+'.png')
+                A.draw('denis/'+path.name+'/'+path.name+'_'+col.name+'.svg')
             
                 #raise Exception('color')
         lpaths = ['Wnt_Pathway',
@@ -950,28 +955,26 @@ class Test(TemplateView):
                  'Ubiquitin_Proteasome_Pathway',
                  'VEGF_Pathway',
                  'Wnt_Pathway']
-        lpath2 = ['Circadian_Pathway', 
-                  'mel7_p53_Signaling_m_Pathway',
-                  'p53_Signaling_m_Pathway', 'TRAF_p_Pathway']
+        lpath2 = ['p53_Signaling_m_Pathway']
         for p in lpath2:
-            path = Pathway.objects.get(name=p)
+            path = Pathway.objects.get(name=p, database='primary_old', organism='human')
            
 
-            filename = settings.MEDIA_ROOT+"/denis/"+p+"_signed_AUC.txt"
+            filename = settings.MEDIA_ROOT+"/denis/"+p+"_signed_AUC_mod.txt.csv"
         
             df_my_nodes = read_excel(settings.MEDIA_ROOT+"/nodes/"+p+".xlsx", sheetname="nodes" )
             nodes = list(df_my_nodes.columns.values)
             
             
             
-            df_nicolay_nodes = read_csv(filename, delimiter=' ', index_col=0 )
+            df_nicolay_nodes = read_csv(filename, index_col=0 )
             df_nicolay_nodes.index.name = 'SYMBOL'
             df_nicolay_nodes['nodes'] = nodes
             df_nicolay_nodes = df_nicolay_nodes.set_index('nodes')
-            
+            df_nicolay_nodes.columns = ['x']
             #raise Exception('test')
             
-            os.mkdir('nicolay/'+path.name)
+            os.mkdir('denis/'+path.name)
             df_nicolay_nodes.apply(colormap,path=path, axis=0)
 
 
