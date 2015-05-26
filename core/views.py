@@ -540,13 +540,16 @@ class CoreSetCalculationParameters(FormView):
                             """
                             
                             for path in pathways:
+                                
+                                gene = Gene.objects.filter(name = target.name, pathway=path)[0]
+                                """
                                 if int(db_choice) == 1:
                                     gene = Gene.objects.filter(name = target.name, pathway=path)[0] # get Genes from Human DB
                                 elif int(db_choice) == 2:
                                     gene = MetabolismGene.objects.filter(name = target.name, pathway=path)[0] # get Genes from Metabolism DB
                                 elif int(db_choice) == 3:
                                     gene = MouseGene.objects.filter(name = target.name, pathway=path)[0] # get Genes from Mouse DB
-                                        
+                                """        
                                 ARR = float(gene.arr)
                                 CNR = process_doc_df.at[target.name, tumour]
                                 if CNR == 0:
