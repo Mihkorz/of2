@@ -70,8 +70,8 @@ urlpatterns = patterns('',
     url(r'^task_status/$', TaskStatus.as_view()),
     
     ################### DataBase App ##############################
-    url(r'^db/pathways/$', PathwayList.as_view(), name="pathway_list"),
-    url(r'^db/pathways/[-\w]+/(?P<pk>\d+)/$', PathwayDetail.as_view(), name="pathway_detail"),
+    url(r'^db/pathways/(?P<organism>[-\w]+)/(?P<database>[-\w]+)/$', PathwayList.as_view(), name="pathway_list"),
+    url(r'^db/pathways/(?P<organism>[-\w]+)/(?P<database>[-\w]+)/[-\w]+/(?P<pk>\d+)/$', PathwayDetail.as_view(), name="pathway_detail"),
     url(r'^db/pathways/search/$', PathwayAjaxSearch.as_view(), name="pathway_ajax_search"),
     url(r'^db/drugs/$', DrugList.as_view(), name="drug_list"),
     url(r'^db/drugs/[-\w]+/(?P<pk>\d+)/$', DrugDetail.as_view(), name="drug_detail"),

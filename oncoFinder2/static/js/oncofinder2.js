@@ -38,7 +38,7 @@
 	    }
 	});
  
- function autocompleteAjaxSearch(searchObj, loadObj, url){
+ function autocompleteAjaxSearch(searchObj, organism, database, loadObj, url){
 	 var query = $(searchObj).val();
 	 
 	 if (query.length == 0) {
@@ -49,7 +49,7 @@
 	 if (query.length >= 3){
 		 
 		 $(loadObj).fadeOut('slow', function(){
-			                 $(loadObj).load(url+"/search/?q="+query, function(){
+			                 $(loadObj).load(url+"/search/?q="+query+"&o="+organism+"&db="+database, function(){
 			                	 $(loadObj).fadeIn('slow');
 			                  });
 			                  

@@ -4,15 +4,24 @@
 
 {% block content %}
 <div class="container">
-    <h1> <img src='/static/images/laboratory_info.png' style="width: 100px;"/>Biochem DataBase 
-    <div class="btn-group">
-        <button type="button" class="btn btn-active"  >Human Pathways</button>
-        <button type="button" class="btn btn-primary"   onClick="location.href='/metabolism/pathways/'">Human Metabolism Pathways</button>
-        <button type="button" class="btn btn-primary"  onClick="location.href='/mouse/pathways/'" >Mouse Pathways</button>
-        <button type="button" class="btn btn-primary"   onClick="location.href='/mouse/metabolismpathways/'">Mouse Metabolism Pathways</button>
+    <h1> <img src='/static/images/laboratory_info.png' style="width: 100px;"/>Biochem DataBase </h1> 
+    <div class="pull-left">
+    <span style="font-size:14px; ">Human:</span> <div class="btn-group btn-group-xs"> 
+        <button type="button" class="btn btn-primary human primary_old" onClick="location.href='/db/pathways/human/primary_old/'" >Primary old</button>
+        <button type="button" class="btn btn-primary human primary_new"   onClick="location.href='/db/pathways/human/primary_new/'">Primary new</button>
+        <button type="button" class="btn btn-primary human metabolism"  onClick="location.href='/db/pathways/human/metabolism/'" >Metabolism</button>
+        <button type="button" class="btn btn-primary human cytoskeleton"   onClick="location.href='/db/pathways/human/cytoskeleton/'">Cytoskeleton</button>
         
-    </div> 
-     </h1>
+    </div>
+    
+    <span style="font-size:14px; margin-left:50px;">Mouse: </span><div class="btn-group btn-group-xs">
+        <button type="button" class="btn btn-primary "  >Primary old</button>
+        <button type="button" class="btn btn-primary"   onClick="location.href='/metabolism/pathways/'">Primary new</button>
+        <button type="button" class="btn btn-primary"  onClick="location.href='/mouse/pathways/'" >Metabolism</button>
+        
+                                               </div>
+     </div>  
+    <br/><br/>
     <span class="text-muted">
     Total ammount = <strong>{{allPathways}}</strong>  pathways
     </span>
@@ -68,8 +77,14 @@
 
 <script>
 $(function(){
+	
+	//deal with buttons
+	//$("button").hasClass("{{organism}}").hasClass("{{database}}").addClass("yoyoy");
+	$("button.{{organism}}.{{database}}").removeClass("btn-primary").addClass("btn-active");
+	
+	
 	$("#pathway_search").keyup(function(){ 
-		autocompleteAjaxSearch(this, $("#path_list_container"), "/db/pathways");
+		autocompleteAjaxSearch(this, '{{organism}}', '{{database}}', $("#path_list_container"), "/db/pathways");
 	});
 	
 });

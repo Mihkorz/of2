@@ -5,27 +5,36 @@ from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
-from .models import Pathway, Drug
+from .models import  Drug
+from core.models import Pathway
+
 
 class PathwayList(ListView):
     """
     List of Pathways in BioChem DB section
     """    
-    model = Pathway
     template_name = 'database/pathway_list.html'
     context_object_name = 'pathways'
     paginate_by = 20
-        
-    def get_context_data(self, **kwargs):
-        context = super(PathwayList, self).get_context_data(**kwargs)
-        context['allPathways'] = Pathway.objects.count()        
-        return context
-        
+    
+    
+    def get_queryset(self):
+        qs = Pathway.objects.filter(organism=self.kwargs['organism'], database=self.kwargs['database']) 
+        return qs
+    
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super(PathwayList, self).dispatch(request, *args, **kwargs)
+        
+    def get_context_data(self, **kwargs):
+        context = super(PathwayList, self).get_context_data(**kwargs)
+        queryset = self.get_queryset()
+        context['allPathways'] = queryset.count()
+        context['organism'] = self.kwargs['organism']
+        context['database'] = self.kwargs['database']
+        return context
+        
       
-    
 class PathwayDetail(DetailView):
     """
     Details page for particular pathway
@@ -51,6 +60,8 @@ class PathwayDetail(DetailView):
                     relColor = 'red'
                 dRelations.append({ inrel.fromnode.name : [inrel.tonode.name, relColor] })      
         context['dRelations'] = dRelations
+        context['organism'] = self.kwargs['organism']
+        context['database'] = self.kwargs['database']
         return context
 
 class PathwayAjaxSearch(ListView):
@@ -63,7 +74,9 @@ class PathwayAjaxSearch(ListView):
     
     def get_queryset(self):
         q = self.request.GET.get('q', '')
-        return Pathway.objects.filter(name__icontains=q)
+        organism = self.request.GET.get('o', '')
+        database = self.request.GET.get('db', '')
+        return Pathway.objects.filter(name__icontains=q, organism=organism, database=database)
     
     
 class DrugList(ListView):
