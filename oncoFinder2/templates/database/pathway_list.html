@@ -15,9 +15,9 @@
     </div>
     
     <span style="font-size:14px; margin-left:50px;">Mouse: </span><div class="btn-group btn-group-xs">
-        <button type="button" class="btn btn-primary "  >Primary old</button>
-        <button type="button" class="btn btn-primary"   onClick="location.href='/metabolism/pathways/'">Primary new</button>
-        <button type="button" class="btn btn-primary"  onClick="location.href='/mouse/pathways/'" >Metabolism</button>
+        <button type="button" class="btn btn-primary mouse primary_old" onClick="location.href='/db/pathways/mouse/primary_old/'" >Primary old</button>
+        <button type="button" class="btn btn-primary mouse primary_new"   onClick="location.href='/db/pathways/mouse/primary_new/'">Primary new</button>
+        <button type="button" class="btn btn-primary mouse metabolism"  onClick="location.href='/db/pathways/mouse/metabolism/'" >Metabolism</button>
         
                                                </div>
      </div>  
@@ -25,7 +25,9 @@
     <span class="text-muted">
     Total ammount = <strong>{{allPathways}}</strong>  pathways
     </span>
-    
+    {%if organism == 'mouse' %}
+     | <a href="/mouse/mapping/">Human-mouse genes mapping</a>
+    {%endif%}
         <div class="input-group col-lg-4 pull-right">
         <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
         <input type="text" class="form-control" placeholder="Pathway name" id="pathway_search" >

@@ -11,7 +11,7 @@
         <button type="button" class="btn btn-primary"   onClick="location.href='/metabolism/pathways/'">Metabolism Pathways</button>
     </div> 
      </h1>
-    <a href="/mouse/pathways/"><< back to Mouse pathways</a>
+    <a href="{{ request.META.HTTP_REFERER }}"><< back to Mouse pathways</a>
         <div class="input-group col-lg-4 pull-right">
         <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
         <input type="text" class="form-control" placeholder="Gene name" id="pathway_search" >
