@@ -8,28 +8,9 @@ AMCF = {{pathway.amcf}}
     </ul>
     <div id="tabContent" class="tab-content">
 		<div id="fragment-1" class="tab-pane fade in active well">
-		Total = {{diff_genes|length}}
+		Total = {{diff_genes_count}}
 		<small>
-		<table class='table table-bordered table table-striped' style='width:500px;'>
-		<thead >
-		  <tr valign="top">
-		    <th>#</th>
-		    <th>SYMBOL</th>
-		    <th>CNR</th>
-		    <th>ARR</th>
-		  </tr>
-		</thead>
-		
-		    {% for gene_name, gene_vals in diff_genes.items %}
-		      <tr valign="top">
-		        <td width='40'>{{ forloop.counter }}</td>
-		        <td>{{ gene_name }}</td>
-		        {%for vals in gene_vals%} 
-		        <td>{{vals}}</td>
-		        {%endfor%}
-		      </tr>
-		    {% endfor %}
-		</table>
+		{{joined|safe}}
 		</small>
 		</div>
 		<div id="fragment-2" class="tab-pane fade well">
@@ -95,12 +76,13 @@ AMCF = {{pathway.amcf}}
     }, true);
     </script>
  <div style="">
+ <small>
  <table class="table table-bordered  table-striped">
  <tr><th>Node</th><th>NEL <span style='color:#fff'>= 1\n * &#931 CNR</span></th><th>Color</th></tr>
  {% for node in colorNodes %}
  <tr><td>{{node.name}}</th><td>{{node.nel}}</td><td style="color:{{node.color}}">{{node.color}}</td></tr>
  {% endfor %}
- </table>
+ </table></small>
 		</div>
 </div>
     

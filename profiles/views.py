@@ -26,7 +26,7 @@ from .models import Project, Document, ProcessDocument
 from .preprocess_views import OfCnrPreprocess, IlluminaPreprocess, OfCnrStatPreprocess, \
                               MedicPreprocess
 from core.stats import pseudo_ttest_1samp, fdr_corr
-from database.models import Pathway, Component, Gene
+from core.models import Pathway, Component, Gene
 from mirna.views import mirnaProjectDetail, mirnaDocumentDetail
 
 
@@ -309,48 +309,48 @@ class DocumentDetail(DetailView):
             if self.object.project.field == 'sci':
                 try:
                     df = read_excel(filename, sheetname="PMS")
-                    context['PAS'] = df.to_html()
+                    context['PAS'] = df.to_html(classes=['pas_table', 'table', 'table-striped', 'table-bordered'])
                 except:
                     try:
                         df = read_excel(filename, sheetname="PAS")
-                        context['PAS'] = df.to_html()
+                        context['PAS'] = df.to_html(classes=['pas_table', 'table', 'table-striped', 'table-bordered'])
                     except:
                         pass
                 try:
                     df = read_excel(filename, sheetname="PMS1")
-                    context['PAS1'] = df.to_html()
+                    context['PAS1'] = df.to_html(classes=['pas1_table', 'table', 'table-striped', 'table-bordered'])
                 except:
                     try:
                         df = read_excel(filename, sheetname="PAS1")
-                        context['PAS1'] = df.to_html()
+                        context['PAS1'] = df.to_html(classes=['pas1_table', 'table', 'table-striped', 'table-bordered'])
                     except:
                         pass
                 try:
                     df = read_excel(filename, sheetname="PMS2")
-                    context['PAS2'] = df.to_html()
+                    context['PAS2'] = df.to_html(classes=['pas2_table', 'table', 'table-striped', 'table-bordered'])
                 except:
                     try:
                         df = read_excel(filename, sheetname="PAS2")
-                        context['PAS2'] = df.to_html()
+                        context['PAS2'] = df.to_html(classes=['pas2_table', 'table', 'table-striped', 'table-bordered'])
                     except:
                         pass
                 try:
                     df = read_excel(filename, sheetname="DS1")
-                    context['DS1'] = df.to_html()
+                    context['DS1'] = df.to_html(classes=['ds1_table', 'table', 'table-striped', 'table-bordered'])
                 except:
                     try:
                         df = read_excel(filename, sheetname="DS1A")
-                        context['DS1'] = df.to_html()
+                        context['DS1'] = df.to_html(classes=['ds1_table', 'table', 'table-striped', 'table-bordered'])
                     except:
                         pass
                 try:
                     df = read_excel(filename, sheetname="DS2")
-                    context['DS2'] = df.to_html()
+                    context['DS2'] = df.to_html(classes=['ds2_table', 'table', 'table-striped', 'table-bordered'])
                 except:
                     pass
                 try:
                     df = read_excel(filename, sheetname="DS1B")
-                    context['DS1B'] = df.to_html()
+                    context['DS1B'] = df.to_html(classes=['ds1b_table', 'table', 'table-striped', 'table-bordered'])
                 except:
                     pass
             
@@ -399,122 +399,23 @@ class SampleDetail(DeleteView):
         sample = self.kwargs['sample_name']
         errors = []
         
+              
         output_filename = settings.MEDIA_ROOT+"/"+self.object.document.name
         process_filename = settings.MEDIA_ROOT+"/"+self.object.related_doc.input_doc.document.name
         calc_params = self.object.parameters
         
+        out_fname = output_filename.split('/')[-1] 
+        df_file_cnr = read_excel(settings.MEDIA_ROOT+"/users/"+self.object.project.owner.username+"/"+self.object.project.name+"/process/cnr_"+out_fname)
+        
+        df_cnr_raw = df_file_cnr[[sample, 'gMean_norm', 'std']]
+        df_cnr_differential = df_cnr_raw[df_cnr_raw[sample]!=1]
+        df_cnr_differential.columns = ['CNR', 'Mean norm', 'STD']
+        context['genes'] = df_cnr_differential.to_html(classes=['gene_table', 'table', 'table-striped', 'table-bordered']) 
+        #raise Exception('sample')
+        
         context['path_db'] = calc_params['db']
-        
-        def strip(text):
-            try:
-                return text.strip().upper()
-            except AttributeError:
-                return text
-        
-        try: # searching for differential genes once again. Don't forget to change in case of main calculation filter changes!
-            process_doc_df = read_csv(settings.MEDIA_ROOT+"/"+self.object.related_doc.input_doc.document.name,
-                                  sep='\t', index_col='SYMBOL',  converters = {'SYMBOL' : strip}).fillna(0)
-            
-            norms_doc_df = process_doc_df[[norm for norm in [col for col in process_doc_df.columns if 'Norm' in col]]]
-            cnr_mean_norm =  norms_doc_df.mean(axis=1)        
-            cnr_gMean_norm = norms_doc_df.apply(gmean, axis=1)
-            std=norms_doc_df.std(axis=1) # standard deviation
-            if calc_params['norm_algirothm']=='geometric': #geometric norms
-                divide = cnr_gMean_norm
-            else:             #arithmetic norms
-                divide = cnr_mean_norm  
-    
-            process_doc_df = process_doc_df.div(divide, axis='index')
-        
-            process_doc_df['Mean_norm'] = cnr_mean_norm
-            process_doc_df['gMean_norm'] = cnr_gMean_norm
-            process_doc_df['std'] = std
-            
-            if calc_params['use_ttest']:
-                def calculate_ttest(row):
-                    tumours = row[[t for t in row.index if 'Tumour' in t]]
-                    norms = row[[n for n in row.index if 'Norm' in n]]
-                       
-                    _, p_val = ttest_ind(tumours, norms)
-            
-                    return p_val
-                
-                log_process_doc_df = np.log(process_doc_df).fillna(0)
-                series_p_values = log_process_doc_df.apply(calculate_ttest, axis=1).fillna(0)
-                process_doc_df['p_value'] = series_p_values
-                if calc_params['use_fdr']:
-                    fdr_q_values = fdr_corr(np.array(series_p_values))
-                    fdr_df = DataFrame({'p' : series_p_values,
-                                        'q' : fdr_q_values
-                                       })
-                    process_doc_df['q_value'] = fdr_df['q']
-                    process_doc_df = process_doc_df[process_doc_df['q_value']<0.05]
-                else:
-                    process_doc_df = process_doc_df[process_doc_df['p_value']<0.05]
-            
-            df_genes = process_doc_df[[sample, 'Mean_norm', 'gMean_norm', 'std']]
-            
-            #raise Exception('yo')
-            
-            
-            diff_genes_for_sample = []
-            dict_diff_genes_for_sample = {}
-            for gene_name, row in df_genes.iterrows():
-                if not calc_params['use_sigma']:
-                    sigma_num = 0
-                else:
-                    sigma_num = calc_params['sigma_num']
-                if not calc_params['use_cnr']:
-                    cnr_up = cnr_low = 0
-                else:
-                    cnr_up = calc_params['cnr_up']
-                    cnr_low = calc_params['cnr_low']
-                        
-                CNR = row[sample]
-                if calc_params['norm_algirothm'] == 'arithmetic':
-                    mean = row['Mean_norm']
-                    column_name = 'Mean_norm'
-                    EXPRESSION_LEVEL = CNR*float(mean)
-                         
-                if calc_params['norm_algirothm'] == 'geometric':
-                    mean = row['gMean_norm']
-                    column_name = 'gMean_norm'
-                    EXPRESSION_LEVEL = CNR*float(mean)
-                        
-                std = row['std'] if float(row['std'])>0 else 0   
-                if (
-                    (
-                       (EXPRESSION_LEVEL >= (mean + sigma_num*std)) or 
-                       (EXPRESSION_LEVEL < (mean - sigma_num*std))
-                     ) and 
-                    (CNR > cnr_up or CNR < cnr_low) and 
-                    (CNR > 0)
-                   ):
-                        
-                    diff_genes_for_sample.append(gene_name) # store differential genes in a list
-                    dict_diff_genes_for_sample[gene_name] = CNR # dictionary gene_name: CNR for Show Details window
-            
-            dict_diff_genes = {'SYMBOL': diff_genes_for_sample}
-            
-            dif_genes_df = DataFrame(dict_diff_genes)
-            dif_genes_df = dif_genes_df.set_index('SYMBOL')
-            
-            joined_df = dif_genes_df.join(df_genes, how='inner')
-            
-            joined_df = joined_df[[sample, column_name, 'std']]
-            joined_df.columns =  ['CNR', 'Mean norm', 'STD']
-            
-            dict_genes = joined_df.to_dict(outtype="dict")
-            
-            output_genes = {}
-            
-            for gene in dict_genes['CNR']:
-                output_genes[gene] = [d[gene] for d in (dict_genes['CNR'], dict_genes['Mean norm'], dict_genes['STD'])] 
-            
-            context['json_diff_genes'] = json.dumps(dict_diff_genes_for_sample) 
-            context['genes'] = output_genes   
-        except:
-            errors.append("Error while determining differential genes!")
+        context['docpath'] = settings.MEDIA_ROOT+"/users/"+self.object.project.owner.username+"/"+self.object.project.name+"/process/cnr_"+out_fname
+        context['sample_name'] = sample
         
         try: # reading data from file
             df_file_pms = read_excel(output_filename, sheetname="PAS")
@@ -554,12 +455,13 @@ class SampleDetail(DeleteView):
             lPaths = []
             for pathname, pms_values in output_pms.iteritems():
                 try:
-                    objPath = Pathway.objects.get(name=pathname)
-                    objPath.pms = pms_values[0]
-                    objPath.pms1 = pms_values[1]
-                    lPaths.append(objPath)
+                    if pathname != 'Pathway':
+                        objPath = Pathway.objects.filter(name=pathname, organism=calc_params['organism'], database__in=calc_params['db'])[0]
+                        objPath.pms = pms_values[0]
+                        objPath.pms1 = pms_values[1]
+                        lPaths.append(objPath)
                 except:
-                    pass
+                    raise
             
             lUp = []
             lDown = []
@@ -685,31 +587,48 @@ class AjaxPathDetail(TemplateView):
         return super(AjaxPathDetail, self).dispatch(request, *args, **kwargs)
     
     def get_context_data(self, request, **kwargs):
-        context = super(AjaxPathDetail, self).get_context_data(**kwargs)
-        
-        #path_db = request.POST['path_db']
+        context = super(AjaxPathDetail, self).get_context_data(**kwargs)    
         
         pathway = Pathway.objects.get(pk = int(request.POST['pathway']))
-        dDifGenes = json.loads(request.POST['jsonGenes'])
+        
+        gene_objects = pathway.gene_set.all()
+        gene_name = []
+        gene_arr = []        
+        for gene in gene_objects:
+            gene_name.append(gene.name.strip().upper())
+            gene_arr.append(float(gene.arr))
+            
+        gene_data = {'SYMBOL': gene_name,
+                     'ARR': gene_arr}
+   
+            
+        gene_df = DataFrame(gene_data).set_index('SYMBOL')
+        
+        sample = request.POST['sample_name']
+        df_file_cnr = read_excel(request.POST['docpath'])
+        
+        df_cnr_raw = df_file_cnr[[sample, 'gMean_norm', 'std']]
+        df_cnr_differential = df_cnr_raw[df_cnr_raw[sample]!=1]
+        df_cnr_differential.columns = ['CNR', 'Mean norm', 'STD']
+        df_cnr_differential.index.name = 'SYMBOL'
+        
+        joined_df = gene_df.join(df_cnr_differential, how='inner') #intersect DataFrames to acquire only genes in current pathway
+        joined_df.reset_index(inplace=True)
+        joined_df.index += 1
+        context['joined'] = joined_df.to_html(classes=['table', 'table-bordered', 'table-striped'])
+        context['diff_genes_count'] = len(joined_df.index)
+        
         
         
         nComp = []
         dif_genes = {}
-        for gName, gCnr in dDifGenes.iteritems():
+        for index, row in joined_df.iterrows():                
             
-            try:
-                gene = Gene.objects.get(name = gName, pathway = pathway)
-                dif_genes[gName] = [gCnr, gene.arr]
-            except:
-                pass
-                
-            
-            loComp = Component.objects.filter(name = gName)
+            loComp = Component.objects.filter(name = row['SYMBOL'], node__in=pathway.node_set.all())
             
             for comp in loComp:
-                if comp.node in pathway.node_set.all():
-                    comp.cnr = gCnr
-                    nComp.append(comp)
+                comp.cnr = row['CNR']
+                nComp.append(comp)
                     
         lNodes = []
         
@@ -726,10 +645,7 @@ class AjaxPathDetail(TemplateView):
                         node.sumDiffComp += float(component.cnr)
             if node.numDiffComp >0 :
                 node.nel = node.sumDiffComp / node.numDiffComp
-            lNodes.append(node)
-        
-        
-               
+            lNodes.append(node)           
         
         finalNodes = []
         for nod in lNodes:
@@ -741,9 +657,7 @@ class AjaxPathDetail(TemplateView):
                 nod.strokeWidth = math.log(nod.nel, 2)
             finalNodes.append(nod)            
         
-        context['colorNodes'] = finalNodes   
-        
-              
+        context['colorNodes'] = finalNodes              
         
         dRelations = []
         for node in pathway.node_set.all():
@@ -756,10 +670,10 @@ class AjaxPathDetail(TemplateView):
                 dRelations.append({ inrel.fromnode.name : [inrel.tonode.name, relColor] })      
         context['dRelations'] = dRelations 
         
-        context['pathway'] = pathway
+        
         context['diff_genes'] = dif_genes
            
-        
+        context['pathway'] = pathway
         
         return context  
     

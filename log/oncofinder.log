@@ -7053,3 +7053,902 @@ Traceback (most recent call last):
   File "/usr/local/lib/python2.7/dist-packages/django/template/base.py", line 577, in __init__
     "from '%s'" % (token[upto:], token))
 TemplateSyntaxError: Could not parse the remainder: '='mouse'' from 'organism='mouse''
+2015-05-28 20:55:24,818 ERROR base 16466 -1366295744 Internal Server Error: /db/medic/breast-cancer/1/gse37946/10/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 87, in dispatch
+    return super(MedicTreatmentDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 97, in get_context_data
+    dialect = sniffer.sniff(open(file_probability, 'r').read(), delimiters='\t,;') # defining the separator of the csv file
+IOError: [Errno 2] No such file or directory: u'/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/oncoFinder2/media/medic/Breast cancer/GSE37946/GSE37946.1.paths_probs.txt'
+2015-06-02 08:55:24,150 ERROR base 4227 -1408242880 Internal Server Error: /db/medic/breast-cancer/1/gse37946/10/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 87, in dispatch
+    return super(MedicTreatmentDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 97, in get_context_data
+    dialect = sniffer.sniff(open(file_probability, 'r').read(), delimiters='\t,;') # defining the separator of the csv file
+IOError: [Errno 2] No such file or directory: u'/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/oncoFinder2/media/medic/Breast cancer/GSE37946/GSE37946.1.paths_probs.txt'
+2015-06-02 08:55:34,496 ERROR base 4227 -1399850176 Internal Server Error: /db/medic/breast-cancer/1/gse42822_tmb/13/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 87, in dispatch
+    return super(MedicTreatmentDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 97, in get_context_data
+    dialect = sniffer.sniff(open(file_probability, 'r').read(), delimiters='\t,;') # defining the separator of the csv file
+IOError: [Errno 2] No such file or directory: u'/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/oncoFinder2/media/medic/Breast cancer/GSE42822_TMB/GSE42822.1.paths_probs.txt'
+2015-06-02 08:55:37,638 ERROR base 4227 -1354138816 Internal Server Error: /db/medic/breast-cancer/1/test_gse34138_erp_prp/19/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 87, in dispatch
+    return super(MedicTreatmentDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 97, in get_context_data
+    dialect = sniffer.sniff(open(file_probability, 'r').read(), delimiters='\t,;') # defining the separator of the csv file
+IOError: [Errno 2] No such file or directory: u'/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/oncoFinder2/media/medic/Breast cancer/test_GSE34138_ERP_PRP/GSE34138.1.paths_probs.txt'
+2015-06-02 08:57:35,301 ERROR base 4227 -1364198592 Internal Server Error: /document/doc6013/Tumour_X5500024052861011409506.H02.CEL/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 393, in dispatch
+    return super(SampleDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 596, in get_context_data
+    thickness = 1*math.log(math.fabs(path.pms))
+ValueError: math domain error
+2015-06-02 09:00:18,807 ERROR base 15059 -1353753792 Internal Server Error: /document/doc6013/Tumour_X5500024052861011409506.H02.CEL/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 393, in dispatch
+    return super(SampleDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 626, in get_context_data
+    thickness = 1*math.log(math.fabs(path.pms))
+ValueError: math domain error
+2015-06-02 09:09:33,525 ERROR base 18667 -1354056896 Internal Server Error: /document/doc6013/Tumour_X5500024052861011409506.H02.CEL/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 393, in dispatch
+    return super(SampleDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 457, in get_context_data
+    raise Exception('yo')
+Exception: yo
+2015-06-02 09:09:35,448 ERROR base 18667 -1364198592 Internal Server Error: /document/doc6013/Tumour_X5500024052861011409506.H02.CEL/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 393, in dispatch
+    return super(SampleDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 457, in get_context_data
+    raise Exception('yo')
+Exception: yo
+2015-06-02 09:37:40,158 ERROR base 31398 -1354605760 Internal Server Error: /document/doc6013/Tumour_X5500024052861011409506.H02.CEL/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 393, in dispatch
+    return super(SampleDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 406, in get_context_data
+    raise Exception('sample')
+Exception: sample
+2015-06-02 09:40:08,201 ERROR base 32427 -1354605760 Internal Server Error: /document/doc6013/Tumour_X5500024052861011409506.H02.CEL/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 393, in dispatch
+    return super(SampleDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 408, in get_context_data
+    raise Exception('sample')
+Exception: sample
+2015-06-02 09:42:49,411 ERROR base 1215 -1354056896 Internal Server Error: /document/doc6013/Tumour_X5500024052861011409506.H02.CEL/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 393, in dispatch
+    return super(SampleDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 406, in get_context_data
+    df_cnr = read_excel(settings.MEDIA_ROOT+"/"+self.object.project.owner+"/"+self.object.project+"/process/cnr_"+self.object.document.get_filename)
+TypeError: cannot concatenate 'str' and 'User' objects
+2015-06-02 09:43:09,228 ERROR base 1449 -1354687680 Internal Server Error: /document/doc6013/Tumour_X5500024052861011409506.H02.CEL/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 393, in dispatch
+    return super(SampleDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 406, in get_context_data
+    df_cnr = read_excel(settings.MEDIA_ROOT+"/"+self.object.project.owner.username+"/"+self.object.project+"/process/cnr_"+self.object.document.get_filename)
+TypeError: coercing to Unicode: need string or buffer, Project found
+2015-06-02 09:43:27,515 ERROR base 1580 -1354302656 Internal Server Error: /document/doc6013/Tumour_X5500024052861011409506.H02.CEL/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 393, in dispatch
+    return super(SampleDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 406, in get_context_data
+    df_cnr = read_excel(settings.MEDIA_ROOT+"/"+self.object.project.owner.username+"/"+self.object.project.name+"/process/cnr_"+self.object.document.get_filename)
+AttributeError: 'FieldFile' object has no attribute 'get_filename'
+2015-06-02 09:44:03,496 ERROR base 1878 -1354519744 Internal Server Error: /document/doc6013/Tumour_X5500024052861011409506.H02.CEL/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 393, in dispatch
+    return super(SampleDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 406, in get_context_data
+    df_cnr = read_excel(settings.MEDIA_ROOT+"/"+self.object.project.owner.username+"/"+self.object.project.name+"/process/cnr_"+self.object.document.get_filename)
+AttributeError: 'FieldFile' object has no attribute 'get_filename'
+2015-06-02 09:46:22,484 ERROR base 2945 -1354056896 Internal Server Error: /document/doc6013/Tumour_X5500024052861011409506.H02.CEL/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 393, in dispatch
+    return super(SampleDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 407, in get_context_data
+    df_cnr = read_excel(settings.MEDIA_ROOT+"/"+self.object.project.owner.username+"/"+self.object.project.name+"/process/cnr_"+self.object.document.get_filename)
+AttributeError: 'FieldFile' object has no attribute 'get_filename'
+2015-06-02 09:46:42,183 ERROR base 3096 -1354056896 Internal Server Error: /document/doc6013/Tumour_X5500024052861011409506.H02.CEL/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 393, in dispatch
+    return super(SampleDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 407, in get_context_data
+    df_cnr = read_excel(settings.MEDIA_ROOT+"/"+self.object.project.owner.username+"/"+self.object.project.name+"/process/cnr_"+out_fname)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/io/excel.py", line 151, in read_excel
+    return ExcelFile(io, engine=engine).parse(sheetname=sheetname, **kwds)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/io/excel.py", line 188, in __init__
+    self.book = xlrd.open_workbook(io)
+  File "/usr/local/lib/python2.7/dist-packages/xlrd-0.9.2-py2.7.egg/xlrd/__init__.py", line 394, in open_workbook
+    f = open(filename, "rb")
+IOError: [Errno 2] No such file or directory: u'/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/oncoFinder2/media/admin/new-db/process/cnr_output_gcrma11.csv_6.xlsx'
+2015-06-02 09:47:29,441 ERROR base 3497 -1354405056 Internal Server Error: /document/doc6013/Tumour_X5500024052861011409506.H02.CEL/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 393, in dispatch
+    return super(SampleDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 409, in get_context_data
+    raise Exception('sample')
+Exception: sample
+2015-06-02 09:51:37,190 ERROR base 5223 -1354519744 Internal Server Error: /document/doc6013/Tumour_X5500024052861011409506.H02.CEL/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 393, in dispatch
+    return super(SampleDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 409, in get_context_data
+    df_cnr = df_file_cnr[sample, 'gMean_norm', 'std']
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 1787, in __getitem__
+    return self._getitem_column(key)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 1794, in _getitem_column
+    return self._get_item_cache(key)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/generic.py", line 1079, in _get_item_cache
+    values = self._data.get(item)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/internals.py", line 2843, in get
+    loc = self.items.get_loc(item)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/index.py", line 1437, in get_loc
+    return self._engine.get_loc(_values_from_object(key))
+  File "pandas/index.pyx", line 134, in pandas.index.IndexEngine.get_loc (pandas/index.c:3824)
+  File "pandas/index.pyx", line 154, in pandas.index.IndexEngine.get_loc (pandas/index.c:3704)
+  File "pandas/hashtable.pyx", line 697, in pandas.hashtable.PyObjectHashTable.get_item (pandas/hashtable.c:12349)
+  File "pandas/hashtable.pyx", line 705, in pandas.hashtable.PyObjectHashTable.get_item (pandas/hashtable.c:12300)
+KeyError: (u'Tumour_X5500024052861011409506.H02.CEL', 'gMean_norm', 'std')
+2015-06-02 09:52:03,454 ERROR base 5402 -1354056896 Internal Server Error: /document/doc6013/Tumour_X5500024052861011409506.H02.CEL/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 393, in dispatch
+    return super(SampleDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 411, in get_context_data
+    raise Exception('sample')
+Exception: sample
+2015-06-02 09:52:15,874 ERROR base 5490 -1354388672 Internal Server Error: /document/doc6013/Tumour_X5500024052861011409506.H02.CEL/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 393, in dispatch
+    return super(SampleDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 409, in get_context_data
+    df_cnr = df_file_cnr[sample, 'gMean_norm']
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 1787, in __getitem__
+    return self._getitem_column(key)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 1794, in _getitem_column
+    return self._get_item_cache(key)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/generic.py", line 1079, in _get_item_cache
+    values = self._data.get(item)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/internals.py", line 2843, in get
+    loc = self.items.get_loc(item)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/index.py", line 1437, in get_loc
+    return self._engine.get_loc(_values_from_object(key))
+  File "pandas/index.pyx", line 134, in pandas.index.IndexEngine.get_loc (pandas/index.c:3824)
+  File "pandas/index.pyx", line 154, in pandas.index.IndexEngine.get_loc (pandas/index.c:3704)
+  File "pandas/hashtable.pyx", line 697, in pandas.hashtable.PyObjectHashTable.get_item (pandas/hashtable.c:12349)
+  File "pandas/hashtable.pyx", line 705, in pandas.hashtable.PyObjectHashTable.get_item (pandas/hashtable.c:12300)
+KeyError: (u'Tumour_X5500024052861011409506.H02.CEL', 'gMean_norm')
+2015-06-02 09:52:32,543 ERROR base 5670 -1354056896 Internal Server Error: /document/doc6013/Tumour_X5500024052861011409506.H02.CEL/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 393, in dispatch
+    return super(SampleDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 411, in get_context_data
+    raise Exception('sample')
+Exception: sample
+2015-06-02 09:53:03,182 ERROR base 5864 -1354138816 Internal Server Error: /document/doc6013/Tumour_X5500024052861011409506.H02.CEL/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 393, in dispatch
+    return super(SampleDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 411, in get_context_data
+    raise Exception('sample')
+Exception: sample
+2015-06-02 09:54:37,875 ERROR base 6585 -1354405056 Internal Server Error: /document/doc6013/Tumour_X5500024052861011409506.H02.CEL/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 393, in dispatch
+    return super(SampleDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 410, in get_context_data
+    df_cnr_differential = df_cnr_raw[(sample<1)]
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 1787, in __getitem__
+    return self._getitem_column(key)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 1794, in _getitem_column
+    return self._get_item_cache(key)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/generic.py", line 1079, in _get_item_cache
+    values = self._data.get(item)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/internals.py", line 2843, in get
+    loc = self.items.get_loc(item)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/index.py", line 1437, in get_loc
+    return self._engine.get_loc(_values_from_object(key))
+  File "pandas/index.pyx", line 134, in pandas.index.IndexEngine.get_loc (pandas/index.c:3824)
+  File "pandas/index.pyx", line 154, in pandas.index.IndexEngine.get_loc (pandas/index.c:3704)
+  File "pandas/hashtable.pyx", line 697, in pandas.hashtable.PyObjectHashTable.get_item (pandas/hashtable.c:12349)
+  File "pandas/hashtable.pyx", line 705, in pandas.hashtable.PyObjectHashTable.get_item (pandas/hashtable.c:12300)
+KeyError: False
+2015-06-02 09:55:08,269 ERROR base 6793 -1354056896 Internal Server Error: /document/doc6013/Tumour_X5500024052861011409506.H02.CEL/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 393, in dispatch
+    return super(SampleDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 410, in get_context_data
+    df_cnr_differential = df_cnr_raw[sample<1]
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 1787, in __getitem__
+    return self._getitem_column(key)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 1794, in _getitem_column
+    return self._get_item_cache(key)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/generic.py", line 1079, in _get_item_cache
+    values = self._data.get(item)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/internals.py", line 2843, in get
+    loc = self.items.get_loc(item)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/index.py", line 1437, in get_loc
+    return self._engine.get_loc(_values_from_object(key))
+  File "pandas/index.pyx", line 134, in pandas.index.IndexEngine.get_loc (pandas/index.c:3824)
+  File "pandas/index.pyx", line 154, in pandas.index.IndexEngine.get_loc (pandas/index.c:3704)
+  File "pandas/hashtable.pyx", line 697, in pandas.hashtable.PyObjectHashTable.get_item (pandas/hashtable.c:12349)
+  File "pandas/hashtable.pyx", line 705, in pandas.hashtable.PyObjectHashTable.get_item (pandas/hashtable.c:12300)
+KeyError: False
+2015-06-02 09:56:39,603 ERROR base 7427 -1354056896 Internal Server Error: /document/doc6013/Tumour_X5500024052861011409506.H02.CEL/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 393, in dispatch
+    return super(SampleDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 412, in get_context_data
+    raise Exception('sample')
+Exception: sample
+2015-06-02 10:01:56,956 ERROR base 9499 -1354687680 Internal Server Error: /document/doc6013/Tumour_X5500024052861011409506.H02.CEL/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 393, in dispatch
+    return super(SampleDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 413, in get_context_data
+    #raise Exception('sample')
+Exception: sample
+2015-06-02 10:02:09,316 ERROR base 9499 -1399862464 Internal Server Error: /document/doc6013/Tumour_X5500024052861011409506.H02.CEL/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 393, in dispatch
+    return super(SampleDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 413, in get_context_data
+    #raise Exception('sample')
+Exception: sample
+2015-06-02 10:23:49,143 ERROR base 18875 -1354302656 Internal Server Error: /document/doc6013/Tumour_X5500024052861011409506.H02.CEL/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 393, in dispatch
+    return super(SampleDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 413, in get_context_data
+    raise Exception('sample')
+Exception: sample
+2015-06-02 10:38:07,558 ERROR base 24680 -1354302656 Internal Server Error: /document/doc6013/Tumour_X5500024052861011409506.H02.CEL/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 393, in dispatch
+    return super(SampleDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 405, in get_context_data
+    context['docID'] = self.object.document.id
+AttributeError: 'FieldFile' object has no attribute 'id'
+2015-06-02 10:41:35,026 ERROR base 26322 -1354056896 Internal Server Error: /document/doc6013/Tumour_X5500024052861011409506.H02.CEL/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 393, in dispatch
+    return super(SampleDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 414, in get_context_data
+    raise Exception('sample')
+Exception: sample
+2015-06-02 10:44:00,725 ERROR base 27391 -1353667776 Internal Server Error: /document/doc6013/Tumour_X5500024052861011409506.H02.CEL/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 393, in dispatch
+    return super(SampleDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 417, in get_context_data
+    raise Exception('sample')
+Exception: sample
+2015-06-02 10:45:32,247 ERROR base 28232 -1354056896 Internal Server Error: /document/doc6013/Tumour_X5500024052861011409506.H02.CEL/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 393, in dispatch
+    return super(SampleDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 417, in get_context_data
+    raise Exception('sample')
+Exception: sample
+2015-06-02 10:48:50,958 ERROR base 29680 -1353753792 Internal Server Error: /document/doc6013/Tumour_X5500024052861011409506.H02.CEL/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 393, in dispatch
+    return super(SampleDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 459, in get_context_data
+    objPath = Pathway.objects.get(name=pathname, organism=calc_params['organism'], database__in=calc_params['database'])
+KeyError: 'database'
+2015-06-02 10:49:24,631 ERROR base 29893 -1353753792 Internal Server Error: /document/doc6013/Tumour_X5500024052861011409506.H02.CEL/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 393, in dispatch
+    return super(SampleDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 459, in get_context_data
+    objPath = Pathway.objects.get(name=pathname, organism=calc_params['organism'], database__in=calc_params['database'])
+KeyError: 'database'
+2015-06-02 10:50:34,812 ERROR base 30366 -1354491072 Internal Server Error: /document/doc6013/Tumour_X5500024052861011409506.H02.CEL/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 393, in dispatch
+    return super(SampleDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 459, in get_context_data
+    objPath = Pathway.objects.get(name=pathname, organism=calc_params['organism'], database__in=calc_params['db'])
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/manager.py", line 151, in get
+    return self.get_queryset().get(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 310, in get
+    self.model._meta.object_name)
+DoesNotExist: Pathway matching query does not exist.
+2015-06-02 10:57:02,142 ERROR base 30992 -1364198592 Internal Server Error: /document/doc6017/Tumour_Drebezova/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 393, in dispatch
+    return super(SampleDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 413, in get_context_data
+    df_cnr_raw = df_file_cnr[[sample, 'gMean_norm', 'std']]
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 1781, in __getitem__
+    return self._getitem_array(key)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 1825, in _getitem_array
+    indexer = self.ix._convert_to_indexer(key, axis=1)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/indexing.py", line 1140, in _convert_to_indexer
+    raise KeyError('%s not in index' % objarr[mask])
+KeyError: "['gMean_norm' 'std'] not in index"
+2015-06-02 11:35:28,194 ERROR base 16642 -1354687680 Internal Server Error: /document/ajaxpathdetail/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 587, in dispatch
+    return super(AjaxPathDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 581, in post
+    return self.render_to_response(self.get_context_data( request, **kwargs), **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 634, in get_context_data
+    loComp = Component.objects.filter(name = gName)
+NameError: global name 'gName' is not defined
+2015-06-02 12:15:05,516 ERROR base 32563 -1354056896 Internal Server Error: /document/doc6019/Tumour_Drebezova/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 393, in dispatch
+    return super(SampleDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 459, in get_context_data
+    objPath = Pathway.objects.get(name=pathname, organism=calc_params['organism'], database__in=calc_params['db'])
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/manager.py", line 151, in get
+    return self.get_queryset().get(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 313, in get
+    (self.model._meta.object_name, num))
+MultipleObjectsReturned: get() returned more than one Pathway -- it returned 2!
+2015-06-02 12:16:17,953 ERROR base 1236 -1354302656 Internal Server Error: /document/doc6019/Tumour_Drebezova/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 393, in dispatch
+    return super(SampleDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 459, in get_context_data
+    objPath = Pathway.objects.get(name=pathname, organism=calc_params['organism'], database__in=calc_params['db'])[0]
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/manager.py", line 151, in get
+    return self.get_queryset().get(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 313, in get
+    (self.model._meta.object_name, num))
+MultipleObjectsReturned: get() returned more than one Pathway -- it returned 2!

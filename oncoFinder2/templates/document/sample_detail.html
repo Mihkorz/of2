@@ -40,26 +40,9 @@
 	  <!-- DIFFERENRIAL GENES TAB-->
 	  <div class="tab-pane fade in  active " id="genes" style="padding: 10px 0 0 0;">
 	  <small>
-	  <table class="table table-striped table-bordered" cellspacing="0" width="100%" id="genes_table">
-	    <thead>
-	      <tr>
-	        <th>SYMBOL</th>
-	        <th>CNR</th>
-	        <th>Mean norm</th>
-	        <th>STD</th>
-	     </tr>
-	    </thead>
-	    <tbody>
-	    {% for genename, gene_values in genes.items%}
-	    <tr>
-	    <td>{{genename}}</td>
-	    {%for value in gene_values%}
-	    <td>{{value}}</td>
-	    {%endfor%}
-	    </tr>
-	    {% endfor %}
-	    </tbody>
-	    </table>
+	  
+	  {{genes|safe}}
+	  
 	  </small>
 	  </div>
 	  
@@ -359,7 +342,7 @@ $(function(){
 <script>
 
 $(document).ready( function () {
-	$('#genes_table').DataTable({ "lengthMenu": [[ 50, 100, -1], [50, 100, "All"]]});
+	$('.gene_table').DataTable({ "lengthMenu": [[ 50, 100, -1], [50, 100, "All"]]});
     $('#pms_table').DataTable({ "lengthMenu": [[ 50, 100, -1], [50, 100, "All"]]});
     $('#ds_table').DataTable({ "lengthMenu": [[ 50, 100, -1], [50, 100, "All"]]});
     
@@ -376,8 +359,8 @@ function fetchPathwayDetails(pathId, path_name)
 	$.post("/document/ajaxpathdetail/",
 			{
 		     pathway: pathId,
-		     path_db: '{{path_db}}',
-		     jsonGenes: '{{json_diff_genes|safe}}'		
+		     docpath: '{{docpath}}',
+		     sample_name: '{{sample_name}}'		
 			},
 			function(data){
 				$(".modal-body").html(data);

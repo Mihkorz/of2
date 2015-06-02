@@ -32,7 +32,7 @@
       <span class="glyphicon glyphicon-download"></span> &nbsp;<b>Download PAS-DS file</b>
      </a>
      <a class="btn btn-default btn-sm pull-right" href="{{MEDIA_URL}}users/{{document.project.owner}}/{{document.project}}/process/cnr_row_{{document.get_filename}}">
-      <span class="glyphicon glyphicon-download-alt"></span> &nbsp;<b>Download row CNR file</b>
+      <span class="glyphicon glyphicon-download-alt"></span> &nbsp;<b>Download raw CNR file</b>
      </a>
      
      <a class="btn btn-default btn-sm pull-right" href="{{MEDIA_URL}}users/{{document.project.owner}}/{{document.project}}/process/cnr_{{document.get_filename}}">
@@ -80,7 +80,7 @@
 	  <li><a href="#ds2" data-toggle="tab">DS2</a></li>
 	  {%endif%}
 	</ul>
-	
+	<small>
 	<div class="tab-content">
 	{% if PAS %}
 	  <div class="tab-pane fade " id="pas">
@@ -96,14 +96,16 @@
 	  {% endif %}
 	  {% if PAS1 %}
 	  <div class="tab-pane fade in active" id="pas1">
-	  
+	     
 	     <div class="wrapper1">
 	        <div class="upper_scroll"></div>
-	       </div>
+	     </div>
 	       <div class="wrapper2">
+	          
 	          {{PAS1|safe}}
+	          
 	       </div>
-	  
+	     
 	  </div>
 	  {% endif %}
 	  {% if PAS2 %}
@@ -155,6 +157,7 @@
 	  </div>
 	  {%endif%}
 	</div>
+	 </small>
 </div>
 <div id="all_tumours" class="out_doc_container" >
 
@@ -199,9 +202,7 @@ $(function(){
 	
 });
 
-$(function(){
-	$("table.dataframe").attr("border", "0").addClass("table table-hover of-table");
-});
+
 $(function(){
 	$(".upper_scroll").width($("#pas1 > div.wrapper2 > table").width());
 	  
@@ -213,6 +214,16 @@ $(function(){
 	    $(".wrapper1").scrollLeft($(this).scrollLeft());
 	  });
 	});
+
+$(document).ready( function () {
+	$('.pas_table').DataTable({ "lengthMenu": [[ 50, 100, -1], [50, 100, "All"]]});
+	$('.pas1_table').DataTable({ "lengthMenu": [[ 50, 100, -1], [50, 100, "All"]]});
+	$('.pas2_table').DataTable({ "lengthMenu": [[ 50, 100, -1], [50, 100, "All"]]});
+	
+	$('.ds1_table').DataTable({ "lengthMenu": [[ 50, 100, -1], [50, 100, "All"]]});
+	$('.ds2_table').DataTable({ "lengthMenu": [[ 50, 100, -1], [50, 100, "All"]]});
+	$('.ds1b_table').DataTable({ "lengthMenu": [[ 50, 100, -1], [50, 100, "All"]]});
+});
 
 </script>
 {% endblock %}
