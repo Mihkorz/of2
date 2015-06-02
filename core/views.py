@@ -245,7 +245,7 @@ class CoreSetCalculationParameters(FormView):
                 process_doc_df = process_doc_df[process_doc_df['p_value']<pvalue_threshold]
         
         
-        if use_ttest_1sam:
+        if use_ttest_1sam or use_cnr or use_sigma:
             norms_df = process_doc_df[[norm for norm in [col for col in process_doc_df.columns if 'Norm' in col]]]
             log_norms_df = np.log(norms_df)#use this for t-test, assuming log(norm) is distributed normally
             
@@ -278,7 +278,7 @@ class CoreSetCalculationParameters(FormView):
                         col_CNR[((col_CNR<=cnr_up) & (col_CNR>=cnr_low))] = 1 
                         
                     if use_sigma: # Sigma FILTER  !!! deprecated !!!                         
-                        col_CNR[((col<(s_mean_norm+sigma_num*std)) |
+                        col_CNR[((col<(s_mean_norm+sigma_num*std)) &
                                        (col>=(s_mean_norm-sigma_num*std)))] = 1 
                     
                     return col_CNR
@@ -286,10 +286,18 @@ class CoreSetCalculationParameters(FormView):
                 else:
                     return col # in case it's not Tumour or Norm column
             
-            prosecc_for_cnr = process_doc_df.copy()
+            prosecc_for_cnr = process_doc_df.copy()           
+            
             cnr_df_diff_genes = prosecc_for_cnr.apply(cnr_diff_genes, axis=0)
+            oldstd = cnr_doc_df['std']
+            old_meanNorm = cnr_doc_df['gMean_norm']
             cnr_doc_df = cnr_df_diff_genes.join(df_for_pq_val)
+            cnr_doc_df['std'] = oldstd
+            cnr_doc_df['gMean_norm'] = old_meanNorm
+            #raise Exception('test cnr')
             cnr_doc_df = cnr_doc_df.sort_index(axis=1)
+            
+            
         
         
         
@@ -614,21 +622,21 @@ class CoreSetCalculationParameters(FormView):
         """ Saving results to Excel file and to database """
         path = os.path.join('users', str(input_document.project.owner),
                                             str(input_document.project),'output')
-        file_name = 'output_'+str(input_document.get_filename()+'.xlsx')
+        file_name = 'output_'+str(input_document.get_filename()+'.xls')
         
         
         output_file = default_storage.save(settings.MEDIA_ROOT+"/"+path+"/"+file_name, ContentFile(''))
         
-        output_pas_df.sort('Database', inplace=True)
-        output_pas1_df.sort('Database', inplace=True)
-        output_pas2_df.sort('Database', inplace=True)
               
         with ExcelWriter(output_file, index=False) as writer:
             if calculate_pas:
+                output_pas_df.sort('Database', inplace=True)
                 output_pas_df.to_excel(writer,'PAS')
-            if calculate_pas1:     
+            if calculate_pas1:
+                output_pas1_df.sort('Database', inplace=True)     
                 output_pas1_df.to_excel(writer,'PAS1')
-            if calculate_pas2:     
+            if calculate_pas2:
+                output_pas2_df.sort('Database', inplace=True)     
                 output_pas2_df.to_excel(writer,'PAS2')
             if calculate_ds1:
                 output_ds1_df.to_excel(writer, 'DS1A')

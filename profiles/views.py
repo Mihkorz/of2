@@ -424,6 +424,7 @@ class SampleDetail(DeleteView):
             
         except:
             errors.append("Error reading PAS from File!")
+            raise
         
         try:
             df_file_ds1 = read_excel(output_filename, sheetname="DS1")
