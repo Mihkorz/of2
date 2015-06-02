@@ -5,6 +5,7 @@ import csv
 import json
 import math
 import numpy as np
+import networkx as nx
 from pandas import read_csv, read_excel, DataFrame
 from scipy.stats.mstats import gmean
 from scipy.stats import ttest_1samp, ttest_ind, ranksums
@@ -573,6 +574,63 @@ class SampleDetail(DeleteView):
         context['sample_name'] = self.kwargs['sample_name']
         
         return context
+
+import matplotlib.pyplot as plt
+import matplotlib.colors as colors
+import matplotlib.cm as cmx
+import matplotlib as mpl
+import struct
+
+def shiftedColorMap(cmap, start=0, midpoint=0, stop=1.0, name='shiftedcmap'):
+    '''
+    Function to offset the "center" of a colormap. Useful for
+    data with a negative min and positive max and you want the
+    middle of the colormap's dynamic range to be at zero
+
+    Input
+    -----
+      cmap : The matplotlib colormap to be altered
+      start : Offset from lowest point in the colormap's range.
+          Defaults to 0.0 (no lower ofset). Should be between
+          0.0 and `midpoint`.
+      midpoint : The new center of the colormap. Defaults to 
+          0.5 (no shift). Should be between 0.0 and 1.0. In
+          general, this should be  1 - vmax/(vmax + abs(vmin))
+          For example if your data range from -15.0 to +5.0 and
+          you want the center of the colormap at 0.0, `midpoint`
+          should be set to  1 - 5/(5 + 15)) or 0.75
+      stop : Offset from highets point in the colormap's range.
+          Defaults to 1.0 (no upper ofset). Should be between
+          `midpoint` and 1.0.
+    '''
+    cdict = {
+        'red': [],
+        'green': [],
+        'blue': [],
+        'alpha': []
+    }
+
+    # regular index to compute the colors
+    reg_index = np.linspace(start, stop, 257)
+
+    # shifted index to match the data
+    shift_index = np.hstack([
+        np.linspace(0.0, midpoint, 128, endpoint=False), 
+        np.linspace(midpoint, 1.0, 129, endpoint=True)
+    ])
+
+    for ri, si in zip(reg_index, shift_index):
+        r, g, b, a = cmap(ri)
+
+        cdict['red'].append((si, r, r))
+        cdict['green'].append((si, g, g))
+        cdict['blue'].append((si, b, b))
+        cdict['alpha'].append((si, a, a))
+
+    newcmap = mpl.colors.LinearSegmentedColormap(name, cdict)
+    plt.register_cmap(cmap=newcmap)
+
+    return newcmap
     
 class AjaxPathDetail(TemplateView):
     template_name = 'document/ajax_pathway_detail.html'
@@ -621,8 +679,10 @@ class AjaxPathDetail(TemplateView):
         
         
         nComp = []
-        dif_genes = {}
-        for index, row in joined_df.iterrows():                
+        
+        G=nx.DiGraph()
+        
+        for _, row in joined_df.iterrows():                
             
             loComp = Component.objects.filter(name = row['SYMBOL'], node__in=pathway.node_set.all())
             
@@ -631,6 +691,8 @@ class AjaxPathDetail(TemplateView):
                 nComp.append(comp)
                     
         lNodes = []
+        lNEL = []
+        
         
         for node in pathway.node_set.all():
             node.nel = 0.0
@@ -645,7 +707,27 @@ class AjaxPathDetail(TemplateView):
                         node.sumDiffComp += float(component.cnr)
             if node.numDiffComp >0 :
                 node.nel = node.sumDiffComp / node.numDiffComp
-            lNodes.append(node)           
+                lNEL.append(node.sumDiffComp / node.numDiffComp)
+            lNodes.append(node)
+                   
+        
+        #choosing colormap for static image
+        lNEL = np.log(lNEL)
+        mmin = np.min(lNEL)
+        mmax = np.max(lNEL)
+        mid = 1 - mmax/(mmax + abs(mmin))
+        
+        if mmax<0 and mmin<0:                    
+            shifted_cmap = plt.get_cmap('Reds_r')
+            mmax = 0
+        if  mmax>0 and mmin>0:
+            shifted_cmap = plt.get_cmap('Greens')
+            mmin = 0
+        else:  
+            cmap = plt.get_cmap('PiYG')
+            shifted_cmap = shiftedColorMap(cmap, start=0, midpoint=mid, stop=1, name='shrunk')
+        cNormp  = colors.Normalize(vmin=mmin, vmax=mmax)
+        scalarMap = cmx.ScalarMappable(norm=cNormp, cmap=shifted_cmap)
         
         finalNodes = []
         for nod in lNodes:
@@ -655,7 +737,14 @@ class AjaxPathDetail(TemplateView):
             if nod.nel <= 1 and nod.nel > 0:
                 nod.color = "red"
                 nod.strokeWidth = math.log(nod.nel, 2)
-            finalNodes.append(nod)            
+            finalNodes.append(nod)
+            
+            if nod.nel!=0:
+                ffil = "#"+struct.pack('BBB',*scalarMap.to_rgba(np.log(nod.nel), bytes=True)[:3]).encode('hex').upper()
+            else:
+                ffil = "grey"
+            G.add_node(nod.name, color='black',style='filled',
+                               fillcolor=ffil)            
         
         context['colorNodes'] = finalNodes              
         
@@ -667,13 +756,18 @@ class AjaxPathDetail(TemplateView):
                     relColor = 'green'
                 if inrel.reltype == '0':
                     relColor = 'red'
-                dRelations.append({ inrel.fromnode.name : [inrel.tonode.name, relColor] })      
-        context['dRelations'] = dRelations 
+                dRelations.append({ inrel.fromnode.name : [inrel.tonode.name, relColor] })
+                G.add_edge(inrel.fromnode.name.encode('ascii','ignore'), inrel.tonode.name.encode('ascii','ignore'), color=relColor)      
         
+        # DRAW STATIC IMAGE
+        A=nx.to_agraph(G)
+        A.layout(prog='dot')
+        A.draw(settings.MEDIA_ROOT+"/pathway.svg")
         
-        context['diff_genes'] = dif_genes
-           
         context['pathway'] = pathway
+        context['dRelations'] = dRelations
+        import random 
+        context['rand'] = random.random() 
         
         return context  
     

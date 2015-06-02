@@ -7952,3 +7952,153 @@ Traceback (most recent call last):
   File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 313, in get
     (self.model._meta.object_name, num))
 MultipleObjectsReturned: get() returned more than one Pathway -- it returned 2!
+2015-06-02 14:48:00,352 ERROR base 30308 -1356154048 Internal Server Error: /document/ajaxpathdetail/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 645, in dispatch
+    return super(AjaxPathDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 639, in post
+    return self.render_to_response(self.get_context_data( request, **kwargs), **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 717, in get_context_data
+    shifted_cmap = shiftedColorMap(cmap, start=0.15, midpoint=mid, stop=0.85, name='shrunk')
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 623, in shiftedColorMap
+    r, g, b, a = cmap(ri)
+TypeError: 'NoneType' object is not callable
+2015-06-02 14:48:30,228 ERROR base 30477 -1356702912 Internal Server Error: /document/ajaxpathdetail/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 645, in dispatch
+    return super(AjaxPathDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 639, in post
+    return self.render_to_response(self.get_context_data( request, **kwargs), **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 717, in get_context_data
+    shifted_cmap = shiftedColorMap(cmap, start=0.15, midpoint=mid, stop=0.85, name='shrunk')
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 623, in shiftedColorMap
+    r, g, b, a = cmap(ri)
+TypeError: 'NoneType' object is not callable
+2015-06-02 14:48:48,698 ERROR base 30477 -1382024384 Internal Server Error: /document/ajaxpathdetail/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 645, in dispatch
+    return super(AjaxPathDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 639, in post
+    return self.render_to_response(self.get_context_data( request, **kwargs), **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 717, in get_context_data
+    shifted_cmap = shiftedColorMap(cmap, start=0.15, midpoint=mid, stop=0.85, name='shrunk')
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 623, in shiftedColorMap
+    r, g, b, a = cmap(ri)
+TypeError: 'NoneType' object is not callable
+2015-06-02 15:04:53,280 ERROR base 5182 -1356899520 Internal Server Error: /document/ajaxpathdetail/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 645, in dispatch
+    return super(AjaxPathDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 639, in post
+    return self.render_to_response(self.get_context_data( request, **kwargs), **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 720, in get_context_data
+    shifted_cmap = shiftedColorMap(cmap, start=0.15, midpoint=mid, stop=0.85, name='shrunk')
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 623, in shiftedColorMap
+    r, g, b, a = cmap(ri)
+TypeError: 'NoneType' object is not callable
+2015-06-02 15:14:11,809 ERROR base 8811 -1356702912 Internal Server Error: /document/ajaxpathdetail/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 645, in dispatch
+    return super(AjaxPathDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 639, in post
+    return self.render_to_response(self.get_context_data( request, **kwargs), **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 743, in get_context_data
+    ffil = "#"+struct.pack('BBB',*scalarMap.to_rgba(np.log(nod.nel), bytes=True)[:3]).encode('hex').upper()
+  File "/usr/lib/pymodules/python2.7/matplotlib/cm.py", line 214, in to_rgba
+    x = self.cmap(x, alpha=alpha, bytes=bytes)
+  File "/usr/lib/pymodules/python2.7/matplotlib/colors.py", line 505, in __call__
+    if not self._isinit: self._init()
+  File "/usr/lib/pymodules/python2.7/matplotlib/colors.py", line 677, in _init
+    self._segmentdata['red'], self._gamma)
+  File "/usr/lib/pymodules/python2.7/matplotlib/colors.py", line 447, in makeMappingArray
+    "data mapping points must have x in increasing order")
+ValueError: data mapping points must have x in increasing order
+2015-06-02 15:15:28,128 ERROR base 8811 -1356702912 Internal Server Error: /document/ajaxpathdetail/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 645, in dispatch
+    return super(AjaxPathDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 639, in post
+    return self.render_to_response(self.get_context_data( request, **kwargs), **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 743, in get_context_data
+    ffil = "#"+struct.pack('BBB',*scalarMap.to_rgba(np.log(nod.nel), bytes=True)[:3]).encode('hex').upper()
+  File "/usr/lib/pymodules/python2.7/matplotlib/cm.py", line 214, in to_rgba
+    x = self.cmap(x, alpha=alpha, bytes=bytes)
+  File "/usr/lib/pymodules/python2.7/matplotlib/colors.py", line 505, in __call__
+    if not self._isinit: self._init()
+  File "/usr/lib/pymodules/python2.7/matplotlib/colors.py", line 677, in _init
+    self._segmentdata['red'], self._gamma)
+  File "/usr/lib/pymodules/python2.7/matplotlib/colors.py", line 444, in makeMappingArray
+    "data mapping points must start with x=0. and end with x=1")
+ValueError: data mapping points must start with x=0. and end with x=1
