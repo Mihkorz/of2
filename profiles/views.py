@@ -711,24 +711,24 @@ class AjaxPathDetail(TemplateView):
                 lNEL.append(node.sumDiffComp / node.numDiffComp)
             lNodes.append(node)
                    
+        if lNEL: #check if list is not empty
+            #choosing colormap for static image
+            lNEL = np.log(lNEL)
+            mmin = np.min(lNEL)
+            mmax = np.max(lNEL)
+            mid = 1 - mmax/(mmax + abs(mmin))
         
-        #choosing colormap for static image
-        lNEL = np.log(lNEL)
-        mmin = np.min(lNEL)
-        mmax = np.max(lNEL)
-        mid = 1 - mmax/(mmax + abs(mmin))
-        
-        if mmax<0 and mmin<0:                    
-            shifted_cmap = plt.get_cmap('Reds_r')
-            mmax = 0
-        if  mmax>0 and mmin>0:
-            shifted_cmap = plt.get_cmap('Greens')
-            mmin = 0
-        else:  
-            cmap = plt.get_cmap('PiYG')
-            shifted_cmap = shiftedColorMap(cmap, start=0, midpoint=mid, stop=1, name='shrunk')
-        cNormp  = colors.Normalize(vmin=mmin, vmax=mmax)
-        scalarMap = cmx.ScalarMappable(norm=cNormp, cmap=shifted_cmap)
+            if mmax<0 and mmin<0:                    
+                shifted_cmap = plt.get_cmap('Reds_r')
+                mmax = 0
+            if  mmax>0 and mmin>0:
+                shifted_cmap = plt.get_cmap('Greens')
+                mmin = 0
+            else:  
+                cmap = plt.get_cmap('PiYG')
+                shifted_cmap = shiftedColorMap(cmap, start=0, midpoint=mid, stop=1, name='shrunk')
+            cNormp  = colors.Normalize(vmin=mmin, vmax=mmax)
+            scalarMap = cmx.ScalarMappable(norm=cNormp, cmap=shifted_cmap)
         
         finalNodes = []
         for nod in lNodes:
