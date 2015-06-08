@@ -508,7 +508,7 @@ class CoreSetCalculationParameters(FormView):
                 col_p_val = [col for col in output_pas1_df.columns if '_p-value' in col]
                 for col in col_p_val:
                     q_val_column_name = col.replace("_p-value", "_q-value");
-                    output_pas1_df[col].fillna(0, inplace=True)
+                    output_pas1_df[col].fillna(1, inplace=True)
                     output_pas1_df[q_val_column_name] = fdr_corr(np.array(output_pas1_df[col]))
                 
             
