@@ -18,23 +18,23 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse 
 from django.conf import settings
 
-from .forms import XpnParametersForm
+from .forms import HarmonyParametersForm
 
 
-class XpnForm(FormView):
+class HarmonyForm(FormView):
     
-    form_class = XpnParametersForm
+    form_class = HarmonyParametersForm
     success_url = '/thanks/'
     
-    template_name = 'core/xpnform.html'
+    template_name = 'core/harmonyform.html'
     
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        return super(XpnForm, self).dispatch(request, *args, **kwargs)
+        return super(HarmonyForm, self).dispatch(request, *args, **kwargs)
         
     
     def get_context_data(self, **kwargs):        
-        context = super(XpnForm, self).get_context_data(**kwargs)
+        context = super(HarmonyForm, self).get_context_data(**kwargs)
         
         context['test'] = 'test'
         return context
@@ -139,16 +139,16 @@ class XpnForm(FormView):
             return self.render_to_response(self.get_context_data(form=form))
         
         
-class XpnDone(TemplateView):
-    template_name = 'core/xpndone.html'
+class HarmonyDone(TemplateView):
+    template_name = 'core/harmonydone.html'
     
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        return super(XpnDone, self).dispatch(request, *args, **kwargs)
+        return super(HarmonyDone, self).dispatch(request, *args, **kwargs)
         
     
     def get_context_data(self, **kwargs):        
-        context = super(XpnDone, self).get_context_data(**kwargs)
+        context = super(HarmonyDone, self).get_context_data(**kwargs)
         output_file = self.args[0]
         context['output_file'] = output_file
         return context
@@ -156,17 +156,17 @@ class XpnDone(TemplateView):
 class PrevFile:
     pass
 
-class XpnPrevFiles(TemplateView):
-    template_name = 'core/xpnprevfiles.html'
+class HarmonyPrevFiles(TemplateView):
+    template_name = 'core/harmonyprevfiles.html'
     
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        return super(XpnPrevFiles, self).dispatch(request, *args, **kwargs)
+        return super(HarmonyPrevFiles, self).dispatch(request, *args, **kwargs)
         
     
     def get_context_data(self, **kwargs):
                 
-        context = super(XpnPrevFiles, self).get_context_data(**kwargs)
+        context = super(HarmonyPrevFiles, self).get_context_data(**kwargs)
         path = settings.MEDIA_ROOT+"/XPN/"
         dirs = os.listdir(path)
         lFiles = []

@@ -496,7 +496,7 @@ class CoreSetCalculationParameters(FormView):
             pas2_list.append(pas2_dict)        
         
         if calculate_pas:
-            output_pas_df = DataFrame(pas_list)
+            output_pas_df = DataFrame(pas_list).fillna(0)
             output_pas_df = output_pas_df.set_index('Pathway')
         if calculate_pas1:
             output_pas1_df = DataFrame(pas1_list)

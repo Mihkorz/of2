@@ -13,8 +13,8 @@ from profiles.views import ProfileIndex, SettingsProfile, SettingsBilling, Creat
                            DocumentDetail, SampleDetail, AjaxPathDetail
                            
 from core.views import CoreSetCalculationParameters, CoreCalculation, Test, Celery, TaskStatus
-from core.xpn_views import XpnForm, XpnDone, XpnPrevFiles, breastmodule
-from core.utils_views import ConvertPath
+from core.harmony_views import HarmonyForm, HarmonyDone, HarmonyPrevFiles, breastmodule
+from core.utils_views import ConvertPath, Ksyusha
 from database.views import PathwayList, PathwayDetail, PathwayAjaxSearch, \
                            DrugList, DrugDetail, DrugAjaxSearch
 from metabolism.views import MetabolismPathwayList, MetabolismPathwayDetail, \
@@ -108,13 +108,14 @@ urlpatterns = patterns('',
     
     
     ################### XPN normalization ##############################
-    url(r'^xpn/$', XpnForm.as_view(), name="xpn_form"),
-    url(r'^xpn/done/(.*)/$', XpnDone.as_view(), name="xpn_done"),
-    url(r'^xpn/prevfiles/$', XpnPrevFiles.as_view(), name="xpn_prevfiles"),
-    url(r'^xpn/breastmodule/$', breastmodule.as_view(), name="breastmodule"),
+    url(r'^harmony/$', HarmonyForm.as_view(), name="harmony_form"),
+    url(r'^harmony/done/(.*)/$', HarmonyDone.as_view(), name="harmony_done"),
+    url(r'^harmony/prevfiles/$', HarmonyPrevFiles.as_view(), name="harmony_prevfiles"),
+    url(r'^harmony/breastmodule/$', breastmodule.as_view(), name="breastmodule"),
     
     ################### Different usefull stuff ##############################
     url(r'^utils/path$', ConvertPath.as_view(), name="convert_path"),
+    url(r'^utils/ksyu$', Ksyusha.as_view(), name="ksyusha"),
 
     
     

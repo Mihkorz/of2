@@ -83,7 +83,7 @@ class MedicCalculationParametersForm(forms.Form):
     her2_status = forms.ChoiceField(label="HER2 status",
                                      choices=HER2_STASUS_CHOICES, initial=0)
         
-class XpnParametersForm(forms.Form):
+class HarmonyParametersForm(forms.Form):
     pl1 = forms.FileField(label="Platform1 data", required=False)
     pl2 = forms.FileField(label="Platform2 data", required=False)
     log_scale = forms.BooleanField(label="log_scale", initial=True, required=False)
@@ -98,7 +98,7 @@ class XpnParametersForm(forms.Form):
     skip_match = forms.BooleanField(label="skip.match", initial=False, required=False)
     
     def __init__(self, *args, **kwargs):
-        super(XpnParametersForm, self).__init__(*args, **kwargs)
+        super(HarmonyParametersForm, self).__init__(*args, **kwargs)
         self.fields['pl1'].widget.attrs.update({'class' : 'form-control input-sm', 'style':'width:200px; display:inline'})
         self.fields['pl2'].widget.attrs.update({'class' : 'form-control input-sm', 'style':'width:200px; display:inline'})
         

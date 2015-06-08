@@ -1,0 +1,233 @@
+{% extends "base_profiles.html" %}
+
+{% block title %}Harmony | OncoFinder v2.0{% endblock %}
+
+{% block content %}
+<div class="container">
+
+  <h1>
+  <img src='/static/images/tablet.png' style="width: 100px;"/>
+    Harmony 
+  </h1>
+  <a href="/xpn/prevfiles/" class="btn btn-default pull-right">Previously calculated files</a>
+ 
+  <hr/>
+  {% if form.errors %}
+  <div class="alert alert-danger">
+    <i class="glyphicon glyphicon-warning-sign"></i>
+    Your form has some errors: <br/>
+    {% for field, errors in form.errors.items %}
+    {{field}}: {{errors}}
+    {%endfor%}
+  </div>
+  {% endif %}
+  
+  
+  <div > 
+        <button type="button" class="btn  btn-active choice xpn" > xpn </button>
+        <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip"  data-placement="top" 
+                                             title="Dynamic harmonization of two datasets"  ></span>
+        <button type="button" class="btn btn-primary choice xpn-static" >xpn.static </button>
+        <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip"  data-placement="top" 
+                                             title="Static harmonization of two datasets"  ></span>
+        <button type="button" class="btn btn-primary choice xpn-vector-matrix" >xpn.vector.matrix </button>
+         <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip"  data-placement="top" 
+                                             title="Static harmonization of one sample with an unchanged matrix "  ></span>
+        <button type="button" class="btn btn-primary choice xpn-afx" >xpn.afx </button>
+         <span class="glyphicon glyphicon-question-sign "   
+                                             data-title="Dynamic harmonization of a dataset and reference Affymetrix matrix"  ></span>
+        <button type="button" class="btn btn-primary choice xpn-afx-static" >xpn.afx.static</button>
+         <span class="glyphicon glyphicon-question-sign "   
+                                             data-title="Static harmonization of a dataset and reference Affymetrix matrix"  ></span>
+        <button type="button" class="btn btn-primary choice xpn-afx-vector" >xpn.afx.vector</button>
+         <span class="glyphicon glyphicon-question-sign "   
+                                             data-title="Static harmonization of one sample and reference Affymetrix matrix"  ></span>
+        
+    </div>
+    
+    
+  <div class="panel panel-primary login_panel">
+    <div class="panel-heading">
+      <h3 class="panel-title">Harmony parameters</h3>
+    </div>
+    <div class="panel-body">
+    <div>
+          Harmony type: <span id='xpn_type_label'>Harmony</span>
+    </div>
+    <div id="desciption">
+    Dynamic harmonization of two datasets
+    </div>
+    <small>
+    To learn more about these parameters please 
+    follow the <a href="http://www.inside-r.org/packages/cran/CONOR/docs/qn" target="_blanc">link</a>
+    <br/><br/>
+    <form class="form-horizontal" role="form" action="" 
+          method="post" enctype="multipart/form-data"  id="xpn_parameters_form">
+          {% csrf_token %}
+          <input type='hidden' name='xpn_type' id="id_xpn_type" value='xpn' />
+          
+          {{ form.pl1.label_tag }} {{ form.pl1 }} <br/>
+          {{ form.pl2.label_tag }} {{ form.pl2 }}<br/>
+          {{ form.log_scale.label_tag }}&nbsp;&nbsp;{{ form.log_scale }}<br/><br/>
+          
+          {{ form.p1_names.label_tag }} {{ form.p1_names }} 
+          {{ form.p2_names.label_tag }} {{ form.p2_names }}
+          
+          {{ form.k.label_tag }} {{ form.k }} 
+          {{ form.l.label_tag }} {{ form.l }} <br/><br/>
+          
+          {{ form.gene_cluster.label_tag }} {{ form.gene_cluster }} 
+          {{ form.assay_cluster.label_tag }} {{ form.assay_cluster }}    
+          {{ form.corr.label_tag }} {{ form.corr }}<br/>
+          
+          {{ form.iterations.label_tag }} {{ form.iterations }} <br/>
+          {{ form.skip_match.label_tag }}&nbsp;&nbsp;{{ form.skip_match }}
+          
+          
+          </small>
+ 
+          
+    </div>
+    <div class="panel-footer">
+      <button class="btn btn-primary" data-loading-text="Calculating..." id="startButton">Start normalization</button>
+      
+          <img src="/static/images/ajax-loader.gif" id="loader" style="margin: 10px 0 0 0; display:none" class="pull-right" />
+     
+    </div>
+  </div>
+</div>
+
+<script>
+$(function() {
+	
+	$('.choice').click(function(){
+		$('.choice').removeClass('btn-active').addClass('btn-primary');
+		$(this).removeClass('btn-primary').addClass('btn-active');
+	});
+	
+	$('.xpn').click(function(){
+		
+		$("label[for='id_pl1']").text("Platform1 dataset:");
+    	$("label[for='id_pl2']").text("Platform2 dataset:");
+    	$("#id_pl2").show();
+		
+		$("#id_xpn_type").val('xpn');
+		$("#xpn_type_label").text('XPN');
+		$("#desciption").text('Dynamic harmonization of two datasets');
+		
+		$("#id_p1_names").val(0);
+		$("#id_k").val(10);
+		$("#id_l").val(4);
+		$("#id_gene_cluster").val('kmeans');
+		$("#id_assay_cluster").val('kmeans');
+		$("#id_corr").val('pearson');
+		$("#id_iterations").val(30);
+	});
+	
+    $('.xpn-static').click(function(){
+    	
+    	$("label[for='id_pl1']").text("Platform1 dataset:");
+    	$("label[for='id_pl2']").text("Platform2 dataset:");
+    	$("#id_pl2").show();
+		
+		$("#id_xpn_type").val('xpn_static');
+		$("#xpn_type_label").text('XPN.STATIC');
+		$("#desciption").text('Static harmonization of two datasets');
+		
+		$("#id_p1_names").val(0);
+		$("#id_k").val(10);
+		$("#id_l").val(4);
+		$("#id_gene_cluster").val('kmeans');
+		$("#id_assay_cluster").val('kmeans');
+		$("#id_corr").val('pearson');
+		$("#id_iterations").val(30);
+	});
+    
+    $('.xpn-vector-matrix').click(function(){
+		
+    	$("label[for='id_pl1']").text("Sample:");
+    	$("label[for='id_pl2']").text("Dataset:");
+    	$("#id_pl2").show();
+    	
+		$("#id_xpn_type").val('xpn_vector_matrix');
+		$("#xpn_type_label").text('XPN.VECTOR.MATRIX');
+		$("#desciption").text('Static harmonization of one sample with an unchanged matrix');
+		
+		$("#id_p1_names").val(0);
+		$("#id_k").val(10);
+		$("#id_l").val(5);
+		$("#id_gene_cluster").val('skmeans');
+		$("#id_assay_cluster").val('hclust');
+		$("#id_corr").val('pearson');
+		$("#id_iterations").val(3);
+	});
+    
+    $('.xpn-afx').click(function(){
+		
+    	$("label[for='id_pl1']").text("Dataset:");
+    	$("label[for='id_pl2']").text("");
+    	$("#id_pl2").hide();
+    	
+		$("#id_xpn_type").val('xpn_afx');
+		$("#xpn_type_label").text('XPN.AFX');
+		$("#desciption").text('Dynamic harmonization of a dataset and reference Affymetrix matrix');
+		
+		$("#id_p1_names").val(0);
+		$("#id_k").val(10);
+		$("#id_l").val(4);
+		$("#id_gene_cluster").val('skmeans');
+		$("#id_assay_cluster").val('hclust');
+		$("#id_corr").val('pearson');
+		$("#id_iterations").val(1);
+	});
+    
+    $('.xpn-afx-static').click(function(){
+		
+    	$("label[for='id_pl1']").text("Dataset:");
+    	$("label[for='id_pl2']").text("");
+    	$("#id_pl2").hide();
+    	
+		$("#id_xpn_type").val('xpn_afx_static');
+		$("#xpn_type_label").text('XPN.AFX.STATIC');
+		$("#desciption").text('Static harmonization of a dataset and reference Affymetrix matrix');
+		
+		$("#id_p1_names").val(0);
+		$("#id_k").val(10);
+		$("#id_l").val(4);
+		$("#id_gene_cluster").val('skmeans');
+		$("#id_assay_cluster").val('hclust');
+		$("#id_corr").val('pearson');
+		$("#id_iterations").val(1);
+	});
+    
+    $('.xpn-afx-vector').click(function(){
+		
+    	$("label[for='id_pl1']").text("Sample:");
+    	$("label[for='id_pl2']").text("");
+    	$("#id_pl2").hide();
+    	
+		$("#id_xpn_type").val('xpn_afx_vector');
+		$("#xpn_type_label").text('XPN.AFX.VECTOR');
+		$("#desciption").text('Static harmonization of one sample and reference Affymetrix matrix'); 
+		
+		$("#id_p1_names").val(0);
+		$("#id_k").val(10);
+		$("#id_l").val(5);
+		$("#id_gene_cluster").val('skmeans');
+		$("#id_assay_cluster").val('hclust');
+		$("#id_corr").val('pearson');
+		$("#id_iterations").val(3);
+	});
+	
+	$('#startButton').click(function () {
+	    var btn = $(this)
+	    btn.button('loading');
+	    $("#loader").fadeIn();
+	    
+
+	  });
+
+});
+</script>
+
+{%endblock%}
