@@ -496,7 +496,7 @@ class CoreSetCalculationParameters(FormView):
             pas2_list.append(pas2_dict)        
         
         if calculate_pas:
-            output_pas_df = DataFrame(pas_list).fillna(0)
+            output_pas_df = DataFrame(pas_list)
             output_pas_df = output_pas_df.set_index('Pathway')
         if calculate_pas1:
             output_pas1_df = DataFrame(pas1_list)
@@ -508,7 +508,7 @@ class CoreSetCalculationParameters(FormView):
                 col_p_val = [col for col in output_pas1_df.columns if '_p-value' in col]
                 for col in col_p_val:
                     q_val_column_name = col.replace("_p-value", "_q-value");
-                    output_pas1_df[q_val_column_name] = fdr_corr(np.array(output_pas1_df[col]))
+                    output_pas1_df[q_val_column_name] = fdr_corr(np.array(output_pas1_df[col].fillna(0)))
                 
             
         if calculate_pas2:
