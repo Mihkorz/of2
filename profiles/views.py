@@ -444,24 +444,31 @@ class SampleDetail(DeleteView):
         try: # constructing PMS dictionary for displaying
             
             
-            df_pms1 = df_file_pms1[[sample]]
-            df_pms1.columns = ['PAS1']
-            pms1_dict =  df_pms1.to_dict(outtype="dict")
-            #pms_dict['PAS1'] = df_pms1.to_dict(outtype="dict")
-            output_pms = {}
+            df_pms1 = df_file_pms1[[sample, 'Database']]
+            df_pms1.columns = ['PAS1', 'Database']
             
-            for path in pms_dict['PAS']:
-                output_pms[path] = [d[path] for d in (pms_dict['PAS'], pms1_dict['PAS1'])]
-                
+            df_pms.reset_index(inplace=True)
+            df_pms.drop(df_pms.index[[0]], inplace=True)
+            df_pms.drop('index', 1, inplace=True)
+            df_pms1.reset_index(inplace=True)
+            df_pms1.drop(df_pms1.index[[0]], inplace=True)
+            
+            joined = df_pms.join(df_pms1, how='outer')
+            
+           
+            
+            
+            
+               
             # drawing Normal-Cancer cell picture 
             lPaths = []
-            for pathname, pms_values in output_pms.iteritems():
+            for _, values in joined.iterrows():
                 try:
-                    if pathname != 'Pathway':
-                        objPath = Pathway.objects.filter(name=pathname, organism=calc_params['organism'], database__in=calc_params['db'])[0]
-                        objPath.pms = pms_values[0]
-                        objPath.pms1 = pms_values[1]
-                        lPaths.append(objPath)
+                    objPath = Pathway.objects.get(name=values['index'], organism=calc_params['organism'], database=values['Database'])
+                    objPath.pms = values['PAS']
+                    objPath.pms1 = values['PAS1']
+                    lPaths.append(objPath)
+                    
                 except:
                     raise
             
