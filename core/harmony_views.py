@@ -19,6 +19,7 @@ from django.core.urlresolvers import reverse
 from django.conf import settings
 
 from .forms import HarmonyParametersForm
+from .stats import Shambhala_harmonisation
 
 
 class HarmonyForm(FormView):
@@ -55,6 +56,8 @@ class HarmonyForm(FormView):
     
     def form_valid(self, form):
         
+        harmony_type=self.request.POST.get('harmony_type', False)
+        
         pl1 = form.cleaned_data.get('pl1', False)
         pl2 = form.cleaned_data.get('pl2', False)
         k = form.cleaned_data.get('k', 10)
@@ -72,67 +75,32 @@ class HarmonyForm(FormView):
         dialect_pl1 = sniffer.sniff(pl1.read(), delimiters='\t,; ') # defining the separator of the csv file
         pl1.seek(0)
         df_pl1 = read_csv(pl1, delimiter=dialect_pl1.delimiter, index_col=0)
-                
-        dialect_pl2 = sniffer.sniff(pl2.read(), delimiters='\t,; ') # defining the separator of the csv file
-        pl2.seek(0)
-        df_pl2 = read_csv(pl2, delimiter=dialect_pl2.delimiter, index_col=0)
         
-        if log_scale:
-            df_pl1 = np.log(df_pl1).fillna(0)
-            df_pl2 = np.log(df_pl2).fillna(0)
+        df_pl2 = DataFrame({})
+        if not "afx" in harmony_type:
+            dialect_pl2 = sniffer.sniff(pl2.read(), delimiters='\t,; ') # defining the separator of the csv file
+            pl2.seek(0)
+            df_pl2 = read_csv(pl2, delimiter=dialect_pl2.delimiter, index_col=0)
         
-        len_col_pl1 = len(df_pl1.columns)
-        len_col_pl2 = len(df_pl2.columns)
-        
-        if abs(np.log2(len_col_pl1/len_col_pl2))>2:
-            raise forms.ValidationError(u"Error! Datasets can't be compared.\
-                                          Number of samples in one dataset is at least 4 \
-                                          times larger than in the other.")
-        
-        diff = abs(len_col_pl1-len_col_pl2)
-        
-        np.random.seed(5) #fix random number generator for the sake of reproducibility
-        
-        if len_col_pl1>len_col_pl2:
-            if abs(np.log2(len_col_pl1/len_col_pl2)<1):
-                choice = np.random.choice(len_col_pl2, diff, replace=False) #create random sample from df columns
-            else:
-                choice = np.random.choice(len_col_pl2, diff, replace=True)               
-            
-            adjusted_df = df_pl2[choice]
-            adjusted_df = self.rename_df_columns(adjusted_df)       
-            df_pl2 = df_pl2.join(adjusted_df)   
-            
-        else:
-            if abs(np.log2(len_col_pl1/len_col_pl2)<1):
-                choice = np.random.choice(len_col_pl1, diff, replace=False)
-            else:
-                choice = np.random.choice(len_col_pl1, diff, replace=True)
-            adjusted_df = df_pl1[choice]            
-            adjusted_df = self.rename_df_columns(adjusted_df)            
-            df_pl1 = df_pl1.join(adjusted_df)
-        
-        Rdf_pl1 = com.convert_to_r_dataframe(df_pl1)
-        Rdf_pl2 = com.convert_to_r_dataframe(df_pl2)
         try:
-            conor = importr("CONOR")
-            R_output = conor.xpn(Rdf_pl1, Rdf_pl2, p1_names=p1_names, p2_names=p2_names,
-                                 iterations=iterations, K=k, L=l )
+            df_after_harmony = Shambhala_harmonisation(df_pl1, df_pl2, harmony_type=harmony_type, p1_names=p1_names, p2_names=p2_names,
+                                 iterations=iterations, K=k, L=l, log_scale=log_scale, gene_cluster=gene_cluster,
+                                 assay_cluster=assay_cluster, corr=corr, skip_match=skip_match)
         except:
             raise
-        py_output = com.convert_robj(R_output)
-
-        df_out_x = DataFrame(py_output['x'])
-        df_out_y = DataFrame(py_output['y'])        
-        df_out_x.index.name = df_out_y.index.name = 'SYMBOL'
         
-        df_output_all = df_out_x.join(df_out_y, lsuffix='_x', rsuffix='_y')
-        filename = pl1.name+pl2.name+".csv"
+        #raise Exception('harmony')
+    
+        
+        if not "afx" in harmony_type:
+            filename = pl1.name+pl2.name+".csv"
+        else:
+            filename = pl1.name+".csv"
         output_file = settings.MEDIA_ROOT+"/XPN/"+filename
         
-        df_output_all.to_csv(output_file) 
+        df_after_harmony.to_csv(output_file) 
         
-        return HttpResponseRedirect(reverse('xpn_done', args=[filename]))
+        return HttpResponseRedirect(reverse('harmony_done', args=[filename]))
         
     
     def form_invalid(self, form):

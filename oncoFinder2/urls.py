@@ -108,10 +108,10 @@ urlpatterns = patterns('',
     
     
     ################### XPN normalization ##############################
-    url(r'^harmony/$', HarmonyForm.as_view(), name="harmony_form"),
-    url(r'^harmony/done/(.*)/$', HarmonyDone.as_view(), name="harmony_done"),
-    url(r'^harmony/prevfiles/$', HarmonyPrevFiles.as_view(), name="harmony_prevfiles"),
-    url(r'^harmony/breastmodule/$', breastmodule.as_view(), name="breastmodule"),
+    url(r'^shambhala/$', HarmonyForm.as_view(), name="harmony_form"),
+    url(r'^shambhala/done/(.*)/$', HarmonyDone.as_view(), name="harmony_done"),
+    url(r'^shambhala/prevfiles/$', HarmonyPrevFiles.as_view(), name="harmony_prevfiles"),
+    url(r'^shambhala/breastmodule/$', breastmodule.as_view(), name="breastmodule"),
     
     ################### Different usefull stuff ##############################
     url(r'^utils/path$', ConvertPath.as_view(), name="convert_path"),

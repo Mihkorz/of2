@@ -215,6 +215,72 @@ def rename_df_columns(df):
         return df    
     
     
+def Shambhala_harmonisation(df_pl1, df_pl2, harmony_type, gene_cluster,
+                                 assay_cluster, corr, skip_match, p1_names=0, p2_names=0,
+                                 iterations=30, K=10, L=4, log_scale=True, ):
     
+    if log_scale:
+            df_pl1 = np.log(df_pl1).fillna(0)
+            df_pl2 = np.log(df_pl2).fillna(0)
+            
+    len_col_pl1 = len(df_pl1.columns)
+    len_col_pl2 = len(df_pl2.columns)
+    is_assays_identical = True if len_col_pl1==len_col_pl2 else False
+    
+            
+    Rdf_pl1 = com.convert_to_r_dataframe(df_pl1)
+    Rdf_pl2 = com.convert_to_r_dataframe(df_pl2)
+    
+    try:
+        harmony = importr("HARMONY")
+        
+        if harmony_type=='harmony_equi':
+            print "harmony equi"
+            R_output = harmony.harmony_equi(Rdf_pl1, Rdf_pl2, p1_names=p1_names, p2_names=p2_names,
+                                 iterations=iterations, K=K, L=L, is_assays_identical=is_assays_identical,
+                                 gene_cluster=gene_cluster, assay_cluster=assay_cluster, corr=corr )
+        if harmony_type=='harmony_static_equi':
+            print "harmony static equi"
+            R_output = harmony.harmony_static_equi(Rdf_pl1, Rdf_pl2, p1_names=p1_names, p2_names=p2_names,
+                                 iterations=iterations, K=K, L=L, is_assays_identical=is_assays_identical,
+                                 gene_cluster=gene_cluster, assay_cluster=assay_cluster, corr=corr )
+         
+        if harmony_type=='harmony_vector_matrix':
+            print "harmony_vector_matrix"
+            R_output = harmony.harmony_vector_matrix(Rdf_pl1, Rdf_pl2,  p1_names=p1_names, p2_names=p2_names,
+                                 iterations=iterations, K=K, L=L, is_assays_identical=is_assays_identical,
+                                 gene_cluster=gene_cluster, assay_cluster=assay_cluster, corr=corr )   
+        if harmony_type=='harmony_afx':
+            print "afx"
+            R_output = harmony.harmony_afx(Rdf_pl1,  p1_names=p1_names, p2_names=p2_names,
+                                 iterations=iterations, K=K, L=L, is_assays_identical=is_assays_identical,
+                                 gene_cluster=gene_cluster, assay_cluster=assay_cluster, corr=corr )
+        if harmony_type=='harmony_afx_static_equi':
+            print "afx static equi"
+            R_output = harmony.harmony_afx_static_equi(Rdf_pl1,  p1_names=p1_names, p2_names=p2_names,
+                                 iterations=iterations, K=K, L=L, is_assays_identical=is_assays_identical,
+                                 gene_cluster=gene_cluster, assay_cluster=assay_cluster, corr=corr )
+        if harmony_type=='harmony_afx_vector':
+            print "harmony_afx_vector"
+            R_output = harmony.harmony_afx_vector(Rdf_pl1,  p1_names=p1_names, p2_names=p2_names,
+                                 iterations=iterations, K=K, L=L,
+                                 gene_cluster=gene_cluster, assay_cluster=assay_cluster, corr=corr )
+    except:
+        raise
+    py_output = com.convert_robj(R_output)
+    
+    if "afx" in harmony_type:
+        py_output.index.name = 'SYMBOL'
+        return py_output
+    else:    
+        df_out_x = pd.DataFrame(py_output['x'])
+        df_out_y = pd.DataFrame(py_output['y'])        
+        df_out_x.index.name = df_out_y.index.name = 'SYMBOL'
+        
+        df_output_all = df_out_x.join(df_out_y, lsuffix='_x', rsuffix='_y')
+        #raise Exception("XPN Exception")
+        return df_output_all
+    
+        
     
     

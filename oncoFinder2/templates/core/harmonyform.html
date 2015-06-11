@@ -1,15 +1,15 @@
 {% extends "base_profiles.html" %}
 
-{% block title %}Harmony | OncoFinder v2.0{% endblock %}
+{% block title %}Shambhala | OncoFinder v2.0{% endblock %}
 
 {% block content %}
 <div class="container">
 
   <h1>
   <img src='/static/images/tablet.png' style="width: 100px;"/>
-    Harmony 
+    Shambhala 
   </h1>
-  <a href="/xpn/prevfiles/" class="btn btn-default pull-right">Previously calculated files</a>
+  <a href="/shambhala/prevfiles/" class="btn btn-default pull-right">Previously calculated files</a>
  
   <hr/>
   {% if form.errors %}
@@ -23,25 +23,25 @@
   {% endif %}
   
   
-  <div > 
-        <button type="button" class="btn  btn-active choice xpn" > xpn </button>
-        <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip"  data-placement="top" 
-                                             title="Dynamic harmonization of two datasets"  ></span>
-        <button type="button" class="btn btn-primary choice xpn-static" >xpn.static </button>
-        <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip"  data-placement="top" 
-                                             title="Static harmonization of two datasets"  ></span>
-        <button type="button" class="btn btn-primary choice xpn-vector-matrix" >xpn.vector.matrix </button>
-         <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip"  data-placement="top" 
-                                             title="Static harmonization of one sample with an unchanged matrix "  ></span>
-        <button type="button" class="btn btn-primary choice xpn-afx" >xpn.afx </button>
-         <span class="glyphicon glyphicon-question-sign "   
-                                             data-title="Dynamic harmonization of a dataset and reference Affymetrix matrix"  ></span>
-        <button type="button" class="btn btn-primary choice xpn-afx-static" >xpn.afx.static</button>
-         <span class="glyphicon glyphicon-question-sign "   
-                                             data-title="Static harmonization of a dataset and reference Affymetrix matrix"  ></span>
-        <button type="button" class="btn btn-primary choice xpn-afx-vector" >xpn.afx.vector</button>
-         <span class="glyphicon glyphicon-question-sign "   
-                                             data-title="Static harmonization of one sample and reference Affymetrix matrix"  ></span>
+  <div class="btn-group" role="group"> 
+        <!-- <button type="button" class="btn btn-xs  btn-active choice harmony" > harmony </button>
+         -->
+        <button type="button" class="btn btn-xs  btn-active choice harmony-equi" > harmony.equi </button>
+        
+        <!--<button type="button" class="btn btn-xs btn-primary choice harmony-static" > harmony.static </button>
+        -->
+        <button type="button" class="btn btn-xs btn-primary choice harmony-static-equi" > harmony.static.equi </button>
+        
+        <button type="button" class="btn btn-xs btn-primary choice harmony-vector-matrix" > harmony.vector.matrix </button>
+         
+        <button type="button" class="btn btn-xs btn-primary choice harmony-afx" > harmony.afx </button>
+         
+        <!--<button type="button" class="btn btn-xs btn-primary choice harmony-afx-static" > harmony.afx.static </button>
+        -->
+        <button type="button" class="btn btn-xs btn-primary choice harmony-afx-static-equi" > harmony.afx.static.equi </button>
+        
+        <button type="button" class="btn btn-xs btn-primary choice harmony-afx-vector" > harmony.afx.vector </button>
+         
         
     </div>
     
@@ -52,7 +52,7 @@
     </div>
     <div class="panel-body">
     <div>
-          Harmony type: <span id='xpn_type_label'>Harmony</span>
+          Harmony type: <span id='xpn_type_label'>HARMONY.EQUI</span>
     </div>
     <div id="desciption">
     Dynamic harmonization of two datasets
@@ -64,7 +64,7 @@
     <form class="form-horizontal" role="form" action="" 
           method="post" enctype="multipart/form-data"  id="xpn_parameters_form">
           {% csrf_token %}
-          <input type='hidden' name='xpn_type' id="id_xpn_type" value='xpn' />
+          <input type='hidden' name='harmony_type' id="id_xpn_type" value='harmony_equi' />
           
           {{ form.pl1.label_tag }} {{ form.pl1 }} <br/>
           {{ form.pl2.label_tag }} {{ form.pl2 }}<br/>
@@ -105,14 +105,14 @@ $(function() {
 		$(this).removeClass('btn-primary').addClass('btn-active');
 	});
 	
-	$('.xpn').click(function(){
+	$('.harmony-equi').click(function(){
 		
 		$("label[for='id_pl1']").text("Platform1 dataset:");
     	$("label[for='id_pl2']").text("Platform2 dataset:");
     	$("#id_pl2").show();
 		
-		$("#id_xpn_type").val('xpn');
-		$("#xpn_type_label").text('XPN');
+		$("#id_xpn_type").val('harmony_equi');
+		$("#xpn_type_label").text('HARMONY.EQUI');
 		$("#desciption").text('Dynamic harmonization of two datasets');
 		
 		$("#id_p1_names").val(0);
@@ -124,14 +124,14 @@ $(function() {
 		$("#id_iterations").val(30);
 	});
 	
-    $('.xpn-static').click(function(){
+    $('.harmony-static-equi').click(function(){
     	
     	$("label[for='id_pl1']").text("Platform1 dataset:");
     	$("label[for='id_pl2']").text("Platform2 dataset:");
     	$("#id_pl2").show();
 		
-		$("#id_xpn_type").val('xpn_static');
-		$("#xpn_type_label").text('XPN.STATIC');
+		$("#id_xpn_type").val('harmony_static_equi');
+		$("#xpn_type_label").text('HARMONY.STATIC.EQUI');
 		$("#desciption").text('Static harmonization of two datasets');
 		
 		$("#id_p1_names").val(0);
@@ -143,14 +143,14 @@ $(function() {
 		$("#id_iterations").val(30);
 	});
     
-    $('.xpn-vector-matrix').click(function(){
+    $('.harmony-vector-matrix').click(function(){
 		
     	$("label[for='id_pl1']").text("Sample:");
     	$("label[for='id_pl2']").text("Dataset:");
     	$("#id_pl2").show();
     	
-		$("#id_xpn_type").val('xpn_vector_matrix');
-		$("#xpn_type_label").text('XPN.VECTOR.MATRIX');
+		$("#id_xpn_type").val('harmony_vector_matrix');
+		$("#xpn_type_label").text('HARMONY.VECTOR.MATRIX');
 		$("#desciption").text('Static harmonization of one sample with an unchanged matrix');
 		
 		$("#id_p1_names").val(0);
@@ -162,14 +162,14 @@ $(function() {
 		$("#id_iterations").val(3);
 	});
     
-    $('.xpn-afx').click(function(){
+    $('.harmony-afx').click(function(){
 		
     	$("label[for='id_pl1']").text("Dataset:");
     	$("label[for='id_pl2']").text("");
     	$("#id_pl2").hide();
     	
-		$("#id_xpn_type").val('xpn_afx');
-		$("#xpn_type_label").text('XPN.AFX');
+		$("#id_xpn_type").val('harmony_afx');
+		$("#xpn_type_label").text('HARMONY.AFX');
 		$("#desciption").text('Dynamic harmonization of a dataset and reference Affymetrix matrix');
 		
 		$("#id_p1_names").val(0);
@@ -181,14 +181,14 @@ $(function() {
 		$("#id_iterations").val(1);
 	});
     
-    $('.xpn-afx-static').click(function(){
+    $('.harmony-afx-static-equi').click(function(){
 		
     	$("label[for='id_pl1']").text("Dataset:");
     	$("label[for='id_pl2']").text("");
     	$("#id_pl2").hide();
     	
-		$("#id_xpn_type").val('xpn_afx_static');
-		$("#xpn_type_label").text('XPN.AFX.STATIC');
+		$("#id_xpn_type").val('harmony_afx_static_equi');
+		$("#xpn_type_label").text('HARMONY.AFX.STATIC.EQUI');
 		$("#desciption").text('Static harmonization of a dataset and reference Affymetrix matrix');
 		
 		$("#id_p1_names").val(0);
@@ -200,14 +200,14 @@ $(function() {
 		$("#id_iterations").val(1);
 	});
     
-    $('.xpn-afx-vector').click(function(){
+    $('.harmony-afx-vector').click(function(){
 		
     	$("label[for='id_pl1']").text("Sample:");
     	$("label[for='id_pl2']").text("");
     	$("#id_pl2").hide();
     	
-		$("#id_xpn_type").val('xpn_afx_vector');
-		$("#xpn_type_label").text('XPN.AFX.VECTOR');
+		$("#id_xpn_type").val('harmony_afx_vector');
+		$("#xpn_type_label").text('HARMONY.AFX.VECTOR');
 		$("#desciption").text('Static harmonization of one sample and reference Affymetrix matrix'); 
 		
 		$("#id_p1_names").val(0);
