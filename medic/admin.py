@@ -15,7 +15,7 @@ from django.conf import settings
 from .models import Nosology, TreatmentMethod, TreatmentNorms
 from database.models import Pathway
 from profiles.models import IlluminaProbeTarget
-from core.stats import quantile_normalization, XPN_normalisation, fdr_corr
+from core.stats import quantile_normalization, XPN_normalisation, fdr_corr, Shambhala_harmonisation
 
 
 class NosologyAdmin(admin.ModelAdmin):
@@ -42,6 +42,8 @@ class TreatmentMethodAdmin(admin.ModelAdmin):
         nres_df = read_csv(nres_file, delimiter=dialect.delimiter,
                            index_col='SYMBOL') #create DataFrame for non-responderss
         
+        nres_df.drop([x for x in nres_df.columns if 'Norm' in x], axis=1, inplace=True)
+        
         joined_df = res_df.join(nres_df, how='inner') #merging 2 files together
         
         norms = TreatmentNorms.objects.filter(nosology=obj.nosology)[0] #get norms for current cancer type
@@ -54,9 +56,13 @@ class TreatmentMethodAdmin(admin.ModelAdmin):
         original_resnres_columns = joined_df.columns 
         original_norm_columns = norms_df.columns
         
+        
         """ Performing XPN between norms and responders+non-responders""" 
         try:
-            df_after_xpn = XPN_normalisation(joined_df, norms_df, iterations=10)
+            #df_after_xpn = XPN_normalisation(joined_df, norms_df, iterations=30)
+            df_after_xpn=Shambhala_harmonisation(joined_df, norms_df, harmony_type='harmony_static_equi', p1_names=0, p2_names=0,
+                                 iterations=30, K=10, L=4, log_scale=True, gene_cluster='kmeans', 
+                                 assay_cluster='kmeans', corr='pearson', skip_match=False)
         except:
             raise
              
@@ -153,6 +159,7 @@ class TreatmentMethodAdmin(admin.ModelAdmin):
         df_probability.to_csv(settings.MEDIA_ROOT+"/"+file_probabilities)
         obj.file_pms1 = file_pas1
         obj.file_probability = file_probabilities      
+        #mmmm = len(marker_pathways)
         #raise Exception('treatment')
         
         obj.num_of_patients = 0 #delete this after migration
