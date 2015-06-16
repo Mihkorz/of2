@@ -29,7 +29,7 @@ from .models import Nosology, TreatmentMethod
 from database.models import Pathway 
 from profiles.models import Document
 from core.forms import MedicCalculationParametersForm
-from core.stats import quantile_normalization, XPN_normalisation, fdr_corr
+from core.stats import quantile_normalization, XPN_normalisation, fdr_corr, Shambhala_harmonisation
 
 
 class MedicNosologyList(ListView):
@@ -373,9 +373,9 @@ class PatientTreatmentDetail(DetailView):
                 patient_pms1 = df_output.loc[path_name.strip()].item()
             else:
                 patient_pms1 = 0
-                
-            r_mean = df_res[path_name].mean(axis=1)
-            r_std = df_res[path_name].std(axis=1)
+              
+            r_mean = df_res[path_name].mean()
+            r_std = df_res[path_name].std()
             
             if patient_pms1 <= r_mean:
                     r_probability = norm.cdf(patient_pms1, r_mean, r_std)
@@ -384,8 +384,8 @@ class PatientTreatmentDetail(DetailView):
                     
             patient_responder[path_name] = r_probability
             
-            nr_mean = df_nres[path_name].mean(axis=1)
-            nr_std = df_nres[path_name].std(axis=1)
+            nr_mean = df_nres[path_name].mean()
+            nr_std = df_nres[path_name].std()
             
             if patient_pms1 <= nr_mean:
                     nr_probability = norm.cdf(patient_pms1, nr_mean, nr_std)
@@ -591,11 +591,16 @@ class MedicPatientCalculation(FormView):
         if her2_status!='0':
                     treatments = treatments.filter(her2_status=her2_status)
         
+        if not treatments:
+            raise Exception('There are no treatments with Hormone status='+hormone_status+' and HER2='+her2_status)
+        
         process_doc_df = read_csv(settings.MEDIA_ROOT+"/"+input_document.input_doc.document.name,
                                   sep='\t', index_col='SYMBOL').fillna(0)
         original_columns = process_doc_df.columns
         
+        
         for treatment in treatments:
+            
             sniffer = csv.Sniffer()
             res_file = treatment.file_res
             dialect = sniffer.sniff(res_file.read(), delimiters='\t,;')
@@ -608,12 +613,16 @@ class MedicPatientCalculation(FormView):
             nres_file.seek(0)
             nres_df = read_csv(nres_file, delimiter=dialect.delimiter,
                            index_col='SYMBOL') #create DataFrame for non-responderss
+            nres_df.drop([x for x in nres_df.columns if 'Norm' in x], axis=1, inplace=True)
             
             res_nres_joined = res_df.join(nres_df, how='inner')
             
-            """ Performing XPN between norms and responders+non-responders """
+            """ Performing HARMONY between norms and responders+non-responders """
             try:
-                df_after_xpn = XPN_normalisation(res_nres_joined, process_doc_df, iterations=10)
+                df_after_xpn=Shambhala_harmonisation(res_nres_joined, process_doc_df, harmony_type='harmony_static_equi', p1_names=0, p2_names=0,
+                                 iterations=10, K=10, L=4, log_scale=True, gene_cluster='kmeans', 
+                                 assay_cluster='kmeans', corr='pearson', skip_match=False)
+                #df_after_xpn = XPN_normalisation(res_nres_joined, process_doc_df, iterations=10)
             except:
                 raise
              
@@ -665,7 +674,7 @@ class MedicPatientCalculation(FormView):
             
             
             
-            
+        #raise Exception('after')    
         output_doc = Document()
         output_doc.doc_type = 2
         json_db = 'Human'

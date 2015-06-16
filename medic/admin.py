@@ -57,7 +57,7 @@ class TreatmentMethodAdmin(admin.ModelAdmin):
         original_norm_columns = norms_df.columns
         
         
-        """ Performing XPN between norms and responders+non-responders""" 
+        """ Performing HARMONY between norms and responders+non-responders""" 
         try:
             #df_after_xpn = XPN_normalisation(joined_df, norms_df, iterations=30)
             df_after_xpn=Shambhala_harmonisation(joined_df, norms_df, harmony_type='harmony_static_equi', p1_names=0, p2_names=0,
