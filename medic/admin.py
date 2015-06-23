@@ -171,9 +171,9 @@ class TreatmentMethodAdmin(admin.ModelAdmin):
         #mmmm = len(marker_pathways)
         #raise Exception('treatment')
         
-        obj.num_of_patients = 0 #delete this after migration
-        obj.accuracy = 0 #delete this after migration
-        obj.percentage_response = 0
+        #obj.num_of_patients = 0 #delete this after migration
+        #obj.accuracy = 0 #delete this after migration
+        #obj.percentage_response = 0
         obj.save()    
 
 admin.site.register(TreatmentMethod, TreatmentMethodAdmin)
