@@ -13,7 +13,7 @@ from django.core.files.base import ContentFile
 from django.conf import settings
 
 from .models import Nosology, TreatmentMethod, TreatmentNorms
-from database.models import Pathway
+from core.models import Pathway
 from profiles.models import IlluminaProbeTarget
 from core.stats import quantile_normalization, XPN_normalisation, fdr_corr, Shambhala_harmonisation
 
@@ -27,6 +27,15 @@ class TreatmentMethodAdmin(admin.ModelAdmin):
     list_display = ('name', 'nosology')
     
     def save_model(self, request, obj, form, change):
+        
+        def compute_jaccard_index(set_1, set_2):
+            n = len(set(set_1).intersection(set_2))
+            return n / float(len(set_1) + len(set_2) - n) 
+        
+        y_pred = []
+        y_true = []
+        #jjj = compute_jaccard_index(y_true, y_pred)
+        #raise Exception('Jaccard')
         
         """ reading responders and non-resonders files """
         res_file = form.cleaned_data['file_res']
@@ -54,15 +63,16 @@ class TreatmentMethodAdmin(admin.ModelAdmin):
         original_nres_columns = [col for col in joined_df.columns if '_NRES' in col]
         len_o_nr_c = len(original_nres_columns)
         original_resnres_columns = joined_df.columns 
-        original_norm_columns = norms_df.columns
         
         
         """ Performing HARMONY between norms and responders+non-responders""" 
         try:
             #df_after_xpn = XPN_normalisation(joined_df, norms_df, iterations=30)
-            df_after_xpn=Shambhala_harmonisation(joined_df, norms_df, harmony_type='harmony_static_equi', p1_names=0, p2_names=0,
-                                 iterations=30, K=10, L=4, log_scale=True, gene_cluster='kmeans', 
-                                 assay_cluster='kmeans', corr='pearson', skip_match=False)
+            df_pl2 = DataFrame({})
+            df_after_xpn=Shambhala_harmonisation(joined_df, df_pl2, harmony_type='harmony_afx_static', p1_names=0, p2_names=0,
+                                 iterations=1, gene_cluster='skmeans', 
+                                 assay_cluster='hclust', corr='pearson', skip_match=False)
+            print 'HARMONY DONE'
         except:
             raise
              
@@ -71,13 +81,12 @@ class TreatmentMethodAdmin(admin.ModelAdmin):
         """ Performing PAS1 calculations for normalised DataFrame
             filters: ttest_1samp + FDR correction 
         """
-        df_for_pas1 = df_after_xpn[original_resnres_columns+original_norm_columns]
+        df_for_pas1 = df_after_xpn[original_resnres_columns]
         
         norms_df = df_for_pas1[[norm for norm in [col for col in df_for_pas1.columns if 'Norm' in col]]]
         log_norms_df = np.log(norms_df)#use this for t-test, assuming log(norm) is distributed normally
         s_mean_norm = norms_df.apply(gmean, axis=1) #series of mean norms for CNR
-        
-        df_for_pas1.drop(norms_df.columns, axis=1, inplace=True)
+            
         
         def apply_filter(col):
             _, p_value = ttest_1samp(log_norms_df, np.log(col), axis=1)
@@ -102,7 +111,7 @@ class TreatmentMethodAdmin(admin.ModelAdmin):
         df_probability = DataFrame(sample_names)
          
         """Start cycle """        
-        for pathway in Pathway.objects.all().prefetch_related('gene_set'):
+        for pathway in Pathway.objects.filter(organism='human', database='primary_old'):
             ar_probabilities = np.array([])            
             
             genes = DataFrame(list(pathway.gene_set.all()

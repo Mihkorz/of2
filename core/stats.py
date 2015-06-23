@@ -255,6 +255,11 @@ def Shambhala_harmonisation(df_pl1, df_pl2, harmony_type, gene_cluster,
             R_output = harmony.harmony_afx(Rdf_pl1,  p1_names=p1_names, p2_names=p2_names,
                                  iterations=iterations, K=K, L=L, is_assays_identical=is_assays_identical,
                                  gene_cluster=gene_cluster, assay_cluster=assay_cluster, corr=corr )
+        if harmony_type=='harmony_afx_static':
+            print "afx static"
+            R_output = harmony.harmony_afx_static(Rdf_pl1,  p1_names=p1_names, p2_names=p2_names,
+                                 iterations=iterations, K=K, L=L, is_assays_identical=False,
+                                 gene_cluster=gene_cluster, assay_cluster=assay_cluster, corr=corr )
         if harmony_type=='harmony_afx_static_equi':
             print "afx static equi"
             R_output = harmony.harmony_afx_static_equi(Rdf_pl1,  p1_names=p1_names, p2_names=p2_names,
@@ -269,8 +274,11 @@ def Shambhala_harmonisation(df_pl1, df_pl2, harmony_type, gene_cluster,
         raise
     py_output = com.convert_robj(R_output)
     
+    
     if "afx" in harmony_type:
         py_output.index.name = 'SYMBOL'
+        if log_scale:
+            py_output = np.exp(py_output).fillna(0)
         return py_output
     else:    
         df_out_x = pd.DataFrame(py_output['x'])
@@ -278,6 +286,8 @@ def Shambhala_harmonisation(df_pl1, df_pl2, harmony_type, gene_cluster,
         df_out_x.index.name = df_out_y.index.name = 'SYMBOL'
         
         df_output_all = df_out_x.join(df_out_y, lsuffix='_x', rsuffix='_y')
+        if log_scale:
+            df_output_all = np.exp(df_output_all).fillna(0)
         #raise Exception("XPN Exception")
         return df_output_all
     

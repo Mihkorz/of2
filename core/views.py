@@ -243,8 +243,8 @@ class CoreSetCalculationParameters(FormView):
             else:
                 cnr_doc_df[process_doc_df['p_value']>=qvalue_threshold] = 1
                 process_doc_df = process_doc_df[process_doc_df['p_value']<pvalue_threshold]
-        
-        
+                
+            
         if use_ttest_1sam or use_cnr or use_sigma:
             norms_df = process_doc_df[[norm for norm in [col for col in process_doc_df.columns if 'Norm' in col]]]
             log_norms_df = np.log(norms_df)#use this for t-test, assuming log(norm) is distributed normally
@@ -295,11 +295,8 @@ class CoreSetCalculationParameters(FormView):
             cnr_doc_df['std'] = oldstd
             cnr_doc_df['gMean_norm'] = old_meanNorm
             #raise Exception('test cnr')
-            cnr_doc_df = cnr_doc_df.sort_index(axis=1)
-            
-            
-        
-        
+            cnr_doc_df.fillna(1, inplace=True)
+            cnr_doc_df = cnr_doc_df.sort_index(axis=1)        
         
         
         if input_document.doc_format=='OF_cnr_stat': #for OF_cnr_stat files only
@@ -333,6 +330,7 @@ class CoreSetCalculationParameters(FormView):
         
         """ START CYCLE """        
         for pathway in pathway_objects:
+            print "PATHWAY: " +pathway.name
             gene_name = []
             gene_arr = []
             
@@ -527,6 +525,7 @@ class CoreSetCalculationParameters(FormView):
             ds3_list = []
         
             for drug in Drug.objects.all(): #iterate trough all Drugs
+                print "-----DRUG----: " +drug.name
                 ds1_dict = {}
                 ds2_dict = {}
                 ds3_dict = {}
@@ -536,6 +535,8 @@ class CoreSetCalculationParameters(FormView):
             
             
                 for tumour in tumour_columns: #loop thought samples columns
+                    print "TUMOUR: " + tumour
+                    
                     DS1 = 0 # DrugScore 1
                     DS2 = 0 # DrugScore 2
                     DS3 = 0                
@@ -664,6 +665,7 @@ class CoreSetCalculationParameters(FormView):
         
         output_file = default_storage.save(settings.MEDIA_ROOT+"/"+path+"/"+file_name, ContentFile(''))
         output_file_row = default_storage.save(settings.MEDIA_ROOT+"/"+path+"/"+file_name_unchanged, ContentFile(''))
+        
         with ExcelWriter(output_file, index=False) as writer:
             cnr_doc_df.to_excel(writer,'CNR')
         with ExcelWriter(output_file_row, index=False) as writer:

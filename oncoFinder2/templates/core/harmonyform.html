@@ -36,8 +36,8 @@
          
         <button type="button" class="btn btn-xs btn-primary choice harmony-afx" > harmony.afx </button>
          
-        <!--<button type="button" class="btn btn-xs btn-primary choice harmony-afx-static" > harmony.afx.static </button>
-        -->
+        <button type="button" class="btn btn-xs btn-primary choice harmony-afx-static" > harmony.afx.static </button>
+        
         <button type="button" class="btn btn-xs btn-primary choice harmony-afx-static-equi" > harmony.afx.static.equi </button>
         
         <button type="button" class="btn btn-xs btn-primary choice harmony-afx-vector" > harmony.afx.vector </button>
@@ -181,6 +181,25 @@ $(function() {
 		$("#id_iterations").val(1);
 	});
     
+    $('.harmony-afx-static').click(function(){
+		
+    	$("label[for='id_pl1']").text("Dataset:");
+    	$("label[for='id_pl2']").text("");
+    	$("#id_pl2").hide();
+    	
+		$("#id_xpn_type").val('harmony_afx_static');
+		$("#xpn_type_label").text('HARMONY.AFX.STATIC');
+		$("#desciption").text('Static harmonization of a dataset and reference Affymetrix matrix');
+		
+		$("#id_p1_names").val(0);
+		$("#id_k").val(10);
+		$("#id_l").val(4);
+		$("#id_gene_cluster").val('skmeans');
+		$("#id_assay_cluster").val('hclust');
+		$("#id_corr").val('pearson');
+		$("#id_iterations").val(1);
+	});
+    
     $('.harmony-afx-static-equi').click(function(){
 		
     	$("label[for='id_pl1']").text("Dataset:");
@@ -189,7 +208,7 @@ $(function() {
     	
 		$("#id_xpn_type").val('harmony_afx_static_equi');
 		$("#xpn_type_label").text('HARMONY.AFX.STATIC.EQUI');
-		$("#desciption").text('Static harmonization of a dataset and reference Affymetrix matrix');
+		$("#desciption").text('Static harmonization of a dataset and reference Affymetrix matrix with equalization');
 		
 		$("#id_p1_names").val(0);
 		$("#id_k").val(10);
