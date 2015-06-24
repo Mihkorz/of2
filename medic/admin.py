@@ -62,16 +62,24 @@ class TreatmentMethodAdmin(admin.ModelAdmin):
         len_o_r_c = len(original_res_columns)
         original_nres_columns = [col for col in joined_df.columns if '_NRES' in col]
         len_o_nr_c = len(original_nres_columns)
+        len_r_nr = len_o_r_c+len_o_nr_c
         original_resnres_columns = joined_df.columns 
-        
+        #raise Exception(len_r_nr)
         
         """ Performing HARMONY between norms and responders+non-responders""" 
         try:
             #df_after_xpn = XPN_normalisation(joined_df, norms_df, iterations=30)
             df_pl2 = DataFrame({})
+            """
             df_after_xpn=Shambhala_harmonisation(joined_df, df_pl2, harmony_type='harmony_afx_static', p1_names=0, p2_names=0,
                                  iterations=1, gene_cluster='skmeans', 
                                  assay_cluster='hclust', corr='pearson', skip_match=False)
+            
+            
+            df_after_xpn=Shambhala_harmonisation(joined_df, norms_df, harmony_type='harmony_static_equi', p1_names=0, p2_names=0,
+                                 iterations=30, gene_cluster='kmeans', 
+                                 assay_cluster='kmeans', corr='pearson', skip_match=False)
+            """
             print 'HARMONY DONE'
         except:
             raise
@@ -81,7 +89,7 @@ class TreatmentMethodAdmin(admin.ModelAdmin):
         """ Performing PAS1 calculations for normalised DataFrame
             filters: ttest_1samp + FDR correction 
         """
-        df_for_pas1 = df_after_xpn[original_resnres_columns]
+        df_for_pas1 = joined_df[original_resnres_columns]
         
         norms_df = df_for_pas1[[norm for norm in [col for col in df_for_pas1.columns if 'Norm' in col]]]
         log_norms_df = np.log(norms_df)#use this for t-test, assuming log(norm) is distributed normally
@@ -103,6 +111,7 @@ class TreatmentMethodAdmin(admin.ModelAdmin):
         
         pas1_all_paths = DataFrame()
         marker_pathways = []
+        marker_auc = []
         
         sample_names = []
         for col in df_for_pas1.columns:
@@ -138,6 +147,7 @@ class TreatmentMethodAdmin(admin.ModelAdmin):
             
             if AUC>0.7:
                 marker_pathways.append(pathway.name)
+                marker_auc.append(str(AUC))
                 
                 r_mean = df_res.mean(axis=1).values[0]
                 r_std = df_res.std(axis=1).values[0]
@@ -169,7 +179,7 @@ class TreatmentMethodAdmin(admin.ModelAdmin):
         obj.file_pms1 = file_pas1
         obj.file_probability = file_probabilities      
         #mmmm = len(marker_pathways)
-        #raise Exception('treatment')
+        raise Exception('treatment')
         
         #obj.num_of_patients = 0 #delete this after migration
         #obj.accuracy = 0 #delete this after migration

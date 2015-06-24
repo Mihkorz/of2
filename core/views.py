@@ -330,7 +330,7 @@ class CoreSetCalculationParameters(FormView):
         
         """ START CYCLE """        
         for pathway in pathway_objects:
-            print "PATHWAY: " +pathway.name
+            #print "PATHWAY: " +pathway.name
             gene_name = []
             gene_arr = []
             
@@ -525,7 +525,7 @@ class CoreSetCalculationParameters(FormView):
             ds3_list = []
         
             for drug in Drug.objects.all(): #iterate trough all Drugs
-                print "-----DRUG----: " +drug.name
+                #print "-----DRUG----: " +drug.name
                 ds1_dict = {}
                 ds2_dict = {}
                 ds3_dict = {}
@@ -578,26 +578,26 @@ class CoreSetCalculationParameters(FormView):
                             
                                 if drug.tip == 'inhibitor' and path.name!='Mab_targets':
                                     DS1 += PMS
-                                    DS3 += PMS2
+                                    DS3 += AMCF*PMS2
                                     DS2 += AMCF*ARR*math.log10(CNR)
                                 if drug.tip == 'activator' and path.name!='Mab_targets':
                                     DS1 -= PMS
-                                    DS3 -= PMS2
+                                    DS3 -= AMCF*PMS2
                                     DS2 -= AMCF*ARR*math.log10(CNR)
                                 if drug.tip == 'mab' and path.name!='Mab_targets':
                                     DS1 += PMS
-                                    DS3 += PMS2
+                                    DS3 += AMCF*PMS2
                                     DS2 += AMCF*ARR*math.log10(CNR)
                                 if drug.tip == 'mab' and path.name=='Mab_targets':
                                     DS1 += abs(PMS) # PMS2
                                     DS3 += abs(PMS2)
                                 if drug.tip == 'killermab' and path.name=='Mab_targets':
                                     DS1 += abs(PMS)# PMS2
-                                    DS3 += abs(PMS2)
+                                    DS3 += AMCF*abs(PMS2)
                                     DS2 += math.log10(CNR)
                                 if drug.tip == 'multivalent' and path.name!='Mab_targets':
                                     DS1 += PMS
-                                    DS3 += PMS2
+                                    DS3 += AMCF*PMS2
                                     if target.tip>0:
                                         DS2 -= AMCF*ARR*math.log10(CNR)
                                     else:
@@ -804,6 +804,37 @@ class Test(TemplateView):
         
 
         
+        new_path_df = read_excel(settings.MEDIA_ROOT+"/primary_new_pathways_renaming.xlsx",
+                                         sheetname=0, header=None)
+        new_path_df.columns=['Old Pathway Name', 'Pathway Name']
+        new_path_df.set_index('Old Pathway Name', inplace=True)
+        dict = {}
+        lname = []
+        lgene = []
+        pathways = Pathway.objects.filter(organism='human', database='metabolism')
+        for path in pathways:
+            
+            
+            try:                    
+                new_path_name = new_path_df.loc[path.name.strip()]['Pathway Name']
+                   
+            except KeyError:
+                new_path_name = path.name
+            
+            for gene in path.gene_set.all():
+                lname.append(new_path_name)
+                lgene.append(gene.name)
+                #dict[new_path_name] = gene.name
+            
+        dict['Pathway'] =  lname
+        dict['Gene'] = lgene   
+        df = DataFrame(dict)
+        df.to_csv('pathways_genes_metabolism.csv')
+        raise Exception('stop')
+    
+    
+    
+    
         import networkx as nx
         import struct
        

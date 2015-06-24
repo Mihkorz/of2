@@ -1644,3 +1644,698 @@ Traceback (most recent call last):
   File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/admin.py", line 178, in save_model
     raise Exception('treatment')
 Exception: treatment
+2015-06-23 15:56:46,558 ERROR base 13940 -1358496960 Internal Server Error: /admin/medic/treatmentmethod/add/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/options.py", line 432, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 99, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/decorators/cache.py", line 52, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/sites.py", line 198, in inner
+    return view(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 99, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/transaction.py", line 371, in inner
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/options.py", line 1131, in add_view
+    self.save_model(request, new_object, form, False)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/admin.py", line 67, in save_model
+    raise Exception(len_r_nr)
+Exception: 39
+2015-06-23 18:19:03,371 ERROR base 13940 -1453442240 Internal Server Error: /admin/medic/treatmentmethod/add/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/options.py", line 432, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 99, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/decorators/cache.py", line 52, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/sites.py", line 198, in inner
+    return view(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 99, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/transaction.py", line 371, in inner
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/options.py", line 1131, in add_view
+    self.save_model(request, new_object, form, False)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/admin.py", line 67, in save_model
+    raise Exception(len_r_nr)
+Exception: 87
+2015-06-23 18:27:37,491 ERROR base 13940 -1594647744 Internal Server Error: /admin/medic/treatmentmethod/add/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/options.py", line 432, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 99, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/decorators/cache.py", line 52, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/sites.py", line 198, in inner
+    return view(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 99, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/transaction.py", line 371, in inner
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/options.py", line 1131, in add_view
+    self.save_model(request, new_object, form, False)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/admin.py", line 67, in save_model
+    raise Exception(len_r_nr)
+Exception: 55
+2015-06-23 18:31:52,136 ERROR base 13940 -1505756352 Internal Server Error: /admin/medic/treatmentmethod/add/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/options.py", line 432, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 99, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/decorators/cache.py", line 52, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/sites.py", line 198, in inner
+    return view(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 99, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/transaction.py", line 371, in inner
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/options.py", line 1131, in add_view
+    self.save_model(request, new_object, form, False)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/admin.py", line 67, in save_model
+    raise Exception(len_r_nr)
+Exception: 11
+2015-06-24 16:18:48,672 ERROR base 8404 -1407202496 Internal Server Error: /admin/medic/treatmentmethod/add/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/options.py", line 432, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 99, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/decorators/cache.py", line 52, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/sites.py", line 198, in inner
+    return view(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 99, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/transaction.py", line 371, in inner
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/options.py", line 1131, in add_view
+    self.save_model(request, new_object, form, False)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/admin.py", line 67, in save_model
+    raise Exception(len_r_nr)
+Exception: 22
+2015-06-24 16:49:29,578 ERROR base 8404 -1398809792 Internal Server Error: /admin/medic/treatmentmethod/add/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/options.py", line 432, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 99, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/decorators/cache.py", line 52, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/sites.py", line 198, in inner
+    return view(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 99, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/transaction.py", line 371, in inner
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/options.py", line 1131, in add_view
+    self.save_model(request, new_object, form, False)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/admin.py", line 67, in save_model
+    raise Exception(len_r_nr)
+Exception: 9
+2015-06-24 17:20:03,873 ERROR base 8629 -1378878656 Internal Server Error: /test/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 768, in dispatch
+    return super(Test, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 806, in get_context_data
+    raise Exception('yoyoyo')
+Exception: yoyoyo
+2015-06-24 17:20:21,725 ERROR base 8802 -1360004288 Internal Server Error: /test/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 768, in dispatch
+    return super(Test, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 812, in get_context_data
+    raise Exception('stop')
+Exception: stop
+2015-06-24 17:25:58,409 ERROR base 11069 -1359299776 Internal Server Error: /test/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 768, in dispatch
+    return super(Test, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 822, in get_context_data
+    for gene in path.gene_set:
+TypeError: 'RelatedManager' object is not iterable
+2015-06-24 17:26:15,100 ERROR base 11201 -1361052864 Internal Server Error: /test/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 768, in dispatch
+    return super(Test, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 822, in get_context_data
+    for gene in path.gene_set():
+TypeError: 'RelatedManager' object is not callable
+2015-06-24 17:27:29,313 ERROR base 11751 -1361052864 Internal Server Error: /test/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 768, in dispatch
+    return super(Test, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 827, in get_context_data
+    df = DataFrame(dict)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 208, in __init__
+    mgr = self._init_dict(data, index, columns, dtype=dtype)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 336, in _init_dict
+    dtype=dtype)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 4751, in _arrays_to_mgr
+    index = extract_index(arrays)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 4790, in extract_index
+    raise ValueError('If using all scalar values, you must pass'
+ValueError: If using all scalar values, you must pass an index
+2015-06-24 17:30:18,723 ERROR base 12914 -1361052864 Internal Server Error: /test/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 768, in dispatch
+    return super(Test, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 833, in get_context_data
+    raise Exception('stop')
+Exception: stop
+2015-06-24 18:02:11,365 ERROR base 24671 -1387271360 Internal Server Error: /admin/medic/treatmentmethod/add/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/options.py", line 432, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 99, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/decorators/cache.py", line 52, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/sites.py", line 198, in inner
+    return view(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 99, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/transaction.py", line 371, in inner
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/options.py", line 1131, in add_view
+    self.save_model(request, new_object, form, False)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/admin.py", line 67, in save_model
+    raise Exception(len_r_nr)
+Exception: 20
+2015-06-24 18:02:49,388 ERROR base 25217 -1358496960 Internal Server Error: /admin/medic/treatmentmethod/add/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/options.py", line 432, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 99, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/decorators/cache.py", line 52, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/sites.py", line 198, in inner
+    return view(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 99, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/transaction.py", line 371, in inner
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/options.py", line 1131, in add_view
+    self.save_model(request, new_object, form, False)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/admin.py", line 141, in save_model
+    marker_pathways.append(pathway.name+'_AUC='+AUC)
+TypeError: coercing to Unicode: need string or buffer, numpy.float64 found
+2015-06-24 18:04:02,318 ERROR base 25576 -1359930560 Internal Server Error: /admin/medic/treatmentmethod/add/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/options.py", line 432, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 99, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/decorators/cache.py", line 52, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/sites.py", line 198, in inner
+    return view(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 99, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/transaction.py", line 371, in inner
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/options.py", line 1131, in add_view
+    self.save_model(request, new_object, form, False)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/admin.py", line 173, in save_model
+    raise Exception('treatment')
+Exception: treatment
+2015-06-24 18:27:52,887 ERROR base 2102 -1360004288 Internal Server Error: /test/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 768, in dispatch
+    return super(Test, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 833, in get_context_data
+    raise Exception('stop')
+Exception: stop
+2015-06-24 18:35:27,458 ERROR base 4802 -1404056768 Internal Server Error: /admin/medic/treatmentmethod/add/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/options.py", line 432, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 99, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/decorators/cache.py", line 52, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/sites.py", line 198, in inner
+    return view(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 99, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/transaction.py", line 371, in inner
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/options.py", line 1131, in add_view
+    self.save_model(request, new_object, form, False)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/admin.py", line 175, in save_model
+    raise Exception('treatment')
+Exception: treatment
+2015-06-24 18:42:44,260 ERROR base 7602 -1359037632 Internal Server Error: /admin/medic/treatmentmethod/add/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/options.py", line 432, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 99, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/decorators/cache.py", line 52, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/sites.py", line 198, in inner
+    return view(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 99, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/transaction.py", line 371, in inner
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/options.py", line 1131, in add_view
+    self.save_model(request, new_object, form, False)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/admin.py", line 175, in save_model
+    raise Exception('treatment')
+Exception: treatment
+2015-06-24 18:46:21,986 ERROR base 9412 -1358599360 Internal Server Error: /admin/medic/treatmentmethod/add/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/options.py", line 432, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 99, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/decorators/cache.py", line 52, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/sites.py", line 198, in inner
+    return view(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 99, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/transaction.py", line 371, in inner
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/options.py", line 1131, in add_view
+    self.save_model(request, new_object, form, False)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/admin.py", line 81, in save_model
+    assay_cluster='kmeans', corr='pearson', skip_match=False)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/stats.py", line 246, in Shambhala_harmonisation
+    gene_cluster=gene_cluster, assay_cluster=assay_cluster, corr=corr )
+  File "/usr/local/lib/python2.7/dist-packages/rpy2/robjects/functions.py", line 170, in __call__
+    return super(SignatureTranslatedFunction, self).__call__(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/rpy2/robjects/functions.py", line 100, in __call__
+    res = super(Function, self).__call__(*new_args, **new_kwargs)
+RRuntimeError: Error in if (value1 < value2) NNNNN = n_1 else NNNNN = n_2 : 
+  missing value where TRUE/FALSE needed
+
+2015-06-24 18:49:30,427 ERROR base 9412 -1378878656 Internal Server Error: /admin/medic/treatmentmethod/add/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/options.py", line 432, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 99, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/decorators/cache.py", line 52, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/sites.py", line 198, in inner
+    return view(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 99, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/transaction.py", line 371, in inner
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/options.py", line 1131, in add_view
+    self.save_model(request, new_object, form, False)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/admin.py", line 81, in save_model
+    assay_cluster='kmeans', corr='pearson', skip_match=False)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/stats.py", line 246, in Shambhala_harmonisation
+    gene_cluster=gene_cluster, assay_cluster=assay_cluster, corr=corr )
+  File "/usr/local/lib/python2.7/dist-packages/rpy2/robjects/functions.py", line 170, in __call__
+    return super(SignatureTranslatedFunction, self).__call__(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/rpy2/robjects/functions.py", line 100, in __call__
+    res = super(Function, self).__call__(*new_args, **new_kwargs)
+RRuntimeError: Error in if (value1 < value2) NNNNN = n_1 else NNNNN = n_2 : 
+  missing value where TRUE/FALSE needed
+
+2015-06-24 18:51:22,910 ERROR base 11242 -1358496960 Internal Server Error: /admin/medic/treatmentmethod/add/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/options.py", line 432, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 99, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/decorators/cache.py", line 52, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/sites.py", line 198, in inner
+    return view(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 99, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/transaction.py", line 371, in inner
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/options.py", line 1131, in add_view
+    self.save_model(request, new_object, form, False)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/admin.py", line 81, in save_model
+    assay_cluster='kmeans', corr='pearson', skip_match=False)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/stats.py", line 246, in Shambhala_harmonisation
+    gene_cluster=gene_cluster, assay_cluster=assay_cluster, corr=corr )
+  File "/usr/local/lib/python2.7/dist-packages/rpy2/robjects/functions.py", line 170, in __call__
+    return super(SignatureTranslatedFunction, self).__call__(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/rpy2/robjects/functions.py", line 100, in __call__
+    res = super(Function, self).__call__(*new_args, **new_kwargs)
+RRuntimeError: Error in if (value1 < value2) NNNNN = n_1 else NNNNN = n_2 : 
+  missing value where TRUE/FALSE needed
+
+2015-06-24 18:51:59,123 ERROR base 11526 -1358496960 Internal Server Error: /admin/medic/treatmentmethod/add/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/options.py", line 432, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 99, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/decorators/cache.py", line 52, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/sites.py", line 198, in inner
+    return view(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 99, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/transaction.py", line 371, in inner
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/options.py", line 1131, in add_view
+    self.save_model(request, new_object, form, False)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/admin.py", line 81, in save_model
+    assay_cluster='kmeans', corr='pearson', skip_match=False)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/stats.py", line 246, in Shambhala_harmonisation
+    gene_cluster=gene_cluster, assay_cluster=assay_cluster, corr=corr )
+  File "/usr/local/lib/python2.7/dist-packages/rpy2/robjects/functions.py", line 170, in __call__
+    return super(SignatureTranslatedFunction, self).__call__(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/rpy2/robjects/functions.py", line 100, in __call__
+    res = super(Function, self).__call__(*new_args, **new_kwargs)
+RRuntimeError: Error in (function (platform1.data, platform2.data, K = 10, L = 4, p1.names = 0,  : 
+  Number of columns must be equal for is.assays.identical = TRUE
+
+2015-06-24 18:53:07,055 ERROR base 11983 -1359930560 Internal Server Error: /admin/medic/treatmentmethod/add/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/options.py", line 432, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 99, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/decorators/cache.py", line 52, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/sites.py", line 198, in inner
+    return view(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 99, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/transaction.py", line 371, in inner
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/options.py", line 1131, in add_view
+    self.save_model(request, new_object, form, False)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/admin.py", line 81, in save_model
+    assay_cluster='kmeans', corr='pearson', skip_match=False)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/stats.py", line 246, in Shambhala_harmonisation
+    gene_cluster=gene_cluster, assay_cluster=assay_cluster, corr=corr )
+  File "/usr/local/lib/python2.7/dist-packages/rpy2/robjects/functions.py", line 170, in __call__
+    return super(SignatureTranslatedFunction, self).__call__(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/rpy2/robjects/functions.py", line 100, in __call__
+    res = super(Function, self).__call__(*new_args, **new_kwargs)
+RRuntimeError: Error in if (value1 < value2) NNNNN = n_1 else NNNNN = n_2 : 
+  missing value where TRUE/FALSE needed
+
+2015-06-24 18:56:47,934 ERROR base 12752 -1359299776 Internal Server Error: /admin/medic/treatmentmethod/add/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/options.py", line 432, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 99, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/decorators/cache.py", line 52, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/sites.py", line 198, in inner
+    return view(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 99, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/transaction.py", line 371, in inner
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/options.py", line 1131, in add_view
+    self.save_model(request, new_object, form, False)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/admin.py", line 181, in save_model
+    raise Exception('treatment')
+Exception: treatment
+2015-06-24 19:01:33,346 ERROR base 12752 -1359299776 Internal Server Error: /admin/medic/treatmentmethod/add/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/options.py", line 432, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 99, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/decorators/cache.py", line 52, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/sites.py", line 198, in inner
+    return view(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 99, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/transaction.py", line 371, in inner
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/options.py", line 1131, in add_view
+    self.save_model(request, new_object, form, False)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/admin.py", line 181, in save_model
+    raise Exception('treatment')
+Exception: treatment
+2015-06-24 19:05:03,270 ERROR base 15911 -1358496960 Internal Server Error: /admin/medic/treatmentmethod/add/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/options.py", line 432, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 99, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/decorators/cache.py", line 52, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/sites.py", line 198, in inner
+    return view(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 99, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/transaction.py", line 371, in inner
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/options.py", line 1131, in add_view
+    self.save_model(request, new_object, form, False)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/admin.py", line 182, in save_model
+    raise Exception('treatment')
+Exception: treatment
+2015-06-24 19:06:42,312 ERROR base 16905 -1358496960 Internal Server Error: /admin/medic/treatmentmethod/add/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/options.py", line 432, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 99, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/decorators/cache.py", line 52, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/sites.py", line 198, in inner
+    return view(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 99, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/transaction.py", line 371, in inner
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/options.py", line 1131, in add_view
+    self.save_model(request, new_object, form, False)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/admin.py", line 182, in save_model
+    raise Exception('treatment')
+Exception: treatment
