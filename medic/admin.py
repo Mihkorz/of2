@@ -75,11 +75,11 @@ class TreatmentMethodAdmin(admin.ModelAdmin):
                                  iterations=1, gene_cluster='skmeans', 
                                  assay_cluster='hclust', corr='pearson', skip_match=False)
             
-            
+            """
             df_after_xpn=Shambhala_harmonisation(joined_df, norms_df, harmony_type='harmony_static_equi', p1_names=0, p2_names=0,
                                  iterations=30, gene_cluster='kmeans', 
                                  assay_cluster='kmeans', corr='pearson', skip_match=False)
-            """
+            
             print 'HARMONY DONE'
         except:
             raise
@@ -89,7 +89,7 @@ class TreatmentMethodAdmin(admin.ModelAdmin):
         """ Performing PAS1 calculations for normalised DataFrame
             filters: ttest_1samp + FDR correction 
         """
-        df_for_pas1 = joined_df[original_resnres_columns]
+        df_for_pas1 = df_after_xpn[original_resnres_columns]
         
         norms_df = df_for_pas1[[norm for norm in [col for col in df_for_pas1.columns if 'Norm' in col]]]
         log_norms_df = np.log(norms_df)#use this for t-test, assuming log(norm) is distributed normally
@@ -179,7 +179,7 @@ class TreatmentMethodAdmin(admin.ModelAdmin):
         obj.file_pms1 = file_pas1
         obj.file_probability = file_probabilities      
         #mmmm = len(marker_pathways)
-        raise Exception('treatment')
+        #raise Exception('treatment')
         
         #obj.num_of_patients = 0 #delete this after migration
         #obj.accuracy = 0 #delete this after migration
