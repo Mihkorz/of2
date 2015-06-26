@@ -3590,3 +3590,535 @@ Traceback (most recent call last):
   File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 192, in get_context_data
     ratio = float(Rcount)/float(len(path_cols))
 ZeroDivisionError: float division by zero
+2015-06-26 13:58:17,716 ERROR base 11894 -1385170112 Internal Server Error: /medic/calculate/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 575, in dispatch
+    return super(MedicPatientCalculation, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 625, in form_valid
+    raise Exception('maza faka')
+Exception: maza faka
+2015-06-26 14:03:43,305 ERROR base 13547 -1371538624 Internal Server Error: /document/doc6719/treat71/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 338, in dispatch
+    return super(PatientTreatmentDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 522, in post
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 382, in get_context_data
+    if patient_pms1 <= r_mean:
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/generic.py", line 709, in __nonzero__
+    .format(self.__class__.__name__))
+ValueError: The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().
+2015-06-26 14:03:43,423 ERROR base 13547 -1443890368 Internal Server Error: /document/doc6719/treat86/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 338, in dispatch
+    return super(PatientTreatmentDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 522, in post
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 410, in get_context_data
+    ratio = float(patient_Rcount)/float(path_num)
+ZeroDivisionError: float division by zero
+2015-06-26 14:03:43,967 ERROR base 13547 -1460675776 Internal Server Error: /document/doc6719/treat83/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 338, in dispatch
+    return super(PatientTreatmentDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 522, in post
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 382, in get_context_data
+    if patient_pms1 <= r_mean:
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/generic.py", line 709, in __nonzero__
+    .format(self.__class__.__name__))
+ValueError: The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().
+2015-06-26 14:03:44,240 ERROR base 13547 -1452283072 Internal Server Error: /document/doc6719/treat88/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 338, in dispatch
+    return super(PatientTreatmentDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 522, in post
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 410, in get_context_data
+    ratio = float(patient_Rcount)/float(path_num)
+ZeroDivisionError: float division by zero
+2015-06-26 14:03:47,022 ERROR base 13547 -1382024384 Internal Server Error: /document/doc6719/treat99/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 338, in dispatch
+    return super(PatientTreatmentDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 522, in post
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 410, in get_context_data
+    ratio = float(patient_Rcount)/float(path_num)
+ZeroDivisionError: float division by zero
+2015-06-26 14:09:55,303 ERROR base 13547 -1390417088 Internal Server Error: /document/doc6719/treat71/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 338, in dispatch
+    return super(PatientTreatmentDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 382, in get_context_data
+    if patient_pms1 <= r_mean:
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/generic.py", line 709, in __nonzero__
+    .format(self.__class__.__name__))
+ValueError: The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().
+2015-06-26 14:10:58,885 ERROR base 13547 -1452283072 Internal Server Error: /document/doc6719/treat71/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 338, in dispatch
+    return super(PatientTreatmentDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 382, in get_context_data
+    if patient_pms1 <= r_mean:
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/generic.py", line 709, in __nonzero__
+    .format(self.__class__.__name__))
+ValueError: The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().
+2015-06-26 14:15:45,036 ERROR base 13547 -1443890368 Internal Server Error: /document/doc6719/treat71/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 338, in dispatch
+    return super(PatientTreatmentDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 361, in get_context_data
+    df_pms1 = read_csv(file_pms1, index_col="Pathway").transpose()
+  File "/usr/local/lib/python2.7/dist-packages/pandas/io/parsers.py", line 470, in parser_f
+    return _read(filepath_or_buffer, kwds)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/io/parsers.py", line 256, in _read
+    return parser.read()
+  File "/usr/local/lib/python2.7/dist-packages/pandas/io/parsers.py", line 715, in read
+    ret = self._engine.read(nrows)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/io/parsers.py", line 1217, in read
+    index, names = self._make_index(data, alldata, names)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/io/parsers.py", line 882, in _make_index
+    index = self._get_simple_index(alldata, columns)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/io/parsers.py", line 916, in _get_simple_index
+    i = ix(idx)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/io/parsers.py", line 910, in ix
+    raise ValueError('Index %s invalid' % col)
+ValueError: Index Pathway invalid
+2015-06-26 14:16:32,398 ERROR base 13547 -1443890368 Internal Server Error: /document/doc6719/treat71/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 338, in dispatch
+    return super(PatientTreatmentDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 361, in get_context_data
+    df_pms1 = read_csv(file_pms1, index_col="Pathway").transpose()
+  File "/usr/local/lib/python2.7/dist-packages/pandas/io/parsers.py", line 470, in parser_f
+    return _read(filepath_or_buffer, kwds)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/io/parsers.py", line 256, in _read
+    return parser.read()
+  File "/usr/local/lib/python2.7/dist-packages/pandas/io/parsers.py", line 715, in read
+    ret = self._engine.read(nrows)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/io/parsers.py", line 1217, in read
+    index, names = self._make_index(data, alldata, names)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/io/parsers.py", line 882, in _make_index
+    index = self._get_simple_index(alldata, columns)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/io/parsers.py", line 916, in _get_simple_index
+    i = ix(idx)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/io/parsers.py", line 910, in ix
+    raise ValueError('Index %s invalid' % col)
+ValueError: Index Pathway invalid
+2015-06-26 14:16:58,542 ERROR base 19181 -1361052864 Internal Server Error: /document/doc6719/treat71/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 338, in dispatch
+    return super(PatientTreatmentDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 362, in get_context_data
+    df_required_paths = df_pms1[path_cols]
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 1781, in __getitem__
+    return self._getitem_array(key)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 1825, in _getitem_array
+    indexer = self.ix._convert_to_indexer(key, axis=1)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/indexing.py", line 1140, in _convert_to_indexer
+    raise KeyError('%s not in index' % objarr[mask])
+KeyError: "['AKT_Pathway' 'AKT_Pathway_Caspase_Cascade' 'AKT_Pathway_Death_Genes'\n 'AKT_Pathway_Elevation_of_Glucose_Import' 'AKT_Pathway_Genetic_Stability'\n 'AKT_Pathway_p73_Mediated_Apoptosis'\n 'AKT_Pathway_Regeneration_of_Cyclic_Nucleotide'\n 'AKT_Pathway_Synaptic_Signaling' 'Androgen_receptor_Pathway'\n 'Androgen_receptor_Pathway_AR_Degradation'\n 'Androgen_receptor_Pathway_Cell_Survival_._Cell_Growth'\n 'Androgen_receptor_Pathway_Gonadotropin_Regulation'\n 'Androgen_receptor_Pathway_Histone_Modification'\n 'Androgen_receptor_Pathway_Prostate_Differentiation_._Development'\n 'Androgen_receptor_Pathway_Sexual_Differentiation_._Sexual_Maturation_at_Puberty'\n 'ATM_Pathway_G2_Mitosis_Progression' 'ATM_Pathway_G2.M_Checkpoint_Arrest'\n 'ATM_Pathway_MDMX_Ubiquitination_._Degradation'\n 'ATM_Pathway_S_Phase_Progresion'\n 'Brca1_as_a_transcription_regulator_effect' 'cAMP_Pathway_Axonal_Growth'\n 'cAMP_Pathway_Cardiovascular_Homeostasis' 'cAMP_Pathway_Cell_Growth'\n 'cAMP_Pathway_Cell_Proliferation' 'cAMP_Pathway_Cell_Survival'\n 'cAMP_Pathway_Degradation_of_Cell_Cycle_Regulators'\n 'cAMP_Pathway_Glycogen_Synthesis' 'cAMP_Pathway_Myocardial_Contraction'\n 'cAMP_Pathway_Oncogenesis' 'cAMP_Pathway_Regulation_of_Cytoskeleton'\n 'Caspase_Cascade_Activated_Tissue_Trans_glutaminase'\n 'Caspase_Cascade_Cell_Survival' 'Caspase_Cascade_ICAD_Degradation'\n 'CD40_Pathway' 'CD40_Pathway_IKBs_Degradation'\n 'Cellular_Anti_Apoptosis_Pathway'\n 'Cellular_Anti_Apoptosis_Pathway_Apoptosis' 'Chemokine_Pathway'\n 'Chemokine_Pathway_Internalization_Degradation_Recycling'\n 'CREB_Pathway_Gene_Expression' 'DNA_Repair_Mechanisms_Pathway'\n 'ERK_Signaling_Pathway' 'Fas_m_Signaling_Pathway'\n 'Fas_p_Signaling_Pathway' 'Glucocorticoid_Receptor_Pathway'\n 'Glucocorticoid_Receptor_Pathway_Cell_cycle_progression'\n 'Glucocorticoid_Receptor_Pathway_Inflammatory_Cytokines' 'GPCR_Pathway'\n 'GPCR_Pathway_Gene_Expression' 'Growth_Hormone_Pathway'\n 'Growth_Hormone_Pathway_Gene_Expression'\n 'Growth_Hormone_Pathway_Glucose_Uptake'\n 'IGF1R_Signaling_Pathway_Glycogen_Synthesis' 'IL_10_Pathway'\n 'IL_10_Pathway_Gene_Expression' 'IL_10_Pathway_Stability_Determination'\n 'IL_2_Pathway' 'IL_2_Pathway_Apoptosis_Inhibition' 'IL_6_Pathway'\n 'Integrin_Signaling_Pathway_Cell_survival'\n 'Integrin_Signaling_Pathway_Cytoskeleton_contraction_integrin_modulation_cell_invasion_and_migration'\n 'Integrin_Signaling_Pathway_Translocates_to_the_nucleus'\n 'Interferon_Pathway' 'Interferon_Pathway_Transcription' 'IP3_Pathway'\n 'JAK_mStat_Pathway_Akt_Pathway' 'JNK_Pathway' 'MAPK_Family_Pathway'\n 'MAPK_Family_Pathway_IKBs_Degradation' 'MAPK_Family_Pathway_Translation'\n 'MAPK_Signaling_Pathway_Gene_Expression'\n 'Mitochondrial_Apopotosis_m_Pathway_Apoptosis'\n 'Mitochondrial_Apopotosis_m_Pathway_DNA_fragmentation' 'NGF_m_Pathway'\n 'p38_m_Signaling_Pathway' 'p38_p_Signaling_Pathway'\n 'p53_Signaling_m_Pathway' 'PAK_Pathway' 'PAK_Pathway_Actin_Cytoskeleton'\n 'PAK_Pathway_Myosin_Activation' 'PPAR_Pathway'\n 'RANK_Signaling_in_Osteoclast_Pathway' 'RAS_Pathway' 'SMAD_m_Pathway'\n 'SMAD_m_Pathway_Degradation' 'SMAD_p_Pathway' 'SMAD_p_Pathway_Degradation'\n 'STAT3_Pathway' 'TGF_beta_Pathway' 'TNF_m_Pathway'\n 'TNF_m_Pathway_Apoptosis' 'TNF_p_Pathway' 'TNF_p_Pathway_IKBs_degradation'\n 'TRAF_m_Pathway_IKBs_Degradation' 'TRAF_p_Pathway'\n 'TRAF_p_Pathway_IKBs_Degradation' 'z_klotho_Wnt_Pathway'] not in index"
+2015-06-26 14:17:09,529 ERROR base 19270 -1361052864 Internal Server Error: /document/doc6719/treat71/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 338, in dispatch
+    return super(PatientTreatmentDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 361, in get_context_data
+    df_pms1 = read_csv(file_pms1, index_col="Pathway").transpose()
+  File "/usr/local/lib/python2.7/dist-packages/pandas/io/parsers.py", line 470, in parser_f
+    return _read(filepath_or_buffer, kwds)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/io/parsers.py", line 256, in _read
+    return parser.read()
+  File "/usr/local/lib/python2.7/dist-packages/pandas/io/parsers.py", line 715, in read
+    ret = self._engine.read(nrows)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/io/parsers.py", line 1217, in read
+    index, names = self._make_index(data, alldata, names)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/io/parsers.py", line 882, in _make_index
+    index = self._get_simple_index(alldata, columns)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/io/parsers.py", line 916, in _get_simple_index
+    i = ix(idx)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/io/parsers.py", line 910, in ix
+    raise ValueError('Index %s invalid' % col)
+ValueError: Index Pathway invalid
+2015-06-26 14:17:45,342 ERROR base 19461 -1361052864 Internal Server Error: /document/doc6719/treat71/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 338, in dispatch
+    return super(PatientTreatmentDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 362, in get_context_data
+    df_required_paths = df_pms1[path_cols]
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 1781, in __getitem__
+    return self._getitem_array(key)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 1825, in _getitem_array
+    indexer = self.ix._convert_to_indexer(key, axis=1)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/indexing.py", line 1140, in _convert_to_indexer
+    raise KeyError('%s not in index' % objarr[mask])
+KeyError: "['AKT_Pathway' 'AKT_Pathway_Caspase_Cascade' 'AKT_Pathway_Death_Genes'\n 'AKT_Pathway_Elevation_of_Glucose_Import' 'AKT_Pathway_Genetic_Stability'\n 'AKT_Pathway_p73_Mediated_Apoptosis'\n 'AKT_Pathway_Regeneration_of_Cyclic_Nucleotide'\n 'AKT_Pathway_Synaptic_Signaling' 'Androgen_receptor_Pathway'\n 'Androgen_receptor_Pathway_AR_Degradation'\n 'Androgen_receptor_Pathway_Cell_Survival_._Cell_Growth'\n 'Androgen_receptor_Pathway_Gonadotropin_Regulation'\n 'Androgen_receptor_Pathway_Histone_Modification'\n 'Androgen_receptor_Pathway_Prostate_Differentiation_._Development'\n 'Androgen_receptor_Pathway_Sexual_Differentiation_._Sexual_Maturation_at_Puberty'\n 'ATM_Pathway_G2_Mitosis_Progression' 'ATM_Pathway_G2.M_Checkpoint_Arrest'\n 'ATM_Pathway_MDMX_Ubiquitination_._Degradation'\n 'ATM_Pathway_S_Phase_Progresion'\n 'Brca1_as_a_transcription_regulator_effect' 'cAMP_Pathway_Axonal_Growth'\n 'cAMP_Pathway_Cardiovascular_Homeostasis' 'cAMP_Pathway_Cell_Growth'\n 'cAMP_Pathway_Cell_Proliferation' 'cAMP_Pathway_Cell_Survival'\n 'cAMP_Pathway_Degradation_of_Cell_Cycle_Regulators'\n 'cAMP_Pathway_Glycogen_Synthesis' 'cAMP_Pathway_Myocardial_Contraction'\n 'cAMP_Pathway_Oncogenesis' 'cAMP_Pathway_Regulation_of_Cytoskeleton'\n 'Caspase_Cascade_Activated_Tissue_Trans_glutaminase'\n 'Caspase_Cascade_Cell_Survival' 'Caspase_Cascade_ICAD_Degradation'\n 'CD40_Pathway' 'CD40_Pathway_IKBs_Degradation'\n 'Cellular_Anti_Apoptosis_Pathway'\n 'Cellular_Anti_Apoptosis_Pathway_Apoptosis' 'Chemokine_Pathway'\n 'Chemokine_Pathway_Internalization_Degradation_Recycling'\n 'CREB_Pathway_Gene_Expression' 'DNA_Repair_Mechanisms_Pathway'\n 'ERK_Signaling_Pathway' 'Fas_m_Signaling_Pathway'\n 'Fas_p_Signaling_Pathway' 'Glucocorticoid_Receptor_Pathway'\n 'Glucocorticoid_Receptor_Pathway_Cell_cycle_progression'\n 'Glucocorticoid_Receptor_Pathway_Inflammatory_Cytokines' 'GPCR_Pathway'\n 'GPCR_Pathway_Gene_Expression' 'Growth_Hormone_Pathway'\n 'Growth_Hormone_Pathway_Gene_Expression'\n 'Growth_Hormone_Pathway_Glucose_Uptake'\n 'IGF1R_Signaling_Pathway_Glycogen_Synthesis' 'IL_10_Pathway'\n 'IL_10_Pathway_Gene_Expression' 'IL_10_Pathway_Stability_Determination'\n 'IL_2_Pathway' 'IL_2_Pathway_Apoptosis_Inhibition' 'IL_6_Pathway'\n 'Integrin_Signaling_Pathway_Cell_survival'\n 'Integrin_Signaling_Pathway_Cytoskeleton_contraction_integrin_modulation_cell_invasion_and_migration'\n 'Integrin_Signaling_Pathway_Translocates_to_the_nucleus'\n 'Interferon_Pathway' 'Interferon_Pathway_Transcription' 'IP3_Pathway'\n 'JAK_mStat_Pathway_Akt_Pathway' 'JNK_Pathway' 'MAPK_Family_Pathway'\n 'MAPK_Family_Pathway_IKBs_Degradation' 'MAPK_Family_Pathway_Translation'\n 'MAPK_Signaling_Pathway_Gene_Expression'\n 'Mitochondrial_Apopotosis_m_Pathway_Apoptosis'\n 'Mitochondrial_Apopotosis_m_Pathway_DNA_fragmentation' 'NGF_m_Pathway'\n 'p38_m_Signaling_Pathway' 'p38_p_Signaling_Pathway'\n 'p53_Signaling_m_Pathway' 'PAK_Pathway' 'PAK_Pathway_Actin_Cytoskeleton'\n 'PAK_Pathway_Myosin_Activation' 'PPAR_Pathway'\n 'RANK_Signaling_in_Osteoclast_Pathway' 'RAS_Pathway' 'SMAD_m_Pathway'\n 'SMAD_m_Pathway_Degradation' 'SMAD_p_Pathway' 'SMAD_p_Pathway_Degradation'\n 'STAT3_Pathway' 'TGF_beta_Pathway' 'TNF_m_Pathway'\n 'TNF_m_Pathway_Apoptosis' 'TNF_p_Pathway' 'TNF_p_Pathway_IKBs_degradation'\n 'TRAF_m_Pathway_IKBs_Degradation' 'TRAF_p_Pathway'\n 'TRAF_p_Pathway_IKBs_Degradation' 'z_klotho_Wnt_Pathway'] not in index"
+2015-06-26 14:21:32,966 ERROR base 19461 -1390417088 Internal Server Error: /document/doc6719/treat71/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 338, in dispatch
+    return super(PatientTreatmentDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 362, in get_context_data
+    df_required_paths = df_pms1[path_cols]
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 1781, in __getitem__
+    return self._getitem_array(key)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 1825, in _getitem_array
+    indexer = self.ix._convert_to_indexer(key, axis=1)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/indexing.py", line 1140, in _convert_to_indexer
+    raise KeyError('%s not in index' % objarr[mask])
+KeyError: "['AKT_Pathway' 'AKT_Pathway_Caspase_Cascade' 'AKT_Pathway_Death_Genes'\n 'AKT_Pathway_Elevation_of_Glucose_Import' 'AKT_Pathway_Genetic_Stability'\n 'AKT_Pathway_p73_Mediated_Apoptosis'\n 'AKT_Pathway_Regeneration_of_Cyclic_Nucleotide'\n 'AKT_Pathway_Synaptic_Signaling' 'Androgen_receptor_Pathway'\n 'Androgen_receptor_Pathway_AR_Degradation'\n 'Androgen_receptor_Pathway_Cell_Survival_._Cell_Growth'\n 'Androgen_receptor_Pathway_Gonadotropin_Regulation'\n 'Androgen_receptor_Pathway_Histone_Modification'\n 'Androgen_receptor_Pathway_Prostate_Differentiation_._Development'\n 'Androgen_receptor_Pathway_Sexual_Differentiation_._Sexual_Maturation_at_Puberty'\n 'ATM_Pathway_G2_Mitosis_Progression' 'ATM_Pathway_G2.M_Checkpoint_Arrest'\n 'ATM_Pathway_MDMX_Ubiquitination_._Degradation'\n 'ATM_Pathway_S_Phase_Progresion'\n 'Brca1_as_a_transcription_regulator_effect' 'cAMP_Pathway_Axonal_Growth'\n 'cAMP_Pathway_Cardiovascular_Homeostasis' 'cAMP_Pathway_Cell_Growth'\n 'cAMP_Pathway_Cell_Proliferation' 'cAMP_Pathway_Cell_Survival'\n 'cAMP_Pathway_Degradation_of_Cell_Cycle_Regulators'\n 'cAMP_Pathway_Glycogen_Synthesis' 'cAMP_Pathway_Myocardial_Contraction'\n 'cAMP_Pathway_Oncogenesis' 'cAMP_Pathway_Regulation_of_Cytoskeleton'\n 'Caspase_Cascade_Activated_Tissue_Trans_glutaminase'\n 'Caspase_Cascade_Cell_Survival' 'Caspase_Cascade_ICAD_Degradation'\n 'CD40_Pathway' 'CD40_Pathway_IKBs_Degradation'\n 'Cellular_Anti_Apoptosis_Pathway'\n 'Cellular_Anti_Apoptosis_Pathway_Apoptosis' 'Chemokine_Pathway'\n 'Chemokine_Pathway_Internalization_Degradation_Recycling'\n 'CREB_Pathway_Gene_Expression' 'DNA_Repair_Mechanisms_Pathway'\n 'ERK_Signaling_Pathway' 'Fas_m_Signaling_Pathway'\n 'Fas_p_Signaling_Pathway' 'Glucocorticoid_Receptor_Pathway'\n 'Glucocorticoid_Receptor_Pathway_Cell_cycle_progression'\n 'Glucocorticoid_Receptor_Pathway_Inflammatory_Cytokines' 'GPCR_Pathway'\n 'GPCR_Pathway_Gene_Expression' 'Growth_Hormone_Pathway'\n 'Growth_Hormone_Pathway_Gene_Expression'\n 'Growth_Hormone_Pathway_Glucose_Uptake'\n 'IGF1R_Signaling_Pathway_Glycogen_Synthesis' 'IL_10_Pathway'\n 'IL_10_Pathway_Gene_Expression' 'IL_10_Pathway_Stability_Determination'\n 'IL_2_Pathway' 'IL_2_Pathway_Apoptosis_Inhibition' 'IL_6_Pathway'\n 'Integrin_Signaling_Pathway_Cell_survival'\n 'Integrin_Signaling_Pathway_Cytoskeleton_contraction_integrin_modulation_cell_invasion_and_migration'\n 'Integrin_Signaling_Pathway_Translocates_to_the_nucleus'\n 'Interferon_Pathway' 'Interferon_Pathway_Transcription' 'IP3_Pathway'\n 'JAK_mStat_Pathway_Akt_Pathway' 'JNK_Pathway' 'MAPK_Family_Pathway'\n 'MAPK_Family_Pathway_IKBs_Degradation' 'MAPK_Family_Pathway_Translation'\n 'MAPK_Signaling_Pathway_Gene_Expression'\n 'Mitochondrial_Apopotosis_m_Pathway_Apoptosis'\n 'Mitochondrial_Apopotosis_m_Pathway_DNA_fragmentation' 'NGF_m_Pathway'\n 'p38_m_Signaling_Pathway' 'p38_p_Signaling_Pathway'\n 'p53_Signaling_m_Pathway' 'PAK_Pathway' 'PAK_Pathway_Actin_Cytoskeleton'\n 'PAK_Pathway_Myosin_Activation' 'PPAR_Pathway'\n 'RANK_Signaling_in_Osteoclast_Pathway' 'RAS_Pathway' 'SMAD_m_Pathway'\n 'SMAD_m_Pathway_Degradation' 'SMAD_p_Pathway' 'SMAD_p_Pathway_Degradation'\n 'STAT3_Pathway' 'TGF_beta_Pathway' 'TNF_m_Pathway'\n 'TNF_m_Pathway_Apoptosis' 'TNF_p_Pathway' 'TNF_p_Pathway_IKBs_degradation'\n 'TRAF_m_Pathway_IKBs_Degradation' 'TRAF_p_Pathway'\n 'TRAF_p_Pathway_IKBs_Degradation' 'z_klotho_Wnt_Pathway'] not in index"
+2015-06-26 14:23:21,600 ERROR base 21185 -1379927232 Internal Server Error: /document/doc6719/treat83/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 338, in dispatch
+    return super(PatientTreatmentDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 382, in get_context_data
+    if patient_pms1 <= r_mean:
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/generic.py", line 709, in __nonzero__
+    .format(self.__class__.__name__))
+ValueError: The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().
+2015-06-26 14:25:03,280 ERROR base 21185 -1400898752 Internal Server Error: /document/doc6719/treat86/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 338, in dispatch
+    return super(PatientTreatmentDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 410, in get_context_data
+    ratio = float(patient_Rcount)/float(path_num)
+ZeroDivisionError: float division by zero
+2015-06-26 14:25:36,619 ERROR base 22920 -1360176320 Internal Server Error: /document/doc6719/treat86/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 338, in dispatch
+    return super(PatientTreatmentDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 415, in get_context_data
+    patient_votes = float(patient_Rcount)/float(path_num)
+ZeroDivisionError: float division by zero
+2015-06-26 14:25:55,453 ERROR base 23102 -1360176320 Internal Server Error: /document/doc6719/treat86/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 338, in dispatch
+    return super(PatientTreatmentDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 450, in get_context_data
+    ratio = float(Rcount)/float(len(path_cols))
+ZeroDivisionError: float division by zero
+2015-06-26 14:26:19,650 ERROR base 23257 -1360004288 Internal Server Error: /document/doc6719/treat86/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 338, in dispatch
+    return super(PatientTreatmentDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 471, in get_context_data
+    lResponders.append(float(Rcount)/float(len_p) )
+ZeroDivisionError: float division by zero
+2015-06-26 14:26:54,038 ERROR base 23536 -1360004288 Internal Server Error: /document/doc6719/treat86/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 338, in dispatch
+    return super(PatientTreatmentDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 493, in get_context_data
+    AUC = (specificity+sensitivity)/2
+UnboundLocalError: local variable 'sensitivity' referenced before assignment
+2015-06-26 14:27:37,491 ERROR base 23799 -1360176320 Internal Server Error: /document/doc6719/treat86/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 338, in dispatch
+    return super(PatientTreatmentDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 493, in get_context_data
+    AUC = (specificity+sensitivity)/2
+UnboundLocalError: local variable 'sensitivity' referenced before assignment
+2015-06-26 14:31:43,069 ERROR base 24115 -1495270592 Internal Server Error: /medic/generatefullreport/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 892, in dispatch
+    return super(MedicAjaxGenerateFullReport, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/medic/views.py", line 835, in post
+    cells[0].text = request.POST.get('t_treatment'+treat_id)
+  File "/usr/local/lib/python2.7/dist-packages/docx/table.py", line 154, in text
+    r.text = text
+  File "/usr/local/lib/python2.7/dist-packages/docx/oxml/text.py", line 251, in text
+    _RunContentAppender.append_to_run_from_text(self, text)
+  File "/usr/local/lib/python2.7/dist-packages/docx/oxml/text.py", line 399, in append_to_run_from_text
+    appender.add_text(text)
+  File "/usr/local/lib/python2.7/dist-packages/docx/oxml/text.py", line 406, in add_text
+    for char in text:
+TypeError: 'NoneType' object is not iterable

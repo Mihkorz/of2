@@ -407,12 +407,12 @@ class PatientTreatmentDetail(DetailView):
         for index, val in divided_df_patient.iteritems():
             if val>1:
                 patient_Rcount+=1
-        ratio = float(patient_Rcount)/float(path_num)
+        ratio = float(patient_Rcount)/float(path_num) if float(path_num)>0 else 0
         
         lResponders = []
         lnonResponders = []
         flag_responder = 1
-        patient_votes = float(patient_Rcount)/float(path_num)
+        patient_votes = float(patient_Rcount)/float(path_num) if float(path_num)>0 else 0
         if ratio > 0.5:
             lResponders.append(patient_votes )
         else:
@@ -447,7 +447,7 @@ class PatientTreatmentDetail(DetailView):
             for index, val in divided_df.iteritems():
                 if val>1:
                     Rcount+= 1
-            ratio = float(Rcount)/float(len(path_cols))
+            ratio = float(Rcount)/float(len(path_cols)) if len(path_cols)>0 else 0
             if status == 'RES':
                 num_responders+=1
             
@@ -464,7 +464,7 @@ class PatientTreatmentDetail(DetailView):
                 num_guessed_wrong+=1
                 false_positive+=1 
             
-            len_p = len(path_cols)
+            len_p = len(path_cols) if len(path_cols)>0 else 1
             if status == 'NRES': 
                 lnonResponders.append(float(Rcount)/float(len_p))
             else:
@@ -485,11 +485,11 @@ class PatientTreatmentDetail(DetailView):
         try:
             specificity = (float(true_negative))/(false_positive+true_negative)
         except:
-            specificity = 'Not difined.'
+            specificity = 0.0001
         try:    
             sensitivity = (float(true_positive))/(true_positive+false_negative)
         except:
-            specificity = 'Not difined.'
+            sensitivity = 0.0001
         AUC = (specificity+sensitivity)/2
         accuracy = (true_positive+true_negative)/float(all_samples)
         
@@ -620,28 +620,28 @@ class MedicPatientCalculation(FormView):
             res_nres_joined = res_df.join(nres_df, how='inner')
             
         """
-        """ Performing HARMONY between norms and responders+non-responders """
+        """ Performing HARMONY between norms and responders+non-responders 
         try:
-                
+            
             df_pl2 = DataFrame({})
             
             df_after_xpn=Shambhala_harmonisation(process_doc_df, df_pl2, harmony_type='harmony_afx_static', p1_names=0, p2_names=0,
                                  iterations=1, gene_cluster='skmeans', 
                                  assay_cluster='hclust', corr='pearson', skip_match=False)
             """
+        """
             df_after_xpn=Shambhala_harmonisation(res_nres_joined, process_doc_df, harmony_type='harmony_static_equi', p1_names=0, p2_names=0,
                                  iterations=10, K=10, L=4, log_scale=True, gene_cluster='kmeans', 
                                  assay_cluster='kmeans', corr='pearson', skip_match=False)
-            """
+            
             #df_after_xpn = XPN_normalisation(res_nres_joined, process_doc_df, iterations=10)
         except:
             raise
-             
-            #df_after_xpn = read_csv(settings.MEDIA_ROOT+"/xpn_done.csv", index_col='SYMBOL')
+            """ 
             
-        """ calculating PAS1 for each treatment """
+        """ calculating PAS1 for patient """
             
-        df_for_pas1 = df_after_xpn[original_columns]
+        df_for_pas1 = process_doc_df[original_columns]
         norms_df = df_for_pas1[[norm for norm in [col for col in df_for_pas1.columns if 'Norm' in col]]]
         log_norms_df = np.log(norms_df)#use this for t-test, assuming log(norm) is distributed normally
         s_mean_norm = norms_df.apply(gmean, axis=1) #series of mean norms for CNR
@@ -830,49 +830,52 @@ class MedicAjaxGenerateFullReport(TemplateView):
         
         
         for treat in TreatmentMethod.objects.filter(nosology = 1):
-            treat_id = str(treat.id)
-            cells = table.add_row().cells
-            cells[0].text = request.POST.get('t_treatment'+treat_id)
-            cells[1].text = request.POST.get('t_responder'+treat_id)
-            
+            try:
+                treat_id = str(treat.id)
+                cells = table.add_row().cells
+                cells[0].text = request.POST.get('t_treatment'+treat_id)
+                cells[1].text = request.POST.get('t_responder'+treat_id)
+            except:
+                pass
         document.add_page_break()
         
         for treat in TreatmentMethod.objects.filter(nosology = 1):
+            try:
+                treat_id = str(treat.id)
             
-            treat_id = str(treat.id)
+                t_n_patients = request.POST.get('t_n_patients'+treat_id)
+                t_hist = request.POST.get('t_hist'+treat_id)
+                t_grade = request.POST.get('t_grade'+treat_id)
+                t_hormone = request.POST.get('t_hormone'+treat_id)
+                t_her2 = request.POST.get('t_her2'+treat_id)
+                t_stage = request.POST.get('t_stage'+treat_id)
+                t_treatment = request.POST.get('t_treatment'+treat_id)
+                t_cit = request.POST.get('t_cit'+treat_id)
+                t_org = request.POST.get('t_org'+treat_id)
+                svg = request.POST.get('svg'+treat_id)
             
-            t_n_patients = request.POST.get('t_n_patients'+treat_id)
-            t_hist = request.POST.get('t_hist'+treat_id)
-            t_grade = request.POST.get('t_grade'+treat_id)
-            t_hormone = request.POST.get('t_hormone'+treat_id)
-            t_her2 = request.POST.get('t_her2'+treat_id)
-            t_stage = request.POST.get('t_stage'+treat_id)
-            t_treatment = request.POST.get('t_treatment'+treat_id)
-            t_cit = request.POST.get('t_cit'+treat_id)
-            t_org = request.POST.get('t_org'+treat_id)
-            svg = request.POST.get('svg'+treat_id)
-            
-            fout = open(settings.MEDIA_ROOT+'/medic/output.png','w')
+                fout = open(settings.MEDIA_ROOT+'/medic/output.png','w')
         
-            cairosvg.svg2png(bytestring=svg,write_to=fout)
+                cairosvg.svg2png(bytestring=svg,write_to=fout)
 
-            fout.close()
+                fout.close()
             
-            document.add_heading('Treatment description:', level=2)
+                document.add_heading('Treatment description:', level=2)
         
-            document.add_paragraph('Treatment: '+t_treatment)
-            document.add_paragraph('Number of patients: '+t_n_patients)
-            document.add_paragraph('Histological type: '+t_hist)
-            document.add_paragraph('Grade: ' + t_grade)
-            document.add_paragraph('Hormone receptor status: '+t_hormone)
-            document.add_paragraph('HER2 status: '+t_her2)
-            document.add_paragraph('Stage: '+t_stage)
-            document.add_paragraph('Citation(s): '+t_cit)
-            document.add_paragraph('Organization name: '+t_org)       
-            document.add_picture(settings.MEDIA_ROOT+'/medic/output.png', width=Inches(7.0))
+                document.add_paragraph('Treatment: '+t_treatment)
+                document.add_paragraph('Number of patients: '+t_n_patients)
+                document.add_paragraph('Histological type: '+t_hist)
+                document.add_paragraph('Grade: ' + t_grade)
+                document.add_paragraph('Hormone receptor status: '+t_hormone)
+                document.add_paragraph('HER2 status: '+t_her2)
+                document.add_paragraph('Stage: '+t_stage)
+                document.add_paragraph('Citation(s): '+t_cit)
+                document.add_paragraph('Organization name: '+t_org)       
+                document.add_picture(settings.MEDIA_ROOT+'/medic/output.png', width=Inches(7.0))
         
-            document.add_page_break()
-            
+                document.add_page_break()
+            except:
+                pass
         f = StringIO()
         document.save(f)
         
