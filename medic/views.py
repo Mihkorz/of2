@@ -112,7 +112,7 @@ class MedicTreatmentDetail(DetailView):
         
         for name, group in grouped:
             status = "NRES" if "NRES" in name else "RES"
-            path_cols = [col for col in group.columns if col not in ['Sample', 'group']]
+            path_cols = [col for col in group.columns if col not in ['Sample', 'group', 'Unnamed: 0']]
             path_df = group[path_cols]
             
             divided_df = path_df.T[path_df.index[1]] / path_df.T[path_df.index[0]]
@@ -121,10 +121,10 @@ class MedicTreatmentDetail(DetailView):
                 if val>1:
                     Rcount+= 1
             
-            ratio = float(Rcount)/float(len(path_cols))
-            if ratio > 0.5 and status == 'RES':
+            ratio = float(Rcount)/float(len(path_cols)) if len(path_cols)>0 else 0
+            if ratio >= 0.5 and status == 'RES':
                 true_positive+=1
-            if ratio > 0.5 and status == 'NRES':
+            if ratio >= 0.5 and status == 'NRES':
                 false_negative+=1
             if ratio <= 0.5 and status == 'NRES':
                 true_negative+=1
@@ -142,6 +142,22 @@ class MedicTreatmentDetail(DetailView):
                 lnonResponders.append(ratio)
             else:
                 lResponders.append(ratio)
+        
+        """ Statistical values """
+        try:
+            specificity = (float(true_negative))/(false_positive+true_negative)
+        except:
+            specificity = 0.00001
+        try:
+            sensitivity = (float(true_positive))/(true_positive+false_negative)
+        except: sensitivity = 0.00001
+        AUC = (specificity+sensitivity)/2
+        accuracy = (true_positive+true_negative)/float(all_samples)
+        
+        context['specificity'] = specificity
+        context['sensitivity'] = sensitivity
+        context['AUC'] = AUC
+        context['accuracy'] = accuracy
         
         from collections import Counter, OrderedDict
         
@@ -165,7 +181,7 @@ class MedicTreatmentDetail(DetailView):
             false_negative = 0
             for name, group in grouped:
                 status = "NRES" if "NRES" in name else "RES"
-                path_cols = [col for col in group.columns if col not in ['Sample', 'group']]
+                path_cols = [col for col in group.columns if col not in ['Sample', 'group', 'Unnamed: 0']]
                 path_df = group[path_cols]
             
                 divided_df = path_df.T[path_df.index[1]] / path_df.T[path_df.index[0]]
@@ -173,10 +189,10 @@ class MedicTreatmentDetail(DetailView):
                 for index, val in divided_df.iteritems():
                     if val>1:
                         Rcount+= 1
-                ratio = float(Rcount)/float(len(path_cols))
+                ratio = float(Rcount)/float(len(path_cols)) if len(path_cols)>0 else 0
                 if ratio >= score and status == 'RES':
                     true_positive+=1
-                if ratio > score and status == 'NRES':
+                if ratio >= score and status == 'NRES':
                     false_negative+=1
                 if ratio <= score and status == 'NRES':
                     true_negative+=1
@@ -203,26 +219,10 @@ class MedicTreatmentDetail(DetailView):
                 dBalnc[score] = AUC
                 dAccur[score] = accuracy
             #raise Exception('true')
-            
-        
-        """ Statistical values """
-        try:
-            specificity = (float(true_negative))/(false_positive+true_negative)
-        except:
-            specificity = 0.00001
-        try:
-            sensitivity = (float(true_positive))/(true_positive+false_negative)
-        except: sensitivity = 0.00001
-        AUC = (specificity+sensitivity)/2
-        accuracy = (true_positive+true_negative)/float(all_samples)
-               
+             
         context['nres'] = OrderedDict(sorted(nresponders.items()))
         context['res'] = OrderedDict(sorted(responders.items()))                
         
-        context['specificity'] = specificity
-        context['sensitivity'] = sensitivity
-        context['AUC'] = AUC
-        context['accuracy'] = accuracy
         
         """ getting best statistaical values for different score"""
         import operator
@@ -367,8 +367,10 @@ class PatientTreatmentDetail(DetailView):
         patient_responder = {}
         patient_nonresponder = {}
         
+        from scipy.stats import norm
+        
         for path_name in path_cols:
-            from scipy.stats import norm 
+            
             if path_name in df_output.index:
                 patient_pms1 = df_output.loc[path_name.strip()].item()
             else:
@@ -397,7 +399,7 @@ class PatientTreatmentDetail(DetailView):
         dict_for_df={}
         dict_for_df['Responder'] = patient_responder
         dict_for_df['Nonresponder'] = patient_nonresponder
-        
+        #raise Exception('ujhfd') 
         df_patient = DataFrame.from_dict(dict_for_df).transpose()
         
         divided_df_patient = df_patient.T[df_patient.index[1]] / df_patient.T[df_patient.index[0]]
@@ -478,7 +480,7 @@ class PatientTreatmentDetail(DetailView):
             responders[x]/=float(all_samples)
             responders[x]*=100
                
-        
+       
         """ Statistical values """
         try:
             specificity = (float(true_negative))/(false_positive+true_negative)
