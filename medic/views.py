@@ -451,10 +451,10 @@ class PatientTreatmentDetail(DetailView):
             if status == 'RES':
                 num_responders+=1
             
-            if ratio > 0.5 and status == 'RES':
+            if ratio >= 0.5 and status == 'RES':
                 num_guessed_rigth+=1
                 true_positive+=1
-            if ratio > 0.5 and status == 'NRES':
+            if ratio >= 0.5 and status == 'NRES':
                 num_guessed_wrong+=1
                 false_negative+=1
             if ratio <= 0.5 and status == 'NRES':
