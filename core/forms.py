@@ -24,6 +24,8 @@ class CalculationParametersForm(forms.Form):
                                    initial=True, required=False)
     use_fdr = forms.BooleanField(label="Use FDR for T-test ",
                                    initial=True, required=False)
+    use_new_fdr = forms.BooleanField(label="New FDR for T-test ",
+                                   initial=False, required=False)
     use_ttest_1sam = forms.BooleanField(label="Use 1sample T-test ",
                                    initial=False, required=False)
     pvalue_threshold = forms.FloatField( label="p-value threshold", initial=0.05, required=False)

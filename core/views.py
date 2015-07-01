@@ -72,6 +72,7 @@ class CoreSetCalculationParameters(FormView):
         #filters
         use_ttest = form.cleaned_data.get('use_ttest', True)
         use_fdr = form.cleaned_data.get('use_fdr', True)
+        use_new_fdr = form.cleaned_data.get('use_new_fdr', True)
         use_ttest_stat = form.cleaned_data.get('use_ttest_stat', True) #for OF_cnr_stat files
         use_fdr_stat = form.cleaned_data.get('use_fdr_stat', False) #for OF_cnr_stat files
         use_ttest_1sam = form.cleaned_data.get('use_ttest_1sam', False) 
@@ -230,8 +231,11 @@ class CoreSetCalculationParameters(FormView):
             series_p_values = log_process_doc_df.apply(calculate_ttest, axis=1).fillna(1)
             process_doc_df['p_value'] = series_p_values
             cnr_doc_df['p_value'] = series_p_values
-            if use_fdr:
-                fdr_q_values = fdr_corr(np.array(series_p_values))
+            if use_fdr or use_new_fdr:
+                if use_new_fdr:
+                    fdr_q_values = fdr_corr(np.array(series_p_values), pi0=-1)
+                else:
+                    fdr_q_values = fdr_corr(np.array(series_p_values))
                 fdr_df = DataFrame({'p' : series_p_values,
                                     'q' : fdr_q_values
                                     })
@@ -243,8 +247,7 @@ class CoreSetCalculationParameters(FormView):
             else:
                 cnr_doc_df[process_doc_df['p_value']>=qvalue_threshold] = 1
                 process_doc_df = process_doc_df[process_doc_df['p_value']<pvalue_threshold]
-                
-            
+                   
         if use_ttest_1sam or use_cnr or use_sigma:
             norms_df = process_doc_df[[norm for norm in [col for col in process_doc_df.columns if 'Norm' in col]]]
             log_norms_df = np.log(norms_df)#use this for t-test, assuming log(norm) is distributed normally
@@ -535,7 +538,7 @@ class CoreSetCalculationParameters(FormView):
             
             
                 for tumour in tumour_columns: #loop thought samples columns
-                    print "TUMOUR: " + tumour
+                    #print "TUMOUR: " + tumour
                     
                     DS1 = 0 # DrugScore 1
                     DS2 = 0 # DrugScore 2
@@ -620,6 +623,7 @@ class CoreSetCalculationParameters(FormView):
             output_ds3_df = output_ds3_df.set_index('Drug')
         
                
+        print "DRUGS DONE"
                     
         """ Saving results to Excel file and to database """
         path = os.path.join('users', str(input_document.project.owner),
@@ -649,15 +653,13 @@ class CoreSetCalculationParameters(FormView):
                 
             params_df.to_excel(writer,'Parameters')
         
-        
         output_doc.document = path+"/"+os.path.basename(output_file)
         output_doc.related_doc = input_document
         output_doc.save() 
         
         """Create CNR file available for downloading """
         
-        
-        """ Saving CNR results to Excel file""" 
+        """ Saving CNR results to Excel file """
         path = os.path.join('users', str(input_document.project.owner),
                                             str(input_document.project),'process')
         file_name = 'cnr_'+str(output_doc.get_filename())
@@ -670,8 +672,6 @@ class CoreSetCalculationParameters(FormView):
             cnr_doc_df.to_excel(writer,'CNR')
         with ExcelWriter(output_file_row, index=False) as writer:
             cnr_unchanged_df.to_excel(writer,'CNR')   
-        
-        
         
         
         return HttpResponseRedirect(reverse('document_detail', args=(output_doc.id,)))
