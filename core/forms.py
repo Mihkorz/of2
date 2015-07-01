@@ -22,9 +22,9 @@ class CalculationParametersForm(forms.Form):
     cnr_up = forms.FloatField(label="CNR upper limit", initial=1.5, required=False)
     use_ttest = forms.BooleanField(label="Use T-test for gene distribution ",
                                    initial=True, required=False)
-    use_fdr = forms.BooleanField(label="Use FDR for T-test ",
+    use_fdr = forms.BooleanField(label="Use Benjamini FDR for T-test ",
                                    initial=True, required=False)
-    use_new_fdr = forms.BooleanField(label="New FDR for T-test ",
+    use_new_fdr = forms.BooleanField(label="New  Storey FDR for T-test ",
                                    initial=False, required=False)
     use_ttest_1sam = forms.BooleanField(label="Use 1sample T-test ",
                                    initial=False, required=False)
