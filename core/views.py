@@ -409,8 +409,13 @@ class CoreSetCalculationParameters(FormView):
                         _, p_value = ttest_1samp(log_norms_df, np.log(col), axis=1)
                         s_p_value = Series(p_value, index = col.index).fillna(1)
                 
-                        if use_fdr:
-                            fdr_q_values = fdr_corr(np.array(s_p_value))
+                        if use_fdr or use_new_fdr:
+                            if use_new_fdr:
+                                fdr_q_values = fdr_corr(np.array(s_p_value), pi0=-1)
+                            else:
+                                fdr_q_values = fdr_corr(np.array(s_p_value))
+                        #if use_fdr:
+                            #fdr_q_values = fdr_corr(np.array(s_p_value))
                             col_CNR = col_CNR[(fdr_q_values<qvalue_threshold)] 
                         else:
                             col_CNR = col_CNR[(s_p_value<pvalue_threshold)]
@@ -623,7 +628,7 @@ class CoreSetCalculationParameters(FormView):
             output_ds3_df = output_ds3_df.set_index('Drug')
         
                
-        print "DRUGS DONE"
+        #print "DRUGS DONE"
                     
         """ Saving results to Excel file and to database """
         path = os.path.join('users', str(input_document.project.owner),
@@ -771,6 +776,30 @@ class Test(TemplateView):
     def get_context_data(self, **kwargs):
               
         context = super(Test, self).get_context_data(**kwargs)
+        
+        from lxml import etree
+        
+        for path in Pathway.objects.filter(organism='human', database='primary_old'):
+            root = etree.Element("pathway", name=path.name, title=path.name, org="hsa", number=str(path.id))  
+            
+            for node in path.node_set.all():
+                entry = etree.SubElement(root, "entry", id=str(node.id), name=node.name, type="gene")
+                for comp in node.component_set.all():
+                    graph = etree.SubElement(entry, "graphics", name=comp.name)
+                    
+                for inrel in node.inrelations.all():
+                    if inrel.reltype == '1':
+                        relColor = 'activation'
+                    if inrel.reltype == '0':
+                        relColor = 'inhibition'
+                    relation = etree.SubElement(root, "relation", entry1=str(inrel.fromnode.id),
+                                                 entry2=str(inrel.tonode.id), type=relColor)
+            applic = open(settings.MEDIA_ROOT+"/xmlpaths/"+path.name+".xml", "w")
+            handle = etree.tostring(root, pretty_print=True, encoding='utf-8', xml_declaration=True)
+            applic.writelines(handle)
+            applic.close()
+        raise Exception('stop')
+        
         """ breast module statistics
         import collections
         for fn in os.listdir(settings.MEDIA_ROOT+"/diffparams/"):

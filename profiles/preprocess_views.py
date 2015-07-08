@@ -166,7 +166,7 @@ class IlluminaPreprocess(FormView):
             except ObjectDoesNotExist:
                 genes.append(row['SYMBOL'])
         """
-        raise Exception('exception')
+        #raise Exception('exception')
         return HttpResponseRedirect(self.success_url+document.project.name)
     
     def form_invalid(self, form):
