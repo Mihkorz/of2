@@ -13,7 +13,9 @@ class CalculationParametersForm(forms.Form):
     DB_CHOICES = (('primary_old', 'Primary Pathway Database (old)'),
                   ('primary_new', 'Primary Pathway Database (new)'),
                   ('metabolism', 'Metabolism Pathway Database'),
-                  ('cytoskeleton', 'Cytoskeleton Pathway Database'),)
+                  ('cytoskeleton', 'Cytoskeleton Pathway Database'),
+                  ('kegg', 'KEGG Pathway Database'),
+                  ('kegg_adjusted', 'KEGG Adjusted Pathway Database'),)
     #FILTERS
     use_sigma = forms.BooleanField(label="Use sigma filter", initial=False, required=False)
     sigma_num = forms.FloatField( label="Sigma amount \n (deprecated)", initial=2, required=False)
