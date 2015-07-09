@@ -14,6 +14,8 @@ PATHWAY_DATABASE = (
     ('primary_new', 'Primary Pathway Database (new)'),
     ('metabolism', 'Metabolism Pathway Database'),
     ('cytoskeleton', 'Cytoskeleton Pathway Database'),
+    ('kegg', 'KEGG Pathway Database'),
+    ('kegg_adjusted', 'KEGG Adjusted Pathway Database'),
 ) 
 
 PATHWAY_ORGANISM = (

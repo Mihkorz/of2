@@ -2,7 +2,7 @@
 import os
 import csv
 import numpy as np
-from pandas import read_csv, DataFrame, Series
+from pandas import read_csv, read_excel, DataFrame, Series
 from scipy.stats.mstats import gmean
 from scipy.stats import ttest_1samp, norm as scipynorm
 from sklearn.metrics import roc_auc_score
@@ -187,7 +187,7 @@ class ConvertPath(TemplateView):
     
     def get_context_data(self, **kwargs):
         context = super(ConvertPath, self).get_context_data(**kwargs)
-        #raise Exception('just stop exception. Check view!')
+        raise Exception('just stop exception. Check view!')
         """
         #human metabolism
         for mpath in MetabolismPathway.objects.all():
@@ -277,30 +277,32 @@ class ConvertPath(TemplateView):
            
         #human new
         """
-        pathh = settings.MEDIA_ROOT+'/microPaths/'
+        pathh = settings.MEDIA_ROOT+'/KEGG_adjusted/'
         
         
         for ffile in os.listdir(pathh):
             df_genes = read_excel(pathh+ffile, sheetname='genes', header=None).fillna('mazafaka')
             df_genes.columns = ['gene', 'arr']
             
-            pathname = ffile.replace('.xls', '')
+            pathname = ffile.replace('.xls', '').replace(' ', '_')
             try:
-                npath = Pathway.objects.get(name=pathname, organism='human', database='primary_new' )               
+                npath = Pathway.objects.get(name=pathname, organism='human', database='kegg_adjusted' )               
             except:                 
             
-                npath = Pathway(name=pathname, amcf=0, organism='human', database='primary_new')
-                #path.save()
+                npath = Pathway(name=pathname, amcf=0, organism='human', database='kegg_adjusted')
+                npath.save()
                 
             def add_gene(row, path):
                 if row['arr']!='mazafaka':
                     g = Gene(name=row['gene'], arr=row['arr'], pathway=path)
                     g.save()                
+           
+            df_genes.apply(add_gene, axis=1, path=npath)
             
-            #df_genes.apply(add_gene, axis=1, path=path)
+            
             def nnodes(row, path):
                 
-                nname = row[1]
+                nname = row[2]
                 try:
                     nnode = Node.objects.get(name=nname, pathway=path)
                 except:
@@ -335,17 +337,22 @@ class ConvertPath(TemplateView):
                      
             
                 #raise Exception('from rrel')
+            try:
+                df_nodes = read_excel(pathh+ffile, sheetname='nodes', header=None, index_col=0)
+                df_nodes.drop(1, axis=1, inplace=True)
+                df_nodes_name = df_nodes[2]
+                #raise Exception('kegg')
+                df_nodes.apply(nnodes, axis=1, path=npath)
+            except:
+                pass
+            try:
+                df_rels = read_excel(pathh+ffile, sheetname='edges', header=None)
+                df_rels.columns = ['from', 'to', 'reltype']
+                df_rels.apply(rrels, axis=1, sNodes=df_nodes_name, path=npath)    
+            except:
+                pass
             
-            df_nodes = read_excel(pathh+ffile, sheetname='nodes', header=None, index_col=0)
-            df_nodes_name = df_nodes[1]
-            df_nodes.apply(nnodes, axis=1, path=npath)
-            
-            df_rels = read_excel(pathh+ffile, sheetname='edges', header=None)
-            df_rels.columns = ['from', 'to', 'reltype']
-            df_rels.apply(rrels, axis=1, sNodes=df_nodes_name, path=npath)    
-            
-            
-            #raise Exception('human new')       
+        raise Exception('KEGG Done')       
         """
         #cytoskeleton pathways 
         """

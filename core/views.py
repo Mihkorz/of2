@@ -269,8 +269,12 @@ class CoreSetCalculationParameters(FormView):
                         _, p_value = ttest_1samp(log_norms_df, np.log(col), axis=1)
                         s_p_value = Series(p_value, index = col.index).fillna(1)
                         df_for_pq_val[col.name+'_pval'] = s_p_value
-                        if use_fdr:
-                            fdr_q_values = fdr_corr(np.array(s_p_value))
+                        if use_fdr or use_new_fdr:
+                            if use_new_fdr:
+                                fdr_q_values = fdr_corr(np.array(s_p_value),  pi0=-1)
+                            else:
+                                fdr_q_values = fdr_corr(np.array(s_p_value))
+                                
                             df_for_pq_val[col.name+'_qval'] = fdr_q_values
                             col_CNR[fdr_q_values>=qvalue_threshold] = 1
                         else:
@@ -288,10 +292,11 @@ class CoreSetCalculationParameters(FormView):
                        
                 else:
                     return col # in case it's not Tumour or Norm column
+                     
             
-            prosecc_for_cnr = process_doc_df.copy()           
-            
-            cnr_df_diff_genes = prosecc_for_cnr.apply(cnr_diff_genes, axis=0)
+            process_doc_df = process_doc_df.apply(cnr_diff_genes, axis=0)
+            cnr_df_diff_genes = process_doc_df.copy() 
+            #raise Exception('new ttest')
             oldstd = cnr_doc_df['std']
             old_meanNorm = cnr_doc_df['gMean_norm']
             cnr_doc_df = cnr_df_diff_genes.join(df_for_pq_val)
@@ -405,10 +410,11 @@ class CoreSetCalculationParameters(FormView):
                         col_CNR = col/s_mean_norm #convert column from GENE EXPRESSION to CNR
                     else:
                         col_CNR = col
+                    """
                     if use_ttest_1sam:
                         _, p_value = ttest_1samp(log_norms_df, np.log(col), axis=1)
                         s_p_value = Series(p_value, index = col.index).fillna(1)
-                
+                        
                         if use_fdr or use_new_fdr:
                             if use_new_fdr:
                                 fdr_q_values = fdr_corr(np.array(s_p_value), pi0=-1)
@@ -428,12 +434,13 @@ class CoreSetCalculationParameters(FormView):
                         col_CNR = col_CNR[((col>=(s_mean_norm+sigma_num*std)) |
                                        (col<(s_mean_norm-sigma_num*std)))] 
                     
-                    col_CNR.replace(0,1, inplace=True) # to avoid log(0)
-                    if ('Tumour_MOLF_LZN_FPKM' in col.name) and (pathway.name=='AKT_Pathway'):
-                        
-                        #rett = np.log(col_CNR)*arr
-                        pass#raise Exception('1sample') 
                     
+                    if ('Tumour_81151_fibroblasts_J1' in col.name) and (pathway.name=='AKT_Pathway'):
+                        #mazafaka = fdr_q_values.tolist()
+                        #rett = np.log(col_CNR)*arr
+                        pass# raise Exception(col_CNR.count()) 
+                    """
+                    col_CNR.replace(0,1, inplace=True) # to avoid log(0)
                     return np.log(col_CNR)*arr # PAS1=ARR*log(CNR)
                        
                 else:
@@ -776,7 +783,28 @@ class Test(TemplateView):
     def get_context_data(self, **kwargs):
               
         context = super(Test, self).get_context_data(**kwargs)
+        lgene = []
+        larr = []
+        lpath = []
+        for drug in Drug.objects.all():
+            s=''
+            for target in drug.target_set.all():
+                s+=' '+target.name
+            lgene.append(s)
+            larr.append(drug.name.encode('ascii', 'ignore'))
+                
+                
+        d = {}
+        d['Drug'] = larr
+        d['Targets'] = lgene
         
+        
+        dff = DataFrame(d)
+        dff.set_index('Drug',inplace=True)
+        dff.to_csv(settings.MEDIA_ROOT+"/drug_targets.csv")
+        raise Exception('stop')
+        
+        """XML PATHS
         from lxml import etree
         
         for path in Pathway.objects.filter(organism='human', database='primary_old'):
@@ -798,7 +826,7 @@ class Test(TemplateView):
             handle = etree.tostring(root, pretty_print=True, encoding='utf-8', xml_declaration=True)
             applic.writelines(handle)
             applic.close()
-        raise Exception('stop')
+        """
         
         """ breast module statistics
         import collections
