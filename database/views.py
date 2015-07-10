@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 
+import networkx as nx
+
 from django.views.generic.detail import DetailView
 from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.conf import settings
 
 from .models import  Drug
 from core.models import Pathway
@@ -50,18 +53,37 @@ class PathwayDetail(DetailView):
     def get_context_data(self, **kwargs):
         context = super(PathwayDetail, self).get_context_data(**kwargs)
         
+        G=nx.DiGraph() #drawing static picture
+        for node in self.object.node_set.all():
+            G.add_node(node, color='black',style='filled',
+                               fillcolor='white')
+        
         dRelations = []
-        for node in self.object.node_set.all(): # drawing relations 
+        for node in self.object.node_set.all(): # drawing relations
+             
             for inrel in node.inrelations.all():
                 relColor = 'black'
                 if inrel.reltype == '1':
                     relColor = 'green'
                 if inrel.reltype == '0':
                     relColor = 'red'
-                dRelations.append({ inrel.fromnode.name : [inrel.tonode.name, relColor] })      
+                dRelations.append({ inrel.fromnode.name : [inrel.tonode.name, relColor] })
+                G.add_edge(inrel.fromnode.name.encode('ascii','ignore'), 
+                            inrel.tonode.name.encode('ascii','ignore'), color=relColor)      
+        
+        A=nx.to_agraph(G)
+        A.layout(prog='dot')
+        
+        A.draw(settings.MEDIA_ROOT+"/pathway_pics/"+self.object.organism+"/"+self.object.database+"/"+self.object.name+".svg")
+        
         context['dRelations'] = dRelations
         context['organism'] = self.kwargs['organism']
         context['database'] = self.kwargs['database']
+        
+        
+        
+        
+        
         return context
 
 class PathwayAjaxSearch(ListView):

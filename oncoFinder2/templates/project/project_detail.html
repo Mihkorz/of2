@@ -69,7 +69,7 @@
               </td>
                   {% else %}
                        Organism: <strong>{{doc.parameters.organism}}</strong>
-                       Pathway DB: <strong>{{doc.parameters.db| join:", "}}</strong>
+                       <br/>Pathway DB: <strong>{{doc.parameters.db| join:", "}}</strong>
                        <!--  <br/> Normal: <strong>{{doc.parameters.norm_algirothm}}</strong>-->
                       {%if doc.parameters.use_ttest%}
                       <br/>Distribution T-test: <strong>yes</strong>

@@ -17,6 +17,7 @@
         <li class="active"><a href="#fragment-1" data-toggle="tab"><span>Genes </span></a></li>
         <li><a href="#fragment-2" data-toggle="tab"><span>Nodes and Components</span></a></li>
         <li><a href="#fragment-3" data-toggle="tab"><span>Graphic Scheme</span></a></li>
+        <li><a href="#fragment-4" data-toggle="tab"><span>Picture</span></a></li>
     </ul>
 <div id="tabContent" class="tab-content">
 <div id="fragment-1" class="tab-pane fade in active well">
@@ -108,6 +109,15 @@ Total = {{pathway.node_set.count}}
         
     }, true);
     </script>
+
+</div>
+<div id="fragment-4" class="tab-pane fade">
+Click the picture to acquire a full size image
+    <a href="{{MEDIA_URL}}/pathway_pics/{{pathway.organism}}/{{pathway.database}}/{{pathway.name}}.svg">
+        <img style="width:100%" 
+         src="{{MEDIA_URL}}/pathway_pics/{{pathway.organism}}/{{pathway.database}}/{{pathway.name}}.svg"
+         title="{{pathway.name}}" alt="pathway.name"/>
+    </a>
 
 </div>
 </div>
