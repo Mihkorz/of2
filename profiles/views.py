@@ -305,7 +305,7 @@ class DocumentDetail(DetailView):
             sniffer = csv.Sniffer()
             dialect = sniffer.sniff(open(filename, 'r').read(), delimiters='\t,;') # defining the separator of the csv file
             df = read_csv(filename, delimiter=dialect.delimiter)
-            context['input'] = df[:50].to_html()            
+            context['input'] = df[:50].to_html(classes=['input_table', 'table', 'table-striped', 'table-bordered'])            
         else:
             if self.object.project.field == 'sci':
                 try:

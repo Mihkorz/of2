@@ -124,6 +124,7 @@ class CoreSetCalculationParameters(FormView):
                                  'use_cnr': use_cnr,
                                  'use_ttest': use_ttest,
                                  'use_fdr': use_fdr,
+                                 'use_new_fdr': use_new_fdr,
                                  'use_ttest_1sam': use_ttest_1sam,
                                  'norm_algirothm': 'geometric' if int(norm_choice)>1 else 'arithmetic',
                                  'organism': organism_choice, 

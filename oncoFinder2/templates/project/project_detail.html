@@ -68,17 +68,28 @@
               </small>
               </td>
                   {% else %}
-                       Pathway DataBase: <strong>{{doc.parameters.db}}</strong>
-                       <br/> Normal algorithm: <strong>{{doc.parameters.norm_algirothm}}</strong>
-                      <br/>Use sigma: <strong>{{doc.parameters.use_sigma}}</strong> <br/>
-                      {% if doc.parameters.use_sigma %}
+                       Organism: <strong>{{doc.parameters.organism}}</strong>
+                       Pathway DB: <strong>{{doc.parameters.db| join:", "}}</strong>
+                       <!--  <br/> Normal: <strong>{{doc.parameters.norm_algirothm}}</strong>-->
+                      {%if doc.parameters.use_ttest%}
+                      <br/>Distribution T-test: <strong>yes</strong>
+                      {%endif%}
+                      {%if doc.parameters.use_ttest_1sam%}
+                      <br/>T-test 1 sample: <strong>yes</strong>
+                      {%endif%}
+                      {%if doc.parameters.use_fdr%}
+                      <br/>Benjamini FDR: <strong>yes</strong>
+                      {%endif%} 
+                      {%if doc.parameters.use_new_fdr%}
+                      <br/>Storey FDR: <strong>yes</strong>
+                      {%endif%}  
+                      {%if doc.parameters.use_sigma%}
+                          <br/>Use sigma: <strong>{{doc.parameters.use_sigma}}</strong> <br/>
                         &nbsp;&nbsp;&nbsp;Sigma amount = <strong>{{doc.parameters.sigma_num}}</strong> <br/>
                       {% endif %}
-                      Use CNR: <strong>{{doc.parameters.use_cnr}}</strong>
                       {% if doc.parameters.use_cnr %}
-                        <br/>&nbsp;&nbsp;&nbsp; CNR lower = <strong>{{doc.parameters.cnr_low}}</strong>
-                        <br/>&nbsp;&nbsp;&nbsp; CNR upper = <strong>{{doc.parameters.cnr_up}}</strong>
-                       
+                      <br/>
+                      <strong>{{doc.parameters.cnr_low}}</strong> > CNR > <strong>{{doc.parameters.cnr_up}}</strong>
                       {% endif %}
                   {% endif %}
                  

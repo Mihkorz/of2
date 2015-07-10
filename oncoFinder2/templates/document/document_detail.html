@@ -46,11 +46,16 @@
 
   </div>
 {% if document.doc_type == 1%}
+<a class="btn btn-default btn-sm " href="{{MEDIA_URL}}{{document.document}}">
+      <span class="glyphicon glyphicon-download-alt"></span> &nbsp;<b>Download file</b>
+     </a>
 <div class="wrapper1">
         <div class="upper_scroll"></div>
        </div>
        <div class="wrapper2">
+          <small>
           {{input|safe}}
+          </small>
        </div>
 {% else %}
 
@@ -216,6 +221,9 @@ $(function(){
 	});
 
 $(document).ready( function () {
+	
+	$('.input_table').DataTable({ "lengthMenu": [[ 50, 100, -1], [50, 100, "All"]]});
+	
 	$('.pas_table').DataTable({ "lengthMenu": [[ 50, 100, -1], [50, 100, "All"]]});
 	$('.pas1_table').DataTable({ "lengthMenu": [[ 50, 100, -1], [50, 100, "All"]]});
 	$('.pas2_table').DataTable({ "lengthMenu": [[ 50, 100, -1], [50, 100, "All"]]});

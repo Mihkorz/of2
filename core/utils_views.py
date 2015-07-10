@@ -187,6 +187,8 @@ class ConvertPath(TemplateView):
     
     def get_context_data(self, **kwargs):
         context = super(ConvertPath, self).get_context_data(**kwargs)
+        
+                    
         raise Exception('just stop exception. Check view!')
         """
         #human metabolism
