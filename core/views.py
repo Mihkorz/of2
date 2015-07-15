@@ -784,25 +784,27 @@ class Test(TemplateView):
     def get_context_data(self, **kwargs):
               
         context = super(Test, self).get_context_data(**kwargs)
-        lgene = []
-        larr = []
-        lpath = []
-        for drug in Drug.objects.all():
-            s=''
-            for target in drug.target_set.all():
-                s+=' '+target.name
-            lgene.append(s)
-            larr.append(drug.name.encode('ascii', 'ignore'))
+        lgene = {}
+        lp = []
+        i=0
+        for path in Pathway.objects.filter(organism='human', database='kegg_adjusted'):
+            
+            if len(path.gene_set.all())>9:
+                i=i+1
+                print i
+                npath = Pathway(organism='human', database='kegg_adjusted_10', name=path.name, amcf=path.amcf)
+                #npath.save()
                 
+                for gene in path.gene_set.all():
+                    ngene = Gene(name=gene.name, arr=gene.arr, pathway=npath)
+                    #ngene.save()          
                 
-        d = {}
-        d['Drug'] = larr
-        d['Targets'] = lgene
         
         
-        dff = DataFrame(d)
-        dff.set_index('Drug',inplace=True)
-        dff.to_csv(settings.MEDIA_ROOT+"/drug_targets.csv")
+        a = list(lgene.keys())
+        dff = DataFrame(a)
+        lll = len(lp)
+        #dff.to_csv(settings.MEDIA_ROOT+"/kegg_adjusted_genes.csv")
         raise Exception('stop')
         
         """XML PATHS
