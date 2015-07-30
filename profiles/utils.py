@@ -30,11 +30,12 @@ def validate_file(file_, content_types=None, max_upload_size=None):
         
         df = read_csv(file_, delimiter=dialect.delimiter)
         symbol = [col for col in df.columns if 'SYMBOL' in col]
+        name = [col for col in df.columns if 'Name' in col]
         tumour_cols = [col for col in df.columns if 'Tumour' in col]
         norm_cols = [col for col in df.columns if 'Norm' in col]
         
-        if not symbol:
-            raise forms.ValidationError(u"Document doesn't contain SYMBOL column.\
+        if not symbol and not name:
+            raise forms.ValidationError(u"Document doesn't contain 'SYMBOL' or 'Name' column.\
                                          Please check your document and try uploading it again.")
             
         

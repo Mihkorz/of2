@@ -252,8 +252,100 @@ class MedicPreprocess(FormView):
             return self.render_to_response(self.get_context_data(form=form)) 
         
     
+class CustomArrayPreprocess(FormView):
+    form_class = UploadDocumentForm
+    template_name = 'document/document_create.html'
+    success_url = '/project/'
     
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(CustomArrayPreprocess, self).dispatch(request, *args, **kwargs)
     
+    def form_valid(self, form):
+        
+        document = form.save(commit=False)
+        project = form.cleaned_data['project']
+        document.save()
+        
+        sniffer = csv.Sniffer()
+        """ get Patient file and convert to Pandas DF """
+        patient_doc = document.document
+        dialect = sniffer.sniff(patient_doc.read(), delimiters='\t,;')
+        patient_doc.seek(0)
+        patient_df = read_csv(patient_doc, delimiter=dialect.delimiter)
+        patient_df = patient_df[['Name', 'Mean']]
+        patient_df.set_index('Name', inplace=True)
+        patient_df.rename(columns={'Mean': 'Mean_Tumour'}, inplace=True)
+        
+        """ get Nomrs file and convert to Pandas DF """
+        norms = form.cleaned_data['norms_file']
+        
+        dialect = sniffer.sniff(norms.file_norms.read(), delimiters='\t,;')
+        norms.file_norms.seek(0)
+        norms_df = read_csv(norms.file_norms, delimiter=dialect.delimiter)
+        
+        try:
+            norms_df.set_index('ID', inplace=True)
+        except:
+            norms_df.set_index('SYMBOL', inplace=True)
+        
+        """ Join Norm's and Patient's DF to obtain intersections"""
+        joined_df = patient_df.join(norms_df, how='inner')
+        column_names = joined_df.columns
+        qn_df = quantile_normalization(joined_df) #quantile normalization
+        qn_df.set_index(0, inplace=True)
+        qn_df.index.name = 'SYMBOL'
+        qn_df.columns = column_names
+        
+        qn_df = np.log(qn_df)
+        
+        probetargets = DataFrame(list(IlluminaProbeTarget.objects.all()
+                                      .values('PROBE_ID', 'TargetID')))#fetch Illumina probe-target mapping 
+        probetargets.set_index('PROBE_ID', inplace=True)
+        probetargets.index.name = 'SYMBOL'
+        
+        gene_df = qn_df.join(probetargets, how='inner')#Use intersection of keys from both frames
+        gene_df.set_index('TargetID', inplace=True)
+        gene_df = gene_df.groupby(gene_df.index, level=0).mean()#deal with duplicate genes by taking mean
+        
+        gene_df.index.name = 'SYMBOL' #now we have DataFrame with gene symbols   
+        
+        gene_df = np.exp(gene_df) #output file
+        
+        """ Add some information for the document """
+        document.sample_num = 1
+        document.norm_num = len(norms_df.columns)
+        document.row_num = len(gene_df)
+        document.doc_format = 'CustomArray'
+        
+        gene_df.to_csv(settings.MEDIA_ROOT+'/'+document.document.name, sep='\t')
+        document.save()
+        
+        path = os.path.join('users', str(document.project.owner),
+                                            str(document.project),'process', 'process_'+str(document.get_filename()))
+        if not os.path.exists(settings.MEDIA_ROOT+'/'+os.path.join('users', str(document.project.owner),
+                                            str(document.project),'process')):
+            os.mkdir(settings.MEDIA_ROOT+'/'+os.path.join('users', str(document.project.owner),
+                                            str(document.project),'process'))
+        new_file = settings.MEDIA_ROOT+"/"+path
+         
+        process_doc = ProcessDocument()
+        process_doc.document = path
+        process_doc.input_doc = document
+        process_doc.created_by = self.request.user
+        process_doc.save()
+        
+        gene_df.to_csv(new_file, sep='\t')
+        
+        
+        
+        #raise Exception('CustomArray')
+        
+        
+        return HttpResponseRedirect(self.success_url+document.project.name)
+        
+    def form_invalid(self, form):
+            return self.render_to_response(self.get_context_data(form=form))    
     
     
     

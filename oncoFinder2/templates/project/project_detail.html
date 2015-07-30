@@ -213,6 +213,21 @@ $(function(){
 	  });
 });
 
+<!-- Show/Hide Norms file choice in case of Custom Array File -->
+$(function(){
+	$("#id_norms_file").hide();
+	$("label[for='id_norms_file']").hide();
+	
+	$("select#id_doc_format").change(function(){
+	    if($("option[value=CustomArray]").is(":selected")){
+	    	     $("#id_norms_file").show();
+	    	     $("label[for='id_norms_file']").show();
+	    } else { $("#id_norms_file").hide();
+		          $("label[for='id_norms_file']").hide(); } 
+	});
+	
+});
+
 <!-- DELETE file Dialog show event handler -->
 $('#deleteModal').on('show.bs.modal', function (e) {
 

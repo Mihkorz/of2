@@ -25,7 +25,7 @@ from .forms import SettingsUserForm, UserProfileFormSet, CreateProjectForm, \
                    UploadDocumentForm
 from .models import Project, Document, ProcessDocument
 from .preprocess_views import OfCnrPreprocess, IlluminaPreprocess, OfCnrStatPreprocess, \
-                              MedicPreprocess
+                              CustomArrayPreprocess, MedicPreprocess
 from core.stats import pseudo_ttest_1samp, fdr_corr
 from core.models import Pathway, Component, Gene
 from mirna.views import mirnaProjectDetail, mirnaDocumentDetail
@@ -179,6 +179,9 @@ class CreateDocument(CreateView):
             return view(request, *args, **kwargs)
         if doc_format == 'Illumina':
             view = IlluminaPreprocess.as_view()
+            return view(request, *args, **kwargs)
+        if doc_format == 'CustomArray':
+            view = CustomArrayPreprocess.as_view()
             return view(request, *args, **kwargs)
         return super(CreateDocument, self).dispatch(request, *args, **kwargs)
         

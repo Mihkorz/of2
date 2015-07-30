@@ -24,8 +24,15 @@ $(function(){
 	$("#create_project_form > input[type=text], textarea").addClass("form-control");
 	
 	$("#id_nosology").hide();
-	$("#id_field_2").click(function(){
-		if($('#id_field_2').is(':checked')) { $("#id_nosology").show(); }
+	$("label[for='id_nosology']").hide();
+	$("#id_field").click(function(){
+		if($('#id_field_2').is(':checked')) { $("#id_nosology").show();
+		                                      $("label[for='id_nosology']").show();}
+		else{
+			$("#id_nosology").hide();
+            $("label[for='id_nosology']").hide();
+			
+		}
 	});
 	 
 	

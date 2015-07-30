@@ -8,6 +8,7 @@ from .widgets import AdminImageWidget
 
 from django.contrib.auth.models import User
 from .models import Profile, Project, Document
+from medic.models import TreatmentNorms
 from .utils import validate_file
 
 logger = logging.getLogger('oncoFinder')
@@ -40,6 +41,9 @@ class UploadDocumentForm(forms.ModelForm):
     project = forms.ModelChoiceField(queryset=Project.objects.all(),
             widget=forms.HiddenInput())
     
+    """ Norms choice for Custom Array file """
+    norms_file = forms.ModelChoiceField(queryset=TreatmentNorms.objects.all(),)
+    
     def clean_document(self):
         try:
             uploaded_file = self.cleaned_data['document']
@@ -64,4 +68,4 @@ class UploadDocumentForm(forms.ModelForm):
     
     class Meta(object):
         model = Document
-        fields = ['doc_format', 'document', 'description', 'created_by', 'project', ]
+        fields = ['doc_format', 'norms_file', 'document', 'description', 'created_by', 'project', ]

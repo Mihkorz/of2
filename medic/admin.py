@@ -198,7 +198,11 @@ class TreatmentNormsAdmin(admin.ModelAdmin):
         dialect = sniffer.sniff(norm_file.read(), delimiters='\t,;')
         norm_file.seek(0)
         norm_df = read_csv(norm_file, delimiter=dialect.delimiter) #create DataFrame with Illumina probes
-        norm_df.index.name = 'SYMBOL'
+        try:
+            norm_df.set_index('ID', inplace=True)
+            norm_df.index.name = 'SYMBOL'
+        except:
+            norm_df.index.name = 'SYMBOL'
         norm_df = np.log2(norm_df)
         norm_columns = norm_df.columns
         

@@ -172,7 +172,7 @@ class CoreSetCalculationParameters(FormView):
                                                  database__in=db_choice
                                                  ).prefetch_related('gene_set')
         
-        all_genes = DataFrame(list(Gene.objects.values_list('name', flat=True).distinct())).set_index(0)#fetch genes    
+        all_genes = DataFrame(list(Gene.objects.filter(pathway__database__in=db_choice).values_list('name', flat=True).distinct())).set_index(0)#fetch genes    
         all_genes.index.name = 'SYMBOL'
         
         
@@ -333,7 +333,7 @@ class CoreSetCalculationParameters(FormView):
                                          index_col='Old Pathway Name')
             
         
-        
+        #raise Exception('before cycle')
         """ START CYCLE """
         output_pas_df  = DataFrame()
         output_pas1_df = DataFrame()
