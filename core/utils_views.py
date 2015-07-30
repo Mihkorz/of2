@@ -188,8 +188,9 @@ class ConvertPath(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(ConvertPath, self).get_context_data(**kwargs)
         
+        
                     
-        raise Exception('just stop exception. Check view!')
+        #raise Exception('just stop exception. Check view!')
         """
         #human metabolism
         for mpath in MetabolismPathway.objects.all():
@@ -278,28 +279,30 @@ class ConvertPath(TemplateView):
         """
            
         #human new
-        """
-        pathh = settings.MEDIA_ROOT+'/KEGG_adjusted/'
         
+        pathh = settings.MEDIA_ROOT+'/KEGG/'
         
+        i=0
         for ffile in os.listdir(pathh):
+            i=i+1
+            print ffile+" n="+str(i) 
             df_genes = read_excel(pathh+ffile, sheetname='genes', header=None).fillna('mazafaka')
             df_genes.columns = ['gene', 'arr']
             
             pathname = ffile.replace('.xls', '').replace(' ', '_')
             try:
-                npath = Pathway.objects.get(name=pathname, organism='human', database='kegg_adjusted' )               
+                npath = Pathway.objects.get(name=pathname, organism='human', database='kegg' )               
             except:                 
             
-                npath = Pathway(name=pathname, amcf=0, organism='human', database='kegg_adjusted')
-                npath.save()
+                npath = Pathway(name=pathname, amcf=0, organism='human', database='kegg')
+                #npath.save()
                 
             def add_gene(row, path):
                 if row['arr']!='mazafaka':
                     g = Gene(name=row['gene'], arr=row['arr'], pathway=path)
-                    g.save()                
+                    #g.save()                
            
-            df_genes.apply(add_gene, axis=1, path=npath)
+            #df_genes.apply(add_gene, axis=1, path=npath)
             
             
             def nnodes(row, path):
@@ -324,6 +327,7 @@ class ConvertPath(TemplateView):
             
                 namefrom = sNodes[fff]
                 nameto = sNodes[ttt]#unknown activation inhibition
+                reltype = 2
                 if row['reltype']=='activation':
                     reltype = 1
                 if row['reltype']=='inhibition':
@@ -344,7 +348,7 @@ class ConvertPath(TemplateView):
                 df_nodes.drop(1, axis=1, inplace=True)
                 df_nodes_name = df_nodes[2]
                 #raise Exception('kegg')
-                df_nodes.apply(nnodes, axis=1, path=npath)
+                #df_nodes.apply(nnodes, axis=1, path=npath)
             except:
                 pass
             try:
@@ -355,7 +359,7 @@ class ConvertPath(TemplateView):
                 pass
             
         raise Exception('KEGG Done')       
-        """
+        
         #cytoskeleton pathways 
         """
         def convertCytoskeleton(row):

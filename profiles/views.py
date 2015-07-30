@@ -419,21 +419,33 @@ class SampleDetail(DeleteView):
         context['sample_name'] = sample
         
         try: # reading data from file
-            df_file_pms = read_excel(output_filename, sheetname="PAS")
-            df_file_pms1 = read_excel(output_filename, sheetname="PAS1")
-            
+            try:
+                df_file_pms = read_excel(output_filename, sheetname="PAS", index_col='Pathway')
+            except:
+                df_file_pms = read_excel(output_filename, sheetname="PAS")
+            try:
+                df_file_pms1 = read_excel(output_filename, sheetname="PAS1", index_col='Pathway')
+            except:
+                df_file_pms1 = read_excel(output_filename, sheetname="PAS1")
         except:
             errors.append("Error reading PAS from File!")
             raise
         
         try:
-            df_file_ds1 = read_excel(output_filename, sheetname="DS1")
-            df_file_ds2 =  read_excel(output_filename, sheetname="DS2")
+            try:
+                df_file_ds1 = read_excel(output_filename, sheetname="DS1A", index_col='Drug')
+            except:
+                df_file_ds1 = read_excel(output_filename, sheetname="DS1A")
+            try:
+                df_file_ds2 =  read_excel(output_filename, sheetname="DS2", index_col='Drug')
+            except:
+                df_file_ds2 =  read_excel(output_filename, sheetname="DS2")
         except:
             errors.append("Error reading Drug Scores!")
         
         try:
-            df_pms = df_file_pms[[sample]]
+            df_pms = df_file_pms[sample]
+            df_pms = DataFrame(df_pms)
             df_pms.columns = ['PAS']
             
             pms_dict =  df_pms.to_dict(outtype="dict")
@@ -447,15 +459,15 @@ class SampleDetail(DeleteView):
             df_pms1 = df_file_pms1[[sample, 'Database']]
             df_pms1.columns = ['PAS1', 'Database']
             
-            df_pms.reset_index(inplace=True)
-            df_pms.drop(df_pms.index[[0]], inplace=True)
-            df_pms.drop('index', 1, inplace=True)
-            df_pms1.reset_index(inplace=True)
-            df_pms1.drop(df_pms1.index[[0]], inplace=True)
+            #df_pms.reset_index(inplace=True)
+            #df_pms.drop(df_pms.index[[0]], inplace=True)
+            #df_pms.drop('index', 1, inplace=True)
+            #df_pms1.reset_index(inplace=True)
+            #df_pms1.drop(df_pms1.index[[0]], inplace=True)
             
             joined = df_pms.join(df_pms1, how='outer')
             
-           
+            
             
             
             
@@ -464,10 +476,11 @@ class SampleDetail(DeleteView):
             lPaths = []
             for _, values in joined.iterrows():
                 try:
-                    objPath = Pathway.objects.get(name=values['index'], organism=calc_params['organism'], database=values['Database'])
-                    objPath.pms = values['PAS']
-                    objPath.pms1 = values['PAS1']
-                    lPaths.append(objPath)
+                    if values.name!='Pathway':
+                        objPath = Pathway.objects.get(name=values.name, organism=calc_params['organism'], database=values['Database'])
+                        objPath.pms = values['PAS']
+                        objPath.pms1 = values['PAS1']
+                        lPaths.append(objPath)
                     
                 except:
                     raise
@@ -559,12 +572,17 @@ class SampleDetail(DeleteView):
             context['lDrawPathCanvas'] = lDrawCanvas
 
         except:
-            raise
+            #raise
             errors.append("Error processing PMS and PMS1 DataFrames!")
             
         try: # constructing DS dictionary for displaying
-            df_ds1 = df_file_ds1[[sample, 'DataBase']]
-            df_ds1.columns = ['DS1', 'DataBase']
+            try:
+                df_ds1 = df_file_ds1[[sample, 'Database']]
+            except:
+                
+                df_ds1 = df_file_ds1[[sample, 'DataBase']]
+                raise
+            df_ds1.columns = ['DS1', 'Database']
             df_ds2 = df_file_ds2[[sample]]
             df_ds2.columns = ['DS2']
             df_ds1 = df_ds1.join(df_ds2, how="inner")
@@ -572,10 +590,13 @@ class SampleDetail(DeleteView):
             
             output_ds = {}
             for drug in ds_dict['DS1']:
-                output_ds[drug] = [d[drug] for d in (ds_dict['DataBase'], ds_dict['DS1'], ds_dict['DS2'] )]
-            
+                try:
+                    output_ds[drug] = [d[drug] for d in (ds_dict['Database'], ds_dict['DS1'], ds_dict['DS2'] )]
+                except:
+                    output_ds[drug] = [d[drug] for d in (ds_dict['DataBase'], ds_dict['DS1'], ds_dict['DS2'] )]                    
             context['DS'] = output_ds
         except:
+            
             errors.append("Error processing DS and DS2 DataFrames!")     
         
         context['error'] = errors

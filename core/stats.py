@@ -37,7 +37,7 @@ def _chk_asarray(a, axis):
     return a, outaxis
 
 def _ttest_finish(df,t):
-    if t<0:
+    if t.all()<0:
         prob = scipy.stats.distributions.t.cdf(t, df) 
     else:
         prob = 1 - scipy.stats.distributions.t.cdf(t, df)

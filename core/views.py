@@ -21,8 +21,8 @@ from django.conf import settings
 
 from .forms import  CalculationParametersForm, MedicCalculationParametersForm
 from profiles.models import Document, ProcessDocument
-from .models import Pathway, Gene
-from database.models import Drug, Node, Component
+from .models import Pathway, Gene, Node, Component
+from database.models import Drug, Target
 from metabolism.models import MetabolismPathway, MetabolismGene
 from mouse.models import MousePathway, MouseGene, MouseMetabolismPathway, MouseMetabolismGene, MouseMapping
 from .stats import pseudo_ttest_1samp, fdr_corr
@@ -150,7 +150,6 @@ class CoreSetCalculationParameters(FormView):
         
         params_df = DataFrame(params_for_output)
                 
-        
         """ Start Calculations"""
          
         def strip(text):
@@ -168,22 +167,7 @@ class CoreSetCalculationParameters(FormView):
                                                 level=0).mean() #deal with duplicate genes by taking mean value
         
         # DataBase choice
-        """
-        if int(db_choice) == 1:
-            pathway_objects = Pathway.objects.all().prefetch_related('gene_set') # Human DB
-            all_genes = DataFrame(list(Gene.objects.values_list('name', flat=True).distinct())).set_index(0)#fetch genes 
-        elif int(db_choice) == 2:
-            pathway_objects = MetabolismPathway.objects.all().prefetch_related('metabolismgene_set') # Human Metabolism DB
-            all_genes = DataFrame(list(MetabolismGene.objects.values_list('name', flat=True).distinct())).set_index(0)#fetch genes
-        elif int(db_choice) == 3:
-            pathway_objects = MousePathway.objects.all().prefetch_related('mousegene_set') # Mouse DB
-            all_genes = DataFrame(list(MouseGene.objects.values_list('name', flat=True).distinct())).set_index(0)#fetch genes
-        elif int(db_choice) == 4:
-            pathway_objects = MouseMetabolismPathway.objects.all().prefetch_related('mousemetabolismgene_set') # Mouse Metabolism DB
-            all_genes = DataFrame(list(MouseMetabolismGene.objects.values_list('name', flat=True).distinct())).set_index(0)#fetch genes
-            
-        """
-        
+          
         pathway_objects = Pathway.objects.filter(organism=organism_choice,
                                                  database__in=db_choice
                                                  ).prefetch_related('gene_set')
@@ -193,43 +177,46 @@ class CoreSetCalculationParameters(FormView):
         
         
         process_doc_df = all_genes.join(process_doc_df, how='inner') # leave only genes that are in our DB
+        tumour_columns = [col for col in process_doc_df.columns if 'Tumour' in col] #get sample columns 
+        normal_columns = [col for col in process_doc_df.columns if 'Norm' in col] #get normal columns
+        
         
         cnr_doc_df =  process_doc_df.copy() # use to generate CNR file for downloading
         if input_document.doc_format!='OF_cnr' and input_document.doc_format!='OF_cnr_stat':
-            cnr_norms_df = cnr_doc_df[[norm for norm in [col for col in cnr_doc_df.columns if 'Norm' in col]]]
+            cnr_norms_df = cnr_doc_df[normal_columns]
             std=cnr_norms_df.std(axis=1) # standard deviation
             if int(norm_choice)>1: #geometric norms
-                cnr_gMean_norm = cnr_norms_df.apply(gmean, axis=1)
-                cnr_gMean_norm = cnr_gMean_norm.astype(np.float).fillna(1)
+                cnr_gMean_norm = cnr_norms_df.apply(gmean, axis=1).fillna(1)
+                #cnr_gMean_norm = cnr_gMean_norm.astype(np.float).fillna(1)
                 cnr_doc_df = cnr_doc_df.div(cnr_gMean_norm, axis='index')
                 cnr_doc_df['gMean_norm'] = cnr_gMean_norm
+                process_doc_df['mean'] = cnr_gMean_norm
             else:             #arithmetic norms
                 cnr_mean_norm =  cnr_norms_df.mean(axis=1)
                 cnr_doc_df = cnr_doc_df.div(cnr_mean_norm, axis='index') 
-                cnr_doc_df['Mean_norm'] = cnr_mean_norm           
+                cnr_doc_df['Mean_norm'] = cnr_mean_norm
+                process_doc_df['mean'] = cnr_mean_norm           
             
             cnr_doc_df['std'] = std
         
         
         
         cnr_unchanged_df = cnr_doc_df.copy()
-        #raise Exception('haha')      
-        tumour_columns = [col for col in process_doc_df.columns if 'Tumour' in col] #get sample columns 
-        
-        
         
         """ Standard T-test for genes """
         if use_ttest:
 
             def calculate_ttest(row):
-                tumours = row[[t for t in row.index if 'Tumour' in t]]
-                norms = row[[n for n in row.index if 'Norm' in n]]
+                tumours = row[tumour_columns]
+                norms = row[normal_columns]
                        
                 _, p_val = ttest_ind(tumours, norms)
-            
+                
                 return p_val
             log_process_doc_df = np.log(process_doc_df).fillna(0)
             series_p_values = log_process_doc_df.apply(calculate_ttest, axis=1).fillna(1)
+            log_process_doc_df = None
+            
             process_doc_df['p_value'] = series_p_values
             cnr_doc_df['p_value'] = series_p_values
             if use_fdr or use_new_fdr:
@@ -242,30 +229,27 @@ class CoreSetCalculationParameters(FormView):
                                     })
                 process_doc_df['q_value'] = fdr_df['q']
                 cnr_doc_df['q_value'] = fdr_df['q']
-                cnr_doc_df[process_doc_df['q_value']>=qvalue_threshold] = 1
-                process_doc_df = process_doc_df[process_doc_df['q_value']<qvalue_threshold]
+                cnr_doc_df[fdr_df['q']>=qvalue_threshold] = 1
+                process_doc_df = process_doc_df[fdr_df['q']<qvalue_threshold]
                 
             else:
-                cnr_doc_df[process_doc_df['p_value']>=qvalue_threshold] = 1
+                cnr_doc_df[process_doc_df['p_value']>=pvalue_threshold] = 1
                 process_doc_df = process_doc_df[process_doc_df['p_value']<pvalue_threshold]
-                   
+            
+            
+                  
+        """ T-test 1 sample CNR filter and Sigma filter for genes """
         if use_ttest_1sam or use_cnr or use_sigma:
-            norms_df = process_doc_df[[norm for norm in [col for col in process_doc_df.columns if 'Norm' in col]]]
+            norms_df = process_doc_df[normal_columns]
             log_norms_df = np.log(norms_df)#use this for t-test, assuming log(norm) is distributed normally
             
-            """ get Series of mean norms for selected algorithm and std """
-            if int(norm_choice)>1: #geometric norms
-                s_mean_norm = norms_df.apply(gmean, axis=1)
-            else:             #arithmetic norms
-                s_mean_norm = norms_df.mean(axis=1)
-            
-            
             df_for_pq_val = DataFrame()
-            def cnr_diff_genes(col):
+            def filter_diff_genes(col):
                 if ('Tumour' in col.name) or ('Norm' in col.name):
-                    
-                    col_CNR = col/s_mean_norm #convert column from GENE EXPRESSION to CNR
-                    
+                    if input_document.doc_format!='OF_cnr' and input_document.doc_format!='OF_cnr_stat':
+                        col_CNR = col/process_doc_df['mean'] #convert column from GENE EXPRESSION to CNR
+                    else:
+                        col_CNR = col
                     if use_ttest_1sam: # two-sided 1sample T-test filter
                         _, p_value = ttest_1samp(log_norms_df, np.log(col), axis=1)
                         s_p_value = Series(p_value, index = col.index).fillna(1)
@@ -286,8 +270,8 @@ class CoreSetCalculationParameters(FormView):
                         col_CNR[((col_CNR<=cnr_up) & (col_CNR>=cnr_low))] = 1 
                         
                     if use_sigma: # Sigma FILTER  !!! deprecated !!!                         
-                        col_CNR[((col<(s_mean_norm+sigma_num*std)) &
-                                       (col>=(s_mean_norm-sigma_num*std)))] = 1 
+                        col_CNR[((col<(process_doc_df['mean']+sigma_num*std)) &
+                                       (col>=(process_doc_df['mean']-sigma_num*std)))] = 1 
                     
                     return col_CNR
                        
@@ -295,9 +279,10 @@ class CoreSetCalculationParameters(FormView):
                     return col # in case it's not Tumour or Norm column
                      
             
-            process_doc_df = process_doc_df.apply(cnr_diff_genes, axis=0)
+            process_doc_df = process_doc_df.apply(filter_diff_genes, axis=0)
+            
             cnr_df_diff_genes = process_doc_df.copy() 
-            #raise Exception('new ttest')
+            
             oldstd = cnr_doc_df['std']
             old_meanNorm = cnr_doc_df['gMean_norm']
             cnr_doc_df = cnr_df_diff_genes.join(df_for_pq_val)
@@ -306,7 +291,8 @@ class CoreSetCalculationParameters(FormView):
             #raise Exception('test cnr')
             cnr_doc_df.fillna(1, inplace=True)
             cnr_doc_df = cnr_doc_df.sort_index(axis=1)        
-        
+        else:
+            process_doc_df = process_doc_df.div(process_doc_df['mean'], axis='index') #convert column from GENE EXPRESSION to CNR
         
         if input_document.doc_format=='OF_cnr_stat': #for OF_cnr_stat files only
             def filter_from_file_stat(col):
@@ -331,31 +317,39 @@ class CoreSetCalculationParameters(FormView):
         if input_document.norm_num >= 3:
             calculate_p_value = True                                
         
-        pas_list = []
-        pas1_list = []
-        pas2_list = []
-        differential_genes = {}
+        """ Inserting new pathway names if needed """
+        if new_pathway_names:
+            if 'primary_old' in db_choice:
+                new_path_primary_old = read_excel(settings.MEDIA_ROOT+"/TRpathways_update_final_updated2.xlsx",
+                                         sheetname=0,
+                                         index_col='Old Pathway Name')
+            if 'primary_new' in db_choice:
+                new_path_primary_new = read_excel(settings.MEDIA_ROOT+"/primary_new_pathways_renaming.xlsx",
+                                         sheetname=0, 
+                                         index_col='Old Pathway Name')
+            if 'cytoskeleton' in db_choice:
+                new_path_cytoskeleton = read_excel(settings.MEDIA_ROOT+"/cytoskeleton_new_pathways_renamed.xlsx",
+                                         sheetname=0, 
+                                         index_col='Old Pathway Name')
+            
         
         
-        """ START CYCLE """        
+        """ START CYCLE """
+        output_pas_df  = DataFrame()
+        output_pas1_df = DataFrame()
+        output_pas2_df = DataFrame()
+        i=0
         for pathway in pathway_objects:
-            #print "PATHWAY: " +pathway.name
-            gene_name = []
-            gene_arr = []
             
             gene_objects = pathway.gene_set.all()
- 
-                
+              
+            gene_data = []
             for gene in gene_objects:
-                gene_name.append(gene.name.strip().upper())
-                gene_arr.append(float(gene.arr))
-            
-            gene_data = {'SYMBOL': gene_name,
-                         'ARR': gene_arr}
-   
-            
-            gene_df = DataFrame(gene_data).set_index('SYMBOL')
-            
+                gene_data.append({'SYMBOL':gene.name.strip().upper(),
+                                  'ARR':float(gene.arr) })   
+           
+            gene_df = DataFrame(gene_data).set_index('SYMBOL') 
+               
             gene_df_abs = gene_df.abs() #for PAS2 calculation
             summ_genes_arr = (gene_df_abs['ARR'].sum() 
                               if gene_df_abs['ARR'].sum()>0 else 1) #for PAS2 calculation
@@ -363,176 +357,243 @@ class CoreSetCalculationParameters(FormView):
             gene_df = gene_df.groupby(gene_df.index, level=0).mean() # take average value for duplicate genes 
             
             joined_df = gene_df.join(process_doc_df, how='inner') #intersect DataFrames to acquire only genes in current pathway
-  
-            pas_dict = {}
-            pas1_dict = {}
-            pas2_dict = {}
             
-            pas_dict['Pathway'] = pas1_dict['Pathway'] = pas2_dict['Pathway'] = pathway.name.strip()
+            """ Calculating PAS1 for samples and norms """
             
-            """ Inserting new pathway names if needed """
-            if new_pathway_names:
-                 
-                if pathway.database == 'primary_new':
-                    new_path_df = read_excel(settings.MEDIA_ROOT+"/primary_new_pathways_renaming.xlsx",
-                                         sheetname=0, header=None)
-                    new_path_df.columns=['Old Pathway Name', 'Pathway Name']
-                    new_path_df.set_index('Old Pathway Name', inplace=True) 
-                else:                    
-                    new_path_df = read_excel(settings.MEDIA_ROOT+"/TRpathways_update_final_updated2.xlsx",
-                                         sheetname=0,
-                                         index_col='Old Pathway Name')            
-                try:                    
-                    new_path_name = new_path_df.loc[pathway.name.strip()]['Pathway Name']
-                   
-                except KeyError:
-                    new_path_name = pathway.name
-                    pass
-                pas_dict['New pathway name'] = pas1_dict['New pathway name'] = pas2_dict['New pathway name'] = new_path_name
+            pas1_norms_samples = np.log(joined_df[tumour_columns+normal_columns])
+            pas1_norms_samples = pas1_norms_samples.multiply(joined_df['ARR'], axis='index')
+            
+            pas1_norms_samples = pas1_norms_samples.sum() # now we have PAS1                      
+            pas_norms_samples = pas1_norms_samples*float(pathway.amcf) # PAS
+            pas2_norms_samples = pas1_norms_samples/summ_genes_arr # PAS2
+            
+            if calculate_p_value and (calculate_pvalue_each or calculate_pvalue_all):
+                s_norms_pas = pas_norms_samples[normal_columns]
+                s_samples_pas = pas_norms_samples[tumour_columns]
                 
+                s_norms_pas1 = pas1_norms_samples[normal_columns]
+                s_samples_pas1 = pas1_norms_samples[tumour_columns]
                 
-            pas_dict['Database'] = pas1_dict['Database'] = pas2_dict['Database'] = pathway.database    
-            
-            """ Calculating PAS for samples and norms using filter(s)  """
-            
-            norms_df = joined_df[[norm for norm in [col for col in joined_df.columns if 'Norm' in col]]]
-            log_norms_df = np.log(norms_df)
-            """ get Series of mean norms for selected algorithm and std """
-            if int(norm_choice)>1: #geometric norms
-                s_mean_norm = norms_df.apply(gmean, axis=1)
-            else:             #arithmetic norms
-                s_mean_norm = norms_df.mean(axis=1)
-            std=norms_df.std(axis=1) # standard deviation
-            
-            def PAS1_calculation(col, arr):
-  
-                if ('Tumour' in col.name) or ('Norm' in col.name):
-                    if input_document.doc_format!='OF_cnr' and input_document.doc_format!='OF_cnr_stat':
-                        col_CNR = col/s_mean_norm #convert column from GENE EXPRESSION to CNR
-                    else:
-                        col_CNR = col
-                    """
-                    if use_ttest_1sam:
-                        _, p_value = ttest_1samp(log_norms_df, np.log(col), axis=1)
-                        s_p_value = Series(p_value, index = col.index).fillna(1)
-                        
-                        if use_fdr or use_new_fdr:
-                            if use_new_fdr:
-                                fdr_q_values = fdr_corr(np.array(s_p_value), pi0=-1)
-                            else:
-                                fdr_q_values = fdr_corr(np.array(s_p_value))
-                        #if use_fdr:
-                            #fdr_q_values = fdr_corr(np.array(s_p_value))
-                            col_CNR = col_CNR[(fdr_q_values<qvalue_threshold)] 
-                        else:
-                            col_CNR = col_CNR[(s_p_value<pvalue_threshold)]
-                        
-                        
-                    if use_cnr: # CNR FILTER
-                        col_CNR = col_CNR[((col_CNR>cnr_up) | (col_CNR<cnr_low))] 
-                      
-                    if use_sigma: # Sigma FILTER  !!! deprecated !!!                         
-                        col_CNR = col_CNR[((col>=(s_mean_norm+sigma_num*std)) |
-                                       (col<(s_mean_norm-sigma_num*std)))] 
-                    
-                    
-                    if ('Tumour_81151_fibroblasts_J1' in col.name) and (pathway.name=='AKT_Pathway'):
-                        #mazafaka = fdr_q_values.tolist()
-                        #rett = np.log(col_CNR)*arr
-                        pass# raise Exception(col_CNR.count()) 
-                    """
-                    col_CNR.replace(0,1, inplace=True) # to avoid log(0)
-                    return np.log(col_CNR)*arr # PAS1=ARR*log(CNR)
-                       
-                else:
-                    return col # in case it's not Tumour or Norm column
+                s_norms_pas2 = pas2_norms_samples[normal_columns]
+                s_samples_pas2 = pas2_norms_samples[tumour_columns]   
                 
-            pas_norms_samples = joined_df.apply(PAS1_calculation, axis=0, 
-                                                  arr=joined_df['ARR'],
-                                                ).fillna(0)#.sum()
-            if (calculate_ds1 or calculate_ds2 or calculate_ds3): 
-                for tumour in tumour_columns:
-                    diff_genes_for_tumor = []
-                    serie = pas_norms_samples[tumour]
-                    serie = serie[(serie>0) | (serie<0)]
-                    diff_genes_for_tumor.extend(serie.index.values.tolist()) # store differential genes in a list
-                    if differential_genes.has_key(tumour):
-                        differential_genes[tumour].extend(diff_genes_for_tumor)
-                    else:
-                        differential_genes[tumour] = diff_genes_for_tumor
-                    
-            
-            pas_norms_samples = pas_norms_samples.sum()    
-             
-            lnorms_all = []
-            lpas1_all = []
-            for index, pas1 in pas_norms_samples.iteritems():
-                if 'Norm' in index:
-                    if calculate_p_value and (calculate_pvalue_each or calculate_pvalue_all):
-                        lnorms_all.append(pas1)
-                    if calculate_norms_pas:
-                        pas_dict[index] = float(pathway.amcf)*pas1
-                        pas1_dict[index] = pas1
-                        pas2_dict[index] = pas1/summ_genes_arr
-                    
-                if 'Tumour' in index:
-                    if calculate_pas:
-                        pas_dict[index] = float(pathway.amcf)*pas1
-                    if calculate_pas1:
-                        pas1_dict[index] = pas1
-                    if calculate_pas2:
-                        pas2_dict[index] = pas1/summ_genes_arr
-                    if calculate_p_value and calculate_pvalue_all:
-                        lpas1_all.append(pas1)
-            
-            if calculate_p_value and calculate_pvalue_each:
+            """P-value for each sample(parametric test)"""
+            if calculate_p_value and calculate_pvalue_each: 
+                            
+                tt_norm_pas  = DataFrame(index=tumour_columns, columns=normal_columns )
+                tt_norm_pas1 = DataFrame(index=tumour_columns, columns=normal_columns )
+                tt_norm_pas2 = DataFrame(index=tumour_columns, columns=normal_columns )
                 
-                for index, pas1 in pas_norms_samples.iteritems():
-                    if 'Tumour' in index:
-                        _, p_val = pseudo_ttest_1samp(lnorms_all, pas1)
-                        pas1_dict[index+'_p-value'] = p_val 
-                                       
-            
+                for norm_name in normal_columns:
+                    tt_norm_pas[norm_name] = s_norms_pas[norm_name]
+                    tt_norm_pas1[norm_name] = s_norms_pas1[norm_name]
+                    tt_norm_pas2[norm_name] = s_norms_pas2[norm_name]
+                
+                _, p_val = pseudo_ttest_1samp(tt_norm_pas, s_samples_pas, axis=1)
+                s_p_value = Series(p_val, index = s_samples_pas.index+'_p-val').fillna(1)
+                pas_norms_samples = pas_norms_samples.append(s_p_value) 
+                
+                _, p_val = pseudo_ttest_1samp(tt_norm_pas1, s_samples_pas1, axis=1)
+                s_p_value = Series(p_val, index = s_samples_pas1.index+'_p-val').fillna(1)
+                pas1_norms_samples = pas1_norms_samples.append(s_p_value)
+                
+                _, p_val = pseudo_ttest_1samp(tt_norm_pas2, s_samples_pas2, axis=1)
+                s_p_value = Series(p_val, index = s_samples_pas2.index+'_p-val').fillna(1)
+                pas2_norms_samples = pas2_norms_samples.append(s_p_value)               
+                
+            """P-value for each pathway(non-parametric test)"""
             if calculate_p_value and calculate_pvalue_all:
-                     
-                    _, p_val = ranksums(lnorms_all, lpas1_all)
-                    pas1_dict['p-value_Mean'] = p_val                
-             
-            """
-            HERE WAS
-            BIG 
-            OLD
-            COMMENT
-            """
-                    
-            pas_list.append(pas_dict)
-            pas1_list.append(pas1_dict)
-            pas2_list.append(pas2_dict)        
-        
-        if calculate_pas:
-            output_pas_df = DataFrame(pas_list)
-            output_pas_df = output_pas_df.set_index('Pathway')
-        if calculate_pas1:
-            output_pas1_df = DataFrame(pas1_list)
-            output_pas1_df = output_pas1_df.set_index('Pathway')
+                
+                _, p_val = ranksums(s_norms_pas, s_samples_pas)
+                pas_norms_samples['p-value_Mean'] = p_val
+                
+                _, p_val = ranksums(s_norms_pas1, s_samples_pas1)
+                pas1_norms_samples['p-value_Mean'] = p_val
+                
+                _, p_val = ranksums(s_norms_pas2, s_samples_pas2)
+                pas2_norms_samples['p-value_Mean'] = p_val 
             
-            if calculate_FDR_all:
+            
+            pas_norms_samples['Pathway'] = pas1_norms_samples['Pathway']=pas2_norms_samples['Pathway']= pathway.name
+            pas_norms_samples['Database'] = pas1_norms_samples['Database']=pas2_norms_samples['Database']= pathway.database
+            
+            
+            if new_pathway_names:
+                new_name = pathway.name
+                try:
+                    if pathway.database == 'primary_old':
+                        new_name = new_path_primary_old.loc[pathway.name]['Pathway Name']
+                    if pathway.database == 'primary_new':
+                        new_name = new_path_primary_new.loc[pathway.name]['Pathway Name']
+                    if pathway.database == 'cytoskeleton':
+                        new_name = new_path_cytoskeleton.loc[pathway.name]['Pathway Name']
+                except:
+                    new_name = pathway.name
+               
+                pas_norms_samples['New Pathway name'] = pas1_norms_samples['New Pathway name']=pas2_norms_samples['New Pathway name']= new_name     
+                    
+                
+            
+            
+            output_pas_df[i]= pas_norms_samples
+            output_pas1_df[i]= pas1_norms_samples
+            output_pas2_df[i]= pas2_norms_samples
+
+            i=i+1
+        """ END CYCLE """
+        
+        """ Creating output DataFrames """
+        output_pas_df = output_pas_df.T
+        output_pas_df.set_index('Pathway', inplace=True)
+        
+        output_pas1_df = output_pas1_df.T
+        output_pas1_df.set_index('Pathway', inplace=True)
+        
+        output_pas2_df = output_pas2_df.T
+        output_pas2_df.set_index('Pathway', inplace=True)
+           
+        if calculate_FDR_all:
                 output_pas1_df['q-value_Mean'] = fdr_corr(np.array(output_pas1_df['p-value_Mean']))
-            if calculate_FDR_each:
+        if calculate_FDR_each:
                 col_p_val = [col for col in output_pas1_df.columns if '_p-value' in col]
                 for col in col_p_val:
                     q_val_column_name = col.replace("_p-value", "_q-value");
                     output_pas1_df[col].fillna(1, inplace=True)
                     output_pas1_df[q_val_column_name] = fdr_corr(np.array(output_pas1_df[col]))
-                
-            
-        if calculate_pas2:
-            output_pas2_df = DataFrame(pas2_list)
-            output_pas2_df = output_pas2_df.set_index('Pathway')
         
+        
+        """ Inserting new pathway names if needed 
+        if new_pathway_names:
+            if pathway.database == 'primary_new':
+                new_path_df = read_excel(settings.MEDIA_ROOT+"/primary_new_pathways_renaming.xlsx",
+                                         sheetname=0, 
+                                         index_col='Old Pathway Name')
+            else:                    
+                new_path_df = read_excel(settings.MEDIA_ROOT+"/TRpathways_update_final_updated2.xlsx",
+                                         sheetname=0,
+                                         index_col='Old Pathway Name')
+            new_path_names=new_path_df['Pathway Name']
+                       
+            output_pas_df = output_pas_df.join(new_path_names)
+            idx = output_pas_df['Pathway Name'].isnull( )
+            output_pas_df['Pathway Name'][ idx ] = output_pas_df.index[ idx ]
+            
+            output_pas1_df = output_pas1_df.join(new_path_names)
+            idx = output_pas1_df['Pathway Name'].isnull( )
+            output_pas1_df['Pathway Name'][ idx ] = output_pas1_df.index[ idx ]
+            
+            output_pas2_df = output_pas2_df.join(new_path_names)
+            idx = output_pas2_df['Pathway Name'].isnull( )
+            output_pas2_df['Pathway Name'][ idx ] = output_pas2_df.index[ idx ]
+        """
+        
+        if not calculate_norms_pas: #exclude norms from DF if checkbox is not selected
+                output_pas_df.drop(normal_columns, axis=1, inplace=True)
+                output_pas1_df.drop(normal_columns, axis=1,  inplace=True)
+                output_pas2_df.drop(normal_columns,  axis=1, inplace=True)
+                
+        """ Sort paths Dataframes """
+        output_pas_df.sort(axis=1, inplace=True)
+        output_pas1_df.sort(axis=1, inplace=True)
+        output_pas2_df.sort(axis=1, inplace=True)
+        
+        #raise Exception('fast PAS') 
+        """ ###################  """
+        """ new DS calculations  """
+        """ ###################  """
+        if (calculate_ds1 or calculate_ds2 or calculate_ds3):
+            
+            output_ds1a_df = DataFrame()
+            output_ds1b_df = DataFrame()
+            output_ds2_df = DataFrame()
+            
+            """ Create Series [target.name] - [pathways it's involved in] """
+            targets = Target.objects.values_list('name', flat=True).distinct()
+            s_target_path = Series()
+            for target in targets:
+                paths = Pathway.objects.filter(gene__name=target, organism=organism_choice,
+                                                 database__in=db_choice).values_list('name', 'amcf', 'gene__arr')
+                
+                s_target_path =  s_target_path.set_value(target, paths)
+                
+                       
+            drug_objects = Drug.objects.all().prefetch_related('target_set')
+            d=0
+            for drug in drug_objects:
+                #print drug.name
+
+                ds1a_df = DataFrame()
+                ds1b_df = DataFrame()
+                ds2_df  = DataFrame()
+                
+                t=0
+                for target in drug.target_set.all():
+                    for path_details in s_target_path[target.name]: #path_details=(pathway.name, pathway.amcf, gene.arr)
+                        
+                        path_name = path_details[0]
+                        amcf = float(path_details[1])
+                        arr = float(path_details[2])
+                        
+                        ds1a_s = output_pas_df.loc[path_details[0]][tumour_columns]
+                        ds1a_df[str(t)+'_'+path_name] = ds1a_s
+                        
+                        ds1b_s = output_pas2_df.loc[path_details[0]][tumour_columns]
+                        ds1b_df[str(t)+'_'+path_name] = ds1b_s*amcf
+                        
+                        try:
+                            cnr_s = process_doc_df.loc[target.name][tumour_columns]
+                        except:
+                            cnr_s = 1
+                        if drug.tip == 'multivalent' and target.tip>0:
+                            m = -1
+                        else:
+                            m = 1
+                        ds2_df[str(t)+'_'+path_name] = m*np.log10(cnr_s)*amcf*arr
+                        
+                        t=t+1                  
+                        
+                full_ds1a_s = ds1a_df.sum(axis=1)
+                full_ds1b_s = ds1b_df.sum(axis=1)
+                full_ds2_s = ds2_df.sum(axis=1)
+                
+                if drug.tip =='activator':
+                    full_ds1a_s = -1*full_ds1a_s
+                    full_ds1b_s = -1*full_ds1b_s
+                    full_ds2_s = -1*full_ds2_s
+                full_ds1a_s['Drug'] = full_ds1b_s['Drug'] = full_ds2_s['Drug'] =drug.name
+                full_ds1a_s['Database'] = full_ds1b_s['Database'] = full_ds2_s['Database'] = drug.db
+                full_ds1a_s['Drug type'] = full_ds1b_s['Drug type'] = full_ds2_s['Drug type'] = drug.tip                
+                               
+                
+                output_ds1a_df[d] = full_ds1a_s
+                output_ds1b_df[d] = full_ds1b_s
+                output_ds2_df[d] = full_ds2_s     
+                d=d+1
+                #raise Exception(drug.name)        
+                       
+                    
+        """ Creating output DataFrames """
+        output_ds1a_df = output_ds1a_df.T
+        output_ds1a_df.fillna(0, inplace=True)
+        output_ds1a_df.set_index('Drug', inplace=True)
+        
+        output_ds1b_df = output_ds1b_df.T
+        output_ds1b_df.fillna(0, inplace=True)
+        output_ds1b_df.set_index('Drug', inplace=True)
+        
+        output_ds2_df = output_ds2_df.T
+        output_ds2_df.fillna(0, inplace=True)
+        output_ds2_df.set_index('Drug', inplace=True)
+        
+        """ Sort paths Dataframes """
+        output_ds1a_df.sort(axis=1, inplace=True)
+        output_ds1b_df.sort(axis=1, inplace=True)
+        output_ds2_df.sort(axis=1, inplace=True)                
+        #raise Exception('DS stop')
+                      
          
-        """ Calculating Drug Score """
-        #raise Exception('exppp')
+        """ OLD Calculating Drug Score 
+        
         output_ds1_df = output_ds2_df = output_ds3_df = DataFrame()
         
         if (calculate_ds1 or calculate_ds2 or calculate_ds3):
@@ -541,7 +602,7 @@ class CoreSetCalculationParameters(FormView):
             ds3_list = []
         
             for drug in Drug.objects.all(): #iterate trough all Drugs
-                #print "-----DRUG----: " +drug.name
+                print drug.name
                 ds1_dict = {}
                 ds2_dict = {}
                 ds3_dict = {}
@@ -549,41 +610,28 @@ class CoreSetCalculationParameters(FormView):
                 ds1_dict['DataBase'] = ds2_dict['DataBase'] = ds3_dict['DataBase'] = drug.db
                 ds1_dict['Type'] = ds2_dict['Type'] = ds3_dict['Type'] = drug.tip          
             
-            
+                ddd = []
                 for tumour in tumour_columns: #loop thought samples columns
                     #print "TUMOUR: " + tumour
                     
                     DS1 = 0 # DrugScore 1
                     DS2 = 0 # DrugScore 2
-                    DS3 = 0                
+                    DS3 = 0
+                    
+                                    
             
                     for target in drug.target_set.all():
                         
                         target.name = target.name.strip().upper()
-                        if target.name in differential_genes[tumour]:
+                        if target.name in process_doc_df.index.values:#differential_genes[tumour]:
                             
                             pathways = Pathway.objects.filter(organism=organism_choice,
                                                  database__in=db_choice, gene__name=target.name)
-                            """
-                            if int(db_choice) == 1:
-                                pathways = Pathway.objects.filter(gene__name=target.name) # Human DB
-                            elif int(db_choice) == 2:
-                                pathways = MetabolismPathway.objects.filter(metabolismgene__name=target.name)# Metabolism DB
-                            elif int(db_choice) == 3:
-                                pathways = MousePathway.objects.filter(mousegene__name=target.name) # Mouse DB
-                            """
                             
                             for path in pathways:
                                 
                                 gene = Gene.objects.filter(name = target.name, pathway=path)[0]
-                                """
-                                if int(db_choice) == 1:
-                                    gene = Gene.objects.filter(name = target.name, pathway=path)[0] # get Genes from Human DB
-                                elif int(db_choice) == 2:
-                                    gene = MetabolismGene.objects.filter(name = target.name, pathway=path)[0] # get Genes from Metabolism DB
-                                elif int(db_choice) == 3:
-                                    gene = MouseGene.objects.filter(name = target.name, pathway=path)[0] # get Genes from Mouse DB
-                                """        
+       
                                 ARR = float(gene.arr)
                                 CNR = process_doc_df.at[target.name, tumour]
                                 if CNR == 0:
@@ -594,6 +642,8 @@ class CoreSetCalculationParameters(FormView):
                             
                                 if drug.tip == 'inhibitor' and path.name!='Mab_targets':
                                     DS1 += PMS
+                                    if tumour == 'Tumour_X5500024052861011409506.H02.CEL':
+                                        ddd.append({path.name:PMS})
                                     DS3 += AMCF*PMS2
                                     DS2 += AMCF*ARR*math.log10(CNR)
                                 if drug.tip == 'activator' and path.name!='Mab_targets':
@@ -623,10 +673,11 @@ class CoreSetCalculationParameters(FormView):
                     ds1_dict[tumour] = DS1
                     ds2_dict[tumour] = DS2
                     ds3_dict[tumour] = DS3
-            
+                raise Exception('drug = '+drug.name+' summ DS111A='+str(sum(ddd)))
                 ds1_list.append(ds1_dict)
                 ds2_list.append(ds2_dict)
                 ds3_list.append(ds3_dict)
+            raise Exception('exppp')
             #raise Exception('DS no drug')
             output_ds1_df = DataFrame(ds1_list)
             output_ds1_df = output_ds1_df.set_index('Drug')
@@ -635,8 +686,7 @@ class CoreSetCalculationParameters(FormView):
             output_ds3_df = DataFrame(ds3_list)
             output_ds3_df = output_ds3_df.set_index('Drug')
         
-               
-        #print "DRUGS DONE"
+        """       
                     
         """ Saving results to Excel file and to database """
         path = os.path.join('users', str(input_document.project.owner),
@@ -650,19 +700,25 @@ class CoreSetCalculationParameters(FormView):
         with ExcelWriter(output_file, index=False) as writer:
             if calculate_pas:
                 output_pas_df.sort('Database', inplace=True)
-                output_pas_df.to_excel(writer,'PAS')
+                output_pas_df.reset_index(inplace=True)
+                output_pas_df.to_excel(writer,'PAS', index=False)
             if calculate_pas1:
-                output_pas1_df.sort('Database', inplace=True)     
-                output_pas1_df.to_excel(writer,'PAS1')
+                output_pas1_df.sort('Database', inplace=True)
+                output_pas1_df.reset_index(inplace=True)     
+                output_pas1_df.to_excel(writer,'PAS1', index=False)
             if calculate_pas2:
-                output_pas2_df.sort('Database', inplace=True)     
-                output_pas2_df.to_excel(writer,'PAS2')
+                output_pas2_df.sort('Database', inplace=True)
+                output_pas2_df.reset_index(inplace=True)     
+                output_pas2_df.to_excel(writer,'PAS2', index=False)
             if calculate_ds1:
-                output_ds1_df.to_excel(writer, 'DS1A')
+                output_ds1a_df.reset_index(inplace=True)
+                output_ds1a_df.to_excel(writer, 'DS1A', index=False)
             if calculate_ds2:
-                output_ds2_df.to_excel(writer, 'DS2')
+                output_ds2_df.reset_index(inplace=True)
+                output_ds2_df.to_excel(writer, 'DS2', index=False)
             if calculate_ds3:
-                output_ds3_df.to_excel(writer, 'DS1B')
+                output_ds1b_df.reset_index(inplace=True)
+                output_ds1b_df.to_excel(writer, 'DS1B', index=False)
                 
             params_df.to_excel(writer,'Parameters')
         
@@ -685,7 +741,6 @@ class CoreSetCalculationParameters(FormView):
             cnr_doc_df.to_excel(writer,'CNR')
         with ExcelWriter(output_file_row, index=False) as writer:
             cnr_unchanged_df.to_excel(writer,'CNR')   
-        
         
         return HttpResponseRedirect(reverse('document_detail', args=(output_doc.id,)))
     
@@ -784,52 +839,67 @@ class Test(TemplateView):
     def get_context_data(self, **kwargs):
               
         context = super(Test, self).get_context_data(**kwargs)
-        lgene = {}
-        lp = []
-        i=0
-        for path in Pathway.objects.filter(organism='human', database='kegg_adjusted'):
-            
-            if len(path.gene_set.all())>9:
-                i=i+1
-                print i
-                npath = Pathway(organism='human', database='kegg_adjusted_10', name=path.name, amcf=path.amcf)
-                #npath.save()
-                
-                for gene in path.gene_set.all():
-                    ngene = Gene(name=gene.name, arr=gene.arr, pathway=npath)
-                    #ngene.save()          
-                
         
-        
-        a = list(lgene.keys())
-        dff = DataFrame(a)
-        lll = len(lp)
-        #dff.to_csv(settings.MEDIA_ROOT+"/kegg_adjusted_genes.csv")
         raise Exception('stop')
-        
-        """XML PATHS
+        """XML PATHS """
         from lxml import etree
+        
+        res_file = settings.MEDIA_ROOT+"/symbol_number.txt"
+        with open(res_file, 'rb') as csvfile:
+            sniffer = csv.Sniffer()
+            dialect = sniffer.sniff(csvfile.read(), delimiters='\t,;')
+            csvfile.seek(0)
+        mapping = read_csv(res_file, delimiter=dialect.delimiter, names=['number', 'gene'] )
+         
+        mapping.set_index('gene',inplace=True)
+        
         
         for path in Pathway.objects.filter(organism='human', database='primary_old'):
             root = etree.Element("pathway", name=path.name, title=path.name, org="hsa", number=str(path.id))  
-            
+            print path.name
+            zero_nodes = []
             for node in path.node_set.all():
-                entry = etree.SubElement(root, "entry", id=str(node.id), name=node.name, type="gene")
+                
+                graph = []
+                entrezGene = []
+                
+                
                 for comp in node.component_set.all():
-                    graph = etree.SubElement(entry, "graphics", name=comp.name)
+                    try:
+                        graph.append(comp.name.strip())
+                        entrezGene.append("hsa:"+str(mapping.loc[comp.name.strip()]['number']))
+                    except:
+                        pass
+                if len(entrezGene)>0:
+                    entry = etree.SubElement(root, "entry", id=str(node.id), name=', '.join(entrezGene), type="gene")
+                    graph_comp = etree.SubElement(entry, "graphics", name=', '.join(graph), 
+                                              fgcolor="#000000", bgcolor="#BFFFBF", type="rectangle",
+                                              x="10", y="10", width="10", height="10" )
                     
+                else:
+                    zero_nodes.append(node.id)
+                    
+            #raise Exception('fire')
+            for node in path.node_set.all():    
                 for inrel in node.inrelations.all():
-                    if inrel.reltype == '1':
-                        relColor = 'activation'
-                    if inrel.reltype == '0':
-                        relColor = 'inhibition'
-                    relation = etree.SubElement(root, "relation", entry1=str(inrel.fromnode.id),
-                                                 entry2=str(inrel.tonode.id), type=relColor)
+                        if inrel.reltype == '1':
+                            relColor = 'activation'
+                        if inrel.reltype == '0':
+                            relColor = 'inhibition'
+                        if (inrel.fromnode.id not in zero_nodes) and (inrel.tonode.id not in zero_nodes): 
+                            relation = etree.SubElement(root, "relation", entry1=str(inrel.fromnode.id),
+                                                 entry2=str(inrel.tonode.id), type='PPrel')
+                            subtype = etree.SubElement(relation, "subtype", name=relColor, value="--|")
+                
+                
             applic = open(settings.MEDIA_ROOT+"/xmlpaths/"+path.name+".xml", "w")
+            for parent in root.xpath('//*[./*]'): # Search for parent elements
+                parent[:] = sorted(parent,key=lambda x: x.tag)
             handle = etree.tostring(root, pretty_print=True, encoding='utf-8', xml_declaration=True)
             applic.writelines(handle)
             applic.close()
-        """
+        raise Exception('XML')
+        """ """
         
         """ breast module statistics
         import collections
