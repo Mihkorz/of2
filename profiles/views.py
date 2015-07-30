@@ -581,7 +581,7 @@ class SampleDetail(DeleteView):
             except:
                 
                 df_ds1 = df_file_ds1[[sample, 'DataBase']]
-                raise
+                
             df_ds1.columns = ['DS1', 'Database']
             df_ds2 = df_file_ds2[[sample]]
             df_ds2.columns = ['DS2']

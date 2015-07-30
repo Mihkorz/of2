@@ -141,7 +141,7 @@ INSTALLED_APPS = (
      
     #third-party apps 
     'gunicorn',
-    'debug_toolbar',
+    #'debug_toolbar',
     'south',
     
     
@@ -273,5 +273,6 @@ LOGGING = {
 if socket.gethostname() == 'mikhail' or socket.gethostname() == 'mikhailComp':
     try:
         from settings_local import *
+        INSTALLED_APPS+=('debug_toolbar',)
     except ImportError:
         pass
