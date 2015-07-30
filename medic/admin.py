@@ -211,7 +211,7 @@ class TreatmentNormsAdmin(admin.ModelAdmin):
         qn_norm_df.index.name = 'SYMBOL'
         qn_norm_df.columns = norm_columns
         
-        qn_norm_df.to_csv(norm_file)
+        #qn_norm_df.to_csv(norm_file)
         
         obj.num_of_norms = len(norm_columns)        
           
