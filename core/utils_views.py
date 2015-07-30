@@ -190,7 +190,7 @@ class ConvertPath(TemplateView):
         
         
                     
-        #raise Exception('just stop exception. Check view!')
+        raise Exception('just stop exception. Check view!')
         """
         #human metabolism
         for mpath in MetabolismPathway.objects.all():
@@ -361,7 +361,7 @@ class ConvertPath(TemplateView):
         raise Exception('KEGG Done')       
         """
         #cytoskeleton MOUSE pathways
-        
+        """
         for hpath in Pathway.objects.filter(organism='human', database='cytoskeleton'):
             try:
                 npath = Pathway.objects.get(name=hpath.name, amcf=hpath.amcf, info=hpath.info, comment=hpath.comment,
@@ -384,7 +384,7 @@ class ConvertPath(TemplateView):
                     pass
         
         raise Exception('mouse') 
-        
+        """
         #cytoskeleton pathways 
         """
         def convertCytoskeleton(row):

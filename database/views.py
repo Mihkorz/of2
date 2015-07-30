@@ -5,6 +5,7 @@ import networkx as nx
 from django.views.generic.detail import DetailView
 from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 from django.utils.decorators import method_decorator
 from django.conf import settings
 
@@ -47,6 +48,7 @@ class PathwayDetail(DetailView):
     context_object_name = 'pathway'
     
     @method_decorator(login_required)
+    @method_decorator(staff_member_required)
     def dispatch(self, request, *args, **kwargs):
         return super(PathwayDetail, self).dispatch(request, *args, **kwargs)
     
@@ -131,6 +133,7 @@ class DrugDetail(DetailView):
     context_object_name = 'drug'
     
     @method_decorator(login_required)
+    @method_decorator(staff_member_required)
     def dispatch(self, request, *args, **kwargs):
         return super(DrugDetail, self).dispatch(request, *args, **kwargs)
     
