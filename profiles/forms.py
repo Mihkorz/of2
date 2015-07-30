@@ -42,7 +42,7 @@ class UploadDocumentForm(forms.ModelForm):
             widget=forms.HiddenInput())
     
     """ Norms choice for Custom Array file """
-    norms_file = forms.ModelChoiceField(queryset=TreatmentNorms.objects.all(),)
+    norms_file = forms.ModelChoiceField(queryset=TreatmentNorms.objects.all(), required=False)
     
     def clean_document(self):
         try:
