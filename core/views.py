@@ -102,6 +102,9 @@ class CoreSetCalculationParameters(FormView):
         calculate_FDR_each = form.cleaned_data.get('calculate_FDR_each', False)
         calculate_FDR_all = form.cleaned_data.get('calculate_FDR_all', False)  
         new_pathway_names = form.cleaned_data.get('new_pathway_names', False)
+        diff_genes_amount = form.cleaned_data.get('diff_genes_amount', False)
+        
+        
         
         #From medical form. TODO: consider moving whole medical calculations to another view
         hormone_status = form.cleaned_data.get('hormone_status', False)
@@ -338,6 +341,10 @@ class CoreSetCalculationParameters(FormView):
         output_pas_df  = DataFrame()
         output_pas1_df = DataFrame()
         output_pas2_df = DataFrame()
+        
+        output_dg_amount = DataFrame() #count differential genes amount and ratio
+        output_dg_ratio = DataFrame()  #for Nicolay special 
+        
         i=0
         for pathway in pathway_objects:
             
@@ -348,7 +355,10 @@ class CoreSetCalculationParameters(FormView):
                 gene_data.append({'SYMBOL':gene.name.strip().upper(),
                                   'ARR':float(gene.arr) })   
            
-            gene_df = DataFrame(gene_data).set_index('SYMBOL') 
+            gene_df = DataFrame(gene_data).set_index('SYMBOL')
+            
+            if diff_genes_amount:
+                gene_number = len(gene_df.index) 
                
             gene_df_abs = gene_df.abs() #for PAS2 calculation
             summ_genes_arr = (gene_df_abs['ARR'].sum() 
@@ -413,6 +423,23 @@ class CoreSetCalculationParameters(FormView):
                 _, p_val = ranksums(s_norms_pas2, s_samples_pas2)
                 pas2_norms_samples['p-value_Mean'] = p_val 
             
+            """Calculate differential genes amount and ratio for Nicolay"""
+            if diff_genes_amount:
+                
+                dif_genes_df = joined_df[tumour_columns]
+                def count_diff_genes(col):
+                    col = col[col!=1]
+                    return col.count()
+                
+                count_genes = dif_genes_df.apply(count_diff_genes)
+                count_genes_ratio = count_genes.divide(gene_number)
+                count_genes_ratio=count_genes_ratio.round(2)
+                count_genes['Pathway']=count_genes_ratio['Pathway']=pathway.name
+                count_genes['Database']=count_genes_ratio['Database']=pathway.database
+                
+                output_dg_amount[i] = count_genes
+                output_dg_ratio[i] = count_genes_ratio
+                
             
             pas_norms_samples['Pathway'] = pas1_norms_samples['Pathway']=pas2_norms_samples['Pathway']= pathway.name
             pas_norms_samples['Database'] = pas1_norms_samples['Database']=pas2_norms_samples['Database']= pathway.database
@@ -442,6 +469,7 @@ class CoreSetCalculationParameters(FormView):
             i=i+1
         """ END CYCLE """
         
+        
         """ Creating output DataFrames """
         output_pas_df = output_pas_df.T
         output_pas_df.set_index('Pathway', inplace=True)
@@ -451,6 +479,17 @@ class CoreSetCalculationParameters(FormView):
         
         output_pas2_df = output_pas2_df.T
         output_pas2_df.set_index('Pathway', inplace=True)
+        
+        if diff_genes_amount:
+            output_dg_amount = output_dg_amount.T
+            output_dg_amount.set_index('Pathway', inplace=True)
+            output_dg_ratio = output_dg_ratio.T
+            output_dg_ratio.set_index('Pathway', inplace=True)
+            
+            output_dg_amount.sort(axis=1, inplace=True)
+            output_dg_ratio.sort(axis=1, inplace=True)
+           
+            
            
         if calculate_FDR_all:
                 output_pas1_df['q-value_Mean'] = fdr_corr(np.array(output_pas1_df['p-value_Mean']))
@@ -572,23 +611,23 @@ class CoreSetCalculationParameters(FormView):
                 #raise Exception(drug.name)        
                        
                     
-        """ Creating output DataFrames """
-        output_ds1a_df = output_ds1a_df.T
-        output_ds1a_df.fillna(0, inplace=True)
-        output_ds1a_df.set_index('Drug', inplace=True)
+            """ Creating output DataFrames """
+            output_ds1a_df = output_ds1a_df.T
+            output_ds1a_df.fillna(0, inplace=True)
+            output_ds1a_df.set_index('Drug', inplace=True)
         
-        output_ds1b_df = output_ds1b_df.T
-        output_ds1b_df.fillna(0, inplace=True)
-        output_ds1b_df.set_index('Drug', inplace=True)
+            output_ds1b_df = output_ds1b_df.T
+            output_ds1b_df.fillna(0, inplace=True)
+            output_ds1b_df.set_index('Drug', inplace=True)
         
-        output_ds2_df = output_ds2_df.T
-        output_ds2_df.fillna(0, inplace=True)
-        output_ds2_df.set_index('Drug', inplace=True)
+            output_ds2_df = output_ds2_df.T
+            output_ds2_df.fillna(0, inplace=True)
+            output_ds2_df.set_index('Drug', inplace=True)
         
-        """ Sort paths Dataframes """
-        output_ds1a_df.sort(axis=1, inplace=True)
-        output_ds1b_df.sort(axis=1, inplace=True)
-        output_ds2_df.sort(axis=1, inplace=True)                
+            """ Sort paths Dataframes """
+            output_ds1a_df.sort(axis=1, inplace=True)
+            output_ds1b_df.sort(axis=1, inplace=True)
+            output_ds2_df.sort(axis=1, inplace=True)                
         #raise Exception('DS stop')
                       
          
@@ -719,6 +758,13 @@ class CoreSetCalculationParameters(FormView):
             if calculate_ds3:
                 output_ds1b_df.reset_index(inplace=True)
                 output_ds1b_df.to_excel(writer, 'DS1B', index=False)
+            if diff_genes_amount:
+                output_dg_amount.sort('Database', inplace=True)
+                output_dg_amount.reset_index(inplace=True)     
+                output_dg_amount.to_excel(writer,'Diff genes amount', index=False)                
+                output_dg_ratio.sort('Database', inplace=True)
+                output_dg_ratio.reset_index(inplace=True)     
+                output_dg_ratio.to_excel(writer,'Diff genes ratio', index=False)
                 
             params_df.to_excel(writer,'Parameters')
         

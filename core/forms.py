@@ -63,6 +63,9 @@ class CalculationParametersForm(forms.Form):
     
     new_pathway_names = forms.BooleanField(label="New pathway names", initial=False, required=False)
     
+    diff_genes_amount = forms.BooleanField(label="Differential genes amount and ratio ", initial=False, required=False)
+    
+    
     
     def __init__(self, *args, **kwargs):
         super(CalculationParametersForm, self).__init__(*args, **kwargs)
