@@ -279,7 +279,7 @@ class ConvertPath(TemplateView):
         """
            
         #human new
-        
+        """
         pathh = settings.MEDIA_ROOT+'/KEGG/'
         
         i=0
@@ -359,6 +359,31 @@ class ConvertPath(TemplateView):
                 pass
             
         raise Exception('KEGG Done')       
+        """
+        #cytoskeleton MOUSE pathways
+        
+        for hpath in Pathway.objects.filter(organism='human', database='cytoskeleton'):
+            try:
+                npath = Pathway.objects.get(name=hpath.name, amcf=hpath.amcf, info=hpath.info, comment=hpath.comment,
+                            organism='mouse', database='cytoskeleton')
+                
+            except:
+                npath = Pathway(name=hpath.name, amcf=hpath.amcf, info=hpath.info, comment=hpath.comment,
+                            organism='mouse', database='cytoskeleton')
+                
+                npath.save()
+                
+            
+            
+            for hgene in hpath.gene_set.all():
+                try:
+                    mmap = MouseMapping.objects.filter(human_gene_symbol=hgene.name)[0]
+                    ngene = Gene(name=mmap.mouse_gene_symbol.upper(), arr=hgene.arr, comment=hgene.comment, pathway=npath)
+                    ngene.save()
+                except:
+                    pass
+        
+        raise Exception('mouse') 
         
         #cytoskeleton pathways 
         """
