@@ -561,9 +561,9 @@ class CoreSetCalculationParameters(FormView):
             for drug in drug_objects:
                 #print drug.name
 
-                ds1a_df = DataFrame()
-                ds1b_df = DataFrame()
-                ds2_df  = DataFrame()
+                ds1a_df = DataFrame(index=tumour_columns)
+                ds1b_df = DataFrame(index=tumour_columns)
+                ds2_df  = DataFrame(index=tumour_columns)
                 
                 t=0
                 for target in drug.target_set.all():
