@@ -84,6 +84,9 @@
 	  {%if DS2%}
 	  <li><a href="#ds2" data-toggle="tab">DS2</a></li>
 	  {%endif%}
+	  {%if patient_report%}
+	  <li><a href="#patient_report" data-toggle="tab">Patient report</a></li>
+	  {%endif%}
 	</ul>
 	<small>
 	<div class="tab-content">
@@ -157,6 +160,18 @@
 	       </div>
 	       <div class="wrapper2">
 	          {{DS2|safe}}
+	       </div>
+	  
+	  </div>
+	  {%endif%}
+	  {%if patient_report %}
+	  <div class="tab-pane fade" id="patient_report">
+	  
+	      <div class="wrapper1">
+	        <div class="upper_scroll"></div>
+	       </div>
+	       <div class="wrapper2">
+	          {{patient_report|safe}}
 	       </div>
 	  
 	  </div>

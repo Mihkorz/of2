@@ -136,8 +136,9 @@
           <div class="form-group form-group-sm">
             <div class="col-sm-12">
               <label>Include in the report following values: 
-                     <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip"  data-placement="top" 
-                                             title="Here will be description of what PMS and DS means"  ></span>
+                     <!--  <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip"  data-placement="top" 
+                                             title="Here will be description of what PAS and DS means"  ></span>
+                    -->
               </label>
               <div>
                 {{ form.calculate_pas.label_tag }}&nbsp; 
@@ -146,12 +147,12 @@
                 {{ form.calculate_pas1 }}&nbsp;&nbsp;
                 {{ form.calculate_pas2.label_tag }}&nbsp; 
                 {{ form.calculate_pas2 }}&nbsp;&nbsp;<br/>
-                {{ form.calculate_ds1.label_tag }}&nbsp; 
-                {{ form.calculate_ds1 }}&nbsp;&nbsp;
+                {{ form.calculate_ds1a.label_tag }}&nbsp; 
+                {{ form.calculate_ds1a }}&nbsp;&nbsp;
                 {{ form.calculate_ds2.label_tag }}&nbsp; 
                 {{ form.calculate_ds2 }}
-                {{ form.calculate_ds3.label_tag }}&nbsp; 
-                {{ form.calculate_ds3 }}<br/>
+                {{ form.calculate_ds1b.label_tag }}&nbsp; 
+                {{ form.calculate_ds1b }}<br/>
             {% if document.doc_format != 'OF_cnr' and document.doc_format != 'OF_cnr_stat' %}
                 {{ form.calculate_norms_pas.label_tag }}&nbsp;
                 {{ form.calculate_norms_pas }}<br/>

@@ -93,9 +93,9 @@ class CoreSetCalculationParameters(FormView):
         calculate_pas = form.cleaned_data.get('calculate_pas', False)
         calculate_pas1 = form.cleaned_data.get('calculate_pas1', True)
         calculate_pas2 = form.cleaned_data.get('calculate_pas2', False)
-        calculate_ds1 = form.cleaned_data.get('calculate_ds1', False)
+        calculate_ds1a = form.cleaned_data.get('calculate_ds1a', False)
         calculate_ds2 = form.cleaned_data.get('calculate_ds2', False)
-        calculate_ds3 = form.cleaned_data.get('calculate_ds3', False)
+        calculate_ds1b = form.cleaned_data.get('calculate_ds1b', False)
         calculate_norms_pas = form.cleaned_data.get('calculate_norms_pas', False)
         calculate_pvalue_each = form.cleaned_data.get('calculate_pvalue_each', False)
         calculate_pvalue_all = form.cleaned_data.get('calculate_pvalue_all', False)
@@ -540,7 +540,7 @@ class CoreSetCalculationParameters(FormView):
         """ ###################  """
         """ new DS calculations  """
         """ ###################  """
-        if (calculate_ds1 or calculate_ds2 or calculate_ds3):
+        if (calculate_ds1a or calculate_ds2 or calculate_ds1b):
             
             output_ds1a_df = DataFrame()
             output_ds1b_df = DataFrame()
@@ -628,7 +628,32 @@ class CoreSetCalculationParameters(FormView):
             output_ds1a_df.sort(axis=1, inplace=True)
             output_ds1b_df.sort(axis=1, inplace=True)
             output_ds2_df.sort(axis=1, inplace=True)                
-        #raise Exception('DS stop')
+        
+        
+        """ Genegate Patient Report """
+        if (calculate_ds1b and calculate_ds2 and len(tumour_columns)==1 ):
+             
+            patient_df = DataFrame(index=output_ds2_df.index)
+
+            patient_df[u'№'] = ""
+            patient_df[u'БД'] = output_ds2_df['Database']
+            patient_df[u'Тип'] = output_ds2_df['Drug type']
+            patient_df['DS2'] = output_ds2_df[tumour_columns]
+            patient_df['DS1'] = output_ds1b_df[tumour_columns]        
+        
+            patient_df.index.name = u'Препарат'
+            patient_df.reset_index(inplace=True)
+            
+            patient_df = patient_df.assign(total=((patient_df['DS1'] + patient_df['DS2'])/2))
+            patient_df.sort('total', inplace=True, ascending=False)
+        
+            patient_df = patient_df[[u'№', u'Препарат', u'БД', 'DS1', 'DS2', u'Тип']]
+            patient_df.reset_index(drop=True, inplace=True)
+            
+            primary_drugs_df = patient_df[patient_df[u'БД']=='primary']        
+            primary_drugs_series = primary_drugs_df[u'Препарат']
+        
+        
                       
          
         """ OLD Calculating Drug Score 
@@ -730,13 +755,13 @@ class CoreSetCalculationParameters(FormView):
         """ Saving results to Excel file and to database """
         path = os.path.join('users', str(input_document.project.owner),
                                             str(input_document.project),'output')
-        file_name = 'output_'+str(input_document.get_filename()+'.xls')
+        file_name = 'output_'+str(input_document.get_filename()+'.xlsx')
         
         
         output_file = default_storage.save(settings.MEDIA_ROOT+"/"+path+"/"+file_name, ContentFile(''))
         
               
-        with ExcelWriter(output_file, index=False) as writer:
+        with ExcelWriter(output_file, engine='xlsxwriter' ) as writer:
             if calculate_pas:
                 output_pas_df.sort('Database', inplace=True)
                 output_pas_df.reset_index(inplace=True)
@@ -749,15 +774,39 @@ class CoreSetCalculationParameters(FormView):
                 output_pas2_df.sort('Database', inplace=True)
                 output_pas2_df.reset_index(inplace=True)     
                 output_pas2_df.to_excel(writer,'PAS2', index=False)
-            if calculate_ds1:
+            if calculate_ds1a:
                 output_ds1a_df.reset_index(inplace=True)
                 output_ds1a_df.to_excel(writer, 'DS1A', index=False)
             if calculate_ds2:
                 output_ds2_df.reset_index(inplace=True)
                 output_ds2_df.to_excel(writer, 'DS2', index=False)
-            if calculate_ds3:
+            if calculate_ds1b:
                 output_ds1b_df.reset_index(inplace=True)
                 output_ds1b_df.to_excel(writer, 'DS1B', index=False)
+            
+            if (calculate_ds1b and calculate_ds2 and len(tumour_columns)==1 ):
+                patient_df.to_excel(writer, 'Patient report', index=False)
+                
+                workbook = writer.book
+                worksheet = writer.sheets['Patient report']
+        
+                num_fmt = workbook.add_format({'align': 'right', 'num_format': '0.0', 'border':True})
+                bold_fmt = workbook.add_format({'align': 'left', 'bold':True, 'border':True})
+                border_fmt = workbook.add_format({'border':True})
+        
+                color_fmt = workbook.add_format({'bg_color': '#CCCCCC'})
+        
+                worksheet.set_column('A:A', 5, border_fmt)
+                worksheet.set_column('B:B', 30, bold_fmt)       
+                worksheet.set_column('C:C', 10, border_fmt)
+                worksheet.set_column('D:E', 10, border_fmt)
+                worksheet.set_column('D:E', 10, num_fmt)
+                worksheet.set_column('F:F', 10, border_fmt)
+        
+                for index,value in primary_drugs_series.iteritems():
+                    worksheet.write('B'+str(index+2), value, color_fmt)
+            
+            
             if diff_genes_amount:
                 output_dg_amount.sort('Database', inplace=True)
                 output_dg_amount.reset_index(inplace=True)     
@@ -783,9 +832,9 @@ class CoreSetCalculationParameters(FormView):
         output_file = default_storage.save(settings.MEDIA_ROOT+"/"+path+"/"+file_name, ContentFile(''))
         output_file_row = default_storage.save(settings.MEDIA_ROOT+"/"+path+"/"+file_name_unchanged, ContentFile(''))
         
-        with ExcelWriter(output_file, index=False) as writer:
+        with ExcelWriter(output_file, engine='xlsxwriter') as writer:
             cnr_doc_df.to_excel(writer,'CNR')
-        with ExcelWriter(output_file_row, index=False) as writer:
+        with ExcelWriter(output_file_row, engine='xlsxwriter') as writer:
             cnr_unchanged_df.to_excel(writer,'CNR')   
         
         return HttpResponseRedirect(reverse('document_detail', args=(output_doc.id,)))
@@ -883,8 +932,53 @@ class Test(TemplateView):
         
     
     def get_context_data(self, **kwargs):
-              
+        import pandas as pd 
         context = super(Test, self).get_context_data(**kwargs)
+        
+        df = read_excel(settings.MEDIA_ROOT+"/new_report.xls")
+        
+        df = df.assign(total=((df['DS1'] + df['DS2'])/2))
+        
+        df.sort('total', inplace=True, ascending=False)
+        
+        df = df[[u'№', u'Препарат', u'БД', 'DS1', 'DS2', u'Тип']]
+        df.reset_index(drop=True, inplace=True)
+        
+        primary_df = df[df[u'БД']=='primary']
+        
+        llist = primary_df[u'Препарат']
+        
+        
+        # Create a Pandas Excel writer using XlsxWriter as the engine.
+        writer = pd.ExcelWriter(settings.MEDIA_ROOT+'/pandas_simple.xlsx', engine='xlsxwriter')
+        
+        
+        df.to_excel(writer, sheet_name='report5', index=False)
+        df.to_excel(writer, sheet_name='report4', index=False)
+        df.to_excel(writer, sheet_name='report3', index=False)
+        df.to_excel(writer, sheet_name='report2', index=False)
+        
+        workbook = writer.book
+        worksheet = writer.sheets['report']
+        
+        num_fmt = workbook.add_format({'align': 'right', 'num_format': '0.0', 'border':True})
+        bold_fmt = workbook.add_format({'align': 'left', 'bold':True, 'border':True})
+        border_fmt = workbook.add_format({'border':True})
+        
+        color_fmt = workbook.add_format({'bg_color': '#CCCCCC'})
+        
+        worksheet.set_column('A:A', 5, border_fmt)
+        worksheet.set_column('B:B', 30, bold_fmt)       
+        worksheet.set_column('C:C', 10, border_fmt)
+        worksheet.set_column('D:E', 10, border_fmt)
+        worksheet.set_column('D:E', 10, num_fmt)
+        worksheet.set_column('F:F', 10, border_fmt)
+        
+        for index,value in llist.iteritems():
+            worksheet.write('B'+str(index+2), value, color_fmt)
+            
+        
+        writer.save()
         
         raise Exception('stop')
         """XML PATHS """

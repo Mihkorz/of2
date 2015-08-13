@@ -20,7 +20,7 @@
         <div class="panel-heading">Users</div>
         <div class="panel-body">
           <ul>
-          {% for user in all_users %}
+          {% for user in all_users|dictsort:"username" %}
           <li><a href="/user/{{user.username}}">{{user.username}}</a></li>
           {% endfor %}
           </ul>
