@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import csv
+import numpy as np
 
 from django import forms
 from django.conf import settings
@@ -38,7 +39,6 @@ def validate_file(file_, content_types=None, max_upload_size=None):
             raise forms.ValidationError(u"Document doesn't contain 'SYMBOL' or 'Name' column.\
                                          Please check your document and try uploading it again.")
             
-        
         for tumour in tumour_cols:
             try:
                 df[tumour].astype(float)
@@ -52,6 +52,13 @@ def validate_file(file_, content_types=None, max_upload_size=None):
             except :
                 raise forms.ValidationError(u'Document contains Norm with non float value in column %s.'
                                         % norm)
+        """Check for zeros in DataFrame"""
+        check_zeros = df.apply(lambda x: np.any(x==0))
+        zeros = check_zeros[check_zeros]
+        if len(zeros.index)>0:
+            raise forms.ValidationError(u'Document contains Zero values in column(s): %s.'
+                                         %(', '.join(list(zeros.index.values))))
+            
                 
         
         
