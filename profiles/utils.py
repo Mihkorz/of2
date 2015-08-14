@@ -52,7 +52,7 @@ def validate_file(file_, content_types=None, max_upload_size=None):
             except :
                 raise forms.ValidationError(u'Document contains Norm with non float value in column %s.'
                                         % norm)
-        """Check for zeros in DataFrame"""
+        """Check for zeros in DataFrame
         check_zeros = df.apply(lambda x: np.any(x==0))
         zeros = check_zeros[check_zeros]
         if len(zeros.index)>0:
@@ -61,7 +61,7 @@ def validate_file(file_, content_types=None, max_upload_size=None):
             
                 
         
-        
+        """
         """
         allrows = csv.reader(file_, dialect='excel', delimiter=dialect.delimiter)
 
