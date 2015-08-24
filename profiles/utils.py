@@ -57,9 +57,7 @@ def validate_file(file_, content_types=None, max_upload_size=None):
         zeros = check_zeros[check_zeros]
         if len(zeros.index)>0:
             raise forms.ValidationError(u'Document contains Zero values in column(s): %s.'
-                                         %(', '.join(list(zeros.index.values))))
-            
-                
+                                         %(', '.join(list(zeros.index.values))))             
         
         """
         """

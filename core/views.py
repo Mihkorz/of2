@@ -369,8 +369,7 @@ class CoreSetCalculationParameters(FormView):
             joined_df = gene_df.join(process_doc_df, how='inner') #intersect DataFrames to acquire only genes in current pathway
             
             """ Calculating PAS1 for samples and norms """
-            
-            pas1_norms_samples = np.log(joined_df[tumour_columns+normal_columns])
+            pas1_norms_samples = np.log(joined_df[tumour_columns+normal_columns].astype('float32'))
             pas1_norms_samples = pas1_norms_samples.multiply(joined_df['ARR'], axis='index')
             
             pas1_norms_samples = pas1_norms_samples.sum() # now we have PAS1                      
@@ -832,11 +831,17 @@ class CoreSetCalculationParameters(FormView):
         output_file = default_storage.save(settings.MEDIA_ROOT+"/"+path+"/"+file_name, ContentFile(''))
         output_file_row = default_storage.save(settings.MEDIA_ROOT+"/"+path+"/"+file_name_unchanged, ContentFile(''))
         
+        cnr_doc_df = cnr_doc_df.astype('float32')
+        cnr_doc_df.to_excel(output_file,sheet_name='CNR')
+        cnr_unchanged_df = cnr_unchanged_df.astype('float32')
+        cnr_unchanged_df.to_excel(output_file_row,sheet_name='CNR')
+        """
         with ExcelWriter(output_file, engine='xlsxwriter') as writer:
             cnr_doc_df.to_excel(writer,'CNR')
+       
         with ExcelWriter(output_file_row, engine='xlsxwriter') as writer:
             cnr_unchanged_df.to_excel(writer,'CNR')   
-        
+        """
         return HttpResponseRedirect(reverse('document_detail', args=(output_doc.id,)))
     
         
@@ -1324,48 +1329,31 @@ class Celery(TemplateView):
     
     def get_context_data(self, **kwargs):
         context = super(Celery, self).get_context_data(**kwargs)
+        df = DataFrame(np.random.randn(10, 5),
+                       columns=['a', 'b', 'c', 'd', 'e'])
         
-        from .tasks import add
-        a = add.delay(5, 1)
-        context ['result'] = a.get()
+        #json = df.to_json()
+        raise Exception('stop')
+        import time
+        from .tasks import add, countArr
+        from celery import group, chord
+        start = time.time()
+        pathways = Pathway.objects.filter(organism='human', database='primary_old')
+        sss = Series()
         
-        from os import listdir
         
-        def nnodes(row):
-            lnodes = []
-            nname = row[1]
-            row.dropna(inplace=True)
-            for el in row:
-                lnodes.append(el)
-            
-            raise Exception('from nnodes')
+        #res = chord()()
         
-        def rrels(row, sNodes):
-            fff = row['from']
+        res = group(countArr.s(path.id) for path in pathways)()
+        result = res.get()
             
-            nname = sNodes[fff]
-            
-            raise Exception('from rrel')
-            
-            
-            
+        stop = time.time() - start
+        raise Exception('celery')
         
-        path = settings.MEDIA_ROOT+'/microPaths/'
-        for ffile in listdir(path):
-            df_genes = read_excel(path+ffile, sheetname='genes', header=None)
-            df_genes.columns = ['gene', 'arr']
-            
-            df_nodes = read_excel(path+ffile, sheetname='nodes', header=None, index_col=0)
-            df_nodes_name = df_nodes[1]
-            #df_nodes.apply(nnodes, axis=1)
-            
-            df_rels = read_excel(path+ffile, sheetname='edges', header=None)
-            df_rels.columns = ['from', 'to', 'reltype']
-            df_rels.apply(rrels, axis=1, sNodes=df_nodes_name)
-            
-            
-            
-            raise Exception('test')
+        #
+        #context ['result'] = a.get()
+        
+        
           
             
             
