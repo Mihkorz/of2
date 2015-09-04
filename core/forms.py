@@ -15,6 +15,7 @@ class CalculationParametersForm(forms.Form):
                   ('metabolism', 'Metabolism Pathway Database'),
                   ('cytoskeleton', 'Cytoskeleton Pathway Database'),
                   ('kegg', 'KEGG Pathway Database'),
+                  ('nci', 'NCI Pathway Database'),
                   ('kegg_adjusted', 'KEGG Adjusted Pathway Database'),
                   ('kegg_10', 'KEGG >10 genes'),
                   ('kegg_adjusted_10', 'KEGG Adjusted >10 genes'),)
