@@ -19,6 +19,9 @@ class CalculationParametersForm(forms.Form):
                   ('kegg_adjusted', 'KEGG Adjusted Pathway Database'),
                   ('kegg_10', 'KEGG >10 genes'),
                   ('kegg_adjusted_10', 'KEGG Adjusted >10 genes'),)
+    DB_CHOICES_DRUG = (('oncofinder', 'OncoFinder'),
+                       ('geroscope', 'GeroScope'),
+                      )
     #FILTERS
     use_sigma = forms.BooleanField(label="Use sigma filter", initial=False, required=False)
     sigma_num = forms.FloatField( label="Sigma amount \n (deprecated)", initial=2, required=False)
@@ -47,6 +50,8 @@ class CalculationParametersForm(forms.Form):
                                      widget=forms.RadioSelect, choices=ORGANISM_CHOICES, initial='human')
     db_choice = forms.MultipleChoiceField(label="Pathway DataBase",
                                      widget=forms.SelectMultiple, choices=DB_CHOICES, initial=['primary_old'])
+    db_choice_drug = forms.MultipleChoiceField(label="Drug DataBase",
+                                     widget=forms.SelectMultiple, choices=DB_CHOICES_DRUG, initial=['oncofinder'])
     norm_choice = forms.ChoiceField(label="Calculation algorithm for normal values",
                                      widget=forms.RadioSelect, choices=NORM_CHOICES, initial=2)
     #values included into report

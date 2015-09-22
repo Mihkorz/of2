@@ -54,10 +54,20 @@
 	      </label>
 	     {% endfor %}
           </div>
-          <div class="col-sm-10">
-          {{ form.db_choice.label_tag }}
-          {{form.db_choice }}
+          <div class="col-sm-12" >
+            <table>
+              <tr>
+                <td>{{ form.db_choice.label_tag }}</td>
+                <td style="padding-left:15px">{{ form.db_choice_drug.label_tag }}</td>
+              </tr>
+              <tr>
+                <td>{{form.db_choice }}</td>
+                <td valign='top' style="padding-left:15px">{{form.db_choice_drug }}</td>
+              </tr>
+            </table>          
           </div>
+          
+          
           
 	
 	     </div>
@@ -190,6 +200,8 @@
 $(function() {
 	
 	$("#id_db_choice").css({"height":"100px"});
+	$("#id_db_choice_drug").css({"width":"145px", "height":"100px" });
+	
 	
 	$('#startButton').click(function () {
 	    var btn = $(this)

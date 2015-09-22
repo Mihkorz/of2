@@ -146,6 +146,8 @@ DRUG_TYPES = (
 DRUG_DATABASE = (
     ('primary', 'primary'),
     ('drugbank', 'drugbank'),
+    ('drugbank_geroscope', 'drugbank_geroscope'),
+    ('primary_geroscope', 'primary_geroscope'),
 )        
 class Drug(models.Model):
     name = models.CharField(verbose_name='Drug name', max_length=250, blank=False)

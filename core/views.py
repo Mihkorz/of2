@@ -87,6 +87,7 @@ class CoreSetCalculationParameters(FormView):
         #database and normal choice
         organism_choice = form.cleaned_data.get('organism_choice', 'human') #default=human
         db_choice = form.cleaned_data.get('db_choice', ['primary_old']) #default=primary_old
+        db_choice_drug = form.cleaned_data.get('db_choice_drug', ['oncofinder']) #default=oncofinder
         norm_choice = form.cleaned_data.get('norm_choice', 2) #default=geometric 
         
         #what to calculate and include in output report
@@ -103,7 +104,6 @@ class CoreSetCalculationParameters(FormView):
         calculate_FDR_all = form.cleaned_data.get('calculate_FDR_all', False)  
         new_pathway_names = form.cleaned_data.get('new_pathway_names', False)
         diff_genes_amount = form.cleaned_data.get('diff_genes_amount', False)
-        
         
         
         #From medical form. TODO: consider moving whole medical calculations to another view
@@ -545,6 +545,15 @@ class CoreSetCalculationParameters(FormView):
             output_ds1b_df = DataFrame()
             output_ds2_df = DataFrame()
             
+            """ Select Drugs Databese """
+            drugs_db = []
+            for db in db_choice_drug:
+                if db == 'geroscope':
+                    append_db = ['drugbank_geroscope', 'primary_geroscope']
+                else:
+                    append_db = ['drugbank', 'primary']
+                drugs_db = drugs_db+append_db
+            
             """ Create Series [target.name] - [pathways it's involved in] """
             targets = Target.objects.values_list('name', flat=True).distinct()
             s_target_path = Series()
@@ -555,7 +564,7 @@ class CoreSetCalculationParameters(FormView):
                 s_target_path =  s_target_path.set_value(target, paths)
                 
                        
-            drug_objects = Drug.objects.all().prefetch_related('target_set')
+            drug_objects = Drug.objects.filter(db__in=drugs_db).prefetch_related('target_set')
             d=0
             for drug in drug_objects:
                 #print drug.name
@@ -937,53 +946,33 @@ class Test(TemplateView):
         
     
     def get_context_data(self, **kwargs):
-        import pandas as pd 
-        context = super(Test, self).get_context_data(**kwargs)
         
-        df = read_excel(settings.MEDIA_ROOT+"/new_report.xls")
+        drugs_of = DataFrame(list(Drug.objects.all().values('name', 'db')))
         
-        df = df.assign(total=((df['DS1'] + df['DS2'])/2))
+        n_of = drugs_of['name'].tolist()
         
-        df.sort('total', inplace=True, ascending=False)
+        drugs_ds = DataFrame(list(Drug.objects.using('old').all().values('name', 'db')))  
         
-        df = df[[u'№', u'Препарат', u'БД', 'DS1', 'DS2', u'Тип']]
-        df.reset_index(drop=True, inplace=True)
-        
-        primary_df = df[df[u'БД']=='primary']
-        
-        llist = primary_df[u'Препарат']
-        
-        
-        # Create a Pandas Excel writer using XlsxWriter as the engine.
-        writer = pd.ExcelWriter(settings.MEDIA_ROOT+'/pandas_simple.xlsx', engine='xlsxwriter')
-        
-        
-        df.to_excel(writer, sheet_name='report5', index=False)
-        df.to_excel(writer, sheet_name='report4', index=False)
-        df.to_excel(writer, sheet_name='report3', index=False)
-        df.to_excel(writer, sheet_name='report2', index=False)
-        
-        workbook = writer.book
-        worksheet = writer.sheets['report']
-        
-        num_fmt = workbook.add_format({'align': 'right', 'num_format': '0.0', 'border':True})
-        bold_fmt = workbook.add_format({'align': 'left', 'bold':True, 'border':True})
-        border_fmt = workbook.add_format({'border':True})
-        
-        color_fmt = workbook.add_format({'bg_color': '#CCCCCC'})
-        
-        worksheet.set_column('A:A', 5, border_fmt)
-        worksheet.set_column('B:B', 30, bold_fmt)       
-        worksheet.set_column('C:C', 10, border_fmt)
-        worksheet.set_column('D:E', 10, border_fmt)
-        worksheet.set_column('D:E', 10, num_fmt)
-        worksheet.set_column('F:F', 10, border_fmt)
-        
-        for index,value in llist.iteritems():
-            worksheet.write('B'+str(index+2), value, color_fmt)
-            
-        
-        writer.save()
+        n_gs = drugs_ds['name'].tolist()
+        ttt = []
+        diff = list(set(n_gs)-set(n_of))
+        for drug_name in diff:
+            d_gs = Drug.objects.using('old').filter(name=drug_name)
+            for d in d_gs:
+                if d.db == 'genego':
+                    new_tip = 'primary_geroscope'
+                if d.db == 'drugbank':
+                    new_tip = 'drugbank_geroscope'
+                d_of = Drug(name=d.name, tip=d.tip, db=new_tip, substance=d.substance,
+                            targets = d.targets, morphology=d.morphology, price=d.price,
+                            sideEffect=d.sideEffect, contraindication=d.contraindication,
+                            compatibility=d.compatibility, experience=d.experience, isInRussia=d.isInRussia,
+                            info=d.info, comment=d.comment )
+                #d_of.save()
+                #for t in d.target_set.all():
+                #    t_of = Target(name=t.name, tip=t.tip, drug=d_of)
+                #    t_of.save()
+                
         
         raise Exception('stop')
         """XML PATHS """
