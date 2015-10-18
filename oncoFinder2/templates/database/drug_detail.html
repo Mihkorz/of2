@@ -43,7 +43,7 @@
            <td> <small>Total: {{pathways|length}}</small>
                <ul>
                {% for path in pathways %}
-               <li><a href="/db/pathways/{{path.name}}/{{path.id}}/" target="_blanc">{{path.name}}</a></li>
+               <li><a href="/db/pathways/{{path.name|slugify}}/{{path.id}}/" target="_blanc">{{path.name}}</a></li>
                {%endfor%}
                </ul>
            </td>

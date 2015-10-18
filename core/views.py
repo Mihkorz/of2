@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import os
-import math
 from datetime import datetime
 from pandas import  DataFrame, Series, read_csv, read_excel,  ExcelWriter
 import numpy as np
@@ -285,12 +284,12 @@ class CoreSetCalculationParameters(FormView):
             process_doc_df = process_doc_df.apply(filter_diff_genes, axis=0)
             
             cnr_df_diff_genes = process_doc_df.copy() 
-            
-            oldstd = cnr_doc_df['std']
-            old_meanNorm = cnr_doc_df['gMean_norm']
-            cnr_doc_df = cnr_df_diff_genes.join(df_for_pq_val)
-            cnr_doc_df['std'] = oldstd
-            cnr_doc_df['gMean_norm'] = old_meanNorm
+            if input_document.doc_format!='OF_cnr' and input_document.doc_format!='OF_cnr_stat':
+                oldstd = cnr_doc_df['std']
+                old_meanNorm = cnr_doc_df['gMean_norm']
+                cnr_doc_df = cnr_df_diff_genes.join(df_for_pq_val)
+                cnr_doc_df['std'] = oldstd
+                cnr_doc_df['gMean_norm'] = old_meanNorm
             #raise Exception('test cnr')
             cnr_doc_df.fillna(1, inplace=True)
             cnr_doc_df = cnr_doc_df.sort_index(axis=1)        
@@ -946,34 +945,23 @@ class Test(TemplateView):
         
     
     def get_context_data(self, **kwargs):
+        context = super(Test, self).get_context_data(**kwargs)
         
-        drugs_of = DataFrame(list(Drug.objects.all().values('name', 'db')))
         
-        n_of = drugs_of['name'].tolist()
-        
-        drugs_ds = DataFrame(list(Drug.objects.using('old').all().values('name', 'db')))  
-        
-        n_gs = drugs_ds['name'].tolist()
-        ttt = []
-        diff = list(set(n_gs)-set(n_of))
-        for drug_name in diff:
-            d_gs = Drug.objects.using('old').filter(name=drug_name)
-            for d in d_gs:
-                if d.db == 'genego':
-                    new_tip = 'primary_geroscope'
-                if d.db == 'drugbank':
-                    new_tip = 'drugbank_geroscope'
-                d_of = Drug(name=d.name, tip=d.tip, db=new_tip, substance=d.substance,
-                            targets = d.targets, morphology=d.morphology, price=d.price,
-                            sideEffect=d.sideEffect, contraindication=d.contraindication,
-                            compatibility=d.compatibility, experience=d.experience, isInRussia=d.isInRussia,
-                            info=d.info, comment=d.comment )
-                #d_of.save()
-                #for t in d.target_set.all():
-                #    t_of = Target(name=t.name, tip=t.tip, drug=d_of)
-                #    t_of.save()
-                
-        
+        i=0
+        for path in Pathway.objects.filter(organism='human', database='kegg_adjusted'):
+            i=i+1
+            print i
+            dnodes = {}
+            for node in path.node_set.all():
+                lcomp = []
+                for comp in node.component_set.all():
+                    lcomp.append(comp.name)
+                dnodes[node.name] = lcomp
+            
+            df = DataFrame.from_dict(dnodes, orient='index')
+            df = df.transpose().fillna('')
+            df.to_csv(settings.MEDIA_ROOT+"/path_node_component/kegg_adjusted/"+path.name+".csv")
         raise Exception('stop')
         """XML PATHS """
         from lxml import etree
@@ -987,10 +975,11 @@ class Test(TemplateView):
          
         mapping.set_index('gene',inplace=True)
         
-        
-        for path in Pathway.objects.filter(organism='human', database='primary_old'):
+        i=0
+        for path in Pathway.objects.filter(organism='human', database='nci'):
             root = etree.Element("pathway", name=path.name, title=path.name, org="hsa", number=str(path.id))  
-            print path.name
+            i=i+1
+            print path.name+" i="+str(i)
             zero_nodes = []
             for node in path.node_set.all():
                 
@@ -1026,7 +1015,7 @@ class Test(TemplateView):
                             subtype = etree.SubElement(relation, "subtype", name=relColor, value="--|")
                 
                 
-            applic = open(settings.MEDIA_ROOT+"/xmlpaths/"+path.name+".xml", "w")
+            applic = open(settings.MEDIA_ROOT+"/xmlpaths/human/nci/"+path.name+".xml", "w")
             for parent in root.xpath('//*[./*]'): # Search for parent elements
                 parent[:] = sorted(parent,key=lambda x: x.tag)
             handle = etree.tostring(root, pretty_print=True, encoding='utf-8', xml_declaration=True)
@@ -1305,85 +1294,7 @@ class Test(TemplateView):
         return context
 
 
-class Celery(TemplateView):
-    """
-    Testing Celery tasks
-    """
-    template_name = 'core/celery.html'
-    
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super(Celery, self).dispatch(request, *args, **kwargs)
-    
-    
-    def get_context_data(self, **kwargs):
-        context = super(Celery, self).get_context_data(**kwargs)
-        df = DataFrame(np.random.randn(10, 5),
-                       columns=['a', 'b', 'c', 'd', 'e'])
-        
-        #json = df.to_json()
-        raise Exception('stop')
-        import time
-        from .tasks import add, countArr
-        from celery import group, chord
-        start = time.time()
-        pathways = Pathway.objects.filter(organism='human', database='primary_old')
-        sss = Series()
-        
-        
-        #res = chord()()
-        
-        res = group(countArr.s(path.id) for path in pathways)()
-        result = res.get()
-            
-        stop = time.time() - start
-        raise Exception('celery')
-        
-        #
-        #context ['result'] = a.get()
-        
-        
-          
-            
-            
-        
-        
-        return context
-    
-        
-class TaskStatus(TemplateView):
-    """ Testing Celery task status via Ajax"""
-    
-    template_name = 'core/test.html'
-    
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        
-        if self.request.is_ajax():
-            import json
-            from django.http import HttpResponse
-            from celery.result import AsyncResult
-            
-            task_id = self.request.POST.get('task_id')
-            task = AsyncResult(task_id)
-            state = task.state
-            result = task.result if task.result else 'not done'
-            
-            data = {'state': state,
-                    'result': result}
-            
-            
-            return HttpResponse(json.dumps(data), content_type="application/json")
-        else:
-        
-            return super(TaskStatus, self).dispatch(request, *args, **kwargs)
-    
-    
-    def get_context_data(self, **kwargs):
-              
-        context = super(TaskStatus, self).get_context_data(**kwargs)
-        
-        return context
+
     
     
     

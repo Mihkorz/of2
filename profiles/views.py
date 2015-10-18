@@ -42,8 +42,7 @@ class ProfileIndex(DetailView):
         return super(ProfileIndex, self).dispatch(request, *args, **kwargs)
     
     def get_context_data(self, **kwargs):              
-        context = super(ProfileIndex, self).get_context_data(**kwargs)
-        
+        context = super(ProfileIndex, self).get_context_data(**kwargs)  
         all_users = User.objects.exclude(username = self.get_object().username)
         context['all_users'] = all_users
         
@@ -52,7 +51,7 @@ class ProfileIndex(DetailView):
         
         all_projects = Project.objects.exclude(owner=self.get_object())[:30]
         context['all_projects'] = all_projects
-                
+        
         return context
         
 class SettingsProfile(UpdateView):
@@ -578,6 +577,7 @@ class SampleDetail(DeleteView):
                            
             context['PMS'] = lPaths
             context['lDrawPathCanvas'] = lDrawCanvas
+            #raise Exception('draw')
 
         except:
             #raise

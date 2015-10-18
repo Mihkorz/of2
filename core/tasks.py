@@ -17,9 +17,9 @@ def countArr(self, path):
     
     return {pathway.name: arr}
 
-@shared_task(bind=True)
-def add(self, x, y):
-    self.update_state(state='PROGRESS')
+@shared_task()
+def add(x, y):
+    
     
     time.sleep(5)
     return x + y

@@ -12,7 +12,7 @@ from profiles.views import ProfileIndex, SettingsProfile, SettingsBilling, Creat
                            DeleteProject, ProjectDetail, CreateDocument, DeleteDocument, \
                            DocumentDetail, SampleDetail, AjaxPathDetail
                            
-from core.views import CoreSetCalculationParameters, CoreCalculation, Test, Celery, TaskStatus
+from core.views import CoreSetCalculationParameters, CoreCalculation, Test 
 from core.harmony_views import HarmonyForm, HarmonyDone, HarmonyPrevFiles, breastmodule
 from core.utils_views import ConvertPath, Ksyusha
 from database.views import PathwayList, PathwayDetail, PathwayAjaxSearch, \
@@ -26,6 +26,8 @@ from medic.views import MedicNosologyList, MedicNosologyDetail, MedicTreatmentDe
                         PatientTreatmentDetail, PatientTreatmentPDF, MedicAjaxGenerateReport, \
                         MedicAjaxGenerateFullReport, MedicPatientCalculation, MedicTest
 from mirna.views import MirnaSetCalculationParameters
+
+from core.celery_views import Celery, TaskStatus
 
 urlpatterns = patterns('',
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
