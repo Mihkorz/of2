@@ -294,7 +294,8 @@ class CoreSetCalculationParameters(FormView):
             cnr_doc_df.fillna(1, inplace=True)
             cnr_doc_df = cnr_doc_df.sort_index(axis=1)        
         else:
-            process_doc_df = process_doc_df.div(process_doc_df['mean'], axis='index') #convert column from GENE EXPRESSION to CNR
+            if input_document.doc_format!='OF_cnr' and input_document.doc_format!='OF_cnr_stat':
+                process_doc_df = process_doc_df.div(process_doc_df['mean'], axis='index') #convert column from GENE EXPRESSION to CNR
         
         if input_document.doc_format=='OF_cnr_stat': #for OF_cnr_stat files only
             def filter_from_file_stat(col):
