@@ -398,15 +398,18 @@ class CoreSetCalculationParameters(FormView):
                     tt_norm_pas1[norm_name] = s_norms_pas1[norm_name]
                     tt_norm_pas2[norm_name] = s_norms_pas2[norm_name]
                 
-                _, p_val = pseudo_ttest_1samp(tt_norm_pas, s_samples_pas, axis=1)
+                #_, p_val = pseudo_ttest_1samp(tt_norm_pas, s_samples_pas, axis=1)
+                _, p_val = ttest_1samp(tt_norm_pas, s_samples_pas, axis=1)
                 s_p_value = Series(p_val, index = s_samples_pas.index+'_p-val').fillna(1)
                 pas_norms_samples = pas_norms_samples.append(s_p_value) 
                 
-                _, p_val = pseudo_ttest_1samp(tt_norm_pas1, s_samples_pas1, axis=1)
+                #_, p_val = pseudo_ttest_1samp(tt_norm_pas1, s_samples_pas1, axis=1)
+                _, p_val = ttest_1samp(tt_norm_pas1, s_samples_pas1, axis=1)
                 s_p_value = Series(p_val, index = s_samples_pas1.index+'_p-val').fillna(1)
                 pas1_norms_samples = pas1_norms_samples.append(s_p_value)
                 
-                _, p_val = pseudo_ttest_1samp(tt_norm_pas2, s_samples_pas2, axis=1)
+                #_, p_val = pseudo_ttest_1samp(tt_norm_pas2, s_samples_pas2, axis=1)
+                _, p_val = ttest_1samp(tt_norm_pas2, s_samples_pas2, axis=1)
                 s_p_value = Series(p_val, index = s_samples_pas2.index+'_p-val').fillna(1)
                 pas2_norms_samples = pas2_norms_samples.append(s_p_value)               
                 
