@@ -16,7 +16,7 @@ from django.conf import settings
 from .models import MirnaMapping
 from .forms import UploadDocumentForm, CalculationParametersForm
 from profiles.models import Project, Document
-from database.models import Pathway, Gene
+from core.models import Pathway, Gene
 
 class mirnaProjectDetail(DetailView):
     model = Project
@@ -96,8 +96,9 @@ class MirnaSetCalculationParameters(FormView):
         cnr_up =  form.cleaned_data['cnr_up']
         use_cnr = form.cleaned_data['use_cnr']
         db_choice = form.cleaned_data['db_choice']
+        organism_choice = form.cleaned_data['organism_choice']
         
-        
+    
         context = self.get_context_data()
         
         """ update current Input Document """
@@ -143,27 +144,51 @@ class MirnaSetCalculationParameters(FormView):
         miPAS_list = []
         miPI_list = []
         
-        pathway_objects = Pathway.objects.all()
+        pathway_objects = Pathway.objects.filter(organism=organism_choice, database='primary_old')
         
         for pathway in pathway_objects:
+            
             gene_name = []
             gene_arr = []
             
             gene_objects = pathway.gene_set.all()
             
             for gene in gene_objects:
-                mapping_mirna_genes = MirnaMapping.objects.filter(Gene=gene.name, Sourse=db_choice)
-                for mirna_gene in mapping_mirna_genes:
-                    gene_name.append(mirna_gene.miRNA_ID.strip())
+                if db_choice == 'Diana TarBase':
+                    mapping_mirna_genes = MirnaMapping.objects.filter(Gene=gene.name, Sourse=db_choice)
+                    for mirna_gene in mapping_mirna_genes:
+                        gene_name.append(mirna_gene.miRNA_ID.strip())
+                        gene_arr.append(float(gene.arr))
+                else:
                     gene_arr.append(float(gene.arr))
+                    gene_name.append(gene.name)
                 
             gene_data = {'SYMBOL': gene_name,
                          'ARR': gene_arr}
             
             gene_df = DataFrame(gene_data).set_index('SYMBOL')
             
-            gene_df = gene_df.groupby(gene_df.index, level=0).mean() # ignore duplicate genes if exist 
+            gene_df = gene_df.groupby(gene_df.index, level=0).mean() # ignore duplicate genes if exist
             
+            if db_choice == 'miRTarBase':
+                if organism_choice == 'human':
+                    mapping_df = read_csv(settings.MEDIA_ROOT+'/mirna/mirtarbase_human_df.csv')
+                if organism_choice == 'mouse':
+                    mapping_df = read_csv(settings.MEDIA_ROOT+'/mirna/mirtarbase_mice_df.csv')
+                    
+                mapping_df = mapping_df[['miRNA.ID', 'Gene']]
+                mapping_df['Gene'] = mapping_df['Gene'].str.upper()
+                mapping_df.set_index('Gene', inplace=True)
+                
+                mirna_gene = mapping_df.join(gene_df, how='inner')
+                mirna_gene.set_index('miRNA.ID', inplace=True)
+                mirna_gene = mirna_gene.groupby(gene_df.index, level=0).mean()
+                mirna_gene.index.name = 'SYMBOL'
+                
+                gene_df = mirna_gene
+                
+             
+            #raise Exception('gene')
             joined_df = gene_df.join(process_doc_df, how='inner')
             
             miPAS_dict = {}
@@ -224,7 +249,7 @@ class MirnaSetCalculationParameters(FormView):
         
         output_file = default_storage.save(settings.MEDIA_ROOT+"/"+path+"/"+file_name, ContentFile(''))
         
-        with ExcelWriter(output_file, index=False) as writer:
+        with ExcelWriter(output_file) as writer:
             output_miPAS_df.to_excel(writer,'miPAS')
             output_miPI_df.to_excel(writer,'miPI')
             

@@ -49,6 +49,11 @@ class CalculationParametersForm(forms.Form):
     
     DB_CHOICES = (('Diana TarBase', 'Diana TarBase',),
                   ('miRTarBase', 'miRTarBase'))
+    ORGANISM_CHOICES = (('human', 'Human',),
+                       ('mouse', 'Mouse',))
+    
+    organism_choice = forms.ChoiceField(label="Organism",
+                                     widget=forms.RadioSelect, choices=ORGANISM_CHOICES, initial='human')
     
     db_choice = forms.ChoiceField(label="Target DataBase",
                                      widget=forms.RadioSelect, choices=DB_CHOICES, initial='Diana TarBase')

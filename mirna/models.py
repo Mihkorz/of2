@@ -6,3 +6,4 @@ class MirnaMapping(models.Model):
     Gene = models.CharField(verbose_name='Gene', max_length=250, blank=False)
     Probability = models.DecimalField(verbose_name='Probability', max_digits=2, decimal_places=1, default=0)
     Sourse = models.CharField(verbose_name='Sourse', max_length=250, blank=False)
+    Organism = models.CharField(verbose_name='Organism', max_length=250, blank=False)

@@ -20,7 +20,7 @@ from django.conf import settings
 
 from .forms import  CalculationParametersForm, MedicCalculationParametersForm
 from profiles.models import Document, ProcessDocument
-from .models import Pathway, Gene, Node, Component
+from .models import Pathway, Gene, Node, Component, Relation
 from database.models import Drug, Target
 from metabolism.models import MetabolismPathway, MetabolismGene
 from mouse.models import MousePathway, MouseGene, MouseMetabolismPathway, MouseMetabolismGene, MouseMapping
@@ -948,22 +948,32 @@ class Test(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(Test, self).get_context_data(**kwargs)
         
-        
-        i=0
-        for path in Pathway.objects.filter(organism='human', database='kegg_adjusted'):
-            i=i+1
-            print i
-            dnodes = {}
-            for node in path.node_set.all():
-                lcomp = []
-                for comp in node.component_set.all():
-                    lcomp.append(comp.name)
-                dnodes[node.name] = lcomp
+        """ MOUSE TOPOLOGY
+        for hp in Pathway.objects.filter(organism='human', database='primary_old').exclude(name__in=['AHR_Pathway', 'AHR_Pathway_AHR_Degradation', 'AHR_Pathway_Cath_D_Expression', 'AHR_Pathway_C_Myc_Expression', 'AHR_Pathway_PS2_Gene_Expression']):
+            mp = Pathway.objects.get(organism='mouse', database='primary_old', name=hp.name)
             
-            df = DataFrame.from_dict(dnodes, orient='index')
-            df = df.transpose().fillna('')
-            df.to_csv(settings.MEDIA_ROOT+"/path_node_component/kegg_adjusted/"+path.name+".csv")
-        raise Exception('stop')
+            print mp.name
+            
+            for hn in hp.node_set.all():
+                mn = Node(name=hn.name, comment=hn.comment, pathway=mp)
+                mn.save()
+                for hc in hn.component_set.all():
+                    try:
+                        mmap = MouseMapping.objects.filter(human_gene_symbol=hc.name)[0]
+                        mc = Component(name=mmap.mouse_gene_symbol.upper(), node=mn)
+                        mc.save()
+                    except:
+                        pass
+                    
+            
+            for hn in hp.node_set.all():
+                for inrel in hn.inrelations.all():
+                    mfn = Node.objects.get(name=inrel.fromnode.name, pathway=mp)
+                    mtn = Node.objects.get(name=inrel.tonode.name, pathway=mp)
+                    mr = Relation(fromnode=mfn, tonode=mtn)
+                    mr.save()
+        """
+        #raise Exception('stop')
         """XML PATHS """
         from lxml import etree
         
@@ -977,7 +987,7 @@ class Test(TemplateView):
         mapping.set_index('gene',inplace=True)
         
         i=0
-        for path in Pathway.objects.filter(organism='human', database='nci'):
+        for path in Pathway.objects.filter(organism='mouse', database='primary_old'):
             root = etree.Element("pathway", name=path.name, title=path.name, org="hsa", number=str(path.id))  
             i=i+1
             print path.name+" i="+str(i)
@@ -1016,7 +1026,7 @@ class Test(TemplateView):
                             subtype = etree.SubElement(relation, "subtype", name=relColor, value="--|")
                 
                 
-            applic = open(settings.MEDIA_ROOT+"/xmlpaths/human/nci/"+path.name+".xml", "w")
+            applic = open(settings.MEDIA_ROOT+"/xmlpaths/mouse/primary_old/"+path.name+".xml", "w")
             for parent in root.xpath('//*[./*]'): # Search for parent elements
                 parent[:] = sorted(parent,key=lambda x: x.tag)
             handle = etree.tostring(root, pretty_print=True, encoding='utf-8', xml_declaration=True)
