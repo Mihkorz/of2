@@ -185,12 +185,17 @@ class MirnaSetCalculationParameters(FormView):
                 mirna_gene = mirna_gene.groupby(gene_df.index, level=0).mean()
                 mirna_gene.index.name = 'SYMBOL'
                 
+                mirna_gene_copy = mirna_gene.copy()
+                mirna_gene_copy = mirna_gene_copy[['-3p' in s for s in mirna_gene_copy.index]]
+                mirna_gene_copy.index = mirna_gene_copy.index.map(lambda x: x.replace('-3p', ''))
+                
+                mirna_gene = mirna_gene.append(mirna_gene_copy)
                 gene_df = mirna_gene
                 
              
-            #raise Exception('gene')
-            joined_df = gene_df.join(process_doc_df, how='inner')
             
+            joined_df = gene_df.join(process_doc_df, how='inner')
+            #raise Exception('gene')
             miPAS_dict = {}
             miPI_dict = {}
             
