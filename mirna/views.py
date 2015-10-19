@@ -126,7 +126,14 @@ class MirnaSetCalculationParameters(FormView):
         output_doc.project = input_document.project
         output_doc.created_by = self.request.user
         output_doc.created_at = datetime.now()        
-        #output_doc.save()
+        
+        params_for_output = []
+        params_for_output.append({'Parameters': 'Organism: '+organism_choice})
+        params_for_output.append({'Parameters': 'Database: '+db_choice })
+        params_for_output.append({'Parameters': 'Used Sigma filer: '+ ('Yes. Sigma number='+str(sigma_num) if use_sigma else 'No') })
+        params_for_output.append({'Parameters': 'Used CNR filter: '+ ('Yes. Lower limit='+str(cnr_low)+'. Upper limit='+str(cnr_up) if use_cnr else 'No') })
+        
+        params_df = DataFrame(params_for_output)
         
         """ Calculating miPAS and miRNA-Pathway Influence (miPI) """
          
@@ -257,6 +264,7 @@ class MirnaSetCalculationParameters(FormView):
         with ExcelWriter(output_file) as writer:
             output_miPAS_df.to_excel(writer,'miPAS')
             output_miPI_df.to_excel(writer,'miPI')
+            params_df.to_excel(writer,'Parameters')
             
         output_doc.document = path+"/"+os.path.basename(output_file)
         output_doc.related_doc = input_document
