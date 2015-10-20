@@ -951,6 +951,15 @@ class Test(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(Test, self).get_context_data(**kwargs)
         
+        def update_amcf(row):
+            
+            path = Pathway.objects.get(organism='human', database='primary_new', name=row['Pathway'])
+            path.amcf=row['AMCF']
+            path.save()
+        
+        df = read_excel(settings.MEDIA_ROOT+"/primary_new_AMCF.xlsx")
+        df.apply(update_amcf, axis=1) 
+        raise Exception('stop')
         """ MOUSE TOPOLOGY
         for hp in Pathway.objects.filter(organism='human', database='primary_old').exclude(name__in=['AHR_Pathway', 'AHR_Pathway_AHR_Degradation', 'AHR_Pathway_Cath_D_Expression', 'AHR_Pathway_C_Myc_Expression', 'AHR_Pathway_PS2_Gene_Expression']):
             mp = Pathway.objects.get(organism='mouse', database='primary_old', name=hp.name)
