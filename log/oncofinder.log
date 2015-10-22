@@ -6527,3 +6527,342 @@ Traceback (most recent call last):
   File "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/options.py", line 531, in get_form
     % (e, self.__class__.__name__))
 FieldError: Unknown field(s) (daabase) specified for Pathway. Check fields/fieldsets/exclude attributes of class PathwayAdmin.
+2015-10-22 16:04:30,583 ERROR base 28566 -1387271360 Internal Server Error: /calculation-parameters/doc7045/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 47, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 218, in form_valid
+    log_process_doc_df = np.log(process_doc_df).fillna(0)
+AttributeError: log
+2015-10-22 16:05:40,216 ERROR base 28566 -1368392896 Internal Server Error: /calculation-parameters/doc7045/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 47, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 218, in form_valid
+    log_process_doc_df = np.log(process_doc_df).fillna(0)
+AttributeError: log
+2015-10-22 16:13:10,290 ERROR base 32215 -1359930560 Internal Server Error: /calculation-parameters/doc7045/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 47, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 220, in form_valid
+    log_process_doc_df = process_doc_df.apply(llog, axis=1)#np.log(process_doc_df).fillna(0)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 3689, in apply
+    return self._apply_standard(f, axis, reduce=reduce)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 3779, in _apply_standard
+    results[i] = func(v)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 211, in llog
+    return np.log(row)
+AttributeError: ('log', u'occurred at index AATK')
+2015-10-22 16:14:07,642 ERROR base 32658 -1359930560 Internal Server Error: /calculation-parameters/doc7045/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 47, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 222, in form_valid
+    log_process_doc_df = process_doc_df.apply(llog, axis=1)#np.log(process_doc_df).fillna(0)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 3689, in apply
+    return self._apply_standard(f, axis, reduce=reduce)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 3779, in _apply_standard
+    results[i] = func(v)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 211, in llog
+    for index, val in row:
+TypeError: ("'float' object is not iterable", u'occurred at index AATK')
+2015-10-22 16:16:25,075 ERROR base 1102 -1359930560 Internal Server Error: /calculation-parameters/doc7045/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 47, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 221, in form_valid
+    log_process_doc_df = process_doc_df.apply(llog, axis=1)#np.log(process_doc_df).fillna(0)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 3689, in apply
+    return self._apply_standard(f, axis, reduce=reduce)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 3779, in _apply_standard
+    results[i] = func(v)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 212, in llog
+    return np.log(row)
+AttributeError: ('log', u'occurred at index AATK')
+2015-10-22 16:16:48,478 ERROR base 1365 -1359930560 Internal Server Error: /calculation-parameters/doc7045/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 47, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 221, in form_valid
+    log_process_doc_df = process_doc_df.apply(llog, axis=1)#np.log(process_doc_df).fillna(0)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 3689, in apply
+    return self._apply_standard(f, axis, reduce=reduce)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 3779, in _apply_standard
+    results[i] = func(v)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 212, in llog
+    return np.log(row)
+AttributeError: ('log', u'occurred at index AATK')
+2015-10-22 16:17:07,118 ERROR base 1490 -1359930560 Internal Server Error: /calculation-parameters/doc7045/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 47, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 221, in form_valid
+    log_process_doc_df = process_doc_df.apply(llog, axis=1)#np.log(process_doc_df).fillna(0)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 3689, in apply
+    return self._apply_standard(f, axis, reduce=reduce)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 3779, in _apply_standard
+    results[i] = func(v)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 212, in llog
+    return np.log(row)
+AttributeError: ('log', u'occurred at index AATK')
+2015-10-22 16:17:26,883 ERROR base 1625 -1360430272 Internal Server Error: /calculation-parameters/doc7045/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 47, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 221, in form_valid
+    log_process_doc_df = process_doc_df.apply(llog, axis=1)#np.log(process_doc_df).fillna(0)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 3689, in apply
+    return self._apply_standard(f, axis, reduce=reduce)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 3779, in _apply_standard
+    results[i] = func(v)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 212, in llog
+    return np.log(row)
+AttributeError: ('log', u'occurred at index AATK')
+2015-10-22 16:17:43,418 ERROR base 1883 -1359930560 Internal Server Error: /calculation-parameters/doc7045/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 47, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 221, in form_valid
+    log_process_doc_df = process_doc_df.apply(llog, axis=1)#np.log(process_doc_df).fillna(0)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 3689, in apply
+    return self._apply_standard(f, axis, reduce=reduce)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 3779, in _apply_standard
+    results[i] = func(v)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 212, in llog
+    return np.log(row)
+AttributeError: ('log', u'occurred at index AATK')
+2015-10-22 16:17:57,534 ERROR base 1989 -1359930560 Internal Server Error: /calculation-parameters/doc7045/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 47, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 221, in form_valid
+    log_process_doc_df = process_doc_df.apply(llog, axis=1)#np.log(process_doc_df).fillna(0)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 3689, in apply
+    return self._apply_standard(f, axis, reduce=reduce)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 3779, in _apply_standard
+    results[i] = func(v)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 212, in llog
+    return np.log(row)
+AttributeError: ('log', u'occurred at index AATK')
+2015-10-22 16:18:14,668 ERROR base 2125 -1359930560 Internal Server Error: /calculation-parameters/doc7045/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 47, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 221, in form_valid
+    log_process_doc_df = process_doc_df.apply(llog, axis=1)#np.log(process_doc_df).fillna(0)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 3689, in apply
+    return self._apply_standard(f, axis, reduce=reduce)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 3779, in _apply_standard
+    results[i] = func(v)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 212, in llog
+    return np.log(row)
+AttributeError: ('log', u'occurred at index AATK')
+2015-10-22 16:26:06,241 ERROR base 5134 -1359930560 Internal Server Error: /calculation-parameters/doc7045/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 47, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 221, in form_valid
+    log_process_doc_df = process_doc_df.apply(llog, axis=1)#np.log(process_doc_df).fillna(0)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 3689, in apply
+    return self._apply_standard(f, axis, reduce=reduce)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 3779, in _apply_standard
+    results[i] = func(v)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 211, in llog
+    raise Exception('stop')
+Exception: ('stop', u'occurred at index AATK')
+2015-10-22 16:26:28,240 ERROR base 5369 -1359381696 Internal Server Error: /calculation-parameters/doc7045/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 47, in dispatch
+    return super(CoreSetCalculationParameters, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 222, in form_valid
+    log_process_doc_df = process_doc_df.apply(llog, axis=1)#np.log(process_doc_df).fillna(0)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 3689, in apply
+    return self._apply_standard(f, axis, reduce=reduce)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 3779, in _apply_standard
+    results[i] = func(v)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/core/views.py", line 212, in llog
+    raise Exception('stop')
+Exception: ('stop', u'occurred at index AATK')

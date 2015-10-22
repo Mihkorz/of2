@@ -207,7 +207,7 @@ class CoreSetCalculationParameters(FormView):
         
         """ Standard T-test for genes """
         if use_ttest:
-
+            
             def calculate_ttest(row):
                 tumours = row[tumour_columns]
                 norms = row[normal_columns]
@@ -215,7 +215,7 @@ class CoreSetCalculationParameters(FormView):
                 _, p_val = ttest_ind(tumours, norms)
                 
                 return p_val
-            log_process_doc_df = np.log(process_doc_df).fillna(0)
+            log_process_doc_df = np.log(process_doc_df.astype('float32')).fillna(0)
             series_p_values = log_process_doc_df.apply(calculate_ttest, axis=1).fillna(1)
             log_process_doc_df = None
             
