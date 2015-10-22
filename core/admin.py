@@ -30,7 +30,7 @@ copy_pathway.short_description = "Copy selected pathways"
 
 class PathwayAdmin(admin.ModelAdmin):
     actions = [copy_pathway]
-    fields = ['name', 'amcf', 'info', 'comment']
+    fields = ['name', 'amcf', 'organism', 'database', 'info', 'comment']
     list_display = ('name', 'organism', 'database', 'node_list', 'gene_list','amcf')
     search_fields = ['name']
     list_filter = ('database', 'organism')

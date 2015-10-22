@@ -952,23 +952,7 @@ class Test(TemplateView):
         context = super(Test, self).get_context_data(**kwargs)
         
         
-        df = read_csv(settings.MEDIA_ROOT+"/Target_drugs_pathway.txt", header=None)
-        df.columns = ['gene']
         
-        po = Pathway(organism='human', database='primary_old', amcf=1, name='Target_drugs_pathway')
-        po.save()
-        pn = Pathway(organism='human', database='primary_new', amcf=1, name='Target_drugs_pathway')
-        pn.save()
-        
-        def add_gene(row):
-            gname = row['gene']
-            go = Gene(name=gname, arr=1, pathway=po)
-            go.save()
-            gn = Gene(name=gname, arr=1, pathway=pn)
-            gn.save()
-            #raise Exception('from add gene')
-        
-        df.apply(add_gene, axis=1)
         
         
         raise Exception('stop')
