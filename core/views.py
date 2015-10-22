@@ -951,14 +951,26 @@ class Test(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(Test, self).get_context_data(**kwargs)
         
-        def update_amcf(row):
-            
-            path = Pathway.objects.get(organism='human', database='primary_new', name=row['Pathway'])
-            path.amcf=row['AMCF']
-            path.save()
         
-        df = read_excel(settings.MEDIA_ROOT+"/primary_new_AMCF.xlsx")
-        df.apply(update_amcf, axis=1) 
+        df = read_csv(settings.MEDIA_ROOT+"/Target_drugs_pathway.txt", header=None)
+        df.columns = ['gene']
+        
+        po = Pathway(organism='human', database='primary_old', amcf=1, name='Target_drugs_pathway')
+        po.save()
+        pn = Pathway(organism='human', database='primary_new', amcf=1, name='Target_drugs_pathway')
+        pn.save()
+        
+        def add_gene(row):
+            gname = row['gene']
+            go = Gene(name=gname, arr=1, pathway=po)
+            go.save()
+            gn = Gene(name=gname, arr=1, pathway=pn)
+            gn.save()
+            #raise Exception('from add gene')
+        
+        df.apply(add_gene, axis=1)
+        
+        
         raise Exception('stop')
         """ MOUSE TOPOLOGY
         for hp in Pathway.objects.filter(organism='human', database='primary_old').exclude(name__in=['AHR_Pathway', 'AHR_Pathway_AHR_Degradation', 'AHR_Pathway_Cath_D_Expression', 'AHR_Pathway_C_Myc_Expression', 'AHR_Pathway_PS2_Gene_Expression']):
