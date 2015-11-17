@@ -52,11 +52,23 @@ class CalculationParametersForm(forms.Form):
     ORGANISM_CHOICES = (('human', 'Human',),
                        ('mouse', 'Mouse',))
     
+    PATH_DB_CHOICES = (('primary_old', 'Primary Pathway Database (old)'),
+                  ('primary_new', 'Primary Pathway Database (new)'),
+                  ('metabolism', 'Metabolism Pathway Database'),
+                  ('cytoskeleton', 'Cytoskeleton Pathway Database'),
+                  ('kegg', 'KEGG Pathway Database'),
+                  ('nci', 'NCI Pathway Database'),
+                  ('kegg_adjusted', 'KEGG Adjusted Pathway Database'),
+                  ('kegg_10', 'KEGG >10 genes'),
+                  ('kegg_adjusted_10', 'KEGG Adjusted >10 genes'),)
+    
     organism_choice = forms.ChoiceField(label="Organism",
                                      widget=forms.RadioSelect, choices=ORGANISM_CHOICES, initial='human')
     
     db_choice = forms.ChoiceField(label="Target DataBase",
                                      widget=forms.RadioSelect, choices=DB_CHOICES, initial='Diana TarBase')
+    path_db_choice = forms.MultipleChoiceField(label="Pathway DataBase",
+                                     widget=forms.SelectMultiple, choices=PATH_DB_CHOICES, initial=['primary_old'])
     sigma_num = forms.FloatField( label="Sigma amount", initial=2, required=False)
     use_sigma = forms.BooleanField(label="Use sigma filter", initial=True, required=False)
     cnr_low = forms.FloatField(label="CNR lower limit", initial=0.67, required=False)

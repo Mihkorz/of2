@@ -951,10 +951,104 @@ class Test(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(Test, self).get_context_data(**kwargs)
         
+        import json
+        import yaml
         
         
         
+        """
+        df = read_excel(settings.MEDIA_ROOT+"/report/output_PAS_crispr_resultcpoolmerged_both_rev_metabolism_primary.xlsx", sheetname='PAS1' )
         
+        df_s = df[df['Database']=='primary_new']
+        df_s = df_s[['New Pathway name', 'Low GFP-p62', 'High GFP-p62']]
+        df_s.columns=['name', 'x', 'y']
+        
+        df_m = df[df['Database']=='metabolism']
+        df_m = df_m[['New Pathway name', 'Low GFP-p62', 'High GFP-p62']]
+        df_m.columns=['name', 'x', 'y']
+        
+        df_s_up = df_m.sort(['x'], ascending=False)
+        df_s_up = df_s_up.head(n=10)
+        
+        uup = df_s_up.to_json(settings.MEDIA_ROOT+"/report/path/metabolism_low_up.json", orient='values')
+        
+        df_s_down = df_m.sort(['x'], ascending=True)
+        df_s_down = df_s_down.head(n=10)
+        
+        ddown = df_s_down.to_json(settings.MEDIA_ROOT+"/report/path/metabolism_low_down.json", orient='values')
+        
+        raise Exception('stop12')
+        
+        p_s = df_s.to_json( orient='records')
+        p_s1 = json.loads(p_s)
+        lp_s = []
+        p_s1 = yaml.safe_load(p_s)
+        for xxx in p_s1:
+            xxx['x'] = float(xxx['x'])
+            xxx['y'] = float(xxx['y'])
+            xxx= json.dumps(xxx)
+            lp_s.append(xxx)
+        
+        f = open(settings.MEDIA_ROOT+"/path1.json", "w")
+        f.write(",".join(map(lambda x: str(x), lp_s)))
+        f.close()
+        
+        
+        
+        p_m = df_m.to_json( orient='records')
+        p_m1 = json.loads(p_m)
+        lp_m = []
+        p_m1 = yaml.safe_load(p_m)
+        for xxx in p_m1:
+            xxx['x'] = float(xxx['x'])
+            xxx['y'] = float(xxx['y'])
+            xxx= json.dumps(xxx)
+            lp_m.append(xxx)
+            
+        f = open(settings.MEDIA_ROOT+"/path2.json", "w")
+        f.write(",".join(map(lambda x: str(x), lp_m)))
+        f.close()
+        """
+        # GENE TABLES 
+        
+        dfp = read_csv(settings.MEDIA_ROOT+"/report/res_low_vs_high_genes.csv")
+        pval = dfp[dfp['pval']<0.05]
+        pval.rename(columns={'Gene': 'SYMBOL'}, inplace=True)
+        pval.set_index('SYMBOL', inplace=True)
+        
+        df = read_csv(settings.MEDIA_ROOT+"/report/crispr_resultcpoolmerged_log2.txt", sep='\t')
+        
+        df_1 = df
+        df_1.set_index('SYMBOL', inplace=True)
+        
+        joined = df_1.join(pval, how='inner')
+        joined.reset_index(inplace=True)
+        
+        df_1 = joined[['SYMBOL', 'Low GFP-p62', 'High GFP-p62' ]]
+        
+        
+        df_1.columns = ['name', 'x', 'y' ]
+        jjj = df_1.to_json( orient='records')
+        
+        #jjj = jjj.replace('"x"', 'x').replace('"y"', 'y').replace('"name"', 'name')
+        jjj1 = json.loads(jjj)
+        
+        lll = []
+        jjj1 = yaml.safe_load(jjj)
+        for xxx in jjj1:
+            xxx['x'] = float(xxx['x'])
+            xxx['y'] = float(xxx['y'])
+            xxx= json.dumps(xxx)
+            lll.append(xxx)
+            
+            
+            
+        
+        
+        f = open(settings.MEDIA_ROOT+"/genes-low-high.json", "w")
+        f.write(",".join(map(lambda x: str(x), lll)))
+        f.close()
+        #"""
         raise Exception('stop')
         """ MOUSE TOPOLOGY
         for hp in Pathway.objects.filter(organism='human', database='primary_old').exclude(name__in=['AHR_Pathway', 'AHR_Pathway_AHR_Degradation', 'AHR_Pathway_Cath_D_Expression', 'AHR_Pathway_C_Myc_Expression', 'AHR_Pathway_PS2_Gene_Expression']):

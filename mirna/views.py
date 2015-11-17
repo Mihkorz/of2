@@ -96,6 +96,7 @@ class MirnaSetCalculationParameters(FormView):
         cnr_up =  form.cleaned_data['cnr_up']
         use_cnr = form.cleaned_data['use_cnr']
         db_choice = form.cleaned_data['db_choice']
+        path_db_choice = form.cleaned_data['path_db_choice']
         organism_choice = form.cleaned_data['organism_choice']
         
     
@@ -129,6 +130,7 @@ class MirnaSetCalculationParameters(FormView):
         
         params_for_output = []
         params_for_output.append({'Parameters': 'Organism: '+organism_choice})
+        params_for_output.append({'Parameters': 'Pathway Database: '+path_db_choice})
         params_for_output.append({'Parameters': 'Database: '+db_choice })
         params_for_output.append({'Parameters': 'Used Sigma filer: '+ ('Yes. Sigma number='+str(sigma_num) if use_sigma else 'No') })
         params_for_output.append({'Parameters': 'Used CNR filter: '+ ('Yes. Lower limit='+str(cnr_low)+'. Upper limit='+str(cnr_up) if use_cnr else 'No') })
@@ -151,7 +153,8 @@ class MirnaSetCalculationParameters(FormView):
         miPAS_list = []
         miPI_list = []
         
-        pathway_objects = Pathway.objects.filter(organism=organism_choice, database='primary_old')
+        pathway_objects = Pathway.objects.filter(organism=organism_choice, 
+                                                 database__in=path_db_choice).prefetch_related('gene_set')
         
         for pathway in pathway_objects:
             
