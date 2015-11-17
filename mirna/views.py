@@ -130,7 +130,7 @@ class MirnaSetCalculationParameters(FormView):
         
         params_for_output = []
         params_for_output.append({'Parameters': 'Organism: '+organism_choice})
-        params_for_output.append({'Parameters': 'Pathway Database: '+path_db_choice})
+        params_for_output.append({'Parameters': 'Pathway Database: '+', '.join(path_db_choice)})
         params_for_output.append({'Parameters': 'Database: '+db_choice })
         params_for_output.append({'Parameters': 'Used Sigma filer: '+ ('Yes. Sigma number='+str(sigma_num) if use_sigma else 'No') })
         params_for_output.append({'Parameters': 'Used CNR filter: '+ ('Yes. Lower limit='+str(cnr_low)+'. Upper limit='+str(cnr_up) if use_cnr else 'No') })
