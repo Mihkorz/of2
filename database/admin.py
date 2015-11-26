@@ -137,11 +137,11 @@ class LogEntryAdmin(admin.ModelAdmin):
 
 
 #admin.site.register(LogEntry, LogEntryAdmin) 
-admin.site.register(Drug, DrugAdmin)     
-admin.site.register(Pathway, PathwayAdmin) 
-admin.site.register(Node, NodeAdmin)
-admin.site.register(Component, ComponentAdmin)  
-admin.site.register(Gene, GeneAdmin) 
-admin.site.register(Relation, RelationAdmin)
+#admin.site.register(Drug, DrugAdmin)     
+#admin.site.register(Pathway, PathwayAdmin) 
+#admin.site.register(Node, NodeAdmin)
+#admin.site.register(Component, ComponentAdmin)  
+#admin.site.register(Gene, GeneAdmin) 
+#admin.site.register(Relation, RelationAdmin)
 
 

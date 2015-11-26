@@ -24,25 +24,43 @@ class ComponentForm(forms.ModelForm):
 class RealtionForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(RealtionForm, self).__init__(*args, **kwargs)
-        self.fields['fromnode'].choices = nodes_by_pathway()
-        self.fields['tonode'].choices = nodes_by_pathway()
+        
+        try:
+            current_rel = kwargs['instance']
+            current_path_db = current_rel.fromnode.pathway.database
+            current_path_org = current_rel.fromnode.pathway.organism
+            
+        except:
+            current_path_db = current_path_org = None
+            
+        
+            
+        
+        
+        self.fields['fromnode'].choices = nodes_by_pathway(current_path_db, current_path_org)
+        self.fields['tonode'].choices = nodes_by_pathway(current_path_db, current_path_org)
+        
+        
     
 class GeneForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(GeneForm, self).__init__(*args, **kwargs)
         #self.fields['node'].choices = nodes_by_pathway()
     
-def nodes_by_pathway():
+def nodes_by_pathway(db, organism):
     choices = []
-    
-    for path in Pathway.objects.all().prefetch_related('node_set'):
+    if db and organism:
+        paths = Pathway.objects.filter(organism=organism, database=db).prefetch_related('node_set')
+    else:
+        paths = Pathway.objects.all().prefetch_related('node_set')
+    for path in paths:
         new_path  = []
         sub_nodes = []
         
         for node in path.node_set.all():
             sub_nodes.append([node.id, node.name])
         
-        new_path = [path.name, sub_nodes]
+        new_path = [path.name+' org: '+path.organism+' db: '+path.database, sub_nodes]
         choices.append(new_path)
         
     return choices
