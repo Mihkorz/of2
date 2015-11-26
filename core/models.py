@@ -120,9 +120,9 @@ class Component(models.Model):
         super(Component, self).clean()
         self.name = self.name.strip(" \t").replace(" ", "_")
         
-RELATION_INHIBITOR = 0
-RELATION_ACTIVATOR = 1
-RELATION_UNKNOWN = 2
+RELATION_INHIBITOR = '0'
+RELATION_ACTIVATOR = '1'
+RELATION_UNKNOWN = '2'
 RELATION_TYPES = (
     (RELATION_INHIBITOR, 'inhibition'),
     (RELATION_ACTIVATOR, 'activation'),
