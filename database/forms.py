@@ -52,7 +52,7 @@ def nodes_by_pathway(db, organism):
     if db and organism:
         paths = Pathway.objects.filter(organism=organism, database=db).prefetch_related('node_set')
     else:
-        paths = Pathway.objects.all().prefetch_related('node_set')
+        paths = Pathway.objects.filter(organism='human', database__in=['primary_old','primary_new']).order_by('database', 'name').prefetch_related('node_set')
     for path in paths:
         new_path  = []
         sub_nodes = []
