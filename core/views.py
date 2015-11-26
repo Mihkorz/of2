@@ -211,7 +211,7 @@ class CoreSetCalculationParameters(FormView):
             def calculate_ttest(row):
                 tumours = row[tumour_columns]
                 norms = row[normal_columns]
-                       
+                 
                 _, p_val = ttest_ind(tumours, norms)
                 
                 return p_val
@@ -221,6 +221,7 @@ class CoreSetCalculationParameters(FormView):
             
             process_doc_df['p_value'] = series_p_values
             cnr_doc_df['p_value'] = series_p_values
+            #raise Exception('stop')
             if use_fdr or use_new_fdr:
                 if use_new_fdr:
                     fdr_q_values = fdr_corr(np.array(series_p_values), pi0=-1)
@@ -951,9 +952,28 @@ class Test(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(Test, self).get_context_data(**kwargs)
         
-        import json
-        import yaml
         
+        paths = Pathway.objects.filter(organism='human', database='primary_new')
+        lll = []
+        for path in paths:
+            
+            for gene in path.gene_set.all():
+                dg = {}
+                dg['gene'] = gene.name.strip().encode('utf8') 
+                dg['ARR'] = gene.arr
+                dg['pathway'] = path.name.strip()
+                lll.append(dg)
+            
+                
+            
+                
+         
+        
+        df = DataFrame(lll)
+        df = df[['gene', 'ARR', 'pathway']]
+        df.to_csv(settings.MEDIA_ROOT+'/primary_new_gene_arr_pathway.csv', index=False)
+        
+        raise Exception('stop')
         
         
         """

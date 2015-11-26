@@ -3,7 +3,7 @@ import logging
 
 from django import forms
 
-from .models import Pathway
+from core.models import Pathway
 
 
 logger = logging.getLogger('Oncofinder')
@@ -35,7 +35,7 @@ class GeneForm(forms.ModelForm):
 def nodes_by_pathway():
     choices = []
     
-    for path in Pathway.objects.all():
+    for path in Pathway.objects.all().prefetch_related('node_set'):
         new_path  = []
         sub_nodes = []
         

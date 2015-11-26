@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import networkx as nx
+import pandas as pd
 
 from django.views.generic.detail import DetailView
 from django.views.generic import ListView
@@ -55,6 +56,18 @@ class PathwayDetail(DetailView):
     def get_context_data(self, **kwargs):
         context = super(PathwayDetail, self).get_context_data(**kwargs)
         
+        """
+        df = pd.DataFrame()
+        filepath = settings.MEDIA_ROOT+'/matched_nodes_to_mir/'+self.object.name+'.txt'
+
+        with open(filepath, 'r') as f:
+            for line in f:
+                df = pd.concat( [df, pd.DataFrame([tuple(line.strip().split('\t'))])], ignore_index=True )
+        
+        df.set_index([0], inplace=True)
+        df = df.fillna('suka')
+        """
+        
         G=nx.DiGraph() #drawing static picture
         for node in self.object.node_set.all():
             G.add_node(node, color='black',style='filled',
@@ -73,9 +86,26 @@ class PathwayDetail(DetailView):
                 G.add_edge(inrel.fromnode.name.encode('ascii','ignore'), 
                             inrel.tonode.name.encode('ascii','ignore'), color=relColor)      
         
+        """
+        for index, row in df.iterrows():
+            
+            from_node = row.tolist()
+            from_node = [x for x in from_node if x != 'suka']
+            
+            name = ', '.join(from_node)
+            
+            G.add_node(name, shape='r', style='filled',fillcolor='#FFCCAA')
+            
+            G.add_edge(name, 
+                            index, color='black')
+            
+            
+            #raise Exception('haha')
+        """
         A=nx.to_agraph(G)
         A.layout(prog='dot')
         
+        #A.draw(settings.MEDIA_ROOT+"/matched_nodes_to_mir/"+self.object.name+".svg")
         A.draw(settings.MEDIA_ROOT+"/pathway_pics/"+self.object.organism+"/"+self.object.database+"/"+self.object.name+".svg")
         
         context['dRelations'] = dRelations
