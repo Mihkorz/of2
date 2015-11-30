@@ -47,7 +47,7 @@ class GeneForm(forms.ModelForm):
         super(GeneForm, self).__init__(*args, **kwargs)
         #self.fields['node'].choices = nodes_by_pathway()
     
-def nodes_by_pathway(db, organism):
+def nodes_by_pathway(db=False, organism=False):
     choices = []
     if db and organism:
         paths = Pathway.objects.filter(organism=organism, database=db).prefetch_related('node_set')
