@@ -54,8 +54,14 @@ class GeneAdmin(admin.ModelAdmin):
     list_filter = ('pathway__name',)
     
 class RelationAdmin(admin.ModelAdmin):
+    
+    def pathway(self):
+        name = self.fromnode.pathway.name
+        return name
+    
     form = RealtionForm
-    list_display = ('id', 'reltype','fromnode', 'tonode', 'comment' )
+    search_fields = ['fromnode__name', 'tonode__name']
+    list_display = ('id', 'reltype','fromnode', 'tonode', 'comment', pathway )
     
 admin.site.register(Pathway, PathwayAdmin) 
 admin.site.register(Node, NodeAdmin)
