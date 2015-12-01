@@ -283,12 +283,15 @@ class CustomArrayPreprocess(FormView):
         dialect = sniffer.sniff(norms.file_norms.read(), delimiters='\t,;')
         norms.file_norms.seek(0)
         norms_df = read_csv(norms.file_norms, delimiter=dialect.delimiter)
+        if not norms_df.index.name:
+            norms_df.index.name = 'SYMBOL'
+            norms_df.reset_index(inplace=True)
         
         try:
             norms_df.set_index('ID', inplace=True)
         except:
             norms_df.set_index('SYMBOL', inplace=True)
-        
+        #raise Exception('stop')
         """ Join Norm's and Patient's DF to obtain intersections"""
         joined_df = patient_df.join(norms_df, how='inner')
         column_names = joined_df.columns

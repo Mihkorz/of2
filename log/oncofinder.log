@@ -11519,3 +11519,285 @@ Traceback (most recent call last):
   File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/database/forms.py", line 22, in __init__
     self.fields['node'].choices = nodes_by_pathway()
 TypeError: nodes_by_pathway() takes exactly 2 arguments (0 given)
+2015-12-01 17:50:56,497 ERROR base 6176 -1370490048 Internal Server Error: /document/doc6965/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 300, in dispatch
+    return super(DocumentDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 308, in get_context_data
+    dialect = sniffer.sniff(open(filename, 'r').read(), delimiters='\t,;') # defining the separator of the csv file
+IOError: [Errno 2] No such file or directory: u'/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/oncoFinder2/media/users/admin/custom/input/81669_Kustovskiy_probe_1.txt'
+2015-12-01 17:51:02,567 ERROR base 6176 -1414546624 Internal Server Error: /document/doc6967/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 300, in dispatch
+    return super(DocumentDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 365, in get_context_data
+    tumour_cols = [col for col in df.columns if 'Tumour' in col]
+UnboundLocalError: local variable 'df' referenced before assignment
+2015-12-01 17:51:09,171 ERROR base 6176 -1406153920 Internal Server Error: /document/doc6975/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 300, in dispatch
+    return super(DocumentDetail, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/detail.py", line 111, in get
+    context = self.get_context_data(object=self.object)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 308, in get_context_data
+    dialect = sniffer.sniff(open(filename, 'r').read(), delimiters='\t,;') # defining the separator of the csv file
+IOError: [Errno 2] No such file or directory: u'/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/oncoFinder2/media/users/admin/custom/input/3DRUGS_ILL_dif07.txt'
+2015-12-01 18:06:51,431 ERROR base 12552 -1359930560 Internal Server Error: /document/new/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 184, in dispatch
+    return view(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/preprocess_views.py", line 262, in dispatch
+    return super(CustomArrayPreprocess, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/preprocess_views.py", line 290, in form_valid
+    norms_df.set_index('SYMBOL', inplace=True)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 2583, in set_index
+    level = frame[col].values
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 1787, in __getitem__
+    return self._getitem_column(key)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 1794, in _getitem_column
+    return self._get_item_cache(key)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/generic.py", line 1079, in _get_item_cache
+    values = self._data.get(item)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/internals.py", line 2843, in get
+    loc = self.items.get_loc(item)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/index.py", line 1437, in get_loc
+    return self._engine.get_loc(_values_from_object(key))
+  File "pandas/index.pyx", line 134, in pandas.index.IndexEngine.get_loc (pandas/index.c:3824)
+  File "pandas/index.pyx", line 154, in pandas.index.IndexEngine.get_loc (pandas/index.c:3704)
+  File "pandas/hashtable.pyx", line 697, in pandas.hashtable.PyObjectHashTable.get_item (pandas/hashtable.c:12349)
+  File "pandas/hashtable.pyx", line 705, in pandas.hashtable.PyObjectHashTable.get_item (pandas/hashtable.c:12300)
+KeyError: 'SYMBOL'
+2015-12-01 18:08:49,833 ERROR base 13462 -1359930560 Internal Server Error: /document/new/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 184, in dispatch
+    return view(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/preprocess_views.py", line 262, in dispatch
+    return super(CustomArrayPreprocess, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/preprocess_views.py", line 290, in form_valid
+    norms_df.set_index('SYMBOL', inplace=True)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 2583, in set_index
+    level = frame[col].values
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 1787, in __getitem__
+    return self._getitem_column(key)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 1794, in _getitem_column
+    return self._get_item_cache(key)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/generic.py", line 1079, in _get_item_cache
+    values = self._data.get(item)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/internals.py", line 2843, in get
+    loc = self.items.get_loc(item)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/index.py", line 1437, in get_loc
+    return self._engine.get_loc(_values_from_object(key))
+  File "pandas/index.pyx", line 134, in pandas.index.IndexEngine.get_loc (pandas/index.c:3824)
+  File "pandas/index.pyx", line 154, in pandas.index.IndexEngine.get_loc (pandas/index.c:3704)
+  File "pandas/hashtable.pyx", line 697, in pandas.hashtable.PyObjectHashTable.get_item (pandas/hashtable.c:12349)
+  File "pandas/hashtable.pyx", line 705, in pandas.hashtable.PyObjectHashTable.get_item (pandas/hashtable.c:12300)
+KeyError: 'SYMBOL'
+2015-12-01 18:15:07,055 ERROR base 15793 -1359381696 Internal Server Error: /document/new/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 184, in dispatch
+    return view(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/preprocess_views.py", line 262, in dispatch
+    return super(CustomArrayPreprocess, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/preprocess_views.py", line 290, in form_valid
+    norms_df.set_index('SYMBOL', inplace=True)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 2583, in set_index
+    level = frame[col].values
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 1787, in __getitem__
+    return self._getitem_column(key)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 1794, in _getitem_column
+    return self._get_item_cache(key)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/generic.py", line 1079, in _get_item_cache
+    values = self._data.get(item)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/internals.py", line 2843, in get
+    loc = self.items.get_loc(item)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/index.py", line 1437, in get_loc
+    return self._engine.get_loc(_values_from_object(key))
+  File "pandas/index.pyx", line 134, in pandas.index.IndexEngine.get_loc (pandas/index.c:3824)
+  File "pandas/index.pyx", line 154, in pandas.index.IndexEngine.get_loc (pandas/index.c:3704)
+  File "pandas/hashtable.pyx", line 697, in pandas.hashtable.PyObjectHashTable.get_item (pandas/hashtable.c:12349)
+  File "pandas/hashtable.pyx", line 705, in pandas.hashtable.PyObjectHashTable.get_item (pandas/hashtable.c:12300)
+KeyError: 'SYMBOL'
+2015-12-01 18:16:01,382 ERROR base 16235 -1360176320 Internal Server Error: /document/new/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 184, in dispatch
+    return view(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/preprocess_views.py", line 262, in dispatch
+    return super(CustomArrayPreprocess, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/preprocess_views.py", line 291, in form_valid
+    norms_df.set_index('SYMBOL', inplace=True)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 2583, in set_index
+    level = frame[col].values
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 1787, in __getitem__
+    return self._getitem_column(key)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 1794, in _getitem_column
+    return self._get_item_cache(key)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/generic.py", line 1079, in _get_item_cache
+    values = self._data.get(item)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/internals.py", line 2843, in get
+    loc = self.items.get_loc(item)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/index.py", line 1437, in get_loc
+    return self._engine.get_loc(_values_from_object(key))
+  File "pandas/index.pyx", line 134, in pandas.index.IndexEngine.get_loc (pandas/index.c:3824)
+  File "pandas/index.pyx", line 154, in pandas.index.IndexEngine.get_loc (pandas/index.c:3704)
+  File "pandas/hashtable.pyx", line 697, in pandas.hashtable.PyObjectHashTable.get_item (pandas/hashtable.c:12349)
+  File "pandas/hashtable.pyx", line 705, in pandas.hashtable.PyObjectHashTable.get_item (pandas/hashtable.c:12300)
+KeyError: 'SYMBOL'
+2015-12-01 18:19:57,612 ERROR base 17875 -1360176320 Internal Server Error: /document/new/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/views.py", line 184, in dispatch
+    return view(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 29, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/decorators.py", line 25, in bound_func
+    return func(self, *args2, **kwargs2)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/preprocess_views.py", line 262, in dispatch
+    return super(CustomArrayPreprocess, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/edit.py", line 171, in post
+    return self.form_valid(form)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/profiles/preprocess_views.py", line 294, in form_valid
+    raise Exception('stop')
+Exception: stop
