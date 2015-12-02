@@ -969,31 +969,23 @@ class Test(TemplateView):
         
         path = Pathway.objects.get(organism='human', database='metabolism', name='tRNA_charging')
         
+        lg = []
+        for gene in path.gene_set.all():
+            lg.append(gene.name)
+       
         
+        for comp in joined:
+            if comp in lg:
+                lg.remove(comp)
         
-        for node in joined:
-            nn = Node(pathway=path, name=node)
+        tr = Node.objects.get(name='tRNA charging', pathway=path)
+        for gg in lg:
+            nn = Node(name=gg, pathway=path)
             nn.save()
-            cc = Component(node=nn, name=node)
+            cc = Component(node=nn, name=gg)
             cc.save()
-        
-        for index, row in df.iterrows():
-            fn = Node.objects.get(name=row['from'], pathway=path)
-            tn = Node.objects.get(name=row['to'], pathway=path)
-            
-            nr = Relation(fromnode=fn, tonode=tn, reltype=1)
-            
-            nr.save()
-        
-        nnn = Node(pathway=path, name='tRNA charging')
-        nnn.save()
-        ccc = Component(node=nnn, name='tRNA charging')
-        ccc.save()
-        
-        for node in path.node_set.all():
-            if node.name not in ['AIMP1', 'AIMP2', 'EEF1E1']:
-                rel = Relation(fromnode=node, tonode=nnn, reltype=1)
-                rel.save()
+            rr = Relation(fromnode=nn, tonode=tr, reltype=1)
+            rr.save()
         
         raise Exception('stop')
         
