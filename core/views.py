@@ -957,25 +957,43 @@ class Test(TemplateView):
         context = super(Test, self).get_context_data(**kwargs)
         
         
-        paths = Pathway.objects.filter(organism='human', database='primary_new')
-        lll = []
-        for path in paths:
-            
-            for gene in path.gene_set.all():
-                dg = {}
-                dg['gene'] = gene.name.strip().encode('utf8') 
-                dg['ARR'] = gene.arr
-                dg['pathway'] = path.name.strip()
-                lll.append(dg)
-            
-                
-            
-                
-         
+        df = read_excel(settings.MEDIA_ROOT+'/trna_charging_interactions.xlsx')
+        df.columns=['from', 'to', 'reltype']
         
-        df = DataFrame(lll)
-        df = df[['gene', 'ARR', 'pathway']]
-        df.to_csv(settings.MEDIA_ROOT+'/primary_new_gene_arr_pathway.csv', index=False)
+        lf = df['from'].drop_duplicates().values.tolist()
+        lt = df['to'].drop_duplicates().values.tolist()
+        
+        joined = lf+lt
+        
+        joined = list(set(joined))
+        
+        path = Pathway.objects.get(organism='human', database='metabolism', name='tRNA_charging')
+        
+        
+        
+        for node in joined:
+            nn = Node(pathway=path, name=node)
+            nn.save()
+            cc = Component(node=nn, name=node)
+            cc.save()
+        
+        for index, row in df.iterrows():
+            fn = Node.objects.get(name=row['from'], pathway=path)
+            tn = Node.objects.get(name=row['to'], pathway=path)
+            
+            nr = Relation(fromnode=fn, tonode=tn, reltype=1)
+            
+            nr.save()
+        
+        nnn = Node(pathway=path, name='tRNA charging')
+        nnn.save()
+        ccc = Component(node=nnn, name='tRNA charging')
+        ccc.save()
+        
+        for node in path.node_set.all():
+            if node.name not in ['AIMP1', 'AIMP2', 'EEF1E1']:
+                rel = Relation(fromnode=node, tonode=nnn, reltype=1)
+                rel.save()
         
         raise Exception('stop')
         
