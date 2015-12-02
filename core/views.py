@@ -272,7 +272,11 @@ class CoreSetCalculationParameters(FormView):
                     if use_cnr: # CNR FILTER
                         col_CNR[((col_CNR<=cnr_up) & (col_CNR>=cnr_low))] = 1 
                         
-                    if use_sigma: # Sigma FILTER  !!! deprecated !!!                         
+                    if use_sigma: # Sigma FILTER  !!! deprecated !!!
+                        
+                        cnr_std = cnr_doc_df['std']
+                        std = cnr_std[cnr_std!=1]
+                                                 
                         col_CNR[((col<(process_doc_df['mean']+sigma_num*std)) &
                                        (col>=(process_doc_df['mean']-sigma_num*std)))] = 1 
                     
