@@ -219,6 +219,7 @@ def Shambhala_harmonisation(df_pl1, df_pl2, harmony_type, gene_cluster,
                                  assay_cluster, corr, skip_match, p1_names=0, p2_names=0,
                                  iterations=30, K=10, L=4, log_scale=True, ):
     
+    
     if log_scale:
             df_pl1 = np.log(df_pl1).fillna(0)
             df_pl2 = np.log(df_pl2).fillna(0)

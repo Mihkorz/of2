@@ -415,9 +415,9 @@ class SampleDetail(DeleteView):
         out_fname = output_filename.split('/')[-1] 
         df_file_cnr = read_excel(settings.MEDIA_ROOT+"/users/"+self.object.project.owner.username+"/"+self.object.project.name+"/process/cnr_"+out_fname)
         
-        df_cnr_raw = df_file_cnr[[sample, 'gMean_norm', 'std']]
+        df_cnr_raw = df_file_cnr[[sample]]
         df_cnr_differential = df_cnr_raw[df_cnr_raw[sample]!=1]
-        df_cnr_differential.columns = ['CNR', 'Mean norm', 'STD']
+        df_cnr_differential.columns = ['CNR']
         context['genes'] = df_cnr_differential.to_html(classes=['gene_table', 'table', 'table-striped', 'table-bordered']) 
         #raise Exception('sample')
         
@@ -702,9 +702,9 @@ class AjaxPathDetail(TemplateView):
         sample = request.POST['sample_name']
         df_file_cnr = read_excel(request.POST['docpath'])
         
-        df_cnr_raw = df_file_cnr[[sample, 'gMean_norm', 'std']]
+        df_cnr_raw = df_file_cnr[[sample]]
         df_cnr_differential = df_cnr_raw[df_cnr_raw[sample]!=1]
-        df_cnr_differential.columns = ['CNR', 'Mean norm', 'STD']
+        df_cnr_differential.columns = ['CNR']
         df_cnr_differential.index.name = 'SYMBOL'
         
         joined_df = gene_df.join(df_cnr_differential, how='inner') #intersect DataFrames to acquire only genes in current pathway
@@ -751,7 +751,7 @@ class AjaxPathDetail(TemplateView):
             #choosing colormap for static image
             lNEL = np.log(lNEL)
             mmin = np.min(lNEL)
-            mmax = np.max(lNEL)
+            mmax = np.max(np.absolute(lNEL)) # absolute was made for Aliper special, remove if needed
             mid = 1 - mmax/(mmax + abs(mmin))
         
             if mmax<0 and mmin<0:                    

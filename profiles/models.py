@@ -125,6 +125,32 @@ class ProcessDocument(models.Model):
     created_by = models.ForeignKey(User, blank=True, null=True, related_name='created')
     created_at = models.DateTimeField(auto_now_add=True)
 
+def get_shambala_document_upload_path(instance, file_name):
+    return os.path.join('Shambala', str(instance.created_by.username), file_name)
+
+AUXILIARY_CHOICES = (('illumina', 'Illumina'),
+                         ('customar', 'CustomArray'))
+
+class ShambalaDocument(models.Model):
+    document = models.FileField(upload_to=get_shambala_document_upload_path, max_length=300)
+    doc_type = models.IntegerField(verbose_name="Document type", choices=DOC_TYPES, 
+                                   default=DOCUMENT_INPUT)
+    auxiliary = models.CharField(verbose_name="Auxiliary (calibration) dataset", max_length=100, 
+                                  choices=AUXILIARY_CHOICES, blank=False, default='illumina')
+    log_scale = models.BooleanField(verbose_name="Apply logarithm", default=True, blank=False)
+    sample_num = models.IntegerField(verbose_name="Sample ammount", blank=True, default=0)
+    row_num = models.IntegerField(verbose_name="Number of rows", blank=True, default=0)
+    related_doc = models.ForeignKey('self', related_name="bound_doc", blank=True, null=True, default=None)
+    created_by = models.ForeignKey(User, blank=True, null=True, related_name='shambala_doc')
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    def __unicode__(self):
+        return self.document.name
+    
+    def get_filename(self):
+        return os.path.basename(self.document.name)
+    
+
 class IlluminaProbeTarget(models.Model):
     PROBE_ID = models.CharField(max_length=250, db_index=True, verbose_name=u'Probe ID', blank=False)
     TargetID = models.CharField(max_length=250, verbose_name=u'Target ID', blank=False)

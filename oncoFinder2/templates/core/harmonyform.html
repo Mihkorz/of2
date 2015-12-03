@@ -1,17 +1,19 @@
 {% extends "base_profiles.html" %}
 
-{% block title %}Shambhala | OncoFinder v2.0{% endblock %}
+{% block title %}Shambhala Harmonisation | OncoFinder v2.0{% endblock %}
 
 {% block content %}
 <div class="container">
 
   <h1>
   <img src='/static/images/tablet.png' style="width: 100px;"/>
-    Shambhala 
+    Harmonisation 
   </h1>
-  <a href="/shambhala/prevfiles/" class="btn btn-default pull-right">Previously calculated files</a>
- 
+  <a href="{% url 'shambala_form' %}" class="btn btn-primary btn-sm pull-left">Shambala</a>
+  <a href="{% url 'harmony_prevfiles' %}" class="btn btn-default  btn-sm pull-right">Previously calculated files</a>
+  <div style="clear:both; padding: 2px"></div>
   <hr/>
+ 
   {% if form.errors %}
   <div class="alert alert-danger">
     <i class="glyphicon glyphicon-warning-sign"></i>

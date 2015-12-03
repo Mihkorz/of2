@@ -8,7 +8,7 @@ import numpy as np
 from pandas import DataFrame, Series, read_csv
 from rpy2.robjects.packages import importr
 from collections import defaultdict
-
+        
 from django import forms
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormView
@@ -16,11 +16,116 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse 
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
 from django.conf import settings
 
-from .forms import HarmonyParametersForm
-from .stats import Shambhala_harmonisation
+from .forms import ShambalaParametersForm, HarmonyParametersForm
+from .stats import Shambhala_harmonisation, quantile_normalization
+from profiles.models import ShambalaDocument
 
+class ShambalaForm(FormView):
+    form_class = ShambalaParametersForm
+    template_name = 'core/shambala_form.html'
+    success_url = '/shambala/done/'
+    
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(ShambalaForm, self).dispatch(request, *args, **kwargs)
+    
+    def get_context_data(self, **kwargs):        
+        context = super(ShambalaForm, self).get_context_data(**kwargs)
+        
+        context['test'] = 'test'
+        return context
+    
+    def form_valid(self, form):
+        document = form.save(commit=False)
+        document.created_by = self.request.user
+        document.save()
+        
+        auxiliary = form.cleaned_data.get('auxiliary', 'illumina') #default=illumina
+        if auxiliary == 'illumina':
+            df_p1 = read_csv(settings.MEDIA_ROOT+'/Shambala/ILL_AGL_abs.txt', sep=' ')
+            df_p1.set_index('SYMBOL', inplace=True)
+        if auxiliary == 'customar':
+            df_p1 = read_csv(settings.MEDIA_ROOT+'/Shambala/CustomArray.txt', sep=' ')
+            df_p1.set_index('SYMBOL', inplace=True)
+        
+        
+
+        
+        df_p = read_csv(settings.MEDIA_ROOT+'/'+document.document.name, sep=r'[\t, ;]')
+        df_p.set_index('SYMBOL', inplace=True)
+        
+        document.doc_type = 1
+        document.row_num = len(df_p)
+        document.sample_num = len(df_p.columns)
+        document.save()
+        
+        def normalize_with_p1(col):
+           
+            joined_df = DataFrame(col).join(df_p1, how='inner')
+            
+            joined_df = np.log(joined_df)
+            column_names = joined_df.columns
+            
+            qn_df = quantile_normalization(joined_df)
+            qn_df.set_index(0, inplace=True)
+            qn_df.index.name = 'SYMBOL'
+            qn_df.columns = column_names
+            
+            
+            df_pl2 = DataFrame({})
+            df_after_harmony = Shambhala_harmonisation(qn_df, df_pl2, harmony_type='harmony_afx_static', p1_names=0, p2_names=0,
+                                 iterations=3, K=10, L=4, log_scale=False, gene_cluster='skmeans',
+                                 assay_cluster='hclust', corr='pearson', skip_match=False)
+            
+            
+            return df_after_harmony[col.name]
+        
+        #result_df = df_p[df_p.columns[0:2]].apply(normalize_with_p1, axis=0)
+        result_df = df_p.apply(normalize_with_p1, axis=0)
+        
+        output_doc = ShambalaDocument()        
+        output_doc.doc_type = 2
+        output_doc.created_by = self.request.user
+        output_doc.related_doc = document
+        
+        """ Saving results to csv file and to database """
+        path = os.path.join('Shambala', str(document.created_by))
+        file_name = 'shambala_'+str(document.get_filename())        
+        
+        output_file = default_storage.save(settings.MEDIA_ROOT+"/"+path+"/"+file_name, ContentFile(''))
+        
+        result_df.to_csv(output_file)
+        
+        output_doc.document = path+"/"+os.path.basename(output_file)
+
+        output_doc.save()
+        
+        
+        return HttpResponseRedirect(reverse('shambala_done'))
+        
+    
+    def form_invalid(self, form):
+            return self.render_to_response(self.get_context_data(form=form))
+        
+
+
+class ShambalaDone(TemplateView):
+    template_name = 'core/shambala_done.html'
+    
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(ShambalaDone, self).dispatch(request, *args, **kwargs)
+        
+    
+    def get_context_data(self, **kwargs):        
+        context = super(ShambalaDone, self).get_context_data(**kwargs)
+        context['documents'] =  ShambalaDocument.objects.all().order_by('-created_at')
+         
+        return context
 
 class HarmonyForm(FormView):
     

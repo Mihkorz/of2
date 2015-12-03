@@ -13,7 +13,9 @@ from profiles.views import ProfileIndex, SettingsProfile, SettingsBilling, Creat
                            DocumentDetail, SampleDetail, AjaxPathDetail
                            
 from core.views import CoreSetCalculationParameters, CoreCalculation, Test 
-from core.harmony_views import HarmonyForm, HarmonyDone, HarmonyPrevFiles, breastmodule
+from core.harmony_views import ShambalaForm, ShambalaDone, \
+                               HarmonyForm, HarmonyDone, HarmonyPrevFiles, \
+                               breastmodule
 from core.utils_views import ConvertPath, Ksyusha
 from database.views import PathwayList, PathwayDetail, PathwayAjaxSearch, \
                            DrugList, DrugDetail, DrugAjaxSearch
@@ -110,8 +112,10 @@ urlpatterns = patterns('',
     
     
     ################### XPN normalization ##############################
-    url(r'^shambhala/$', HarmonyForm.as_view(), name="harmony_form"),
-    url(r'^shambhala/done/(.*)/$', HarmonyDone.as_view(), name="harmony_done"),
+    url(r'^shambhala/$', ShambalaForm.as_view(), name="shambala_form"),
+    url(r'^shambhala/done/$', ShambalaDone.as_view(), name="shambala_done"),
+    url(r'^shambhala/harmony/$', HarmonyForm.as_view(), name="harmony_form"),
+    url(r'^shambhala/harmony/done/(.*)/$', HarmonyDone.as_view(), name="harmony_done"),
     url(r'^shambhala/prevfiles/$', HarmonyPrevFiles.as_view(), name="harmony_prevfiles"),
     url(r'^shambhala/breastmodule/$', breastmodule.as_view(), name="breastmodule"),
     

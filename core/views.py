@@ -956,36 +956,41 @@ class Test(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(Test, self).get_context_data(**kwargs)
         
+        from core.stats import quantile_normalization
+        from .stats import Shambhala_harmonisation
         
-        df = read_excel(settings.MEDIA_ROOT+'/trna_charging_interactions.xlsx')
-        df.columns=['from', 'to', 'reltype']
+        df_p = read_csv(settings.MEDIA_ROOT+'/Shambala/AGL_qn.txt', sep=r'[\t, ;]')
+        df_p.index.name = 'SYMBOL'
         
-        lf = df['from'].drop_duplicates().values.tolist()
-        lt = df['to'].drop_duplicates().values.tolist()
+        df_p1 = read_csv(settings.MEDIA_ROOT+'/Shambala/ILL_AGL_abs.txt', sep=' ')
+        df_p1.set_index('SYMBOL', inplace=True)
         
-        joined = lf+lt
         
-        joined = list(set(joined))
         
-        path = Pathway.objects.get(organism='human', database='metabolism', name='tRNA_charging')
         
-        lg = []
-        for gene in path.gene_set.all():
-            lg.append(gene.name)
-       
+        def normalize_with_p1(col):
+           
+            joined_df = DataFrame(col).join(df_p1, how='inner')
+            
+            joined_df = np.log(joined_df)
+            column_names = joined_df.columns
+            
+            qn_df = quantile_normalization(joined_df)
+            qn_df.set_index(0, inplace=True)
+            qn_df.index.name = 'SYMBOL'
+            qn_df.columns = column_names
+            
+            
+            df_pl2 = DataFrame({})
+            df_after_harmony = Shambhala_harmonisation(qn_df, df_pl2, harmony_type='harmony_afx_static', p1_names=0, p2_names=0,
+                                 iterations=3, K=10, L=4, log_scale=False, gene_cluster='skmeans',
+                                 assay_cluster='hclust', corr='pearson', skip_match=False)
+            
+            
+            return df_after_harmony[col.name]
         
-        for comp in joined:
-            if comp in lg:
-                lg.remove(comp)
+        result = df_p[df_p.columns[0:2]].apply(normalize_with_p1, axis=0)
         
-        tr = Node.objects.get(name='tRNA charging', pathway=path)
-        for gg in lg:
-            nn = Node(name=gg, pathway=path)
-            nn.save()
-            cc = Component(node=nn, name=gg)
-            cc.save()
-            rr = Relation(fromnode=nn, tonode=tr, reltype=1)
-            rr.save()
         
         raise Exception('stop')
         

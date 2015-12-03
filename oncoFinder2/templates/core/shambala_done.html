@@ -1,0 +1,79 @@
+{% extends "base_profiles.html" %}
+
+{% block title %}Shambhala | OncoFinder v2.0{% endblock %}
+
+{% block content %}
+<div class="container">
+
+  <h1>
+  <img src='/static/images/tablet.png' style="width: 100px;"/>
+    Shambala 
+  </h1>
+  <a href="{% url 'shambala_form' %}" class="btn btn-primary btn-sm pull-left">More Shambala</a>
+  
+  <div style="clear:both; padding: 1px"></div>
+  <hr/>
+  
+  <div class="panel-body">
+  
+    <table id="shambala_doc_table" class="table table-hover of-table">
+            <tr class="bg-primary">
+              <th>Document</th><th>Type</th><th>Calculated by</th><th>Date</th>
+            </tr>
+            
+            {% for doc in documents %}
+            <tr  id="doc{{doc.id}}"
+            {% if doc.get_doc_type_display == 'input' %}
+            class="info"
+            {% else %}
+            class="success"
+            {% endif %}
+            >
+            
+            <td>
+              <span class="glyphicon glyphicon-file"></span>
+              <strong><a href="/media/Shambala/{{doc.created_by}}/{{doc.get_filename}}">{{doc.get_filename}}</a></strong>
+              <br/>
+              <small>
+                  {% if doc.get_doc_type_display == 'input' %}
+                     Samples: <strong>{{doc.sample_num}}</strong><br/>
+                     Rows: <strong>{{doc.row_num}}</strong>
+                  {%endif%}
+              </small>
+           </td>
+           <td>
+                 {% if doc.doc_type == 1 %}
+                 <span class="glyphicon glyphicon-log-in"></span>
+                 {% else %}
+                 <span class="glyphicon glyphicon-log-out"></span>
+                 {% endif %} 
+                 <strong><i>
+                 {{doc.get_doc_type_display}}
+                 </i></strong>
+                 
+              </td>
+              <td>
+                <strong><i>{{doc.created_by}}</i></strong>
+              </td>
+              
+              <td>Created at: <strong>{{doc.created_at}}</strong>
+              </td>
+              
+            </tr>
+            {%endfor%}
+          </table>
+  
+  
+  
+  
+  </div>
+
+  
+  
+</div>
+
+<script>
+
+</script>
+
+{%endblock%}

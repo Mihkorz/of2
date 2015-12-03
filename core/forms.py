@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django import forms
+from profiles.models import ShambalaDocument
 
 class CalculationParametersForm(forms.Form):
     
@@ -128,7 +129,19 @@ class HarmonyParametersForm(forms.Form):
         self.fields['corr'].widget.attrs.update({'class' : 'form-control input-sm'})
 
 
-
+class ShambalaParametersForm(forms.ModelForm):
+    class Meta(object):
+        model = ShambalaDocument
+        fields = ['document', 'auxiliary', 'log_scale' ]
+                    
+    
+    
+    def __init__(self, *args, **kwargs):
+        super(ShambalaParametersForm, self).__init__(*args, **kwargs)
+        
+        self.fields['document'].widget.attrs.update({'class' : 'form-control input-sm', 
+                                                'style':'width:200px; display:inline'})
+        
 
 
 
