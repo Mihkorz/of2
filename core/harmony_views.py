@@ -44,6 +44,8 @@ class ShambalaForm(FormView):
         document.created_by = self.request.user
         document.save()
         
+        log_scale = form.cleaned_data.get('log_scale', False)
+        
         auxiliary = form.cleaned_data.get('auxiliary', 'illumina') #default=illumina
         if auxiliary == 'illumina':
             df_p1 = read_csv(settings.MEDIA_ROOT+'/Shambala/ILL_AGL_abs.txt', sep=' ')
@@ -78,7 +80,7 @@ class ShambalaForm(FormView):
             
             df_pl2 = DataFrame({})
             df_after_harmony = Shambhala_harmonisation(qn_df, df_pl2, harmony_type='harmony_afx_static', p1_names=0, p2_names=0,
-                                 iterations=3, K=10, L=4, log_scale=False, gene_cluster='skmeans',
+                                 iterations=3, K=10, L=4, log_scale=log_scale, gene_cluster='skmeans',
                                  assay_cluster='hclust', corr='pearson', skip_match=False)
             
             

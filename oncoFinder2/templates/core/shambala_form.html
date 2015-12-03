@@ -60,6 +60,21 @@
 </div>
 
 <script>
+$(function() {
+	
+	$("#id_db_choice").css({"height":"100px"});
+	$("#id_db_choice_drug").css({"width":"145px", "height":"100px" });
+	
+	
+	$('#startButton').click(function () {
+	    var btn = $(this)
+	    btn.button('loading');
+	    $("#loader").fadeIn();
+	    
+
+	  });
+	
+});
 
 </script>
 
