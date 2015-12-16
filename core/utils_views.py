@@ -190,7 +190,7 @@ class ConvertPath(TemplateView):
         
         
                     
-        raise Exception('just stop exception. Check view!')
+        #raise Exception('just stop exception. Check view!')
         """
         #human metabolism
         for mpath in MetabolismPathway.objects.all():
@@ -279,8 +279,8 @@ class ConvertPath(TemplateView):
         """
            
         #human new
-        """
-        pathh = settings.MEDIA_ROOT+'/KEGG/'
+        
+        pathh = settings.MEDIA_ROOT+'/biocarta/'
         
         i=0
         for ffile in os.listdir(pathh):
@@ -291,18 +291,18 @@ class ConvertPath(TemplateView):
             
             pathname = ffile.replace('.xls', '').replace(' ', '_')
             try:
-                npath = Pathway.objects.get(name=pathname, organism='human', database='kegg' )               
+                npath = Pathway.objects.get(name=pathname, organism='human', database='biocarta' )               
             except:                 
             
-                npath = Pathway(name=pathname, amcf=0, organism='human', database='kegg')
-                #npath.save()
+                npath = Pathway(name=pathname, amcf=0, organism='human', database='biocarta')
+                npath.save()
                 
             def add_gene(row, path):
                 if row['arr']!='mazafaka':
                     g = Gene(name=row['gene'], arr=row['arr'], pathway=path)
-                    #g.save()                
+                    g.save()                
            
-            #df_genes.apply(add_gene, axis=1, path=npath)
+            df_genes.apply(add_gene, axis=1, path=npath)
             
             
             def nnodes(row, path):
@@ -348,7 +348,7 @@ class ConvertPath(TemplateView):
                 df_nodes.drop(1, axis=1, inplace=True)
                 df_nodes_name = df_nodes[2]
                 #raise Exception('kegg')
-                #df_nodes.apply(nnodes, axis=1, path=npath)
+                df_nodes.apply(nnodes, axis=1, path=npath)
             except:
                 pass
             try:
@@ -357,9 +357,9 @@ class ConvertPath(TemplateView):
                 df_rels.apply(rrels, axis=1, sNodes=df_nodes_name, path=npath)    
             except:
                 pass
-            
-        raise Exception('KEGG Done')       
-        """
+         
+        raise Exception('Biocarta Done')       
+        
         #cytoskeleton MOUSE pathways
         """
         for hpath in Pathway.objects.filter(organism='human', database='cytoskeleton'):

@@ -16,6 +16,7 @@ PATHWAY_DATABASE = (
     ('cytoskeleton', 'Cytoskeleton Pathway Database'),
     ('kegg', 'KEGG Pathway Database'),
     ('nci', 'NCI Pathway Database'),
+    ('biocarta', 'Biocarta'),
     ('kegg_adjusted', 'KEGG Adjusted Pathway Database'),
     ('kegg_10', 'KEGG 10'),
     ('kegg_adjusted_10', 'KEGG Adjusted 10'), 

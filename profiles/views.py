@@ -413,8 +413,12 @@ class SampleDetail(DeleteView):
         calc_params = self.object.parameters
         
         out_fname = output_filename.split('/')[-1] 
-        df_file_cnr = read_excel(settings.MEDIA_ROOT+"/users/"+self.object.project.owner.username+"/"+self.object.project.name+"/process/cnr_"+out_fname)
-        
+        try:
+            df_file_cnr = read_excel(settings.MEDIA_ROOT+"/users/"+self.object.project.owner.username+"/"+self.object.project.name+"/process/cnr_"+out_fname, 
+                                 index_col='SYMBOL')
+        except:
+            df_file_cnr = read_excel(settings.MEDIA_ROOT+"/users/"+self.object.project.owner.username+"/"+self.object.project.name+"/process/cnr_"+out_fname)
+            
         df_cnr_raw = df_file_cnr[[sample]]
         df_cnr_differential = df_cnr_raw[df_cnr_raw[sample]!=1]
         df_cnr_differential.columns = ['CNR']
@@ -700,7 +704,10 @@ class AjaxPathDetail(TemplateView):
         gene_df = DataFrame(gene_data).set_index('SYMBOL')
         
         sample = request.POST['sample_name']
-        df_file_cnr = read_excel(request.POST['docpath'])
+        try:
+            df_file_cnr = read_excel(request.POST['docpath'], index_col='SYMBOL')
+        except:
+            df_file_cnr = read_excel(request.POST['docpath'])
         
         df_cnr_raw = df_file_cnr[[sample]]
         df_cnr_differential = df_cnr_raw[df_cnr_raw[sample]!=1]

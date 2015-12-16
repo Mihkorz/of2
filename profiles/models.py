@@ -129,7 +129,8 @@ def get_shambala_document_upload_path(instance, file_name):
     return os.path.join('Shambala', str(instance.created_by.username), file_name)
 
 AUXILIARY_CHOICES = (('illumina', 'Illumina'),
-                         ('customar', 'CustomArray'))
+                         ('customar', 'CustomArray'),
+                         ('test', 'test'))
 
 class ShambalaDocument(models.Model):
     document = models.FileField(upload_to=get_shambala_document_upload_path, max_length=300)
