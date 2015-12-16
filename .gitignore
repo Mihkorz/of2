@@ -9,7 +9,6 @@
 *.egg
 *.egg-info
 media
-log/*
 dist
 build
 eggs
@@ -39,3 +38,7 @@ nosetests.xml
 .pydevproject
 .idea
 .db
+.settings
+
+# R
+.Rhistory
