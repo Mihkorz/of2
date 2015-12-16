@@ -1,0 +1,22 @@
+python-dev
+
+libmysqlclient-dev
+
+gfortran
+libatlas-base-dev
+libtiff4-dev
+libjpeg8-dev
+zlib1g-dev
+libfreetype6-dev
+liblcms1-dev
+libwebp-dev
+libffi-dev
+
+libxml2-dev
+libxslt1-dev
+
+# R
+r-base-dev
+
+# pygraphviz
+graphviz libgraphviz-dev pkg-config

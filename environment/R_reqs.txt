@@ -1,0 +1,19 @@
+install.packages("CLSOCP", dependencies=TRUE)
+install.packages("tseries", dependencies=TRUE)
+install.packages("outliers", dependencies=TRUE)
+install.packages("nortest", dependencies=TRUE)
+
+# see http://www.bioconductor.org/packages//2.7/bioc/html/preprocessCore.html
+source("https://bioconductor.org/biocLite.R")
+biocLite("preprocessCore")
+
+install.packages("fields", dependencies=TRUE)
+install.packages("fpc", dependencies=TRUE)
+install.packages("flexclust", dependencies=TRUE)
+install.packages("fastcluster", dependencies=TRUE)
+install.packages("skmeans", dependencies=TRUE)
+install.packages("LICORS", dependencies=TRUE)
+
+install.packages("<R_packages>/CONORData_1.0.2.tar.gz", dependencies=TRUE)
+install.packages("<R_packages>/CONOR_1.0.2.tar.gz", dependencies=TRUE)
+install.packages("<R_packages>/HARMONY.tar.gz", dependencies=TRUE)
