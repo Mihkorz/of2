@@ -26,6 +26,12 @@ class DrugAdmin(admin.ModelAdmin):
     inlines = [
         TargetInline,
     ]
+
+class TargetAdmin(admin.ModelAdmin):
+    fields = ['name','tip', 'drug']
+    list_display = ('name', 'tip', 'drug')
+    search_fields = ['name', 'drug__name']
+    list_filter = ('drug__name',)
     
 def copy_pathway(modeladmin, request, queryset):
     for path in queryset:
@@ -137,7 +143,8 @@ class LogEntryAdmin(admin.ModelAdmin):
 
 
 #admin.site.register(LogEntry, LogEntryAdmin) 
-#admin.site.register(Drug, DrugAdmin)     
+admin.site.register(Drug, DrugAdmin)
+admin.site.register(Target, TargetAdmin)     
 #admin.site.register(Pathway, PathwayAdmin) 
 #admin.site.register(Node, NodeAdmin)
 #admin.site.register(Component, ComponentAdmin)  

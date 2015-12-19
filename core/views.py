@@ -957,6 +957,22 @@ class Test(TemplateView):
         context = super(Test, self).get_context_data(**kwargs)
         
         
+        paths = Pathway.objects.filter(organism='human', database='primary_new')
+        pn = {}
+        for pp in paths:
+            print pp.name 
+            for nn in pp.node_set.all():
+                cc = []
+                if nn.component_set.count()>1:
+                    for comp in nn.component_set.all():
+                        cc.append(comp.name)
+                    pn[pp.name+' '+nn.name] =cc
+                    
+        
+        df = DataFrame.from_dict(pn, orient='index')
+        df = df.transpose().fillna('')
+        df = df.reindex_axis(sorted(df.columns), axis=1)
+        df.to_csv(settings.MEDIA_ROOT+'/nodes_components.csv')
         raise Exception('stop')
         
         

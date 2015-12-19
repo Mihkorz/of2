@@ -190,7 +190,7 @@ class ConvertPath(TemplateView):
         
         
                     
-        #raise Exception('just stop exception. Check view!')
+        raise Exception('just stop exception. Check view!')
         """
         #human metabolism
         for mpath in MetabolismPathway.objects.all():
@@ -277,7 +277,7 @@ class ConvertPath(TemplateView):
             
         
         """
-           
+        """ 
         #human new
         
         pathh = settings.MEDIA_ROOT+'/biocarta/'
@@ -359,7 +359,7 @@ class ConvertPath(TemplateView):
                 pass
          
         raise Exception('Biocarta Done')       
-        
+        """
         #cytoskeleton MOUSE pathways
         """
         for hpath in Pathway.objects.filter(organism='human', database='cytoskeleton'):

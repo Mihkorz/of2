@@ -36,8 +36,8 @@ class MouseMetabolismGeneAdmin(admin.ModelAdmin):
     search_fields = ['name', 'pathway__name']
     list_filter = ('pathway__name',)
 
-admin.site.register(MouseMapping, MouseMappingAdmin)    
-admin.site.register(MousePathway, MousePathwayAdmin)  
-admin.site.register(MouseGene, MouseGeneAdmin)
-admin.site.register(MouseMetabolismPathway, MouseMetabolismPathwayAdmin)  
-admin.site.register(MouseMetabolismGene, MouseMetabolismGeneAdmin)  
+#admin.site.register(MouseMapping, MouseMappingAdmin)    
+#admin.site.register(MousePathway, MousePathwayAdmin)  
+#admin.site.register(MouseGene, MouseGeneAdmin)
+#admin.site.register(MouseMetabolismPathway, MouseMetabolismPathwayAdmin)  
+#admin.site.register(MouseMetabolismGene, MouseMetabolismGeneAdmin)  

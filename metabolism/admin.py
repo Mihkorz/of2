@@ -17,5 +17,5 @@ class MetabolismGeneAdmin(admin.ModelAdmin):
     search_fields = ['name', 'pathway__name']
     list_filter = ('pathway__name',)
     
-admin.site.register(MetabolismPathway, MetabolismPathwayAdmin)  
-admin.site.register(MetabolismGene, MetabolismGeneAdmin) 
+#admin.site.register(MetabolismPathway, MetabolismPathwayAdmin)  
+#admin.site.register(MetabolismGene, MetabolismGeneAdmin) 
