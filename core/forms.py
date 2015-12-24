@@ -133,7 +133,7 @@ class HarmonyParametersForm(forms.Form):
 class ShambalaParametersForm(forms.ModelForm):
     class Meta(object):
         model = ShambalaDocument
-        fields = ['document', 'auxiliary', 'log_scale' ]
+        fields = ['document', 'auxiliary', 'log_scale', 'random_seed' ]
                     
     
     
@@ -150,4 +150,3 @@ class ShambalaParametersForm(forms.ModelForm):
 
 
 
-    

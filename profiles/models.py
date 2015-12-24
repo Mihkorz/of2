@@ -139,6 +139,7 @@ class ShambalaDocument(models.Model):
     auxiliary = models.CharField(verbose_name="Auxiliary (calibration) dataset", max_length=100, 
                                   choices=AUXILIARY_CHOICES, blank=False, default='illumina')
     log_scale = models.BooleanField(verbose_name="Apply logarithm", default=True, blank=False)
+    random_seed = models.IntegerField(verbose_name="Random seed", default=0)
     sample_num = models.IntegerField(verbose_name="Sample ammount", blank=True, default=0)
     row_num = models.IntegerField(verbose_name="Number of rows", blank=True, default=0)
     related_doc = models.ForeignKey('self', related_name="bound_doc", blank=True, null=True, default=None)
@@ -155,4 +156,4 @@ class ShambalaDocument(models.Model):
 class IlluminaProbeTarget(models.Model):
     PROBE_ID = models.CharField(max_length=250, db_index=True, verbose_name=u'Probe ID', blank=False)
     TargetID = models.CharField(max_length=250, verbose_name=u'Target ID', blank=False)
-    PROBE_SEQUENCE = models.CharField(max_length=250, verbose_name=u'Probe Sequance')    
+    PROBE_SEQUENCE = models.CharField(max_length=250, verbose_name=u'Probe Sequance')
