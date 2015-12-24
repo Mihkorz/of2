@@ -217,7 +217,7 @@ def rename_df_columns(df):
     
 def Shambhala_harmonisation(df_pl1, df_pl2, harmony_type, gene_cluster,
                                  assay_cluster, corr, skip_match, p1_names=0, p2_names=0,
-                                 iterations=30, K=10, L=4, log_scale=True, ):
+                                 iterations=30, K=10, L=4, log_scale=True, random_seed=0):
     
     
     if log_scale:
@@ -260,7 +260,8 @@ def Shambhala_harmonisation(df_pl1, df_pl2, harmony_type, gene_cluster,
             print "afx static"
             R_output = harmony.harmony_afx_static(Rdf_pl1,  p1_names=p1_names, p2_names=p2_names,
                                  iterations=iterations, K=K, L=L, is_assays_identical=False,
-                                 gene_cluster=gene_cluster, assay_cluster=assay_cluster, corr=corr )
+                                 gene_cluster=gene_cluster, assay_cluster=assay_cluster, corr=corr,
+                                 random_seed=random_seed)
         if harmony_type=='harmony_afx_static_equi':
             print "afx static equi"
             R_output = harmony.harmony_afx_static_equi(Rdf_pl1,  p1_names=p1_names, p2_names=p2_names,
