@@ -1,0 +1,24 @@
+<div class="ajax_path">
+
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#fragment-1" data-toggle="tab"><span>Differential Genes </span></a></li>
+        <li><a href="#fragment-4" data-toggle="tab"><span>Graphic Scheme</span></a></li>
+    </ul>
+    <div id="tabContent" class="tab-content">
+		<div id="fragment-1" class="tab-pane fade in active well">
+		Total = {{diff_genes_count}}
+		<small>
+		{{joined|safe}}
+		</small>
+		</div>
+		
+<div id="fragment-4" class="tab-pane  well">
+	<a target="_blank" href='/media/pathway.svg?path={{pathway.name}}&r={{rand}}' >	
+    <img src='/media/pathway.svg?path={{pathway.name}}&r={{rand}}' style="width:100%"/>
+    </a>
+
+		
+</div>
+    
+</div>
+</div>

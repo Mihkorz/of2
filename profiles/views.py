@@ -728,7 +728,7 @@ class AjaxPathDetail(TemplateView):
         
         for _, row in joined_df.iterrows():                
             
-            loComp = Component.objects.filter(name = row['SYMBOL'], node__in=pathway.node_set.all())
+            loComp = Component.objects.filter(name = row['SYMBOL'], node__pathway=pathway)
             
             for comp in loComp:
                 comp.cnr = row['CNR']
@@ -739,13 +739,14 @@ class AjaxPathDetail(TemplateView):
         
         
         for node in pathway.node_set.all():
+            lcurrentComponents = [i.name for i in node.component_set.all()]
             node.nel = 0.0
             node.numDiffComp = 0
             node.sumDiffComp = 0.0
             node.color = "grey"
             node.strokeWidth = 1
             for component in nComp:
-                if component in node.component_set.all():
+                if component.name in lcurrentComponents:
                     if component.cnr != 0:
                         node.numDiffComp += 1
                         node.sumDiffComp += float(component.cnr)

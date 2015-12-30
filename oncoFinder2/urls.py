@@ -7,7 +7,8 @@ from django.views.generic.base import  RedirectView
 from django.contrib import admin
 admin.autodiscover()
 
-from website.views import IndexPage, AboutPage, Logout
+from website.views import IndexPage, AboutPage, Logout, \
+                          LorealReport, ReportJson, ReportAjaxPathDetail
 from profiles.views import ProfileIndex, SettingsProfile, SettingsBilling, CreateProject, \
                            DeleteProject, ProjectDetail, CreateDocument, DeleteDocument, \
                            DocumentDetail, SampleDetail, AjaxPathDetail
@@ -122,6 +123,12 @@ urlpatterns = patterns('',
     ################### Different usefull stuff ##############################
     url(r'^utils/path$', ConvertPath.as_view(), name="convert_path"),
     url(r'^utils/ksyu$', Ksyusha.as_view(), name="ksyusha"),
+    
+    ################### REPORT ###############################################
+    url(r'^report-portal/report/loreal/$', LorealReport.as_view(), name="loreal-report"),
+    url(r'^report-portal/json/$', ReportJson.as_view(), name="report-json"),
+    url(r'^report-portal/report/ajaxpathdetail/$', ReportAjaxPathDetail.as_view(), name="report_ajax_path_detail"),
+    
 
     
     

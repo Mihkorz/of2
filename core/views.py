@@ -956,23 +956,44 @@ class Test(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(Test, self).get_context_data(**kwargs)
         
+        def mazafaka(row):
+            
+            nnn = row.name
+            row = row.dropna()
+            row = row.tolist()
+            row.sort()
+            df1=read_csv(settings.MEDIA_ROOT+'/nodes-comp.csv')
+            
+            for col in df1:
+                ss = df1[col]
+                ss = ss.dropna()
+                ss = ss.tolist()
+                ss.sort()
+                
+                
+                
+                if row==ss:
+                    nnodes = Node.objects.filter(name=col)
+                    for nnode in nnodes:
+                        nnode.name = nnn
+                        nnode.save()  
+                    #raise Exception('inner stop')
         
-        paths = Pathway.objects.filter(organism='human', database='primary_new')
-        pn = {}
-        for pp in paths:
-            print pp.name 
-            for nn in pp.node_set.all():
-                cc = []
-                if nn.component_set.count()>1:
-                    for comp in nn.component_set.all():
-                        cc.append(comp.name)
-                    pn[pp.name+' '+nn.name] =cc
-                    
-        
-        df = DataFrame.from_dict(pn, orient='index')
-        df = df.transpose().fillna('')
-        df = df.reindex_axis(sorted(df.columns), axis=1)
-        df.to_csv(settings.MEDIA_ROOT+'/nodes_components.csv')
+             
+        for subdir, dirs, files in os.walk(settings.MEDIA_ROOT+'/renamed pathways proteins/'):
+            ff = files
+        i=0
+        for ffile in ff:
+            i=i+1
+            print ffile+'   n='+str(i)
+            try:
+                df = read_csv(settings.MEDIA_ROOT+'/renamed pathways proteins/'+ffile)
+            
+                df.apply(mazafaka)
+            except:
+                print "ERROR in "+ffile
+                
+                
         raise Exception('stop')
         
         
