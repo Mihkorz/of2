@@ -159,21 +159,21 @@ function drawPathScatter(name, renderTo, xname, yname, file_name1, file_name2){
 
 $(document).ready(function(){
 
-	drawGeneScatter(name="L'Oreal_preprocessed_NHK. Tumour VS Norm",
+	drawGeneScatter(name="L'Oreal_preprocessed_NHK. Case VS NHE",
 			        renderTo='genes-nhk',
-			        xname='log2(Tumour counts)', yname='log2(Norm counts)',
+			        xname='log2(Case counts)', yname='log2(NHE counts)',
 			        file_name='output_loreal_preprocessed_NHK.txt.xlsx')
-    drawGeneScatter(name="L'Oreal_preprocessed_RhE (Type 1). Tumour VS Norm",
+    drawGeneScatter(name="L'Oreal_preprocessed_RhE (Type 1). Case VS NHE",
 			        renderTo='genes-type1',
-			        xname='log2(Tumour counts)', yname='log2(Norm counts)',
+			        xname='log2(Case counts)', yname='log2(NHE counts)',
 			        file_name='output_loreal_preprocessed_RhE (Type 1).txt.xlsx')
-	drawGeneScatter(name="L'Oreal_preprocessed_RhE (Type 2). Tumour VS Norm",
+	drawGeneScatter(name="L'Oreal_preprocessed_RhE (Type 2). Case VS NHE",
 			        renderTo='genes-type2',
-			        xname='log2(Tumour counts)', yname='log2(Norm counts)',
+			        xname='log2(Case counts)', yname='log2(NHE counts)',
 			        file_name='output_loreal_preprocessed_RhE (Type 2).txt.xlsx')
-	drawGeneScatter(name="L'Oreal_preprocessed_RhE (Type 3). Tumour VS Norm",
+	drawGeneScatter(name="L'Oreal_preprocessed_RhE (Type 3). Case VS NHE",
 			        renderTo='genes-type3',
-			        xname='log2(Tumour counts)', yname='log2(Norm counts)',
+			        xname='log2(Case counts)', yname='log2(NHE counts)',
 			        file_name='output_loreal_preprocessed_RhE (Type 3).txt.xlsx')
     
 	

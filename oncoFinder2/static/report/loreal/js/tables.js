@@ -26,7 +26,7 @@ function drawGeneTable(id, file_name){
 	// FIRST DOC
 	$('#'+id).DataTable( {
     	"paging":   true,
-        "iDisplayLength": 10,
+        "iDisplayLength": 20,
         "ordering": true,
         "order": [[ 1, "desc" ]],
         "info":     false,
@@ -67,7 +67,7 @@ function drawPathwayTable(id, file_name1, file_name2){
 	// FIRST DOC
 	$('#'+id).DataTable( {
     	"paging":   true,
-        
+    	"iDisplayLength": 20,
         "ordering": true,
         "order": [[ 1, "desc" ]],
         "info":     false,
@@ -126,6 +126,9 @@ $(document).ready(function() {
 	drawPathwayTable('tbl-type2-type3', 
 			         'output_loreal_preprocessed_RhE (Type 2).txt.xlsx', 
 			         'output_loreal_preprocessed_RhE (Type 3).txt.xlsx')
+    drawPathwayTable('tbl-all', 
+			         'all', 
+			         'all')
 	
     
 	

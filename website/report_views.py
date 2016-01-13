@@ -150,26 +150,55 @@ class ReportPathwayTableJson(TemplateView):
         file_name1 = request.GET.get('file_name1')
         file_name2 = request.GET.get('file_name2')
         
-        
-        df_1 = pd.read_excel(settings.MEDIA_ROOT+"/../static/report/loreal/"+file_name1,
+        if file_name1 == file_name2 == 'all':
+            dfnhk = pd.read_excel(settings.MEDIA_ROOT+"/../static/report/loreal/output_loreal_preprocessed_NHK.txt.xlsx",
                                 sheetname='PAS1', index_col='Pathway')
-        df_2 = pd.read_excel(settings.MEDIA_ROOT+"/../static/report/loreal/"+file_name2,
+            df1 = pd.read_excel(settings.MEDIA_ROOT+"/../static/report/loreal/output_loreal_preprocessed_RhE (Type 1).txt.xlsx",
+                                 sheetname='PAS1', index_col='Pathway')
+            df2 = pd.read_excel(settings.MEDIA_ROOT+"/../static/report/loreal/output_loreal_preprocessed_RhE (Type 2).txt.xlsx",
+                                sheetname='PAS1', index_col='Pathway')
+            df3 = pd.read_excel(settings.MEDIA_ROOT+"/../static/report/loreal/output_loreal_preprocessed_RhE (Type 3).txt.xlsx",
+                                 sheetname='PAS1', index_col='Pathway')
+            
+            
+            dfnhk_tumour = dfnhk[[x for x in dfnhk.columns if 'Tumour' in x]]
+            snkh_tumour = dfnhk_tumour.mean(axis=1)
+            df1_tumour = df1[[x for x in df1.columns if 'Tumour' in x]]
+            s1_tumour = df1_tumour.mean(axis=1)
+            df2_tumour = df2[[x for x in df2.columns if 'Tumour' in x]]
+            s2_tumour = df2_tumour.mean(axis=1)
+            df3_tumour = df3[[x for x in df3.columns if 'Tumour' in x]]
+            s3_tumour = df3_tumour.mean(axis=1)
+            
+            df_output = pd.DataFrame()
+            df_output['1'] = snkh_tumour
+            df_output['2'] = s1_tumour
+            df_output['3'] = s2_tumour
+            df_output['4'] = s3_tumour
+            
+            df_output.reset_index(inplace=True)
+            
+            
+        else:
+            df_1 = pd.read_excel(settings.MEDIA_ROOT+"/../static/report/loreal/"+file_name1,
+                                sheetname='PAS1', index_col='Pathway')
+            df_2 = pd.read_excel(settings.MEDIA_ROOT+"/../static/report/loreal/"+file_name2,
                                  sheetname='PAS1', index_col='Pathway')
         
-        df1_tumour = df_1[[x for x in df_1.columns if 'Tumour' in x]]
-        s1_tumour = df1_tumour.mean(axis=1)
+            df1_tumour = df_1[[x for x in df_1.columns if 'Tumour' in x]]
+            s1_tumour = df1_tumour.mean(axis=1)
         
-        df2_tumour = df_2[[x for x in df_2.columns if 'Tumour' in x]]
-        s2_tumour = df2_tumour.mean(axis=1)               
+            df2_tumour = df_2[[x for x in df_2.columns if 'Tumour' in x]]
+            s2_tumour = df2_tumour.mean(axis=1)               
         
-        df_output = pd.DataFrame()
+            df_output = pd.DataFrame()
         
-        df_output['1'] = s1_tumour
-        df_output['2'] = s2_tumour
+            df_output['1'] = s1_tumour
+            df_output['2'] = s2_tumour
         
-        df_output.reset_index(inplace=True)
+            df_output.reset_index(inplace=True)
         
-        #raise Exception('path table')
+        
         
         df_json = df_output.to_json(orient='values')
         
