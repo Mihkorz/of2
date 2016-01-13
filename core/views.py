@@ -955,25 +955,65 @@ class Test(TemplateView):
     
     def get_context_data(self, **kwargs):
         context = super(Test, self).get_context_data(**kwargs)
+        """
+        import pandas as pd
+        lca = []
         
+        
+        
+        old_df = pd.DataFrame( columns=range(300))
+        
+        i = 0
+        for node in Node.objects.filter(pathway__database='biocarta', pathway__organism='human').order_by('name'):
+            i = i+1
+            print node.name+' i='+str(i)+ ' org='+node.pathway.organism
+            lc = []
+            for comp in node.component_set.all():
+                lc.append(comp.name)
+            
+            lc.sort()
+            
+            if lc not in lca:
+                lca.append(lc)
+                s1 = pd.Series(lc, name=node.name)
+                old_df = old_df.append(s1)
+                
+            
+                
+                    
+                
+               
+            
+              
+        old_df = old_df.transpose()
+        old_df.to_csv(settings.MEDIA_ROOT+'/nodes-comp-biocarta.csv')
+        raise Exception('stop1111')
+        """
+        df1=read_csv(settings.MEDIA_ROOT+'/nodes-comp-biocarta.csv')
+        df1 = df1.T.drop_duplicates().T
         def mazafaka(row):
             
             nnn = row.name
+            print " ----  "+nnn
             row = row.dropna()
             row = row.tolist()
             row.sort()
-            df1=read_csv(settings.MEDIA_ROOT+'/nodes-comp.csv')
+            
             
             for col in df1:
                 ss = df1[col]
+                
                 ss = ss.dropna()
+                ss = Series(ss)
                 ss = ss.tolist()
                 ss.sort()
                 
                 
                 
+                
                 if row==ss:
-                    nnodes = Node.objects.filter(name=col)
+                    
+                    nnodes = Node.objects.filter(name=col, pathway__database='biocarta')
                     for nnode in nnodes:
                         nnode.name = nnn
                         nnode.save()  
@@ -983,14 +1023,17 @@ class Test(TemplateView):
         for subdir, dirs, files in os.walk(settings.MEDIA_ROOT+'/renamed pathways proteins/'):
             ff = files
         i=0
+        ff.sort()
         for ffile in ff:
             i=i+1
             print ffile+'   n='+str(i)
             try:
                 df = read_csv(settings.MEDIA_ROOT+'/renamed pathways proteins/'+ffile)
-            
+                
+                
                 df.apply(mazafaka)
             except:
+                #raise
                 print "ERROR in "+ffile
                 
                 

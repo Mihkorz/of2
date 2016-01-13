@@ -8,16 +8,17 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore.js" type="text/javascript"></script>
     <script src="//d3js.org/d3.v3.min.js" type="text/javascript"></script>
     <script src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js" type="text/javascript"></script>
-    <script src="/static/js/highcharts.js" type="text/javascript"></script>
+    <script src="http://code.highcharts.com/highcharts.js" type="text/javascript"></script>
     <script src="http://code.highcharts.com/modules/exporting.js"></script>
     <link href="/static/css/report_style.css" rel="stylesheet" type="text/css">
     <link href="https://cdn.datatables.net/1.10.10/css/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="https://cdn.datatables.net/buttons/1.0.3/css/buttons.dataTables.min.css" rel="stylesheet">
     
     <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
     
   </head>
-  <body>
+  <body style='font-size: 14px;'>
     <div class="content h100">
       <div class="main">
         <div class="inner">
@@ -48,82 +49,252 @@
           </ul>
           
           
-          <h1>L'Oreal_preprocessed_NHK</h1>
+          <h1>Gene Analysis</h1>
           
           <div>
-
-  <!-- Nav tabs -->
-  <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="#A1209_04" aria-controls="home" role="tab" data-toggle="tab">A1209_04</a></li>
-    <li role="presentation"><a href="#A1209_08" aria-controls="profile" role="tab" data-toggle="tab">A1209_08</a></li>
-    <li role="presentation"><a href="#A1209_12" aria-controls="messages" role="tab" data-toggle="tab">A1209_12</a></li>
-    <li role="presentation"><a href="#A1209_15" aria-controls="settings" role="tab" data-toggle="tab">A1209_15</a></li>
-  </ul>
-
-  <!-- Tab panes -->
+          
+          <!-- GENE Nav tabs -->
+         <ul class="nav nav-tabs" role="tablist">
+         <li role="presentation" class="active"><a href="#nhk_tab" aria-controls="home" role="tab" data-toggle="tab">NHK</a></li>
+         <li role="presentation"><a href="#type1_tab" aria-controls="profile" role="tab" data-toggle="tab">TYPE1</a></li>
+         <li role="presentation"><a href="#type2_tab" aria-controls="messages" role="tab" data-toggle="tab">TYPE2</a></li>
+         <li role="presentation"><a href="#type3_tab" aria-controls="settings" role="tab" data-toggle="tab">TYPE3</a></li>
+         </ul>
+         
+         <!-- GENE Tab panes -->
   <div class="tab-content">
-    <div role="tabpanel" class="tab-pane fade in active" id="A1209_04">
+    <div role="tabpanel" class="tab-pane fade in active" id="nhk_tab">
     
-      <br/>
-      <h4>Table 1. A1209_04</h4>
-      <table id="tbl-A1209_04" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+      <br/> 
+          
+          <!-- GENES NKK -->
+          <div id="genes-nhk" style="min-width: 800px; height: 400px; max-width: 800px; margin: 0 auto"></div>
+  <br/><br/>
+  
+  <h4>Table 1. L'Oreal_preprocessed_NHK</h4>
+      <table id="tbl-gene-nhk" class="path table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
           <tr>
-           <th>Pathway</th>
-           <th>Database</th>
-           <th>PAS</th>
-           <th>PAS1</th>
+           <th>Gene</th>
+           <th>log2FoldChange</th>
+           <th>pval</th>
+           <th>padj</th>
           </tr>
         </thead>  
-      </table>    
-    
-    </div>
-    <div role="tabpanel" class="tab-pane fade" id="A1209_08">
-    <br/>
-      <h4>Table 2. A1209_08</h4>
-      <table id="tbl-A1209_08" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+      </table>
+      <br/><br/>
+      </div>
+      
+      <div role="tabpanel" class="tab-pane fade " id="type1_tab">
+      <!-- GENES TYPE 1 -->
+      <div id="genes-type1" style="min-width: 800px; height: 400px; max-width: 800px; margin: 0 auto"></div>
+  <br/><br/>
+  
+  <h4>Table 2. L'Oreal_loreal_preprocessed_RhE (Type 1)</h4>
+      <table id="tbl-gene-type1" class="path table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
           <tr>
-           <th>Pathway</th>
-           <th>Database</th>
-           <th>PAS</th>
-           <th>PAS1</th>
+           <th>Gene</th>
+           <th>log2FoldChange</th>
+           <th>pval</th>
+           <th>padj</th>
           </tr>
         </thead>  
       </table> 
+      <br/><br/>
+      </div>
+      
+      <div role="tabpanel" class="tab-pane fade " id="type2_tab">
+      <!-- GENES TYPE 2 -->
+      <div id="genes-type2" style="min-width: 800px; height: 400px; max-width: 800px; margin: 0 auto"></div>
+  <br/><br/>
+  
+  <h4>Table 3. L'Oreal_loreal_preprocessed_RhE (Type 2)</h4>
+      <table id="tbl-gene-type2" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>Gene</th>
+           <th>log2FoldChange</th>
+           <th>pval</th>
+           <th>padj</th>
+          </tr>
+        </thead>  
+      </table> 
+       <br/><br/>
+       </div>
+       
+       <div role="tabpanel" class="tab-pane fade " id="type3_tab">
+       <!-- GENES TYPE 3 -->
+      <div id="genes-type3" style="min-width: 800px; height: 400px; max-width: 800px; margin: 0 auto"></div>
+  <br/><br/>
+  
+  <h4>Table 4. L'Oreal_loreal_preprocessed_RhE (Type 3)</h4>
+      <table id="tbl-gene-type3" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>Gene</th>
+           <th>log2FoldChange</th>
+           <th>pval</th>
+           <th>padj</th>
+          </tr>
+        </thead>  
+      </table> 
+       <br/><br/>
+     </div>
+     
+  </div> <!--  end of tabs GENE -->
+
+  
+<h1>Pathway Analysis</h1>
+
+ <!-- PAthway Nav tabs -->
+         <ul class="nav nav-tabs" role="tablist">
+         <li role="presentation" class="active"><a href="#nhk_type1_tab" aria-controls="home" role="tab" data-toggle="tab">NHK-TYPE1</a></li>
+         <li role="presentation"><a href="#nhk_type2_tab" aria-controls="profile" role="tab" data-toggle="tab">NHK-TYPE2</a></li>
+         <li role="presentation"><a href="#nhk_type3_tab" aria-controls="messages" role="tab" data-toggle="tab">NHK-TYPE3</a></li>
+         <li role="presentation"><a href="#type1_type2_tab" aria-controls="settings" role="tab" data-toggle="tab">TYPE1-TYPE2</a></li>
+         <li role="presentation"><a href="#type1_type3_tab" aria-controls="settings" role="tab" data-toggle="tab">TYPE1-TYPE3</a></li>
+         <li role="presentation"><a href="#type2_type3_tab" aria-controls="settings" role="tab" data-toggle="tab">TYPE2-TYPE3</a></li>
+         </ul>
+         
+         <!-- PATHWAY Tab panes -->
+  <div class="tab-content">
+    <!-- PATH NHK TYPE1 -->
+    <div role="tabpanel" class="tab-pane fade in active" id="nhk_type1_tab">
     
-    </div>
-    <div role="tabpanel" class="tab-pane fade" id="A1209_12">
-    <br/>
-      <h4>Table 3. A1209_12</h4>
-      <table id="tbl-A1209_12" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+      <br/> 
+          
+          
+          <div id="path-nhk-type1" style="min-width: 800px; height: 400px; max-width: 800px; margin: 0 auto"></div>
+  <br/><br/>
+  
+  <h4>Table 5. NHK vs Type1</h4>
+      <table id="tbl-nhk-type1" class="path table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
           <tr>
-           <th>Pathway</th>
-           <th>Database</th>
-           <th>PAS</th>
-           <th>PAS1</th>
+           <th>Pathway Name</th>
+           <th>NHK</th>
+           <th>Type1</th>
           </tr>
         </thead>  
-      </table> 
-    </div>
-    <div role="tabpanel" class="tab-pane fade" id="A1209_15">
-    <br/>
-      <h4>Table 4. A1209_15</h4>
-      <table id="tbl-A1209_15" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+      </table>
+      <br/><br/>
+      </div>
+      
+      
+      <!-- PATH NHK TYPE2 -->
+    <div role="tabpanel" class="tab-pane fade " id="nhk_type2_tab">
+    
+      <br/> 
+          
+          
+          <div id="path-nhk-type2" style="min-width: 800px; height: 400px; max-width: 800px; margin: 0 auto"></div>
+  <br/><br/>
+  
+  <h4>Table 6. NHK vs Type2</h4>
+      <table id="tbl-nhk-type2" class="path table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
           <tr>
-           <th>Pathway</th>
-           <th>Database</th>
-           <th>PAS</th>
-           <th>PAS1</th>
+           <th>Pathway Name</th>
+           <th>NHK</th>
+           <th>Type2</th>
           </tr>
         </thead>  
-      </table> 
-    </div>
-  </div>
-<div style="height:500px;"></div>
+      </table>
+      <br/><br/>
+      </div>
+      
+      <!-- PATH NHK TYPE3 -->
+    <div role="tabpanel" class="tab-pane fade " id="nhk_type3_tab">
+    
+      <br/> 
+          
+          
+          <div id="path-nhk-type3" style="min-width: 800px; height: 400px; max-width: 800px; margin: 0 auto"></div>
+  <br/><br/>
+  
+  <h4>Table 7. NHK vs Type3</h4>
+      <table id="tbl-nhk-type3" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>Pathway Name</th>
+           <th>NHK</th>
+           <th>Type3</th>
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+      </div>
+      
+      <!-- PATH TYPE1 TYPE2 -->
+    <div role="tabpanel" class="tab-pane fade " id="type1_type2_tab">
+    
+      <br/> 
+          
+          
+          <div id="path-type1-type2" style="min-width: 800px; height: 400px; max-width: 800px; margin: 0 auto"></div>
+  <br/><br/>
+  
+  <h4>Table 8. Type1 vs Type2</h4>
+      <table id="tbl-type1-type2" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>Pathway Name</th>
+           <th>Type1</th>
+           <th>Type2</th>
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+      </div>
+      
+      <!-- PATH TYPE1 TYPE3 -->
+    <div role="tabpanel" class="tab-pane fade " id="type1_type3_tab">
+    
+      <br/> 
+          
+          
+          <div id="path-type1-type3" style="min-width: 800px; height: 400px; max-width: 800px; margin: 0 auto"></div>
+  <br/><br/>
+  
+  <h4>Table 9. Type1 vs Type3</h4>
+      <table id="tbl-type1-type3" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>Pathway Name</th>
+           <th>Type1</th>
+           <th>Type3</th>
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+      </div>
+      
+      
+      <!-- PATH TYPE2 TYPE3 -->
+    <div role="tabpanel" class="tab-pane fade " id="type2_type3_tab">
+    
+      <br/> 
+          
+          
+          <div id="path-type2-type3" style="min-width: 800px; height: 400px; max-width: 800px; margin: 0 auto"></div>
+  <br/><br/>
+  
+  <h4>Table 10. Type2 vs Type3</h4>
+      <table id="tbl-type2-type3" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>Pathway Name</th>
+           <th>Type2</th>
+           <th>Type3</th>
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+      </div>
+
 </div>
+<div style='min-height:500px'></div>
             
           </div>
           
@@ -153,7 +324,17 @@
       </div>
     </div>
     
-    <script src="/static/js/tables.js" type="text/javascript"></script>
+    
+    <script src="https://cdn.datatables.net/buttons/1.0.3/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.0.3/js/buttons.bootstrap.min.js"></script>
+    <script src="//cdn.datatables.net/buttons/1.0.3/js/buttons.flash.min.js"></script>
+    <script src="//cdn.datatables.net/buttons/1.0.3/js/buttons.html5.min.js"></script>
+    <script src="//cdn.datatables.net/buttons/1.0.3/js/buttons.print.min.js"></script>
+    
+    <script src="/static/report/loreal/js/tables.js" type="text/javascript"></script>
+    <script src="/static/report/loreal/js/scatter.js" type="text/javascript"></script>
+    
+    
     
     
     <!-- MODAL FOR PATHS  -->

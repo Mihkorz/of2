@@ -1,5 +1,0 @@
-AuthName "Protected Page"
-AuthType Basic
-AuthUserFile /var/chroot/home/content/p3nexnas05_data01/55/2100055/html/home/n2fe2100055572/html/.htpasswd
-require valid-user
-
