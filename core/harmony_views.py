@@ -54,9 +54,8 @@ class ShambalaForm(FormView):
             df_p1 = read_csv(settings.MEDIA_ROOT+'/Shambala/CustomArray.txt', sep=' ')
             df_p1.set_index('SYMBOL', inplace=True)
         
-        
+        random_seed = form.cleaned_data.get('random_seed')
 
-        
         df_p = read_csv(settings.MEDIA_ROOT+'/'+document.document.name, sep=r'[\t, ;]')
         df_p.set_index('SYMBOL', inplace=True)
         
@@ -81,7 +80,7 @@ class ShambalaForm(FormView):
             df_pl2 = DataFrame({})
             df_after_harmony = Shambhala_harmonisation(qn_df, df_pl2, harmony_type='harmony_afx_static', p1_names=0, p2_names=0,
                                  iterations=3, K=10, L=4, log_scale=log_scale, gene_cluster='skmeans',
-                                 assay_cluster='hclust', corr='pearson', skip_match=False)
+                                 assay_cluster='hclust', corr='pearson', skip_match=False, random_seed=random_seed)
             
             
             return df_after_harmony[col.name]
@@ -458,6 +457,5 @@ class breastmodule(TemplateView):
         context['test'] = 'test'
         
         return context      
-    
     
     
