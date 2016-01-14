@@ -78,7 +78,7 @@ var options = {
 } 
 
 
-function drawPathScatter(name, renderTo, xname, yname, file_name1, file_name2){
+function drawPathScatter(name, renderTo, xname, yname, file_name1, file_name2, is_metabolic){
 	
 	var options = {
 				
@@ -146,7 +146,8 @@ function drawPathScatter(name, renderTo, xname, yname, file_name1, file_name2){
 	    $.getJSON('/report-portal/pathscatterjson/',
 	    		{
 	    	     'file_name1': file_name1,
-	    	     'file_name2': file_name2
+	    	     'file_name2': file_name2,
+	    	     'is_metabolic': is_metabolic
 	    		},
 	    		function(data) { 
 	    	
@@ -176,44 +177,80 @@ $(document).ready(function(){
 			        xname='log2(Case counts)', yname='log2(NHE counts)',
 			        file_name='output_loreal_preprocessed_RhE (Type 3).txt.xlsx')
     
-	
+	// SIGNALING
 	drawPathScatter(name="NHK VS Type1",
 	        renderTo='path-nhk-type1',
 	        xname='NHK', yname='Type1',
 	        file_name1='output_loreal_preprocessed_NHK.txt.xlsx',
-	        file_name2='output_loreal_preprocessed_RhE (Type 1).txt.xlsx')
+	        file_name2='output_loreal_preprocessed_RhE (Type 1).txt.xlsx', false)
 	        
 	drawPathScatter(name="NHK VS Type2",
 	        renderTo='path-nhk-type2',
 	        xname='NHK', yname='Type2',
 	        file_name1='output_loreal_preprocessed_NHK.txt.xlsx',
-	        file_name2='output_loreal_preprocessed_RhE (Type 2).txt.xlsx')
+	        file_name2='output_loreal_preprocessed_RhE (Type 2).txt.xlsx', false)
 	
 	drawPathScatter(name="NHK VS Type3",
 	        renderTo='path-nhk-type3',
 	        xname='NHK', yname='Type3',
 	        file_name1='output_loreal_preprocessed_NHK.txt.xlsx',
-	        file_name2='output_loreal_preprocessed_RhE (Type 3).txt.xlsx')
+	        file_name2='output_loreal_preprocessed_RhE (Type 3).txt.xlsx', false)
 	
     drawPathScatter(name="Type1 VS Type2",
 	        renderTo='path-type1-type2',
 	        xname='Type1', yname='Type2',
 	        file_name1='output_loreal_preprocessed_RhE (Type 1).txt.xlsx',
-	        file_name2='output_loreal_preprocessed_RhE (Type 2).txt.xlsx')
+	        file_name2='output_loreal_preprocessed_RhE (Type 2).txt.xlsx', false)
 	        
 	drawPathScatter(name="Type1 VS Type3",
 	        renderTo='path-type1-type3',
 	        xname='Type1', yname='Type3',
 	        file_name1='output_loreal_preprocessed_RhE (Type 1).txt.xlsx',
-	        file_name2='output_loreal_preprocessed_RhE (Type 3).txt.xlsx')
+	        file_name2='output_loreal_preprocessed_RhE (Type 3).txt.xlsx', false)
 	
 	 drawPathScatter(name="Type2 VS Type3",
 	        renderTo='path-type2-type3',
 	        xname='Type2', yname='Type3',
 	        file_name1='output_loreal_preprocessed_RhE (Type 2).txt.xlsx',
-	        file_name2='output_loreal_preprocessed_RhE (Type 3).txt.xlsx')
+	        file_name2='output_loreal_preprocessed_RhE (Type 3).txt.xlsx', false)
   
 
+	// METABolIC
+	drawPathScatter(name="NHK VS Type1",
+	        renderTo='meta_path-nhk-type1',
+	        xname='NHK', yname='Type1',
+	        file_name1='output_loreal_preprocessed_NHK.txt.xlsx',
+	        file_name2='output_loreal_preprocessed_RhE (Type 1).txt.xlsx', true)
+	        
+	drawPathScatter(name="NHK VS Type2",
+	        renderTo='meta_path-nhk-type2',
+	        xname='NHK', yname='Type2',
+	        file_name1='output_loreal_preprocessed_NHK.txt.xlsx',
+	        file_name2='output_loreal_preprocessed_RhE (Type 2).txt.xlsx', true)
+	
+	drawPathScatter(name="NHK VS Type3",
+	        renderTo='meta_path-nhk-type3',
+	        xname='NHK', yname='Type3',
+	        file_name1='output_loreal_preprocessed_NHK.txt.xlsx',
+	        file_name2='output_loreal_preprocessed_RhE (Type 3).txt.xlsx', true)
+	
+    drawPathScatter(name="Type1 VS Type2",
+	        renderTo='meta_path-type1-type2',
+	        xname='Type1', yname='Type2',
+	        file_name1='output_loreal_preprocessed_RhE (Type 1).txt.xlsx',
+	        file_name2='output_loreal_preprocessed_RhE (Type 2).txt.xlsx', true)
+	        
+	drawPathScatter(name="Type1 VS Type3",
+	        renderTo='meta_path-type1-type3',
+	        xname='Type1', yname='Type3',
+	        file_name1='output_loreal_preprocessed_RhE (Type 1).txt.xlsx',
+	        file_name2='output_loreal_preprocessed_RhE (Type 3).txt.xlsx', true)
+	
+	 drawPathScatter(name="Type2 VS Type3",
+	        renderTo='meta_path-type2-type3',
+	        xname='Type2', yname='Type3',
+	        file_name1='output_loreal_preprocessed_RhE (Type 2).txt.xlsx',
+	        file_name2='output_loreal_preprocessed_RhE (Type 3).txt.xlsx', true)
 
 });
 

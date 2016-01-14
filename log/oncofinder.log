@@ -6991,3 +6991,258 @@ Traceback (most recent call last):
   File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 141, in get
     raise Exception('gene detail')
 Exception: gene detail
+2016-01-14 19:05:41,429 ERROR base 28032 -1390417088 Internal Server Error: /report-portal/pathwaytablejson/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 190, in dispatch
+    return super(ReportPathwayTableJson, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 233, in get
+    raise Exception('metabolic')
+Exception: metabolic
+2016-01-14 19:05:59,431 ERROR base 28336 -1358955712 Internal Server Error: /report-portal/pathwaytablejson/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 190, in dispatch
+    return super(ReportPathwayTableJson, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 233, in get
+    raise Exception('metabolic')
+Exception: metabolic
+2016-01-14 19:06:16,467 ERROR base 28336 -1358955712 Internal Server Error: /report-portal/pathwaytablejson/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 190, in dispatch
+    return super(ReportPathwayTableJson, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 233, in get
+    raise Exception('metabolic')
+Exception: metabolic
+2016-01-14 19:07:30,149 ERROR base 28962 -1358881984 Internal Server Error: /report-portal/pathwaytablejson/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 190, in dispatch
+    return super(ReportPathwayTableJson, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 236, in get
+    raise Exception('metabolic')
+Exception: metabolic
+2016-01-14 19:08:28,251 ERROR base 29378 -1358079168 Internal Server Error: /report-portal/pathwaytablejson/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 190, in dispatch
+    return super(ReportPathwayTableJson, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 240, in get
+    raise Exception('metabolic')
+Exception: metabolic
+2016-01-14 19:09:35,651 ERROR base 29833 -1358079168 Internal Server Error: /report-portal/pathwaytablejson/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 190, in dispatch
+    return super(ReportPathwayTableJson, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 244, in get
+    raise Exception('metabolic')
+Exception: metabolic
+2016-01-14 19:10:06,008 ERROR base 29833 -1358079168 Internal Server Error: /report-portal/pathwaytablejson/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 190, in dispatch
+    return super(ReportPathwayTableJson, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 244, in get
+    raise Exception('metabolic')
+Exception: metabolic
+2016-01-14 19:15:53,534 ERROR base 32229 -1440744640 Internal Server Error: /report-portal/pathwaytablejson/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 190, in dispatch
+    return super(ReportPathwayTableJson, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 239, in get
+    df_output.drop(df_output.index['Target_drugs_pathway'], inplace=True)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/index.py", line 1149, in __getitem__
+    return getitem(key)
+IndexError: only integers, slices (`:`), ellipsis (`...`), numpy.newaxis (`None`) and integer or boolean arrays are valid indices
+2016-01-14 19:16:09,445 ERROR base 32229 -1440744640 Internal Server Error: /report-portal/pathwaytablejson/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 190, in dispatch
+    return super(ReportPathwayTableJson, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 239, in get
+    df_output.drop(df_output.index['Target_drugs_pathway'], inplace=True)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/index.py", line 1149, in __getitem__
+    return getitem(key)
+IndexError: only integers, slices (`:`), ellipsis (`...`), numpy.newaxis (`None`) and integer or boolean arrays are valid indices
+2016-01-14 19:16:27,725 ERROR base 32548 -1358881984 Internal Server Error: /report-portal/pathwaytablejson/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 190, in dispatch
+    return super(ReportPathwayTableJson, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 239, in get
+    df_output.drop(df_output.index[['Target_drugs_pathway']], inplace=True)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/index.py", line 1160, in __getitem__
+    result = getitem(key)
+IndexError: only integers, slices (`:`), ellipsis (`...`), numpy.newaxis (`None`) and integer or boolean arrays are valid indices
+2016-01-14 19:20:02,654 ERROR base 858 -1412449472 Internal Server Error: /report-portal/pathwaytablejson/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 190, in dispatch
+    return super(ReportPathwayTableJson, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 269, in get
+    df_output.drop(['Target_drugs_pathway'], inplace=True)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/generic.py", line 1617, in drop
+    new_axis = axis.drop(labels, errors=errors)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/index.py", line 2803, in drop
+    raise ValueError('labels %s not contained in axis' % labels[mask])
+ValueError: labels ['Target_drugs_pathway'] not contained in axis
+2016-01-14 19:20:02,804 ERROR base 858 -1391461568 Internal Server Error: /report-portal/pathwaytablejson/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 190, in dispatch
+    return super(ReportPathwayTableJson, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 269, in get
+    df_output.drop(['Target_drugs_pathway'], inplace=True)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/generic.py", line 1617, in drop
+    new_axis = axis.drop(labels, errors=errors)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/index.py", line 2803, in drop
+    raise ValueError('labels %s not contained in axis' % labels[mask])
+ValueError: labels ['Target_drugs_pathway'] not contained in axis
+2016-01-14 19:20:03,205 ERROR base 858 -1378878656 Internal Server Error: /report-portal/pathwaytablejson/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 190, in dispatch
+    return super(ReportPathwayTableJson, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 269, in get
+    df_output.drop(['Target_drugs_pathway'], inplace=True)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/generic.py", line 1617, in drop
+    new_axis = axis.drop(labels, errors=errors)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/index.py", line 2803, in drop
+    raise ValueError('labels %s not contained in axis' % labels[mask])
+ValueError: labels ['Target_drugs_pathway'] not contained in axis
+2016-01-14 19:20:03,218 ERROR base 858 -1368392896 Internal Server Error: /report-portal/pathwaytablejson/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 190, in dispatch
+    return super(ReportPathwayTableJson, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 269, in get
+    df_output.drop(['Target_drugs_pathway'], inplace=True)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/generic.py", line 1617, in drop
+    new_axis = axis.drop(labels, errors=errors)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/index.py", line 2803, in drop
+    raise ValueError('labels %s not contained in axis' % labels[mask])
+ValueError: labels ['Target_drugs_pathway'] not contained in axis
+2016-01-14 19:20:03,375 ERROR base 858 -1358333120 Internal Server Error: /report-portal/pathwaytablejson/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 190, in dispatch
+    return super(ReportPathwayTableJson, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 269, in get
+    df_output.drop(['Target_drugs_pathway'], inplace=True)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/generic.py", line 1617, in drop
+    new_axis = axis.drop(labels, errors=errors)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/index.py", line 2803, in drop
+    raise ValueError('labels %s not contained in axis' % labels[mask])
+ValueError: labels ['Target_drugs_pathway'] not contained in axis
+2016-01-14 19:20:03,445 ERROR base 858 -1404056768 Internal Server Error: /report-portal/pathwaytablejson/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 190, in dispatch
+    return super(ReportPathwayTableJson, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 269, in get
+    df_output.drop(['Target_drugs_pathway'], inplace=True)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/generic.py", line 1617, in drop
+    new_axis = axis.drop(labels, errors=errors)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/index.py", line 2803, in drop
+    raise ValueError('labels %s not contained in axis' % labels[mask])
+ValueError: labels ['Target_drugs_pathway'] not contained in axis
+2016-01-14 19:20:27,652 ERROR base 858 -1391461568 Internal Server Error: /report-portal/pathwaytablejson/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 190, in dispatch
+    return super(ReportPathwayTableJson, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 269, in get
+    df_output.drop(['Target_drugs_pathway'], inplace=True)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/generic.py", line 1617, in drop
+    new_axis = axis.drop(labels, errors=errors)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/index.py", line 2803, in drop
+    raise ValueError('labels %s not contained in axis' % labels[mask])
+ValueError: labels ['Target_drugs_pathway'] not contained in axis

@@ -153,12 +153,23 @@ class ReportPathwayScatterJson(TemplateView):
         
         file_name1 = request.GET.get('file_name1') 
         file_name2 = request.GET.get('file_name2')       
-        
+        is_metabolic = request.GET.get('is_metabolic')
+        if is_metabolic =='false':
+            is_metabolic = False
+        else:
+            is_metabolic = True 
         
         df_1 = pd.read_excel(settings.MEDIA_ROOT+"/../static/report/loreal/"+file_name1,
                                 sheetname='PAS1', index_col='Pathway')
         df_2 = pd.read_excel(settings.MEDIA_ROOT+"/../static/report/loreal/"+file_name2,
                                  sheetname='PAS1', index_col='Pathway')
+        
+        if is_metabolic:
+                df_1 = df_1[df_1['Database']=='metabolism']
+                df_2 = df_2[df_2['Database']=='metabolism']
+        else:
+                df_1 = df_1[df_1['Database']!='metabolism']
+                df_2 = df_2[df_2['Database']!='metabolism']
         
         df1_tumour = df_1[[x for x in df_1.columns if 'Tumour' in x]]
         s1_tumour = df1_tumour.mean(axis=1)
@@ -175,6 +186,12 @@ class ReportPathwayScatterJson(TemplateView):
         #df_output = df_output[df_output['y']>0 ]
         
         df_output.index.name='name'
+        
+        try:
+            df_output.drop(['Target_drugs_pathway'], inplace=True)
+        except:
+            pass
+        
         df_output.reset_index(inplace=True)
         
         df_output = df_output.to_json(orient='records')        
@@ -193,6 +210,11 @@ class ReportPathwayTableJson(TemplateView):
         
         file_name1 = request.GET.get('file_name1')
         file_name2 = request.GET.get('file_name2')
+        is_metabolic = request.GET.get('is_metabolic')
+        if is_metabolic =='false':
+            is_metabolic = False
+        else:
+            is_metabolic = True
         
         if file_name1 == file_name2 == 'all':
             dfnhk = pd.read_excel(settings.MEDIA_ROOT+"/../static/report/loreal/output_loreal_preprocessed_NHK.txt.xlsx",
@@ -205,6 +227,17 @@ class ReportPathwayTableJson(TemplateView):
                                  sheetname='PAS1', index_col='Pathway')
             
             
+            if is_metabolic:
+                dfnhk = dfnhk[dfnhk['Database']=='metabolism']
+                df1 = df1[df1['Database']=='metabolism']
+                df2 = df2[df2['Database']=='metabolism']
+                df3 = df3[df3['Database']=='metabolism']
+            else:
+                dfnhk = dfnhk[dfnhk['Database']!='metabolism']
+                df1 = df1[df1['Database']!='metabolism']
+                df2 = df2[df2['Database']!='metabolism']
+                df3 = df3[df3['Database']!='metabolism']
+                
             dfnhk_tumour = dfnhk[[x for x in dfnhk.columns if 'Tumour' in x]]
             snkh_tumour = dfnhk_tumour.mean(axis=1).round(decimals=2)
             df1_tumour = df1[[x for x in df1.columns if 'Tumour' in x]]
@@ -219,7 +252,10 @@ class ReportPathwayTableJson(TemplateView):
             df_output['2'] = s1_tumour
             df_output['3'] = s2_tumour
             df_output['4'] = s3_tumour
-            
+            try:
+                df_output.drop(['Target_drugs_pathway'], inplace=True)
+            except:
+                pass
             df_output.reset_index(inplace=True)
             
             
@@ -229,6 +265,14 @@ class ReportPathwayTableJson(TemplateView):
             df_2 = pd.read_excel(settings.MEDIA_ROOT+"/../static/report/loreal/"+file_name2,
                                  sheetname='PAS1', index_col='Pathway')
         
+            
+            if is_metabolic:
+                df_1 = df_1[df_1['Database']=='metabolism']
+                df_2 = df_2[df_2['Database']=='metabolism']
+            else:
+                df_1 = df_1[df_1['Database']!='metabolism']
+                df_2 = df_2[df_2['Database']!='metabolism']
+            
             df1_tumour = df_1[[x for x in df_1.columns if 'Tumour' in x]]
             s1_tumour = df1_tumour.mean(axis=1).round(decimals=2)
         
@@ -239,7 +283,10 @@ class ReportPathwayTableJson(TemplateView):
         
             df_output['1'] = s1_tumour
             df_output['2'] = s2_tumour
-        
+            try:
+                df_output.drop(['Target_drugs_pathway'], inplace=True)
+            except:
+                pass
             df_output.reset_index(inplace=True)
         
         
