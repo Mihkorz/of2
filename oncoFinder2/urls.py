@@ -10,7 +10,7 @@ admin.autodiscover()
 from website.views import IndexPage, AboutPage, Logout
 
 from website.report_views import LorealReport, \
-                                 ReportGeneTableJson, ReportGeneScatterJson, \
+                                 ReportGeneTableJson, ReportGeneScatterJson, ReportGeneDetailJson, \
                                  ReportPathwayScatterJson, ReportPathwayTableJson, ReportAjaxPathDetail
                           
 from profiles.views import ProfileIndex, SettingsProfile, SettingsBilling, CreateProject, \
@@ -132,6 +132,7 @@ urlpatterns = patterns('',
     url(r'^report-portal/report/loreal/$', LorealReport.as_view(), name="loreal-report"),
     url(r'^report-portal/genescatterjson/$', ReportGeneScatterJson.as_view(), name="gene_scatter_json"),
     url(r'^report-portal/genetablejson/$', ReportGeneTableJson.as_view(), name="gene_table_json"),
+    url(r'^report-portal/genedetailjson/$', ReportGeneDetailJson.as_view(), name="gene_detail_json"),
     url(r'^report-portal/pathscatterjson/$', ReportPathwayScatterJson.as_view(), name="path_scatter_json"),
     url(r'^report-portal/pathwaytablejson/$', ReportPathwayTableJson.as_view(), name="pathway_table_json"),
     url(r'^report-portal/report/ajaxpathdetail/$', ReportAjaxPathDetail.as_view(), name="report_ajax_path_detail"),

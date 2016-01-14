@@ -1,6 +1,66 @@
+// CHART FOR GENES
+	
+	var options = {
+	        chart: {
+	        	renderTo: 'gene_plot',
+	            type: 'column'
+	        },
+	        title: {
+	            text: 'MTOR gene'
+	        },
+	        xAxis: {
+	        	type: 'category',
+	        	labels: {
+	        		rotation: -45,
+	        	}
+	            
+	        },
+	        yAxis: {
+			      title: {
+			        text: '# of counts'
+			      }
+			    },
+	        credits: {
+	            enabled: false
+	        },
+	        series: [{
+	            name: 'NHE',
+	            color: 'grey',
+	            
+	        }, {
+	            name: 'Case',
+	            color: 'red',
+	            
+	        }, ]
+	    }
 
-function showPathDetails(path_name, db, filename, sample){
-	$("#modalBody").html('<h4 id="loading">Loading ...</h4><div id="gene_plot" style="width: 600px; height: 400px; margin: 0 auto"></div>');
+	
+function drawGeneChart(gene_name, file_name){
+		$("#modalBody").html('<h4 id="loading">Loading ...</h4><div id="gene_plot" style="width: 500px; height: 400px; margin: 0 auto"></div>');
+		
+		$("#myModalLabel").text(gene_name);
+		
+		$('#pathmodal').modal('show');
+		
+		$.getJSON('/report-portal/genedetailjson/',
+				{'gene': gene_name,
+			     'file_name': file_name},
+				function(data){
+					
+					$("#loading").empty();
+					
+					options.title.text = gene_name+' gene'
+					
+					options.series[0].data = data['NHE'];
+					options.series[1].data = data['Case'];
+					
+			        var chart = new Highcharts.Chart(options);
+				})
+
+	}
+	
+function showPathDetails(path_name, filename){
+	$("#modalBody").html('<h4 id="loading">Loading ...</h4><div id="gene_plot" style="width: 800px; height: 400px; margin: 0 auto"></div>');
 	
 	$("#myModalLabel").text(path_name);
 	
@@ -9,16 +69,15 @@ function showPathDetails(path_name, db, filename, sample){
 	$.get("/report-portal/report/ajaxpathdetail/",
 			{
 		     pathway: path_name,
-		     db: db,
-		     
 		     filename: filename,
-		     sample: sample		
+		     		
 			},
 			function(data){
 				$("#modalBody").html(data);
 			}
 			);
 }
+
 
 
 function drawGeneTable(id, file_name){
@@ -54,9 +113,9 @@ function drawGeneTable(id, file_name){
 	
     $('#'+id+' tbody').on( 'click', 'tr td:first-child', function () {
     	
-    	var path_name = $(this).text();
-    	var db = $(this).next().text();
-    	showPathDetails(path_name, db, file_name, sample);    	
+    	var gene_name = $(this).text();
+    	
+    	drawGeneChart(gene_name, file_name);    	
     	
     });
 }
@@ -64,7 +123,7 @@ function drawGeneTable(id, file_name){
 
 function drawPathwayTable(id, file_name1, file_name2){
 	
-	// FIRST DOC
+	
 	$('#'+id).DataTable( {
     	"paging":   true,
     	"iDisplayLength": 20,
@@ -83,17 +142,54 @@ function drawPathwayTable(id, file_name1, file_name2){
         	    	 }
     } );
 	
+	if(file_name1!='all'){
+	
 	$('#'+id).on( 'draw.dt', function () {
-    	$("table.path tr td:first-child").wrapInner('<a href="#/"></a>')
+    	$("table.path tr td:nth-child(2)").wrapInner('<a href="#/"></a>');
+    	$("table.path tr td:nth-child(3)").wrapInner('<a href="#/"></a>')
     } );
 	
-    $('#'+id+' tbody').on( 'click', 'tr td:first-child', function () {
+    $('#'+id+' tbody').on( 'click', 'tr td:nth-child(2)', function () {    	
+    	var path_name = $(this).prev().text();    	
+    	showPathDetails(path_name, file_name1);    	
     	
-    	var path_name = $(this).text();
-    	var db = $(this).next().text();
-    	showPathDetails(path_name, db, file_name, sample);    	
+                                                                        });
+    $('#'+id+' tbody').on( 'click', 'tr td:nth-child(3)', function () {    	
+    	var path_name = $(this).prev().prev().text();    	
+    	showPathDetails(path_name, file_name2);    	
     	
-    });
+                                                                        });
+	}
+	else {
+		$('#'+id).on( 'draw.dt', function () {
+	    	$("table.path tr td:nth-child(2)").wrapInner('<a href="#/"></a>');
+	    	$("table.path tr td:nth-child(3)").wrapInner('<a href="#/"></a>');
+	    	$("table.path tr td:nth-child(4)").wrapInner('<a href="#/"></a>');
+	    	$("table.path tr td:nth-child(5)").wrapInner('<a href="#/"></a>');
+	    } );
+		
+		$('#'+id+' tbody').on( 'click', 'tr td:nth-child(2)', function () {    	
+	    	var path_name = $(this).prev().text();    	
+	    	showPathDetails(path_name, 'output_loreal_preprocessed_NHK.txt.xlsx');    	
+	    	
+	                                                                        });
+		$('#'+id+' tbody').on( 'click', 'tr td:nth-child(3)', function () {    	
+	    	var path_name = $(this).prev().prev().text();    	
+	    	showPathDetails(path_name,  'output_loreal_preprocessed_RhE (Type 1).txt.xlsx');    	
+	    	
+	                                                                        });
+		$('#'+id+' tbody').on( 'click', 'tr td:nth-child(4)', function () {    	
+	    	var path_name = $(this).prev().prev().prev().text();    	
+	    	showPathDetails(path_name,  'output_loreal_preprocessed_RhE (Type 2).txt.xlsx');    	
+	    	
+	                                                                        });
+		$('#'+id+' tbody').on( 'click', 'tr td:nth-child(5)', function () {    	
+	    	var path_name = $(this).prev().prev().prev().prev().text();    	
+	    	showPathDetails(path_name,  'output_loreal_preprocessed_RhE (Type 3).txt.xlsx');    	
+	    	
+	                                                                        });
+		
+	}
 }
 
 
@@ -102,33 +198,37 @@ function drawPathwayTable(id, file_name1, file_name2){
 $(document).ready(function() {
 	
 	
-	drawGeneTable('tbl-gene-nhk', 'output_loreal_preprocessed_NHK.txt.xlsx')
-	drawGeneTable('tbl-gene-type1', 'output_loreal_preprocessed_RhE (Type 1).txt.xlsx')
-	drawGeneTable('tbl-gene-type2', 'output_loreal_preprocessed_RhE (Type 2).txt.xlsx')
-	drawGeneTable('tbl-gene-type3', 'output_loreal_preprocessed_RhE (Type 3).txt.xlsx')
+	drawGeneTable('tbl-gene-nhk', 'output_loreal_preprocessed_NHK.txt.xlsx');
+	/*
+	drawGeneTable('tbl-gene-type1', 'output_loreal_preprocessed_RhE (Type 1).txt.xlsx');
+	drawGeneTable('tbl-gene-type2', 'output_loreal_preprocessed_RhE (Type 2).txt.xlsx');
+	drawGeneTable('tbl-gene-type3', 'output_loreal_preprocessed_RhE (Type 3).txt.xlsx');
 	
 	
 	drawPathwayTable('tbl-nhk-type1', 
 			         'output_loreal_preprocessed_NHK.txt.xlsx', 
-			         'output_loreal_preprocessed_RhE (Type 1).txt.xlsx')
+			         'output_loreal_preprocessed_RhE (Type 1).txt.xlsx');
+			        
 	drawPathwayTable('tbl-nhk-type2', 
 			         'output_loreal_preprocessed_NHK.txt.xlsx', 
-			         'output_loreal_preprocessed_RhE (Type 2).txt.xlsx')
+			         'output_loreal_preprocessed_RhE (Type 2).txt.xlsx');
 	drawPathwayTable('tbl-nhk-type3', 
 			         'output_loreal_preprocessed_NHK.txt.xlsx', 
-			         'output_loreal_preprocessed_RhE (Type 3).txt.xlsx')
+			         'output_loreal_preprocessed_RhE (Type 3).txt.xlsx');
 	drawPathwayTable('tbl-type1-type2', 
 			         'output_loreal_preprocessed_RhE (Type 1).txt.xlsx', 
-			         'output_loreal_preprocessed_RhE (Type 2).txt.xlsx')
+			         'output_loreal_preprocessed_RhE (Type 2).txt.xlsx');
     drawPathwayTable('tbl-type1-type3', 
 			         'output_loreal_preprocessed_RhE (Type 1).txt.xlsx', 
-			         'output_loreal_preprocessed_RhE (Type 3).txt.xlsx')
+			         'output_loreal_preprocessed_RhE (Type 3).txt.xlsx');
 	drawPathwayTable('tbl-type2-type3', 
 			         'output_loreal_preprocessed_RhE (Type 2).txt.xlsx', 
-			         'output_loreal_preprocessed_RhE (Type 3).txt.xlsx')
+			         'output_loreal_preprocessed_RhE (Type 3).txt.xlsx');
+    
     drawPathwayTable('tbl-all', 
 			         'all', 
-			         'all')
+			         'all');
+			     */
 	
     
 	

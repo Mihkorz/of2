@@ -43,10 +43,10 @@ class ReportGeneScatterJson(TemplateView):
                                 index_col='SYMBOL')
         
         df_tumour = df_gene[[x for x in df_gene.columns if 'Tumour' in x]]
-        s_tumour = df_tumour.mean(axis=1)
+        s_tumour = df_tumour.mean(axis=1).round(decimals=2)
         
         df_norm = df_gene[[x for x in df_gene.columns if 'Norm' in x]]
-        s_norm = df_norm.mean(axis=1)        
+        s_norm = df_norm.mean(axis=1).round(decimals=2)        
         
         df_output = pd.DataFrame()
         
@@ -80,7 +80,7 @@ class ReportGeneTableJson(TemplateView):
         
         df_tumour = df_gene[[x for x in df_gene.columns if 'Tumour' in x]]
         s_tumour = df_tumour.mean(axis=1)
-        s_tumour = np.log2(s_tumour)
+        s_tumour = np.log2(s_tumour).round(decimals=2)
         df_output = pd.DataFrame()
         df_output['log2FoldChange'] = s_tumour
         df_output['pval'] = df_gene['p_value']
@@ -97,6 +97,50 @@ class ReportGeneTableJson(TemplateView):
         
         response_data = {'data': json.loads(output_json)}
         return HttpResponse(json.dumps(response_data), content_type="application/json")
+
+class ReportGeneDetailJson(TemplateView):
+    template_name="website/report.html"
+    def dispatch(self, request, *args, **kwargs):
+        
+        return super(ReportGeneDetailJson, self).dispatch(request, *args, **kwargs)
+    
+    def get(self, request, *args, **kwargs):
+        
+        gene_name = request.GET.get('gene')
+        file_name = request.GET.get('file_name')
+        
+        df_gene = pd.read_excel(settings.MEDIA_ROOT+"/../static/report/loreal/cnr_"+file_name,
+                                index_col='SYMBOL')
+        
+        df_tumour = df_gene[[x for x in df_gene.columns if 'Tumour' in x]]
+        s_tumour = df_tumour.mean(axis=1)
+        
+        df_norm = df_gene[[x for x in df_gene.columns if 'Norm' in x]]
+        s_norm = df_norm.mean(axis=1)       
+        
+        df_output = pd.DataFrame()
+        
+        df_output['x'] = s_tumour
+        df_output['y'] = s_norm
+        df_output = df_output.multiply(df_gene['gMean_norm']  , axis=0)
+        
+        df_output = df_output[df_output['x']>0 ]
+        
+        gene_row = df_output.loc[gene_name].round(decimals=0)
+        
+        response_data = {}
+        response_data['NHE'] = [
+                   ['NHE', gene_row['y']],
+                   ['Case', 0]
+                   ]
+        response_data['Case'] = [
+                   ['NHE', 0],
+                   ['Case', gene_row['x']]
+                   ]
+        
+        #raise Exception('gene detail')
+        return HttpResponse(json.dumps(response_data), content_type="application/json")
+
 
 
 class ReportPathwayScatterJson(TemplateView):
@@ -162,13 +206,13 @@ class ReportPathwayTableJson(TemplateView):
             
             
             dfnhk_tumour = dfnhk[[x for x in dfnhk.columns if 'Tumour' in x]]
-            snkh_tumour = dfnhk_tumour.mean(axis=1)
+            snkh_tumour = dfnhk_tumour.mean(axis=1).round(decimals=2)
             df1_tumour = df1[[x for x in df1.columns if 'Tumour' in x]]
-            s1_tumour = df1_tumour.mean(axis=1)
+            s1_tumour = df1_tumour.mean(axis=1).round(decimals=2)
             df2_tumour = df2[[x for x in df2.columns if 'Tumour' in x]]
-            s2_tumour = df2_tumour.mean(axis=1)
+            s2_tumour = df2_tumour.mean(axis=1).round(decimals=2)
             df3_tumour = df3[[x for x in df3.columns if 'Tumour' in x]]
-            s3_tumour = df3_tumour.mean(axis=1)
+            s3_tumour = df3_tumour.mean(axis=1).round(decimals=2)
             
             df_output = pd.DataFrame()
             df_output['1'] = snkh_tumour
@@ -186,10 +230,10 @@ class ReportPathwayTableJson(TemplateView):
                                  sheetname='PAS1', index_col='Pathway')
         
             df1_tumour = df_1[[x for x in df_1.columns if 'Tumour' in x]]
-            s1_tumour = df1_tumour.mean(axis=1)
+            s1_tumour = df1_tumour.mean(axis=1).round(decimals=2)
         
             df2_tumour = df_2[[x for x in df_2.columns if 'Tumour' in x]]
-            s2_tumour = df2_tumour.mean(axis=1)               
+            s2_tumour = df2_tumour.mean(axis=1).round(decimals=2)               
         
             df_output = pd.DataFrame()
         
@@ -255,7 +299,7 @@ class ReportAjaxPathDetail(TemplateView):
     def get_context_data(self, *args, **kwargs):
         context = super(ReportAjaxPathDetail, self).get_context_data(**kwargs)
         
-        pathway = Pathway.objects.get(organism='human', name=self.request.GET['pathway'], database=self.request.GET['db'])
+        pathway = Pathway.objects.filter(organism='human', name=self.request.GET['pathway']).exclude(database='primary_old')[0]
         
         gene_data = []
         for gene in pathway.gene_set.all():
@@ -266,12 +310,15 @@ class ReportAjaxPathDetail(TemplateView):
         gene_df = pd.DataFrame(gene_data).set_index('SYMBOL')    
         
         filename = 'cnr_'+self.request.GET['filename']
-        sample = 'Tumour_'+self.request.GET['sample']+'.CEL'
         
-        df_file_cnr = pd.read_excel(settings.MEDIA_ROOT+"/../static/report/"+filename, index_col='SYMBOL')
-        df_cnr_raw = df_file_cnr[[sample]]
-        df_cnr_differential = df_cnr_raw[df_cnr_raw[sample]!=1]
-        df_cnr_differential.columns = ['CNR']
+        
+        df_file_cnr = pd.read_excel(settings.MEDIA_ROOT+"/../static/report/loreal/"+filename, index_col='SYMBOL')
+        
+        df_cnr_raw = df_file_cnr[[x for x in df_file_cnr.columns if 'Tumour' in x]]
+        df_cnr_raw = df_cnr_raw.mean(axis=1).round(decimals=2)
+        
+        df_cnr_differential = df_cnr_raw[df_cnr_raw!=1]
+        df_cnr_differential.name = 'CNR'
         
         joined_df = gene_df.join(df_cnr_differential, how='inner')
         joined_df.reset_index(inplace=True)

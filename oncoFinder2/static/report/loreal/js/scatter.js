@@ -158,7 +158,7 @@ function drawPathScatter(name, renderTo, xname, yname, file_name1, file_name2){
 	}
 
 $(document).ready(function(){
-
+/*
 	drawGeneScatter(name="L'Oreal_preprocessed_NHK. Case VS NHE",
 			        renderTo='genes-nhk',
 			        xname='log2(Case counts)', yname='log2(NHE counts)',
@@ -214,7 +214,7 @@ $(document).ready(function(){
 	        file_name2='output_loreal_preprocessed_RhE (Type 3).txt.xlsx')
   
 
-
+*/
 });
 
 

@@ -9,7 +9,8 @@
     <script src="//d3js.org/d3.v3.min.js" type="text/javascript"></script>
     <script src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js" type="text/javascript"></script>
     <script src="http://code.highcharts.com/highcharts.js" type="text/javascript"></script>
-    <script src="http://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/highcharts-3d.js"  type="text/javascript"></script>
+    <script src="http://code.highcharts.com/modules/exporting.js"  type="text/javascript"></script>
     <link href="/static/css/report_style.css" rel="stylesheet" type="text/css">
     <link href="https://cdn.datatables.net/1.10.10/css/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="https://cdn.datatables.net/buttons/1.0.3/css/buttons.dataTables.min.css" rel="stylesheet">
@@ -55,7 +56,8 @@
           
           <!-- GENE Nav tabs -->
          <ul class="nav nav-tabs" role="tablist">
-         <li role="presentation" class="active"><a href="#nhk_tab" aria-controls="home" role="tab" data-toggle="tab">NHK</a></li>
+         <li role="presentation" class="active"><a href="#allgenes_tab" aria-controls="home1" role="tab" data-toggle="tab">ALL</a></li>
+         <li role="presentation" ><a href="#nhk_tab" aria-controls="home" role="tab" data-toggle="tab">NHK</a></li>
          <li role="presentation"><a href="#type1_tab" aria-controls="profile" role="tab" data-toggle="tab">TYPE1</a></li>
          <li role="presentation"><a href="#type2_tab" aria-controls="messages" role="tab" data-toggle="tab">TYPE2</a></li>
          <li role="presentation"><a href="#type3_tab" aria-controls="settings" role="tab" data-toggle="tab">TYPE3</a></li>
@@ -63,7 +65,11 @@
          
          <!-- GENE Tab panes -->
   <div class="tab-content">
-    <div role="tabpanel" class="tab-pane fade in active" id="nhk_tab">
+   <div role="tabpanel" class="tab-pane fade in active" id="allgenes_tab">
+   <div id="genes-3d" style="min-width: 800px; height: 400px; max-width: 800px; margin: 0 auto"></div>
+   </div>
+  
+    <div role="tabpanel" class="tab-pane fade " id="nhk_tab">
     
       <br/> 
           
@@ -149,19 +155,40 @@
 
  <!-- PAthway Nav tabs -->
          <ul class="nav nav-tabs" role="tablist">
-         <li role="presentation" class="active"><a href="#nhk_type1_tab" aria-controls="home" role="tab" data-toggle="tab">NHK-TYPE1</a></li>
+         <li role="presentation" class="active"><a href="#all_tab" aria-controls="settings" role="tab" data-toggle="tab">ALL</a></li>
+         <li role="presentation" ><a href="#nhk_type1_tab" aria-controls="home" role="tab" data-toggle="tab">NHK-TYPE1</a></li>
          <li role="presentation"><a href="#nhk_type2_tab" aria-controls="profile" role="tab" data-toggle="tab">NHK-TYPE2</a></li>
          <li role="presentation"><a href="#nhk_type3_tab" aria-controls="messages" role="tab" data-toggle="tab">NHK-TYPE3</a></li>
          <li role="presentation"><a href="#type1_type2_tab" aria-controls="settings" role="tab" data-toggle="tab">TYPE1-TYPE2</a></li>
          <li role="presentation"><a href="#type1_type3_tab" aria-controls="settings" role="tab" data-toggle="tab">TYPE1-TYPE3</a></li>
          <li role="presentation"><a href="#type2_type3_tab" aria-controls="settings" role="tab" data-toggle="tab">TYPE2-TYPE3</a></li>
-         <li role="presentation"><a href="#all_tab" aria-controls="settings" role="tab" data-toggle="tab">All</a></li>
+         
          </ul>
          
          <!-- PATHWAY Tab panes -->
   <div class="tab-content">
+  <!-- PATH ALL -->
+    <div role="tabpanel" class="tab-pane fade in active" id="all_tab">     <br/> 
+          
+         
+  
+  <h4>Table 11. All</h4>
+      <table id="tbl-all" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>Pathway Name</th>
+           <th>NHK</th>
+           <th>Type1</th>
+           <th>Type2</th>
+           <th>Type3</th>
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+      </div>
+  
     <!-- PATH NHK TYPE1 -->
-    <div role="tabpanel" class="tab-pane fade in active" id="nhk_type1_tab">
+    <div role="tabpanel" class="tab-pane fade " id="nhk_type1_tab">
     
       <br/> 
           
@@ -294,29 +321,9 @@
       <br/><br/>
       </div>
       
-      <!-- PATH TYPE2 TYPE3 -->
-    <div role="tabpanel" class="tab-pane fade " id="all_tab">
-    
-      <br/> 
-          
-         
-  
-  <h4>Table 11. All</h4>
-      <table id="tbl-all" class="path table table-striped table-bordered" cellspacing="0" width="100%">
-        <thead>
-          <tr>
-           <th>Pathway Name</th>
-           <th>NHK</th>
-           <th>Type1</th>
-           <th>Type2</th>
-           <th>Type3</th>
-          </tr>
-        </thead>  
-      </table>
-      <br/><br/>
-      </div>
+      
 
-</div>
+</div></div>
 <div style='min-height:500px'></div>
             
           </div>
@@ -348,19 +355,20 @@
     </div>
     
     
-  <script src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js" type="text/javascript"></script>
-  <script src="https://cdn.datatables.net/1.10.9/js/dataTables.bootstrap.min.js" type="text/javascript"></script>
-  <script src="https://cdn.datatables.net/buttons/1.0.3/js/dataTables.buttons.min.js" type="text/javascript"></script>
-  <script src="https://cdn.datatables.net/buttons/1.0.3/js/buttons.bootstrap.min.js" type="text/javascript"></script>
-  <script src="//cdn.datatables.net/buttons/1.0.3/js/buttons.flash.min.js" type="text/javascript"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js" type="text/javascript"></script>
-  <script src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js" type="text/javascript"></script>
-  <script src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js" type="text/javascript"></script>
-  <script src="//cdn.datatables.net/buttons/1.0.3/js/buttons.html5.min.js" type="text/javascript"></script>
-  <script src="//cdn.datatables.net/buttons/1.0.3/js/buttons.print.min.js" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/1.10.9/js/dataTables.bootstrap.min.js" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/buttons/1.0.3/js/dataTables.buttons.min.js" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/buttons/1.0.3/js/buttons.bootstrap.min.js" type="text/javascript"></script>
+    <script src="//cdn.datatables.net/buttons/1.0.3/js/buttons.flash.min.js" type="text/javascript"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js" type="text/javascript"></script>
+    <script src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js" type="text/javascript"></script>
+    <script src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js" type="text/javascript"></script>
+    <script src="//cdn.datatables.net/buttons/1.0.3/js/buttons.html5.min.js" type="text/javascript"></script>
+    <script src="//cdn.datatables.net/buttons/1.0.3/js/buttons.print.min.js" type="text/javascript"></script>
     
     <script src="/static/report/loreal/js/tables.js" type="text/javascript"></script>
     <script src="/static/report/loreal/js/scatter.js" type="text/javascript"></script>
+    <script src="/static/report/loreal/js/3d.js" type="text/javascript"></script>
     
     
     
@@ -374,8 +382,7 @@
         <h4 class="modal-title" id="myModalLabel">Modal title</h4>
       </div>
       <div class="modal-body" id='modalBody'>
-        <h4 id="loading">Loading ...</h4>
-        <div id="gene_plot" style="width: 500px; height: 400px; margin: 0 auto"></div>
+        
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
