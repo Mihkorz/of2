@@ -108,7 +108,7 @@ function drawGeneTable(id, file_name){
     } );
 	
 	$('#'+id).on( 'draw.dt', function () {
-    	$("table.path tr td:first-child").wrapInner('<a href="#/"></a>')
+    	$("table#"+id+".path tr td:first-child").wrapInner('<a href="#/"></a>')
     } );
 	
     $('#'+id+' tbody').on( 'click', 'tr td:first-child', function () {
@@ -145,8 +145,8 @@ function drawPathwayTable(id, file_name1, file_name2){
 	if(file_name1!='all'){
 	
 	$('#'+id).on( 'draw.dt', function () {
-    	$("table.path tr td:nth-child(2)").wrapInner('<a href="#/"></a>');
-    	$("table.path tr td:nth-child(3)").wrapInner('<a href="#/"></a>')
+    	$("table#"+id+".path tr td:nth-child(2)").wrapInner('<a href="#/"></a>');
+    	$("table#"+id+".path tr td:nth-child(3)").wrapInner('<a href="#/"></a>')
     } );
 	
     $('#'+id+' tbody').on( 'click', 'tr td:nth-child(2)', function () {    	
@@ -162,10 +162,10 @@ function drawPathwayTable(id, file_name1, file_name2){
 	}
 	else {
 		$('#'+id).on( 'draw.dt', function () {
-	    	$("table.path tr td:nth-child(2)").wrapInner('<a href="#/"></a>');
-	    	$("table.path tr td:nth-child(3)").wrapInner('<a href="#/"></a>');
-	    	$("table.path tr td:nth-child(4)").wrapInner('<a href="#/"></a>');
-	    	$("table.path tr td:nth-child(5)").wrapInner('<a href="#/"></a>');
+	    	$("table#"+id+".path tr td:nth-child(2)").wrapInner('<a href="#/"></a>');
+	    	$("table#"+id+".path tr td:nth-child(3)").wrapInner('<a href="#/"></a>');
+	    	$("table#"+id+".path tr td:nth-child(4)").wrapInner('<a href="#/"></a>');
+	    	$("table#"+id+".path tr td:nth-child(5)").wrapInner('<a href="#/"></a>');
 	    } );
 		
 		$('#'+id+' tbody').on( 'click', 'tr td:nth-child(2)', function () {    	
