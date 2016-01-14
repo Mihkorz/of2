@@ -7246,3 +7246,485 @@ Traceback (most recent call last):
   File "/usr/local/lib/python2.7/dist-packages/pandas/core/index.py", line 2803, in drop
     raise ValueError('labels %s not contained in axis' % labels[mask])
 ValueError: labels ['Target_drugs_pathway'] not contained in axis
+2016-01-14 20:52:53,754 ERROR base 4417 -1357833408 Internal Server Error: /report-portal/report/ajaxpathvenn/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 477, in dispatch
+    return super(ReportAjaxPathwayVenn, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 495, in get_context_data
+    raise Exception('venn')
+Exception: venn
+2016-01-14 20:56:17,645 ERROR base 6024 -1359381696 Internal Server Error: /report-portal/report/ajaxpathvenn/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 477, in dispatch
+    return super(ReportAjaxPathwayVenn, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 504, in get_context_data
+    raise Exception('venn')
+Exception: venn
+2016-01-14 20:57:11,881 ERROR base 6470 -1357833408 Internal Server Error: /report-portal/report/ajaxpathvenn/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 477, in dispatch
+    return super(ReportAjaxPathwayVenn, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 504, in get_context_data
+    aaa1 = s1_tumour.size()
+TypeError: 'int' object is not callable
+2016-01-14 20:57:55,010 ERROR base 6777 -1358714048 Internal Server Error: /report-portal/report/ajaxpathvenn/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 477, in dispatch
+    return super(ReportAjaxPathwayVenn, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 506, in get_context_data
+    raise Exception('venn')
+Exception: venn
+2016-01-14 20:58:39,714 ERROR base 7070 -1357833408 Internal Server Error: /report-portal/report/ajaxpathvenn/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 477, in dispatch
+    return super(ReportAjaxPathwayVenn, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 507, in get_context_data
+    raise Exception('venn')
+Exception: venn
+2016-01-14 20:59:07,799 ERROR base 7310 -1357833408 Internal Server Error: /report-portal/report/ajaxpathvenn/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 477, in dispatch
+    return super(ReportAjaxPathwayVenn, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 504, in get_context_data
+    s2_tumour = s1_tumour[s2_tumour!=0]
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/series.py", line 595, in __getitem__
+    key = check_bool_indexer(self.index, key)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/indexing.py", line 1695, in check_bool_indexer
+    result = result.reindex(ax)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/series.py", line 2268, in reindex
+    return super(Series, self).reindex(index=index, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/generic.py", line 1962, in reindex
+    method, fill_value, copy).__finalize__(self)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/generic.py", line 1981, in _reindex_axes
+    fill_value=fill_value, copy=copy, allow_dups=False)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/generic.py", line 2073, in _reindex_with_indexers
+    copy=copy)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/internals.py", line 3503, in reindex_indexer
+    self.axes[axis]._can_reindex(indexer)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/index.py", line 2086, in _can_reindex
+    raise ValueError("cannot reindex from a duplicate axis")
+ValueError: cannot reindex from a duplicate axis
+2016-01-14 20:59:34,451 ERROR base 7468 -1358079168 Internal Server Error: /report-portal/report/ajaxpathvenn/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 477, in dispatch
+    return super(ReportAjaxPathwayVenn, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 508, in get_context_data
+    raise Exception('venn')
+Exception: venn
+2016-01-14 21:02:11,723 ERROR base 8501 -1357665472 Internal Server Error: /report-portal/report/ajaxpathvenn/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 477, in dispatch
+    return super(ReportAjaxPathwayVenn, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 506, in get_context_data
+    hhhh = s1_tumour.align(s2_tumour,  how='inner')
+TypeError: align() got an unexpected keyword argument 'how'
+2016-01-14 21:02:32,925 ERROR base 8699 -1358079168 Internal Server Error: /report-portal/report/ajaxpathvenn/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 477, in dispatch
+    return super(ReportAjaxPathwayVenn, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 509, in get_context_data
+    aaa2 = hhhh.size
+AttributeError: 'tuple' object has no attribute 'size'
+2016-01-14 21:04:47,580 ERROR base 9603 -1357665472 Internal Server Error: /report-portal/report/ajaxpathvenn/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 477, in dispatch
+    return super(ReportAjaxPathwayVenn, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 506, in get_context_data
+    hhhh = pd.DataFrame(s1_tumour).join(pd.DataFrame(s2_tumour),  how='inner')
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 4278, in join
+    rsuffix=rsuffix, sort=sort)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 4292, in _join_compat
+    suffixes=(lsuffix, rsuffix), sort=sort)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/tools/merge.py", line 35, in merge
+    return op.get_result()
+  File "/usr/local/lib/python2.7/dist-packages/pandas/tools/merge.py", line 202, in get_result
+    rdata.items, rsuf)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/internals.py", line 4364, in items_overlap_with_suffix
+    to_rename)
+ValueError: columns overlap but no suffix specified: Int64Index([0], dtype='int64')
+2016-01-14 21:05:24,361 ERROR base 9827 -1357665472 Internal Server Error: /report-portal/report/ajaxpathvenn/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 477, in dispatch
+    return super(ReportAjaxPathwayVenn, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 509, in get_context_data
+    aaa2 = hhhh.index.count
+AttributeError: 'Index' object has no attribute 'count'
+2016-01-14 21:06:00,718 ERROR base 10096 -1358468288 Internal Server Error: /report-portal/report/ajaxpathvenn/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 477, in dispatch
+    return super(ReportAjaxPathwayVenn, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 510, in get_context_data
+    raise Exception('venn')
+Exception: venn
+2016-01-14 21:06:59,986 ERROR base 10497 -1357665472 Internal Server Error: /report-portal/report/ajaxpathvenn/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 477, in dispatch
+    return super(ReportAjaxPathwayVenn, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 510, in get_context_data
+    raise Exception('venn')
+Exception: venn
+2016-01-14 21:07:52,351 ERROR base 10847 -1358333120 Internal Server Error: /report-portal/report/ajaxpathvenn/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 477, in dispatch
+    return super(ReportAjaxPathwayVenn, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 510, in get_context_data
+    raise Exception('venn')
+Exception: venn
+2016-01-14 21:08:36,007 ERROR base 11088 -1358079168 Internal Server Error: /report-portal/report/ajaxpathvenn/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 477, in dispatch
+    return super(ReportAjaxPathwayVenn, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 510, in get_context_data
+    raise Exception('venn')
+Exception: venn
+2016-01-14 21:09:42,919 ERROR base 11564 -1358955712 Internal Server Error: /report-portal/report/ajaxpathvenn/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 477, in dispatch
+    return super(ReportAjaxPathwayVenn, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 510, in get_context_data
+    raise Exception('venn')
+Exception: venn
+2016-01-14 21:14:32,804 ERROR base 13375 -1357833408 Internal Server Error: /report-portal/report/ajaxpathvenn/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 477, in dispatch
+    return super(ReportAjaxPathwayVenn, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 510, in get_context_data
+    raise Exception('venn')
+Exception: venn
+2016-01-14 21:17:43,488 ERROR base 14574 -1357665472 Internal Server Error: /report-portal/report/ajaxpathvenn/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 477, in dispatch
+    return super(ReportAjaxPathwayVenn, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 511, in get_context_data
+    mmm = aaa1.join(aaa2, how='inner')
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 4278, in join
+    rsuffix=rsuffix, sort=sort)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 4292, in _join_compat
+    suffixes=(lsuffix, rsuffix), sort=sort)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/tools/merge.py", line 35, in merge
+    return op.get_result()
+  File "/usr/local/lib/python2.7/dist-packages/pandas/tools/merge.py", line 202, in get_result
+    rdata.items, rsuf)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/internals.py", line 4364, in items_overlap_with_suffix
+    to_rename)
+ValueError: columns overlap but no suffix specified: Int64Index([0], dtype='int64')
+2016-01-14 21:18:04,493 ERROR base 14713 -1357833408 Internal Server Error: /report-portal/report/ajaxpathvenn/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 477, in dispatch
+    return super(ReportAjaxPathwayVenn, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 512, in get_context_data
+    raise Exception('venn')
+Exception: venn
+2016-01-14 21:19:27,438 ERROR base 15242 -1358079168 Internal Server Error: /report-portal/report/ajaxpathvenn/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 477, in dispatch
+    return super(ReportAjaxPathwayVenn, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 511, in get_context_data
+    mmm = aaa1.join(aaa2, how='inner', lsuffix='_l')
+AttributeError: 'NoneType' object has no attribute 'join'
+2016-01-14 21:20:04,762 ERROR base 15524 -1358881984 Internal Server Error: /report-portal/report/ajaxpathvenn/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 477, in dispatch
+    return super(ReportAjaxPathwayVenn, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 513, in get_context_data
+    raise Exception('venn')
+Exception: venn
+2016-01-14 21:21:27,326 ERROR base 16028 -1357833408 Internal Server Error: /report-portal/report/ajaxpathvenn/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 477, in dispatch
+    return super(ReportAjaxPathwayVenn, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 514, in get_context_data
+    raise Exception('venn')
+Exception: venn
+2016-01-14 21:21:28,240 ERROR base 16028 -1369441472 Internal Server Error: /report-portal/report/ajaxpathvenn/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 477, in dispatch
+    return super(ReportAjaxPathwayVenn, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 514, in get_context_data
+    raise Exception('venn')
+Exception: venn
+2016-01-14 21:26:37,053 ERROR base 17987 -1358165184 Internal Server Error: /report-portal/report/ajaxpathvenn/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 477, in dispatch
+    return super(ReportAjaxPathwayVenn, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 513, in get_context_data
+    raise Exception('venn')
+Exception: venn
+2016-01-14 21:29:26,754 ERROR base 19039 -1358079168 Internal Server Error: /report-portal/report/ajaxpathvenn/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 477, in dispatch
+    return super(ReportAjaxPathwayVenn, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 513, in get_context_data
+    raise Exception('venn')
+Exception: venn
+2016-01-14 21:31:13,320 ERROR base 19785 -1360004288 Internal Server Error: /report-portal/report/ajaxpathvenn/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 477, in dispatch
+    return super(ReportAjaxPathwayVenn, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 513, in get_context_data
+    raise Exception('venn')
+Exception: venn
+2016-01-14 21:33:37,183 ERROR base 20753 -1358079168 Internal Server Error: /report-portal/report/ajaxpathvenn/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 477, in dispatch
+    return super(ReportAjaxPathwayVenn, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 510, in get_context_data
+    raise Exception('venn')
+Exception: venn
+2016-01-14 21:48:49,644 ERROR base 22671 -1407190208 Internal Server Error: /report-portal/report/ajaxpathvenn/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 477, in dispatch
+    return super(ReportAjaxPathwayVenn, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 154, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 495, in get_context_data
+    df_1 = pd.read_excel(settings.MEDIA_ROOT+"/../static/report/loreal/"+file_name1,
+TypeError: cannot concatenate 'str' and 'NoneType' objects
+2016-01-14 22:05:58,705 ERROR base 32073 -1414546624 Internal Server Error: /report-portal/report/ajaxpathvenn/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 477, in dispatch
+    return super(ReportAjaxPathwayVenn, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 509, in get
+    venn_cyrcles.append('{sets: ["'+name1+'"], size: '+str(len(index1))+'}')
+TypeError: cannot concatenate 'str' and 'NoneType' objects
+2016-01-14 22:17:18,562 ERROR base 32073 -1446892736 Internal Server Error: /report-portal/report/ajaxpathvenn/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 112, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 477, in dispatch
+    return super(ReportAjaxPathwayVenn, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 87, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/mikhail/EclipseWorkspace/oncoFinder2/oncoFinder2/website/report_views.py", line 509, in get
+    venn_cyrcles.append('{sets: ["'+name1+'"], size: '+str(len(index1))+'}')
+TypeError: cannot concatenate 'str' and 'NoneType' objects

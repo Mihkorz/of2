@@ -159,6 +159,7 @@ function drawPathScatter(name, renderTo, xname, yname, file_name1, file_name2, i
 	}
 
 $(document).ready(function(){
+	
 
 	drawGeneScatter(name="L'Oreal_preprocessed_NHK. Case VS NHE",
 			        renderTo='genes-nhk',

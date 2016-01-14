@@ -470,3 +470,74 @@ class ReportAjaxPathDetail(TemplateView):
         
         
         return context
+    
+class ReportAjaxPathwayVenn(TemplateView):
+    template_name="website/report_ajax_venn.html"
+    def dispatch(self, request, *args, **kwargs):
+        return super(ReportAjaxPathwayVenn, self).dispatch(request, *args, **kwargs)
+    
+    def get(self, request, *args, **kwargs):
+                
+        file_name1 = self.request.GET.get('file_name1')
+        file_name2 = self.request.GET.get('file_name2')
+        name1 = self.request.GET.get('name1')
+        name2 = self.request.GET.get('name2')
+        is_metabolic = self.request.GET.get('is_metabolic')
+        if is_metabolic =='false':
+            is_metabolic = False
+        else:
+            is_metabolic = True        
+        
+        venn_cyrcles = []
+        venn_intersections = []
+            
+        df_1 = pd.read_excel(settings.MEDIA_ROOT+"/../static/report/loreal/"+file_name1,
+                                sheetname='PAS1', index_col='Pathway')
+        df_2 = pd.read_excel(settings.MEDIA_ROOT+"/../static/report/loreal/"+file_name2,
+                                 sheetname='PAS1', index_col='Pathway')
+        
+        if is_metabolic:
+            df_1 = df_1[df_1['Database']=='metabolism']
+            df_2 = df_2[df_2['Database']=='metabolism']
+        else:
+            df_1 = df_1[df_1['Database']!='metabolism']
+            df_2 = df_2[df_2['Database']!='metabolism']
+        
+        df1_tumour = df_1[[x for x in df_1.columns if 'Tumour' in x]]
+        s1_tumour = df1_tumour.mean(axis=1)
+        s1_tumour = s1_tumour[s1_tumour!=0]
+        
+        df2_tumour = df_2[[x for x in df_2.columns if 'Tumour' in x]]
+        s2_tumour = df2_tumour.mean(axis=1)
+        s2_tumour = s2_tumour[s2_tumour!=0]
+        
+        index1 = s1_tumour.index        
+        index2 = s2_tumour.index
+        set1 = {}
+        set2 = {}
+        set1['sets'] = [name1]
+        set1['size'] = len(index1)
+        set2['sets'] = [name2]
+        set2['size'] = len(index2)         
+        venn_cyrcles.append(set1)
+        venn_cyrcles.append(set2)
+        
+        intersection = len(index1.intersection(index2))
+        set_inter = {}
+        set_inter['sets'] = [name1, name2]
+        set_inter['size'] = intersection
+        set_inter['id'] = '2_'
+        venn_cyrcles.append(set_inter)
+    
+        
+        
+        response_data= venn_cyrcles
+        
+        
+        
+        return HttpResponse(json.dumps(response_data), content_type="application/json")
+    
+    
+    
+    
+    

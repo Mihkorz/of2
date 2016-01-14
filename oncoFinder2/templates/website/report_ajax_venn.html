@@ -1,0 +1,23 @@
+<div is='vennCanvas'></div>
+<script>
+
+$(function() {
+	
+    /////////// Venn Diagrams
+    // Generate Cyrcles and Intersections
+    var sets = [ {%for cyrcle in venn_cyrcles%}
+                 {{cyrcle|safe}},
+                 {%endfor%}
+                 
+                 {%for intersection in venn_intersections%}
+                 {{intersection|safe}},
+                 {%endfor%}
+                 
+                 ];
+    
+    
+    var div = d3.select("#vennCanvas");
+    div.datum(sets).call(venn.VennDiagram().width(500).height(500));
+	
+});
+</script>
