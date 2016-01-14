@@ -199,7 +199,7 @@ $(document).ready(function() {
 	
 	
 	drawGeneTable('tbl-gene-nhk', 'output_loreal_preprocessed_NHK.txt.xlsx');
-	/*
+	
 	drawGeneTable('tbl-gene-type1', 'output_loreal_preprocessed_RhE (Type 1).txt.xlsx');
 	drawGeneTable('tbl-gene-type2', 'output_loreal_preprocessed_RhE (Type 2).txt.xlsx');
 	drawGeneTable('tbl-gene-type3', 'output_loreal_preprocessed_RhE (Type 3).txt.xlsx');
@@ -228,7 +228,7 @@ $(document).ready(function() {
     drawPathwayTable('tbl-all', 
 			         'all', 
 			         'all');
-			     */
+			     
 	
     
 	
