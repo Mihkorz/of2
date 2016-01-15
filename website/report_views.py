@@ -3,6 +3,7 @@ import json
 import pandas as pd
 import numpy as np
 import networkx as nx
+import itertools
 
 from django.views.generic.base import TemplateView
 from django.shortcuts import redirect
@@ -489,45 +490,162 @@ class ReportAjaxPathwayVenn(TemplateView):
             is_metabolic = True        
         
         venn_cyrcles = []
-        venn_intersections = []
-            
-        df_1 = pd.read_excel(settings.MEDIA_ROOT+"/../static/report/loreal/"+file_name1,
+        
+        if file_name1 == 'all':
+            dfnhk = pd.read_excel(settings.MEDIA_ROOT+"/../static/report/loreal/output_loreal_preprocessed_NHK.txt.xlsx",
                                 sheetname='PAS1', index_col='Pathway')
-        df_2 = pd.read_excel(settings.MEDIA_ROOT+"/../static/report/loreal/"+file_name2,
+            df1 = pd.read_excel(settings.MEDIA_ROOT+"/../static/report/loreal/output_loreal_preprocessed_RhE (Type 1).txt.xlsx",
+                                 sheetname='PAS1', index_col='Pathway')
+            df2 = pd.read_excel(settings.MEDIA_ROOT+"/../static/report/loreal/output_loreal_preprocessed_RhE (Type 2).txt.xlsx",
+                                sheetname='PAS1', index_col='Pathway')
+            df3 = pd.read_excel(settings.MEDIA_ROOT+"/../static/report/loreal/output_loreal_preprocessed_RhE (Type 3).txt.xlsx",
+                                 sheetname='PAS1', index_col='Pathway')
+            
+            
+            if is_metabolic:
+                dfnhk = dfnhk[dfnhk['Database']=='metabolism']
+                df1 = df1[df1['Database']=='metabolism']
+                df2 = df2[df2['Database']=='metabolism']
+                df3 = df3[df3['Database']=='metabolism']
+            else:
+                dfnhk = dfnhk[dfnhk['Database']!='metabolism']
+                df1 = df1[df1['Database']!='metabolism']
+                df2 = df2[df2['Database']!='metabolism']
+                df3 = df3[df3['Database']!='metabolism']
+                
+            dict_s = {}
+            list_s = ['NHK', 'RhE (Type1)', 'RhE (Type2)', 'RhE (Type3)']
+            
+            dfnhk_tumour = dfnhk[[x for x in dfnhk.columns if 'Tumour' in x]]
+            snhk_tumour = dfnhk_tumour.mean(axis=1)
+            snhk_tumour_up = snhk_tumour[snhk_tumour>0]
+            snhk_tumour_down = snhk_tumour[snhk_tumour<0]
+            venn_cyrcles.append({'sets': ['NHK'], 'size': (snhk_tumour_up.count()+snhk_tumour_down.count())})
+            dict_s['NHK'] = snhk_tumour
+            dict_s['NHK up'] = snhk_tumour_up.index
+            dict_s['NHK down'] = snhk_tumour_down.index
+            
+            df1_tumour = df1[[x for x in df1.columns if 'Tumour' in x]]
+            st1_tumour = df1_tumour.mean(axis=1)
+            st1_tumour_up = st1_tumour[st1_tumour>0]
+            st1_tumour_down = st1_tumour[st1_tumour<0]
+            venn_cyrcles.append({'sets': ['RhE (Type1)'], 'size': (st1_tumour_up.count()+st1_tumour_down.count())})
+            dict_s['RhE (Type1)'] = st1_tumour
+            dict_s['RhE (Type1) up'] = st1_tumour_up.index
+            dict_s['RhE (Type1) down'] = st1_tumour_down.index
+            
+            df2_tumour = df2[[x for x in df2.columns if 'Tumour' in x]]
+            st2_tumour = df2_tumour.mean(axis=1)
+            st2_tumour_up = st2_tumour[st2_tumour>0]
+            st2_tumour_down = st2_tumour[st2_tumour<0]
+            venn_cyrcles.append({'sets': ['RhE (Type2)'], 'size': (st2_tumour_up.count()+st2_tumour_down.count())})
+            dict_s['RhE (Type2)'] = st2_tumour
+            dict_s['RhE (Type2) up'] = st2_tumour_up.index
+            dict_s['RhE (Type2) down'] = st2_tumour_down.index
+          
+            df3_tumour = df3[[x for x in df3.columns if 'Tumour' in x]]
+            st3_tumour = df3_tumour.mean(axis=1)
+            st3_tumour_up = st3_tumour[st3_tumour>0]
+            st3_tumour_down = st3_tumour[st3_tumour<0]
+            venn_cyrcles.append({'sets': ['RhE (Type3)'], 'size': (st3_tumour_up.count()+st3_tumour_down.count())})
+            dict_s['RhE (Type3)'] = st3_tumour
+            dict_s['RhE (Type3) up'] = st3_tumour_up.index
+            dict_s['RhE (Type3) down'] = st3_tumour_down.index
+            
+            combinations_2= list(itertools.combinations(list_s, 2)) # get all pairs of items
+            for idx, combination in enumerate(combinations_2):
+                
+                index1_up = dict_s[combination[0]+' up']
+                index1_down = dict_s[combination[0]+' down']
+                index2_up = dict_s[combination[1]+' up']                
+                index2_down = dict_s[combination[1]+' down']
+                
+                intersection = len(index1_up.intersection(index2_up))+len(index1_down.intersection(index2_down))
+            
+                venn_cyrcles.append({'sets': [combination[0], combination[1]],
+                                     'size': intersection,
+                                     'id': '2_'+str(idx)})
+                
+            combinations_3= list(itertools.combinations(list_s, 3)) # get all triplets of items
+            for idx, combination in enumerate(combinations_3):
+                
+                index1_up = dict_s[combination[0]+' up']
+                index1_down = dict_s[combination[0]+' down']
+                index2_up = dict_s[combination[1]+' up']                
+                index2_down = dict_s[combination[1]+' down']
+                index3_up = dict_s[combination[2]+' up']                
+                index3_down = dict_s[combination[2]+' down']
+                
+                inter_up = (index1_up.intersection(index2_up)).intersection(index3_up)
+                inter_down = (index1_down.intersection(index2_down)).intersection(index3_down)
+                intersection = len(inter_up)+len(inter_down)
+                
+                venn_cyrcles.append({'sets': [combination[0], combination[1], combination[2]],
+                                     'size': intersection,
+                                     'id': '3_'+str(idx)})
+                
+            combinations_4= list(itertools.combinations(list_s, 4)) # get all fourplets of items
+            for idx, combination in enumerate(combinations_4):
+                index1_up = dict_s[combination[0]+' up']
+                index1_down = dict_s[combination[0]+' down']
+                index2_up = dict_s[combination[1]+' up']                
+                index2_down = dict_s[combination[1]+' down']
+                index3_up = dict_s[combination[2]+' up']                
+                index3_down = dict_s[combination[2]+' down']
+                index4_up = dict_s[combination[3]+' up']                
+                index4_down = dict_s[combination[3]+' down']
+                
+                inter_up = ((index1_up.intersection(index2_up)).intersection(index3_up)).intersection(index4_up)
+                inter_down = ((index1_down.intersection(index2_down)).intersection(index3_down)).intersection(index4_down)
+                intersection = len(inter_up)+len(inter_down)
+                
+                venn_cyrcles.append({'sets': [combination[0], combination[1], combination[2], combination[3]],
+                                     'size': intersection,
+                                     'id': '4_'+str(idx)})
+                
+            #raise Exception('venn all')
+        else:
+            df_1 = pd.read_excel(settings.MEDIA_ROOT+"/../static/report/loreal/"+file_name1,
+                                sheetname='PAS1', index_col='Pathway')
+            df_2 = pd.read_excel(settings.MEDIA_ROOT+"/../static/report/loreal/"+file_name2,
                                  sheetname='PAS1', index_col='Pathway')
         
-        if is_metabolic:
-            df_1 = df_1[df_1['Database']=='metabolism']
-            df_2 = df_2[df_2['Database']=='metabolism']
-        else:
-            df_1 = df_1[df_1['Database']!='metabolism']
-            df_2 = df_2[df_2['Database']!='metabolism']
+            if is_metabolic:
+                df_1 = df_1[df_1['Database']=='metabolism']
+                df_2 = df_2[df_2['Database']=='metabolism']
+            else:
+                df_1 = df_1[df_1['Database']!='metabolism']
+                df_2 = df_2[df_2['Database']!='metabolism']
         
-        df1_tumour = df_1[[x for x in df_1.columns if 'Tumour' in x]]
-        s1_tumour = df1_tumour.mean(axis=1)
-        s1_tumour = s1_tumour[s1_tumour!=0]
+            df1_tumour = df_1[[x for x in df_1.columns if 'Tumour' in x]]
+            s1_tumour = df1_tumour.mean(axis=1)
+            s1_tumour_up = s1_tumour[s1_tumour>0]
+            s1_tumour_down = s1_tumour[s1_tumour<0]
         
-        df2_tumour = df_2[[x for x in df_2.columns if 'Tumour' in x]]
-        s2_tumour = df2_tumour.mean(axis=1)
-        s2_tumour = s2_tumour[s2_tumour!=0]
+            df2_tumour = df_2[[x for x in df_2.columns if 'Tumour' in x]]
+            s2_tumour = df2_tumour.mean(axis=1)
+            s2_tumour_up = s2_tumour[s2_tumour>0]
+            s2_tumour_down = s2_tumour[s2_tumour<0]
         
-        index1 = s1_tumour.index        
-        index2 = s2_tumour.index
-        set1 = {}
-        set2 = {}
-        set1['sets'] = [name1]
-        set1['size'] = len(index1)
-        set2['sets'] = [name2]
-        set2['size'] = len(index2)         
-        venn_cyrcles.append(set1)
-        venn_cyrcles.append(set2)
+            index1_up = s1_tumour_up.index
+            index1_down = s1_tumour_down.index        
+            index2_up = s2_tumour_up.index
+            index2_down = s2_tumour_down.index     
+            set1 = {}
+            set2 = {}
+            set1['sets'] = [name1]
+            set1['size'] = len(index1_up)+len(index1_down)
+            set2['sets'] = [name2]
+            set2['size'] = len(index2_up)+len(index2_down)         
+            venn_cyrcles.append(set1)
+            venn_cyrcles.append(set2)
         
-        intersection = len(index1.intersection(index2))
-        set_inter = {}
-        set_inter['sets'] = [name1, name2]
-        set_inter['size'] = intersection
-        set_inter['id'] = '2_'
-        venn_cyrcles.append(set_inter)
+            intersection = len(index1_up.intersection(index2_up))+len(index1_down.intersection(index2_down))
+            set_inter = {}
+            set_inter['sets'] = [name1, name2]
+            set_inter['size'] = intersection
+            set_inter['id'] = '2_'
+            venn_cyrcles.append(set_inter)
     
         
         
