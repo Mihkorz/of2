@@ -113,31 +113,33 @@ class ReportGeneDetailJson(TemplateView):
         df_gene = pd.read_excel(settings.MEDIA_ROOT+"/../static/report/loreal/cnr_"+file_name,
                                 index_col='SYMBOL')
         
-        df_tumour = df_gene[[x for x in df_gene.columns if 'Tumour' in x]]
-        s_tumour = df_tumour.mean(axis=1)
+        df_gene = df_gene.multiply(df_gene['gMean_norm']  , axis=0)
         
-        df_norm = df_gene[[x for x in df_gene.columns if 'Norm' in x]]
-        s_norm = df_norm.mean(axis=1)       
+        
+               
         
         df_output = pd.DataFrame()
         
-        df_output['x'] = s_tumour
-        df_output['y'] = s_norm
-        df_output = df_output.multiply(df_gene['gMean_norm']  , axis=0)
         
-        df_output = df_output[df_output['x']>0 ]
-        
-        gene_row = df_output.loc[gene_name].round(decimals=0)
+        gene_row = df_gene.loc[gene_name].round(decimals=0)
         
         response_data = {}
-        response_data['NHE'] = [
-                   ['NHE', gene_row['y']],
-                   ['Case', 0]
-                   ]
-        response_data['Case'] = [
-                   ['NHE', 0],
-                   ['Case', gene_row['x']]
-                   ]
+        
+        lNHE = []
+        lCase = []
+        for index, value in gene_row.iteritems():
+            if 'Tumour' in index:
+                index = index.replace('Tumour_', '').replace('.CEL', '')
+                lNHE.append([index, 0])
+                lCase.append([index, value])
+            if 'Norm' in index:
+                index = index.replace('Normal_', '').replace('.CEL', '')
+                lNHE.append([index, value])
+                lCase.append([index, 0])
+             
+
+        response_data['NHE'] = lNHE        
+        response_data['Case'] = lCase
         
         #raise Exception('gene detail')
         return HttpResponse(json.dumps(response_data), content_type="application/json")
@@ -366,12 +368,13 @@ class ReportAjaxPathDetail(TemplateView):
         df_cnr_raw = df_cnr_raw.mean(axis=1).round(decimals=2)
         
         df_cnr_differential = df_cnr_raw[df_cnr_raw!=1]
-        df_cnr_differential.name = 'CNR'
+        df_cnr_differential.name = 'CNR' #log2(Fold-change)
         
         joined_df = gene_df.join(df_cnr_differential, how='inner')
         joined_df.reset_index(inplace=True)
+        joined_df['log2(Fold-change)'] = np.log2(joined_df['CNR']).round(decimals=2)
         joined_df.index += 1
-        context['joined'] = joined_df.to_html(classes=['table', 'table-bordered', 'table-striped'])
+        context['joined'] = joined_df[['SYMBOL', 'Node(s)', 'log2(Fold-change)']].to_html(classes=['table', 'table-bordered', 'table-striped'])
         context['diff_genes_count'] = len(joined_df.index)
         
         
