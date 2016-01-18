@@ -17,7 +17,7 @@
 	        },
 	        yAxis: {
 			      title: {
-			        text: '# of counts'
+			        text: 'log2(Expression level)'
 			      }
 			    },
 	        credits: {

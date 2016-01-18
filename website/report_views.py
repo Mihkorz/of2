@@ -87,7 +87,7 @@ class ReportGeneTableJson(TemplateView):
         df_output['pval'] = df_gene['p_value']
         df_output['padj'] = df_gene['q_value']
         
-        df_output = df_output[df_output['log2FoldChange']>0 ]
+        df_output = df_output[df_output['log2FoldChange']!=0 ]
         df_output.index.name = 'Gene'
         df_output.reset_index(inplace=True)
         #raise Exception('gene table')
@@ -114,14 +114,14 @@ class ReportGeneDetailJson(TemplateView):
                                 index_col='SYMBOL')
         
         df_gene = df_gene.multiply(df_gene['gMean_norm']  , axis=0)
-        
+        df_gene = np.log2(df_gene)
         
                
         
         df_output = pd.DataFrame()
         
         
-        gene_row = df_gene.loc[gene_name].round(decimals=0)
+        gene_row = df_gene.loc[gene_name].round(decimals=2)
         
         response_data = {}
         
