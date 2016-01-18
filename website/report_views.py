@@ -487,6 +487,7 @@ class ReportAjaxPathwayVenn(TemplateView):
         name1 = self.request.GET.get('name1')
         name2 = self.request.GET.get('name2')
         is_metabolic = self.request.GET.get('is_metabolic')
+        regulation = self.request.GET.get('regulation')
         if is_metabolic =='false':
             is_metabolic = False
         else:
@@ -523,7 +524,12 @@ class ReportAjaxPathwayVenn(TemplateView):
             snhk_tumour = dfnhk_tumour.mean(axis=1)
             snhk_tumour_up = snhk_tumour[snhk_tumour>0]
             snhk_tumour_down = snhk_tumour[snhk_tumour<0]
-            venn_cyrcles.append({'sets': ['NHK'], 'size': (snhk_tumour_up.count()+snhk_tumour_down.count())})
+            if regulation == 'updown':
+                venn_cyrcles.append({'sets': ['NHK'], 'size': (snhk_tumour_up.count()+snhk_tumour_down.count())})
+            elif regulation == 'up':
+                venn_cyrcles.append({'sets': ['NHK'], 'size': (snhk_tumour_up.count())})
+            elif regulation == 'down':
+                venn_cyrcles.append({'sets': ['NHK'], 'size': (snhk_tumour_down.count())})
             dict_s['NHK'] = snhk_tumour
             dict_s['NHK up'] = snhk_tumour_up.index
             dict_s['NHK down'] = snhk_tumour_down.index
@@ -532,7 +538,12 @@ class ReportAjaxPathwayVenn(TemplateView):
             st1_tumour = df1_tumour.mean(axis=1)
             st1_tumour_up = st1_tumour[st1_tumour>0]
             st1_tumour_down = st1_tumour[st1_tumour<0]
-            venn_cyrcles.append({'sets': ['RhE (Type1)'], 'size': (st1_tumour_up.count()+st1_tumour_down.count())})
+            if regulation == 'updown':
+                venn_cyrcles.append({'sets': ['RhE (Type1)'], 'size': (st1_tumour_up.count()+st1_tumour_down.count())})
+            elif regulation == 'up':
+                venn_cyrcles.append({'sets': ['RhE (Type1)'], 'size': (st1_tumour_up.count())})
+            elif regulation == 'down':
+                venn_cyrcles.append({'sets': ['RhE (Type1)'], 'size': (st1_tumour_down.count())})
             dict_s['RhE (Type1)'] = st1_tumour
             dict_s['RhE (Type1) up'] = st1_tumour_up.index
             dict_s['RhE (Type1) down'] = st1_tumour_down.index
@@ -541,7 +552,12 @@ class ReportAjaxPathwayVenn(TemplateView):
             st2_tumour = df2_tumour.mean(axis=1)
             st2_tumour_up = st2_tumour[st2_tumour>0]
             st2_tumour_down = st2_tumour[st2_tumour<0]
-            venn_cyrcles.append({'sets': ['RhE (Type2)'], 'size': (st2_tumour_up.count()+st2_tumour_down.count())})
+            if regulation == 'updown':
+                venn_cyrcles.append({'sets': ['RhE (Type2)'], 'size': (st2_tumour_up.count()+st2_tumour_down.count())})
+            elif regulation == 'up':
+                venn_cyrcles.append({'sets': ['RhE (Type2)'], 'size': (st2_tumour_up.count())})
+            elif regulation == 'down':
+                venn_cyrcles.append({'sets': ['RhE (Type2)'], 'size': (st2_tumour_down.count())})    
             dict_s['RhE (Type2)'] = st2_tumour
             dict_s['RhE (Type2) up'] = st2_tumour_up.index
             dict_s['RhE (Type2) down'] = st2_tumour_down.index
@@ -550,7 +566,12 @@ class ReportAjaxPathwayVenn(TemplateView):
             st3_tumour = df3_tumour.mean(axis=1)
             st3_tumour_up = st3_tumour[st3_tumour>0]
             st3_tumour_down = st3_tumour[st3_tumour<0]
-            venn_cyrcles.append({'sets': ['RhE (Type3)'], 'size': (st3_tumour_up.count()+st3_tumour_down.count())})
+            if regulation == 'updown':
+                venn_cyrcles.append({'sets': ['RhE (Type3)'], 'size': (st3_tumour_up.count()+st3_tumour_down.count())})
+            elif regulation == 'up':
+                venn_cyrcles.append({'sets': ['RhE (Type3)'], 'size': (st3_tumour_up.count())})
+            elif regulation == 'down':
+                venn_cyrcles.append({'sets': ['RhE (Type3)'], 'size': (st3_tumour_down.count())})
             dict_s['RhE (Type3)'] = st3_tumour
             dict_s['RhE (Type3) up'] = st3_tumour_up.index
             dict_s['RhE (Type3) down'] = st3_tumour_down.index
@@ -562,9 +583,12 @@ class ReportAjaxPathwayVenn(TemplateView):
                 index1_down = dict_s[combination[0]+' down']
                 index2_up = dict_s[combination[1]+' up']                
                 index2_down = dict_s[combination[1]+' down']
-                
-                intersection = len(index1_up.intersection(index2_up))+len(index1_down.intersection(index2_down))
-            
+                if regulation == 'updown':
+                    intersection = len(index1_up.intersection(index2_up))+len(index1_down.intersection(index2_down))
+                elif regulation == 'up':
+                    intersection = len(index1_up.intersection(index2_up))
+                elif regulation == 'down':
+                    intersection = len(index1_down.intersection(index2_down))
                 venn_cyrcles.append({'sets': [combination[0], combination[1]],
                                      'size': intersection,
                                      'id': '2_'+str(idx)})
@@ -581,8 +605,12 @@ class ReportAjaxPathwayVenn(TemplateView):
                 
                 inter_up = (index1_up.intersection(index2_up)).intersection(index3_up)
                 inter_down = (index1_down.intersection(index2_down)).intersection(index3_down)
-                intersection = len(inter_up)+len(inter_down)
-                
+                if regulation == 'updown':
+                    intersection = len(inter_up)+len(inter_down)
+                elif regulation == 'up':
+                    intersection = len(inter_up)
+                elif regulation == 'down':
+                    intersection = len(inter_down)
                 venn_cyrcles.append({'sets': [combination[0], combination[1], combination[2]],
                                      'size': intersection,
                                      'id': '3_'+str(idx)})
@@ -600,7 +628,12 @@ class ReportAjaxPathwayVenn(TemplateView):
                 
                 inter_up = ((index1_up.intersection(index2_up)).intersection(index3_up)).intersection(index4_up)
                 inter_down = ((index1_down.intersection(index2_down)).intersection(index3_down)).intersection(index4_down)
-                intersection = len(inter_up)+len(inter_down)
+                if regulation == 'updown':
+                    intersection = len(inter_up)+len(inter_down)
+                elif regulation == 'up':
+                    intersection = len(inter_up)
+                elif regulation == 'down':
+                    intersection = len(inter_down)
                 
                 venn_cyrcles.append({'sets': [combination[0], combination[1], combination[2], combination[3]],
                                      'size': intersection,
@@ -637,13 +670,24 @@ class ReportAjaxPathwayVenn(TemplateView):
             set1 = {}
             set2 = {}
             set1['sets'] = [name1]
-            set1['size'] = len(index1_up)+len(index1_down)
             set2['sets'] = [name2]
-            set2['size'] = len(index2_up)+len(index2_down)         
+            if regulation == 'updown':
+                set1['size'] = len(index1_up)+len(index1_down)
+                set2['size'] = len(index2_up)+len(index2_down)
+            elif regulation == 'up':
+                set1['size'] = len(index1_up)
+                set2['size'] = len(index2_up)
+            elif regulation == 'down':
+                set1['size'] = len(index1_down)
+                set2['size'] = len(index2_down)        
             venn_cyrcles.append(set1)
             venn_cyrcles.append(set2)
-        
-            intersection = len(index1_up.intersection(index2_up))+len(index1_down.intersection(index2_down))
+            if regulation == 'updown':
+                intersection = len(index1_up.intersection(index2_up))+len(index1_down.intersection(index2_down))
+            elif regulation == 'up':
+                intersection = len(index1_up.intersection(index2_up))
+            elif regulation == 'down':
+                intersection = len(index1_down.intersection(index2_down))    
             set_inter = {}
             set_inter['sets'] = [name1, name2]
             set_inter['size'] = intersection
