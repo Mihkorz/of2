@@ -1,3 +1,81 @@
+function drawDinamicTable(idx){
+	
+	var arParams = idx.split("_");
+	var inter_num = arParams[0];
+    var regulation = arParams[1];
+    var members = arParams[2];
+    var is_metabolic = arParams[3];
+	
+    tblId = members.split(' ').join('_')
+    tblId = tblId.replace(/\(/g, '').replace(/\)/g, '')
+    tblId+=regulation
+    
+    arMembers = members.split('vs');
+    
+    if(is_metabolic=='true'){$('#venn_meta_dinamic > div.dataTables_wrapper').fadeOut('fast');}
+    else{$('#venn_path_dinamic > div.dataTables_wrapper').fadeOut('fast');}
+    
+    
+	if (arParams[0]<4){
+		if($( "#"+tblId ).length){ //check if required table already exists
+			$("#"+tblId+"_wrapper").fadeIn();
+		}
+		else{
+			if(is_metabolic=='true'){htmlTable = '<table id="'+tblId+'" class="path table table-striped table-bordered meta-dinamic" width="100%" >'}
+			else {htmlTable = '<table id="'+tblId+'" class="path table table-striped table-bordered path-dinamic" width="100%" >'}
+			
+			htmlTable+='<thead><tr>';
+			htmlTable+='<th>Pathway Name</th>';
+			
+			arMembers.forEach(function(item, i, arr) {
+				htmlTable+='<th>'+item+'</th>';
+			});
+			
+			htmlTable+='</tr></thead>';
+			htmlTable+='</table>';			
+			
+			if(is_metabolic=='true'){$("#venn_meta_dinamic").append(htmlTable);}			    
+			else{$("#venn_path_dinamic").append(htmlTable);}
+			
+			$('#'+tblId).DataTable( {
+		    	"paging":   true,
+		        "iDisplayLength": 20,
+		        "ordering": true,
+		        "order": [[ 1, "desc" ]],
+		        "info":     false,
+		        
+		        "dom": 'Bfrtip',
+		        "buttons": [
+		                  {extend: 'csv',
+		                   exportOptions: {
+		                            columns: ':visible'
+		                        },
+		                  title: tblId},
+		                  
+		                  {extend: 'pdf',
+		                  title: tblId},
+		                 'print'
+		                 ],
+		        "ajax": {'url':'/report-portal/report/ajaxpathvenntbl/',
+		        	     'type': 'GET',
+		        	     'data':{
+		        	    	 inter_num: inter_num,
+		    		         regulation: regulation,
+		    		         members: members,
+		    		         is_metabolic: is_metabolic
+		        	            }
+		        	    	 }
+		    } );
+			
+			
+	        
+		    }
+	}
+	else{
+		$("#tbl-all").fadeIn();
+	}
+}
+
 
 function drawVenn(renderTo, file_name1, file_name2, name1, name2, is_metabolic, reg){
 	$.get("/report-portal/report/ajaxpathvenn/",
@@ -55,7 +133,13 @@ function drawVenn(renderTo, file_name1, file_name2, name1, name2, is_metabolic, 
                                .style("fill-opacity", d.sets.length == 1 ? .25 : .0)
                                .style("stroke-opacity", 0);
                                                  })
-                 .on("click", function(d, i){alert(d.size)});
+                 .on("click", function(d, i){
+                	 
+                	 venn.sortAreas(div, d);
+                     var idx = d.id;
+                     drawDinamicTable(idx);
+                	 
+                 });
 			}
 			);
 	
@@ -68,7 +152,7 @@ $(document).ready(function(){
 			'all',
 			'all',
 			'all', 'all', false, 'updown');
-	drawVenn('venn_path-all-up',
+		drawVenn('venn_path-all-up',
 			'all',
 			'all',
 			'all', 'all', false, 'up');
@@ -77,7 +161,7 @@ $(document).ready(function(){
 			'all',
 			'all', 'all', false, 'down');
 	
-	
+	/*
 	drawVenn('venn_path-nhk-type1',
 			'output_loreal_preprocessed_NHK.txt.xlsx',
 			'output_loreal_preprocessed_RhE (Type 1).txt.xlsx',
@@ -156,7 +240,7 @@ $(document).ready(function(){
 			'output_loreal_preprocessed_RhE (Type 2).txt.xlsx',
 			'output_loreal_preprocessed_RhE (Type 3).txt.xlsx',
 			'RhE (Type2)', 'RhE (Type3)', false, 'down');
-	
+	*/
 	// METABOLISM
 	drawVenn('venn_meta-all',
 			'all',
@@ -170,7 +254,7 @@ $(document).ready(function(){
 			'all',
 			'all',
 			'all', 'all', true, 'down')
-			
+	/*		
 	drawVenn('venn_meta-nhk-type1',
 			'output_loreal_preprocessed_NHK.txt.xlsx',
 			'output_loreal_preprocessed_RhE (Type 1).txt.xlsx',
@@ -248,5 +332,5 @@ $(document).ready(function(){
 			'output_loreal_preprocessed_RhE (Type 2).txt.xlsx',
 			'output_loreal_preprocessed_RhE (Type 3).txt.xlsx',
 			'RhE (Type2)', 'RhE (Type3)', true, 'down');
-         
+  */       
 });

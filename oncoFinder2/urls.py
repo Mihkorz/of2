@@ -12,7 +12,7 @@ from website.views import IndexPage, AboutPage, Logout
 from website.report_views import LorealReport, \
                                  ReportGeneTableJson, ReportGeneScatterJson, ReportGeneDetailJson, \
                                  ReportPathwayScatterJson, ReportPathwayTableJson, ReportAjaxPathDetail, \
-                                 ReportAjaxPathwayVenn
+                                 ReportAjaxPathwayVenn, ReportAjaxPathwayVennTable
                           
 from profiles.views import ProfileIndex, SettingsProfile, SettingsBilling, CreateProject, \
                            DeleteProject, ProjectDetail, CreateDocument, DeleteDocument, \
@@ -138,6 +138,7 @@ urlpatterns = patterns('',
     url(r'^report-portal/pathwaytablejson/$', ReportPathwayTableJson.as_view(), name="pathway_table_json"),
     url(r'^report-portal/report/ajaxpathdetail/$', ReportAjaxPathDetail.as_view(), name="report_ajax_path_detail"),
     url(r'^report-portal/report/ajaxpathvenn/$', ReportAjaxPathwayVenn.as_view(), name="report_ajax_path_venn"),
+    url(r'^report-portal/report/ajaxpathvenntbl/$', ReportAjaxPathwayVennTable.as_view(), name="report_ajax_path_venn_tbl"),
     
 
     

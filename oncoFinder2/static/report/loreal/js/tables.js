@@ -83,29 +83,31 @@ function showPathDetails(path_name, filename){
 function drawGeneTable(id, file_name){
 	
 	// FIRST DOC
-	$('#'+id).DataTable( {
+	var table = $('#'+id).DataTable( {
     	"paging":   true,
         "iDisplayLength": 20,
         "ordering": true,
         "order": [[ 1, "desc" ]],
         "info":     false,
-        
         "dom": 'Bfrtip',
         "buttons": [
-                  {extend: 'csv',
-                  title: file_name},
-                  
-                  {extend: 'pdf',
-                  title: file_name},
-                 'print'
-                 ],
+                   {extend: 'csv', title: file_name},
+                   'print'
+              ],
+        
         "ajax": {'url':'/report-portal/genetablejson/',
         	     'type': 'GET',
         	     'data':{
         	            'file_name': file_name,
-        	            }
-        	    	 }
-    } );
+        	            },
+        	      
+        
+    },"deferRender": true });
+	
+	
+	
+	table.buttons().container()
+    .appendTo( $('.col-sm-6:eq(0)', table.table().container() ) );
 	
 	$('#'+id).on( 'draw.dt', function () {
     	$("table#"+id+".path tr td:first-child").wrapInner('<a href="#/"></a>')
@@ -132,7 +134,7 @@ function drawPathwayTable(id, file_name1, file_name2, is_metabolic){
         "info":     false,
         
         "dom": 'Bfrtip',
-        "buttons": ['csv', 'pdf', 'print'],
+        "buttons": [{extend: 'csv', title: id}, 'pdf', 'print'],
         
         "ajax": {'url':'/report-portal/pathwaytablejson/',
         	     'type': 'GET',
@@ -201,10 +203,12 @@ function drawPathwayTable(id, file_name1, file_name2, is_metabolic){
 
 
 $(document).ready(function() {
+	
+	
 	// GENES
 	
 	drawGeneTable('tbl-gene-nhk', 'output_loreal_preprocessed_NHK.txt.xlsx');
-	
+		
 	drawGeneTable('tbl-gene-type1', 'output_loreal_preprocessed_RhE (Type 1).txt.xlsx');
 	drawGeneTable('tbl-gene-type2', 'output_loreal_preprocessed_RhE (Type 2).txt.xlsx');
 	drawGeneTable('tbl-gene-type3', 'output_loreal_preprocessed_RhE (Type 3).txt.xlsx');
