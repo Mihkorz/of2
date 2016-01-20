@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>How Old By Blood  | Insilico Medicine</title>
+    <link href="/static/bower_components/bootstrap-stylus/dist/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <script src="//code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script>
+    <script src="/static/js/oncofinder2.js" type="text/javascript"></script>
+    <script src="/static/bower_components/bootstrap-stylus/dist/bootstrap.min.js" type="text/javascript"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore.js" type="text/javascript"></script>
+    <script src="/static/js/d3.v3.min.js" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="http://code.highcharts.com/highcharts.js" type="text/javascript"></script>
+    <script src="https://code.highcharts.com/highcharts-3d.js"  type="text/javascript"></script>
+    <script src="http://code.highcharts.com/modules/exporting.js"  type="text/javascript"></script>
+    <link href="/static/css/report_style.css" rel="stylesheet" type="text/css">
+    <link href="https://cdn.datatables.net/1.10.10/css/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="https://cdn.datatables.net/buttons/1.0.3/css/buttons.dataTables.min.css" rel="stylesheet">
+    
+    <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+    
+  </head>
+  <body style='font-size: 14px;'>
+    <div class="content h100">
+      <div class="main">
+        <div class="inner">
+         <div>
+         <span class='pull-left' style='font-size:11pt; margin:15px;'>
+         <img src='/static/images/insilico.png' style="width:40px;"/>
+         Insilico Medicine</span>
+         <!-- <span class='pull-right' style='font-size:11pt; margin:15px;'>Access Level: Z-II, <br/>Confidential </span> -->
+         </div><br style="clear:both;"/>
+          <div class='text-center'>
+            <h1>How Old By Blood <br/>
+                Guess Your Age by Regular Blood Test</h1>
+          </div>
+          
+          <div style="margin: 50px 0 0 50px;">
+            <!--<h4 style='font-weight:bold; font-size:12pt;'>Organization: </h4>
+            <span style="font-size:11pt">Episkin Academy</span>
+            <br/><br/>
+             <h4 style='font-weight:bold; font-size:12pt;'>Data Quality Assessment: </h4>-->
+            
+            
+          <hr/>
+          
+          <h3 class='pull-left'>Your Age Is: {{age}} years</h3>
+          
+          <a href='/nn-blood/' class="btn btn-success btn-lg pull-right" style='margin: 0 40px 0 0;'>
+          Run Another Test
+          </a>
+          
+         
+          
+
+         
+         
+        
+  
+
+
+
+<div style='min-height:500px'></div>
+            
+          </div>
+          
+          
+          
+        </div>
+      </div>
+      
+    </div>
+    <div class="bar" style="heigh:100%">
+      <div class="inner h100" style="heigh:100%">
+        <div class="top"><img src="/static/images/logo.svg"></div>
+        
+        <div class="bottom">
+          <div class="inner"> Insilico Medicine Inc., Johns Hopkins <br/>University Eastern, ETC B301, 1101 East <br/>33rd Street, Baltimore, MD 21218 </div>
+        </div>
+      </div>
+    </div>
+    
+    
+    <script src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/1.10.10/js/dataTables.bootstrap.min.js" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/buttons/1.1.0/js/dataTables.buttons.min.js" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/buttons/1.1.0/js/buttons.bootstrap.min.js" type="text/javascript"></script>
+    <script src="//cdn.datatables.net/buttons/1.1.0/js/buttons.flash.min.js" type="text/javascript"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js" type="text/javascript"></script>
+    <script src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js" type="text/javascript"></script>
+    <script src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js" type="text/javascript"></script>
+    <script src="//cdn.datatables.net/buttons/1.1.0/js/buttons.html5.min.js" type="text/javascript"></script>
+    <script src="//cdn.datatables.net/buttons/1.1.0/js/buttons.print.min.js" type="text/javascript"></script>
+    
+   <script>
+   $(function() {
+	   
+	   $('input[type=number]').addClass('form-control');
+	   
+   });
+   
+   </script>
+    
+    
+    
+    
+    <!-- MODAL FOR PATHS  -->
+    <div id="pathmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+ <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;  </button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body" id='modalBody'>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    <!--
+    script.
+      $(function () {
+        svgPanZoom('#pathway', {
+          zoomEnabled: true,
+          controlIconsEnabled: true,
+          fit: true,
+          center: true
+        });
+      });
+    -->
+  </body>
+</html>

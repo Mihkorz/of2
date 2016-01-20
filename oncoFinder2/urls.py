@@ -14,6 +14,8 @@ from website.report_views import LorealReport, \
                                  ReportPathwayScatterJson, ReportPathwayTableJson, ReportAjaxPathDetail, \
                                  ReportAjaxPathwayVenn, ReportAjaxPathwayVennTable
                           
+from website.nn_views import nnBloodView, nnBloodResult 
+
 from profiles.views import ProfileIndex, SettingsProfile, SettingsBilling, CreateProject, \
                            DeleteProject, ProjectDetail, CreateDocument, DeleteDocument, \
                            DocumentDetail, SampleDetail, AjaxPathDetail
@@ -140,7 +142,9 @@ urlpatterns = patterns('',
     url(r'^report-portal/report/ajaxpathvenn/$', ReportAjaxPathwayVenn.as_view(), name="report_ajax_path_venn"),
     url(r'^report-portal/report/ajaxpathvenntbl/$', ReportAjaxPathwayVennTable.as_view(), name="report_ajax_path_venn_tbl"),
     
-
+    ################### BLOOD NN ###############################################
+    url(r'^nn-blood/$', nnBloodView.as_view(), name="nn-blood"),
+    url(r'^nn-blood/result/$', nnBloodResult.as_view(), name="nn-blood"),
     
     
 
