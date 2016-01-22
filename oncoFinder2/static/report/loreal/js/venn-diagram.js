@@ -242,6 +242,7 @@ $(document).ready(function(){
 			'RhE (Type2)', 'RhE (Type3)', false, 'down');
 	*/
 	// METABOLISM
+	
 	drawVenn('venn_meta-all',
 			'all',
 			'all',
@@ -254,6 +255,7 @@ $(document).ready(function(){
 			'all',
 			'all',
 			'all', 'all', true, 'down')
+	
 	/*		
 	drawVenn('venn_meta-nhk-type1',
 			'output_loreal_preprocessed_NHK.txt.xlsx',

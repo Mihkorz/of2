@@ -10,6 +10,7 @@
     <script src="/static/js/d3.v3.min.js" type="text/javascript"></script>
     <script src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js" type="text/javascript"></script>
     <script src="http://code.highcharts.com/highcharts.js" type="text/javascript"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"  type="text/javascript"></script>
     <script src="https://code.highcharts.com/highcharts-3d.js"  type="text/javascript"></script>
     <script src="http://code.highcharts.com/modules/exporting.js"  type="text/javascript"></script>
     <link href="/static/css/report_style.css" rel="stylesheet" type="text/css">
@@ -46,13 +47,67 @@
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#methods">Methods</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#gene_analysis">Gene level analysis</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#path_analysis">Pathway analysis</a></li>
-            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#key_regulators">Key regulators</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#public_domain">Public domain screening</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#references">References</a></li>
           </ul>
           
-          
-          <h1>Gene Analysis</h1>
+          <h2 id="input_data">Input data</h2>
           <hr/>
+          <h3 id="input_data">Abbreviations and gene names</h3>
+          <ul>
+          <li>NHE - normal human epidermis</li>
+          <li>NHEK - normal human epidermal keratinocytes</li>
+          <li>NHD - normal human dermis</li>
+          <li>NHDF - normal human dermal fibroblasts</li>
+          <li>RhE - reconstructed human epidermis</li>
+          <li>RHS - reconstructed human skin</li>
+          <li>ECM - extracellular matrix</li>
+          <li>GF - growth factor</li>
+          <li>PAS - pathway activation score</li>
+          <li>PCA - principal component analysis</li>
+          <li>PTEN - phosphatase and tensin homolog</li>
+          <li>EGF- epidermal growth factor</li>
+          <li>EGFR- epidermal growth factor receptor</li>
+          <li>HAS - hyaluronan synthases</li>
+          <li>MMP - matrix metalloproteinases</li>
+          <li>HYAL - hyaluronoglucosaminidase</li> 
+          <li>FN - fibronectin</li>
+          <li>ELN - elastin</li>
+          <li>KRT - keratin</li>
+          <li>GH - plateled derived growth factor</li>
+          <li>PDGF- growth hormone</li>
+          </ul>
+          
+          <hr/>
+          <h2 id="methods" >Methods</h2>
+          <hr/>
+          
+          Raw gene expression data, provided by Episkin, was processed with frozen RMA method 
+          [McCall, Matthew N., Benjamin M. Bolstad, and Rafael A. Irizarry. "Frozen robust multiarray analysis
+           (fRMA)." Biostatistics 11.2 (2010): 242-253.]. Differential gene Five functional groups were 
+           considered in the analysis: NHE, NHEK, RhE (Type 1), RhE (Type 2) and RhE (Type 3). In all 
+           following parts of analysis NHE group was used as a reference and other groups were compared 
+           to it. For the gene-level analysis, we performed Student’s T-test followed by Benjamini-Hochberg 
+           FDR adjustment [Benjamini, Y., and Y. Hochberg. 1995. Controlling the false discovery rate: a 
+           practical and powerful approach to multiple testing. Journal of the Royal Statistical Society B 57:
+            289-300.]. For pathway level analysis each preprocessed gene expression group was independently 
+            compared to NHE reference using an algorithm called OncoFinder [Buzdin AA, Zhavoronkov AA, Korzinkin
+             MB, Venkova LS, Zenin AA, Smirnov PY, Borisov NM. Oncofinder, a new method for the analysis of 
+             intracellular signaling pathway activation using transcriptomic data. Front Genet. 2014; 5:55.]. 
+             Taking the preprocessed gene expression data as an input it allows for cross-platform dataset 
+             comparison with low error rate and has the ability to obtain functional features of intracellular
+              regulation using mathematical estimations. Positive and negative PAS values indicate pathway 
+              up- and down-regulation, respectively. 
+Gene expression datasets from public domain that came from different microarray platforms were preprocessed
+ and harmonized.
+ 
+ 
+          <hr/>          
+          <h2 id='gene_analysis'>Gene level analysis</h2>
+          <hr/>
+          PCA demonstrated that samples correlate between groups and show small variability within groups on gene expression level. 
+          All three types of reconstructed human epidermis make up one big cluster.
+          <br/><br/>
           <div>
           
           <!-- GENE Nav tabs -->
@@ -67,6 +122,7 @@
          <!-- GENE Tab panes -->
   <div class="tab-content">
    <div role="tabpanel" class="tab-pane fade in active" id="allgenes_tab">
+   
    <div id="genes-3d" style="min-width: 800px; height: 400px; max-width: 800px; margin: 0 auto"></div>
    
    
@@ -152,11 +208,46 @@
      </div>
      
   </div> <!--  end of tabs GENE -->
-
- <hr/> 
-<h1>Pathway Analysis</h1>
 <hr/>
-<h2>Signaling Pathways</h2>
+<h3>Notable genes</h3>
+<hr/>
+
+<div>
+ <!-- GENE Nav tabs -->
+         <ul class="nav nav-tabs" role="tablist">
+           {%for gene in lGenes%}
+           <li role="presentation" {%if forloop.counter == 1 %}class="active"{%endif%}><a href="#{{gene}}_tab" aria-controls="home1" role="tab" data-toggle="tab">{{gene}}</a></li>
+           {%endfor%}
+         </ul>
+
+   <div class="tab-content">
+    {%for gene in lGenes%}
+     {%if forloop.counter == 1 %}
+     <div role="tabpanel" class="tab-pane fade in active" id="{{gene}}_tab">
+     {%else%}
+     <div role="tabpanel" class="tab-pane fade " id="{{gene}}_tab">
+     {%endif%}
+     <div id="{{gene}}" style="min-width: 800px; height: 400px; max-width: 800px; margin: 0 auto"></div>
+   
+     </div>
+    {%endfor%}
+   
+   </div> <!--  end of tab panel -->
+</div> <!-- end of Notable genes -->
+<!-- ---------------------------------PATHWAY--------------------------------------------- -->
+ <hr/> 
+<h2 id='path_analysis'>Pathway Analysis</h2>
+<hr/>
+
+NHE samples were selected as a norm for differential pathway analysis.<br/>
+Pathway signature shows that skin models resemble mature skin with downregulation of early stage 
+of skin development and repair processes pathways such as WNT pathways [1] and EGF and EGFR pathways [2].<br/>
+However, tissues proliferate, cell division and growth are still active on a pathway level: downregulation of 
+PTEN pathway[3], upregulation of PLK1-pathway[4].Growth hormone involved in
+<br/><br/>
+One of the most upregulated is a group of Extracellular remodeling pathways. 
+
+<h3>Signaling Pathways</h3>
 
  <!-- PAthway Nav tabs -->
          <ul class="nav nav-tabs" role="tablist">
@@ -445,7 +536,7 @@
 
 <hr/>
 <!-- ---------------------------- METABOLIC------------------------ -->
-<h2>Metabolic Pathways</h2>
+<h3>Metabolic Pathways</h3>
 <hr/>
  <!-- Meabolic PAthway Nav tabs -->
          <ul class="nav nav-tabs" role="tablist">
@@ -727,15 +818,982 @@
 
 </div>
 <hr/>
-<h1>Public domain screening</h1>
+<h2 id='public_domain'>Public domain screening</h2>
 <hr/>
-<a href='/static/report/loreal/public-domain.jpg' target=' _blank'>
-<img src='/static/report/loreal/public-domain.jpg' style="width:95%"/>
-</a><hr/>
-<img src='/static/report/loreal/ECM_corplot.png' style='width:95%' /><hr/><br/>
-<img src='/static/report/loreal/GF.png' style='width:95%' /><hr/><br/>
-<img src='/static/report/loreal/All_genes.png' style='width:95%' /><hr/><br/>
+<div dir="ltr">
+<h4>Table 13. Datasets summary</h4>
+    <table class='table table-bordered table-striped' style="width:95%">
+        <colgroup>
+            <col width="106"/>
+            <col width="95"/>
+            <col width="113"/>
+            <col width="39"/>
+            <col width="192"/>
+            <col width="127"/>
+        </colgroup>
+        <thead>
+        <tr>
+                <th>
+                    <p dir="ltr">
+                        Name
+                    </p>
+                </th>
+                <th>
+                    <p dir="ltr">
+                        Platform
+                    </p>
+                </th>
+                <th>
+                    <p dir="ltr">
+                        Groups of samples
+                    </p>
+                </th>
+                <th>
+                    <p dir="ltr">
+                        N
+                    </p>
+                </th>
+                <th>
+                    <p dir="ltr">
+                        Cell source
+                    </p>
+                </th>
+                <th>
+                    <p dir="ltr">
+                        Model
+                    </p>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            <tr>
+                <td rowspan="4">
+                    <p dir="ltr">
+                        GSE19330
+                    </p>
+                </td>
+                <td rowspan="4">
+                    <p dir="ltr">
+                        HG-U133 Plus 2
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        Epiderm_219
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        5
+                    </p>
+                </td>
+                <td rowspan="4">
+                    <br/>
+                    <p dir="ltr">
+                        epidermal keratinocytes
+                    </p>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                </td>
+                <td rowspan="4">
+                    <p dir="ltr">
+                        epidermis
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p dir="ltr">
+                        Epiderm_254
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        5
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p dir="ltr">
+                        Epiderm_926
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        5
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p dir="ltr">
+                        Epiderm_1188
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        5
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td rowspan="4">
+                    <br/>
+                    <p dir="ltr">
+                        GSE17539
+                    </p>
+                </td>
+                <td rowspan="4">
+                    <br/>
+                    <p dir="ltr">
+                        HG-U133 Plus 2
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        NHS
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        4
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        whole skin
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        whole skin
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p dir="ltr">
+                        RHS_3days
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        3
+                    </p>
+                </td>
+                <td rowspan="3">
+                    <p dir="ltr">
+                        epidermal keratinocytes + dermal fibroblasts
+                    </p>
+                </td>
+                <td rowspan="3">
+                    <p dir="ltr">
+                        whole skin
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p dir="ltr">
+                        RHS_7days
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        3
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p dir="ltr">
+                        RHS_14days
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        3
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td rowspan="4">
+                    <p dir="ltr">
+                        GSE3204
+                    </p>
+                </td>
+                <td rowspan="4">
+                    <p dir="ltr">
+                        HG-U133A
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        RHS
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        4
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        epidermal keratinocytes + dermal fibroblasts
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        whole skin
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p dir="ltr">
+                        NHDF
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        4
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        dermal fibroblasts
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        dermis
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p dir="ltr">
+                        NHEK
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        3
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        epidermal keratinocytes
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        epidermis
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p dir="ltr">
+                        NHS
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        4
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        whole skin
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        whole skin
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td rowspan="2">
+                    <p dir="ltr">
+                        GSE11418
+                    </p>
+                </td>
+                <td rowspan="2">
+                    <p dir="ltr">
+                        HG-U133 Plus 2
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        NHDF_6pas_neo
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        2
+                    </p>
+                </td>
+                <td rowspan="2">
+                    <p dir="ltr">
+                        dermal fibroblasts
+                    </p>
+                </td>
+                <td rowspan="2">
+                    <p dir="ltr">
+                        dermis
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p dir="ltr">
+                        NHDF_13pas_neo
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        3
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p dir="ltr">
+                        GSE63626
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        HG-U133 Plus 2
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        NHDF
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        4
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        dermal fibroblasts
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        dermis
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td rowspan="3">
+                    <p dir="ltr">
+                        GSE30355
+                    </p>
+                </td>
+                <td rowspan="3">
+                    <p dir="ltr">
+                        HG-U133 Plus 2
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        NHEK
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        10
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        cultured epidermal keratinocytes
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        epidermis
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p dir="ltr">
+                        NHEK_sort
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        10
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        flow cytometry
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        inflamed epidermis
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p dir="ltr">
+                        NHEK_las
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        10
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        isolated by laser capture microscopy
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        epidermis
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td rowspan="4">
+                    <p dir="ltr">
+                        GSE42114
+                    </p>
+                </td>
+                <td rowspan="4">
+                    <p dir="ltr">
+                        HG-U133 Plus 2
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        Basal_NHE
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        3
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        epidermis
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        epidermis
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p dir="ltr">
+                        Suprabasal_NHE
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        3
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        epidermis
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        epidermis
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p dir="ltr">
+                        Reticular_NHD
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        3
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        dermis
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        dermis
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p dir="ltr">
+                        NHE
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        10
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        epidermis
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        epidermis
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p dir="ltr">
+                        GSE8056
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        HG-U133 Plus 2
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        NHS
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        3
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        whole skin
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        whole skin
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p dir="ltr">
+                        GSE62333
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        HuGene-1_1-st
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        NHDF
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        20
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        dermal fibroblasts
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        dermis
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td rowspan="5">
+                    <p dir="ltr">
+                        LÓreal
+                    </p>
+                </td>
+                <td rowspan="5">
+                    <p dir="ltr">
+                        HuGene-1_0-st
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        NHE
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        4
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        epidermis
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        epidermis
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p dir="ltr">
+                        NHEK
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        4
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        epidermal keratinocytes
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        epidermis
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p dir="ltr">
+                        RHE_type_1
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        4
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        epidermal keratinocytes
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        epidermis
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p dir="ltr">
+                        RHE_type_2
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        4
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        epidermal keratinocytes
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        epidermis
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p dir="ltr">
+                        RHE_type_3
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        3
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        epidermal keratinocytes
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        epidermis
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p dir="ltr">
+                        GSE67527
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        HuGene-1_0-st
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        NHDF
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        4
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        dermal fibroblasts
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        dermis
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p dir="ltr">
+                        GSE25400
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        HuGene-1_0-st
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        EpiDerm
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        2
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        epidermal keratinocytes
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        epidermis
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p dir="ltr">
+                        GSE48459
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        HuGene-1_0-st
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        EpiDerm
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        4
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        epidermal keratinocytes
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        epidermis
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p dir="ltr">
+                        GSE48761
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        HuGene-1_0-st
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        NHDF
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        10
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        dermal fibroblasts
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        derma
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p dir="ltr">
+                        GSE28315
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        HuGene-1_0-st
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        NHE
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        6
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        Mainly epidermis with minimal dermis
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        epidermis
+                    </p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
+We obtained gene expression data for native skin, different skin layers and skin substitutes 
+(engineered skin/engineered epidermis/ NHDF/NHEK) from public domain (GEO and ArrayExpress):
+
+<ul>
+  <li> native human skin
+       <ul>
+         <li>whole skin</li>
+         <li>epidermis</li>
+         <li>dermis</li>
+       </ul>
+   </li>
+   <li>cultured skin substitutes
+       <ul>
+         <li>reconstructed epidermis</li>
+         <li>reconstructed human skin</li>
+         <li>epidermal skin-derived keratinocytes</li>
+         <li>dermal skin-derived fibroblasts</li>
+       </ul>
+   </li>
+</ul>
+<br/>
+ Data were profiled on different microarray platforms, so we performed harmonization in order 
+ to correct the difference between platforms.
+<ul>
+  <li>NHE_LÓreal samples show strong correlation (r=0,86) with all the three types of reconstructed epidermis (RhE type 1, type 2, type 3) 
+      as well as other NHE samples on</li>
+  <li>NHEK_LÓreal samples correlate better with reconstructed epidermis than with native skin.</li>
+  <li>NHDF samples show the weakest correlation with native skin on gene expression level among all samples</li>
+</ul>
+<hr/>
+<img src='/static/report/loreal/All_genes.png' style='width:95%' />
+<h4>Figure N. Native skin compared with different kinds of skin substitutes</h4>
+<hr/>
+Gene expression data suffers from the "curse of dimensionality" and so requires special approaches 
+to work with. One possible way to deal with dimensionality is to select a subset of features 
+(genes in our case) that is related to the process. We selected 192 genes that are associated with
+ ECM formation and remodeling and 89 core genes that are GFs or involved in regulation of GFs that are 
+ linked to the processes of skin development and proliferation.
+<hr/>
+
+<img src='/static/report/loreal/ECM_corplot.png' style='width:95%' />
+<h4>Figure N+1 ECM associated genes.(EMC_2.PNG)</h4>
+<hr/>
+<ul>
+  <li>RhE type 1 show more similarity to native human skin on ECM associated gene expression level.</li>
+  <li>NHDF samples do not correlate with NHE samples and all reconstructed epidermis samples (RhE type 1, 
+  type 2, type 3 and Epiderm samples except Epiderm GSE48459 samples)</li>
+  <li>NHS samples and whole skin substitutes (such as RHS from GSE3204 and GSE17539 datasets) group with 
+  NHDF samples and Reticual Dermis samples on ECM associated gene expression level</li>
+</ul>
+<hr/>
+<img src='/static/report/loreal/GF.png' style='width:95%' />
+<h4>Figure N+2 GFs genes</h4>
+<hr/>
+<ul>
+  <li>RhE type 2 show stronger correlation (r=0,97) with NHE LÓreal samples than RhE type 1 and type 3</li>
+</ul>
+
+
+Gene subsetting analysis demonstrates that samples could be divided into 2 groups that show 
+"dermis" signature and "epidermis" signature.<br/>
+Also, analysis allows to determine outliers (bad samples) from public domain, such as 
+GSE48459 (EpiDerm samples) that resemble "dermis" signature, while EpiDerm is a model of skin 
+epidermis and is supposed to show “epidermis” signature.
+
+<hr/>  
+  <h2  id='references'>References</h2>
+   
+   <ol style="font-size:9pt;">
+     <li>Augustin, I. Wnt signaling in skin homeostasis and pathology. J. Dtsch. 
+     Dermatol. Ges. 13, 302–306 (2015).</li>
+     <li>Chalhoub, N. & Baker, S. J. PTEN and the PI3-Kinase Pathway in Cancer. Annu.
+      Rev. Pathol. Mech. Dis. 4, 127–150 (2009).</li>
+      <li>Pastore, S., Mascia, F., Mariani, V. & Girolomoni, G. The Epidermal Growth Factor Receptor System in Skin Repair 
+      and Inflammation. J. Invest. Dermatol. 128, 1365–1374 (2008).</li>
+      <li>Vaid, R. et al. Functions of Polo-Like Kinases: A Journey From Yeast To Humans. Protein Pept. Lett. 23, 185–197 (2016).</li>
+   
+   </ol>
 
 </div>
 
@@ -760,7 +1818,7 @@
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#methods">Methods</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#gene_analysis">Gene level analysis</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#path_analysis">Pathway analysis</a></li>
-            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#key_regulators">Key regulators</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#public_domain">Public domain screening</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#references">References</a></li>
           </ul>
         </div>
@@ -785,9 +1843,10 @@
     <script src="/static/report/loreal/js/venn.js/venn.js" type="text/javascript"></script>
     <script src="/static/report/loreal/js/tables.js" type="text/javascript"></script>
     <script src="/static/report/loreal/js/scatter.js" type="text/javascript"></script>
-    <script src="/static/report/loreal/js/3d.js" type="text/javascript"></script>
-    <script src="/static/report/loreal/js/venn-diagram.js" type="text/javascript"></script>
+    <script src="/static/report/loreal/js/boxplot.js" type="text/javascript"></script>
     
+    <script src="/static/report/loreal/js/venn-diagram.js" type="text/javascript"></script>
+    <script src="/static/report/loreal/js/3d.js" type="text/javascript"></script>
     
     
     
