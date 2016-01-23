@@ -57,49 +57,50 @@
           <ul>
           <li>NHE - normal human epidermis</li>
           <li>NHEK - normal human epidermal keratinocytes</li>
-          <li>NHD - normal human dermis</li>
-          <li>NHDF - normal human dermal fibroblasts</li>
-          <li>RhE - reconstructed human epidermis</li>
-          <li>RHS - reconstructed human skin</li>
-          <li>ECM - extracellular matrix</li>
-          <li>GF - growth factor</li>
+          <li>RhE - reconstructed human epidermis/li>
           <li>PAS - pathway activation score</li>
           <li>PCA - principal component analysis</li>
-          <li>PTEN - phosphatase and tensin homolog</li>
-          <li>EGF- epidermal growth factor</li>
-          <li>EGFR- epidermal growth factor receptor</li>
-          <li>HAS - hyaluronan synthases</li>
+          <li>ECM - extracellular matrix</li>
           <li>MMP - matrix metalloproteinases</li>
-          <li>HYAL - hyaluronoglucosaminidase</li> 
+          <li>HYAL - hyaluronoglucosaminidase </li>
+          <li>HAS - hyaluronan synthases</li>
+          <li>COL - collagen</li>
           <li>FN - fibronectin</li>
-          <li>ELN - elastin</li>
           <li>KRT - keratin</li>
-          <li>GH - plateled derived growth factor</li>
-          <li>PDGF- growth hormone</li>
+          <li>ELN - elastin</li>
+          <li>GF - growth factor</li>
+          <li>FGFR - fibroblast growth factor receptor</li>
+          <li>EGF - epidermal growth factor</li> 
+          <li>PLK1 - Polo-Like Kinase 1</li>
+          <li>GSK3B - Glycogen synthase kinase 3 beta</li>
+          <li>ILK - interleukin</li>
+          <li>PTEN - phosphatase and tensin homolog</li>
+          <li>EGFR - epidermal growth factor receptor</li>
+          <li>IGF- Insulin-like growth factor</li>
+          <li>NHDF - normal human dermal fibroblasts</li>
+          <li>NHS - native human skin</li>
+          <li>RHS - reconstructed human skin</li>
+          <li>NHD - normal human dermis</li>
+          <li>FGF - fibroblast growth factor</li>
+          <li>GH - growth hormone</li>
           </ul>
           
           <hr/>
           <h2 id="methods" >Methods</h2>
           <hr/>
           
-          Raw gene expression data, provided by Episkin, was processed with frozen RMA method 
-          [McCall, Matthew N., Benjamin M. Bolstad, and Rafael A. Irizarry. "Frozen robust multiarray analysis
-           (fRMA)." Biostatistics 11.2 (2010): 242-253.]. Differential gene Five functional groups were 
-           considered in the analysis: NHE, NHEK, RhE (Type 1), RhE (Type 2) and RhE (Type 3). In all 
-           following parts of analysis NHE group was used as a reference and other groups were compared 
-           to it. For the gene-level analysis, we performed Student’s T-test followed by Benjamini-Hochberg 
-           FDR adjustment [Benjamini, Y., and Y. Hochberg. 1995. Controlling the false discovery rate: a 
-           practical and powerful approach to multiple testing. Journal of the Royal Statistical Society B 57:
-            289-300.]. For pathway level analysis each preprocessed gene expression group was independently 
-            compared to NHE reference using an algorithm called OncoFinder [Buzdin AA, Zhavoronkov AA, Korzinkin
-             MB, Venkova LS, Zenin AA, Smirnov PY, Borisov NM. Oncofinder, a new method for the analysis of 
-             intracellular signaling pathway activation using transcriptomic data. Front Genet. 2014; 5:55.]. 
-             Taking the preprocessed gene expression data as an input it allows for cross-platform dataset 
-             comparison with low error rate and has the ability to obtain functional features of intracellular
-              regulation using mathematical estimations. Positive and negative PAS values indicate pathway 
-              up- and down-regulation, respectively. 
-Gene expression datasets from public domain that came from different microarray platforms were preprocessed
- and harmonized.
+          Raw gene expression data, provided by Episkin, was processed with frozen RMA method [1]. Five 
+          functional groups were considered in the differential gene expression analysis: NHE, NHEK, RhE 
+          
+          (Type 1), RhE (Type 2) and RhE (Type 3). In all following parts of analysis NHE group was used 
+          as a reference and other groups were compared to it. For the gene-level analysis, we performed 
+          Student’s T-test followed by Benjamini-Hochberg FDR adjustment [2]. For the pathway level analysis 
+          each preprocessed gene expression group was independently compared to NHE reference using an 
+          algorithm called OncoFinder [3]. Using preprocessed gene expression data as an input allows 
+          for cross-platform dataset comparison with low error rate and provides the ability to obtain 
+          functional features of intracellular regulation using mathematical estimations. Positive and 
+          negative PAS values indicate pathway up- and down-regulation, respectively. In total, we 
+          performed the analysis of 1856 signaling and 319 metabolic pathways. 
  
  
           <hr/>          
@@ -211,6 +212,12 @@ Gene expression datasets from public domain that came from different microarray 
 <hr/>
 <h3>Notable genes</h3>
 <hr/>
+The analysis of gene expression of the components that are involved in formation and remodeling of ECM 
+shows that RhE samples contain highly expressed enzymes that are connected with the degradation of ECM 
+(such as MMPs, HYALs) and low expressed enzymes that are involved in formation of ECM (HAS1, COL1, FN1). 
+Some of the major GF associated genes are significantly upregulated in RhE (for example, GH1) compared to
+ NHE and NHEK, while some are downregulated (FGF1, EGF). Several GF genes and genes of GF receptors may 
+ serve as a marker for NHEK (FGF1, EGF, WNT1).
 
 <div>
  <!-- GENE Nav tabs -->
@@ -239,15 +246,19 @@ Gene expression datasets from public domain that came from different microarray 
 <h2 id='path_analysis'>Pathway Analysis</h2>
 <hr/>
 
-NHE samples were selected as a norm for differential pathway analysis.<br/>
-Pathway signature shows that skin models resemble mature skin with downregulation of early stage 
-of skin development and repair processes pathways such as WNT pathways [1] and EGF and EGFR pathways [2].<br/>
-However, tissues proliferate, cell division and growth are still active on a pathway level: downregulation of 
-PTEN pathway[3], upregulation of PLK1-pathway[4].Growth hormone involved in
-<br/><br/>
-One of the most upregulated is a group of Extracellular remodeling pathways. 
 
 <h3>Signaling Pathways</h3>
+
+NHE samples were selected as a norm for differential pathway analysis.<br/>
+Among all examined samples NHEK samples show more perturbed pathways 
+(1826 dysregulated pathways compared to 1784, 1765, 1768 for RhE type 1, type 2, type 3, respectively) 
+and so these samples are more distant from NHE. Strong upregulation of Aurora B signaling pathway [4],
+ PLK1-pathway [5], GSK3B ILK regulated pathway [6], repression of PTEN pathway [7] support the evidence
+  that NHEK proliferate more actively than RhE samples. Also, pathway signature shows that RhE resemble
+   mature skin with downregulation of early stage of skin development and repair processes pathways such
+    as WNT pathway [8], EGF and EGFR pathways [9]. Growth hormone is well known to be actively involved 
+    in skin development and repair [10] and is also inhibited along with IGF.
+The group of Extracellular remodeling pathways is activated in NHEK, while in RhE samples it is repressed.
 
  <!-- PAthway Nav tabs -->
          <ul class="nav nav-tabs" role="tablist">
@@ -538,6 +549,19 @@ One of the most upregulated is a group of Extracellular remodeling pathways.
 <!-- ---------------------------- METABOLIC------------------------ -->
 <h3>Metabolic Pathways</h3>
 <hr/>
+
+NHE demonstrated more dysregulated metabolic pathways 
+(281 compared to 256, 246, 252 for RhE type 1, type 2, type 3 respectively).<br/>
+Metabolic pathways screening showed that all studied samples have a suppressed biosynthesis of
+ ECM skin-associated polysaccharides, such as dermatan sulfate, heparan sulfate [11]. However,
+  RhE samples demonstrate an activation of all metabolic pathways of cholesterol biosynthesis 
+  and fatty acids metabolism. For example, we observed the activation of ester lipids and 
+  arachidonic acid (polyunsaturated omega-6 fatty acid), linoleic acid (polyunsaturated omega-6 fatty acid)
+   metabolism signaling pathways in RhE samples. Since cholesterol, fatty acids and their esters are major 
+   components of stratum corneum [12] and all of the above mentioned pathways are not extremely perturbed 
+   compared to the reference NHE, RhE resemble the signature of a "horny layer” of skin on a pathway level. 
+To sum up, the models of RhE resemble mature epidermis with "horny layer" on a pathway and gene expression 
+level. RhE type 2 samples are more similar to NHE on signaling and metabolic pathway levels.
  <!-- Meabolic PAthway Nav tabs -->
          <ul class="nav nav-tabs" role="tablist">
          <li role="presentation" class="active"><a href="#meta_all_tab" aria-controls="settings" role="tab" data-toggle="tab">ALL</a></li>
@@ -1747,7 +1771,7 @@ We obtained gene expression data for native skin, different skin layers and skin
 </ul>
 <hr/>
 <img src='/static/report/loreal/All_genes.png' style='width:95%' />
-<h4>Figure N. Native skin compared with different kinds of skin substitutes</h4>
+<h4>Figure 1. Native skin compared with different kinds of skin substitutes </h4>
 <hr/>
 Gene expression data suffers from the "curse of dimensionality" and so requires special approaches 
 to work with. One possible way to deal with dimensionality is to select a subset of features 
@@ -1757,10 +1781,10 @@ to work with. One possible way to deal with dimensionality is to select a subset
 <hr/>
 
 <img src='/static/report/loreal/ECM_corplot.png' style='width:95%' />
-<h4>Figure N+1 ECM associated genes.(EMC_2.PNG)</h4>
+<h4>Figure 2. ECM associated genes.</h4>
 <hr/>
 <ul>
-  <li>RhE type 1 show more similarity to native human skin on ECM associated gene expression level.</li>
+  <li>RhE type 1 shows similarity to native human skin on ECM associated gene expression level.</li>
   <li>NHDF samples do not correlate with NHE samples and all reconstructed epidermis samples (RhE type 1, 
   type 2, type 3 and Epiderm samples except Epiderm GSE48459 samples)</li>
   <li>NHS samples and whole skin substitutes (such as RHS from GSE3204 and GSE17539 datasets) group with 
@@ -1768,30 +1792,46 @@ to work with. One possible way to deal with dimensionality is to select a subset
 </ul>
 <hr/>
 <img src='/static/report/loreal/GF.png' style='width:95%' />
-<h4>Figure N+2 GFs genes</h4>
+<h4>Figure 3. GFs genes</h4>
 <hr/>
 <ul>
-  <li>RhE type 2 show stronger correlation (r=0,97) with NHE LÓreal samples than RhE type 1 and type 3</li>
+  <li>RhE type 2 shows stronger correlation (r=0,97) with NHE LÓreal samples than RhE type 1 and type 3.</li>
 </ul>
+<br/>
+Gene subsetting analysis demonstrated that samples could be divided into 2 groups that show "dermis" 
+signature and "epidermis" signature.<br/>
+Also, analysis allows to determine outliers from public domain, such as GSE48459 (EpiDerm samples) that 
+strangely resemble "dermis" signature, while EpiDerm is a model of skin epidermis and is supposed to show 
+“epidermis” signature.
 
-
-Gene subsetting analysis demonstrates that samples could be divided into 2 groups that show 
-"dermis" signature and "epidermis" signature.<br/>
-Also, analysis allows to determine outliers (bad samples) from public domain, such as 
-GSE48459 (EpiDerm samples) that resemble "dermis" signature, while EpiDerm is a model of skin 
-epidermis and is supposed to show “epidermis” signature.
 
 <hr/>  
   <h2  id='references'>References</h2>
    
    <ol style="font-size:9pt;">
-     <li>Augustin, I. Wnt signaling in skin homeostasis and pathology. J. Dtsch. 
-     Dermatol. Ges. 13, 302–306 (2015).</li>
-     <li>Chalhoub, N. & Baker, S. J. PTEN and the PI3-Kinase Pathway in Cancer. Annu.
-      Rev. Pathol. Mech. Dis. 4, 127–150 (2009).</li>
-      <li>Pastore, S., Mascia, F., Mariani, V. & Girolomoni, G. The Epidermal Growth Factor Receptor System in Skin Repair 
-      and Inflammation. J. Invest. Dermatol. 128, 1365–1374 (2008).</li>
-      <li>Vaid, R. et al. Functions of Polo-Like Kinases: A Journey From Yeast To Humans. Protein Pept. Lett. 23, 185–197 (2016).</li>
+     <li>McCall, Matthew N., Benjamin M. Bolstad, and Rafael A. Irizarry. "Frozen robust multiarray analysis
+      (fRMA)." Biostatistics 11.2 (2010): 242-253.</li>
+     <li>Benjamini, Y., and Y. Hochberg. 1995. Controlling the false discovery rate: a practical and 
+     powerful approach to multiple testing. Journal of the Royal Statistical Society B 57: 289-300.</li>
+      <li>Buzdin AA, Zhavoronkov AA, Korzinkin MB, Venkova LS, Zenin AA, Smirnov PY, Borisov NM. 
+      Oncofinder, a new method for the analysis of intracellular signaling pathway activation using 
+      transcriptomic data. Front Genet. 2014; 5:55.</li>
+      <li>Fu, J., Bian, M., Jiang, Q. & Zhang, C. Roles of Aurora kinases in mitosis and tumorigenesis. 
+      Mol. Cancer Res. 5, 1–10 (2007).</li>
+      <li>Vaid, R. et al. Functions of Polo-Like Kinases: A Journey From Yeast To Humans. Protein Pept.
+       Lett. 23, 185–197 (2016).</li>
+       <li>Rayasam, G. V., Tulasi, V. K., Sodhi, R., Davis, J. A. & Ray, A. Glycogen synthase kinase 3: 
+       more than a namesake. Br. J. Pharmacol. 156, 885–898 (2009).</li>
+       <li>Chalhoub, N. & Baker, S. J. PTEN and the PI3-Kinase Pathway in Cancer. Annu. Rev. Pathol. Mech. 
+       Dis. 4, 127–150 (2009).</li>
+       <li>Augustin, I. Wnt signaling in skin homeostasis and pathology. J. Dtsch. Dermatol. Ges. 13, 302–306 (2015).</li>
+       <li> Pastore, S., Mascia, F., Mariani, V. & Girolomoni, G. The Epidermal Growth Factor Receptor System in Skin 
+       Repair and Inflammation. J. Invest. Dermatol. 128, 1365–1374 (2008).</li>
+       <li>Póvoa, G. & Diniz, L. M. Growth hormone system: skin interactions. An. Bras. Dermatol. 86, 
+       1159–65 (2011).</li>
+       <li>Trowbridge, J. M. & Gallo, R. L. Dermatan sulfate: new functions from an old glycosaminoglycan. 
+       Glycobiology 12, 117R–25R (2002).</li>
+       <li>Wertz, P. W. Epidermal lipids. Semin. Dermatol. 11, 106–13 (1992).</li>
    
    </ol>
 

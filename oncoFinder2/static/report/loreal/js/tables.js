@@ -92,7 +92,8 @@ function drawGeneTable(id, file_name){
         "dom": 'Bfrtip',
         "buttons": [
                    {extend: 'csv', title: file_name},
-                   'print'
+                   {extend: 'print', title: file_name}
+                   
               ],
         
         "ajax": {'url':'/report-portal/genetablejson/',
@@ -134,7 +135,7 @@ function drawPathwayTable(id, file_name1, file_name2, is_metabolic){
         "info":     false,
         
         "dom": 'Bfrtip',
-        "buttons": [{extend: 'csv', title: id}, 'pdf', 'print'],
+        "buttons": [{extend: 'csv', title: id}, {extend: 'pdf', title: id} , 'print'],
         
         "ajax": {'url':'/report-portal/pathwaytablejson/',
         	     'type': 'GET',
