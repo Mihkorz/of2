@@ -25,8 +25,9 @@ class LorealReport(TemplateView):
         context = super(LorealReport, self).get_context_data(**kwargs)
         
         lGenes = ['COL1A1', 'COL1A2', 'KRT7', 'HYAL1', 'HYAL2', 'HYAL4', 'HAS1', 'HAS2',
-               'ELN', 'MMP1', 'MMP13', 'MMP8', 'FN1', 'WNT1', 'EGF', 'EGFR', 'GH1', 'PDGF', 'TGFb',
-               'FGF1', 'FGFR']
+               'ELN', 'MMP1', 'MMP13', 'MMP8', 'FN1', 'WNT1', 'EGF', 'EGFR', 'GH1', 'PDGF', 'TGFB1',
+               'TGFBR1', 'TGFBR2',
+               'FGF1', 'FGFR1']
         
         context['lGenes'] = lGenes
         
