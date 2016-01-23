@@ -121,6 +121,8 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
+X_FRAME_OPTIONS = 'EXEMPT'
+
 ROOT_URLCONF = 'oncoFinder2.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
