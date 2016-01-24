@@ -54,7 +54,9 @@ function drawDinamicTable(idx){
 		                  
 		                  {extend: 'pdf',
 		                  title: tblId},
-		                 'print'
+		                  {extend: 'print',
+			                  title: tblId},
+		                 
 		                 ],
 		        "ajax": {'url':'/report-portal/report/ajaxpathvenntbl/',
 		        	     'type': 'GET',
