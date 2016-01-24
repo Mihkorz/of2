@@ -151,7 +151,18 @@ function drawPathwayTable(id, file_name1, file_name2, is_metabolic){
 		if(file_name1!='all'){
 	
 	    $('#'+id).on( 'draw.dt', function () {
-    	    $("table#"+id+".path tr td:nth-child(2)").wrapInner('<a href="#/"></a>');
+	    	
+	    	var path_name_td = $("table#"+id+".path tr td:first-child()");
+	    	path_name_td.each(function(){
+	    		var path_long_name = $(this).text();
+	    		if(path_long_name.length > 70){
+		    		var short_name = $.trim(path_long_name).substring(0, 70)
+	                .trim(this) + "...";
+		    		$(this).html("<span title='"+path_long_name+"'>"+short_name+"</span>");
+		    	}
+	    	});	    	
+    	    
+	    	$("table#"+id+".path tr td:nth-child(2)").wrapInner('<a href="#/"></a>');
     	    $("table#"+id+".path tr td:nth-child(3)").wrapInner('<a href="#/"></a>')
         } );
 	
@@ -168,6 +179,18 @@ function drawPathwayTable(id, file_name1, file_name2, is_metabolic){
 	    }
 	    else {
 		    $('#'+id).on( 'draw.dt', function () {
+		    	
+		    	var path_name_td = $("table#"+id+".path tr td:first-child()");
+		    	path_name_td.each(function(){
+		    		var path_long_name = $(this).text();
+		    		if(path_long_name.length > 70){
+			    		var short_name = $.trim(path_long_name).substring(0, 70)
+		                .trim(this) + "...";
+			    		$(this).html("<span title='"+path_long_name+"'>"+short_name+"</span>");
+			    	}
+		    	});	  
+		    	
+		    	
 	    	    $("table#"+id+".path tr td:nth-child(2)").wrapInner('<a href="#/"></a>');
 	    	    $("table#"+id+".path tr td:nth-child(3)").wrapInner('<a href="#/"></a>');
 	    	    $("table#"+id+".path tr td:nth-child(4)").wrapInner('<a href="#/"></a>');
