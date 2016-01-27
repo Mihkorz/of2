@@ -852,6 +852,7 @@ class CoreSetCalculationParameters(FormView):
         cnr_doc_df.to_excel(output_file,sheet_name='CNR')
         cnr_unchanged_df = cnr_unchanged_df.astype('float32')
         cnr_unchanged_df.to_excel(output_file_row,sheet_name='CNR')
+        
         """
         with ExcelWriter(output_file, engine='xlsxwriter') as writer:
             cnr_doc_df.to_excel(writer,'CNR')
@@ -955,40 +956,32 @@ class Test(TemplateView):
     
     def get_context_data(self, **kwargs):
         context = super(Test, self).get_context_data(**kwargs)
-        """
-        import pandas as pd
-        lca = []
         
+        paths = Pathway.objects.filter(organism='mouse', database='primary_new')
         
-        
-        old_df = pd.DataFrame( columns=range(300))
-        
-        i = 0
-        for node in Node.objects.filter(pathway__database='biocarta', pathway__organism='human').order_by('name'):
-            i = i+1
-            print node.name+' i='+str(i)+ ' org='+node.pathway.organism
-            lc = []
-            for comp in node.component_set.all():
-                lc.append(comp.name)
+        dNodes = {}
+        for path in paths:
+            print path.name
             
-            lc.sort()
-            
-            if lc not in lca:
-                lca.append(lc)
-                s1 = pd.Series(lc, name=node.name)
-                old_df = old_df.append(s1)
-                
-            
-                
+            for node in path.node_set.all():
+                lcomp = []
+                for comp in node.component_set.all():
+                    lcomp.append(comp.name)
                     
+                dNodes[node.name] = lcomp
                 
-               
             
-              
-        old_df = old_df.transpose()
-        old_df.to_csv(settings.MEDIA_ROOT+'/nodes-comp-biocarta.csv')
-        raise Exception('stop1111')
-        """
+            df = DataFrame.from_dict(dNodes, orient='index')
+            df = df.transpose()
+            
+            df.to_csv(settings.MEDIA_ROOT+'/renamed_nodes/mouse/primary_new/'+path.name+'.csv')
+                
+           
+             
+        
+        
+        raise Exception('test stop')
+        
         df1=read_csv(settings.MEDIA_ROOT+'/nodes-comp-biocarta.csv')
         df1 = df1.T.drop_duplicates().T
         def mazafaka(row):

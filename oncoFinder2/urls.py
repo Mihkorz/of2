@@ -13,6 +13,9 @@ from website.report_views import LorealReport, \
                                  ReportGeneTableJson, ReportGeneScatterJson, ReportGeneDetailJson, ReportGeneBoxplotJson, \
                                  ReportPathwayScatterJson, ReportPathwayTableJson, ReportAjaxPathDetail, \
                                  ReportAjaxPathwayVenn, ReportAjaxPathwayVennTable
+                                 
+from website.bt_report_views import BTReport, \
+                                    BTGeneVolcanoJson, BTReportGeneTableJson, BTReportGeneBoxplotJson
                           
 from website.nn_views import nnBloodView, nnBloodResult 
 
@@ -131,7 +134,7 @@ urlpatterns = patterns('',
     url(r'^utils/path$', ConvertPath.as_view(), name="convert_path"),
     url(r'^utils/ksyu$', Ksyusha.as_view(), name="ksyusha"),
     
-    ################### REPORT ###############################################
+    ################### REPORT L'oreal ###############################################
     url(r'^report-portal/report/loreal/$', LorealReport.as_view(), name="loreal-report"),
     url(r'^report-portal/genescatterjson/$', ReportGeneScatterJson.as_view(), name="gene_scatter_json"),
     url(r'^report-portal/genetablejson/$', ReportGeneTableJson.as_view(), name="gene_table_json"),
@@ -143,6 +146,11 @@ urlpatterns = patterns('',
     url(r'^report-portal/report/ajaxpathvenn/$', ReportAjaxPathwayVenn.as_view(), name="report_ajax_path_venn"),
     url(r'^report-portal/report/ajaxpathvenntbl/$', ReportAjaxPathwayVennTable.as_view(), name="report_ajax_path_venn_tbl"),
     
+    ################### REPORT BT ###############################################
+    url(r'^report-portal/report/bt/$', BTReport.as_view(), name="bt-report"),
+    url(r'^report-portal/bt-genevolcanojson/$', BTGeneVolcanoJson.as_view(), name="bt-gen-volcano-json"),
+    url(r'^report-portal/bt-genetablejson/$', BTReportGeneTableJson.as_view(), name="bt-gene_table_json"),
+    url(r'^report-portal/bt-genesboxplotjson/$', BTReportGeneBoxplotJson.as_view(), name="bt-gene_boxplot_json"),
     ################### BLOOD NN ###############################################
     url(r'^nn-blood/$', nnBloodView.as_view(), name="nn-blood"),
     url(r'^nn-blood/result/$', nnBloodResult.as_view(), name="nn-blood"),
