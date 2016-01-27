@@ -879,11 +879,11 @@ class ReportAjaxPathwayVennTable(TemplateView):
             if is_metabolic=='true':
                 df_1 = df_1[df_1['Database']=='metabolism']
                 df_2 = df_2[df_2['Database']=='metabolism']
-                df_3 = df_2[df_3['Database']=='metabolism']
+                df_3 = df_3[df_3['Database']=='metabolism']
             else:                
                 df_1 = df_1[df_1['Database']!='metabolism']
                 df_2 = df_2[df_2['Database']!='metabolism']
-                df_3 = df_2[df_3['Database']!='metabolism']
+                df_3 = df_3[df_3['Database']!='metabolism']
             
             s_tumour1 = df_1[[x for x in df_1.columns if 'Tumour' in x]]
             s_tumour1 = s_tumour1.mean(axis=1).round(decimals=2)

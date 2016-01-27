@@ -217,6 +217,289 @@ class BTReportGeneBoxplotJson(TemplateView):
         return HttpResponse(json.dumps(response_data), content_type="application/json")
 
 
+class BTReportAjaxPathwayVenn(TemplateView):
+    template_name="website/report_ajax_venn.html"
+    def dispatch(self, request, *args, **kwargs):
+        return super(BTReportAjaxPathwayVenn, self).dispatch(request, *args, **kwargs)
+    
+    def get(self, request, *args, **kwargs):
+          
+                
+        file_name1 = self.request.GET.get('file_name1')
+        name1 = self.request.GET.get('name1')
+        file_name2 = self.request.GET.get('file_name2')        
+        name2 = self.request.GET.get('name2')
+        file_name3 = self.request.GET.get('file_name3')        
+        name3 = self.request.GET.get('name3')
+        is_metabolic = self.request.GET.get('is_metabolic')
+        regulation = self.request.GET.get('regulation')
+              
+        
+        venn_cyrcles = []
+        
+        
+        df1 = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/"+file_name1,
+                                  index_col='Pathway')
+        df2 = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/"+file_name2,
+                                 index_col='Pathway')
+        df3 = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/"+file_name3,
+                                  index_col='Pathway') 
+           
+         
+        if is_metabolic=='true':
+            df1 = df1[df1['Database']=='metabolism']
+            df2 = df2[df2['Database']=='metabolism']
+            df3 = df3[df3['Database']=='metabolism']
+        else:
+            df1 = df1[df1['Database']!='metabolism']
+            df2 = df2[df2['Database']!='metabolism']
+            df3 = df3[df3['Database']!='metabolism']
+                
+        dict_s = {}
+        list_s = [name1, name2, name3]
+         
+            
+        
+        st1_tumour = df1['0']
+        st1_tumour_up = st1_tumour[st1_tumour>0]
+        st1_tumour_down = st1_tumour[st1_tumour<0]
+        if regulation == 'updown':
+            venn_cyrcles.append({'sets': [name1], 'size': (st1_tumour_up.count()+st1_tumour_down.count()),
+                                     'id': '1_updown_'+name1+'_'+is_metabolic})
+        elif regulation == 'up':
+            venn_cyrcles.append({'sets': [name1], 'size': (st1_tumour_up.count()),
+                                     'id': '1_up_'+name1+'_'+is_metabolic})
+        elif regulation == 'down':
+            venn_cyrcles.append({'sets': [name1], 'size': (st1_tumour_down.count()),
+                                     'id': '1_down_'+name1+'_'+is_metabolic})
+        dict_s[name1] = st1_tumour
+        dict_s[name1+' up'] = st1_tumour_up.index
+        dict_s[name1+' down'] = st1_tumour_down.index        
+          
+           
+        st2_tumour = df2['0']
+        st2_tumour_up = st2_tumour[st2_tumour>0]
+        st2_tumour_down = st2_tumour[st2_tumour<0]
+        if regulation == 'updown':
+            venn_cyrcles.append({'sets': [name2], 'size': (st2_tumour_up.count()+st2_tumour_down.count()),
+                                     'id': '1_updown_'+name2+'_'+is_metabolic})
+        elif regulation == 'up':
+            venn_cyrcles.append({'sets': [name2], 'size': (st2_tumour_up.count()),
+                                     'id': '1_up_'+name2+'_'+is_metabolic})
+        elif regulation == 'down':
+            venn_cyrcles.append({'sets': [name2], 'size': (st2_tumour_down.count()),
+                                     'id': '1_down_'+name2+'_'+is_metabolic})    
+        dict_s[name2] = st2_tumour
+        dict_s[name2+' up'] = st2_tumour_up.index
+        dict_s[name2+' down'] = st2_tumour_down.index
+          
+        st3_tumour = df3['0']
+        st3_tumour_up = st3_tumour[st3_tumour>0]
+        st3_tumour_down = st3_tumour[st3_tumour<0]
+        if regulation == 'updown':
+                venn_cyrcles.append({'sets': [name3], 'size': (st3_tumour_up.count()+st3_tumour_down.count()),
+                                     'id': '1_updown_'+name3+'_'+is_metabolic})
+        elif regulation == 'up':
+                venn_cyrcles.append({'sets': [name3], 'size': (st3_tumour_up.count()),
+                                     'id': '1_up_'+name3+'_'+is_metabolic})
+        elif regulation == 'down':
+                venn_cyrcles.append({'sets': [name3], 'size': (st3_tumour_down.count()),
+                                     'id': '1_down_'+name3+'_'+is_metabolic})
+        dict_s[name3] = st3_tumour
+        dict_s[name3+' up'] = st3_tumour_up.index
+        dict_s[name3+' down'] = st3_tumour_down.index
+        
+        
+         
+            
+        combinations_2= list(itertools.combinations(list_s, 2)) # get all pairs of items
+        for idx, combination in enumerate(combinations_2):
+                
+            index1_up = dict_s[combination[0]+' up']
+            index1_down = dict_s[combination[0]+' down']
+            index2_up = dict_s[combination[1]+' up']                
+            index2_down = dict_s[combination[1]+' down']
+            if regulation == 'updown':
+                intersection = len(index1_up.intersection(index2_up))+len(index1_down.intersection(index2_down))
+                id_x = '2_updown_'+combination[0]+'vs'+ combination[1]+'_'+is_metabolic
+            elif regulation == 'up':
+                intersection = len(index1_up.intersection(index2_up))
+                id_x = '2_up_'+combination[0]+'vs'+ combination[1]+'_'+is_metabolic
+            elif regulation == 'down':
+                intersection = len(index1_down.intersection(index2_down))
+                id_x = '2_down_'+combination[0]+'vs'+ combination[1]+'_'+is_metabolic
+            venn_cyrcles.append({'sets': [combination[0], combination[1]],
+                                     'size': intersection,
+                                     'id': id_x })
+             
+        combinations_3= list(itertools.combinations(list_s, 3)) # get all triplets of items
+        for idx, combination in enumerate(combinations_3):
+                
+            index1_up = dict_s[combination[0]+' up']
+            index1_down = dict_s[combination[0]+' down']
+            index2_up = dict_s[combination[1]+' up']                
+            index2_down = dict_s[combination[1]+' down']
+            index3_up = dict_s[combination[2]+' up']                
+            index3_down = dict_s[combination[2]+' down']
+                
+            inter_up = (index1_up.intersection(index2_up)).intersection(index3_up)
+            inter_down = (index1_down.intersection(index2_down)).intersection(index3_down)
+            if regulation == 'updown':
+                intersection = len(inter_up)+len(inter_down)
+                id_x = '3_updown_'+combination[0]+'vs'+combination[1]+'vs'+combination[2]+'_'+is_metabolic
+            elif regulation == 'up':
+                intersection = len(inter_up)
+                id_x = '3_up_'+combination[0]+'vs'+combination[1]+'vs'+combination[2]+'_'+is_metabolic
+            elif regulation == 'down':
+                intersection = len(inter_down)
+                id_x = '3_down_'+combination[0]+'vs'+combination[1]+'vs'+combination[2]+'_'+is_metabolic
+            venn_cyrcles.append({'sets': [combination[0], combination[1], combination[2]],
+                                     'size': intersection,
+                                     'id': id_x})
+ 
+            #raise Exception('venn all')
+
+        response_data= venn_cyrcles
+
+        return HttpResponse(json.dumps(response_data), content_type="application/json")
+    
+class BTReportAjaxPathwayVennTable(TemplateView):
+    template_name="website/report_ajax_venn.html"
+    def dispatch(self, request, *args, **kwargs):
+        return super(BTReportAjaxPathwayVennTable, self).dispatch(request, *args, **kwargs)
+    
+    def get(self, request, *args, **kwargs):
+        inter_num = int(self.request.GET.get('inter_num'))
+        regulation = self.request.GET.get('regulation')
+        members = self.request.GET.get('members')
+        is_metabolic = self.request.GET.get('is_metabolic')
+        
+        
+        lMembers = members.split('vs')
+        
+        
+        
+        if inter_num == 1:
+            
+            df_1 = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/pros_output_EPL_vs_"+lMembers[0]+".csv",
+                                 index_col='Pathway')
+            
+                        
+            if is_metabolic=='true':
+                df_1 = df_1[df_1['Database']=='metabolism']
+            else:                
+                df_1 = df_1[df_1['Database']!='metabolism']
+                
+            s_tumour = df_1['0'].round(decimals=2)
+            s_tumour.name = lMembers[0]
+            if regulation == 'updown':
+                s_tumour = s_tumour[s_tumour!=0]
+            elif regulation == 'up':            
+                s_tumour = s_tumour[s_tumour>0]
+            elif regulation == 'down':  
+                s_tumour = s_tumour[s_tumour<0]
+            
+            df_1_tumour = pd.DataFrame(s_tumour)
+            df_1_tumour.reset_index(inplace=True)
+            df_json = df_1_tumour.to_json(orient='values')
+            
+        
+        elif inter_num == 2:
+            df_1 = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/pros_output_EPL_vs_"+lMembers[0]+".csv",
+                                 index_col='Pathway') 
+            df_2 = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/pros_output_EPL_vs_"+lMembers[1]+".csv",
+                                 index_col='Pathway')
+            
+            if is_metabolic=='true':
+                df_1 = df_1[df_1['Database']=='metabolism']
+                df_2 = df_2[df_2['Database']=='metabolism']
+            else:                
+                df_1 = df_1[df_1['Database']!='metabolism']
+                df_2 = df_2[df_2['Database']!='metabolism']
+                
+            s_tumour1 = df_1['0'].round(decimals=2)
+            s_tumour1.name = lMembers[0]
+            
+            s_tumour2 = df_2['0'].round(decimals=2)
+            s_tumour2.name = lMembers[1]
+            if regulation == 'updown':
+                s_tumour1_up = s_tumour1[s_tumour1>0]
+                s_tumour1_down = s_tumour1[s_tumour1<0]
+                s_tumour2_up = s_tumour2[s_tumour2>0]
+                s_tumour2_down = s_tumour2[s_tumour2<0]
+                
+                df_up = pd.DataFrame(s_tumour1_up).join(pd.DataFrame(s_tumour2_up), how='inner', sort=True)         
+                df_down = pd.DataFrame(s_tumour1_down).join(pd.DataFrame(s_tumour2_down), how='inner', sort=True)
+                joined_df = df_up.append(df_down)
+            elif regulation == 'up':            
+                s_tumour1 = s_tumour1[s_tumour1>0]
+                s_tumour2 = s_tumour2[s_tumour2>0]
+                joined_df = pd.DataFrame(s_tumour1).join(pd.DataFrame(s_tumour2), how='inner')
+            elif regulation == 'down':  
+                s_tumour1 = s_tumour1[s_tumour1<0]
+                s_tumour2 = s_tumour2[s_tumour2<0]
+                joined_df = pd.DataFrame(s_tumour1).join(pd.DataFrame(s_tumour2), how='inner')
+            
+            joined_df.reset_index(inplace=True)
+            df_json = joined_df.to_json(orient='values')
+            
+        elif inter_num == 3:
+            df_1 = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/pros_output_EPL_vs_"+lMembers[0]+".csv",
+                                index_col='Pathway') 
+            df_2 = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/pros_output_EPL_vs_"+lMembers[1]+".csv",
+                                 index_col='Pathway')
+            df_3 = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/pros_output_EPL_vs_"+lMembers[2]+".csv",
+                                index_col='Pathway')
+            
+            if is_metabolic=='true':
+                df_1 = df_1[df_1['Database']=='metabolism']
+                df_2 = df_2[df_2['Database']=='metabolism']
+                df_3 = df_3[df_3['Database']=='metabolism']
+            else:                
+                df_1 = df_1[df_1['Database']!='metabolism']
+                df_2 = df_2[df_2['Database']!='metabolism']
+                df_3 = df_3[df_3['Database']!='metabolism']
+            
+            
+            s_tumour1 = df_1['0'].round(decimals=2)
+            s_tumour1.name = lMembers[0]
+           
+            s_tumour2 = df_2['0'].round(decimals=2)
+            s_tumour2.name = lMembers[1]
+            
+            s_tumour3 = df_3['0'].round(decimals=2)
+            s_tumour3.name = lMembers[2]
+            
+            if regulation == 'updown':
+                s_tumour1_up = s_tumour1[s_tumour1>0]
+                s_tumour1_down = s_tumour1[s_tumour1<0]
+                s_tumour2_up = s_tumour2[s_tumour2>0]
+                s_tumour2_down = s_tumour2[s_tumour2<0]
+                s_tumour3_up = s_tumour3[s_tumour3>0]
+                s_tumour3_down = s_tumour3[s_tumour3<0]
+                
+                df_up = pd.DataFrame(s_tumour1_up).join(pd.DataFrame(s_tumour2_up), how='inner', sort=True)
+                df_up = df_up.join(pd.DataFrame(s_tumour3_up), how='inner', sort=True)         
+                df_down = pd.DataFrame(s_tumour1_down).join(pd.DataFrame(s_tumour2_down), how='inner', sort=True)
+                df_down = df_down.join(pd.DataFrame(s_tumour3_down), how='inner', sort=True) 
+                joined_df = df_up.append(df_down)
+            elif regulation == 'up':            
+                s_tumour1 = s_tumour1[s_tumour1>0]
+                s_tumour2 = s_tumour2[s_tumour2>0]
+                s_tumour3 = s_tumour3[s_tumour3>0]
+                joined_df = pd.DataFrame(s_tumour1).join(pd.DataFrame(s_tumour2), how='inner')
+                joined_df = joined_df.join(pd.DataFrame(s_tumour3), how='inner')
+            elif regulation == 'down':  
+                s_tumour1 = s_tumour1[s_tumour1<0]
+                s_tumour2 = s_tumour2[s_tumour2<0]
+                joined_df = pd.DataFrame(s_tumour1).join(pd.DataFrame(s_tumour2), how='inner')
+                joined_df = joined_df.join(pd.DataFrame(s_tumour3), how='inner')
+            
+            joined_df.reset_index(inplace=True)
+            df_json = joined_df.to_json(orient='values')
+            
+        response_data = {'aaData': json.loads(df_json)}
+        return HttpResponse(json.dumps(response_data), content_type="application/json")
 
 
 

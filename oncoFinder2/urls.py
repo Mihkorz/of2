@@ -15,7 +15,8 @@ from website.report_views import LorealReport, \
                                  ReportAjaxPathwayVenn, ReportAjaxPathwayVennTable
                                  
 from website.bt_report_views import BTReport, \
-                                    BTGeneVolcanoJson, BTReportGeneTableJson, BTReportGeneBoxplotJson
+                                    BTGeneVolcanoJson, BTReportGeneTableJson, BTReportGeneBoxplotJson,\
+                                    BTReportAjaxPathwayVenn, BTReportAjaxPathwayVennTable
                           
 from website.nn_views import nnBloodView, nnBloodResult 
 
@@ -151,6 +152,8 @@ urlpatterns = patterns('',
     url(r'^report-portal/bt-genevolcanojson/$', BTGeneVolcanoJson.as_view(), name="bt-gen-volcano-json"),
     url(r'^report-portal/bt-genetablejson/$', BTReportGeneTableJson.as_view(), name="bt-gene_table_json"),
     url(r'^report-portal/bt-genesboxplotjson/$', BTReportGeneBoxplotJson.as_view(), name="bt-gene_boxplot_json"),
+    url(r'^report-portal/report/bt-ajaxpathvenn/$', BTReportAjaxPathwayVenn.as_view(), name="bt-report_ajax_path_venn"),
+    url(r'^report-portal/report/bt-ajaxpathvenntbl/$', BTReportAjaxPathwayVennTable.as_view(), name="bt-report_ajax_path_venn_tbl"),
     ################### BLOOD NN ###############################################
     url(r'^nn-blood/$', nnBloodView.as_view(), name="nn-blood"),
     url(r'^nn-blood/result/$', nnBloodResult.as_view(), name="nn-blood"),
