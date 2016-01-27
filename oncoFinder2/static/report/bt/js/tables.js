@@ -19,13 +19,13 @@
         xAxis: {
             categories: ['ES', 'EPL', 'ASC', 'ABC', 'AEC', 'ANC' , 'CCL'],
             title: {
-                text: 'Skin type'
+                text: 'Cell type'
             }
         },
 
         yAxis: {
             title: {
-                text: 'Expression'
+                text: 'Log2(Expression level)'
             },
             
         },

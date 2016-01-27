@@ -18,7 +18,7 @@ function drawGeneBoxplot(name, renderTo, gene){
         xAxis: {
             categories: ['NHK', 'RhE (Type1)', 'RhE (Type2)', 'RhE (Type3)'],
             title: {
-                text: 'Skin type'
+                text: 'Group'
             }
         },
 

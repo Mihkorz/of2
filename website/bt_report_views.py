@@ -54,7 +54,7 @@ class BTGeneVolcanoJson(TemplateView):
         df_gene.rename(columns={'gene': 'Symbol'}, inplace=True)
         df_gene['_row'] = 'hahaha'
          
-        df_gene = df_gene[(df_gene['adj.P.Val']<0.05) & (np.absolute(df_gene['logFC'])>0.4)] 
+        df_gene = df_gene[(df_gene['adj.P.Val']<0.05) & (np.absolute(df_gene['logFC'])>1)] 
          
         df_gene['adj.P.Val'] = -1*np.log10(df_gene['adj.P.Val'])        
          
@@ -128,7 +128,7 @@ class BTReportGeneTableJson(TemplateView):
         
         df_gene = df_gene[['gene', 'logFC', 'adj.P.Val']]
         
-        df_gene = df_gene[(df_gene['adj.P.Val']<0.05) & (np.absolute(df_gene['logFC'])>0.4)] 
+        df_gene = df_gene[(df_gene['adj.P.Val']<0.05) & (np.absolute(df_gene['logFC'])>1)] 
         
         output_json = df_gene.to_json(orient='values')
 
@@ -174,11 +174,11 @@ class BTReportGeneBoxplotJson(TemplateView):
                 
             row_gene = filered_df.loc[gene]      
         
-            median = row_gene['Tumour_median'] 
-            upper_quartile = row_gene['Tumour_upper_quartile'] 
-            lower_quartile = row_gene['Tumour_lower_quartile']            
-            upper_whisker = row_gene['Tumour_upper_whisker'] 
-            lower_whisker = row_gene['Tumour_lower_whisker'] 
+            median = np.around(np.log2(row_gene['Tumour_median']), decimals=2)  
+            upper_quartile = np.around(np.log2(row_gene['Tumour_upper_quartile']), decimals=2) 
+            lower_quartile = np.around(np.log2(row_gene['Tumour_lower_quartile'] ), decimals=2)           
+            upper_whisker = np.around(np.log2(row_gene['Tumour_upper_whisker']), decimals=2) 
+            lower_whisker = np.around(np.log2(row_gene['Tumour_lower_whisker']), decimals=2) 
               
             lSerie = [lower_whisker, lower_quartile, median, upper_quartile, upper_whisker]
                  
@@ -189,11 +189,11 @@ class BTReportGeneBoxplotJson(TemplateView):
                 
                 row_gene = filered_df.loc[gene]      
         
-                median = row_gene['Normal_median'] 
-                upper_quartile = row_gene['Normal_upper_quartile'] 
-                lower_quartile = row_gene['Normal_lower_quartile']            
-                upper_whisker = row_gene['Normal_upper_whisker'] 
-                lower_whisker = row_gene['Normal_lower_whisker'] 
+                median = np.around(np.log2(row_gene['Normal_median']), decimals=2) 
+                upper_quartile = np.around(np.log2(row_gene['Normal_upper_quartile']), decimals=2) 
+                lower_quartile = np.around(np.log2(row_gene['Normal_lower_quartile']), decimals=2)            
+                upper_whisker = np.around(np.log2(row_gene['Normal_upper_whisker']), decimals=2) 
+                lower_whisker = np.around(np.log2(row_gene['Normal_lower_whisker']), decimals=2)
               
                 lSerie = [lower_whisker, lower_quartile, median, upper_quartile, upper_whisker]
                 series_tumour.append(lSerie)
