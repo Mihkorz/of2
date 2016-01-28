@@ -26,12 +26,18 @@ class BTReport(TemplateView):
               
         context = super(BTReport, self).get_context_data(**kwargs)
         
-        lGenes = ['COL1A1', 'COL1A2', 'KRT7', 'HYAL1', 'HYAL2', 'HYAL4', 'HAS1', 'HAS2',
-               'ELN', 'MMP1', 'MMP13', 'MMP8', 'FN1', 'WNT1', 'EGF', 'EGFR', 'GH1', 'TGFB1',
-               'TGFBR1', 'TGFBR2',
-               'FGF1', 'FGFR1']
+        lEmbryonicGenes =[ 'PCDHB2', 'PCDHB17', 'CSTF3', 'LOC644919', 'ITGA11', 'SMA4',
+                          'LOC727877', 'MAST2', 'TMEM18', 'LOC100130914', 'ADSSL1', 'ZNF767',
+                          'C19orf25', 'C19orf6', 'NKTR', 'LOC286208', 'GOLGA8A', 'CDK5RAP3',
+                          'OPN3', 'MGC16384', 'ZNF33A', 'LOC100190939', 'TPM1', 'GSDMB']
+               
+        lAdultGenes = ['COX7A1', 'ZNF280D', 'LOC441408', 'TRIM4', 'NIN', 'NAALADL1', 'ASF1B',
+                       'COMT', 'CAT', 'C18orf56', 'LOC440731', 'HOXA5', 'LOC375295', 'POLQ',
+                       'CAT', 'MEG3', 'CDT1', 'FOS']
         
-        context['lGenes'] = lGenes
+        context['lEmbryonicGenes'] = lEmbryonicGenes
+        
+        context['lAdultGenes'] = lAdultGenes
         
         return context
     
@@ -52,7 +58,10 @@ class BTGeneVolcanoJson(TemplateView):
         df_gene = df_gene[['gene', 'logFC', 'adj.P.Val']]
         
         df_gene.rename(columns={'gene': 'Symbol'}, inplace=True)
-        df_gene['_row'] = 'hahaha'
+        
+        df_gene['logFC'] = df_gene['logFC'].round(decimals=2)
+        
+        df_gene['_row'] = df_gene['adj.P.Val'].round(decimals=2)
          
         df_gene = df_gene[(df_gene['adj.P.Val']<0.05) & (np.absolute(df_gene['logFC'])>1)] 
          
@@ -127,6 +136,8 @@ class BTReportGeneTableJson(TemplateView):
         df_gene = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/"+file_name, sep='\t')
         
         df_gene = df_gene[['gene', 'logFC', 'adj.P.Val']]
+        
+        df_gene['logFC'] = df_gene['logFC'].round(decimals=2)         
         
         df_gene = df_gene[(df_gene['adj.P.Val']<0.05) & (np.absolute(df_gene['logFC'])>1)] 
         
@@ -206,7 +217,7 @@ class BTReportGeneBoxplotJson(TemplateView):
               'name': 'boxplot',              
               'data': series_tumour,
               'tooltip': {
-                          'headerFormat': '<em>Skin type: {point.key}</em><br/>'
+                          'headerFormat': '<em>Group: {point.key}</em><br/>'
                           }
               }
         
@@ -216,6 +227,106 @@ class BTReportGeneBoxplotJson(TemplateView):
         
         return HttpResponse(json.dumps(response_data), content_type="application/json")
 
+class BTReportPathwayTableJson(TemplateView):
+    template_name="website/report.html"
+    def dispatch(self, request, *args, **kwargs):
+        
+        return super(BTReportPathwayTableJson, self).dispatch(request, *args, **kwargs)
+    
+    def get(self, request, *args, **kwargs):
+        
+        file_name1 = request.GET.get('file_name1')
+        file_name2 = request.GET.get('file_name2')
+        is_metabolic = request.GET.get('is_metabolic')
+        if is_metabolic =='false':
+            is_metabolic = False
+        else:
+            is_metabolic = True
+        
+        if file_name1 == file_name2 == 'all':
+            df_ES = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/pros_output_EPL_vs_ES.csv",
+                                 index_col='Pathway')
+            df_ASC = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/pros_output_EPL_vs_ASC.csv",
+                                 index_col='Pathway')
+            df_ABC = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/pros_output_EPL_vs_ABC.csv",
+                                 index_col='Pathway')
+            df_AEC = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/pros_output_EPL_vs_AEC.csv",
+                                 index_col='Pathway')
+            df_ANC = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/pros_output_EPL_vs_ANC.csv",
+                                 index_col='Pathway')
+            df_CCL = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/pros_output_EPL_vs_CCL.csv",
+                                 index_col='Pathway')
+            
+            if is_metabolic:
+                df_ES = df_ES[df_ES['Database']=='metabolism']
+                df_ASC = df_ASC[df_ASC['Database']=='metabolism']
+                df_ABC = df_ABC[df_ABC['Database']=='metabolism']
+                df_AEC = df_AEC[df_AEC['Database']=='metabolism']
+                df_ANC = df_ANC[df_ANC['Database']=='metabolism']
+                df_CCL = df_CCL[df_CCL['Database']=='metabolism']
+            else:
+                df_ES = df_ES[df_ES['Database']!='metabolism']
+                df_ASC = df_ASC[df_ASC['Database']!='metabolism']
+                df_ABC = df_ABC[df_ABC['Database']!='metabolism']
+                df_AEC = df_AEC[df_AEC['Database']!='metabolism']
+                df_ANC = df_ANC[df_ANC['Database']!='metabolism']
+                df_CCL = df_CCL[df_CCL['Database']!='metabolism']
+            
+            
+            
+            df_output = pd.DataFrame()
+            df_output['1'] = df_ES['0'].round(decimals=2)
+            df_output['2'] = df_ASC['0'].round(decimals=2)
+            df_output['3'] = df_ABC['0'].round(decimals=2)
+            df_output['4'] = df_AEC['0'].round(decimals=2)
+            df_output['5'] = df_ANC['0'].round(decimals=2)
+            df_output['6'] = df_CCL['0'].round(decimals=2)
+            try:
+                df_output.drop(['Target_drugs_pathway'], inplace=True)
+            except:
+                pass
+            df_output.reset_index(inplace=True)
+            
+            
+        else:
+            df_1 = pd.read_excel(settings.MEDIA_ROOT+"/../static/report/loreal/"+file_name1,
+                                sheetname='PAS1', index_col='Pathway')
+            df_2 = pd.read_excel(settings.MEDIA_ROOT+"/../static/report/loreal/"+file_name2,
+                                 sheetname='PAS1', index_col='Pathway')
+        
+            
+            if is_metabolic:
+                df_1 = df_1[df_1['Database']=='metabolism']
+                df_2 = df_2[df_2['Database']=='metabolism']
+            else:
+                df_1 = df_1[df_1['Database']!='metabolism']
+                df_2 = df_2[df_2['Database']!='metabolism']
+            
+            df1_tumour = df_1[[x for x in df_1.columns if 'Tumour' in x]]
+            s1_tumour = df1_tumour.mean(axis=1).round(decimals=2)
+        
+            df2_tumour = df_2[[x for x in df_2.columns if 'Tumour' in x]]
+            s2_tumour = df2_tumour.mean(axis=1).round(decimals=2)               
+        
+            df_output = pd.DataFrame()
+        
+            df_output['1'] = s1_tumour
+            df_output['2'] = s2_tumour
+            try:
+                df_output.drop(['Target_drugs_pathway'], inplace=True)
+            except:
+                pass
+            df_output.reset_index(inplace=True)
+        
+        
+        
+        df_json = df_output.to_json(orient='values')
+        
+        
+        
+        response_data = {'aaData': json.loads(df_json)}
+        return HttpResponse(json.dumps(response_data), content_type="application/json")
+    
 import matplotlib.pyplot as plt
 import matplotlib.colors as colors
 import matplotlib.cm as cmx
@@ -274,13 +385,17 @@ class BTReportAjaxPathDetail(TemplateView):
            
         gene_df = pd.DataFrame(gene_data).set_index('SYMBOL')    
         
-        filename = 'cnr_'+self.request.GET['filename']
+        filename = 'cnr_proc_EPL_vs_'+self.request.GET['filename']+'.csv'
         
         
-        df_file_cnr = pd.read_excel(settings.MEDIA_ROOT+"/../static/report/loreal/"+filename, index_col='SYMBOL')
+        df_file_cnr = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/"+filename)
         
-        df_cnr_raw = df_file_cnr[[x for x in df_file_cnr.columns if 'Tumour' in x]]
-        df_cnr_raw = df_cnr_raw.mean(axis=1).round(decimals=2)
+        df_file_cnr.columns = ['SYMBOL', 'CNR']
+        df_file_cnr.set_index('SYMBOL', inplace=True)
+        
+        
+        df_cnr_raw = df_file_cnr['CNR'].round(decimals=2)
+        #raise Exception('draw path')
         
         df_cnr_differential = df_cnr_raw[df_cnr_raw!=1]
         df_cnr_differential.name = 'CNR' #log2(Fold-change)

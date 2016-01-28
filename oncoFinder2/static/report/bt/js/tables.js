@@ -19,7 +19,7 @@
         xAxis: {
             categories: ['ES', 'EPL', 'ASC', 'ABC', 'AEC', 'ANC' , 'CCL'],
             title: {
-                text: 'Cell type'
+                text: 'Group'
             }
         },
 
@@ -144,7 +144,7 @@ function drawPathwayTable(id, file_name1, file_name2, is_metabolic){
         "dom": 'Bfrtip',
         "buttons": [{extend: 'csv', title: id}, {extend: 'pdf', title: id} , {extend: 'print', title: id}],
         
-        "ajax": {'url':'/report-portal/pathwaytablejson/',
+        "ajax": {'url':'/report-portal/bt-pathwaytablejson/',
         	     'type': 'GET',
         	     'data':{
         	            'file_name1': file_name1,
@@ -195,6 +195,9 @@ function drawPathwayTable(id, file_name1, file_name2, is_metabolic){
 		                .trim(this) + "...";
 			    		$(this).html("<span title='"+path_long_name+"'>"+short_name+"</span>");
 			    	}
+		    		else {
+		    			$(this).html("<span title='"+path_long_name+"'>"+path_long_name+"</span>");
+		    		}
 		    	});	  
 		    	
 		    	
@@ -202,28 +205,46 @@ function drawPathwayTable(id, file_name1, file_name2, is_metabolic){
 	    	    $("table#"+id+".path tr td:nth-child(3)").wrapInner('<a href="#/"></a>');
 	    	    $("table#"+id+".path tr td:nth-child(4)").wrapInner('<a href="#/"></a>');
 	    	    $("table#"+id+".path tr td:nth-child(5)").wrapInner('<a href="#/"></a>');
+	    	    $("table#"+id+".path tr td:nth-child(6)").wrapInner('<a href="#/"></a>');
+	    	    $("table#"+id+".path tr td:nth-child(7)").wrapInner('<a href="#/"></a>');
 	        } );
 		
 		    $('#'+id+' tbody').on( 'click', 'tr td:nth-child(2)', function () {    	
-	    	    var path_name = $(this).prev().text();    	
-	    	    showPathDetails(path_name, 'output_loreal_preprocessed_NHK.txt.xlsx');    	
-	    	
-	                                                                        });
+	    	    var path_name = $(this).prev().find('span').attr('title');    	
+	    	    var $th = $(this).closest('table').find('th').eq($(this).index());
+	    	    var group = $th.text();
+	    	    showPathDetails(path_name, group);    	    	
+	                                                                              });
 		    $('#'+id+' tbody').on( 'click', 'tr td:nth-child(3)', function () {    	
-	    	   var path_name = $(this).prev().prev().text();    	
-	    	   showPathDetails(path_name,  'output_loreal_preprocessed_RhE (Type 1).txt.xlsx');    	
-	    	
-	                                                                        });
+	    	    var path_name = $(this).prev().prev().find('span').attr('title');    	
+	    	    var $th = $(this).closest('table').find('th').eq($(this).index());
+	    	    var group = $th.text();
+	    	    showPathDetails(path_name, group);    	    	
+	                                                                              });
 		    $('#'+id+' tbody').on( 'click', 'tr td:nth-child(4)', function () {    	
-	    	  var path_name = $(this).prev().prev().prev().text();    	
-	    	  showPathDetails(path_name,  'output_loreal_preprocessed_RhE (Type 2).txt.xlsx');    	
-	    	
-	                                                                        });
-		   $('#'+id+' tbody').on( 'click', 'tr td:nth-child(5)', function () {    	
-	    	var path_name = $(this).prev().prev().prev().prev().text();    	
-	    	showPathDetails(path_name,  'output_loreal_preprocessed_RhE (Type 3).txt.xlsx');    	
-	    	
-	                                                                        });
+	    	    var path_name = $(this).prev().prev().prev().find('span').attr('title');    	
+	    	    var $th = $(this).closest('table').find('th').eq($(this).index());
+	    	    var group = $th.text();
+	    	    showPathDetails(path_name, group);    	    	
+	                                                                              });
+		    $('#'+id+' tbody').on( 'click', 'tr td:nth-child(5)', function () {    	
+	    	    var path_name = $(this).prev().prev().prev().prev().find('span').attr('title');    	
+	    	    var $th = $(this).closest('table').find('th').eq($(this).index());
+	    	    var group = $th.text();
+	    	    showPathDetails(path_name, group);    	    	
+	                                                                              });
+		    $('#'+id+' tbody').on( 'click', 'tr td:nth-child(6)', function () {    	
+	    	    var path_name = $(this).prev().prev().prev().prev().prev().find('span').attr('title');    	
+	    	    var $th = $(this).closest('table').find('th').eq($(this).index());
+	    	    var group = $th.text();
+	    	    showPathDetails(path_name, group);    	    	
+	                                                                              });
+		    $('#'+id+' tbody').on( 'click', 'tr td:nth-child(7)', function () {    	
+	    	    var path_name = $(this).prev().prev().prev().prev().prev().prev().find('span').attr('title');    	
+	    	    var $th = $(this).closest('table').find('th').eq($(this).index());
+	    	    var group = $th.text();
+	    	    showPathDetails(path_name, group);    	    	
+	                                                                              });
 		
 	}
 	
@@ -245,63 +266,27 @@ $(document).ready(function() {
 	drawGeneTable('tbl-EPL_vs_CCL', 'EPL_vs_CCL.DE.tab');
 	drawGeneTable('tbl-EPL_vs_ES', 'EPL_vs_ES.DE.tab');
 		
-	/*
+	
 	
 	
 	// SIGNALING PATHS
 	
-	drawPathwayTable('tbl-nhk-type1', 
-			         'output_loreal_preprocessed_NHK.txt.xlsx', 
-			         'output_loreal_preprocessed_RhE (Type 1).txt.xlsx', false);
-			        
-	drawPathwayTable('tbl-nhk-type2', 
-			         'output_loreal_preprocessed_NHK.txt.xlsx', 
-			         'output_loreal_preprocessed_RhE (Type 2).txt.xlsx', false);
-	drawPathwayTable('tbl-nhk-type3', 
-			         'output_loreal_preprocessed_NHK.txt.xlsx', 
-			         'output_loreal_preprocessed_RhE (Type 3).txt.xlsx', false);
-	drawPathwayTable('tbl-type1-type2', 
-			         'output_loreal_preprocessed_RhE (Type 1).txt.xlsx', 
-			         'output_loreal_preprocessed_RhE (Type 2).txt.xlsx', false);
-    drawPathwayTable('tbl-type1-type3', 
-			         'output_loreal_preprocessed_RhE (Type 1).txt.xlsx', 
-			         'output_loreal_preprocessed_RhE (Type 3).txt.xlsx', false);
-	drawPathwayTable('tbl-type2-type3', 
-			         'output_loreal_preprocessed_RhE (Type 2).txt.xlsx', 
-			         'output_loreal_preprocessed_RhE (Type 3).txt.xlsx', false);
+	
     
-    drawPathwayTable('tbl-all', 
+    drawPathwayTable('tbl-path_all', 
 			         'all', 
 			         'all', false);
 			     
-	
+    	
  // METABOLIC PATHS
 	
-	drawPathwayTable('meta_tbl-nhk-type1', 
-	         'output_loreal_preprocessed_NHK.txt.xlsx', 
-	         'output_loreal_preprocessed_RhE (Type 1).txt.xlsx', true);
-	        
-    drawPathwayTable('meta_tbl-nhk-type2', 
-	         'output_loreal_preprocessed_NHK.txt.xlsx', 
-	         'output_loreal_preprocessed_RhE (Type 2).txt.xlsx', true);
-    drawPathwayTable('meta_tbl-nhk-type3', 
-	         'output_loreal_preprocessed_NHK.txt.xlsx', 
-	         'output_loreal_preprocessed_RhE (Type 3).txt.xlsx', true);
-    drawPathwayTable('meta_tbl-type1-type2', 
-	         'output_loreal_preprocessed_RhE (Type 1).txt.xlsx', 
-	         'output_loreal_preprocessed_RhE (Type 2).txt.xlsx', true);
-    drawPathwayTable('meta_tbl-type1-type3', 
-	         'output_loreal_preprocessed_RhE (Type 1).txt.xlsx', 
-	         'output_loreal_preprocessed_RhE (Type 3).txt.xlsx', true);
-    drawPathwayTable('meta_tbl-type2-type3', 
-	         'output_loreal_preprocessed_RhE (Type 2).txt.xlsx', 
-	         'output_loreal_preprocessed_RhE (Type 3).txt.xlsx', true);
+	
 
-    drawPathwayTable('meta_tbl-all', 
+    drawPathwayTable('tbl-meta_all', 
 	         'all', 
 	         'all', true);
 	
-	*/
+	
     
 } );
 

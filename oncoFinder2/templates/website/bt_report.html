@@ -162,7 +162,54 @@
    </div>
  </div><!--  end of gene tab-content -->
  
+<hr/>
+<h3>Notable genes</h3>
+<hr/>
+<div>
+<h4>Embryonic genes</h4>
+ <!-- Notable GENE Nav tabs -->
+         <ul class="nav nav-tabs" role="tablist">
+           {%for gene in lEmbryonicGenes%}
+           <li role="presentation" {%if forloop.counter == 1 %}class="active"{%endif%}><a href="#{{gene}}_tab" aria-controls="home1" role="tab" data-toggle="tab">{{gene}}</a></li>
+           {%endfor%}
+         </ul>
 
+   <div class="tab-content">
+    {%for gene in lEmbryonicGenes%}
+     {%if forloop.counter == 1 %}
+     <div role="tabpanel" class="tab-pane fade in active" id="{{gene}}_tab">
+     {%else%}
+     <div role="tabpanel" class="tab-pane fade " id="{{gene}}_tab">
+     {%endif%}
+     <div id="{{gene}}" style="min-width: 800px; height: 400px; max-width: 800px; margin: 0 auto">Loading box plot...</div>
+   
+     </div>
+    {%endfor%}
+   
+   </div> <!--  end of tab panel -->
+<hr/>   
+<h4>Adult genes</h4>
+ <!-- Notable GENE Nav tabs -->
+         <ul class="nav nav-tabs" role="tablist">
+           {%for gene in lAdultGenes%}
+           <li role="presentation" {%if forloop.counter == 1 %}class="active"{%endif%}><a href="#{{gene}}_tab" aria-controls="home1" role="tab" data-toggle="tab">{{gene}}</a></li>
+           {%endfor%}
+         </ul>
+
+   <div class="tab-content">
+    {%for gene in lAdultGenes%}
+     {%if forloop.counter == 1 %}
+     <div role="tabpanel" class="tab-pane fade in active" id="{{gene}}_tab">
+     {%else%}
+     <div role="tabpanel" class="tab-pane fade " id="{{gene}}_tab">
+     {%endif%}
+     <div id="{{gene}}" style="min-width: 800px; height: 400px; max-width: 800px; margin: 0 auto">Loading box plot...</div>
+   
+     </div>
+    {%endfor%}
+   
+   </div> <!--  end of tab panel -->
+</div> <!-- end of Notable genes -->
          
           
 
@@ -183,7 +230,8 @@
 
 <!-- PAthway Nav tabs -->
          <ul class="nav nav-tabs" role="tablist">
-         <li role="presentation" class="active"><a href="#ESvsASCvsCCL_tab" aria-controls="settings" role="tab" data-toggle="tab">ESvsASCvsCCL</a></li>
+         <li role="presentation" class="active"><a href="#pah_all_tab" aria-controls="settings" role="tab" data-toggle="tab">ALL</a></li>
+         <li role="presentation" ><a href="#ESvsASCvsCCL_tab" aria-controls="settings" role="tab" data-toggle="tab">ESvsASCvsCCL</a></li>
          <li role="presentation" ><a href="#ESvsANCvsCCL_tab" aria-controls="home" role="tab" data-toggle="tab">ESvsANCvsCCL</a></li>
          <li role="presentation"><a href="#ESvsAECvsCCL_tab" aria-controls="profile" role="tab" data-toggle="tab">ESvsAECvsCCL</a></li>
          <li role="presentation"><a href="#ESvsABCvsCCL_tab" aria-controls="messages" role="tab" data-toggle="tab">ESvsABCvsCCL</a></li>
@@ -192,7 +240,27 @@
          <!-- PATHWAY Tab panes -->
   <div class="tab-content">
   
-  <div role="tabpanel" class="tab-pane fade in active" id="ESvsASCvsCCL_tab">     <br/> 
+  <div role="tabpanel" class="tab-pane fade in active " id="pah_all_tab">     <br/> 
+    <h4>Table 7. All signaling pathways</h4>
+    <table id="tbl-path_all" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>Pathway</th>
+           <th>ES</th>
+           <th>ASC</th>
+           <th>ABC</th>
+           <th>AEC</th>
+           <th>ANC</th>
+           <th>CCL</th>
+          </tr>
+        </thead>  
+      </table>       
+   <br/>
+  
+  </div>
+  
+  
+  <div role="tabpanel" class="tab-pane fade " id="ESvsASCvsCCL_tab">     <br/> 
     <table style='text-align:center;'>
       <tr>
        <td>
@@ -267,7 +335,8 @@
 <hr/>
 <!-- Metabolic Nav tabs -->
          <ul class="nav nav-tabs" role="tablist">
-         <li role="presentation" class="active"><a href="#meta_ESvsASCvsCCL_tab" aria-controls="settings" role="tab" data-toggle="tab">ESvsASCvsCCL</a></li>
+         <li role="presentation" class="active"><a href="#meta_all_tab" aria-controls="settings" role="tab" data-toggle="tab">ALL</a></li>
+         <li role="presentation" ><a href="#meta_ESvsASCvsCCL_tab" aria-controls="settings" role="tab" data-toggle="tab">ESvsASCvsCCL</a></li>
          <li role="presentation" ><a href="#meta_ESvsANCvsCCL_tab" aria-controls="home" role="tab" data-toggle="tab">ESvsANCvsCCL</a></li>
          <li role="presentation"><a href="#meta_ESvsAECvsCCL_tab" aria-controls="profile" role="tab" data-toggle="tab">ESvsAECvsCCL</a></li>
          <li role="presentation"><a href="#meta_ESvsABCvsCCL_tab" aria-controls="messages" role="tab" data-toggle="tab">ESvsABCvsCCL</a></li>
@@ -275,8 +344,26 @@
          
          <!-- PATHWAY Tab panes -->
   <div class="tab-content">
+   <div role="tabpanel" class="tab-pane fade in active " id="meta_all_tab">     <br/> 
+    <h4>Table 8. All metabolic pathways</h4>
+    <table id="tbl-meta_all" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>Pathway</th>
+           <th>ES</th>
+           <th>ASC</th>
+           <th>ABC</th>
+           <th>AEC</th>
+           <th>ANC</th>
+           <th>CCL</th>
+          </tr>
+        </thead>  
+      </table>       
+   <br/>
   
-  <div role="tabpanel" class="tab-pane fade in active" id="meta_ESvsASCvsCCL_tab">     <br/> 
+  </div>
+  
+  <div role="tabpanel" class="tab-pane fade " id="meta_ESvsASCvsCCL_tab">     <br/> 
     <table style='text-align:center;'>
       <tr>
        <td>
@@ -415,6 +502,7 @@
     <script src="/static/report/bt/js/opentip.js" charset="utf-8"></script>
     <script src="/static/report/bt/js/adapter-native.js" charset="utf-8"></script>
     <script src="/static/report/bt/js/volcano.js" type="text/javascript"></script>
+    <script src="/static/report/bt/js/boxplot.js" type="text/javascript"></script>
     
     
     <!-- MODAL FOR PATHS  -->
