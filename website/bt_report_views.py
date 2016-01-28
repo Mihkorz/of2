@@ -75,8 +75,9 @@ class BTGeneVolcanoJson(TemplateView):
     
     def get(self, request, *args, **kwargs):
         
-        file_name = 'EPL_vs_ES.onc.tab11'
-        df_gene = pd.read_csv(settings.MEDIA_ROOT+"/users/admin/bt/input/"+file_name, sep='\t')
+        file_name = 'EPL_vs_ABC.txt'
+        file_out = 'box_EPL_vs_ABC.onc.tab'
+        df_gene = pd.read_csv(settings.MEDIA_ROOT+"/users/admin/bt-new/input/"+file_name, sep='\t')
         df_gene.set_index('SYMBOL', inplace=True)
         
         
@@ -118,7 +119,7 @@ class BTGeneVolcanoJson(TemplateView):
         
         count_df = df_gene.apply(boxplot ,axis=1)
         
-        count_df.to_csv(settings.MEDIA_ROOT+"/users/admin/bt/input/box_"+file_name)
+        count_df.to_csv(settings.MEDIA_ROOT+"/users/admin/bt-new/input/box_"+file_name)
         
         raise Exception('stop') 
 

@@ -959,17 +959,17 @@ class Test(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(Test, self).get_context_data(**kwargs)
         
-        filen = 'cnr_output_EPL_vs_ES.onc.tab.xlsx'
-        file_out = 'cnr_proc_EPL_vs_ES.csv'
+        filen = 'cnr_output_EPL_vs_ABC.txt.xlsx'
+        file_out = 'cnr_proc_EPL_vs_ABC.csv'
         
         
-        df = read_excel(settings.MEDIA_ROOT+'/users/admin/bt/process/'+filen,
+        df = read_excel(settings.MEDIA_ROOT+'/users/admin/bt-new/process/'+filen,
                         index_col='SYMBOL')
         
         df = df[[x for x in df.columns if 'Tumour' in x]]
         
         df = df.mean(axis=1)
-        df.to_csv(settings.MEDIA_ROOT+'/users/admin/bt/process/'+file_out)
+        df.to_csv(settings.MEDIA_ROOT+'/users/admin/bt-new/process/'+file_out)
         raise Exception('test stop')
         
         df1=read_csv(settings.MEDIA_ROOT+'/nodes-comp-biocarta.csv')
