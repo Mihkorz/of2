@@ -959,6 +959,25 @@ class Test(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(Test, self).get_context_data(**kwargs)
         
+        filen = 'output_EPL_vs_ES.txt.xlsx'
+        file_out = 'pros_output_EPL_vs_ES.csv'
+        
+        
+        df = read_excel(settings.MEDIA_ROOT+'/users/admin/bt-new/output/'+filen,
+                        sheetname='PAS1', index_col='Pathway')
+        
+        df_t = df[[x for x in df.columns if 'Tumour' in x]]
+        
+        df_t = df_t.mean(axis=1)
+        
+        df_out = DataFrame()
+        
+        df_out['Database']=df['Database']
+        df_out['0']=df_t
+        
+        df_out.to_csv(settings.MEDIA_ROOT+'/users/admin/bt-new/output/'+file_out, encoding='utf-8')
+        raise Exception('test stop')
+        
         filen = 'cnr_output_EPL_vs_ABC.txt.xlsx'
         file_out = 'cnr_proc_EPL_vs_ABC.csv'
         
