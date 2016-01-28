@@ -75,7 +75,7 @@ function showPathDetails(path_name, filename){
 	
 	$('#pathmodal').modal('show');
 	
-	$.get("/report-portal/report/ajaxpathdetail/",
+	$.get("/report-portal/report/bt-ajaxpathdetail/",
 			{
 		     pathway: path_name,
 		     filename: filename,

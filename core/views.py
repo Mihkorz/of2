@@ -153,7 +153,7 @@ class CoreSetCalculationParameters(FormView):
         params_df = DataFrame(params_for_output)
                 
         """ Start Calculations"""
-         
+        print 'start calc'
         def strip(text):
             try:
                 return text.strip().upper()
@@ -240,7 +240,7 @@ class CoreSetCalculationParameters(FormView):
                 process_doc_df = process_doc_df[process_doc_df['p_value']<pvalue_threshold]
             
             
-                  
+        print 't-test done'         
         """ T-test 1 sample CNR filter and Sigma filter for genes """
         if use_ttest_1sam or use_cnr or use_sigma:
             norms_df = process_doc_df[normal_columns]
@@ -542,6 +542,8 @@ class CoreSetCalculationParameters(FormView):
         output_pas_df.sort(axis=1, inplace=True)
         output_pas1_df.sort(axis=1, inplace=True)
         output_pas2_df.sort(axis=1, inplace=True)
+        
+        print 'PAS done'
         
         #raise Exception('fast PAS') 
         """ ###################  """
@@ -848,10 +850,10 @@ class CoreSetCalculationParameters(FormView):
         output_file = default_storage.save(settings.MEDIA_ROOT+"/"+path+"/"+file_name, ContentFile(''))
         output_file_row = default_storage.save(settings.MEDIA_ROOT+"/"+path+"/"+file_name_unchanged, ContentFile(''))
         
-        cnr_doc_df = cnr_doc_df.astype('float32')
+        #cnr_doc_df = cnr_doc_df.astype('float32')
         cnr_doc_df.to_excel(output_file,sheet_name='CNR')
-        cnr_unchanged_df = cnr_unchanged_df.astype('float32')
-        cnr_unchanged_df.to_excel(output_file_row,sheet_name='CNR')
+        #cnr_unchanged_df = cnr_unchanged_df.astype('float32')
+        #cnr_unchanged_df.to_excel(output_file_row,sheet_name='CNR')
         
         """
         with ExcelWriter(output_file, engine='xlsxwriter') as writer:
@@ -957,29 +959,17 @@ class Test(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(Test, self).get_context_data(**kwargs)
         
-        paths = Pathway.objects.filter(organism='mouse', database='primary_new')
-        
-        dNodes = {}
-        for path in paths:
-            print path.name
-            
-            for node in path.node_set.all():
-                lcomp = []
-                for comp in node.component_set.all():
-                    lcomp.append(comp.name)
-                    
-                dNodes[node.name] = lcomp
-                
-            
-            df = DataFrame.from_dict(dNodes, orient='index')
-            df = df.transpose()
-            
-            df.to_csv(settings.MEDIA_ROOT+'/renamed_nodes/mouse/primary_new/'+path.name+'.csv')
-                
-           
-             
+        filen = 'cnr_output_EPL_vs_ES.onc.tab.xlsx'
+        file_out = 'cnr_proc_EPL_vs_ES.csv'
         
         
+        df = read_excel(settings.MEDIA_ROOT+'/users/admin/bt/process/'+filen,
+                        index_col='SYMBOL')
+        
+        df = df[[x for x in df.columns if 'Tumour' in x]]
+        
+        df = df.mean(axis=1)
+        df.to_csv(settings.MEDIA_ROOT+'/users/admin/bt/process/'+file_out)
         raise Exception('test stop')
         
         df1=read_csv(settings.MEDIA_ROOT+'/nodes-comp-biocarta.csv')
