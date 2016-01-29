@@ -53,6 +53,8 @@
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#path_analysis">Pathway analysis</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#references">References</a></li>
           </ul>
+          
+          
           <h2 id="input_data">Input data</h2>
           <hr/>
           <h3 id="input_data">Abbreviations</h3>
@@ -185,6 +187,118 @@
  </div><!--  end of gene tab-content -->
  
 <hr/>
+
+<!-- -------------------- GENE VENN  -->
+<br/>
+<h3>Significantly up- and downregulated genes</h3>
+<br/>
+<!-- PAthway Nav tabs -->
+         <ul class="nav nav-tabs" role="tablist">
+         <li role="presentation" class="active"><a href="#gene_all_tab" aria-controls="settings" role="tab" data-toggle="tab">ALL</a></li>
+         <li role="presentation" ><a href="#gene_ESvsASCvsCCL_tab" aria-controls="settings" role="tab" data-toggle="tab">ESvsASCvsCCL</a></li>
+         <li role="presentation" ><a href="#gene_ESvsANCvsCCL_tab" aria-controls="home" role="tab" data-toggle="tab">ESvsANCvsCCL</a></li>
+         <li role="presentation"><a href="#gene_ESvsAECvsCCL_tab" aria-controls="profile" role="tab" data-toggle="tab">ESvsAECvsCCL</a></li>
+         <li role="presentation"><a href="#gene_ESvsABCvsCCL_tab" aria-controls="messages" role="tab" data-toggle="tab">ESvsABCvsCCL</a></li>
+        </ul>
+        
+           <!-- GEne VEnn Tab panes -->
+  <div class="tab-content">
+  
+  <div role="tabpanel" class="tab-pane fade in active " id="gene_all_tab">     <br/> 
+    <h4>Table 7. All genes</h4>
+    <table id="tbl-gene_all" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>Gene</th>
+           <th>ES</th>
+           <th>ASC</th>
+           <th>ABC</th>
+           <th>AEC</th>
+           <th>ANC</th>
+           <th>CCL</th>
+          </tr>
+        </thead>  
+      </table>       
+   <br/>
+  
+  </div>
+  
+ <div role="tabpanel" class="tab-pane fade " id="gene_ESvsASCvsCCL_tab">     <br/> 
+    <table style='text-align:center;'>
+      <tr>
+       <td>
+       <div id="venn_gene-ESvsASCvsCCL-up" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Significantly upregulated genes
+       </td>
+       <td>
+       <div id="venn_gene-ESvsASCvsCCL-down" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Down regulated pathways
+       </td>
+      </tr>
+    </table>        
+   <br/>
+  <div id="venn_gene_dinamic_ESvsASCvsCCL" class="" style="max-width:1000px;"></div> <!--  div to place dinamic tables from Venn clicks -->
+  </div>
+  
+  <div role="tabpanel" class="tab-pane fade " id="gene_ESvsANCvsCCL_tab">     <br/> 
+    <table style='text-align:center;'>
+      <tr>
+       <td>
+       <div id="venn_gene-ESvsANCvsCCL-up" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Significantly upregulated genes
+       </td>
+       <td>
+       <div id="venn_gene-ESvsANCvsCCL-down" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Significantly downregulated genes
+       </td>
+      </tr>
+    </table>        
+    
+  <div id="venn_gene_dinamic_ESvsANCvsCCL" class="" style="max-width:1000px;"></div> <!--  div to place dinamic tables from Venn clicks -->
+  </div>
+  
+  <div role="tabpanel" class="tab-pane fade " id="gene_ESvsAECvsCCL_tab">     <br/> 
+    <table style='text-align:center;'>
+      <tr>
+       <td>
+       <div id="venn_gene-ESvsAECvsCCL-up" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Significantly upregulated genes
+       </td>
+       <td>
+       <div id="venn_gene-ESvsAECvsCCL-down" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Significantly downregulated genes
+       </td>
+      </tr>
+    </table>        
+    
+  <div id="venn_gene_dinamic_ESvsAECvsCCL" class="" style="max-width:1000px;"></div> <!--  div to place dinamic tables from Venn clicks -->
+  </div>
+  
+  <div role="tabpanel" class="tab-pane fade " id="gene_ESvsABCvsCCL_tab">     <br/> 
+    <table style='text-align:center;'>
+      <tr>
+       <td>
+       <div id="venn_gene-ESvsABCvsCCL-up" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Significantly upregulated genes
+       </td>
+       <td>
+       <div id="venn_gene-ESvsABCvsCCL-down" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Significantly downregulated genes
+       </td>
+      </tr>
+    </table>        
+    
+  <div id="venn_gene_dinamic_ESvsABCvsCCL" class="" style="max-width:1000px;"></div> <!--  div to place dinamic tables from Venn clicks -->
+  </div>
+  
+  
+  
+  </div><!-- ebd gene venn tab panes -->
+
+
+
+<!-- -------------------- END GENE VENN  -->
+<hr/>
 <h3>Notable genes</h3>
 <hr/>
 <div>
@@ -232,16 +346,7 @@
    
    </div> <!--  end of tab panel -->
 </div> <!-- end of Notable genes -->
-         
-          
 
-  
-
-
-
-
-
-   
 
 <!-- ---------------------------------PATHWAY--------------------------------------------- -->
  <hr/> 
@@ -263,7 +368,7 @@
   <div class="tab-content">
   
   <div role="tabpanel" class="tab-pane fade in active " id="pah_all_tab">     <br/> 
-    <h4>Table 7. All signaling pathways</h4>
+    <h4>Table 8. All signaling pathways</h4>
     <table id="tbl-path_all" class="path table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
           <tr>
@@ -287,11 +392,11 @@
       <tr>
        <td>
        <div id="venn_path-ESvsASCvsCCL-up" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
-       Up regulated pathways
+       Upregulated pathways
        </td>
        <td>
        <div id="venn_path-ESvsASCvsCCL-down" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
-       Down regulated pathways
+       Downregulated pathways
        </td>
       </tr>
     </table>        
@@ -304,11 +409,11 @@
       <tr>
        <td>
        <div id="venn_path-ESvsANCvsCCL-up" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
-       Up regulated pathways
+       Upregulated pathways
        </td>
        <td>
        <div id="venn_path-ESvsANCvsCCL-down" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
-       Down regulated pathways
+       Downregulated pathways
        </td>
       </tr>
     </table>        
@@ -321,11 +426,11 @@
       <tr>
        <td>
        <div id="venn_path-ESvsAECvsCCL-up" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
-       Up regulated pathways
+       Upregulated pathways
        </td>
        <td>
        <div id="venn_path-ESvsAECvsCCL-down" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
-       Down regulated pathways
+       Downregulated pathways
        </td>
       </tr>
     </table>        
@@ -338,11 +443,11 @@
       <tr>
        <td>
        <div id="venn_path-ESvsABCvsCCL-up" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
-       Up regulated pathways
+       Upregulated pathways
        </td>
        <td>
        <div id="venn_path-ESvsABCvsCCL-down" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
-       Down regulated pathways
+       Downregulated pathways
        </td>
       </tr>
     </table>        
@@ -367,7 +472,7 @@
          <!-- PATHWAY Tab panes -->
   <div class="tab-content">
    <div role="tabpanel" class="tab-pane fade in active " id="meta_all_tab">     <br/> 
-    <h4>Table 8. All metabolic pathways</h4>
+    <h4>Table 9. All metabolic pathways</h4>
     <table id="tbl-meta_all" class="path table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
           <tr>
@@ -390,11 +495,11 @@
       <tr>
        <td>
        <div id="meta_venn_path-ESvsASCvsCCL-up" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
-       Up regulated pathways
+       Upregulated pathways
        </td>
        <td>
        <div id="meta_venn_path-ESvsASCvsCCL-down" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
-       Down regulated pathways
+       Downregulated pathways
        </td>
       </tr>
     </table>        
@@ -407,11 +512,11 @@
       <tr>
        <td>
        <div id="meta_venn_path-ESvsANCvsCCL-up" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
-       Up regulated pathways
+       Upregulated pathways
        </td>
        <td>
        <div id="meta_venn_path-ESvsANCvsCCL-down" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
-       Down regulated pathways
+       Downregulated pathways
        </td>
       </tr>
     </table>        
@@ -424,11 +529,11 @@
       <tr>
        <td>
        <div id="meta_venn_path-ESvsAECvsCCL-up" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
-       Up regulated pathways
+       Upregulated pathways
        </td>
        <td>
        <div id="meta_venn_path-ESvsAECvsCCL-down" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
-       Down regulated pathways
+       Downregulated pathways
        </td>
       </tr>
     </table>        
@@ -441,11 +546,11 @@
       <tr>
        <td>
        <div id="meta_venn_path-ESvsABCvsCCL-up" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
-       Up regulated pathways
+       Upregulated pathways
        </td>
        <td>
        <div id="meta_venn_path-ESvsABCvsCCL-down" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
-       Down regulated pathways
+       Downregulated pathways
        </td>
       </tr>
     </table>        

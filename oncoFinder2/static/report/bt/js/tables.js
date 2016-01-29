@@ -61,6 +61,7 @@ function drawGeneChart(gene_name, file_name){
 			     function(data) { 
 			    	 $("#loading").empty();
 			     	options.series[0] = data;
+			     	options.title.name = gene_name;
 			     	
 			     	
 			        var chart = new Highcharts.Chart(options);
@@ -265,6 +266,8 @@ $(document).ready(function() {
 	drawGeneTable('tbl-EPL_vs_ASC', 'EPL_vs_ASC.DE.tab');
 	drawGeneTable('tbl-EPL_vs_CCL', 'EPL_vs_CCL.DE.tab');
 	drawGeneTable('tbl-EPL_vs_ES', 'EPL_vs_ES.DE.tab');
+	
+	drawGeneTable('tbl-gene_all', 'all');
 		
 	
 	

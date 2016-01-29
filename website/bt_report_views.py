@@ -134,17 +134,44 @@ class BTReportGeneTableJson(TemplateView):
         
         file_name = request.GET.get('file_name')
         
-        df_gene = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/"+file_name, sep='\t')
         
-        df_gene = df_gene[['gene', 'logFC', 'adj.P.Val']]
+        if file_name!='all':
+            df_gene = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/"+file_name, sep='\t')
         
-        df_gene['logFC'] = df_gene['logFC'].round(decimals=2)         
+            df_gene = df_gene[['gene', 'logFC', 'adj.P.Val']]
         
-        df_gene = df_gene[(df_gene['adj.P.Val']<0.05) & (np.absolute(df_gene['logFC'])>1)] 
+            df_gene['logFC'] = df_gene['logFC'].round(decimals=2)         
         
-        output_json = df_gene.to_json(orient='values')
+            df_gene = df_gene[(df_gene['adj.P.Val']<0.05) & (np.absolute(df_gene['logFC'])>1)] 
+        
+            
+        
+        else:
+            df_ES = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/EPL_vs_ES.DE.tab",
+                                 sep='\t', index_col='gene')
+            df_ASC = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/EPL_vs_ASC.DE.tab",
+                                 sep='\t', index_col='gene')
+            df_ABC = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/EPL_vs_ABC.DE.tab",
+                                 sep='\t', index_col='gene')
+            df_AEC = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/EPL_vs_AEC.DE.tab",
+                                 sep='\t', index_col='gene')
+            df_ANC = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/EPL_vs_ANC.DE.tab",
+                                 sep='\t', index_col='gene')
+            df_CCL = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/EPL_vs_CCL.DE.tab",
+                                 sep='\t', index_col='gene')
+            
+            df_gene = pd.DataFrame()
+            df_gene['1'] = df_ES['logFC'].round(decimals=2)
+            df_gene['2'] = df_ASC['logFC'].round(decimals=2)
+            df_gene['3'] = df_ABC['logFC'].round(decimals=2)
+            df_gene['4'] = df_AEC['logFC'].round(decimals=2)
+            df_gene['5'] = df_ANC['logFC'].round(decimals=2)
+            df_gene['6'] = df_CCL['logFC'].round(decimals=2)
+            
+            df_gene.reset_index(inplace=True)
+            #raise Exception('gene table')
 
-        #raise Exception('gene table')
+        output_json = df_gene.to_json(orient='values')
         response_data = {'data': json.loads(output_json)}
         return HttpResponse(json.dumps(response_data), content_type="application/json")
     
@@ -523,33 +550,47 @@ class BTReportAjaxPathwayVenn(TemplateView):
         name3 = self.request.GET.get('name3')
         is_metabolic = self.request.GET.get('is_metabolic')
         regulation = self.request.GET.get('regulation')
+        path_gene = self.request.GET.get('path_gene')
               
         
         venn_cyrcles = []
         
         
-        df1 = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/"+file_name1,
+        if path_gene == 'pathways':
+            df1 = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/"+file_name1,
                                   index_col='Pathway')
-        df2 = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/"+file_name2,
+            df2 = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/"+file_name2,
                                  index_col='Pathway')
-        df3 = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/"+file_name3,
-                                  index_col='Pathway') 
-           
+            df3 = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/"+file_name3,
+                                  index_col='Pathway')           
          
-        if is_metabolic=='true':
-            df1 = df1[df1['Database']=='metabolism']
-            df2 = df2[df2['Database']=='metabolism']
-            df3 = df3[df3['Database']=='metabolism']
-        else:
-            df1 = df1[df1['Database']!='metabolism']
-            df2 = df2[df2['Database']!='metabolism']
-            df3 = df3[df3['Database']!='metabolism']
+            if is_metabolic=='true':
+                df1 = df1[df1['Database']=='metabolism']
+                df2 = df2[df2['Database']=='metabolism']
+                df3 = df3[df3['Database']=='metabolism']
+            else:
+                df1 = df1[df1['Database']!='metabolism']
+                df2 = df2[df2['Database']!='metabolism']
+                df3 = df3[df3['Database']!='metabolism']
                 
+        elif path_gene == 'genes':
+            df1 = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/"+file_name1,
+                                  sep='\t', index_col='gene')
+            df2 = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/"+file_name2,
+                                 sep='\t', index_col='gene')
+            df3 = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/"+file_name3,
+                                  sep='\t', index_col='gene')
+            
+            df1 = pd.DataFrame(df1['logFC']) 
+            df2 = pd.DataFrame(df2['logFC'])
+            df3 = pd.DataFrame(df3['logFC'])
+            df1.columns = ['0']
+            df2.columns = ['0']
+            df3.columns = ['0']
+        
         dict_s = {}
         list_s = [name1, name2, name3]
-         
             
-        
         st1_tumour = df1['0']
         st1_tumour_up = st1_tumour[st1_tumour>0]
         st1_tumour_down = st1_tumour[st1_tumour<0]
@@ -663,22 +704,28 @@ class BTReportAjaxPathwayVennTable(TemplateView):
         regulation = self.request.GET.get('regulation')
         members = self.request.GET.get('members')
         is_metabolic = self.request.GET.get('is_metabolic')
-        
+        path_gene = self.request.GET.get('path_gene')
         
         lMembers = members.split('vs')
         
         
         
         if inter_num == 1:
-            
-            df_1 = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/pros_output_EPL_vs_"+lMembers[0]+".csv",
+            if path_gene == 'pathways':
+                df_1 = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/pros_output_EPL_vs_"+lMembers[0]+".csv",
                                  index_col='Pathway')
             
                         
-            if is_metabolic=='true':
-                df_1 = df_1[df_1['Database']=='metabolism']
-            else:                
-                df_1 = df_1[df_1['Database']!='metabolism']
+                if is_metabolic=='true':
+                    df_1 = df_1[df_1['Database']=='metabolism']
+                else:                
+                    df_1 = df_1[df_1['Database']!='metabolism']
+                
+            elif path_gene =='genes':
+                df_1 = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/EPL_vs_"+lMembers[0]+".DE.tab",
+                                 sep='\t', index_col='gene')           
+                df_1 = pd.DataFrame(df_1['logFC'])
+                df_1.columns = ['0']
                 
             s_tumour = df_1['0'].round(decimals=2)
             s_tumour.name = lMembers[0]
@@ -695,17 +742,27 @@ class BTReportAjaxPathwayVennTable(TemplateView):
             
         
         elif inter_num == 2:
-            df_1 = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/pros_output_EPL_vs_"+lMembers[0]+".csv",
+            if path_gene == 'pathways':
+                df_1 = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/pros_output_EPL_vs_"+lMembers[0]+".csv",
                                  index_col='Pathway') 
-            df_2 = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/pros_output_EPL_vs_"+lMembers[1]+".csv",
+                df_2 = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/pros_output_EPL_vs_"+lMembers[1]+".csv",
                                  index_col='Pathway')
             
-            if is_metabolic=='true':
-                df_1 = df_1[df_1['Database']=='metabolism']
-                df_2 = df_2[df_2['Database']=='metabolism']
-            else:                
-                df_1 = df_1[df_1['Database']!='metabolism']
-                df_2 = df_2[df_2['Database']!='metabolism']
+                if is_metabolic=='true':
+                    df_1 = df_1[df_1['Database']=='metabolism']
+                    df_2 = df_2[df_2['Database']=='metabolism']
+                else:                
+                    df_1 = df_1[df_1['Database']!='metabolism']
+                    df_2 = df_2[df_2['Database']!='metabolism']
+            elif path_gene =='genes':
+                df_1 = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/EPL_vs_"+lMembers[0]+".DE.tab",
+                                 sep='\t', index_col='gene')
+                df_2 = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/EPL_vs_"+lMembers[1]+".DE.tab",
+                                 sep='\t', index_col='gene')           
+                df_1 = pd.DataFrame(df_1['logFC'])
+                df_2 = pd.DataFrame(df_2['logFC'])
+                df_1.columns = ['0']
+                df_2.columns = ['0']
                 
             s_tumour1 = df_1['0'].round(decimals=2)
             s_tumour1.name = lMembers[0]
@@ -734,21 +791,36 @@ class BTReportAjaxPathwayVennTable(TemplateView):
             df_json = joined_df.to_json(orient='values')
             
         elif inter_num == 3:
-            df_1 = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/pros_output_EPL_vs_"+lMembers[0]+".csv",
+            if path_gene == 'pathways':
+                df_1 = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/pros_output_EPL_vs_"+lMembers[0]+".csv",
                                 index_col='Pathway') 
-            df_2 = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/pros_output_EPL_vs_"+lMembers[1]+".csv",
+                df_2 = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/pros_output_EPL_vs_"+lMembers[1]+".csv",
                                  index_col='Pathway')
-            df_3 = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/pros_output_EPL_vs_"+lMembers[2]+".csv",
+                df_3 = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/pros_output_EPL_vs_"+lMembers[2]+".csv",
                                 index_col='Pathway')
             
-            if is_metabolic=='true':
-                df_1 = df_1[df_1['Database']=='metabolism']
-                df_2 = df_2[df_2['Database']=='metabolism']
-                df_3 = df_3[df_3['Database']=='metabolism']
-            else:                
-                df_1 = df_1[df_1['Database']!='metabolism']
-                df_2 = df_2[df_2['Database']!='metabolism']
-                df_3 = df_3[df_3['Database']!='metabolism']
+                if is_metabolic=='true':
+                    df_1 = df_1[df_1['Database']=='metabolism']
+                    df_2 = df_2[df_2['Database']=='metabolism']
+                    df_3 = df_3[df_3['Database']=='metabolism']
+                else:                
+                    df_1 = df_1[df_1['Database']!='metabolism']
+                    df_2 = df_2[df_2['Database']!='metabolism']
+                    df_3 = df_3[df_3['Database']!='metabolism']
+            
+            elif path_gene =='genes':
+                df_1 = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/EPL_vs_"+lMembers[0]+".DE.tab",
+                                 sep='\t', index_col='gene')
+                df_2 = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/EPL_vs_"+lMembers[1]+".DE.tab",
+                                 sep='\t', index_col='gene')
+                df_3 = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/EPL_vs_"+lMembers[2]+".DE.tab",
+                                 sep='\t', index_col='gene')           
+                df_1 = pd.DataFrame(df_1['logFC'])
+                df_2 = pd.DataFrame(df_2['logFC'])
+                df_3 = pd.DataFrame(df_3['logFC'])
+                df_1.columns = ['0']
+                df_2.columns = ['0']
+                df_3.columns = ['0']
             
             
             s_tumour1 = df_1['0'].round(decimals=2)

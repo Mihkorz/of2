@@ -1,4 +1,4 @@
-function drawDinamicTable(idx, tblRenderTo){
+function drawDinamicTable(idx, tblRenderTo, path_gene){
 	
 	var arParams = idx.split("_");
 	var inter_num = arParams[0];
@@ -26,7 +26,9 @@ function drawDinamicTable(idx, tblRenderTo){
 			else {htmlTable = '<table id="'+tblId+'" class="path table table-striped table-bordered path-dinamic" width="100%" >'}
 			
 			htmlTable+='<thead><tr>';
-			htmlTable+='<th>Pathway Name</th>';
+			if(path_gene=='pathways') htmlTable+='<th>Pathway Name</th>';
+			if(path_gene=='genes') htmlTable+='<th>Gene</th>';
+			
 			
 			arMembers.forEach(function(item, i, arr) {
 				htmlTable+='<th>'+item+'</th>';
@@ -65,7 +67,8 @@ function drawDinamicTable(idx, tblRenderTo){
 		        	    	 inter_num: inter_num,
 		    		         regulation: regulation,
 		    		         members: members,
-		    		         is_metabolic: is_metabolic
+		    		         is_metabolic: is_metabolic,
+		    		         path_gene: path_gene
 		        	            }
 		        	    	 }
 		    } );
@@ -83,14 +86,18 @@ function drawDinamicTable(idx, tblRenderTo){
 		    			$(this).html("<span title='"+path_long_name+"'>"+path_long_name+"</span>");
 		    		}
 		    	});
-		    	
+		   
+		   if(path_gene == 'pathways'){
 		    	$("table#"+tblId+".path tr td:nth-child(2)").wrapInner('<a href="#/"></a>');
 	    	    $("table#"+tblId+".path tr td:nth-child(3)").wrapInner('<a href="#/"></a>');
 	    	    $("table#"+tblId+".path tr td:nth-child(4)").wrapInner('<a href="#/"></a>');
-	    	    
-		    	
+		   }
+		   else{
+			   $("table#"+tblId+".path tr td:first-child()").wrapInner('<a href="#/"></a>');
+		        } 
+		   
 			});
-			
+			if(path_gene == 'pathways'){
 			$('#'+tblId+' tbody').on( 'click', 'tr td:nth-child(2)', function () {    	
 	    	    var path_name = $(this).prev().find('span').attr('title');    	
 	    	    var $th = $(this).closest('table').find('th').eq($(this).index());
@@ -109,6 +116,15 @@ function drawDinamicTable(idx, tblRenderTo){
 	    	    var group = $th.text();
 	    	    showPathDetails(path_name, group);    	    	
 	                                                                              });
+			} // end of if path_gene==paths
+			else{
+				
+				$('#'+tblId+' tbody').on( 'click', 'tr td:first-child', function () {				    	
+				    	var gene_name = $(this).text();				    	
+				    	drawGeneChart(gene_name);				    	
+				    });
+				
+			}
 			
 	        
 		    }
@@ -122,7 +138,7 @@ function drawDinamicTable(idx, tblRenderTo){
 function drawVenn(renderTo, file_name1, name1,
 		                      file_name2, name2,
 		                      file_name3, name3,
-		                      is_metabolic, reg, tblRenderTo){
+		                      is_metabolic, reg, tblRenderTo, path_gene){
 	$.get("/report-portal/report/bt-ajaxpathvenn/",
 			{
 		file_name1: file_name1,
@@ -132,7 +148,8 @@ function drawVenn(renderTo, file_name1, name1,
 		file_name3: file_name3,
 		name3: name3,
 		is_metabolic: is_metabolic,
-		regulation: reg
+		regulation: reg,
+		path_gene: path_gene
 			},
 			function(data){
 				var sets = data;
@@ -158,7 +175,7 @@ function drawVenn(renderTo, file_name1, name1,
 
                    // Display a tooltip with the current size
                    tooltip.transition().duration(400).style("opacity", .9);
-                   tooltip.text(d.size + " pathways");
+                   tooltip.text(d.size + " "+path_gene);
                    
 
                    // highlight the current path
@@ -184,7 +201,7 @@ function drawVenn(renderTo, file_name1, name1,
                 	 
                 	 venn.sortAreas(div, d);
                      var idx = d.id;
-                     drawDinamicTable(idx, tblRenderTo);
+                     drawDinamicTable(idx, tblRenderTo, path_gene);
                 	 
                  });
 			}
@@ -193,51 +210,96 @@ function drawVenn(renderTo, file_name1, name1,
 }
 
 $(document).ready(function(){
+	// GENES
+	drawVenn('venn_gene-ESvsASCvsCCL-up',
+			'EPL_vs_ES.DE.tab', 'ES',
+			'EPL_vs_ASC.DE.tab', 'ASC',
+			'EPL_vs_CCL.DE.tab', 'CCL', 
+			false, 'up', 'venn_gene_dinamic_ESvsASCvsCCL', 'genes');
+		drawVenn('venn_gene-ESvsASCvsCCL-down',
+				'EPL_vs_ES.DE.tab', 'ES',
+				'EPL_vs_ASC.DE.tab', 'ASC',
+				'EPL_vs_CCL.DE.tab', 'CCL', 
+				false, 'down', 'venn_gene_dinamic_ESvsASCvsCCL', 'genes');
+		
+		drawVenn('venn_gene-ESvsANCvsCCL-up',
+				'EPL_vs_ES.DE.tab', 'ES',
+				'EPL_vs_ANC.DE.tab', 'ANC',
+				'EPL_vs_CCL.DE.tab', 'CCL', 
+				false, 'up', 'venn_gene_dinamic_ESvsANCvsCCL', 'genes');
+		drawVenn('venn_gene-ESvsANCvsCCL-down',
+					'EPL_vs_ES.DE.tab', 'ES',
+					'EPL_vs_ANC.DE.tab', 'ANC',
+					'EPL_vs_CCL.DE.tab', 'CCL', 
+					false, 'down', 'venn_gene_dinamic_ESvsANCvsCCL', 'genes');
+		
+		drawVenn('venn_gene-ESvsAECvsCCL-up',
+				'EPL_vs_ES.DE.tab', 'ES',
+				'EPL_vs_AEC.DE.tab', 'AEC',
+				'EPL_vs_CCL.DE.tab', 'CCL', 
+				false, 'up', 'venn_gene_dinamic_ESvsAECvsCCL', 'genes');
+		drawVenn('venn_gene-ESvsAECvsCCL-down',
+					'EPL_vs_ES.DE.tab', 'ES',
+					'EPL_vs_AEC.DE.tab', 'AEC',
+					'EPL_vs_CCL.DE.tab', 'CCL', 
+					false, 'down', 'venn_gene_dinamic_ESvsAECvsCCL', 'genes');
+			
+		drawVenn('venn_gene-ESvsABCvsCCL-up',
+					'EPL_vs_ES.DE.tab', 'ES',
+					'EPL_vs_ABC.DE.tab', 'ABC',
+					'EPL_vs_CCL.DE.tab', 'CCL', 
+					false, 'up', 'venn_gene_dinamic_ESvsABCvsCCL', 'genes');
+		drawVenn('venn_gene-ESvsABCvsCCL-down',
+						'EPL_vs_ES.DE.tab', 'ES',
+						'EPL_vs_ABC.DE.tab', 'ABC',
+						'EPL_vs_CCL.DE.tab', 'CCL', 
+						false, 'down', 'venn_gene_dinamic_ESvsABCvsCCL', 'genes');
+	
 	// SIGNALING
 	
 		drawVenn('venn_path-ESvsASCvsCCL-up',
 			'pros_output_EPL_vs_ES.csv', 'ES',
 			'pros_output_EPL_vs_ASC.csv', 'ASC',
 			'pros_output_EPL_vs_CCL.csv', 'CCL', 
-			false, 'up', 'venn_path_dinamic_ESvsASCvsCCL');
+			false, 'up', 'venn_path_dinamic_ESvsASCvsCCL', 'pathways');
 		drawVenn('venn_path-ESvsASCvsCCL-down',
 				'pros_output_EPL_vs_ES.csv', 'ES',
 				'pros_output_EPL_vs_ASC.csv', 'ASC',
 				'pros_output_EPL_vs_CCL.csv', 'CCL', 
-				false, 'down', 'venn_path_dinamic_ESvsASCvsCCL');
+				false, 'down', 'venn_path_dinamic_ESvsASCvsCCL', 'pathways');
 		
 		drawVenn('venn_path-ESvsANCvsCCL-up',
 				'pros_output_EPL_vs_ES.csv', 'ES',
 				'pros_output_EPL_vs_ANC.csv', 'ANC',
 				'pros_output_EPL_vs_CCL.csv', 'CCL', 
-				false, 'up', 'venn_path_dinamic_ESvsANCvsCCL');
+				false, 'up', 'venn_path_dinamic_ESvsANCvsCCL', 'pathways');
 		drawVenn('venn_path-ESvsANCvsCCL-down',
 					'pros_output_EPL_vs_ES.csv', 'ES',
 					'pros_output_EPL_vs_ANC.csv', 'ANC',
 					'pros_output_EPL_vs_CCL.csv', 'CCL', 
-					false, 'down', 'venn_path_dinamic_ESvsANCvsCCL');
+					false, 'down', 'venn_path_dinamic_ESvsANCvsCCL', 'pathways');
 		
 		drawVenn('venn_path-ESvsAECvsCCL-up',
 				'pros_output_EPL_vs_ES.csv', 'ES',
 				'pros_output_EPL_vs_AEC.csv', 'AEC',
 				'pros_output_EPL_vs_CCL.csv', 'CCL', 
-				false, 'up', 'venn_path_dinamic_ESvsAECvsCCL');
+				false, 'up', 'venn_path_dinamic_ESvsAECvsCCL', 'pathways');
 		drawVenn('venn_path-ESvsAECvsCCL-down',
 					'pros_output_EPL_vs_ES.csv', 'ES',
 					'pros_output_EPL_vs_AEC.csv', 'AEC',
 					'pros_output_EPL_vs_CCL.csv', 'CCL', 
-					false, 'down', 'venn_path_dinamic_ESvsAECvsCCL');
+					false, 'down', 'venn_path_dinamic_ESvsAECvsCCL', 'pathways');
 			
 		drawVenn('venn_path-ESvsABCvsCCL-up',
 					'pros_output_EPL_vs_ES.csv', 'ES',
 					'pros_output_EPL_vs_ABC.csv', 'ABC',
 					'pros_output_EPL_vs_CCL.csv', 'CCL', 
-					false, 'up', 'venn_path_dinamic_ESvsABCvsCCL');
+					false, 'up', 'venn_path_dinamic_ESvsABCvsCCL', 'pathways');
 		drawVenn('venn_path-ESvsABCvsCCL-down',
 						'pros_output_EPL_vs_ES.csv', 'ES',
 						'pros_output_EPL_vs_ABC.csv', 'ABC',
 						'pros_output_EPL_vs_CCL.csv', 'CCL', 
-						false, 'down', 'venn_path_dinamic_ESvsABCvsCCL');
+						false, 'down', 'venn_path_dinamic_ESvsABCvsCCL', 'pathways');
 		
 		// METABOLIC
 		
@@ -245,44 +307,44 @@ $(document).ready(function(){
 			'pros_output_EPL_vs_ES.csv', 'ES',
 			'pros_output_EPL_vs_ASC.csv', 'ASC',
 			'pros_output_EPL_vs_CCL.csv', 'CCL', 
-			true, 'up', 'meta_venn_path_dinamic_ESvsASCvsCCL');
+			true, 'up', 'meta_venn_path_dinamic_ESvsASCvsCCL', 'pathways');
 		drawVenn('meta_venn_path-ESvsASCvsCCL-down',
 				'pros_output_EPL_vs_ES.csv', 'ES',
 				'pros_output_EPL_vs_ASC.csv', 'ASC',
 				'pros_output_EPL_vs_CCL.csv', 'CCL', 
-				true, 'down', 'meta_venn_path_dinamic_ESvsASCvsCCL');
+				true, 'down', 'meta_venn_path_dinamic_ESvsASCvsCCL', 'pathways');
 		
 		drawVenn('meta_venn_path-ESvsANCvsCCL-up',
 				'pros_output_EPL_vs_ES.csv', 'ES',
 				'pros_output_EPL_vs_ANC.csv', 'ANC',
 				'pros_output_EPL_vs_CCL.csv', 'CCL', 
-				true, 'up', 'meta_venn_path_dinamic_ESvsANCvsCCL');
+				true, 'up', 'meta_venn_path_dinamic_ESvsANCvsCCL', 'pathways');
 		drawVenn('meta_venn_path-ESvsANCvsCCL-down',
 					'pros_output_EPL_vs_ES.csv', 'ES',
 					'pros_output_EPL_vs_ANC.csv', 'ANC',
 					'pros_output_EPL_vs_CCL.csv', 'CCL', 
-					true, 'down', 'meta_venn_path_dinamic_ESvsANCvsCCL');
+					true, 'down', 'meta_venn_path_dinamic_ESvsANCvsCCL', 'pathways');
 		
 		drawVenn('meta_venn_path-ESvsAECvsCCL-up',
 				'pros_output_EPL_vs_ES.csv', 'ES',
 				'pros_output_EPL_vs_AEC.csv', 'AEC',
 				'pros_output_EPL_vs_CCL.csv', 'CCL', 
-				true, 'up', 'venn_path_dinamic_ESvsAECvsCCL');
+				true, 'up', 'venn_path_dinamic_ESvsAECvsCCL', 'pathways');
 		drawVenn('venn_path-ESvsAECvsCCL-down',
 					'pros_output_EPL_vs_ES.csv', 'ES',
 					'pros_output_EPL_vs_AEC.csv', 'AEC',
 					'pros_output_EPL_vs_CCL.csv', 'CCL', 
-					true, 'down', 'meta_venn_path_dinamic_ESvsAECvsCCL');
+					true, 'down', 'meta_venn_path_dinamic_ESvsAECvsCCL', 'pathways');
 			
 		drawVenn('meta_venn_path-ESvsABCvsCCL-up',
 					'pros_output_EPL_vs_ES.csv', 'ES',
 					'pros_output_EPL_vs_ABC.csv', 'ABC',
 					'pros_output_EPL_vs_CCL.csv', 'CCL', 
-					true, 'up', 'meta_venn_path_dinamic_ESvsABCvsCCL');
+					true, 'up', 'meta_venn_path_dinamic_ESvsABCvsCCL', 'pathways');
 		drawVenn('meta_venn_path-ESvsABCvsCCL-down',
 						'pros_output_EPL_vs_ES.csv', 'ES',
 						'pros_output_EPL_vs_ABC.csv', 'ABC',
 						'pros_output_EPL_vs_CCL.csv', 'CCL', 
-						true, 'down', 'meta_venn_path_dinamic_ESvsABCvsCCL');
+						true, 'down', 'meta_venn_path_dinamic_ESvsABCvsCCL', 'pathways');
 	
 });
