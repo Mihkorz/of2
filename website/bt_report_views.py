@@ -17,7 +17,7 @@ from core.models import Pathway, Node, Component
 
 class BTReport(TemplateView):
     template_name = "website/bt_report.html"
-    @method_decorator(login_required)
+    
     def dispatch(self, request, *args, **kwargs):
         
         return super(BTReport, self).dispatch(request, *args, **kwargs)
@@ -44,7 +44,7 @@ class BTReport(TemplateView):
     
 class BTGeneVolcanoJson(TemplateView):
     template_name="website/bt_report.html"
-    @method_decorator(login_required)
+    
     def dispatch(self, request, *args, **kwargs):
         
         return super(BTGeneVolcanoJson, self).dispatch(request, *args, **kwargs)
@@ -125,7 +125,7 @@ class BTGeneVolcanoJson(TemplateView):
 
 class BTReportGeneTableJson(TemplateView):
     template_name="website/bt_report.html"
-    @method_decorator(login_required)
+    
     def dispatch(self, request, *args, **kwargs):
         
         return super(BTReportGeneTableJson, self).dispatch(request, *args, **kwargs)
@@ -177,7 +177,7 @@ class BTReportGeneTableJson(TemplateView):
     
 class BTReportGeneBoxplotJson(TemplateView):
     template_name="website/report.html"
-    @method_decorator(login_required)
+    
     def dispatch(self, request, *args, **kwargs):
         
         return super(BTReportGeneBoxplotJson, self).dispatch(request, *args, **kwargs)
