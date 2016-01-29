@@ -148,7 +148,7 @@ class BTReportGeneTableJson(TemplateView):
         
         else:
             df_ES = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/EPL_vs_ES.DE.tab",
-                                 sep='\t', index_col='gene')
+                                 sep='\t', index_col='gene')            
             df_ASC = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/EPL_vs_ASC.DE.tab",
                                  sep='\t', index_col='gene')
             df_ABC = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/EPL_vs_ABC.DE.tab",
@@ -167,6 +167,8 @@ class BTReportGeneTableJson(TemplateView):
             df_gene['4'] = df_AEC['logFC'].round(decimals=2)
             df_gene['5'] = df_ANC['logFC'].round(decimals=2)
             df_gene['6'] = df_CCL['logFC'].round(decimals=2)
+            
+            
             
             df_gene.reset_index(inplace=True)
             #raise Exception('gene table')
@@ -576,10 +578,13 @@ class BTReportAjaxPathwayVenn(TemplateView):
         elif path_gene == 'genes':
             df1 = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/"+file_name1,
                                   sep='\t', index_col='gene')
+            df1 = df1[(df1['adj.P.Val']<0.05) & (np.absolute(df1['logFC'])>1)] 
             df2 = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/"+file_name2,
                                  sep='\t', index_col='gene')
+            df2 = df2[(df2['adj.P.Val']<0.05) & (np.absolute(df2['logFC'])>1)] 
             df3 = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/"+file_name3,
                                   sep='\t', index_col='gene')
+            df3 = df3[(df3['adj.P.Val']<0.05) & (np.absolute(df3['logFC'])>1)] 
             
             df1 = pd.DataFrame(df1['logFC']) 
             df2 = pd.DataFrame(df2['logFC'])
@@ -724,6 +729,7 @@ class BTReportAjaxPathwayVennTable(TemplateView):
             elif path_gene =='genes':
                 df_1 = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/EPL_vs_"+lMembers[0]+".DE.tab",
                                  sep='\t', index_col='gene')           
+                df_1 = df_1[(df_1['adj.P.Val']<0.05) & (np.absolute(df_1['logFC'])>1)]
                 df_1 = pd.DataFrame(df_1['logFC'])
                 df_1.columns = ['0']
                 
@@ -759,6 +765,9 @@ class BTReportAjaxPathwayVennTable(TemplateView):
                                  sep='\t', index_col='gene')
                 df_2 = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/EPL_vs_"+lMembers[1]+".DE.tab",
                                  sep='\t', index_col='gene')           
+                df_1 = df_1[(df_1['adj.P.Val']<0.05) & (np.absolute(df_1['logFC'])>1)]
+                df_2 = df_2[(df_2['adj.P.Val']<0.05) & (np.absolute(df_2['logFC'])>1)]
+                
                 df_1 = pd.DataFrame(df_1['logFC'])
                 df_2 = pd.DataFrame(df_2['logFC'])
                 df_1.columns = ['0']
@@ -815,6 +824,12 @@ class BTReportAjaxPathwayVennTable(TemplateView):
                                  sep='\t', index_col='gene')
                 df_3 = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/EPL_vs_"+lMembers[2]+".DE.tab",
                                  sep='\t', index_col='gene')           
+                
+                df_1 = df_1[(df_1['adj.P.Val']<0.05) & (np.absolute(df_1['logFC'])>1)]
+                df_2 = df_2[(df_2['adj.P.Val']<0.05) & (np.absolute(df_2['logFC'])>1)]
+                df_3 = df_3[(df_3['adj.P.Val']<0.05) & (np.absolute(df_3['logFC'])>1)]
+                
+                
                 df_1 = pd.DataFrame(df_1['logFC'])
                 df_2 = pd.DataFrame(df_2['logFC'])
                 df_3 = pd.DataFrame(df_3['logFC'])

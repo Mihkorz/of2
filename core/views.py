@@ -959,36 +959,8 @@ class Test(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(Test, self).get_context_data(**kwargs)
         
-        filen = 'output_EPL_vs_ES.txt.xlsx'
-        file_out = 'pros_output_EPL_vs_ES.csv'
         
         
-        df = read_excel(settings.MEDIA_ROOT+'/users/admin/bt-new/output/'+filen,
-                        sheetname='PAS1', index_col='Pathway')
-        
-        df_t = df[[x for x in df.columns if 'Tumour' in x]]
-        
-        df_t = df_t.mean(axis=1)
-        
-        df_out = DataFrame()
-        
-        df_out['Database']=df['Database']
-        df_out['0']=df_t
-        
-        df_out.to_csv(settings.MEDIA_ROOT+'/users/admin/bt-new/output/'+file_out, encoding='utf-8')
-        raise Exception('test stop')
-        
-        filen = 'cnr_output_EPL_vs_ABC.txt.xlsx'
-        file_out = 'cnr_proc_EPL_vs_ABC.csv'
-        
-        
-        df = read_excel(settings.MEDIA_ROOT+'/users/admin/bt-new/process/'+filen,
-                        index_col='SYMBOL')
-        
-        df = df[[x for x in df.columns if 'Tumour' in x]]
-        
-        df = df.mean(axis=1)
-        df.to_csv(settings.MEDIA_ROOT+'/users/admin/bt-new/process/'+file_out)
         raise Exception('test stop')
         
         df1=read_csv(settings.MEDIA_ROOT+'/nodes-comp-biocarta.csv')
@@ -1040,6 +1012,50 @@ class Test(TemplateView):
                 
                 
         raise Exception('stop')
+        
+        """ HUMAN PATH TO MOUSE
+        for mmm in Pathway.objects.filter(organism='mouse', database='kegg_adjusted'):
+            mmm.delete()
+        
+        hps = Pathway.objects.filter(organism='human', database='kegg_adjusted')
+        i=0
+        for hp in hps:
+            i=i+1
+            print hp.name+' i = '+str(i)
+            
+            mp = Pathway(organism='mouse', database='kegg_adjusted', name=hp.name, amcf=hp.amcf)
+            mp.save()
+            
+            for hg in hp.gene_set.all():
+                try:
+                    mmap = MouseMapping.objects.filter(human_gene_symbol=hg.name)[0]
+                
+                    mg = Gene(name=mmap.mouse_gene_symbol.upper(), arr=hg.arr, pathway=mp, comment=hg.comment)
+                except:
+                    mg = Gene(name=hg.name, arr=hg.arr, pathway=mp, comment=hg.comment)
+                    
+                mg.save()
+                
+            for hn in hp.node_set.all():
+                mn = Node(name=hn.name, comment=hn.comment, pathway=mp)
+                mn.save()
+                for hc in hn.component_set.all():
+                    try:
+                        mmap = MouseMapping.objects.filter(human_gene_symbol=hc.name)[0]
+                        mc = Component(name=mmap.mouse_gene_symbol.upper(), node=mn)
+                        
+                    except:
+                        mc = Component(name=hc.name, node=mn)
+                    mc.save()
+                    
+            
+            for hn in hp.node_set.all():
+                for inrel in hn.inrelations.all():
+                    mfn = Node.objects.filter(name=inrel.fromnode.name, pathway=mp)[0]
+                    mtn = Node.objects.filter(name=inrel.tonode.name, pathway=mp)[0]
+                    mr = Relation(fromnode=mfn, tonode=mtn)
+                    mr.save()
+        """
         
         
         """
