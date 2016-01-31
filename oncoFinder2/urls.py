@@ -14,6 +14,9 @@ from website.report_views import LorealReport, \
                                  ReportPathwayScatterJson, ReportPathwayTableJson, ReportAjaxPathDetail, \
                                  ReportAjaxPathwayVenn, ReportAjaxPathwayVennTable
                                  
+from website.lrl_report_views import LRLReport,\
+                                     LRLReportGeneScatterJson, LRLReportGeneTableJson, LRLReportGeneDetailJson
+
 from website.bt_report_views import BTReport, \
                                     BTGeneVolcanoJson, BTReportGeneTableJson, BTReportGeneBoxplotJson,\
                                     BTReportPathwayTableJson, BTReportAjaxPathDetail, \
@@ -148,6 +151,11 @@ urlpatterns = patterns('',
     url(r'^report-portal/report/ajaxpathvenn/$', ReportAjaxPathwayVenn.as_view(), name="report_ajax_path_venn"),
     url(r'^report-portal/report/ajaxpathvenntbl/$', ReportAjaxPathwayVennTable.as_view(), name="report_ajax_path_venn_tbl"),
     
+    ################### REPORT LRL2016 ###############################################
+    url(r'^report-portal/report/lrl2016/$', LRLReport.as_view(), name="lrl-report"),
+    url(r'^report-portal/lrl-genescatterjson/$', LRLReportGeneScatterJson.as_view(), name="lrl-gene_scatter_json"),
+    url(r'^report-portal/lrl-genetablejson/$', LRLReportGeneTableJson.as_view(), name="lrl-gene_table_json"),
+    url(r'^report-portal/lrl-genedetailjson/$', LRLReportGeneDetailJson.as_view(), name="lrl-gene_detail_json"),
     ################### REPORT BT ###############################################
     url(r'^report-portal/report/bt/$', BTReport.as_view(), name="bt-report"),
     url(r'^report-portal/bt-genevolcanojson/$', BTGeneVolcanoJson.as_view(), name="bt-gen-volcano-json"),
@@ -157,6 +165,8 @@ urlpatterns = patterns('',
     url(r'^report-portal/report/bt-ajaxpathdetail/$', BTReportAjaxPathDetail.as_view(), name="bt-report_ajax_path_detail"),
     url(r'^report-portal/report/bt-ajaxpathvenn/$', BTReportAjaxPathwayVenn.as_view(), name="bt-report_ajax_path_venn"),
     url(r'^report-portal/report/bt-ajaxpathvenntbl/$', BTReportAjaxPathwayVennTable.as_view(), name="bt-report_ajax_path_venn_tbl"),
+    
+    
     ################### BLOOD NN ###############################################
     url(r'^nn-blood/$', nnBloodView.as_view(), name="nn-blood"),
     url(r'^nn-blood/result/$', nnBloodResult.as_view(), name="nn-blood"),

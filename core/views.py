@@ -960,7 +960,31 @@ class Test(TemplateView):
         context = super(Test, self).get_context_data(**kwargs)
         
         
+        ppp = Pathway.objects.get(name='HA_syntesis_pathway', organism='human', database='primary_new', amcf=0)
         
+        
+        
+        
+        df_rel = read_csv(settings.MEDIA_ROOT+'/HA_syntesis_pathway_interactions.csv')
+        
+        def add_rels(col):
+            
+            fr_node = Node.objects.get(name=col['From node'], pathway=ppp)
+            to_node = Node.objects.get(name=col['To node'], pathway=ppp)
+            
+            if col['Relation type']=='activation':
+                reltype=1
+            elif col['Relation type']=='inhibition':
+                reltype=0
+            else:
+                reltype=2
+            mr = Relation(fromnode=fr_node, tonode=to_node, reltype=reltype)
+                
+            mr.save()
+            
+       
+        
+        dd = df_rel.apply(add_rels, axis=1)
         raise Exception('test stop')
         
         df1=read_csv(settings.MEDIA_ROOT+'/nodes-comp-biocarta.csv')
