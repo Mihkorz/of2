@@ -161,7 +161,46 @@ class LRLReportGeneDetailJson(TemplateView):
         
         #
         return HttpResponse(json.dumps(response_data), content_type="application/json")   
+
+
+class LRLGeneVolcanoJson(TemplateView):
+    template_name="website/bt_report.html"
     
+    def dispatch(self, request, *args, **kwargs):
+        
+        return super(LRLGeneVolcanoJson, self).dispatch(request, *args, **kwargs)
+    
+    def post(self, request, *args, **kwargs):
+        
+        file_name = request.POST.get('file_name')        
+        
+        df_input = pd.read_excel(settings.MEDIA_ROOT+"/../static/report/lrl2016/"+file_name, index_col='SYMBOL')
+        
+        df1_tumour = df_input[[x for x in df_input.columns if 'Tumour' in x]]
+        s1_tumour = np.log2(df1_tumour.mean(axis=1)).round(decimals=2)
+        
+        df_gene = pd.DataFrame()
+        
+        df_gene['logFC'] = s1_tumour
+        df_gene['adj.P.Val'] = df_input['q_value']
+        
+        df_gene.reset_index(inplace=True)
+        #raise Exception('fuck')
+        df_gene.rename(columns={'SYMBOL': 'Symbol'}, inplace=True)
+        
+        df_gene['logFC'] = df_gene['logFC'].round(decimals=2)
+        
+        df_gene['_row'] = df_gene['adj.P.Val'].round(decimals=2)
+         
+        df_gene = df_gene[(df_gene['adj.P.Val']<0.05) & (np.absolute(df_gene['logFC'])>0)] 
+         
+        df_gene['adj.P.Val'] = -1*np.log10(df_gene['adj.P.Val'])        
+         
+        
+        output_json = df_gene.to_json(orient='records')        
+        
+        response_data =json.loads(output_json)
+        return HttpResponse(json.dumps(response_data), content_type="application/json")    
     
     
     

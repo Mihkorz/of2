@@ -70,7 +70,7 @@ function drawVolcanoPlot(renderTo,  file_name){
 	    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 	
-	d3.json('/report-portal/bt-genevolcanojson/')
+	d3.json('/report-portal/lrl-genevolcanojson/')
 	.header("X-CSRFToken", getCookie('csrftoken'))
 	.header("Content-Type", "application/x-www-form-urlencoded")
 	.post("file_name="+file_name ,function(error, root){
@@ -258,11 +258,14 @@ function drawVolcanoPlot(renderTo,  file_name){
 
 $(function(){
 	
-	drawVolcanoPlot('EPL_vs_ABC',  'EPL_vs_ABC.DE.tab');
-	drawVolcanoPlot('EPL_vs_AEC',  'EPL_vs_AEC.DE.tab');
+	drawVolcanoPlot('ra_all',  'cnr_output_ra_concat.csv.xlsx');
+	drawVolcanoPlot('mh_all',  'cnr_output_mh_concat.csv.xlsx');
+	drawVolcanoPlot('ca_all',  'cnr_output_ca_concat.csv.xlsx');
+	drawVolcanoPlot('re_all',  'cnr_output_re_concat.csv.xlsx');
+	/*drawVolcanoPlot('EPL_vs_AEC',  'EPL_vs_AEC.DE.tab');
 	drawVolcanoPlot('EPL_vs_ANC',  'EPL_vs_ANC.DE.tab');
 	drawVolcanoPlot('EPL_vs_ASC',  'EPL_vs_ASC.DE.tab');
 	drawVolcanoPlot('EPL_vs_CCL',  'EPL_vs_CCL.DE.tab');
 	drawVolcanoPlot('EPL_vs_ES',   'EPL_vs_ES.DE.tab');
-	
+	*/
 });

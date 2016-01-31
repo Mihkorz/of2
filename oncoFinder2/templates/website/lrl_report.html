@@ -20,6 +20,9 @@
     <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
     
+    <link href="/static/report/bt/js/opentip.css" rel="stylesheet" type="text/css">
+    <link href="/static/report/bt/js/volcano.css" rel="stylesheet" type="text/css">
+    
 
     
   </head>
@@ -60,7 +63,8 @@
 <h3 id='ra'>Retinoic acid</h3>
 
 <ul class="nav nav-tabs" role="tablist">
-         <li role="presentation" class="active"><a href="#ra_24_01_tab" aria-controls="home1" role="tab" data-toggle="tab">24h 0.1 micromol</a></li>
+         <li role="presentation" class="active"><a href="#ra_all_tab" aria-controls="home1" role="tab" data-toggle="tab">Combined</a></li>
+         <li role="presentation" class=""><a href="#ra_24_01_tab" aria-controls="home1" role="tab" data-toggle="tab">24h 0.1 micromol</a></li>
          <li role="presentation" ><a href="#ra_24_1_tab" aria-controls="home" role="tab" data-toggle="tab">24h 1 micromol</a></li>
          <li role="presentation"><a href="#ra_48_01_tab" aria-controls="profile" role="tab" data-toggle="tab">48h 0.1 micromol</a></li>
          <li role="presentation"><a href="#ra_48_1_tab" aria-controls="messages" role="tab" data-toggle="tab">48h 1 micromol</a></li>
@@ -68,7 +72,12 @@
          </ul>
             <!-- GENE Tab panes -->
   <div class="tab-content">
-  <div role="tabpanel" class="tab-pane fade in active " id="ra_24_01_tab">    
+  <div role="tabpanel" class="tab-pane fade in active " id="ra_all_tab">
+  
+  <div id="ra_all" style="min-width: 800px; height: 400px; max-width: 800px; margin: 0 auto"><span>Loading plot...</span></div>
+    
+  </div>
+  <div role="tabpanel" class="tab-pane fade  " id="ra_24_01_tab">    
       <br/>           
           <div id="ra_24_01_scatter" style="min-width: 800px; height: 400px; max-width: 800px; margin: 0 auto">Loading plot...</div>
   <br/><br/>
@@ -142,7 +151,8 @@
 <h3 id='mh'>Metformin hydrochloride</h3>
 
 <ul class="nav nav-tabs" role="tablist">
-         <li role="presentation" class="active"><a href="#mh_24_2_tab" aria-controls="home1" role="tab" data-toggle="tab">24h 2 micromol</a></li>
+         <li role="presentation" class="active"><a href="#mh_all_tab" aria-controls="home1" role="tab" data-toggle="tab">Combined</a></li>
+         <li role="presentation"><a href="#mh_24_2_tab" aria-controls="home1" role="tab" data-toggle="tab">24h 2 micromol</a></li>
          <li role="presentation" ><a href="#mh_24_4_tab" aria-controls="home" role="tab" data-toggle="tab">24h 4 micromol</a></li>
          <li role="presentation"><a href="#mh_48_2_tab" aria-controls="profile" role="tab" data-toggle="tab">48h 2 micromol</a></li>
          <li role="presentation"><a href="#mh_48_4_tab" aria-controls="messages" role="tab" data-toggle="tab">48h 4 micromol</a></li>
@@ -150,7 +160,13 @@
          </ul>
             <!-- GENE Tab panes -->
   <div class="tab-content">
-  <div role="tabpanel" class="tab-pane fade in active " id="mh_24_2_tab">    
+  <div role="tabpanel" class="tab-pane fade in active " id="mh_all_tab">
+  
+  <div id="mh_all" style="min-width: 800px; height: 400px; max-width: 800px; margin: 0 auto"><span>Loading plot...</span></div>
+    
+  </div>
+  
+  <div role="tabpanel" class="tab-pane fade " id="mh_24_2_tab">    
       <br/>           
           <div id="mh_24_2_scatter" style="min-width: 800px; height: 400px; max-width: 800px; margin: 0 auto">Loading plot...</div>
   <br/><br/>
@@ -224,7 +240,8 @@
 <h3 id='ca'>Capryloylsalicylic acid</h3>
 
 <ul class="nav nav-tabs" role="tablist">
-         <li role="presentation" class="active"><a href="#ca_24_5_tab" aria-controls="home1" role="tab" data-toggle="tab">24h 5 micromol</a></li>
+         <li role="presentation" class="active"><a href="#ca_all_tab" aria-controls="home1" role="tab" data-toggle="tab">Combined</a></li>
+         <li role="presentation" ><a href="#ca_24_5_tab" aria-controls="home1" role="tab" data-toggle="tab">24h 5 micromol</a></li>
          <li role="presentation" ><a href="#ca_24_10_tab" aria-controls="home" role="tab" data-toggle="tab">24h 10 micromol</a></li>
          <li role="presentation"><a href="#ca_48_5_tab" aria-controls="profile" role="tab" data-toggle="tab">48h 5 micromol</a></li>
          <li role="presentation"><a href="#ca_48_10_tab" aria-controls="messages" role="tab" data-toggle="tab">48h 10 micromol</a></li>
@@ -232,7 +249,12 @@
          </ul>
             <!-- GENE Tab panes -->
   <div class="tab-content">
-  <div role="tabpanel" class="tab-pane fade in active " id="ca_24_5_tab">    
+  <div role="tabpanel" class="tab-pane fade in active " id="ca_all_tab">
+  
+  <div id="ca_all" style="min-width: 800px; height: 400px; max-width: 800px; margin: 0 auto"><span>Loading plot...</span></div>
+    
+  </div>
+  <div role="tabpanel" class="tab-pane fade  " id="ca_24_5_tab">    
       <br/>           
           <div id="ca_24_5_scatter" style="min-width: 800px; height: 400px; max-width: 800px; margin: 0 auto">Loading plot...</div>
   <br/><br/>
@@ -305,7 +327,8 @@
 <h3 id='re'>Resveratrol</h3>
 
 <ul class="nav nav-tabs" role="tablist">
-         <li role="presentation" class="active"><a href="#re_24_10_tab" aria-controls="home1" role="tab" data-toggle="tab">24h 10 nmol</a></li>
+         <li role="presentation" class="active"><a href="#re_all_tab" aria-controls="home1" role="tab" data-toggle="tab">Combined</a></li>
+         <li role="presentation" ><a href="#re_24_10_tab" aria-controls="home1" role="tab" data-toggle="tab">24h 10 nmol</a></li>
          <li role="presentation" ><a href="#re_24_50_tab" aria-controls="home" role="tab" data-toggle="tab">24h 50 micromol</a></li>
          <li role="presentation"><a href="#re_48_10_tab" aria-controls="profile" role="tab" data-toggle="tab">48h 10 nmol</a></li>
          <li role="presentation"><a href="#re_48_50_tab" aria-controls="messages" role="tab" data-toggle="tab">48h 50 micromol</a></li>
@@ -313,7 +336,12 @@
          </ul>
             <!-- GENE Tab panes -->
   <div class="tab-content">
-  <div role="tabpanel" class="tab-pane fade in active " id="re_24_10_tab">    
+  <div role="tabpanel" class="tab-pane fade in active " id="re_all_tab">
+  
+  <div id="re_all" style="min-width: 800px; height: 400px; max-width: 800px; margin: 0 auto"><span>Loading plot...</span></div>
+    
+  </div>
+  <div role="tabpanel" class="tab-pane fade " id="re_24_10_tab">    
       <br/>           
           <div id="re_24_10_scatter" style="min-width: 800px; height: 400px; max-width: 800px; margin: 0 auto">Loading plot...</div>
   <br/><br/>
@@ -430,6 +458,10 @@
     
     <script src="/static/report/lrl2016/js/scatter.js" type="text/javascript"></script>
     <script src="/static/report/lrl2016/js/tables.js" type="text/javascript"></script>
+    <script src="/static/report/lrl2016/js/opentip.js" charset="utf-8"></script>
+    <script src="/static/report/lrl2016/js/adapter-native.js" charset="utf-8"></script>
+    <script src="/static/report/lrl2016/js/volcano.js" type="text/javascript"></script>
+    
     
     
     <!--  
