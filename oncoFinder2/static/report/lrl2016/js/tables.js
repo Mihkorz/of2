@@ -456,21 +456,28 @@ $(document).ready(function() {
 	sideTable('tbl-s-ca', 'salycilic_acid_adverse.csv');
 	sideTable('tbl-s-re', 'Resveratrol_side_effects.csv');
 	
-    /*
-    drawPathwayTable('tbl-path_all', 
-			         'all', 
-			         'all', false);
-			     
-    	
- // METABOLIC PATHS
-	
-	
+ // Geroprotectors table colorising
 
-    drawPathwayTable('tbl-meta_all', 
-	         'all', 
-	         'all', true);
+	function roundToTwo(num) {    
+	    return +(Math.round(num + "e+2")  + "e-2");
+	}
 	
-	*/
+	$('#tbl-gero > tbody  > tr').each(function() {
+		
+		var td = $(this).find("td").each(function(){
+			var value = parseFloat($(this).text());
+			if(value!=24 && value!=48){
+			if(value>0) {
+				
+				$(this).text(roundToTwo(value));
+				$(this).addClass('success');}
+			if(value<0) {
+				$(this).text(roundToTwo(value));
+				$(this).addClass('danger');}
+			}
+		});
+		
+	});
     
 } );
 
