@@ -68,7 +68,7 @@ function showPathDetails(path_name, filename){
 	
 	$('#pathmodal').modal('show');
 	
-	$.get("/report-portal/report/bt-ajaxpathdetail/",
+	$.get("/report-portal/report/lrl-ajaxpathdetail/",
 			{
 		     pathway: path_name,
 		     filename: filename,
@@ -160,9 +160,16 @@ function pathTable(renderTo, file_name){
     	});	  
     	
     	
-	    //$("table#"+renderTo+".path tr td:nth-child(2)").wrapInner('<a href="#/"></a>');
+	    $("table#"+renderTo+".path tr td:nth-child(2)").wrapInner('<a href="#/"></a>');
 	   
     } );
+	
+	$('#'+renderTo+' tbody').on( 'click', 'tr td:nth-child(2)', function () {    	
+	    var path_name = $(this).prev().find('span').attr('title');    	
+	    var $th = $(this).closest('table').find('th').eq($(this).index());
+	    var group = $th.text();
+	    showPathDetails(path_name, file_name);    	    	
+                                                                          });
 	
 }
 
