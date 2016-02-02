@@ -27,28 +27,28 @@ class LRLReport(TemplateView):
         context = super(LRLReport, self).get_context_data(**kwargs)
         
         dSamples={'Retinoic acid': {'id': 'ra',
-                                    'data': [['ra_24_01', '24h 0.1 micromol'],
-                                    ['ra_24_1', '24h 1 micromol'],
-                                    ['ra_48_01', '48h 0.1 micromol'],
-                                    ['ra_48_1', '48h 1 micromol']]
+                                    'data': [['ra_24_01', '24h 0.1 µM'],
+                                    ['ra_24_1', '24h 1 µM'],
+                                    ['ra_48_01', '48h 0.1 µM'],
+                                    ['ra_48_1', '48h 1 µM']]
                                     },
                   'Metformin hydrochloride': {'id': 'mh',
-                                              'data': [['mh_24_2', '24h 2 micromol'],
-                                                      ['mh_24_2', '24h 2 micromol'],
-                                                      ['mh_24_2', '24h 2 micromol'],
-                                                      ['mh_24_2', '24h 2 micromol']]
+                                              'data': [['mh_24_2', '24h 2 mM'],
+                                                      ['mh_24_4', '24h 4 mM'],
+                                                      ['mh_48_2', '48h 2 mM'],
+                                                      ['mh_48_4', '48h 4 mM']]
                                               },
-                  'Capryloylsalicylic acid': {'id': 'ca',
-                                              'data': [['ca_24_5', '24h 5 micromol'],
-                                                      ['ca_24_10', '24h 10 micromol'],
-                                                      ['ca_48_5', '48h 5 micromol'],
-                                                      ['ca_48_10', '48h 10 micromol']]
+                  'Capryloyl salicylic acid': {'id': 'ca',
+                                              'data': [['ca_24_5', '24h 5 µM'],
+                                                      ['ca_24_10', '24h 10 µM'],
+                                                      ['ca_48_5', '48h 5 µM'],
+                                                      ['ca_48_10', '48h 10 µM']]
                                               },
                   'Resveratrol': {'id': 're',
-                                              'data': [['re_24_10', '24h 10 nmol'],
-                                                      ['re_24_50', '24h 50 micromol'],
-                                                      ['re_48_10', '24h 10 nmol'],
-                                                      ['re_48_50', '48h 50 micromol']]
+                                              'data': [['re_24_10', '24h 10 µM'],
+                                                      ['re_24_50', '24h 50 µM'],
+                                                      ['re_48_10', '48h 10 µM'],
+                                                      ['re_48_50', '48h 50 µM']]
                                               }
                    }
         
@@ -490,7 +490,82 @@ class LRLReportAjaxPathDetail(TemplateView):
         return context        
     
     
+class LRLReportAjaxPathLine(TemplateView):
+    template_name="website/report.html"
+    def dispatch(self, request, *args, **kwargs):
+        
+        return super(LRLReportAjaxPathLine, self).dispatch(request, *args, **kwargs)
     
+    def get(self, request, *args, **kwargs):
+        
+        path = request.GET.get('path')
+        renderTo = request.GET.get('renderTo')
+        
+        if 're' in renderTo:
+            file_name1_24 = 'output_Tumour_24h_10nmol_resveratrol.xlsx'
+            file_name2_24 = 'output_Tumour_24h_50micromol_resveratrol.xlsx'
+            file_name1_48 = 'output_Tumour_48h_10nmol_resveratrol.xlsx'
+            file_name2_48 = 'output_Tumour_48h_50micromol_resveratrol.xlsx'
+            s_name1 = '10 µM'
+            s_name2 = '50 µM'           
+        elif 'mh' in renderTo:
+            file_name1_24 = 'output_Tumour_24h_2millimol_Metformin_hydrochloride.xlsx'
+            file_name2_24 = 'output_Tumour_24h_4millimol_Metformin_hydrochloride.xlsx'
+            file_name1_48 = 'output_Tumour_48h_2millimol_Metformin_hydrochloride.xlsx'
+            file_name2_48 = 'output_Tumour_48h_4millimol_Metformin_hydrochloride.xlsx'
+            s_name1 = '2 mM'
+            s_name2 = '4 mM' 
+        elif 'ca' in renderTo:
+            file_name1_24 = 'output_Tumour_24h_5micromol_Capryloylsalicylic_acid.xlsx'
+            file_name2_24 = 'output_Tumour_24h_10micromol_Capryloylsalicylic_acid.xlsx'
+            file_name1_48 = 'output_Tumour_48h_5micromol_Capryloylsalicylic_acid.xlsx'
+            file_name2_48 = 'output_Tumour_48h_10micromol_Capryloylsalicylic_acid.xlsx'
+            s_name1 = '5 µM'
+            s_name2 = '10 µM' 
+        elif 'ra' in renderTo:
+            file_name1_24 = 'output_Tumour_24h_1micromol_Retinoic_acid.xlsx'
+            file_name2_24 = 'output_Tumour_24h_01micromol_Retinoic_acid.xlsx'
+            file_name1_48 = 'output_Tumour_48h_1micromol_Retinoic_acid.xlsx'
+            file_name2_48 = 'output_Tumour_48h_01micromol_Retinoic_acid.xlsx'
+            s_name1 = '0.1 µM'
+            s_name2 = '1 µM' 
+        
+        
+        df1_24 = pd.read_excel(settings.MEDIA_ROOT+"/../static/report/lrl2016/"+file_name1_24,
+                                sheetname='PAS1', index_col='Pathway')
+        name1_24 = [x for x in df1_24.columns if 'Tumour' in x][0]
+        df2_24 = pd.read_excel(settings.MEDIA_ROOT+"/../static/report/lrl2016/"+file_name2_24,
+                                sheetname='PAS1', index_col='Pathway')
+        name2_24 = [x for x in df2_24.columns if 'Tumour' in x][0]
+        df1_48 = pd.read_excel(settings.MEDIA_ROOT+"/../static/report/lrl2016/"+file_name1_48,
+                                sheetname='PAS1', index_col='Pathway')
+        name1_48 = [x for x in df1_48.columns if 'Tumour' in x][0]
+        df2_48 = pd.read_excel(settings.MEDIA_ROOT+"/../static/report/lrl2016/"+file_name2_48,
+                                sheetname='PAS1', index_col='Pathway')
+        name2_48 = [x for x in df2_48.columns if 'Tumour' in x][0]
+        
+        val1_24 = df1_24.loc[path][name1_24].round(decimals=2)
+        val2_24 = df2_24.loc[path][name2_24].round(decimals=2)
+        val1_48 = df1_48.loc[path][name1_48].round(decimals=2)
+        val2_48 = df2_48.loc[path][name2_48].round(decimals=2)
+        
+        
+        l1 = [val1_24, val1_48]
+        l2 = [val2_24, val2_48]
+        
+        series1 = {'name': s_name1,
+                   'data': l1}
+        series2 = {'name': s_name2,
+                   'data': l2}
+        
+        response_data = {}
+             
+
+        response_data['s1'] = series1        
+        response_data['s2'] = series2
+        
+        #
+        return HttpResponse(json.dumps(response_data), content_type="application/json")       
     
     
     

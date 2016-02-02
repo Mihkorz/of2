@@ -1,6 +1,38 @@
-// CHART FOR GENES
+// CHART FOR PATH LINE
+var	line_options = {
+        chart: {
+        	renderTo: 'gene_plot',
+            type: 'line'
+        },
+        title: {
+            text: 'Concentration- and time-dependent pathway changes'
+        },
+        xAxis: {
+        	type: 'category',
+        	categories: ['24h', '48h']        	
+            
+        },
+        yAxis: {
+		      title: {
+		        text: 'PAS'
+		      }
+		    },
+        credits: {
+            enabled: false
+        },
+        series: [{
+            name: 'Normal',
+            data: [1,4],
+            
+        }, {
+            name: 'Case',
+            data: [5,6],
+            
+        }, ]
+    }
 	
-	var options = {
+//CHART FOR GENES
+var options = {
 	        chart: {
 	        	renderTo: 'gene_plot',
 	            type: 'column'
@@ -80,7 +112,31 @@ function showPathDetails(path_name, filename){
 			);
 }
 
+function showPathLinePlot(path_name, renderTo){
+	$("#modalBody").html('<h4 id="loading">Loading ...</h4><div id="gene_plot" style="width: 500px; height: 400px; margin: 0 auto"></div>');
+	
+	$("#myModalLabel").text(path_name);
+	
+	$('#pathmodal').modal('show');
+	
+	$.getJSON('/report-portal/lrl-ajaxpathline/',
+			{
+		     'path': path_name,
+		     'renderTo': renderTo
+		     },
+		     function(data){
+					
+					$("#loading").empty();
+					
+					options.title.text = path_name
+					
+					line_options.series[0] = data['s1'];
+					line_options.series[1] = data['s2'];
+					
+			        var chart = new Highcharts.Chart(line_options);
+				});
 
+}
 
 function drawGeneTable(id, file_name){
 	
@@ -159,10 +215,16 @@ function pathTable(renderTo, file_name){
     		}
     	});	  
     	
-    	
+    	$("table#"+renderTo+".path tr td:first-child()").wrapInner('<a href="#/"></a>');
 	    $("table#"+renderTo+".path tr td:nth-child(2)").wrapInner('<a href="#/"></a>');
 	   
     } );
+	
+	$('#'+renderTo+' tbody').on( 'click', 'tr td:first-child()', function () {    	
+	    var path_name = $(this).find('span').attr('title');    	
+	    
+	    showPathLinePlot(path_name, renderTo);    	    	
+                                                                          });
 	
 	$('#'+renderTo+' tbody').on( 'click', 'tr td:nth-child(2)', function () {    	
 	    var path_name = $(this).prev().find('span').attr('title');    	
