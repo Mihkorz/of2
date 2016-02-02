@@ -50,10 +50,18 @@
             <ul class="list-unstyled" style='font-size: 11pt; margin: 50px 0 0 0;' >
             <li class="title">Table of contents: </li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#input_data">Input data</a></li>
-            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#ra">Retinoic acid</a></li>
-            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#mh">Metformin hydrochloride</a></li>
-            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#ca">Capryloylsalicylic acid</a></li>
-            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#re">Resveratrol</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#gene_analysis">Gene level analysis</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#ra">Retinoic acid</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#mh">Metformin hydrochloride</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#ca">Capryloylsalicylic acid</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#re">Resveratrol</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#path_analysis">Pathway level analysis</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#p_ra">Retinoic acid</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#p_mh">Metformin hydrochloride</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#p_ca">Capryloylsalicylic acid</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#p_re">Resveratrol</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#path_analysis">Pathway level analysis</a></li>
+            
           </ul>
           
 <hr/>
@@ -410,6 +418,42 @@
       </div>
   </div> <!--  end of tab panes -->
 
+
+<hr/>
+          <h2 id='path_analysis'>Pathway level analysis</h2>
+<hr/>
+
+{%for drug, value in dSamples.items%}
+<h3 id='path_{{value.id}}'>{{drug}}</h3>
+
+<ul class="nav nav-tabs" role="tablist">
+         
+         {%for llist in value.data %}
+         <li role="presentation" class="{%if forloop.counter == 1 %}active{%endif%}"><a href="#p_{{llist.0}}_tab" aria-controls="home1" role="tab" data-toggle="tab">{{llist.1}}</a></li>         
+         {%endfor%}
+         </ul>
+            <!-- Pathway Tab panes -->
+  <div class="tab-content">
+  
+  
+  {%for llist in value.data %}
+  
+  <div role="tabpanel" class="tab-pane fade {%if forloop.counter == 1 %}in active{%endif%}" id="p_{{llist.0}}_tab"> 
+  <h4>Table . {{drug}}. {{llist.1}}</h4>
+      <table id="tbl-p-{{llist.0}}" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>Pathway</th>
+           <th>PAS</th>
+          </tr>
+        </thead>  
+      </table>
+  </div>
+  
+  {%endfor%}
+  </div>
+{%endfor%}
+
 </div>  
 
 
@@ -428,12 +472,13 @@
         <div class="top"><img src="/static/images/logo.svg"></div>
         <div class="menu">
           <ul class="list-unstyled" >
-            <li class="title">Table of contents: </li>
+            <li class="title">Table of contents: </li> 
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#input_data">Input data</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#ra">Retinoic acid</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#mh">Metformin hydrochloride</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#ca">Capryloylsalicylic acid</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#re">Resveratrol</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#path_analysis">Pathway level analysis</a></li>
           </ul>
         </div>
         <div class="bottom">

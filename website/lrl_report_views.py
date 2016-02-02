@@ -26,19 +26,33 @@ class LRLReport(TemplateView):
               
         context = super(LRLReport, self).get_context_data(**kwargs)
         
-        lEmbryonicGenes =[ 'PCDHB2', 'PCDHB17', 'CSTF3', 'LOC644919', 'ITGA11', 'SMA4',
-                          'LOC727877', 'MAST2', 'TMEM18', 'LOC100130914', 'ADSSL1', 'ZNF767',
-                          'C19orf25', 'C19orf6', 'NKTR', 'LOC286208', 'GOLGA8A', 'CDK5RAP3',
-                          'OPN3', 'MGC16384', 'ZNF33A', 'LOC100190939', 'TPM1', 'GSDMB']
-               
-        lAdultGenes = ['COX7A1', 'ZNF280D', 'LOC441408', 'TRIM4', 'NIN', 'NAALADL1', 'ASF1B',
-                       'COMT', 'CAT', 'C18orf56', 'LOC440731', 'HOXA5', 'LOC375295', 'POLQ',
-                       'CAT', 'MEG3', 'CDT1', 'FOS']
+        dSamples={'Retinoic acid': {'id': 'ra',
+                                    'data': [['ra_24_01', '24h 0.1 micromol'],
+                                    ['ra_24_1', '24h 1 micromol'],
+                                    ['ra_48_01', '48h 0.1 micromol'],
+                                    ['ra_48_1', '48h 1 micromol']]
+                                    },
+                  'Metformin hydrochloride': {'id': 'mh',
+                                              'data': [['mh_24_2', '24h 2 micromol'],
+                                                      ['mh_24_2', '24h 2 micromol'],
+                                                      ['mh_24_2', '24h 2 micromol'],
+                                                      ['mh_24_2', '24h 2 micromol']]
+                                              },
+                  'Capryloylsalicylic acid': {'id': 'ca',
+                                              'data': [['ca_24_5', '24h 5 micromol'],
+                                                      ['ca_24_10', '24h 10 micromol'],
+                                                      ['ca_48_5', '48h 5 micromol'],
+                                                      ['ca_48_10', '48h 10 micromol']]
+                                              },
+                  'Resveratrol': {'id': 're',
+                                              'data': [['re_24_10', '24h 10 nmol'],
+                                                      ['re_24_50', '24h 50 micromol'],
+                                                      ['re_48_10', '24h 10 nmol'],
+                                                      ['re_48_50', '48h 50 micromol']]
+                                              }
+                   }
         
-        context['lEmbryonicGenes'] = lEmbryonicGenes
-        
-        context['lAdultGenes'] = lAdultGenes
-        
+        context['dSamples'] = dSamples
         return context
 
 
@@ -202,7 +216,82 @@ class LRLGeneVolcanoJson(TemplateView):
         response_data =json.loads(output_json)
         return HttpResponse(json.dumps(response_data), content_type="application/json")    
     
+
+class LRLReportPathwayTableJson(TemplateView):
+    template_name="website/report.html"
+    def dispatch(self, request, *args, **kwargs):
+        
+        return super(LRLReportPathwayTableJson, self).dispatch(request, *args, **kwargs)
     
+    def get(self, request, *args, **kwargs):
+        
+        file_name = request.GET.get('file_name')
+
+        
+        if file_name == 'all':
+            dfnhk = pd.read_excel(settings.MEDIA_ROOT+"/../static/report/loreal/output_loreal_preprocessed_NHK.txt.xlsx",
+                                sheetname='PAS1', index_col='Pathway')
+            df1 = pd.read_excel(settings.MEDIA_ROOT+"/../static/report/loreal/output_loreal_preprocessed_RhE (Type 1).txt.xlsx",
+                                 sheetname='PAS1', index_col='Pathway')
+            df2 = pd.read_excel(settings.MEDIA_ROOT+"/../static/report/loreal/output_loreal_preprocessed_RhE (Type 2).txt.xlsx",
+                                sheetname='PAS1', index_col='Pathway')
+            df3 = pd.read_excel(settings.MEDIA_ROOT+"/../static/report/loreal/output_loreal_preprocessed_RhE (Type 3).txt.xlsx",
+                                 sheetname='PAS1', index_col='Pathway')
+
+                
+            dfnhk_tumour = dfnhk[[x for x in dfnhk.columns if 'Tumour' in x]]
+            snkh_tumour = dfnhk_tumour.mean(axis=1).round(decimals=2)
+            df1_tumour = df1[[x for x in df1.columns if 'Tumour' in x]]
+            s1_tumour = df1_tumour.mean(axis=1).round(decimals=2)
+            df2_tumour = df2[[x for x in df2.columns if 'Tumour' in x]]
+            s2_tumour = df2_tumour.mean(axis=1).round(decimals=2)
+            df3_tumour = df3[[x for x in df3.columns if 'Tumour' in x]]
+            s3_tumour = df3_tumour.mean(axis=1).round(decimals=2)
+            
+            df_output = pd.DataFrame()
+            df_output['1'] = snkh_tumour
+            df_output['2'] = s1_tumour
+            df_output['3'] = s2_tumour
+            df_output['4'] = s3_tumour
+            try:
+                df_output.drop(['Target_drugs_pathway'], inplace=True)
+            except:
+                pass
+            df_output.reset_index(inplace=True)
+            
+            
+        else:
+            
+            df = pd.read_excel(settings.MEDIA_ROOT+"/../static/report/lrl2016/"+file_name,
+                                sheetname='PAS1', index_col='Pathway')
+            
+            t_name = [x for x in df.columns if 'Tumour' in x][0]
+            
+            df = df[df[t_name]!=0]
+            
+            df[t_name] = df[t_name].round(decimals=2)
+            
+            df = df.drop('Database', 1)
+            
+            
+            try:
+                df.drop(['Target_drugs_pathway'], inplace=True)
+            except:
+                pass
+            df.reset_index(inplace=True)
+        
+        
+        
+        df_json = df.to_json(orient='values')
+        
+        
+        
+        response_data = {'aaData': json.loads(df_json)}
+        return HttpResponse(json.dumps(response_data), content_type="application/json")
+    
+    
+    
+        
     
     
     
