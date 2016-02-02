@@ -23,7 +23,7 @@ function drawGeneBoxplot(name, renderTo, gene){
                          'Capryloyl salicylic acid', 'Resveratrol'
                          ],
             title: {
-                text: 'Group'
+                text: 'Drug'
             }
         },
 
