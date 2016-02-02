@@ -53,6 +53,14 @@ class LRLReport(TemplateView):
                    }
         
         context['dSamples'] = dSamples
+        
+        lGenes = ['COL1A1', 'COL1A2', 'KRT7', 'HYAL1', 'HYAL2',  'HAS1', 'HAS2',
+               'ELN', 'MMP1', 'MMP13', 'MMP8', 'FN1', 'WNT1', 'EGF', 'EGFR', 'GH1', 'TGFB1',
+               'TGFBR1', 'TGFBR2',
+               'FGF1', 'FGFR1']
+        
+        context['lGenes'] = lGenes
+        
         return context
 
 
@@ -121,7 +129,7 @@ class LRLReportGeneTableJson(TemplateView):
         df_output['y'] = s_norm
         
         df_output = df_output.div(df_output.y, axis='index')
-        df_output = np.log2(df_output)
+        df_output = np.log2(df_output).round(decimals=2)
         
         df_output = df_output[np.absolute(df_output['x'])>1]
         
@@ -176,6 +184,75 @@ class LRLReportGeneDetailJson(TemplateView):
         #
         return HttpResponse(json.dumps(response_data), content_type="application/json")   
 
+
+
+class LRLReportGeneBoxplotJson(TemplateView):
+    template_name="website/report.html"
+    def dispatch(self, request, *args, **kwargs):
+        
+        return super(LRLReportGeneBoxplotJson, self).dispatch(request, *args, **kwargs)
+    
+    def get(self, request, *args, **kwargs):
+        
+        gene  = request.GET.get('gene')
+        
+        
+        
+        df_ra = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/lrl2016/ra_concat.csv",
+                                index_col='SYMBOL', )
+        df_mh = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/lrl2016/mh_concat.csv",
+                                index_col='SYMBOL', )
+        df_ca = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/lrl2016/ca_concat.csv",
+                                index_col='SYMBOL', )
+        df_re = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/lrl2016/re_concat.csv",
+                                index_col='SYMBOL', )
+        
+        series_tumour = []
+        series_norm = []
+        
+        for df in [df_ra, df_mh, df_ca, df_re]:
+            for t_n in ['Tumour', 'Norm']:
+                
+                filered_df = df[[x for x in df if t_n in x]]
+                
+                row_gene = np.array(filered_df.loc[gene].round(decimals=2))      
+        
+                median = np.around(np.median(row_gene), decimals=0) 
+                upper_quartile = np.around(np.percentile(row_gene, 75), decimals=2)
+                lower_quartile = np.around(np.percentile(row_gene, 25), decimals=2)
+                iqr = upper_quartile - lower_quartile
+                upper_whisker = np.around(row_gene[row_gene<=upper_quartile+1.5*iqr], decimals=2).max()
+                lower_whisker = np.around(row_gene[row_gene>=lower_quartile-1.5*iqr], decimals=2).min()
+                
+                lSerie = [lower_whisker, lower_quartile, median, upper_quartile, upper_whisker]
+                
+                if t_n == 'Tumour':
+                    series_tumour.append(lSerie)
+                else:
+                    series_norm.append(lSerie)
+        
+        
+        s1 = {
+              'name': 'Normal',              
+              'data': series_norm,
+              'tooltip': {
+                          'headerFormat': '<em>Drug: {point.key}</em><br/>'
+                          }
+              }
+        
+        s2 = {
+              'name': 'Case',
+              'color': 'red',
+              'data': series_tumour,
+              'tooltip': {
+                          'headerFormat': '<em>Drug: {point.key}</em><br/>'
+                          }
+              }
+        
+        
+        response_data = [s1, s2]
+        
+        return HttpResponse(json.dumps(response_data), content_type="application/json")
 
 class LRLGeneVolcanoJson(TemplateView):
     template_name="website/bt_report.html"

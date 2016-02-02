@@ -18,7 +18,10 @@ function drawGeneBoxplot(name, renderTo, gene){
         },
 
         xAxis: {
-            categories: ['ES', 'EPL', 'ASC', 'ABC', 'AEC', 'ANC' , 'CCL'],
+            categories: ['Retinoic acid', 
+                         'Metformin hydrochloride',
+                         'Capryloyl salicylic acid', 'Resveratrol'
+                         ],
             title: {
                 text: 'Group'
             }
@@ -47,39 +50,35 @@ function drawGeneBoxplot(name, renderTo, gene){
 
     }
 	
-	$.getJSON('/report-portal/bt-genesboxplotjson/',
+	$.getJSON('/report-portal/lrl-genesboxplotjson/',
     		{    	     
     	     gene: gene
+    	     
     		},
     		function(data) { 
     	
-    	options.series[0] = data;
+    		options.series[0] = data[0];
+    	    options.series[1] = data[1];
     	
         var chart = new Highcharts.Chart(options);
     });
 }
 $(function () {
 	
-	arEmbryonicGenes =[ 'PCDHB2', 'PCDHB17', 'CSTF3', 'LOC644919', 'ITGA11', 'SMA4',
-                       'LOC727877', 'MAST2', 'TMEM18', 'LOC100130914', 'ADSSL1', 'ZNF767',
-                       'C19orf25', 'C19orf6', 'NKTR', 'LOC286208', 'GOLGA8A', 'CDK5RAP3',
-                       'OPN3', 'MGC16384', 'ZNF33A', 'LOC100190939', 'TPM1', 'GSDMB']
+	lGenes = ['COL1A1', 'COL1A2', 'KRT7', 'HYAL1', 'HYAL2',  'HAS1', 'HAS2',
+              'ELN', 'MMP1', 'MMP13', 'MMP8', 'FN1', 'WNT1', 'EGF', 'EGFR', 'GH1', 'TGFB1',
+              'TGFBR1', 'TGFBR2',
+              'FGF1', 'FGFR1']
             
-     arAdultGenes = ['COX7A1', 'ZNF280D', 'LOC441408', 'TRIM4', 'NIN', 'NAALADL1', 'ASF1B',
-                    'COMT', 'CAT', 'C18orf56', 'LOC440731', 'HOXA5', 'LOC375295', 'POLQ',
-                    'CAT', 'MEG3', 'CDT1', 'FOS']
+     
 	
-	for (var i in arEmbryonicGenes) {
+	for (var i in lGenes) {
 		
-		  drawGeneBoxplot(name=arEmbryonicGenes[i], renderTo=arEmbryonicGenes[i], gene=arEmbryonicGenes[i]);
+		  drawGeneBoxplot(name=lGenes[i], renderTo=lGenes[i], gene=lGenes[i]);
 		  
 		}
 	
-	for (var i in arAdultGenes) {
-		
-		  drawGeneBoxplot(name=arAdultGenes[i], renderTo=arAdultGenes[i], gene=arAdultGenes[i]);
-		  
-		}
+	
 	
 
     

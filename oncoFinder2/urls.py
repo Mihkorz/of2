@@ -17,7 +17,7 @@ from website.report_views import LorealReport, \
 from website.lrl_report_views import LRLReport,\
                                      LRLReportGeneScatterJson, LRLReportGeneTableJson, LRLReportGeneDetailJson, \
                                      LRLGeneVolcanoJson, LRLReportPathwayTableJson, LRLReportSideEffTableJson, \
-                                     LRLReportAjaxPathDetail, LRLReportAjaxPathLine
+                                     LRLReportAjaxPathDetail, LRLReportAjaxPathLine, LRLReportGeneBoxplotJson
 
 from website.bt_report_views import BTReport, \
                                     BTGeneVolcanoJson, BTReportGeneTableJson, BTReportGeneBoxplotJson,\
@@ -159,6 +159,7 @@ urlpatterns = patterns('',
     url(r'^report-portal/lrl-genetablejson/$', LRLReportGeneTableJson.as_view(), name="lrl-gene_table_json"),
     url(r'^report-portal/lrl-genedetailjson/$', LRLReportGeneDetailJson.as_view(), name="lrl-gene_detail_json"),
     url(r'^report-portal/lrl-genevolcanojson/$', LRLGeneVolcanoJson.as_view(), name="lrl-gen-volcano-json"),
+    url(r'^report-portal/lrl-genesboxplotjson/$', LRLReportGeneBoxplotJson.as_view(), name="lrl-gene_boxplot_json"),
     url(r'^report-portal/lrl-pathwaytablejson/$', LRLReportPathwayTableJson.as_view(), name="lrl-pathway_table_json"),
     url(r'^report-portal/report/lrl-ajaxpathdetail/$', LRLReportAjaxPathDetail.as_view(), name="lrl-report_ajax_path_detail"),
     url(r'^report-portal/lrl-ajaxpathline/$', LRLReportAjaxPathLine.as_view(), name="lrl-report_ajax_path_line"),

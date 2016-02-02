@@ -43,7 +43,7 @@
           
           <div style="margin: 50px 0 0 50px; padding: 0 50px 0 0;">
             <h4 style='font-weight:bold; font-size:12pt;'>Organization: </h4>
-            <span style="font-size:11pt">L'oreal</span>
+            <span style="font-size:11pt">L'Oréal</span>
             <br/><br/>
             <!-- <h4 style='font-weight:bold; font-size:12pt;'>Data Quality Assessment: </h4>-->
             
@@ -53,8 +53,9 @@
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#gene_analysis">Gene level analysis</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#ra">Retinoic acid</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#mh">Metformin hydrochloride</a></li>
-            <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#ca">Capryloylsalicylic acid</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#ca">Capryloyl salicylic acid</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#re">Resveratrol</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#notable_genes">Notable genes</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#path_analysis">Pathway level analysis</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#p_ra">Retinoic acid</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#p_mh">Metformin hydrochloride</a></li>
@@ -420,8 +421,30 @@
       </div>
   </div> <!--  end of tab panes -->
 
-
 <hr/>
+<h3 id='notable_genes'>Notable genes</h3>
+ <!-- GENE Nav tabs -->
+         <ul class="nav nav-tabs" role="tablist">
+           {%for gene in lGenes%}
+           <li role="presentation" {%if forloop.counter == 1 %}class="active"{%endif%}><a href="#{{gene}}_tab" aria-controls="home1" role="tab" data-toggle="tab">{{gene}}</a></li>
+           {%endfor%}
+         </ul>
+
+   <div class="tab-content">
+    {%for gene in lGenes%}
+     {%if forloop.counter == 1 %}
+     <div role="tabpanel" class="tab-pane fade in active" id="{{gene}}_tab">
+     {%else%}
+     <div role="tabpanel" class="tab-pane fade " id="{{gene}}_tab">
+     {%endif%}
+     <div id="{{gene}}" style="min-width: 800px; height: 400px; max-width: 800px; margin: 0 auto"></div>
+   
+     </div>
+    {%endfor%}
+   
+   </div> <!--  end of tab panel -->
+   
+<hr/><!-- -------------------------------- PATHWAYS------------------------------------ -->
           <h2 id='path_analysis'>Pathway level analysis</h2>
 <hr/>
 
@@ -466,7 +489,7 @@
   </li>
   <li role="presentation" class=""><a href="#s_mh_tab" aria-controls="home1" role="tab" data-toggle="tab">Metformin hydrochloride</a>
   </li>
-  <li role="presentation" class=""><a href="#s_ca_tab" aria-controls="home1" role="tab" data-toggle="tab">Capryloylsalicylic acid</a>
+  <li role="presentation" class=""><a href="#s_ca_tab" aria-controls="home1" role="tab" data-toggle="tab">Capryloyl salicylic acid</a>
   </li>
   <li role="presentation" class=""><a href="#s_re_tab" aria-controls="home1" role="tab" data-toggle="tab">Resveratrol</a>
   </li>       
@@ -576,18 +599,18 @@
     <script src="//cdn.datatables.net/buttons/1.1.0/js/buttons.print.min.js" type="text/javascript"></script>
     <script src="/static/report/lrl2016/js/venn.js/venn.js" type="text/javascript"></script>
     
-    
+    <script src="/static/report/lrl2016/js/volcano.js" type="text/javascript"></script>
     <script src="/static/report/lrl2016/js/scatter.js" type="text/javascript"></script>
     <script src="/static/report/lrl2016/js/tables.js" type="text/javascript"></script>
     <script src="/static/report/lrl2016/js/opentip.js" charset="utf-8"></script>
     <script src="/static/report/lrl2016/js/adapter-native.js" charset="utf-8"></script>
-    <script src="/static/report/lrl2016/js/volcano.js" type="text/javascript"></script>
     
     
-    
-    <!--  
     
     <script src="/static/report/lrl2016/js/boxplot.js" type="text/javascript"></script>
+    <!--  
+    
+   
     <script src="/static/report/lrl2016/js/venn-diagram.js" type="text/javascript"></script>
     -->
     
