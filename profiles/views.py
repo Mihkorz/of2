@@ -771,8 +771,17 @@ class AjaxPathDetail(TemplateView):
             else:  
                 cmap = plt.get_cmap('PiYG')
                 shifted_cmap = shiftedColorMap(cmap, start=0, midpoint=mid, stop=1, name='shrunk')
+            
+            fig = plt.figure(figsize=(8,3))
+            ax1 = fig.add_axes([0.05, 0.80, 0.9, 0.15]) 
             cNormp  = colors.Normalize(vmin=mmin, vmax=mmax)
             scalarMap = cmx.ScalarMappable(norm=cNormp, cmap=shifted_cmap)
+            
+            cb1 = mpl.colorbar.ColorbarBase(ax1, cmap=shifted_cmap,
+                                   norm=cNormp,
+                                   orientation='horizontal')
+            cb1.set_label('nodes activation')
+            plt.savefig(settings.MEDIA_ROOT+'/path_scale.png') 
         
         finalNodes = []
         for nod in lNodes:
