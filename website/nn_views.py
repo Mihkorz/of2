@@ -60,7 +60,7 @@ class nnBloodView(FormView):
     form_class = nnBloodForm
     success_url = 'result/'
     
-    @method_decorator(login_required)
+    
     def dispatch(self, request, *args, **kwargs):      
         return super(nnBloodView, self).dispatch(request, *args, **kwargs)
     
@@ -160,7 +160,7 @@ class nnBloodResult(TemplateView):
     template_name = 'website/nn_blood_result.html'    
     
     
-    @method_decorator(login_required)
+    
     def dispatch(self, request, *args, **kwargs):
         return super(nnBloodResult, self).dispatch(request, *args, **kwargs)
         
