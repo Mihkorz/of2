@@ -1254,7 +1254,7 @@ class Test(TemplateView):
                             subtype = etree.SubElement(relation, "subtype", name=relColor, value="--|")
                 
                 
-            applic = open(settings.MEDIA_ROOT+"/xmlpaths/mouse/primary_old/"+path.name+".xml", "w")
+            applic = open(settings.MEDIA_ROOT+"/xmlpaths/primary_new/"+path.name+".xml", "w")
             for parent in root.xpath('//*[./*]'): # Search for parent elements
                 parent[:] = sorted(parent,key=lambda x: x.tag)
             handle = etree.tostring(root, pretty_print=True, encoding='utf-8', xml_declaration=True)

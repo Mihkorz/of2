@@ -286,7 +286,47 @@ function drawPathwayTable(id, file_name1, file_name2, is_metabolic){
 	} // end of is_metabolic
 }
 
-
+function sideTable(renderTo, file_name){
+	
+	$('#'+renderTo).DataTable( {
+    	"paging":   true,
+    	"iDisplayLength": 20,
+        "ordering": true,
+        "order": [[ 1, "desc" ]],
+        "info":     false,
+        
+        "dom": 'Bfrtip',
+        "buttons": [{extend: 'csv', title: renderTo}, {extend: 'pdf', title: renderTo} , {extend: 'print', title: renderTo}],
+        
+        "ajax": {'url':'/report-portal/lrl-sideefftablejson/',
+        	     'type': 'GET',
+        	     'data':{
+        	            'file_name': file_name
+        	            }
+        	    	 }
+    } );
+	
+	$('#'+renderTo).on( 'draw.dt', function () {
+    	
+    	var path_name_td = $("table#"+renderTo+".path tr td:first-child()");
+    	path_name_td.each(function(){
+    		var path_long_name = $(this).text();
+    		if(path_long_name.length > 70){
+	    		var short_name = $.trim(path_long_name).substring(0, 70)
+                .trim(this) + "...";
+	    		$(this).html("<span title='"+path_long_name+"'>"+short_name+"</span>");
+	    	}
+    		else {
+    			$(this).html("<span title='"+path_long_name+"'>"+path_long_name+"</span>");
+    		}
+    	});	  
+    	
+    	
+	    //$("table#"+renderTo+".path tr td:nth-child(2)").wrapInner('<a href="#/"></a>');
+	   
+    } );
+	
+}
 
 
 $(document).ready(function() {
@@ -318,25 +358,34 @@ $(document).ready(function() {
 	
 	// SIGNALING PATHS
 	
-	pathTable('tbl-p-ra_24_01', 'output_Tumour_24h_01micromol_Retinoic_acid.xlsx');
+	pathTable('tbl-p-ra_24_01', 'output_Tumour_24h_01micromol_Retinoic_acid.xlsx'); //Cum ROR=13.5215
 	pathTable('tbl-p-ra_24_1', 'output_Tumour_24h_1micromol_Retinoic_acid.xlsx');
 	pathTable('tbl-p-ra_48_01', 'output_Tumour_48h_01micromol_Retinoic_acid.xlsx');
 	pathTable('tbl-p-ra_48_1', 'output_Tumour_48h_1micromol_Retinoic_acid.xlsx');
 	
-	pathTable('tbl-p-mh_24_2', 'output_Tumour_24h_2millimol_Metformin_hydrochloride.xlsx');
+	pathTable('tbl-p-mh_24_2', 'output_Tumour_24h_2millimol_Metformin_hydrochloride.xlsx'); //Cum ROR=11.5703
 	pathTable('tbl-p-mh_24_4', 'output_Tumour_24h_4millimol_Metformin_hydrochloride.xlsx');
 	pathTable('tbl-p-mh_48_2', 'output_Tumour_48h_2millimol_Metformin_hydrochloride.xlsx');
 	pathTable('tbl-p-mh_48_4', 'output_Tumour_48h_4millimol_Metformin_hydrochloride.xlsx');
 	
-	pathTable('tbl-p-ca_24_5', 'output_Tumour_24h_5micromol_Capryloylsalicylic_acid.xlsx');
+	pathTable('tbl-p-ca_24_5', 'output_Tumour_24h_5micromol_Capryloylsalicylic_acid.xlsx'); //Cum ROR=13.5215
 	pathTable('tbl-p-ca_24_10', 'output_Tumour_24h_10micromol_Capryloylsalicylic_acid.xlsx');
 	pathTable('tbl-p-ca_48_5', 'output_Tumour_48h_5micromol_Capryloylsalicylic_acid.xlsx');
 	pathTable('tbl-p-ca_48_10', 'output_Tumour_48h_10micromol_Capryloylsalicylic_acid.xlsx');
 	
-	pathTable('tbl-p-re_24_10', 'output_Tumour_24h_10nmol_resveratrol.xlsx');
+	pathTable('tbl-p-re_24_10', 'output_Tumour_24h_10nmol_resveratrol.xlsx'); //Cum ROR=8.7583
 	pathTable('tbl-p-re_24_50', 'output_Tumour_24h_50micromol_resveratrol.xlsx');	
 	pathTable('tbl-p-re_48_10', 'output_Tumour_48h_10nmol_resveratrol.xlsx');	
 	pathTable('tbl-p-re_48_50', 'output_Tumour_48h_50micromol_resveratrol.xlsx');	
+	
+	
+	
+	// Side Effects
+	
+	sideTable('tbl-s-ra', 'Retinoic acid_side_effects.csv');
+	sideTable('tbl-s-mh', 'metformin_side_effects.csv');
+	sideTable('tbl-s-ca', 'salycilic_acid_adverse.csv');
+	sideTable('tbl-s-re', 'Resveratrol_side_effects.csv');
 	
     /*
     drawPathwayTable('tbl-path_all', 

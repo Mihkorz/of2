@@ -290,7 +290,28 @@ class LRLReportPathwayTableJson(TemplateView):
         return HttpResponse(json.dumps(response_data), content_type="application/json")
     
     
+
+class LRLReportSideEffTableJson(TemplateView):
+    template_name="website/report.html"
+    def dispatch(self, request, *args, **kwargs):
+        
+        return super(LRLReportSideEffTableJson, self).dispatch(request, *args, **kwargs)
     
+    def get(self, request, *args, **kwargs):
+        
+        file_name = request.GET.get('file_name')
+        
+        df = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/lrl2016/"+file_name, sep='\t' )
+
+        
+        
+        
+        df_json = df.to_json(orient='values')
+        
+        
+        
+        response_data = {'aaData': json.loads(df_json)}
+        return HttpResponse(json.dumps(response_data), content_type="application/json")    
         
     
     

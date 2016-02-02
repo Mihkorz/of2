@@ -16,7 +16,7 @@ from website.report_views import LorealReport, \
                                  
 from website.lrl_report_views import LRLReport,\
                                      LRLReportGeneScatterJson, LRLReportGeneTableJson, LRLReportGeneDetailJson, \
-                                     LRLGeneVolcanoJson, LRLReportPathwayTableJson
+                                     LRLGeneVolcanoJson, LRLReportPathwayTableJson, LRLReportSideEffTableJson
 
 from website.bt_report_views import BTReport, \
                                     BTGeneVolcanoJson, BTReportGeneTableJson, BTReportGeneBoxplotJson,\
@@ -159,6 +159,7 @@ urlpatterns = patterns('',
     url(r'^report-portal/lrl-genedetailjson/$', LRLReportGeneDetailJson.as_view(), name="lrl-gene_detail_json"),
     url(r'^report-portal/lrl-genevolcanojson/$', LRLGeneVolcanoJson.as_view(), name="lrl-gen-volcano-json"),
     url(r'^report-portal/lrl-pathwaytablejson/$', LRLReportPathwayTableJson.as_view(), name="lrl-pathway_table_json"),
+    url(r'^report-portal/lrl-sideefftablejson/$', LRLReportSideEffTableJson.as_view(), name="lrl-sideeff_table_json"),
     ################### REPORT BT ###############################################
     url(r'^report-portal/report/bt/$', BTReport.as_view(), name="bt-report"),
     url(r'^report-portal/bt-genevolcanojson/$', BTGeneVolcanoJson.as_view(), name="bt-gen-volcano-json"),
