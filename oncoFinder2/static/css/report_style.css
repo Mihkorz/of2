@@ -12,3 +12,7 @@
   border-radius: 8px;
   opacity: 0;
 }
+#tbl-similarity_wrapper {
+        width: 900px;
+        margin: 0 auto;
+    }

@@ -959,10 +959,14 @@ class Test(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(Test, self).get_context_data(**kwargs)
         
+        import json
+        df = read_csv(settings.MEDIA_ROOT+'/../static/report/lrl2016/lor_similarity_with_cmap.csv',
+                      sep=';')
         
-        df = read_excel(settings.MEDIA_ROOT+'/users/admin/lrl_test/process/cnr_output_ca_concat.csv.xlsx')
-        
-        df11 = df[df['q_value']!=1]
+        jjj = df.to_json(orient='values')
+        jjj = json.loads(jjj)
+        with open(settings.MEDIA_ROOT+'/../static/report/lrl2016/lor_similarity.json', 'w') as outfile:
+            json.dump(jjj, outfile)
         raise Exception('test stop')
         
         df1=read_csv(settings.MEDIA_ROOT+'/nodes-comp-biocarta.csv')

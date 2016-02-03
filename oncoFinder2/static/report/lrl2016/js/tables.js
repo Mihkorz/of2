@@ -478,6 +478,12 @@ $(document).ready(function() {
 		});
 		
 	});
+      
+
+	 $('#tbl-similarity').DataTable( {
+	        "scrollX": true,
+	        "ajax": '/static/report/lrl2016/lor_similarity.json'
+	    } );
     
 } );
 
