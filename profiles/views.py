@@ -322,10 +322,12 @@ class DocumentDetail(DetailView):
                 try:
                     df = read_excel(filename, sheetname="PMS1")
                     context['PAS1'] = df.to_html(classes=['pas1_table', 'table', 'table-striped', 'table-bordered'])
+                    
                 except:
                     try:
                         df = read_excel(filename, sheetname="PAS1")
                         context['PAS1'] = df.to_html(classes=['pas1_table', 'table', 'table-striped', 'table-bordered'])
+                        tumour_cols = [col for col in df.columns if 'Tumour' in col]
                     except:
                         pass
                 try:
@@ -344,6 +346,7 @@ class DocumentDetail(DetailView):
                     try:
                         df = read_excel(filename, sheetname="DS1A")
                         context['DS1'] = df.to_html(classes=['ds1_table', 'table', 'table-striped', 'table-bordered'])
+                        tumour_cols = [col for col in df.columns if 'Tumour' in col]
                     except:
                         pass
                 try:
@@ -362,7 +365,7 @@ class DocumentDetail(DetailView):
                 except:
                     pass
             
-                tumour_cols = [col for col in df.columns if 'Tumour' in col]
+                
                 context['tumour_cols'] = tumour_cols
             
             """ MEDIC OUTPUT FILE """

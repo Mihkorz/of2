@@ -178,7 +178,7 @@ class CoreSetCalculationParameters(FormView):
         all_genes.index.name = 'SYMBOL'
         
         
-        #process_doc_df = all_genes.join(process_doc_df, how='inner') # leave only genes that are in our DB
+        process_doc_df = all_genes.join(process_doc_df, how='inner') # leave only genes that are in our DB
         tumour_columns = [col for col in process_doc_df.columns if 'Tumour' in col] #get sample columns 
         normal_columns = [col for col in process_doc_df.columns if 'Norm' in col] #get normal columns
         
@@ -850,10 +850,10 @@ class CoreSetCalculationParameters(FormView):
         output_file = default_storage.save(settings.MEDIA_ROOT+"/"+path+"/"+file_name, ContentFile(''))
         output_file_row = default_storage.save(settings.MEDIA_ROOT+"/"+path+"/"+file_name_unchanged, ContentFile(''))
         
-        #cnr_doc_df = cnr_doc_df.astype('float32')
+        cnr_doc_df = cnr_doc_df.astype('float32')
         cnr_doc_df.to_excel(output_file,sheet_name='CNR')
-        #cnr_unchanged_df = cnr_unchanged_df.astype('float32')
-        #cnr_unchanged_df.to_excel(output_file_row,sheet_name='CNR')
+        cnr_unchanged_df = cnr_unchanged_df.astype('float32')
+        cnr_unchanged_df.to_excel(output_file_row,sheet_name='CNR')
         
         """
         with ExcelWriter(output_file, engine='xlsxwriter') as writer:
