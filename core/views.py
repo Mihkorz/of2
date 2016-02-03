@@ -960,13 +960,14 @@ class Test(TemplateView):
         context = super(Test, self).get_context_data(**kwargs)
         
         import json
-        df = read_csv(settings.MEDIA_ROOT+'/../static/report/lrl2016/lor_similarity_with_cmap.csv',
-                      sep=';')
-        
+        df = read_excel(settings.MEDIA_ROOT+'/sim_Resve.xlsx',
+                      )
+        df.reset_index(inplace=True)
         jjj = df.to_json(orient='values')
         jjj = json.loads(jjj)
-        with open(settings.MEDIA_ROOT+'/../static/report/lrl2016/lor_similarity.json', 'w') as outfile:
+        with open(settings.MEDIA_ROOT+'/../static/report/lrl2016/sim_Resve.json', 'w') as outfile:
             json.dump(jjj, outfile)
+        
         raise Exception('test stop')
         
         df1=read_csv(settings.MEDIA_ROOT+'/nodes-comp-biocarta.csv')

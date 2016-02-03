@@ -62,6 +62,7 @@
             <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#p_ca">Capryloylsalicylic acid</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#p_re">Resveratrol</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#gero-score">Geroprotective score for skin</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#simalarity">Similarity scores with other compounds</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#side_eff">Side effects</a></li>
             
             
@@ -504,30 +505,78 @@
 
 <hr/>
 <h2 id='similarity'>Similarity scores with other compounds</h2>
-<table id='tbl-similarity' class="table table-striped table-bordered" width="100%">
+  <ul class="nav nav-tabs" role="tablist">
+           
+    <li role="presentation" class="active"><a href="#sim_ra_tab" aria-controls="home1" role="tab" data-toggle="tab">Retinoic acid</a></li>
+    <li role="presentation" ><a href="#sim_mh_tab" aria-controls="home1" role="tab" data-toggle="tab">Metformin hydrochloride</a></li>
+    <li role="presentation" ><a href="#sim_ca_tab" aria-controls="home1" role="tab" data-toggle="tab">Capryloyl salicylic acid</a></li>
+    <li role="presentation" ><a href="#sim_re_tab" aria-controls="home1" role="tab" data-toggle="tab">Resveratrol</a></li>      
+  </ul>
+  <div class="tab-content">
+  <div role="tabpanel" class="tab-pane fade in active" id="sim_ra_tab">
+  <h4>Retinoic acid</h4>
+  <table id='tbl-sim_ra' class="table table-striped table-bordered" width="100%">
   <thead>
     <tr>
       <th></th>
-      <th>lFC Tumour_24h_01micromol_Retinoic_acid</th>
-      <th>lFC Tumour_48h_1micromol_Retinoic_acid</th>
-      <th>lFC Tumour_48h_01micromol_Retinoic_acid</th>
-      <th>lFC Tumour_24h_1micromol_Retinoic_acid</th>
-      <th>lFC Tumour_48h_2millimol_Metformin_hydrochloride</th>
-      <th>lFC Tumour_48h_4millimol_Metformin_hydrochloride</th>
-      <th>lFC Tumour_24h_2millimol_Metformin_hydrochloride</th>
-      <th>lFC Tumour_24h_4millimol_Metformin_hydrochloride</th>
-      <th>lFC Tumour_48h_10nmol_resveratrol</th>
-      <th>lFC Tumour_48h_50micromol_resveratrol</th>
-      <th>lFC Tumour_24h_10nmol_resveratrol</th>
-      <th>lFC Tumour_24h_50micromol_resveratrol</th>
-      <th>lFC Tumour_24h_10micromol_Capryloylsalicylic_acid,y</th>
-      <th>lFC Tumour_24h_5micromol_Capryloylsalicylic_acid</th>
-      <th>lFC Tumour_48h_10micromol_Capryloylsalicylic_acid</th>
-      <th>lFC Tumour_48h_5micromol_Capryloylsalicylic_acid</th>
+      <th>24h 01µM RA</th>
+      <th>48h 1µM RA</th>
+      <th>48h 01µM RA</th>
+      <th>24h 1µM RA</th>
     </tr>
   </thead>
-
 </table>
+  
+  </div>
+  <div role="tabpanel" class="tab-pane fade " id="sim_mh_tab">
+    <h4>Metformin hydrochloride</h4>
+  <table id='tbl-sim_mh' class="table table-striped table-bordered" width="100%">
+  <thead>
+    <tr>
+      <th></th>
+      <th>48h 2mM ME</th>
+      <th>48h 4mM ME</th>
+      <th>24h 2mM ME</th>
+      <th>24h 4mM ME</th>
+    </tr>
+  </thead>
+</table>
+  
+  </div>
+  <div role="tabpanel" class="tab-pane fade " id="sim_ca_tab">
+      <h4>Capryloyl salicylic acid</h4>
+  <table id='tbl-sim_ca' class="table table-striped table-bordered" width="100%">
+  <thead>
+    <tr>
+      <th></th>
+      <th>24h 10µM CA</th>
+      <th>24h 5µM CA</th>
+      <th>48h 10µM CA</th>
+      <th>48h 5µM CA</th>
+    </tr>
+  </thead>
+</table>
+  
+  </div>
+  <div role="tabpanel" class="tab-pane fade " id="sim_re_tab">
+        <h4>Resveratrol</h4>
+  <table id='tbl-sim_re' class="table table-striped table-bordered" width="100%">
+  <thead>
+    <tr>
+      <th></th>
+      <th>48h 10 µM Rel</th>
+      <th>48h 50µM REl</th>
+      <th>24h 10 µM REl</th>
+      <th>24h 50µM REl</th>
+    </tr>
+  </thead>
+</table>
+  
+  </div>
+  
+  
+  </div>
+
 					
 <!-- ------------------------ SIDE EFFECTS  -->
 <hr/>
@@ -628,6 +677,7 @@
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#gene_analysis">Gene level analysis</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#path_analysis">Pathway level analysis</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#gero-score">Geroprotective score for skin</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#simalarity">Similarity scores with other compounds</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#side_eff">Side Effects</a></li>
           </ul>
         </div>

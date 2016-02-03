@@ -480,10 +480,130 @@ $(document).ready(function() {
 	});
       
 
-	 $('#tbl-similarity').DataTable( {
-	        "scrollX": true,
-	        "ajax": '/static/report/lrl2016/lor_similarity.json'
+	 $('#tbl-sim_ra').DataTable( {
+		 "paging":   true,
+	    	"iDisplayLength": 20,
+	        "ordering": true,
+	        "order": [[ 1, "desc" ]],
+	        "info":     false,
+	        
+	        "dom": 'Bfrtip',
+	        "buttons": [{extend: 'csv', title: 'RA_sim'}, {extend: 'pdf', title: 'RA_sim'} , {extend: 'print', title: 'RA_sim'}],
+	        
+	        "ajax": '/static/report/lrl2016/RA_sim.json'
 	    } );
+	 $('#tbl-sim_mh').DataTable( {
+		 "paging":   true,
+	    	"iDisplayLength": 20,
+	        "ordering": true,
+	        "order": [[ 1, "desc" ]],
+	        "info":     false,
+	        
+	        "dom": 'Bfrtip',
+	        "buttons": [{extend: 'csv', title: 'Sim_Metformin'}, {extend: 'pdf', title: 'Sim_Metformin'} , {extend: 'print', title: 'Sim_Metformin'}],
+	        
+	        "ajax": '/static/report/lrl2016/Sim_Metformin.json'
+	    } );
+	 $('#tbl-sim_ca').DataTable( {
+		 "paging":   true,
+	    	"iDisplayLength": 20,
+	        "ordering": true,
+	        "order": [[ 1, "desc" ]],
+	        "info":     false,
+	        
+	        "dom": 'Bfrtip',
+	        "buttons": [{extend: 'csv', title: 'Sim_Capro'}, {extend: 'pdf', title: 'Sim_Capro'} , {extend: 'print', title: 'Sim_Capro'}],
+	        
+	        "ajax": '/static/report/lrl2016/Sim_Capro.json'
+	    } );
+	 $('#tbl-sim_re').DataTable( {
+		 "paging":   true,
+	    	"iDisplayLength": 20,
+	        "ordering": true,
+	        "order": [[ 1, "desc" ]],
+	        "info":     false,
+	        
+	        "dom": 'Bfrtip',
+	        "buttons": [{extend: 'csv', title: 'sim_Resve'}, {extend: 'pdf', title: 'sim_Resve'} , {extend: 'print', title: 'sim_Resve'}],
+	        
+	        "ajax": '/static/report/lrl2016/sim_Resve.json'
+	    } );
+	 
+	 $('#tbl-sim_ra').on( 'draw.dt', function () {
+		 $('#tbl-sim_ra > tbody  > tr').each(function() {
+				
+				var td = $(this).find("td").each(function(){
+					var value = parseFloat($(this).text());
+					if(value!=24 && value!=48){
+					if(value>0) {
+						
+						$(this).text(roundToTwo(value));
+						$(this).addClass('success');}
+					if(value<0) {
+						$(this).text(roundToTwo(value));
+						$(this).addClass('danger');}
+					}
+				});
+				
+			});
+		 
+	 });
+	 $('#tbl-sim_mh').on( 'draw.dt', function () {
+		 $('#tbl-sim_mh > tbody  > tr').each(function() {
+				
+				var td = $(this).find("td").each(function(){
+					var value = parseFloat($(this).text());
+					if(value!=24 && value!=48){
+					if(value>0) {
+						
+						$(this).text(roundToTwo(value));
+						$(this).addClass('success');}
+					if(value<0) {
+						$(this).text(roundToTwo(value));
+						$(this).addClass('danger');}
+					}
+				});
+				
+			});
+	 });
+	 $('#tbl-sim_ca').on( 'draw.dt', function () {
+		 $('#tbl-sim_ca > tbody  > tr').each(function() {
+				
+				var td = $(this).find("td").each(function(){
+					var value = parseFloat($(this).text());
+					if(value!=24 && value!=48){
+					if(value>0) {
+						
+						$(this).text(roundToTwo(value));
+						$(this).addClass('success');}
+					if(value<0) {
+						$(this).text(roundToTwo(value));
+						$(this).addClass('danger');}
+					}
+				});
+				
+			});
+	 });
+	 $('#tbl-sim_re').on( 'draw.dt', function () {
+		 $('#tbl-sim_re > tbody  > tr').each(function() {
+				
+				var td = $(this).find("td").each(function(){
+					var value = parseFloat($(this).text());
+					if(value!=24 && value!=48){
+					if(value>0) {
+						
+						$(this).text(roundToTwo(value));
+						$(this).addClass('success');}
+					if(value<0) {
+						$(this).text(roundToTwo(value));
+						$(this).addClass('danger');}
+					}
+				});
+				
+			});
+	 });
+	 
+	 
     
 } );
 
