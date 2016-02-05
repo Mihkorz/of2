@@ -147,25 +147,65 @@ class IlluminaPreprocess(FormView):
                 return text
         
         
-        df1 = read_csv(filename, delimiter=dialect.delimiter,
+        df = read_csv(filename, delimiter=dialect.delimiter,
                         converters = {'SYMBOL' : strip}).fillna(0) 
         
         
-        probetargets = IlluminaProbeTarget.objects.all()
-        mapping_dict = {}
-        for probetarget in probetargets:
-            mapping_dict[probetarget.PROBE_ID] = probetarget.TargetID
-            
-        dfff = df1['SYMBOL'].map(mapping_dict, na_action='ignore')
+        df.set_index('SYMBOL', inplace=True)
+        column_names = df.columns
         
-        """
-        for row in columns:
-            try:
-                probetarget = IlluminaProbeTarget.objects.get(PROBE_ID=row['SYMBOL'])
-                genes.append(probetarget.TargetID)
-            except ObjectDoesNotExist:
-                genes.append(row['SYMBOL'])
-        """
+        tumour_cols = [x for x in column_names if 'Tumour' in x] 
+        norm_cols = [x for x in column_names if 'Norm' in x] 
+        
+        
+        
+        df = np.log(df)
+        
+        qn_df = quantile_normalization(df)
+        
+        qn_df.set_index(0, inplace=True)
+        qn_df.index.name = 'SYMBOL'
+        qn_df.columns = column_names
+        
+        
+        probetargets = DataFrame(list(IlluminaProbeTarget.objects.all()
+                                      .values('PROBE_ID', 'TargetID')))#fetch Illumina probe-target mapping 
+        probetargets.set_index('PROBE_ID', inplace=True)
+        probetargets.index.name = 'SYMBOL'
+            
+        gene_df = qn_df.join(probetargets, how='inner')#Use intersection of keys from both frames
+        gene_df.set_index('TargetID', inplace=True)
+        gene_df = gene_df.groupby(gene_df.index, level=0).mean()#deal with duplicate genes by taking mean
+        
+        gene_df.index.name = 'SYMBOL' #now we have DataFrame with gene symbols   
+        
+        gene_df = np.exp(gene_df) #output file
+        
+        """ Add some information for the document """
+        document.sample_num = len(tumour_cols)
+        document.norm_num = len(norm_cols)
+        document.row_num = len(gene_df)
+        document.doc_format = 'Illumina'
+        
+        gene_df.to_csv(settings.MEDIA_ROOT+'/'+document.document.name, sep='\t')
+        document.save()
+        
+        path = os.path.join('users', str(document.project.owner),
+                                            str(document.project),'process', 'process_'+str(document.get_filename()))
+        if not os.path.exists(settings.MEDIA_ROOT+'/'+os.path.join('users', str(document.project.owner),
+                                            str(document.project),'process')):
+            os.mkdir(settings.MEDIA_ROOT+'/'+os.path.join('users', str(document.project.owner),
+                                            str(document.project),'process'))
+        new_file = settings.MEDIA_ROOT+"/"+path
+         
+        process_doc = ProcessDocument()
+        process_doc.document = path
+        process_doc.input_doc = document
+        process_doc.created_by = self.request.user
+        process_doc.save()
+        
+        gene_df.to_csv(new_file, sep='\t')
+        
         #raise Exception('exception')
         return HttpResponseRedirect(self.success_url+document.project.name)
     
