@@ -605,8 +605,10 @@ class CoreSetCalculationParameters(FormView):
                             m = -1
                         else:
                             m = 1
-                        ds2_df[str(t)+'_'+path_name] = m*np.log10(cnr_s)*amcf*arr
-                        
+                        try:
+                            ds2_df[str(t)+'_'+path_name] = m*np.log10(cnr_s)*amcf*arr
+                        except:
+                            ds2_df[str(t)+'_'+path_name] = 0
                         t=t+1                  
                         
                 full_ds1a_s = ds1a_df.sum(axis=1)
