@@ -201,7 +201,7 @@ class CoreSetCalculationParameters(FormView):
             
             cnr_doc_df['std'] = std
         
-        
+        process_doc_df = process_doc_df[process_doc_df['mean']>0]
         
         cnr_unchanged_df = cnr_doc_df.copy()
         
@@ -270,7 +270,8 @@ class CoreSetCalculationParameters(FormView):
                         
                                       
                     if use_cnr: # CNR FILTER
-                        col_CNR[((col_CNR<=cnr_up) & (col_CNR>=cnr_low))] = 1 
+                        col_CNR[((col_CNR<=cnr_up) & (col_CNR>=cnr_low))] = 1
+                        col_CNR[(col_CNR==0)] = 1 
                         
                     if use_sigma: # Sigma FILTER  !!! deprecated !!!
                         
@@ -375,11 +376,14 @@ class CoreSetCalculationParameters(FormView):
             
             """ Calculating PAS1 for samples and norms """
             pas1_norms_samples = np.log(joined_df[tumour_columns+normal_columns].astype('float32'))
+            
             pas1_norms_samples = pas1_norms_samples.multiply(joined_df['ARR'], axis='index')
             
             pas1_norms_samples = pas1_norms_samples.sum() # now we have PAS1                      
             pas_norms_samples = pas1_norms_samples*float(pathway.amcf) # PAS
             pas2_norms_samples = pas1_norms_samples/summ_genes_arr # PAS2
+            
+            
             
             if calculate_p_value and (calculate_pvalue_each or calculate_pvalue_all):
                 s_norms_pas = pas_norms_samples[normal_columns]
