@@ -201,7 +201,7 @@ class CoreSetCalculationParameters(FormView):
             
             cnr_doc_df['std'] = std
         
-        process_doc_df = process_doc_df[process_doc_df['mean']>0]
+        #process_doc_df = process_doc_df[process_doc_df['mean']>0]
         
         cnr_unchanged_df = cnr_doc_df.copy()
         
@@ -271,7 +271,7 @@ class CoreSetCalculationParameters(FormView):
                                       
                     if use_cnr: # CNR FILTER
                         col_CNR[((col_CNR<=cnr_up) & (col_CNR>=cnr_low))] = 1
-                        col_CNR[(col_CNR==0)] = 1 
+                        #col_CNR[(col_CNR==0)] = 1 
                         
                     if use_sigma: # Sigma FILTER  !!! deprecated !!!
                         
@@ -375,6 +375,8 @@ class CoreSetCalculationParameters(FormView):
             joined_df = gene_df.join(process_doc_df, how='inner') #intersect DataFrames to acquire only genes in current pathway
             
             """ Calculating PAS1 for samples and norms """
+            joined_df.replace([np.inf, -np.inf, 0], 1, inplace=True)
+            
             pas1_norms_samples = np.log(joined_df[tumour_columns+normal_columns].astype('float32'))
             
             pas1_norms_samples = pas1_norms_samples.multiply(joined_df['ARR'], axis='index')
@@ -382,7 +384,6 @@ class CoreSetCalculationParameters(FormView):
             pas1_norms_samples = pas1_norms_samples.sum() # now we have PAS1                      
             pas_norms_samples = pas1_norms_samples*float(pathway.amcf) # PAS
             pas2_norms_samples = pas1_norms_samples/summ_genes_arr # PAS2
-            
             
             
             if calculate_p_value and (calculate_pvalue_each or calculate_pvalue_all):
@@ -580,6 +581,9 @@ class CoreSetCalculationParameters(FormView):
                        
             drug_objects = Drug.objects.filter(db__in=drugs_db).prefetch_related('target_set')
             d=0
+            
+            testDrug = DataFrame(columns=['Drug', 'Target molecules affected', 'Molecular pathways affected'])
+            
             for drug in drug_objects:
                 #print drug.name
 
@@ -588,7 +592,31 @@ class CoreSetCalculationParameters(FormView):
                 ds2_df  = DataFrame(index=tumour_columns)
                 
                 t=0
+                
+                
+                tUp = []
+                tDown = []
+                tIntact = []
+                pUp = []
+                pDown = []
+                pIntact = []
                 for target in drug.target_set.all():
+                    
+                    if len(tumour_columns)==1:
+                    
+                        try:
+                            cnr_s = process_doc_df.loc[target.name][tumour_columns].values[0]                        
+                        except:                        
+                            cnr_s = 1
+                    
+                        if cnr_s>1:
+                            tUp.append(target.name)
+                        elif cnr_s<1:
+                            tDown.append(target.name)
+                        elif cnr_s == 1:
+                            tIntact.append(target.name)
+                        
+                    
                     for path_details in s_target_path[target.name]: #path_details=(pathway.name, pathway.amcf, gene.arr)
                         
                         path_name = path_details[0]
@@ -598,11 +626,14 @@ class CoreSetCalculationParameters(FormView):
                         ds1a_s = output_pas_df.loc[path_details[0]][tumour_columns]
                         ds1a_df[str(t)+'_'+path_name] = ds1a_s
                         
+                        
+                        
                         ds1b_s = output_pas2_df.loc[path_details[0]][tumour_columns]
                         ds1b_df[str(t)+'_'+path_name] = ds1b_s*amcf
                         
                         try:
                             cnr_s = process_doc_df.loc[target.name][tumour_columns]
+                            cnr_s.replace([np.inf, -np.inf, 0], 1, inplace=True)
                         except:
                             cnr_s = 1
                         if drug.tip == 'multivalent' and target.tip>0:
@@ -613,12 +644,21 @@ class CoreSetCalculationParameters(FormView):
                             ds2_df[str(t)+'_'+path_name] = m*np.log10(cnr_s)*amcf*arr
                         except:
                             ds2_df[str(t)+'_'+path_name] = 0
-                        t=t+1                  
+                        t=t+1
                         
+                        if len(tumour_columns)==1:
+                            ppas = output_pas_df.loc[path_details[0]][tumour_columns].values[0]
+                            if ppas>0:
+                                pUp.append(path_details[0])
+                            if ppas<0:
+                                pDown.append(path_details[0])
+                            if ppas==0:
+                                pIntact.append(path_details[0])                  
+                
                 full_ds1a_s = ds1a_df.sum(axis=1)
                 full_ds1b_s = ds1b_df.sum(axis=1)
                 full_ds2_s = ds2_df.sum(axis=1)
-                
+ 
                 if drug.tip =='activator':
                     full_ds1a_s = -1*full_ds1a_s
                     full_ds1b_s = -1*full_ds1b_s
@@ -632,9 +672,39 @@ class CoreSetCalculationParameters(FormView):
                 output_ds1b_df[d] = full_ds1b_s
                 output_ds2_df[d] = full_ds2_s     
                 d=d+1
-                #raise Exception(drug.name)        
-                       
+                #raise Exception(drug.name)
+                
+                if len(tumour_columns)==1:
+                    strTargets = ''
+                    if tUp:
+                        strTargets = strTargets+'Up: '+', '.join(tUp)+'. '
+                    if tDown:
+                        strTargets = strTargets+'Down: '+', '.join(tDown)+'. '
+                    if tIntact:
+                        strTargets = strTargets+'Intact: '+', '.join(tIntact)+'. '
                     
+                    strPaths = ''
+                
+                    pUp = list(set(pUp))
+                    pDown = list(set(pDown))
+                    pIntact = list(set(pIntact))
+                
+                    if pUp:
+                        strPaths = strPaths+'Up: '+', '.join(pUp)+'. '
+                    if pDown:
+                        strPaths = strPaths+'Down: '+', '.join(pDown)+'. '
+                    if pIntact:
+                        strPaths = strPaths+'Intact: '+', '.join(pIntact)+'. '
+                
+                    ddict = {'Drug': drug.name,
+                         'Target molecules affected': strTargets,
+                         'Molecular pathways affected': strPaths} 
+                
+                    testDrug = testDrug.append(ddict, ignore_index=True)       
+            
+            
+                       
+                 
             """ Creating output DataFrames """
             output_ds1a_df = output_ds1a_df.T
             output_ds1a_df.fillna(0, inplace=True)
@@ -673,6 +743,20 @@ class CoreSetCalculationParameters(FormView):
         
             patient_df = patient_df[[u'№', u'Препарат', u'БД', 'DS1', 'DS2', u'Тип']]
             patient_df.reset_index(drop=True, inplace=True)
+            
+            global count_drugbank
+            count_drugbank = 1
+            def rate_top10_drugbank(row):
+                global count_drugbank
+                if count_drugbank<=10:
+                    if row[u'БД'] == 'drugbank':                        
+                        row[u'№'] = count_drugbank
+                
+                        count_drugbank = count_drugbank+1
+                
+                return row
+            
+            patient_df = patient_df.apply(rate_top10_drugbank, axis=1)
             
             primary_drugs_df = patient_df[patient_df[u'БД']=='primary']        
             primary_drugs_series = primary_drugs_df[u'Препарат']
@@ -829,6 +913,8 @@ class CoreSetCalculationParameters(FormView):
         
                 for index,value in primary_drugs_series.iteritems():
                     worksheet.write('B'+str(index+2), value, color_fmt)
+                    
+                testDrug.to_excel(writer, 'Test New Patient report', index=False)
             
             
             if diff_genes_amount:
@@ -965,19 +1051,37 @@ class Test(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(Test, self).get_context_data(**kwargs)
         
-        import json
-        df = read_excel(settings.MEDIA_ROOT+'/sim_Resve.xlsx',
-                      )
-        df.reset_index(inplace=True)
-        jjj = df.to_json(orient='values')
-        jjj = json.loads(jjj)
-        with open(settings.MEDIA_ROOT+'/../static/report/lrl2016/sim_Resve.json', 'w') as outfile:
-            json.dump(jjj, outfile)
+        paths = Pathway.objects.filter(database='kegg_adjusted', organism='human')
         
-        raise Exception('test stop')
+        from pandas import concat
         
-        df1=read_csv(settings.MEDIA_ROOT+'/nodes-comp-biocarta.csv')
+        i = 0 
+        summ_df = DataFrame()
+        for path in paths:
+            dnodes = {}
+            for node in path.node_set.all():
+                
+                lc = []
+                for comp in node.component_set.all():
+                    lc.append(comp.name)
+                dnodes[node.name]= lc
+                
+                
+            node_df = DataFrame.from_dict(dnodes, orient='index')
+            node_df = node_df.transpose()
+            
+            summ_df = concat([summ_df, node_df], axis=1, ignore_index=False)
+            
+            print i
+            i=i+1
+            #if i==15:
+            #    raise Exception('inner stop')
+        summ_df.to_csv(settings.MEDIA_ROOT+'/nodes-comp-kegg_adjusted.csv')
+        #raise Exception('test stop')
+        
+        df1=read_csv(settings.MEDIA_ROOT+'/nodes-comp-kegg_adjusted.csv')
         df1 = df1.T.drop_duplicates().T
+        
         def mazafaka(row):
             
             nnn = row.name
@@ -1000,14 +1104,14 @@ class Test(TemplateView):
                 
                 if row==ss:
                     
-                    nnodes = Node.objects.filter(name=col, pathway__database='biocarta')
+                    nnodes = Node.objects.filter(name=col, pathway__database='kegg_adjusted')
                     for nnode in nnodes:
                         nnode.name = nnn
                         nnode.save()  
                     #raise Exception('inner stop')
         
              
-        for subdir, dirs, files in os.walk(settings.MEDIA_ROOT+'/renamed pathways proteins/'):
+        for subdir, dirs, files in os.walk(settings.MEDIA_ROOT+'/renamed pathways proteins tab/'):
             ff = files
         i=0
         ff.sort()
@@ -1015,8 +1119,8 @@ class Test(TemplateView):
             i=i+1
             print ffile+'   n='+str(i)
             try:
-                df = read_csv(settings.MEDIA_ROOT+'/renamed pathways proteins/'+ffile)
-                
+                df = read_csv(settings.MEDIA_ROOT+'/renamed pathways proteins tab/'+ffile, sep='\t')
+               
                 
                 df.apply(mazafaka)
             except:
