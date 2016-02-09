@@ -677,11 +677,11 @@ class CoreSetCalculationParameters(FormView):
                 if len(tumour_columns)==1:
                     strTargets = ''
                     if tUp:
-                        strTargets = strTargets+'Up: '+', '.join(tUp)+'. '
+                        strTargets = strTargets+'Up: '+'\n '.join(tUp)+'. '
                     if tDown:
-                        strTargets = strTargets+'Down: '+', '.join(tDown)+'. '
+                        strTargets = strTargets+'\n\nDown: '+'\n '.join(tDown)+'. '
                     if tIntact:
-                        strTargets = strTargets+'Intact: '+', '.join(tIntact)+'. '
+                        strTargets = strTargets+'\n\nIntact: '+'\n '.join(tIntact)+'. '
                     
                     strPaths = ''
                 
@@ -690,11 +690,11 @@ class CoreSetCalculationParameters(FormView):
                     pIntact = list(set(pIntact))
                 
                     if pUp:
-                        strPaths = strPaths+'Up: '+', '.join(pUp)+'. '
+                        strPaths = strPaths+'Up: '+'\n'.join(pUp)+'. '
                     if pDown:
-                        strPaths = strPaths+'Down: '+', '.join(pDown)+'. '
+                        strPaths = strPaths+'\n\nDown: '+'\n '.join(pDown)+'. '
                     if pIntact:
-                        strPaths = strPaths+'Intact: '+', '.join(pIntact)+'. '
+                        strPaths = strPaths+'\n\nIntact: '+'\n '.join(pIntact)+'. '
                 
                     ddict = {'Drug': drug.name,
                          'Target molecules affected': strTargets,
