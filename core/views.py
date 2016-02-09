@@ -1051,7 +1051,98 @@ class Test(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(Test, self).get_context_data(**kwargs)
         
-        paths = Pathway.objects.filter(database='kegg_adjusted', organism='human')
+        ffile = 'Hedgehog_Signaling_in_Mammals_no_Tubulin_Pathway.xls'
+        pathh = settings.MEDIA_ROOT+'/'
+        pathname = ffile.replace('.xls', '').replace(' ', '_')
+        try:
+            npath = Pathway.objects.get(name=pathname, organism='human', database='primary_new' )               
+        except:
+            npath = Pathway(name=pathname, amcf=0, organism='human', database='primary_new')
+            npath.save()
+        
+        df_genes = read_excel(pathh+ffile, sheetname='genes', header=None).fillna('mazafaka')
+        df_genes.columns = ['gene', 'arr']
+        
+        def add_gene(row, path):
+                if row['arr']!='mazafaka':
+                    try:
+                        g = Gene.objects.get(name=row['gene'], arr=row['arr'], pathway=path)
+                    except:
+                        g = Gene(name=row['gene'], arr=row['arr'], pathway=path)
+                        #g.save()                
+           
+        #df_genes.apply(add_gene, axis=1, path=npath)
+        
+        def nnodes(row, path):
+                
+                nname = row.name
+                
+                try:
+                    nnode = Node.objects.get(name=nname, pathway=path)
+                except:
+                    nnode = Node(name=nname, pathway=path)
+                    nnode.save()
+                
+                row.dropna(inplace=True)
+                for el in row:
+                    mcomp = Component(name=el, node=nnode)
+                    mcomp.save()
+                #raise Exception('from nnodes')
+            
+                
+        
+        df_nodes = read_excel(pathh+ffile, sheetname='nodes', header=None, index_col=0)
+        
+        df_nodes_name = df_nodes.index
+        #df_nodes.apply(nnodes, axis=1, path=npath)
+        
+        def rrels(row, sNodes, path):
+                fff = row['from']
+                ttt = row['to']
+                
+                #namefrom = sNodes[fff]
+                #nameto = sNodes[ttt]
+                
+                reltype = 2 #unknown activation inhibition
+                if row['reltype']=='activation':
+                    reltype = 1
+                if row['reltype']=='inhibition':
+                    reltype = 0
+                if row['reltype']=='unknown':
+                    reltype = 2
+                    
+                dbfrom = Node.objects.get(name=fff, pathway=path)
+                dbto = Node.objects.get(name=ttt, pathway=path)
+                
+                nrel = Relation(fromnode=dbfrom, tonode=dbto, reltype=reltype)
+                nrel.save()
+                     
+            
+                #raise Exception('from rrel')
+        
+        
+        df_rels = read_excel(pathh+ffile, sheetname='edges', header=None)
+        df_rels.columns = ['from', 'to', 'reltype']
+        #df_rels.apply(rrels, axis=1, sNodes=df_nodes_name, path=npath)
+        
+        def node_name(row, path):
+            name = row.name
+            normal_name = row['new name']
+            
+            node = Node.objects.get(name=name, pathway=path)
+            node.name = normal_name
+            node.save()
+            #raise Exception('from nnname')
+        
+        df_node_names = read_excel(pathh+ffile, sheetname='node_names', header=None, index_col=0)
+        
+        df_node_names.columns = ['new name']
+        
+        df_node_names.apply(node_name, axis=1, path=npath)
+        
+        raise Exception('test stop')
+        """ RENAME NODES CODE"""
+        paths = Pathway.objects.filter(database='cytoskeleton', organism='human')
         
         from pandas import concat
         
@@ -1064,8 +1155,7 @@ class Test(TemplateView):
                 lc = []
                 for comp in node.component_set.all():
                     lc.append(comp.name)
-                dnodes[node.name]= lc
-                
+                dnodes[node.name]= lc                
                 
             node_df = DataFrame.from_dict(dnodes, orient='index')
             node_df = node_df.transpose()
@@ -1076,10 +1166,10 @@ class Test(TemplateView):
             i=i+1
             #if i==15:
             #    raise Exception('inner stop')
-        summ_df.to_csv(settings.MEDIA_ROOT+'/nodes-comp-kegg_adjusted.csv')
+        summ_df.to_csv(settings.MEDIA_ROOT+'/nodes-comp-cytoskeleton.csv')
         #raise Exception('test stop')
         
-        df1=read_csv(settings.MEDIA_ROOT+'/nodes-comp-kegg_adjusted.csv')
+        df1=read_csv(settings.MEDIA_ROOT+'/nodes-comp-cytoskeleton.csv')
         df1 = df1.T.drop_duplicates().T
         
         def mazafaka(row):
@@ -1098,9 +1188,6 @@ class Test(TemplateView):
                 ss = Series(ss)
                 ss = ss.tolist()
                 ss.sort()
-                
-                
-                
                 
                 if row==ss:
                     

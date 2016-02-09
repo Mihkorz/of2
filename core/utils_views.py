@@ -277,10 +277,14 @@ class ConvertPath(TemplateView):
             
         
         """
-        """ 
+         
         #human new
         
-        pathh = settings.MEDIA_ROOT+'/biocarta/'
+        delete_paths = Pathway.objects.filter( organism='human', database='reactome')
+        for dpath in delete_paths:
+            dpath.delete()
+        
+        pathh = settings.MEDIA_ROOT+'/reactome/'
         
         i=0
         for ffile in os.listdir(pathh):
@@ -291,10 +295,10 @@ class ConvertPath(TemplateView):
             
             pathname = ffile.replace('.xls', '').replace(' ', '_')
             try:
-                npath = Pathway.objects.get(name=pathname, organism='human', database='biocarta' )               
+                npath = Pathway.objects.get(name=pathname, organism='human', database='reactome' )               
             except:                 
             
-                npath = Pathway(name=pathname, amcf=0, organism='human', database='biocarta')
+                npath = Pathway(name=pathname, amcf=0, organism='human', database='reactome')
                 npath.save()
                 
             def add_gene(row, path):
@@ -307,13 +311,13 @@ class ConvertPath(TemplateView):
             
             def nnodes(row, path):
                 
-                nname = row[2]
+                nname = row.name
                 try:
                     nnode = Node.objects.get(name=nname, pathway=path)
                 except:
                     nnode = Node(name=nname, pathway=path)
                     nnode.save()
-                
+                row = row[row!=1]
                 row.dropna(inplace=True)
                 for el in row:
                     mcomp = Component(name=el, node=nnode)
@@ -325,8 +329,8 @@ class ConvertPath(TemplateView):
                 fff = row['from']
                 ttt = row['to']
             
-                namefrom = sNodes[fff]
-                nameto = sNodes[ttt]#unknown activation inhibition
+                #namefrom = sNodes[fff]
+                #nameto = sNodes[ttt]#unknown activation inhibition
                 reltype = 2
                 if row['reltype']=='activation':
                     reltype = 1
@@ -335,14 +339,23 @@ class ConvertPath(TemplateView):
                 if row['reltype']=='unknown':
                     reltype = 2
                     
-                dbfrom = Node.objects.get(name=namefrom, pathway=path)
-                dbto = Node.objects.get(name=nameto, pathway=path)
+                dbfrom = Node.objects.get(name=fff, pathway=path)
+                dbto = Node.objects.get(name=ttt, pathway=path)
                 
                 nrel = Relation(fromnode=dbfrom, tonode=dbto, reltype=reltype)
                 nrel.save()
                      
             
                 #raise Exception('from rrel')
+            def node_name(row, path):
+                name = row.name
+                normal_name = row['new name']
+            
+                node = Node.objects.get(name=name, pathway=path)
+                node.name = normal_name
+                node.save()
+                #raise Exception('from nnname')
+            
             try:
                 df_nodes = read_excel(pathh+ffile, sheetname='nodes', header=None, index_col=0)
                 df_nodes.drop(1, axis=1, inplace=True)
@@ -357,9 +370,15 @@ class ConvertPath(TemplateView):
                 df_rels.apply(rrels, axis=1, sNodes=df_nodes_name, path=npath)    
             except:
                 pass
+            try:
+                df_node_names = read_excel(pathh+ffile, sheetname='node_names', header=None, index_col=0)
+                df_node_names.columns = ['new name']       
+                df_node_names.apply(node_name, axis=1, path=npath)
+            except:
+                pass
          
-        raise Exception('Biocarta Done')       
-        """
+        raise Exception('reactome Done')       
+        
         #cytoskeleton MOUSE pathways
         """
         for hpath in Pathway.objects.filter(organism='human', database='cytoskeleton'):
