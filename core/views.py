@@ -582,7 +582,11 @@ class CoreSetCalculationParameters(FormView):
             drug_objects = Drug.objects.filter(db__in=drugs_db).prefetch_related('target_set')
             d=0
             
-            testDrug = DataFrame(columns=['Drug', 'Target molecules affected', 'Molecular pathways affected'])
+            patient_target_path = DataFrame(columns=['Drug', 
+                                                     'Upregulated target molecules (TM)', 
+                                                     'Downregulated TM',
+                                                     'Upregulated target molecular pathways (TMP)',
+                                                     'Downregulated TMP'])
             
             for drug in drug_objects:
                 #print drug.name
@@ -594,12 +598,11 @@ class CoreSetCalculationParameters(FormView):
                 t=0
                 
                 
-                tUp = []
-                tDown = []
-                tIntact = []
-                pUp = []
-                pDown = []
-                pIntact = []
+                targetUp = [] # list of up-down regualted target and pathways for single patien report 
+                targetDown = []                
+                pathUp = []
+                pathDown = []
+                
                 for target in drug.target_set.all():
                     
                     if len(tumour_columns)==1:
@@ -609,12 +612,10 @@ class CoreSetCalculationParameters(FormView):
                         except:                        
                             cnr_s = 1
                     
-                        if cnr_s>1:
-                            tUp.append(target.name)
+                        if cnr_s>1: # for single patient report
+                            targetUp.append(target.name)
                         elif cnr_s<1:
-                            tDown.append(target.name)
-                        elif cnr_s == 1:
-                            tIntact.append(target.name)
+                            targetDown.append(target.name)                        
                         
                     
                     for path_details in s_target_path[target.name]: #path_details=(pathway.name, pathway.amcf, gene.arr)
@@ -646,14 +647,13 @@ class CoreSetCalculationParameters(FormView):
                             ds2_df[str(t)+'_'+path_name] = 0
                         t=t+1
                         
-                        if len(tumour_columns)==1:
+                        if len(tumour_columns)==1:# for single patient report
                             ppas = output_pas_df.loc[path_details[0]][tumour_columns].values[0]
                             if ppas>0:
-                                pUp.append(path_details[0])
+                                pathUp.append(path_details[0])
                             if ppas<0:
-                                pDown.append(path_details[0])
-                            if ppas==0:
-                                pIntact.append(path_details[0])                  
+                                pathDown.append(path_details[0])
+                                            
                 
                 full_ds1a_s = ds1a_df.sum(axis=1)
                 full_ds1b_s = ds1b_df.sum(axis=1)
@@ -675,32 +675,32 @@ class CoreSetCalculationParameters(FormView):
                 #raise Exception(drug.name)
                 
                 if len(tumour_columns)==1:
-                    strTargets = ''
-                    if tUp:
-                        strTargets = strTargets+'Up: '+'\n '.join(tUp)+'. '
-                    if tDown:
-                        strTargets = strTargets+'\n\nDown: '+'\n '.join(tDown)+'. '
-                    if tIntact:
-                        strTargets = strTargets+'\n\nIntact: '+'\n '.join(tIntact)+'. '
+                    strTargetsUp = ''
+                    strTargetsDown = ''
+                    if targetUp:
+                        strTargetsUp = strTargetsUp+'\n'.join(targetUp)+'. '
+                    if targetDown:
+                        strTargetsDown = strTargetsDown+'\n'.join(targetDown)+'. '
                     
-                    strPaths = ''
+                    strPathsUp = ''
+                    strPathsDown = ''
+                    
+                    pathUp = list(set(pathUp))
+                    pathDown = list(set(pathDown))
                 
-                    pUp = list(set(pUp))
-                    pDown = list(set(pDown))
-                    pIntact = list(set(pIntact))
-                
-                    if pUp:
-                        strPaths = strPaths+'Up: '+'\n'.join(pUp)+'. '
-                    if pDown:
-                        strPaths = strPaths+'\n\nDown: '+'\n '.join(pDown)+'. '
-                    if pIntact:
-                        strPaths = strPaths+'\n\nIntact: '+'\n '.join(pIntact)+'. '
+                    if pathUp:
+                        strPathsUp = strPathsUp+'\n'.join(pathUp)+'. '
+                    if pathDown:
+                        strPathsDown = strPathsDown+'\n '.join(pathDown)+'. '
+        
                 
                     ddict = {'Drug': drug.name,
-                         'Target molecules affected': strTargets,
-                         'Molecular pathways affected': strPaths} 
+                             'Upregulated target molecules (TM)': strTargetsUp,
+                             'Downregulated TM': strTargetsDown,
+                             'Upregulated target molecular pathways (TMP)': strPathsUp,
+                             'Downregulated TMP': strPathsDown} 
                 
-                    testDrug = testDrug.append(ddict, ignore_index=True)       
+                    patient_target_path = patient_target_path.append(ddict, ignore_index=True)       
             
             
                        
@@ -914,7 +914,7 @@ class CoreSetCalculationParameters(FormView):
                 for index,value in primary_drugs_series.iteritems():
                     worksheet.write('B'+str(index+2), value, color_fmt)
                     
-                testDrug.to_excel(writer, 'Test New Patient report', index=False)
+                patient_target_path.to_excel(writer, 'Test New Patient report', index=False)
             
             
             if diff_genes_amount:
@@ -1051,94 +1051,44 @@ class Test(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(Test, self).get_context_data(**kwargs)
         
-        ffile = 'Hedgehog_Signaling_in_Mammals_no_Tubulin_Pathway.xls'
-        pathh = settings.MEDIA_ROOT+'/'
-        pathname = ffile.replace('.xls', '').replace(' ', '_')
-        try:
-            npath = Pathway.objects.get(name=pathname, organism='human', database='primary_new' )               
-        except:
-            npath = Pathway(name=pathname, amcf=0, organism='human', database='primary_new')
-            npath.save()
-        
-        df_genes = read_excel(pathh+ffile, sheetname='genes', header=None).fillna('mazafaka')
-        df_genes.columns = ['gene', 'arr']
-        
-        def add_gene(row, path):
-                if row['arr']!='mazafaka':
-                    try:
-                        g = Gene.objects.get(name=row['gene'], arr=row['arr'], pathway=path)
-                    except:
-                        g = Gene(name=row['gene'], arr=row['arr'], pathway=path)
-                        #g.save()                
-           
-        #df_genes.apply(add_gene, axis=1, path=npath)
-        
-        def nnodes(row, path):
-                
-                nname = row.name
-                
+        hps = Pathway.objects.filter(organism='human', database='primary_new', name='Hedgehog_Signaling_in_Mammals_no_Tubulin_Pathway')
+        i=0
+        for hp in hps:
+            i=i+1
+            print hp.name+' i = '+str(i)
+            
+            mp = Pathway(organism='mouse', database='primary_new', name=hp.name, amcf=hp.amcf)
+            mp.save()
+            
+            for hg in hp.gene_set.all():
                 try:
-                    nnode = Node.objects.get(name=nname, pathway=path)
+                    mmap = MouseMapping.objects.filter(human_gene_symbol=hg.name)[0]
+                
+                    mg = Gene(name=mmap.mouse_gene_symbol.upper(), arr=hg.arr, pathway=mp, comment=hg.comment)
                 except:
-                    nnode = Node(name=nname, pathway=path)
-                    nnode.save()
-                
-                row.dropna(inplace=True)
-                for el in row:
-                    mcomp = Component(name=el, node=nnode)
-                    mcomp.save()
-                #raise Exception('from nnodes')
-            
-                
-        
-        df_nodes = read_excel(pathh+ffile, sheetname='nodes', header=None, index_col=0)
-        
-        df_nodes_name = df_nodes.index
-        #df_nodes.apply(nnodes, axis=1, path=npath)
-        
-        def rrels(row, sNodes, path):
-                fff = row['from']
-                ttt = row['to']
-                
-                #namefrom = sNodes[fff]
-                #nameto = sNodes[ttt]
-                
-                reltype = 2 #unknown activation inhibition
-                if row['reltype']=='activation':
-                    reltype = 1
-                if row['reltype']=='inhibition':
-                    reltype = 0
-                if row['reltype']=='unknown':
-                    reltype = 2
+                    mg = Gene(name=hg.name, arr=hg.arr, pathway=mp, comment=hg.comment)
                     
-                dbfrom = Node.objects.get(name=fff, pathway=path)
-                dbto = Node.objects.get(name=ttt, pathway=path)
+                mg.save()
                 
-                nrel = Relation(fromnode=dbfrom, tonode=dbto, reltype=reltype)
-                nrel.save()
-                     
+            for hn in hp.node_set.all():
+                mn = Node(name=hn.name, comment=hn.comment, pathway=mp)
+                mn.save()
+                for hc in hn.component_set.all():
+                    try:
+                        mmap = MouseMapping.objects.filter(human_gene_symbol=hc.name)[0]
+                        mc = Component(name=mmap.mouse_gene_symbol.upper(), node=mn)
+                        
+                    except:
+                        mc = Component(name=hc.name, node=mn)
+                    mc.save()
+                    
             
-                #raise Exception('from rrel')
-        
-        
-        df_rels = read_excel(pathh+ffile, sheetname='edges', header=None)
-        df_rels.columns = ['from', 'to', 'reltype']
-        #df_rels.apply(rrels, axis=1, sNodes=df_nodes_name, path=npath)
-        
-        def node_name(row, path):
-            name = row.name
-            normal_name = row['new name']
-            
-            node = Node.objects.get(name=name, pathway=path)
-            node.name = normal_name
-            node.save()
-            #raise Exception('from nnname')
-        
-        df_node_names = read_excel(pathh+ffile, sheetname='node_names', header=None, index_col=0)
-        
-        df_node_names.columns = ['new name']
-        
-        df_node_names.apply(node_name, axis=1, path=npath)
+            for hn in hp.node_set.all():
+                for inrel in hn.inrelations.all():
+                    mfn = Node.objects.filter(name=inrel.fromnode.name, pathway=mp)[0]
+                    mtn = Node.objects.filter(name=inrel.tonode.name, pathway=mp)[0]
+                    mr = Relation(fromnode=mfn, tonode=mtn)
+                    mr.save()
         
         raise Exception('test stop')
         """ RENAME NODES CODE"""
