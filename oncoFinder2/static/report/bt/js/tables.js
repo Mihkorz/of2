@@ -61,7 +61,7 @@ function drawGeneChart(gene_name, file_name){
 			     function(data) { 
 			    	 $("#loading").empty();
 			     	options.series[0] = data;
-			     	options.title.name = gene_name;
+			     	options.title.text = gene_name;
 			     	
 			     	
 			        var chart = new Highcharts.Chart(options);

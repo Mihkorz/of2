@@ -33,7 +33,7 @@ class BTReport(TemplateView):
                
         lAdultGenes = ['COX7A1', 'ZNF280D', 'LOC441408', 'TRIM4', 'NIN', 'NAALADL1', 'ASF1B',
                        'COMT', 'CAT', 'C18orf56', 'LOC440731', 'HOXA5', 'LOC375295', 'POLQ',
-                       'CAT', 'MEG3', 'CDT1', 'FOS']
+                        'MEG3', 'CDT1', 'FOS']
         
         context['lEmbryonicGenes'] = lEmbryonicGenes
         
@@ -63,7 +63,7 @@ class BTGeneVolcanoJson(TemplateView):
         
         df_gene['_row'] = df_gene['adj.P.Val'].round(decimals=2)
          
-        df_gene = df_gene[(df_gene['adj.P.Val']<0.05) & (np.absolute(df_gene['logFC'])>1)] 
+        df_gene = df_gene[(df_gene['adj.P.Val']<0.05) & (np.absolute(df_gene['logFC'])>0.4)] 
          
         df_gene['adj.P.Val'] = -1*np.log10(df_gene['adj.P.Val'])        
          
@@ -142,7 +142,7 @@ class BTReportGeneTableJson(TemplateView):
         
             df_gene['logFC'] = df_gene['logFC'].round(decimals=2)         
         
-            df_gene = df_gene[(df_gene['adj.P.Val']<0.05) & (np.absolute(df_gene['logFC'])>1)] 
+            df_gene = df_gene[(df_gene['adj.P.Val']<0.05) & (np.absolute(df_gene['logFC'])>0.4)] 
         
             
         
@@ -191,17 +191,17 @@ class BTReportGeneBoxplotJson(TemplateView):
         
         
         df_ES = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/box_EPL_vs_ES.onc.tab",
-                                index_col='SYMBOL', )
+                                index_col='SYMBOL', sep='\t' )
         df_ASC = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/box_EPL_vs_ASC.onc.tab",
-                                index_col='SYMBOL', )
+                                index_col='SYMBOL', sep='\t')
         df_ABC = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/box_EPL_vs_ABC.onc.tab",
                                 index_col='SYMBOL', )
         df_AEC = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/box_EPL_vs_AEC.onc.tab",
-                                index_col='SYMBOL', )
+                                index_col='SYMBOL', sep='\t')
         df_ANC = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/box_EPL_vs_ANC.onc.tab",
-                                index_col='SYMBOL', )
+                                index_col='SYMBOL', sep='\t')
         df_CCL = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/box_EPL_vs_CCL.onc.tab",
-                                index_col='SYMBOL', )
+                                index_col='SYMBOL', sep='\t')
         
         #raise Exception('boxplot')
         series_tumour = []

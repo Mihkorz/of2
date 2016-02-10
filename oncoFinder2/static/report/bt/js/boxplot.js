@@ -67,7 +67,7 @@ $(function () {
             
      arAdultGenes = ['COX7A1', 'ZNF280D', 'LOC441408', 'TRIM4', 'NIN', 'NAALADL1', 'ASF1B',
                     'COMT', 'CAT', 'C18orf56', 'LOC440731', 'HOXA5', 'LOC375295', 'POLQ',
-                    'CAT', 'MEG3', 'CDT1', 'FOS']
+                     'MEG3', 'CDT1', 'FOS']
 	
 	for (var i in arEmbryonicGenes) {
 		
