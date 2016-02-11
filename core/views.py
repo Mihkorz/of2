@@ -375,11 +375,13 @@ class CoreSetCalculationParameters(FormView):
             joined_df = gene_df.join(process_doc_df, how='inner') #intersect DataFrames to acquire only genes in current pathway
             
             """ Calculating PAS1 for samples and norms """
-            joined_df.replace([np.inf, -np.inf, 0], 1, inplace=True)
+            
+            joined_df[tumour_columns+normal_columns].replace([np.inf, -np.inf, 0], 1, inplace=True)            
             
             pas1_norms_samples = np.log(joined_df[tumour_columns+normal_columns].astype('float32'))
             
             pas1_norms_samples = pas1_norms_samples.multiply(joined_df['ARR'], axis='index')
+
             
             pas1_norms_samples = pas1_norms_samples.sum() # now we have PAS1                      
             pas_norms_samples = pas1_norms_samples*float(pathway.amcf) # PAS
