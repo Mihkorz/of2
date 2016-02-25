@@ -1121,7 +1121,7 @@ class Test(TemplateView):
             ff = files
         i=0
         ff.sort()
-        for ffile in ff[130:150]:
+        for ffile in ff[149:200]:
             i=i+1
             print ffile+'   n='+str(i)
             try:
@@ -1133,8 +1133,8 @@ class Test(TemplateView):
                 #raise
                 print "ERROR in "+ffile
                 
-                
-        raise Exception('stop  130-150')
+        # 100-150 failed        
+        raise Exception('stop  150-200')
         
         """ HUMAN PATH TO MOUSE
         for mmm in Pathway.objects.filter(organism='mouse', database='kegg_adjusted'):
