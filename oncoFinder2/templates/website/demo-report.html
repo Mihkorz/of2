@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Demo Report | Insilico Medicine</title>
+    <link href="/static/bower_components/bootstrap-stylus/dist/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <script src="//code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script>
+    <script src="/static/bower_components/bootstrap-stylus/dist/bootstrap.min.js" type="text/javascript"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore.js" type="text/javascript"></script>
+    <script src="//d3js.org/d3.v3.min.js" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="http://code.highcharts.com/highcharts.js" type="text/javascript"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"  type="text/javascript"></script>
+    <script src="http://code.highcharts.com/modules/exporting.js"></script>
+    <script src="/static/report/demo/js/svg-pan-zoom.js" type="text/javascript"></script>
+    <link href="/static/css/report_style.css" rel="stylesheet" type="text/css">
+    <link href="https://cdn.datatables.net/1.10.10/css/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css">
+    
+    <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+    
+  </head>
+  <body>
+    <div class="content h100">
+      <div class="main">
+        <div class="inner">
+         <div>
+         <span class='pull-left' style='font-size:11pt; margin:15px;'>
+         <img src='/static/images/insilico.png' style="width:40px;"/>
+         Insilico Medicine - Demo Report </span>
+         <span class='pull-right' style='font-size:11pt; margin:15px;'>Access Level: Z-II, <br/>Confidential </span>
+         </div><br style="clear:both;"/>
+          <div class='text-center'>
+            <h1>Whole genome CRISPR screen data analysis</h1>
+          </div>
+          
+          <div style="margin: 50px 0 0 50px;">
+            <h4 style='font-weight:bold; font-size:12pt;'>Organization: </h4>
+            <span style="font-size:11pt">Demo</span>
+            <br/><br/>
+            <!-- <h4 style='font-weight:bold; font-size:12pt;'>Data Quality Assessment: </h4>-->
+            
+            <ul class="list-unstyled" style='font-size: 11pt; margin: 50px 0 0 0;' >
+            <li class="title">Table of contents: </li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#input_data">Input data</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#methods">Methods</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#gene_analysis">Gene level analysis</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#path_analysis">Pathway analysis</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#key_regulators">Key regulators</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#references">References</a></li>
+          </ul>
+            
+          </div>
+          
+          <div style=" font-size:11pt; margin: 80px 50px 50px 50px;">
+          <h4 id="input_data">Input data</h4>
+          
+          The original data sent to Insilico consisted of two datasets: cpool1 and cpool2, which 
+          contained different sets of barcodes. Each of the datasets contained information on the 
+          number of counts, barcode annotation and metadata for 6 samples: 2 replicates for unsorted, 
+          high and low GFP-p62 groups. The total number of unique barcodes was 89,346, which corresponded 
+          to 18,225 genes. Since cpool1 and cpool2 contained different gene sets, samples were concatenated
+           according to sample groups to obtain a complete list of genes.  
+            
+            <br/><br/>
+            <!--  
+            <strong>Comments: </strong>
+            
+            <span style="display: block; margin:10px 0 50px 50px;"> - Around 500+ barcodes from the count tables didn't have gene annotations.
+            </span>
+            -->
+            <h4 id="methods" >Methods</h4>
+            
+            CRISPR count data was merged to barcode annotation and aggregated over all barcodes targeted to a gene. Thus, we continued with 6 samples: 
+            2 unsorted, 2 high-GFP and 2 low-GFP fractions.
+            
+            
+            
+            
+            <!-- GENES -->
+            <div style="margin: 50px 0 0 0;">
+              <h4 id="gene_analysis">Gene level analysis</h4>
+              <br/>
+              For the gene-level analysis, we tried different statistical approaches among which a negative
+               binomial distribution-based approach appeared to be the most powerful and statistically grounded.
+                This distribution can be considered as an extension of Poisson distribution and can model both 
+                shot noise generated by random subsampling and sequencing and biological variation between 
+                samples. A similar approach is currently widely used for differential expression analysis.
+                <br/><br/>
+                We systematically searched for the genes that had a significantly different amount of CRISPR 
+                integration events. Comparisons were performed for all pairs of cell fractions: unsorted vs high-GFP, 
+                unsorted vs low-GFP and low-GFP vs high-GFP.
+                <br/><br/>
+                Figures 1-3 show the mean amount of CRISPR integration events for a gene in one fraction compared to
+                 another fraction (all comparisons are plotted, log scale). Only genes with a significant difference 
+                 between compared cell fractions are shown.
+                 <br/><br/>
+                 Tables 1-3 summarize the results of all 3 comparisons. For each comparison, they contain the 
+                 logarithmic fold change value of CRISPR incidence between cell fractions and  regular and adjusted 
+                 p-value (FDR) indicating the significance of the difference. We noted that MTOR was among the top
+                  genes in all comparisons. We also performed gene set enrichment analysis over known gene categories 
+                  and discovered enrichment of the mTOR pathway and autophagy-related categories.
+                 <br/><br/>
+                 By clicking on a gene name in one of the tables, one can observe a barplot with normalized incidence
+                  of CRISPR integration events for all 6 samples; color indicates the fraction of cells.
+                 
+                
+ 
+ <div id="genes-unsorted-low" style="min-width: 310px; height: 400px; max-width: 800px; margin: 0 auto"></div>
+  <br/><br/>
+  <h4>Table 1. Top-20 significantly differential genes for Low GFP-p62 vs Unsorted</h4>
+  <table id="tbl-genes-undorted-low" class="genes table table-striped table-bordered" cellspacing="0" width="100%">
+    <thead>
+      <tr>
+        <th>Gene</th>
+        <th>log2FoldChange</th>
+        <th>pval</th>
+        <th>padj</th>
+      </tr>
+    </thead>  
+  </table>
+  
+  <hr/>
+  
+  <div id="genes-unsorted-high" style="min-width: 310px; height: 400px; max-width: 800px; margin: 0 auto"></div>
+   <br/><br/>
+  <h4>Table 2. Top-20 significantly differential genes for High GFP-p62 vs Unsorted</h4>
+  <table id="tbl-genes-undorted-high" class="genes table table-striped table-bordered" cellspacing="0" width="100%">
+    <thead>
+      <tr>
+        <th>Gene</th>
+        <th>log2FoldChange</th>
+        <th>pval</th>
+        <th>padj</th>
+      </tr>
+    </thead>  
+  </table>
+  
+  <hr/>
+  
+  <div id="genes-low-high" style="min-width: 310px; height: 400px; max-width: 800px; margin: 0 auto"></div>
+  <br/><br/>
+  <h4>Table 3. Top-20 significantly differential genes for High GFP-p62 vs Low GFP-p62</h4>
+  <table id="tbl-genes-low-high" class="genes table table-striped table-bordered" cellspacing="0" width="100%">
+    <thead>
+      <tr>
+        <th>Gene</th>
+        <th>log2FoldChange</th>
+        <th>pval</th>
+        <th>padj</th>
+      </tr>
+    </thead>  
+  </table>
+  
+  <hr/>
+  
+  
+  <!-- PATHWAYS-->
+            
+              <h4 id="path_analysis" style='margin: 50px 0 0 0;'>Pathway analysis</h4>
+              <br/>
+              
+              Pathway-level analysis was performed with proprietary databases and algorithms. 
+              To elucidate the functional effect of CRISPR integration, we considered each such event 
+              as LoF, hence functional down-regulation of the given gene product. In contrast, a lower 
+              amount of CRISPR cleavages corresponds to functional up-regulation. We profiled the samples 
+              from High and Low GFP-p62 groups in comparison to the unsorted group and obtained the prioritized
+               list of significantly dysregulated signaling and metabolic pathways (Fig. 4, 5; Tables 4-11).
+                
+               
+   <div id="signaling-pathways" style="min-width: 310px; height: 400px; max-width: 800px; margin: 0 auto"></div>
+   <br/><br/>
+   <h4>Table 4. Top 10 up-regulated signaling pathways in High GFP-p62</h4>
+   <table id="tbl-signal-high-up" class="table table-striped table-bordered" cellspacing="0" width="100%">
+    <thead>
+      <tr>
+        <th>Pathway name</th>
+        <th>Low GFP-p62</th>
+        <th>High GFP-p62</th>
+      </tr>
+    </thead>  
+  </table>
+  <br/><br/>
+  <h4>Table 5. Top 10 down-regulated signaling pathways in High GFP-p62</h4>
+   <table id="tbl-signal-high-down" class="table table-striped table-bordered" cellspacing="0" width="100%">
+    <thead>
+      <tr>
+        <th>Pathway name</th>
+        <th>Low GFP-p62</th>
+        <th>High GFP-p62</th>
+      </tr>
+    </thead>  
+  </table>
+  
+  <br/><br/>
+  <h4>Table 6. Top 10 up-regulated signaling pathways in Low GFP-p62</h4>
+   <table id="tbl-signal-low-up" class="table table-striped table-bordered" cellspacing="0" width="100%">
+    <thead>
+      <tr>
+        <th>Pathway name</th>
+        <th>Low GFP-p62</th>
+        <th>High GFP-p62</th>
+      </tr>
+    </thead>  
+  </table>
+  
+  <br/><br/>
+  <h4>Table 7. Top 10 down-regulated signaling pathways in Low GFP-p62</h4>
+   <table id="tbl-signal-low-down" class="table table-striped table-bordered" cellspacing="0" width="100%">
+    <thead>
+      <tr>
+        <th>Pathway name</th>
+        <th>Low GFP-p62</th>
+        <th>High GFP-p62</th>
+      </tr>
+    </thead>  
+  </table>
+  
+  <hr/>
+  
+  <!--  METABOLIC PLOT -->
+  
+  <div id="metabolic-pathways" style="min-width: 310px; height: 400px; max-width: 800px; margin: 0 auto"></div>
+   <br/><br/>
+   <h4>Table 8. Top 10 up-regulated metabolic pathways in High GFP-p62</h4>
+   <table id="tbl-metabolic-high-up" class="table table-striped table-bordered" cellspacing="0" width="100%">
+    <thead>
+      <tr>
+        <th>Pathway name</th>
+        <th>Low GFP-p62</th>
+        <th>High GFP-p62</th>
+      </tr>
+    </thead>  
+  </table>
+  <br/><br/>
+  <h4>Table 9. Top 10 down-regulated metabolic pathways in High GFP-p62</h4>
+   <table id="tbl-metabolic-high-down" class="table table-striped table-bordered" cellspacing="0" width="100%">
+    <thead>
+      <tr>
+        <th>Pathway name</th>
+        <th>Low GFP-p62</th>
+        <th>High GFP-p62</th>
+      </tr>
+    </thead>  
+  </table>
+  
+  <br/><br/>
+  <h4>Table 10. Top 10 up-regulated metabolic pathways in Low GFP-p62</h4>
+   <table id="tbl-metabolic-low-up" class="table table-striped table-bordered" cellspacing="0" width="100%">
+    <thead>
+      <tr>
+        <th>Pathway name</th>
+        <th>Low GFP-p62</th>
+        <th>High GFP-p62</th>
+      </tr>
+    </thead>  
+  </table>
+  
+  <br/><br/>
+  <h4>Table 11. Top 10 down-regulated metabolic pathways in Low GFP-p62</h4>
+   <table id="tbl-metabolic-low-down" class="table table-striped table-bordered" cellspacing="0" width="100%">
+    <thead>
+      <tr>
+        <th>Pathway name</th>
+        <th>Low GFP-p62</th>
+        <th>High GFP-p62</th>
+      </tr>
+    </thead>  
+  </table>
+  
+  <hr/>
+  
+  <!-- MTOR pics -->
+  In both comparisons, we see the MTOR pathway amongst the most dysregulated. In the case of Low GFP-p62 
+  vs. unsorted, it is functionally down-regulated. Figure 6 depicts the functional state of the MTOR pathway
+   in the Low GFP-p62 group. Autophagy is the most down-regulated of the branches.  
+  <br/>
+  <a href='/static/report/demo/MTOR_pathway_mtorc12_lowGFP.svg' target='_blank'>
+    <img src='/static/report/demo/MTOR_pathway_mtorc12_lowGFP.svg' style="min-width: 310px; height: 400px; max-width: 800px; margin: 0 auto"/>
+  </a>
+  <div class='text-center'>Figure 6. MTOR pathway enrichment in Low vs Unsorted GFP-p62. Red color indicates high differential CRISPR integration (functional down-regulation), Green color indicates low differential CRISPR integration (functional up-regulation)</div>
+  
+  <br/>
+  In contrast, in the case of High GFP-p62, we observed MTOR pathway up-regulation(Figure 7).  
+  <br/><br/>
+  
+  <a href='/static/report/demo/MTOR_pathway_mtorc12_highGFP.svg' target='_blank'>
+    <img src='/static/report/demo/MTOR_pathway_mtorc12_highGFP.svg' style="min-width: 310px; height: 400px; max-width: 800px; margin: 0 auto"/>
+  </a>
+  <div class='text-center'>Figure 7. MTOR pathway enrichment in High vs Unsorted GFP-p62. Red color indicates high differential CRISPR integration (functional down-regulation), Green color indicates low differential CRISPR integration (functional up-regulation)</div>
+  
+  
+  <hr/>
+  
+  Another particular example of signaling state in Low GFP-P62 fraction is Ras pathway. RAS acts 
+  upstream of PI3K pathway by activation of PI3K and subsequent activation of AKT. AKT downregulates TSC 
+  complex which, in turn, downregulates MTOR (Figure 8). Overall, the observation fits into a pattern of 
+  MTOR downregulation.
+  <br/><br/>
+  <a href='/static/report/demo/RAS_pathway_edit.svg' target='_blank'>
+    <img src='/static/report/demo/RAS_pathway_edit.svg' style="min-width: 310px; height: 400px; max-width: 800px; margin: 0 auto"/>
+  </a>
+  <div class='text-center'>Figure 8. RAS pathway Low GFP-p62 vs Unsorted. Red color indicates high differential CRISPR integration (functional down-regulation), Green color indicates low differential CRISPR integration (functional up-regulation)</div>
+  
+  
+  <hr/> 
+  
+   To further demonstrate the performance of pathway-based approach, we show an example of a pathway that 
+   is detected by CRISPR as differentially affected as a whole while no single gene from that pathway could
+    be detected as significantly differential. Fig. 9 schematically shows activation of the genes in the 
+    SMAD pathway. None of the genes in the pathway show significant enrichment in the comparison between 
+    High GFP and unsorted cells, but the pathway itself was detected as upregulated in the high-GFP fraction. 
+    The pathway-level changes are thus not detected by conventional enrichment analysis of differential genes.
+     Interestingly, we observe high CRISPR integration frequency in TGFBR1 and TGFBR2 and lower frequency in 
+     the genes directly associated with SMAD2/SMAD4. Functional down-regulation of TGF-beta receptors may 
+     represent one of the alternative mechanisms to inhibit autophagy. SMAD2 on the other hand has shown 
+     to be one of the key regulators of autophagy and its knockdown leads to induction of 
+     autophagy (Pan et al., 2015). 
+   
+    
+  <a href='/static/report/demo/smad_high_vs_un.svg' target='_blank'>
+    <img src='/static/report/demo/smad_high_vs_un.svg' style="min-width: 310px; height: 400px; max-width: 800px; margin: 0 auto"/>
+  </a>
+  <div class='text-center'>Figure 9. SMAD pathway High GFP-p62 vs Unsorted. Red color indicates high differential CRISPR integration (functional down-regulation), Green color indicates low differential CRISPR integration (functional up-regulation)</div>
+  <!-- <br/><br/>
+  If we look at the same pathway in the comparison between Low GFP-p62 and unsorted cells, we do not quite see such an effect (Figure 9). 
+  <br/><br/>
+  <a href='/static/report/smad_low_vs_unsorted.svg' target='_blank'>
+    <img src='/static/report/smad_low_vs_unsorted.svg' style="min-width: 310px; height: 400px; max-width: 800px; margin: 0 auto"/>
+  </a>
+  <div class='text-center'>Figure 9. SMAD pathway Low GFP-p62 vs Unsorted. Red color indicates high differential CRISPR integration (functional down-regulation), Green color indicates low differential CRISPR integration (functional up-regulation)</div>
+   -->
+  <hr/>
+  <br/><br/>
+  <h4>tRNA charging pathway</h4>
+  
+  <br/><br/>
+  Curiously, among the most affected metabolic pathways we see tRNA charging process. As can 
+  be seen from Table 12, a number of its genes are significantly differential in High GFP fraction 
+  compared to Low GFP group in a very coordinated way. The pathway itself is functionally down-regulated 
+  in Low GFP group, meaning it contains less working copies of the genes (Figure 10).
+  
+  <br/><br/>
+  <h4>Table 12. Genes for tRNA charging pathway in High GFP-p62 vs Low GFP-p62</h4>
+  <table id="tRNA-genes-low-high" class="genes table table-striped table-bordered" cellspacing="0" width="100%">
+    <thead>
+      <tr>
+        <th>Gene</th>
+        <th>log2FoldChange</th>
+        <th>pval</th>
+        <th>padj</th>
+      </tr>
+    </thead>  
+  </table>
+  
+  <a href='/static/report/demo/tRNA_charging.svg' target='_blank'>
+    <img src='/static/report/demo/tRNA_charging.svg' style="min-width: 310px; height: 400px; max-width: 800px; margin: 0 auto"/>
+  </a>
+  <div class='text-center'>Figure 10. tRNA charging pathway enrichment in Low vs High GFP-p62. Red color indicates high differential CRISPR integration (functional down-regulation), Green color indicates low differential CRISPR integration (functional up-regulation)</div>
+  
+  <hr/>
+  
+  <h4 id='key_regulators' style='margin: 50px 0 0 0;'>Key pathway regulators for drug targeting</h4>
+  <br/><br/>
+  Thorough analysis of differential CRISPR integration indicated that low-GFP fraction of cells required
+   upregulation of autophagy-related pathways and downregulation of mTOR pathway (which negatively regulated
+    autophagy). We deduce that increased cell autophagy is the key feature of low-GFP cell fraction. 
+   <br/><br/>
+   
+   Hyperactivation of cell autophagy can be a key mechanism of cancer cell resistance to chemotherapy 
+   (Sui et al., 2013). The experimental data provided to us could be extremely useful in studying mechanisms
+    of autophagy and particularly in searching for key genes responsible for its activation. Inhibition of 
+    these genes might lead to suppression of autophagy and drug resistance; thus, the genes could serve as 
+    drug targets for combinational therapy.
+     <br/><br/>
+   
+   Most of the genes with differential CRISPR cleavage abundance had higher amount of cleavages in the “low-GFP”
+    (i.e., predicted high autophagy) cell fraction, suggesting that those genes were protecting the cell by 
+    increased autophagy and cancer transformation. Of those, one of the highest effects was observed for MTOR.
+
+<br/><br/>
+   In this section, we were mostly interested in the genes with the opposite effect, which are essential 
+   for autophagy to function. Potential target genes were defined as genes that had significantly more 
+   functional copies in the subset of cells with high autophagy. This implies significantly fewer CRISPR 
+   cleavages in “low-GFP” (i.e., high autophagy) cell subset.
+   
+   <br/><br/>
+   Among those genes, we selected <strong>PIK3C3</strong> and <strong>ULK1</strong> kinases as the most promising drug targets. These two genes
+    are both involved in autophagy as activators and both have known potential inhibitors.
+    
+    <br/><br/>
+    
+    By utilizing our PharmAtlas platform we identified several compounds targeting ULK1. In particular, 
+    <strong>SBI-0206965</strong>, an effective, selective and cell permeable inhibitor for ULK1 was recently discovered 
+    (Egan et al., 2015). This small molecule can potentially be used in combination with current chemotherapy 
+    to suppress chemotherapy resistance mechanisms.
+    
+    <br/><br/>
+    Other genes with significantly lower abundance of CRISPR cleavages in Low GFP-p62 fraction include: WIPI2, TSC2, RAB1A and ATMIN. 
+  
+    
+  <hr/>
+  <h4 id="conclusion" style='margin: 50px 0 0 0;'>PharmAtlas Repository Analysis & Similarity-based Drug Scoring</h4>
+  <br/><br/> 
+  We performed multiple experiments and queries using the CRISPR data on our proprietary PharmAtlas platform. 
+  Many of these tests did not yield any results; however, here we include some of the findings that may be 
+  useful for further analysis.
+  <br/><br/>
+  <div style="color:#999; ">Comparison to drug-induced transcriptomes</div>
+  
+  <br/><br/>
+  We compared significant changes in CRISPR integration incidence and expression changes induced by various 
+  chemical compounds, shRNA knockdowns and overexpression of certain genes from Broad Connectivity map database.
+   We explored the comparison between unsorted and low-GFP fraction as the one with the strongest effect 
+   observed and applied our proprietary scoring procedure to find the treatments which can turn the cells 
+   from “low-GFP” to “unsorted” state, i.e. to inhibit the processes characteristic to low-GFP state 
+   (high autophagy and low mTOR).
+   
+   <br/><br/>
+   Table 13 summarizes the treatments which are predicted to revert the cells from low-GFP to “unsorted” state. 
+   In the top 10 treatments, we found three drugs. One of them, <strong>ubenimex</strong> is a protease inhibitor which 
+   can play a role in inhibition of autophagy process which we previously observed to be essential in 
+   low-GFP fraction. We also found a proton pump inhibitor, <strong>pantoprazole</strong> among the top hits. Interestingly, 
+   a different proton pump inhibitor esomeprazole has been shown to reduce autophagic flux and, moreover,  
+   to decrease mammalian target of rapamycin signalling (Marino et al., 2010). This can provide a potential 
+   mechanism for the discovered proton pump to affect autophagy and mTOR pathways in the direction opposite 
+   to the one from unsorted to low-GFP.
+   
+   <br/><br/>
+  <h4>Table 13. Treatments from Broad Connectivity map predicted to return the cells from low-GFP state to unsorted state.</h4>
+   <table id="tbl-map-predict" class="table table-striped table-bordered" cellspacing="0" width="100%">
+    <thead>
+      <tr>
+        <th>Treatment</th>
+        <th>Type</th>
+        <th>Score</th>
+        <th>Comment</th>
+      </tr>
+      <tr>
+        <td>CCL25</td>
+        <td>overexpression</td>
+        <td>11.65</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>CRH</td>
+        <td>overexpression</td>
+        <td>10.91</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>ubenimex</td>
+        <td>drug</td>
+        <td>10.78</td>
+        <td>protease inhibitor</td>
+      </tr>
+      <tr>
+        <td>APOE</td>
+        <td>overexpression</td>
+        <td>10.56</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>AHSG</td>
+        <td>overexpression</td>
+        <td>10.22</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>(BRDN0000403060)</td>
+        <td>drug</td>
+        <td>10.19</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>DKK1</td>
+        <td>overexpression</td>
+        <td>10.12</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>anacardic-acid</td>
+        <td>drug</td>
+        <td>9.88</td>
+        <td>JAK3-inhibitor-V</td>
+      </tr>
+      <tr>
+        <td>pantoprazole</td>
+        <td>drug</td>
+        <td>9.81</td>
+        <td>proton pump inhibitor</td>
+      </tr>
+      <tr>
+        <td>MIA</td>
+        <td>overexpression</td>
+        <td>9.71</td>
+        <td></td>
+      </tr>
+    </thead>  
+  </table>
+  
+                          
+  
+  <hr/>  
+  <h4  style='margin: 50px 0 0 0;' id='references'>References</h4>
+   <br/><br/>
+   <ol style="font-size:9pt;">
+     <li> Egan DF, Chun MG, Vamos M, Zou H, Rong J, Miller CJ, Lou HJ, Raveendra-Panickar D, 
+     Yang CC, Sheffler DJ, Teriete P, Asara JM, Turk BE, Cosford ND, Shaw RJ. Small Molecule 
+     Inhibition of the Autophagy Kinase ULK1 and Identification of ULK1 Substrates. Mol Cell. 
+     2015 Jul 16;59(2):285-97. doi:10.1016/j.molcel.2015.05.031. Epub 2015 Jun 25. PubMed PMID: 26118643;
+      PubMed Central PMCID: PMC4530630.
+      </li>
+      <li>
+      Marino ML, Fais S, Djavaheri-Mergny M, Villa A, Meschini S, Lozupone F, Venturi G, Della Mina P, 
+      Pattingre S, Rivoltini L, Codogno P, De Milito A: Proton pump inhibition induces autophagy as a 
+      survival mechanism following oxidative stress in human melanoma cells. Cell Death and Dis 2010, 1:e87.
+      </li>
+      <li>
+      Pan CC, Kumar S, Shah N, Bloodworth JC, Hawinkels LJ, Mythreye K, Hoyt DG, Lee
+NY. Endoglin Regulation of Smad2 Function Mediates Beclin1 Expression and
+Endothelial Autophagy. J Biol Chem. 2015 Jun 12;290(24):14884-92. doi:
+10.1074/jbc.M114.630178. Epub 2015 Apr 30. PubMed PMID: 25931117; PubMed Central 
+PMCID: PMC4463436.
+      </li>
+      <li>
+      Sui X, Chen R, Wang Z, Huang Z, Kong N, Zhang M, Han W, Lou F, Yang J, Zhang
+Q, Wang X, He C, Pan H. Autophagy and chemotherapy resistance: a promising
+therapeutic target for cancer treatment. Cell Death Dis. 2013 Oct 10;4:e838. doi:
+10.1038/cddis.2013.350. Review. PubMed PMID: 24113172; PubMed Central PMCID:
+PMC3824660.
+        
+      </li>
+   </ol>   
+              
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      
+    </div>
+    <div class="bar" style="heigh:100%">
+      <div class="inner h100" style="heigh:100%">
+        <div class="top"><img src="/static/images/logo.svg"></div>
+        <div class="menu">
+          <ul class="list-unstyled" >
+            <li class="title">Table of contents: </li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#input_data">Input data</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#methods">Methods</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#gene_analysis">Gene level analysis</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#path_analysis">Pathway analysis</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#key_regulators">Key regulators</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#references">References</a></li>
+          </ul>
+        </div>
+        <div class="bottom">
+          <div class="inner"> Insilico Medicine Inc., Johns Hopkins <br/>University Eastern, ETC B301, 1101 East <br/>33rd Street, Baltimore, MD 21218 </div>
+        </div>
+      </div>
+    </div>
+    <script src="/static/report/demo/js/scatter.js" type="text/javascript"></script>
+    <script src="/static/report/demo/js/scatter2.js" type="text/javascript"></script>
+     <script src="/static/report/demo/js/scatter3.js" type="text/javascript"></script>
+    <script src="/static/report/demo/js/path1.js" type="text/javascript"></script>
+    <script src="/static/report/demo/js/path2.js" type="text/javascript"></script>
+    <script src="/static/report/demo/js/highchrts_column.js" type="text/javascript"></script>
+    <script src="/static/report/demo/js/tables.js" type="text/javascript"></script>
+    
+    
+    <!-- MODAL FOR GENES  -->
+    <div id="genemodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+ <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;  </button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body" id='modalBody'>
+        <h4 id="loading">Loading ...</h4>
+        <div id="gene_plot" style="width: 500px; height: 400px; margin: 0 auto"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    <!--
+    script.
+      $(function () {
+        svgPanZoom('#pathway', {
+          zoomEnabled: true,
+          controlIconsEnabled: true,
+          fit: true,
+          center: true
+        });
+      });
+    -->
+  </body>
+</html>

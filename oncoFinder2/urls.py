@@ -23,7 +23,9 @@ from website.bt_report_views import BTReport, \
                                     BTGeneVolcanoJson, BTReportGeneTableJson, BTReportGeneBoxplotJson,\
                                     BTReportPathwayTableJson, BTReportAjaxPathDetail, \
                                     BTReportAjaxPathwayVenn, BTReportAjaxPathwayVennTable
-                          
+
+from website.demo_report_views import DemoReport, ReportJson                         
+
 from website.nn_views import nnBloodView, nnBloodResult 
 
 from profiles.views import ProfileIndex, SettingsProfile, SettingsBilling, CreateProject, \
@@ -174,6 +176,9 @@ urlpatterns = patterns('',
     url(r'^report-portal/report/bt-ajaxpathvenn/$', BTReportAjaxPathwayVenn.as_view(), name="bt-report_ajax_path_venn"),
     url(r'^report-portal/report/bt-ajaxpathvenntbl/$', BTReportAjaxPathwayVennTable.as_view(), name="bt-report_ajax_path_venn_tbl"),
     
+    ################### REPORT DEMO ###############################################
+    url(r'^report-portal/report/demo/$', DemoReport.as_view(), name="demo-report"),
+    url(r'^report-portal/demo/json/$', ReportJson.as_view(), name="report-json"),
     
     ################### BLOOD NN ###############################################
     url(r'^nn-blood/$', nnBloodView.as_view(), name="nn-blood"),

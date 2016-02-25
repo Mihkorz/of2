@@ -3,13 +3,13 @@ $(document).ready(function(){
 	var options = {
 			
 			chart: {
-				  renderTo: 'genes-unsorted-low',
+				  renderTo: 'signaling-pathways',
 			      type: 'scatter',
 			      zoomType: 'xy',
 			      marginBottom : 100
 			    },
 			    title: {
-			      text: 'Figure 1. Scatterplot representing significant mean log2 gene counts of Unsorted vs Low GFP-p62 ',
+			      text: 'Figure 4. Signaling pathways',
 			      y: 360
 			    },
 			    credits: false,
@@ -19,7 +19,7 @@ $(document).ready(function(){
 			    xAxis: {
 			      title: {
 			        enabled: true,
-			        text: 'log2(Unsorted counts)'
+			        text: 'Low GFP-p62 PAS'
 			      },
 			      startOnTick: true,
 			      endOnTick: true,
@@ -27,7 +27,7 @@ $(document).ready(function(){
 			    },
 			    yAxis: {
 			      title: {
-			        text: 'log2(Low GFP-p62 counts)'
+			        text: 'High GFP-p62 PAS'
 			      }
 			    },
 			    legend: {
@@ -63,7 +63,7 @@ $(document).ready(function(){
 			
 	}
 	
-    $.getJSON('/static/report/genes-unsorted-low.json', function(data) { 
+    $.getJSON('/static/report/demo/signaling_paths.json', function(data) { 
     	
     	options.series[0].data = data;
         var chart = new Highcharts.Chart(options);
@@ -73,5 +73,3 @@ $(document).ready(function(){
 
 
 });
-
-

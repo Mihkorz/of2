@@ -1054,12 +1054,14 @@ class Test(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(Test, self).get_context_data(**kwargs)
         
-        nn = Node.objects.all().count()
+        
+        
+        
         
 
 
-        raise Exception('test stop')
-        """ RENAME NODES CODE"""
+        #raise Exception('test stop')
+        """ RENAME NODES CODE
         paths = Pathway.objects.filter(database='cytoskeleton', organism='human')
         
         from pandas import concat
@@ -1089,7 +1091,7 @@ class Test(TemplateView):
         
         df1=read_csv(settings.MEDIA_ROOT+'/nodes-comp-cytoskeleton.csv')
         df1 = df1.T.drop_duplicates().T
-        
+        """
         def mazafaka(row):
             
             nnn = row.name
@@ -1098,22 +1100,21 @@ class Test(TemplateView):
             row = row.tolist()
             row.sort()
             
+            aaa = row[0]
+            fnodes = Node.objects.filter(component__name__in = [aaa])
             
-            for col in df1:
-                ss = df1[col]
+            for node in fnodes:                
+                lcomp = list(node.component_set.all().values_list('name', flat='true'))
+                lcomp.sort()
                 
-                ss = ss.dropna()
-                ss = Series(ss)
-                ss = ss.tolist()
-                ss.sort()
+                if row==lcomp:
+                    node.name = nnn
+                    node.save()
+                    #raise Exception('match!')
                 
-                if row==ss:
-                    
-                    nnodes = Node.objects.filter(name=col, pathway__database='kegg_adjusted')
-                    for nnode in nnodes:
-                        nnode.name = nnn
-                        nnode.save()  
-                    #raise Exception('inner stop')
+            
+            #raise Exception('from apply')
+            
         
              
         for subdir, dirs, files in os.walk(settings.MEDIA_ROOT+'/renamed pathways proteins tab/'):
@@ -1127,7 +1128,7 @@ class Test(TemplateView):
                 df = read_csv(settings.MEDIA_ROOT+'/renamed pathways proteins tab/'+ffile, sep='\t')
                
                 
-                df.apply(mazafaka)
+                #df.apply(mazafaka)
             except:
                 #raise
                 print "ERROR in "+ffile

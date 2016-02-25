@@ -63,7 +63,7 @@ $(document).ready(function(){
 			
 	}
 	
-    $.getJSON('/static/report/genes-unsorted-high.json', function(data) { 
+    $.getJSON('/static/report/demo/genes-unsorted-high.json', function(data) { 
     	
     	options.series[0].data = data;
         var chart = new Highcharts.Chart(options);

@@ -63,7 +63,7 @@ $(document).ready(function(){
 			
 	}
 	
-    $.getJSON('/static/report/metabolic_paths.json', function(data) { 
+    $.getJSON('/static/report/demo/metabolic_paths.json', function(data) { 
     	
     	options.series[0].data = data;
         var chart = new Highcharts.Chart(options);
