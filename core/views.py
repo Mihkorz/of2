@@ -1121,20 +1121,20 @@ class Test(TemplateView):
             ff = files
         i=0
         ff.sort()
-        for ffile in ff:
+        for ffile in ff[:50]:
             i=i+1
             print ffile+'   n='+str(i)
             try:
                 df = read_csv(settings.MEDIA_ROOT+'/renamed pathways proteins tab/'+ffile, sep='\t')
                
                 
-                #df.apply(mazafaka)
+                df.apply(mazafaka)
             except:
                 #raise
                 print "ERROR in "+ffile
                 
                 
-        raise Exception('stop')
+        raise Exception('stop first 50')
         
         """ HUMAN PATH TO MOUSE
         for mmm in Pathway.objects.filter(organism='mouse', database='kegg_adjusted'):
