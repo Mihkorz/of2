@@ -72,7 +72,14 @@ $(document).ready(function() {
     	"paging":   false,
         "ordering": false,
         "info":     false,
-        "bFilter": false,
+        "bFilter": true,
+        "dom": 'Bfrtip',
+        "buttons": [
+                   {extend: 'csv', title: 'res_unsorted_vs_low_genes'},
+                   {extend: 'pdf', title: 'res_unsorted_vs_low_genes'},
+                   {extend: 'print', title: 'res_unsorted_vs_low_genes'}
+                   
+              ],
         "ajax": '/static/report/demo/res_unsorted_vs_low_genes.json'
     } );
     
@@ -93,7 +100,14 @@ $(document).ready(function() {
     	"paging":   false,
         "ordering": false,
         "info":     false,
-        "bFilter": false,
+        "bFilter": true,
+        "dom": 'Bfrtip',
+        "buttons": [
+                   {extend: 'csv', title: 'res_unsorted_vs_high_genes'},
+                   {extend: 'pdf', title: 'res_unsorted_vs_high_genes'},
+                   {extend: 'print', title: 'res_unsorted_vs_high_genes'}
+                   
+              ],
         "ajax": '/static/report/demo/res_unsorted_vs_high_genes.json'
     } );
     
@@ -112,7 +126,14 @@ $(document).ready(function() {
     	"paging":   false,
         "ordering": false,
         "info":     false,
-        "bFilter": false,
+        "bFilter": true,
+        "dom": 'Bfrtip',
+        "buttons": [
+                   {extend: 'csv', title: 'res_low_vs_high_genes'},
+                   {extend: 'pdf', title: 'res_low_vs_high_genes'},
+                   {extend: 'print', title: 'res_low_vs_high_genes'}
+                   
+              ],
         "ajax": '/static/report/demo/res_low_vs_high_genes.json'
     } );
     
@@ -134,7 +155,14 @@ $(document).ready(function() {
         "ordering": true,
         "order": [[ 3, "asc" ]],
         "info":     false,
-        "bFilter": false,
+        "bFilter": true,
+        "dom": 'Bfrtip',
+        "buttons": [
+                   {extend: 'csv', title: 'trna_charging_low_vs_high'},
+                   {extend: 'pdf', title: 'trna_charging_low_vs_high'},
+                   {extend: 'print', title: 'trna_charging_low_vs_high'}
+                   
+              ],
         "ajax": '/static/report/demo/trna_charging_low_vs_high.json'
     } );
     
@@ -158,7 +186,14 @@ $(document).ready(function() {
         "ordering": true,
         "order": [[ 2, "desc" ]],
         "info":     false,
-        "bFilter": false,
+        "bFilter": true,
+        "dom": 'Bfrtip',
+        "buttons": [
+                   {extend: 'csv', title: 'signal_high_up'},
+                   {extend: 'pdf', title: 'signal_high_up'},
+                   {extend: 'print', title: 'signal_high_up'}
+                   
+              ],
         "ajax": '/static/report/demo/path/signal_high_up.json'
     } );
     
@@ -167,7 +202,14 @@ $(document).ready(function() {
         "ordering": true,
         "order": [[ 2, "asc" ]],
         "info":     false,
-        "bFilter": false,
+        "bFilter": true,
+        "dom": 'Bfrtip',
+        "buttons": [
+                   {extend: 'csv', title: 'signal_high_down'},
+                   {extend: 'pdf', title: 'signal_high_down'},
+                   {extend: 'print', title: 'signal_high_down'}
+                   
+              ],
         "ajax": '/static/report/demo/path/signal_high_down.json'
     } );
     
@@ -176,7 +218,14 @@ $(document).ready(function() {
         "ordering": true,
         "order": [[ 1, "desc" ]],
         "info":     false,
-        "bFilter": false,
+        "bFilter": true,
+        "dom": 'Bfrtip',
+        "buttons": [
+                   {extend: 'csv', title: 'signal_low_up'},
+                   {extend: 'pdf', title: 'signal_low_up'},
+                   {extend: 'print', title: 'signal_low_up'}
+                   
+              ],
         "ajax": '/static/report/demo/path/signal_low_up.json'
     } );
     
@@ -185,7 +234,14 @@ $(document).ready(function() {
         "ordering": true,
         "order": [[ 1, "asc" ]],
         "info":     false,
-        "bFilter": false,
+        "bFilter": true,
+        "dom": 'Bfrtip',
+        "buttons": [
+                   {extend: 'csv', title: 'signal_low_down'},
+                   {extend: 'pdf', title: 'signal_low_down'},
+                   {extend: 'print', title: 'signal_low_down'}
+                   
+              ],
         "ajax": '/static/report/demo/path/signal_low_down.json'
     } );
     
@@ -196,7 +252,14 @@ $(document).ready(function() {
         "ordering": true,
         "order": [[ 2, "desc" ]],
         "info":     false,
-        "bFilter": false,
+        "bFilter": true,
+        "dom": 'Bfrtip',
+        "buttons": [
+                   {extend: 'csv', title: 'metabolic_high_up'},
+                   {extend: 'pdf', title: 'metabolic_high_up'},
+                   {extend: 'print', title: 'metabolic_high_up'}
+                   
+              ],
         "ajax": '/static/report/demo/path/metabolic_high_up.json'
     } );
     
@@ -205,7 +268,14 @@ $(document).ready(function() {
         "ordering": true,
         "order": [[ 2, "asc" ]],
         "info":     false,
-        "bFilter": false,
+        "bFilter": true,
+        "dom": 'Bfrtip',
+        "buttons": [
+                   {extend: 'csv', title: 'metabolic_high_down'},
+                   {extend: 'pdf', title: 'metabolic_high_down'},
+                   {extend: 'print', title: 'metabolic_high_down'}
+                   
+              ],
         "ajax": '/static/report/demo/path/metabolic_high_down.json'
     } );
     
@@ -214,7 +284,14 @@ $(document).ready(function() {
         "ordering": true,
         "order": [[ 1, "desc" ]],
         "info":     false,
-        "bFilter": false,
+        "bFilter": true,
+        "dom": 'Bfrtip',
+        "buttons": [
+                   {extend: 'csv', title: 'metabolic_low_up'},
+                   {extend: 'pdf', title: 'metabolic_low_up'},
+                   {extend: 'print', title: 'metabolic_low_up'}
+                   
+              ],
         "ajax": '/static/report/demo/path/metabolic_low_up.json'
     } );
     
@@ -223,7 +300,14 @@ $(document).ready(function() {
         "ordering": true,
         "order": [[ 1, "asc" ]],
         "info":     false,
-        "bFilter": false,
+        "bFilter": true,
+        "dom": 'Bfrtip',
+        "buttons": [
+                   {extend: 'csv', title: 'metabolic_low_down'},
+                   {extend: 'pdf', title: 'metabolic_low_down'},
+                   {extend: 'print', title: 'metabolic_low_down'}
+                   
+              ],
         "ajax": '/static/report/demo/path/metabolic_low_down.json'
     } );
     
