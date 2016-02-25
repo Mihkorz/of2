@@ -681,9 +681,9 @@ class CoreSetCalculationParameters(FormView):
                     strTargetsUp = ''
                     strTargetsDown = ''
                     if targetUp:
-                        strTargetsUp = strTargetsUp+'\n'.join(targetUp)+'. '
+                        strTargetsUp = strTargetsUp+' '.join(targetUp)
                     if targetDown:
-                        strTargetsDown = strTargetsDown+'\n'.join(targetDown)+'. '
+                        strTargetsDown = strTargetsDown+' '.join(targetDown)
                     
                     strPathsUp = ''
                     strPathsDown = ''
@@ -692,9 +692,9 @@ class CoreSetCalculationParameters(FormView):
                     pathDown = list(set(pathDown))
                 
                     if pathUp:
-                        strPathsUp = strPathsUp+'\n'.join(pathUp)+'. '
+                        strPathsUp = strPathsUp+' '.join(pathUp)
                     if pathDown:
-                        strPathsDown = strPathsDown+'\n '.join(pathDown)+'. '
+                        strPathsDown = strPathsDown+' '.join(pathDown)
         
                 
                     ddict = {'Drug': drug.name,
@@ -917,7 +917,7 @@ class CoreSetCalculationParameters(FormView):
                 for index,value in primary_drugs_series.iteritems():
                     worksheet.write('B'+str(index+2), value, color_fmt)
                     
-                patient_target_path.to_excel(writer, 'Test New Patient report', index=False)
+                patient_target_path.to_excel(writer, 'Annotated DS', index=False)
             
             
             if diff_genes_amount:
@@ -1054,45 +1054,10 @@ class Test(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(Test, self).get_context_data(**kwargs)
         
-        hps = Pathway.objects.filter(organism='human', database='primary_new', name='Hedgehog_Signaling_in_Mammals_no_Tubulin_Pathway')
-        i=0
-        for hp in hps:
-            i=i+1
-            print hp.name+' i = '+str(i)
-            
-            mp = Pathway(organism='mouse', database='primary_new', name=hp.name, amcf=hp.amcf)
-            mp.save()
-            
-            for hg in hp.gene_set.all():
-                try:
-                    mmap = MouseMapping.objects.filter(human_gene_symbol=hg.name)[0]
-                
-                    mg = Gene(name=mmap.mouse_gene_symbol.upper(), arr=hg.arr, pathway=mp, comment=hg.comment)
-                except:
-                    mg = Gene(name=hg.name, arr=hg.arr, pathway=mp, comment=hg.comment)
-                    
-                mg.save()
-                
-            for hn in hp.node_set.all():
-                mn = Node(name=hn.name, comment=hn.comment, pathway=mp)
-                mn.save()
-                for hc in hn.component_set.all():
-                    try:
-                        mmap = MouseMapping.objects.filter(human_gene_symbol=hc.name)[0]
-                        mc = Component(name=mmap.mouse_gene_symbol.upper(), node=mn)
-                        
-                    except:
-                        mc = Component(name=hc.name, node=mn)
-                    mc.save()
-                    
-            
-            for hn in hp.node_set.all():
-                for inrel in hn.inrelations.all():
-                    mfn = Node.objects.filter(name=inrel.fromnode.name, pathway=mp)[0]
-                    mtn = Node.objects.filter(name=inrel.tonode.name, pathway=mp)[0]
-                    mr = Relation(fromnode=mfn, tonode=mtn)
-                    mr.save()
+        nn = Node.objects.all().count()
         
+
+
         raise Exception('test stop')
         """ RENAME NODES CODE"""
         paths = Pathway.objects.filter(database='cytoskeleton', organism='human')
