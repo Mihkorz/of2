@@ -25,30 +25,99 @@ class LRLReport(TemplateView):
     def get_context_data(self, **kwargs):
               
         context = super(LRLReport, self).get_context_data(**kwargs)
+        rText = """Resveratrol is known as a compound that can extend lifespan of model 
+        <a href='http://www.geroprotectors.org/compounds/GP00177' target='_blank'>organisms</a>.<br/>
+                   <strong>Targets:</strong> AHR, CAR15, Carbonic anhydrases 
+                   (CA1, CA2, CA3, CA4, CA9, CA5A, CA5B, CA6, CA7, CA12, CA13, CA14), 
+                   PTGS1, Cytochromes (CYP1A1, CYP1A2, CYP1B1, CYP2A6, CYP2B6, CYP2E1, CYP3A4),
+                    PLA2G4A, SULT1E1, TYR. <br/><br/>
+                    Resveratrol is a potential oncosuppressor because of its ability to inhibit various
+                     cytochromes [4].  Incubation with resveratrol resulted in suppression of expression of 
+                     collagen coding genes and fibronectin gene (FN1) in keratinocytes. Also, on a gene expression
+                      level resveratrol in 50 µM concentration demonstrated suppression of β subunit of AMPK.
+                       Resveratrol demonstrated strong suppression of mTOR pathway with inhibition of mTORC1 
+                       complex after 48 hours of incubation. Lower concentration (10 µM) showed stronger 
+                       inhibition of mTOR pathway generally due to the absence of compensatory effects of 
+                       upregulation Ras-ERK pathway, which can be observed in case of higher 
+                       concentration (50 µM).<br/>
+Higher resveratrol concentration (50 µM) showed stronger suppression
+ of AMPK pathway after 48 hours of incubation than 10 µM concentration. 
+ Also, after treatment with 50 µM concentration of the compound cells
+  demonstrated upregulation of stress pathways, such as p38 signaling pathway, 
+  PTEN Pathway DNA Repair, etc. [5]. Thus the lower concentration of resveratrol 
+  seems to be more beneficial.
+                    
+                    """
+        
+        raText = """ <strong>Targets:</strong> Retinoic Acid Receptors (RARA, RARB, RARG, RXRA, RXRB, RXRG), 
+        RARRES1, FFAR1, GPRC5A, RGR, PRKCA <br/><br/>
+        Upregulation of HAS2, a gene that codes major hyaluronan synthase in human, is observed in all samples
+         incubated with Retinoic acid. However, upregulation of AMPK pathway, which occurs in samples after
+48 hours of incubation, could suppress hyaluronic acid synthesis on protein level [6,7] <br/>
+After 48 hours of incubation mTOR pathway was inhibited (with both mTORC1 and mTORC2 complexes affected)
+ and while suppression of mTORC1 could be beneficial to longevity, suppression of mTORC2 leads to the 
+ reduction of insulin sensitivity [8].<br/>
+Upregulation of TGF-beta signaling pathway occured after short period of incubation (24 hours) and 
+appeared to be beneficial to the skin aging process. However, after 48 hours of incubation keratinocytes 
+started to demonstrate suppression of TGF-beta pathway. TGF-beta pathway is usually depressed in photoaged 
+and aged skin and causes reduction of collagen [9].<br/>
+Incubation with Retinoic acid led to upregulation of stress related pathways, such as p38 signaling pathway
+ and STAT3, with the suppression of anti-apoptosis pathways (strong down regulation of PTEN pathway, etc.) [10]
+        
+        """
+        
+        mhText = """<strong>Targets:</strong> EGFR, INSR, GCG, AMPK (PRKAA1, PRKAA2, PRKAB1), SLC47A1, CES1,
+         DPP4, MAPK1, MAPK3, NCOA1, RPS6KB1<br/><br/>
+         Metformin is a well known compound that shows strong potential to increase longevity of 
+         <a href='http://www.geroprotectors.org/compounds/GP00132' target='_blank'>model organisms</a> 
+         and human.<br/> 
+Despite the fact that mTORC1 complex is slightly downregulated, the whole mTOR main pathway is upregulated. 
+This could be due to the effects of compensation and cross-talk between mTOR and other pathways [11]. 
+Higher concentration (4mM) of metformin triggered and upregulated AMPK pathway even after 24 hours of 
+incubation, while 2 mM showed upregulation of AMPK only after 48 hours of incubation. Incubation of cells 
+with metformin leads to strong upregulation of WNT signaling pathway, which might be beneficial to skin 
+aging [12].
+        """
+        
+        caText = """
+        Suppression of COXs (Prostaglandin synthases) genes was observed only after 48 
+        hours of incubation. Inhibition of KEGG Arachidonic acid metabolism Main Pathway 
+        (Arachidonic acid is a predecessor of Prostaglandin) and downregulation of IL-10 
+        pathway proved strong anti-inflammatory potential of Capryloyl salicylic acid.<br/>
+Thus Capryloyl salicylic acid showed similar action as salicylic acid and aspirin. <br/>
+Downregulation of mTOR pathway was observed after 48 hours of incubation, which could be a cellular response to upregulation after 24 hours of treatment. 
+However, strong concentration and time-dependent suppression of TGF-beta pathway occurred in keratinocytes incubated with Capryloyl Salicylic acid. 
+        """
+        
+        
         
         dSamples={'Retinoic acid': {'id': 'ra',
                                     'data': [['ra_24_01', '24h 0.1 µM'],
                                     ['ra_24_1', '24h 1 µM'],
                                     ['ra_48_01', '48h 0.1 µM'],
-                                    ['ra_48_1', '48h 1 µM']]
+                                    ['ra_48_1', '48h 1 µM']],
+                                    'text': raText
                                     },
                   'Metformin hydrochloride': {'id': 'mh',
                                               'data': [['mh_24_2', '24h 2 mM'],
                                                       ['mh_24_4', '24h 4 mM'],
                                                       ['mh_48_2', '48h 2 mM'],
-                                                      ['mh_48_4', '48h 4 mM']]
+                                                      ['mh_48_4', '48h 4 mM']],
+                                              'text': mhText
                                               },
                   'Capryloyl salicylic acid': {'id': 'ca',
                                               'data': [['ca_24_5', '24h 5 µM'],
                                                       ['ca_24_10', '24h 10 µM'],
                                                       ['ca_48_5', '48h 5 µM'],
-                                                      ['ca_48_10', '48h 10 µM']]
+                                                      ['ca_48_10', '48h 10 µM']],
+                                               'text': caText
                                               },
                   'Resveratrol': {'id': 're',
                                               'data': [['re_24_10', '24h 10 µM'],
                                                       ['re_24_50', '24h 50 µM'],
                                                       ['re_48_10', '48h 10 µM'],
-                                                      ['re_48_50', '48h 50 µM']]
+                                                      ['re_48_50', '48h 50 µM']],
+                                               'text': rText
                                               }
                    }
         

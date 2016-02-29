@@ -49,7 +49,7 @@
             
             <ul class="list-unstyled" style='font-size: 11pt; margin: 50px 0 0 0;' >
             <li class="title">Table of contents: </li>
-            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#input_data">Input data</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#methods">Methods</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#gene_analysis">Gene level analysis</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#ra">Retinoic acid</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#mh">Metformin hydrochloride</a></li>
@@ -64,11 +64,32 @@
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#gero-score">Geroprotective score for skin</a></li>
             <!--  <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#simalarity">Similarity scores with other compounds</a></li>-->
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#side_eff">Side effects</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#conclusions">Conclusions</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#references">References</a></li>
             
             
             
           </ul>
           
+<hr/>
+          <h2 id='methods'>Methods</h2>
+<hr/>
+Gene expression data provided by L’Óreal was processed with frozen RMA method [1]. 
+Four functional groups were considered in the differential gene expression analysis: 
+Resveratrol, Retinoic acid, Metformin hydrochloride and Capryloyl salicylic acid. 
+In all the following parts of analysis gene expression data from keratinocytes 
+before incubation with compounds was used as a reference and other groups were 
+compared to it. For the gene-level analysis, we performed Student’s T-test. 
+For the pathway level analysis each preprocessed gene expression group was independently 
+compared to the reference using an algorithm called OncoFinder [2]. Using preprocessed gene 
+expression data as an input allows for cross-platform dataset comparison with low error rate
+ and provides the ability to obtain functional features of intracellular regulation using 
+ mathematical estimations. Positive and negative PAS values indicate pathway up- and down-regulation, 
+ respectively.<br/>
+Geroscope™, an extension of Oncofinder [3], was used to calculate possible geroprotective 
+activity of provided compounds and to perform comparison with other compounds. 
+
+
 <hr/>
           <h2 id='gene_analysis'>Gene level analysis</h2>
 <hr/>
@@ -452,7 +473,7 @@
 
 {%for drug, value in dSamples.items%}
 <h3 id='path_{{value.id}}'>{{drug}}</h3>
-
+{{value.text|safe}}<br/><br/>
 <ul class="nav nav-tabs" role="tablist">
          
          {%for llist in value.data %}
@@ -484,6 +505,12 @@
 
 <h2 id='gero-score'>Geroprotective score for skin</h2>
 
+Supplement N demonstrate high score independently of skin age. Metformin is beneficial 
+to young and middle aged skin under 50 y/o. Resveratrol and Capryloyl Salicylic acid 
+showed higher scores in 50+ y/o skin, probably because of their anti-inflammatory 
+activity (inflammation processes prevail in aged skin). Retinoic acid is beneficial for skin 
+in low concentrations and short period of incubation (1 µm 24 hours).<br/><br/>
+
 <table class="table table-striped table-bordered" id='tbl-gero'>
 <thead><tr class="tableizer-firstrow"><th>Drug</th><th>25-31 y.o</th><th>33-39 y.o</th><th>40-44 y.o.</th><th>45-50 y.o</th><th>50-52 y.o</th><th>53-55 y.o</th><th>56-60 y.o</th><th>61-65 y.o</th><th>66-70 y.o.</th></tr></thead><tbody>
  <tr><td>Supplement NC 6h 0.0137um</td><td>1328</td><td>305</td><td>309</td><td>228</td><td>165</td><td>545</td><td>2204</td><td>593</td><td>2421</td></tr>
@@ -500,6 +527,46 @@
  <tr><td>Supplement ME 6h 0.3704um</td><td>16</td><td>2</td><td>56</td><td>2</td><td>20</td><td>99</td><td>430</td><td>443</td><td>555</td></tr>
  <tr><td>Retinoic acid 24h 1 um</td><td>17</td><td>40</td><td>215</td><td>199</td><td>228</td><td>361</td><td>1414</td><td>1149</td><td>1203</td></tr>
 </tbody></table>
+<br/>
+<h4>Supplement N</h4>
+Targets: Aldo-Keto Reductases (AKR1B10, AKR1B1), VKORC1, CSF2RB,Matrix Metallopeptidase (MMP2, MMP9), CASP3, CYC1, CHUK, IKBKB, JAK2,, NFKB1, NFKB2, V-Rel Avian Reticuloendotheliosis Viral Oncogene Homologs (REL, RELA, RELB), Mitogen-Activated Protein Kinases (MAPK11, MAPK12, MAPK13, MAPK14, MAPK10), STAT5A, STAT5B, GSS, SLC7A11
+<br/>Antioxidant compound that suppresses matrix metallopeptidase activities.
+<br/>
+<h4>Supplement EG</h4>
+Targets:  BACE1, SLC2A1, MMP7, KDR, COMT, GLUD1, SQLE, FUT7, HDC, IPMK, Inositol-Trisphosphate 3-Kinase (ITPKA, ITPKB, ITPKC), NAT1, Polymerase subunits(POLA1, POLA2, POLG), PREP, TERT, Topoisomerases (TOP1, TOP2A, TOP2B), UDP Glucuronosyltransferases (UGT1A4, UGT1A6), SLCO2B1, SLCO1B1, SCN5A,Mitogen-Activated Protein Kinases  (MAPK1, MAPK3, NFKB1, MAPK11, MAPK12, MAPK13, MAPK14)
+<br/>Anti-inflammatory and antioxidant compound that upregulates AMPK and inhibit p38 pathways.
+<br/>
+<h4>Supplement EA</h4>
+Targets: ELN, F12, BACE1, SLC22A11, SLC22A6, KDR, Aldo-Keto Reductases (AKR1B1, AKR1B10, AKR1A1), SRC, Casein Kinases (CSNK2A1, CSNK2A2), SQLE, IPMK,Inositol-Trisphosphate 3-Kinases (ITPKA, ITPKB, ITPKC), Protein Kinase C (PRKCA, PRKCB, PRKCD, PRKCE, PRKCG, PRKCH, PRKCI, PRKCQ, PRKCZ), Protein Kinase D1(PRKD1, PRKD2, PRKD3), Topoisomerases (TOP1, TOP2A, TOP2B), HMGCR
+<br/>Supplement with antioxidant and antiproliferative activities. 
+<br/>
+<h4>Supplement CU</h4>
+AHR, CFTR, VDR, Mitogen-Activated Protein Kinases (MAPK11, MAPK12, MAPK13, MAPK14), ALOX5, BCL2, CAR15, Carbonic anhydrases (CA1, CA2, CA3, CA4, CA9, CA5A, CA5B, CA6, CA7, CA12, CA13, CA14), ANPEP, POLL, ERBB2, GLO1, MAOA, MMP2, NAT2, NQO1, EP300, PAK1
+<br/>Anti-inflammatory and antioxidant compound that inhibits matrix metallopeptidase.
+<br/>
+<h4>Supplement QU</h4>
+Targets:  Adenosin Receptors (ADORA1, ADORA2A, ADORA3), EGFR, SLC16A7, ABCG2, AHR, Aldo-Keto Reductases (AKR1B10, AKR1B1, AKR1A1), ALOX5, CSNK2A1, CSNK2A2, CSNK2B, Cyclin-Dependent Kinases(CDK1, CDK2, CDK5, CDK6), CNP, COMT, PTGS2, Cytochromes (CYP19A1, CYP1A1, CYP1A2, CYP2B6, CYP2C8, CYP2C19, CYP2C9, CYP2D6, CYP2J2), GSK3A, GSK3B, HSD17B1, HSD17B7, IKBKB, IPMK, Inositol-Trisphosphate 3-Kinases(ITPKA, ITPKB, ITPKC), N-Acetyltransferase 1 (NAT1, NAT2), Phosphatidylinositol-4-Phosphate 3-Kinase (PIK3CA, PIK3CB, PIK3CD, PIK3C2A, PIK3C2B, PIK3C2G), Phosphatidylinositol 4-Kinase (PI4K2B, PI4KA, PI4KB, PI4K2A), PIM1, PLK1, PREP, PRKG2, PTPN1, SULT1A1, SULT1E1, SULT2A1, Topoisomerase II( TOP2A, TOP2B), UGT1A3
+<br/>Anti-inflammatory compound.
+<br/>
+<h4>Supplement CA</h4>
+Targets: Adenosine A1 Receptors (ADORA1, ADORA2A, ADORA2B, ADORA3,) Phospholipase A2 (PLA2G10, PLA2G12A, PLA2G12B, PLA2G1B, PLA2G2A, PLA2G2D, PLA2G2E, PLA2G2F, PLA2G3, PLA2G4A, PLA2G4C, PLA2G5, PLA2G6, PLA2G7), PNPLA8, PRDX6, ATM, ATR, CHIA, CHIT1, SLC28A1, SLC28A2, CYP1A2, ITPR1, Potassium Channels (KCNH2, KCNH7, KCNH6,  KCND2), SLC9A3, Phosphodiesterase ( PDE1A, PDE1B, PDE1C, PDE4A, PDE4B), Phosphatidylinositol-4,5-Bisphosphate 3-Kinase (PIK3CA, PIK3CB, PIK3CD, PIK3CG), Phosphorylase (PYGB, PYGL, PYGM) , EPHA4
+<br/>
+<h4>Supplement SS</h4>
+Targets: Prostaglandin-Endoperoxide Synthases (PTGS1, PTGS2), SLC22A6
+<br/>Anti-inflammatory drug.
+<br/>
+<h4>Supplement A</h4>
+Targets:
+ELANE, ASIC3, ALOX5, Prostaglandin-Endoperoxide Synthases (PTGS1, PTGS2) IKBKB, SLC22A6
+<br/>
+Anti-inflammatory drug.
+<br/>
+<h4>Supplement ME</h4>
+Targets:
+MTNR1A, MTNR1B, RORA, ESR1
+<br/>
+A biogenic amine with antioxidant activity.
+
 
 <!-- OLD TABLE <table class="table table-striped table-bordered" id='tbl-gero'>
 <tr class="tableizer-firstrow"><th> </th><th>26-40 y.o.</th><th>41-50 y.o.</th><th>51-65 y.o.</th><th>66-76 y.o.</th><th>77-86 y.o.</th></tr>
@@ -671,7 +738,38 @@
   
   </div>
 
+<h2 id='conclusions'>Conclusions</h2>
 
+<ol>
+  <li>Low concentration (10 µM) of resveratrol showed more beneficial effects to skin (such as inhibition of mTOR via mTORC1 complex and absence of upregulation of stress related pathways) on a pathway level.</li>
+  <li>High concentration (50 µM) of resveratrol led to the activation of cell stress response on a pathway level.</li>
+  <li>Retinoic acid activated stress related pathways.</li>
+  <li>Retinoic acid upregulated TGF-beta pathway after 24 hours of incubation, but showed strong downregulation of TGF-beta pathway after 48 hours of incubation.</li>
+  <li>Metformin showed strong upregulation of WNT signaling pathway and upregulation of TGF-beta signaling pathway. These pathways are usually down-regulated in aged skin.</li>
+  <li>Capryloyl salicylic acid demonstrated beneficial actions on skin (strong suppression of inflammation) only after 48 hours of incubation.</li>
+  <li>Capryloyl salicylic acid activated TGF-beta pathway that causes the reduction of skin collagen.</li>
+  <li>Metformin demonstrated anti-aging action on skin younger than 50 y/o on a pathway level. </li>
+  <li>Capryloyl salicylic acid demonstrated anti-aging action on 50+ y/o skin on a pathway level and seemed to be a better anti-aging treatment than other salicylates, resveratrol and retinoic acid.</li>
+  <li>Resveratrol demonstrated anti-aging action on 50+ y/o skin on a pathway level.</li>
+  <li>Retinoic acid demonstrated anti-aging action on 50+ y/o skin on a pathway level.</li>
+
+</ol>
+
+<h2 id='references'>References</h2>
+  <ol>
+    <li>McCall, Matthew N., Benjamin M. Bolstad, and Rafael A. Irizarry. "Frozen robust multiarray analysis (fRMA)." Biostatistics 11.2 (2010): 242-253.</li>
+    <li>Aliper, A. M. et al. Signaling pathway activation drift during aging: Hutchinson-Gilford Progeria Syndrome fibroblasts are comparable to normal middle-age and old-age cells. Aging  7, 26–37 (2015).</li>
+    <li>Buzdin AA, Zhavoronkov AA, Korzinkin MB, Venkova LS, Zenin AA, Smirnov PY, Borisov NM. Oncofinder, a new method for the analysis of intracellular signaling pathway activation using transcriptomic data. Front Genet. 2014; 5:55.</li>
+    <li>Mikstacka, R.; Przybylska, D.; Rimando, A. M.; Baer-Dubowska, W. Inhibition of Human Recombinant Cytochromes P450 CYP1A1 and CYP1B1 by Trans-Resveratrol Methyl Ethers. Mol. Nutr. Food Res. 2007, 51 (5), 517–524.</li>
+    <li>Ono, K.; Han, J. The p38 Signal Transduction Pathway: Activation and Function. Cell Signal 2000, 12, 1–13.Vigetti, D.; Karousou, E.; Viola, M.; Deleonibus, S.; De Luca, G.; Passi, A.</li>
+    <li>Hyaluronan: Biosynthesis and Signaling. Biochim. Biophys. Acta 2014, 1840 (8), 2452–2459.</li>
+    <li>Vigetti, D.; Viola, M.; Karousou, E.; Deleonibus, S.; Karamanou, K.; De Luca, G.; Passi, A. Epigenetics in Extracellular Matrix Remodeling and Hyaluronan Metabolism. FEBS J. 2014, 281 (22), 4980–4992.</li>
+    <li>Lamming, D. W.; Ye, L.; Sabatini, D. M.; Baur, J. A. Rapalogs and mTOR Inhibitors as Anti-Aging Therapeutics. J. Clin. Invest. 2013, 123 (3), 980–989.</li>
+    <li>Quan, T.; He, T.; Kang, S.; Voorhees, J. J.; Fisher, G. J. Ultraviolet Irradiation Alters Transforming Growth Factor Beta/smad Pathway in Human Skin in Vivo. J. Invest. Dermatol. 2002, 119 (2), 499–506.</li>
+    <li>Ming, M.; He, Y.-Y. PTEN: New Insights into Its Regulation and Function in Skin Cancer. J. Invest. Dermatol. 2009, 129 (9), 2109–2</li>
+    <li>Mendoza, M. C.; Er, E. E.; Blenis, J. The Ras-ERK and PI3K-mTOR Pathways: Cross-Talk and Compensation. Trends Biochem. Sci. 2011, 36 (6), 320–</li>
+
+  </ol>
 </div>  
 
 
@@ -697,6 +795,8 @@
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#gero-score">Geroprotective score for skin</a></li>
             <!-- <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#simalarity">Similarity scores with other compounds</a></li>-->
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#side_eff">Side Effects</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#conclusions">Conclusions</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#references">References</a></li>
           </ul>
         </div>
         <div class="bottom">
