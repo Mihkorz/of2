@@ -264,6 +264,7 @@ class CoreSetCalculationParameters(FormView):
                                 fdr_q_values = fdr_corr(np.array(s_p_value))
                                 
                             df_for_pq_val[col.name+'_qval'] = fdr_q_values
+                           
                             col_CNR[fdr_q_values>=qvalue_threshold] = 1
                         else:
                             col_CNR[s_p_value>=pvalue_threshold] = 1               
@@ -288,7 +289,7 @@ class CoreSetCalculationParameters(FormView):
                      
             
             process_doc_df = process_doc_df.apply(filter_diff_genes, axis=0)
-            
+            #raise Exception('single t-test')
             cnr_df_diff_genes = process_doc_df.copy() 
             if input_document.doc_format!='OF_cnr' and input_document.doc_format!='OF_cnr_stat':
                 oldstd = cnr_doc_df['std']
@@ -1054,13 +1055,87 @@ class Test(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(Test, self).get_context_data(**kwargs)
         
+        ps = Pathway.objects.filter(organism='human', database='kegg_adjusted')
+        path = '/ivan/kegg_adjusted/nodes/'
+        
+        darr = {}
+        dgenes = {}
+        for p in ps:
+            print p.name
+            lfrom = []
+            lto = []
+            ltype = []
+            
+            dd = {}
+            for node in p.node_set.all(): # drawing relations
+                
+                lc = []
+                for c in node.component_set.all():
+                    lc.append(c.name)
+                dd[node.name] = lc    
+            
+                    
+        
+            df1 = DataFrame.from_dict(dd, orient='index')
+            df1 = df1.transpose()
+            #df1 = df1[['From node', 'To node', 'Relation type']]
+            df1.to_csv(settings.MEDIA_ROOT+path+p.name+'.csv' , sep='\t', encoding='utf-8')
+            
+        
+        raise Exception('test top')
+        nodes = Node.objects.filter(pathway__database='primary_new')
         
         
+        import pygraphviz as pgv
+        
+        from matplotlib import pylab
+        import networkx as nx
+        
+        def save_graph(graph,file_name):
+            
+            #initialze Figure
+            plt.figure(num=None, figsize=(20, 20), dpi=80)
+            plt.axis('off')
+            fig = plt.figure(1)
+            pos = nx.spring_layout(graph)
+            nx.draw_networkx_nodes(graph,pos)
+            nx.draw_networkx_edges(graph,pos)
+            nx.draw_networkx_labels(graph,pos)
+        
+            cut = 1.00
+            xmax = cut * max(xx for xx, yy in pos.values())
+            ymax = cut * max(yy for xx, yy in pos.values())
+            plt.xlim(0, xmax)
+            plt.ylim(0, ymax)
+        
+            plt.savefig(file_name,bbox_inches="tight")
+            pylab.close()
+            del fig
+        
+        df = read_csv(settings.MEDIA_ROOT+"/all_relations.csv")
+        
+       
+        G=nx.DiGraph(strict=False,directed=True) #drawing static picture
+        
+        def add_edges(row):
+            print row['from node']+'->'+row['to node']
+            G.add_edge(row['from node'], 
+                       row['to node'], color=row['color'])
+        df.head(1000).apply(add_edges, axis=1)
+        
+        
+        save_graph(G, settings.MEDIA_ROOT+"/file.svg")
+        #G.layout(prog='dot')
+        #G.draw(settings.MEDIA_ROOT+"/file.svg")
+       
+        
+        #A.draw(settings.MEDIA_ROOT+"/matched_nodes_to_mir/"+self.object.name+".svg")
+        #A.draw(settings.MEDIA_ROOT+"/megapath.svg")
         
         
 
 
-        #raise Exception('test stop')
+        raise Exception('test stop')
         """ RENAME NODES CODE
         paths = Pathway.objects.filter(database='cytoskeleton', organism='human')
         

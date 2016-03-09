@@ -23,7 +23,9 @@ from website.bt_report_views import BTReport, \
                                     BTGeneVolcanoJson, BTReportGeneTableJson, BTReportGeneBoxplotJson,\
                                     BTReportPathwayTableJson, BTReportAjaxPathDetail, \
                                     BTReportAjaxPathwayVenn, BTReportAjaxPathwayVennTable
-
+from website.gp_report_views import GPReport, \
+                                    GPReportPathwayTableJson, GPReportAjaxPathwayVenn, GPReportAjaxPathwayVennTable, \
+                                    GPReportAjaxPathDetail
 from website.demo_report_views import DemoReport, ReportJson                         
 
 from website.nn_views import nnBloodView, nnBloodResult 
@@ -175,6 +177,13 @@ urlpatterns = patterns('',
     url(r'^report-portal/report/bt-ajaxpathdetail/$', BTReportAjaxPathDetail.as_view(), name="bt-report_ajax_path_detail"),
     url(r'^report-portal/report/bt-ajaxpathvenn/$', BTReportAjaxPathwayVenn.as_view(), name="bt-report_ajax_path_venn"),
     url(r'^report-portal/report/bt-ajaxpathvenntbl/$', BTReportAjaxPathwayVennTable.as_view(), name="bt-report_ajax_path_venn_tbl"),
+    
+    ################### REPORT GP ###############################################
+    url(r'^report-portal/report/gpcomp/$', GPReport.as_view(), name="gp-report"),
+    url(r'^report-portal/gp-pathwaytablejson/$', GPReportPathwayTableJson.as_view(), name="pathway_table_json"),
+    url(r'^report-portal/report/gp-ajaxpathvenn/$', GPReportAjaxPathwayVenn.as_view(), name="bt-report_ajax_path_venn"),
+    url(r'^report-portal/report/gp-ajaxpathvenntbl/$', GPReportAjaxPathwayVennTable.as_view(), name="bt-report_ajax_path_venn_tbl"),
+    url(r'^report-portal/report/gp-ajaxpathdetail/$', GPReportAjaxPathDetail.as_view(), name="bt-report_ajax_path_detail"),
     
     ################### REPORT DEMO ###############################################
     url(r'^report-portal/report/demo/$', DemoReport.as_view(), name="demo-report"),
