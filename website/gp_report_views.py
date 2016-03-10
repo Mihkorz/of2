@@ -207,7 +207,7 @@ class GPReportAjaxPathDetail(TemplateView):
     def get_context_data(self, *args, **kwargs):
         context = super(GPReportAjaxPathDetail, self).get_context_data(**kwargs)
         
-        pathway = Pathway.objects.filter(organism='human', name=self.request.GET['pathway']).exclude(database__in=['primary_old', 'kegg'])[0]
+        pathway = Pathway.objects.filter(organism='human', name=self.request.GET['pathway']).exclude(database__in=['primary_old', 'kegg', 'aging'])[0]
         
         gene_data = []
         for gene in pathway.gene_set.all():
