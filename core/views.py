@@ -1055,32 +1055,8 @@ class Test(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(Test, self).get_context_data(**kwargs)
         
-        for subdir, dirs, files in os.walk(settings.MEDIA_ROOT+'/gero_pathways/'):
-            ff = files
-        i=0
-        ff.sort()
-        for ffile in ff:
-            i=i+1
-            print ffile+'   n='+str(i)
-            try:
-                df = read_csv(settings.MEDIA_ROOT+'/gero_pathways/'+ffile)
-                
-                ffile = ffile.replace('.csv', '')
-                arrr = ffile.split('__')
-                
-                amcf = float(arrr[1])
-                
-                p = Pathway.objects.get_or_create(organism='human', database='aging', amcf=amcf, name=arrr[0])
-                
-                for index, rrow in df.iterrows():
-                    g = Gene(name=rrow['SYMBOL'], arr=rrow['ARR'], pathway=p[0])
-                    g.save()
-                
-                    #raise Exception()
-                
-            except:
-                raise
-                print "ERROR in "+ffile
+        
+             
         
        
             
