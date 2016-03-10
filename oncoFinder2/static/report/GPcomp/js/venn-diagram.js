@@ -282,12 +282,12 @@ $(document).ready(function(){
 				'output_N-acetylcysteine.xlsx', 'N-acetylcysteine',
 				'output_Myricetin.xlsx', 'Myricetin',
 				'output_Epigallocatechin gallate.xlsx', 'Epigallocatechin gallate', 
-				'age', 'up', 'MCF7_venn_meta_dinamic', 'MCF7');
+				'age', 'up', 'MCF7_venn_age_dinamic', 'MCF7');
 		drawVenn('MCF7_venn_age-down',
 					'output_N-acetylcysteine.xlsx', 'N-acetylcysteine',
 					'output_Myricetin.xlsx', 'Myricetin',
 					'output_Epigallocatechin gallate.xlsx', 'Epigallocatechin gallate', 
-					'age', 'down', 'MCF7_venn_meta_dinamic', 'MCF7');
+					'age', 'down', 'MCF7_venn_age_dinamic', 'MCF7');
 		
 		
 		
