@@ -744,6 +744,7 @@ class GPReportAjaxPathwayVennTable(TemplateView):
             elif regulation == 'down':  
                 s_tumour1 = s_tumour1[s_tumour1<0]
                 s_tumour2 = s_tumour2[s_tumour2<0]
+                s_tumour3 = s_tumour3[s_tumour3<0]
                 joined_df = pd.DataFrame(s_tumour1).join(pd.DataFrame(s_tumour2), how='inner')
                 joined_df = joined_df.join(pd.DataFrame(s_tumour3), how='inner')
             
