@@ -281,11 +281,11 @@ $(document).ready(function() {
 	// SIGNALING PATHS
 	
 	
-    
+    /*
     drawPathwayTable('tbl-path_all', 
 			         'all', 
 			         'all', 'path');
-    
+    */
     drawPathwayTable('MCF7_tbl-path_all', 
 	         'all', 
 	         'MCF7', 'path');
@@ -295,9 +295,10 @@ $(document).ready(function() {
 	
 	
 
-    drawPathwayTable('tbl-meta_all', 
+   /* drawPathwayTable('tbl-meta_all', 
 	         'all', 
 	         'all', 'meta');
+    */
     drawPathwayTable('meta_MCF7_tbl-path_all', 
 	         'all', 
 	         'MCF7', 'meta');
@@ -305,10 +306,11 @@ $(document).ready(function() {
 // AGE PATHS
 	
 	
-
+/*
     drawPathwayTable('tbl-age_all', 
 	         'all', 
 	         'all', 'age');
+  */
     drawPathwayTable('MCF7_tbl-age_all', 
 	         'all', 
 	         'MCF7', 'age');
