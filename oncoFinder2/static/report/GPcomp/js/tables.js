@@ -309,7 +309,7 @@ $(document).ready(function() {
     drawPathwayTable('tbl-age_all', 
 	         'all', 
 	         'all', 'age');
-    drawPathwayTable('meta_MCF7_tbl-age_all', 
+    drawPathwayTable('MCF7_tbl-age_all', 
 	         'all', 
 	         'MCF7', 'age');
 	

@@ -278,12 +278,12 @@ $(document).ready(function(){
 				'output_drug_BRD-K55591206_perttime_6_dose_10um.txt.xlsx', 'Epigallocatechin gallate', 
 				'age', 'down', 'venn_meta_dinamic', 'pathways');
 		
-		drawVenn('meta_MCF7_venn_age-up',
+		drawVenn('MCF7_venn_age-up',
 				'output_N-acetylcysteine.xlsx', 'N-acetylcysteine',
 				'output_Myricetin.xlsx', 'Myricetin',
 				'output_Epigallocatechin gallate.xlsx', 'Epigallocatechin gallate', 
 				'age', 'up', 'MCF7_venn_meta_dinamic', 'MCF7');
-		drawVenn('meta_MCF7_venn_age-down',
+		drawVenn('MCF7_venn_age-down',
 					'output_N-acetylcysteine.xlsx', 'N-acetylcysteine',
 					'output_Myricetin.xlsx', 'Myricetin',
 					'output_Epigallocatechin gallate.xlsx', 'Epigallocatechin gallate', 
