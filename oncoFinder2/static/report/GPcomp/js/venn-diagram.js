@@ -62,6 +62,7 @@ function drawDinamicTable(idx, tblRenderTo, path_gene){
 			                  title: tblId},
 		                 
 		                 ],
+		                 
 		        "ajax": {'url':'/report-portal/report/gp-ajaxpathvenntbl/',
 		        	     'type': 'GET',
 		        	     'data':{
@@ -176,8 +177,8 @@ function drawVenn(renderTo, file_name1, name1,
 
                    // Display a tooltip with the current size
                    tooltip.transition().duration(400).style("opacity", .9);
-                   if(path_gene == 'MCF7') { path_gene = 'pathways'}
-                   tooltip.text(d.size + " "+path_gene);
+                   if(path_gene == 'MCF7') { tooltip.text(d.size + " pathways");}
+                   else{tooltip.text(d.size + " "+path_gene);}
                    
 
                    // highlight the current path
@@ -230,7 +231,7 @@ $(document).ready(function(){
 		
 		drawVenn('MCF7_venn_path-up',
 				'output_N-acetylcysteine.xlsx', 'N-acetylcysteine',
-				'output_Myricetin.xlsx', 'Myricetin',
+				'output_Myricetin.xlsx', 'Myricetin1',
 				'output_Epigallocatechin gallate.xlsx', 'Epigallocatechin gallate', 
 				false, 'up', 'MCF7_venn_path_dinamic', 'MCF7');
 		drawVenn('MCF7_venn_path-down',
