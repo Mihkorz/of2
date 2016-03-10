@@ -231,7 +231,7 @@ $(document).ready(function(){
 		*/
 		drawVenn('MCF7_venn_path-up',
 				'output_N-acetylcysteine.xlsx', 'N-acetylcysteine',
-				'output_Myricetin.xlsx', 'Myricetin1',
+				'output_Myricetin.xlsx', 'Myricetin',
 				'output_Epigallocatechin gallate.xlsx', 'Epigallocatechin gallate', 
 				'path', 'up', 'MCF7_venn_path_dinamic', 'MCF7');
 		drawVenn('MCF7_venn_path-down',
