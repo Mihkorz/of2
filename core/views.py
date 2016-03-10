@@ -1055,31 +1055,34 @@ class Test(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(Test, self).get_context_data(**kwargs)
         
-        ps = Pathway.objects.filter(organism='human', database='kegg_adjusted')
-        path = '/ivan/kegg_adjusted/nodes/'
-        
-        darr = {}
-        dgenes = {}
-        for p in ps:
-            print p.name
-            lfrom = []
-            lto = []
-            ltype = []
-            
-            dd = {}
-            for node in p.node_set.all(): # drawing relations
+        for subdir, dirs, files in os.walk(settings.MEDIA_ROOT+'/gero_pathways/'):
+            ff = files
+        i=0
+        ff.sort()
+        for ffile in ff:
+            i=i+1
+            print ffile+'   n='+str(i)
+            try:
+                df = read_csv(settings.MEDIA_ROOT+'/gero_pathways/'+ffile)
                 
-                lc = []
-                for c in node.component_set.all():
-                    lc.append(c.name)
-                dd[node.name] = lc    
-            
-                    
+                ffile = ffile.replace('.csv', '')
+                arrr = ffile.split('__')
+                
+                amcf = float(arrr[1])
+                
+                p = Pathway.objects.get_or_create(organism='human', database='aging', amcf=amcf, name=arrr[0])
+                
+                for index, rrow in df.iterrows():
+                    g = Gene(name=rrow['SYMBOL'], arr=rrow['ARR'], pathway=p[0])
+                    g.save()
+                
+                    #raise Exception()
+                
+            except:
+                raise
+                print "ERROR in "+ffile
         
-            df1 = DataFrame.from_dict(dd, orient='index')
-            df1 = df1.transpose()
-            #df1 = df1[['From node', 'To node', 'Relation type']]
-            df1.to_csv(settings.MEDIA_ROOT+path+p.name+'.csv' , sep='\t', encoding='utf-8')
+       
             
         
         raise Exception('test top')

@@ -21,7 +21,9 @@ class CalculationParametersForm(forms.Form):
                   ('reactome', 'Reactome'),
                   ('kegg_adjusted', 'KEGG Adjusted Pathway Database'),
                   ('kegg_10', 'KEGG >10 genes'),
-                  ('kegg_adjusted_10', 'KEGG Adjusted >10 genes'),)
+                  ('kegg_adjusted_10', 'KEGG Adjusted >10 genes'),
+                  ('aging', 'Aging related'), )
+    
     DB_CHOICES_DRUG = (('oncofinder', 'OncoFinder'),
                        ('geroscope', 'GeroScope'),
                       )

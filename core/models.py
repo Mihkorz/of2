@@ -20,7 +20,8 @@ PATHWAY_DATABASE = (
     ('reactome', 'Reactome'),
     ('kegg_adjusted', 'KEGG Adjusted Pathway Database'),
     ('kegg_10', 'KEGG 10'),
-    ('kegg_adjusted_10', 'KEGG Adjusted 10'), 
+    ('kegg_adjusted_10', 'KEGG Adjusted 10'),
+    ('aging', 'Aging related'), 
 ) 
 
 PATHWAY_ORGANISM = (
