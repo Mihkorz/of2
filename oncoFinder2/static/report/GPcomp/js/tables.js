@@ -160,7 +160,7 @@ function drawPathwayTable(id, file_name1, file_name2, is_metabolic){
         	    	 }
     } );
 	
-	if(!is_metabolic){
+	if(is_metabolic!='meta'||is_metabolic!='age'){
 	
 		if(file_name1!='all'){
 	
@@ -284,11 +284,11 @@ $(document).ready(function() {
     
     drawPathwayTable('tbl-path_all', 
 			         'all', 
-			         'all', false);
+			         'all', 'path');
     
     drawPathwayTable('MCF7_tbl-path_all', 
 	         'all', 
-	         'MCF7', false);
+	         'MCF7', 'path');
 			     
     	
  // METABOLIC PATHS
@@ -297,11 +297,21 @@ $(document).ready(function() {
 
     drawPathwayTable('tbl-meta_all', 
 	         'all', 
-	         'all', true);
+	         'all', 'meta');
     drawPathwayTable('meta_MCF7_tbl-path_all', 
 	         'all', 
-	         'MCF7', true);
+	         'MCF7', 'meta');
 	
+// AGE PATHS
+	
+	
+
+    drawPathwayTable('tbl-age_all', 
+	         'all', 
+	         'all', 'age');
+    drawPathwayTable('meta_MCF7_tbl-age_all', 
+	         'all', 
+	         'MCF7', 'age');
 	
     
 } );

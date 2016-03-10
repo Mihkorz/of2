@@ -53,10 +53,7 @@ class GPReportPathwayTableJson(TemplateView):
         file_name1 = request.GET.get('file_name1')
         file_name2 = request.GET.get('file_name2')
         is_metabolic = request.GET.get('is_metabolic')
-        if is_metabolic =='false':
-            is_metabolic = False
-        else:
-            is_metabolic = True
+        
         
         if file_name1 == 'all':
             
@@ -76,16 +73,23 @@ class GPReportPathwayTableJson(TemplateView):
                                  sheetname='PAS1', index_col='Pathway')
             
             
-            if is_metabolic:
+            if is_metabolic == 'meta':
                 df_acetylcysteine = df_acetylcysteine[df_acetylcysteine['Database']=='metabolism']
                 df_Myricetin = df_Myricetin[df_Myricetin['Database']=='metabolism']
                 df_Epigallocatechin = df_Epigallocatechin[df_Epigallocatechin['Database']=='metabolism']
                 
-            else:
-                df_acetylcysteine = df_acetylcysteine[df_acetylcysteine['Database']!='metabolism']
-                df_Myricetin = df_Myricetin[df_Myricetin['Database']!='metabolism']
-                df_Epigallocatechin = df_Epigallocatechin[df_Epigallocatechin['Database']!='metabolism']
-                
+            elif is_metabolic == 'path':
+                df_acetylcysteine = df_acetylcysteine[(df_acetylcysteine['Database']!='metabolism' )]
+                df_Myricetin = df_Myricetin[(df_Myricetin['Database']!='metabolism' )]
+                df_Epigallocatechin = df_Epigallocatechin[(df_Epigallocatechin['Database']!='metabolism' )]
+            
+                df_acetylcysteine = df_acetylcysteine[df_acetylcysteine['Database']!='aging']
+                df_Myricetin = df_Myricetin[df_Myricetin['Database']!='aging']
+                df_Epigallocatechin = df_Epigallocatechin[df_Epigallocatechin['Database']!='aging']
+            elif is_metabolic == 'age':
+                df_acetylcysteine = df_acetylcysteine[df_acetylcysteine['Database']=='aging']
+                df_Myricetin = df_Myricetin[df_Myricetin['Database']=='aging']
+                df_Epigallocatechin = df_Epigallocatechin[df_Epigallocatechin['Database']=='aging']     
             
             
             
@@ -117,12 +121,18 @@ class GPReportPathwayTableJson(TemplateView):
                                  sheetname='PAS1', index_col='Pathway')
         
             
-            if is_metabolic:
+            if is_metabolic=='meta':
                 df_1 = df_1[df_1['Database']=='metabolism']
                 df_2 = df_2[df_2['Database']=='metabolism']
-            else:
+            elif is_metabolic=='age' :
+                df_1 = df_1[df_1['Database']=='aging']
+                df_2 = df_2[df_2['Database']=='aging']
+            elif is_metabolic=='path' :    
                 df_1 = df_1[df_1['Database']!='metabolism']
                 df_2 = df_2[df_2['Database']!='metabolism']
+                
+                df_1 = df_1[df_1['Database']!='aging']
+                df_2 = df_2[df_2['Database']!='aging']
             
             df1_tumour = df_1[[x for x in df_1.columns if 'Tumour' in x]]
             s1_tumour = df1_tumour.mean(axis=1).round(decimals=2)
@@ -361,14 +371,22 @@ class GPReportAjaxPathwayVenn(TemplateView):
             df3 = pd.read_excel(settings.MEDIA_ROOT+"/../static/report/GPcomp/"+file_name3,
                                   sheetname='PAS1', index_col='Pathway')           
          
-            if is_metabolic=='true':
+            if is_metabolic=='meta':
                 df1 = df1[df1['Database']=='metabolism']
                 df2 = df2[df2['Database']=='metabolism']
                 df3 = df3[df3['Database']=='metabolism']
-            else:
-                df1 = df1[df1['Database']!='metabolism']
-                df2 = df2[df2['Database']!='metabolism']
-                df3 = df3[df3['Database']!='metabolism']
+            elif is_metabolic=='age':
+                df1 = df1[df1['Database']=='aging']
+                df2 = df2[df2['Database']=='aging']
+                df3 = df3[df3['Database']=='aging']
+            elif is_metabolic=='path':
+                df1 = df1[(df1['Database']!='metabolism') ]
+                df2 = df2[(df2['Database']!='metabolism') ]
+                df3 = df3[(df3['Database']!='metabolism')]
+                
+                df1 = df1[df1['Database']!='aging']
+                df2 = df2[df2['Database']!='aging']
+                df3 = df3[df3['Database']!='aging']
                 
             df1_tumour = df1[[x for x in df1.columns if 'Tumour' in x]]
             df1['0'] = df1_tumour.mean(axis=1).round(decimals=2)
@@ -538,10 +556,13 @@ class GPReportAjaxPathwayVennTable(TemplateView):
                                   sheetname='PAS1', index_col='Pathway')
             
                 
-                if is_metabolic=='true':
+                if is_metabolic=='meta':
                     df_1 = df_1[df_1['Database']=='metabolism']
-                else:                
+                elif is_metabolic=='age':
+                    df_1 = df_1[df_1['Database']=='aging']
+                elif is_metabolic=='path':                
                     df_1 = df_1[df_1['Database']!='metabolism']
+                    df_1 = df_1[df_1['Database']!='aging']
                     
                 df1_tumour = df_1[[x for x in df_1.columns if 'Tumour' in x]]
                 df_1['0'] = df1_tumour.mean(axis=1).round(decimals=2) 
@@ -574,12 +595,18 @@ class GPReportAjaxPathwayVennTable(TemplateView):
                 df_2 = pd.read_excel(settings.MEDIA_ROOT+"/../static/report/GPcomp/"+lMembers[1]+".xlsx",
                                  sheetname='PAS1',index_col='Pathway')
             
-                if is_metabolic=='true':
+                if is_metabolic=='meta':
                     df_1 = df_1[df_1['Database']=='metabolism']
                     df_2 = df_2[df_2['Database']=='metabolism']
-                else:                
+                elif is_metabolic=='age':
+                    df_1 = df_1[df_1['Database']=='aging']
+                    df_2 = df_2[df_2['Database']=='aging']
+                elif is_metabolic=='path':                
                     df_1 = df_1[df_1['Database']!='metabolism']
                     df_2 = df_2[df_2['Database']!='metabolism']
+                    
+                    df_1 = df_1[df_1['Database']!='aging']
+                    df_2 = df_2[df_2['Database']!='aging']
             
                 df1_tumour = df_1[[x for x in df_1.columns if 'Tumour' in x]]
                 df_1['0'] = df1_tumour.mean(axis=1).round(decimals=2)
@@ -592,12 +619,18 @@ class GPReportAjaxPathwayVennTable(TemplateView):
                 df_2 = pd.read_excel(settings.MEDIA_ROOT+"/../static/report/GPcomp/output_"+lMembers[1]+".xlsx",
                                  sheetname='PAS1',index_col='Pathway')
             
-                if is_metabolic=='true':
+                if is_metabolic=='meta':
                     df_1 = df_1[df_1['Database']=='metabolism']
                     df_2 = df_2[df_2['Database']=='metabolism']
-                else:                
+                elif is_metabolic=='age':
+                    df_1 = df_1[df_1['Database']=='aging']
+                    df_2 = df_2[df_2['Database']=='aging']
+                elif is_metabolic=='path':               
                     df_1 = df_1[df_1['Database']!='metabolism']
                     df_2 = df_2[df_2['Database']!='metabolism']
+                    
+                    df_1 = df_1[df_1['Database']!='aging']
+                    df_2 = df_2[df_2['Database']!='aging']
             
                 df1_tumour = df_1[[x for x in df_1.columns if 'Tumour' in x]]
                 df_1['0'] = df1_tumour.mean(axis=1).round(decimals=2)
@@ -652,14 +685,23 @@ class GPReportAjaxPathwayVennTable(TemplateView):
                 df_3 = pd.read_excel(settings.MEDIA_ROOT+"/../static/report/GPcomp/"+lMembers[2]+".xlsx",
                                 sheetname='PAS1',index_col='Pathway')
             
-                if is_metabolic=='true':
+                if is_metabolic=='meta':
                     df_1 = df_1[df_1['Database']=='metabolism']
                     df_2 = df_2[df_2['Database']=='metabolism']
                     df_3 = df_3[df_3['Database']=='metabolism']
-                else:                
+                    
+                elif is_metabolic=='age':
+                    df_1 = df_1[df_1['Database']=='aging']
+                    df_2 = df_2[df_2['Database']=='aging']
+                    df_3 = df_3[df_3['Database']=='aging']
+                elif is_metabolic=='path':                
                     df_1 = df_1[df_1['Database']!='metabolism']
                     df_2 = df_2[df_2['Database']!='metabolism']
                     df_3 = df_3[df_3['Database']!='metabolism']
+                    
+                    df_1 = df_1[df_1['Database']!='aging']
+                    df_2 = df_2[df_2['Database']!='aging']
+                    df_3 = df_3[df_3['Database']!='aging']
                     
                 df1_tumour = df_1[[x for x in df_1.columns if 'Tumour' in x]]
                 df_1['0'] = df1_tumour.mean(axis=1).round(decimals=2)
@@ -676,14 +718,23 @@ class GPReportAjaxPathwayVennTable(TemplateView):
                 df_3 = pd.read_excel(settings.MEDIA_ROOT+"/../static/report/GPcomp/output_"+lMembers[2]+".xlsx",
                                 sheetname='PAS1',index_col='Pathway')
             
-                if is_metabolic=='true':
+                if is_metabolic=='meta':
                     df_1 = df_1[df_1['Database']=='metabolism']
                     df_2 = df_2[df_2['Database']=='metabolism']
                     df_3 = df_3[df_3['Database']=='metabolism']
-                else:                
+                    
+                elif is_metabolic=='age':
+                    df_1 = df_1[df_1['Database']=='aging']
+                    df_2 = df_2[df_2['Database']=='aging']
+                    df_3 = df_3[df_3['Database']=='aging']
+                elif is_metabolic=='path':                
                     df_1 = df_1[df_1['Database']!='metabolism']
                     df_2 = df_2[df_2['Database']!='metabolism']
                     df_3 = df_3[df_3['Database']!='metabolism']
+                    
+                    df_1 = df_1[df_1['Database']!='aging']
+                    df_2 = df_2[df_2['Database']!='aging']
+                    df_3 = df_3[df_3['Database']!='aging']
                     
                 df1_tumour = df_1[[x for x in df_1.columns if 'Tumour' in x]]
                 df_1['0'] = df1_tumour.mean(axis=1).round(decimals=2)
