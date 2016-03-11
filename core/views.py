@@ -1055,7 +1055,31 @@ class Test(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(Test, self).get_context_data(**kwargs)
         
+        hps = Pathway.objects.filter(organism='human', database='primary_old').exclude(name='Target_drugs_pathway')
         
+        for hp in hps:
+            print hp.name
+            mp = Pathway.objects.get(organism='mouse', database='primary_old', name=hp.name)
+            
+            for hn in hp.node_set.all():
+                mn = Node(name=hn.name, comment=hn.comment, pathway=mp)
+                mn.save()
+                for hc in hn.component_set.all():
+                    try:
+                        mmap = MouseMapping.objects.filter(human_gene_symbol=hc.name)[0]
+                        mc = Component(name=mmap.mouse_gene_symbol.upper(), node=mn)
+                        
+                    except:
+                        mc = Component(name=hc.name, node=mn)
+                    mc.save()
+                    
+            
+            for hn in hp.node_set.all():
+                for inrel in hn.inrelations.all():
+                    mfn = Node.objects.filter(name=inrel.fromnode.name, pathway=mp)[0]
+                    mtn = Node.objects.filter(name=inrel.tonode.name, pathway=mp)[0]
+                    mr = Relation(fromnode=mfn, tonode=mtn)
+                    mr.save()
              
         
        
