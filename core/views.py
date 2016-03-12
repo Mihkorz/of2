@@ -1057,7 +1057,7 @@ class Test(TemplateView):
         
         nn = Node.objects.all()
         i=0
-        for n in nn[:40000]:
+        for n in nn:
             print n.name+" i="+str(i)
             i=i+1
             if n.component_set.all().count()==1:
