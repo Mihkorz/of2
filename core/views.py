@@ -1055,7 +1055,40 @@ class Test(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(Test, self).get_context_data(**kwargs)
         
-        hps = Pathway.objects.filter(organism='human', database='primary_old').exclude(name='Target_drugs_pathway')
+        lpas = [-2.4282229263,
+                    -2.2972422689,
+                        -0.7605066411,
+                            -0.0916940495,
+                                0.3143978268,
+                                    0.6686477605,
+                                        3.5390110714,
+                                            -0.3068754673,
+                                                -0.0279981289,
+                                                    -0.7879720367,
+                                                        1.3834673958,
+                                                            0.5052559525,
+                                                                0.3531912565
+]
+        numl = np.array(lpas)
+        
+        mmm = numl.mean()
+        
+        lnum = [0.34, 
+                1.24,
+                0.26,
+                -0.25,
+                0.51,
+                0.59,
+                -0.29,
+                -0.47,
+                -0.42]
+        
+        sss = np.array(lnum).sum()
+        
+        raise Exception('stop')
+        
+        lpath = []
+        hps = Pathway.objects.filter(organism='human', database='primary_old', name__in=lpath)
         
         for hp in hps:
             print hp.name
