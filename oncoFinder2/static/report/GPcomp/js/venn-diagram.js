@@ -89,7 +89,7 @@ function drawDinamicTable(idx, tblRenderTo, path_gene){
 		    		}
 		    	});
 		   
-		   if(path_gene == 'pathways' || path_gene == 'MCF7'){
+		   if(is_metabolic == 'path'){
 		    	$("table#"+tblId+".path tr td:nth-child(2)").wrapInner('<a href="#/"></a>');
 	    	    $("table#"+tblId+".path tr td:nth-child(3)").wrapInner('<a href="#/"></a>');
 	    	    $("table#"+tblId+".path tr td:nth-child(4)").wrapInner('<a href="#/"></a>');
@@ -99,7 +99,7 @@ function drawDinamicTable(idx, tblRenderTo, path_gene){
 		        } 
 		   
 			});
-			if(path_gene == 'pathways' || path_gene == 'MCF7'){
+			if(is_metabolic == 'path'){
 			$('#'+tblId+' tbody').on( 'click', 'tr td:nth-child(2)', function () {    	
 	    	    var path_name = $(this).prev().find('span').attr('title');    	
 	    	    var $th = $(this).closest('table').find('th').eq($(this).index());

@@ -2,6 +2,7 @@
 import json
 import pandas as pd
 import numpy as np
+from scipy.stats.mstats import gmean
 import networkx as nx
 import itertools
 
@@ -223,7 +224,7 @@ class GPReportAjaxPathDetail(TemplateView):
         df_file_cnr = pd.read_excel(settings.MEDIA_ROOT+"/../static/report/GPcomp/"+filename)
         
         df1_tumour = df_file_cnr[[x for x in df_file_cnr.columns if 'Tumour' in x]]
-        df_file_cnr['CNR'] = df1_tumour.mean(axis=1).round(decimals=2) 
+        df_file_cnr['CNR'] = df1_tumour.apply(gmean, axis=1).fillna(1).round(decimals=2) 
         df_file_cnr = df_file_cnr[['SYMBOL', 'CNR']]
         
         df_file_cnr.set_index('SYMBOL', inplace=True)
@@ -241,6 +242,8 @@ class GPReportAjaxPathDetail(TemplateView):
         joined_df.index += 1
         context['joined'] = joined_df[['SYMBOL', 'Node(s)', 'log2(Fold-change)']].to_html(classes=['table', 'table-bordered', 'table-striped'])
         context['diff_genes_count'] = len(joined_df.index)
+        
+        
         
         
         nComp = []
