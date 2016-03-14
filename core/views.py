@@ -1055,16 +1055,27 @@ class Test(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(Test, self).get_context_data(**kwargs)
         
-        nn = Node.objects.all()
-        i=0
-        for n in nn:
-            print n.name+" i="+str(i)
-            i=i+1
-            if n.component_set.all().count()==1:
-                n.name = n.component_set.all()[0].name
-                n.save()
+        dnodes = {'HIF1Alpha':    'HIF1A',
+'TWIST1' :   'TWIST1',
+'Ets' :   'ETS1',
+'LOXL2'  :  'LOXL2',
+'NOTCH1' :   'NOTCH1',
+'SNAI1' :   'SNAI1',
+'LOX'  :  'LOX',
+'CTGF'  :  'CTGF',
+'Cadherin' :   'CDH1',
+}
                 
-        
+        p = Pathway.objects.get(organism='mouse', database='primary_old', name='Hypoxia_induced_EMT_in_cancer_and_fibrosis_3')
+        p1 = Pathway.objects.get(organism='human', database='primary_old', name='Hypoxia_induced_EMT_in_cancer_and_fibrosis_3')
+        for key, value in dnodes.iteritems():
+            node = Node.objects.get(pathway=p, name=key)
+            node1 = Node.objects.get(pathway=p1, name=key)
+            comp = Component(name=value, node=node)
+            comp1 = Component(name=value, node=node1)
+            comp.save()
+            comp1.save()
+            
         
         raise Exception('stop')
         
