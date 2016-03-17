@@ -1085,7 +1085,7 @@ class Test(TemplateView):
             
         df = DataFrame(lll)
         df = df[['Pathway', 'Number of Proteins', 'Main Proteins']]
-        df.to_csv(settings.MEDIA_ROOT+"/4Jane.csv")
+        df.to_csv(settings.MEDIA_ROOT+"/4Jane.csv", sep='\t', encoding='utf-8')
         raise Exception('stop')
         
         lpath = []
