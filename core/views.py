@@ -1055,28 +1055,37 @@ class Test(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(Test, self).get_context_data(**kwargs)
         
-        dnodes = {'HIF1Alpha':    'HIF1A',
-'TWIST1' :   'TWIST1',
-'Ets' :   'ETS1',
-'LOXL2'  :  'LOXL2',
-'NOTCH1' :   'NOTCH1',
-'SNAI1' :   'SNAI1',
-'LOX'  :  'LOX',
-'CTGF'  :  'CTGF',
-'Cadherin' :   'CDH1',
-}
-                
-        p = Pathway.objects.get(organism='mouse', database='primary_old', name='Hypoxia_induced_EMT_in_cancer_and_fibrosis_3')
-        p1 = Pathway.objects.get(organism='human', database='primary_old', name='Hypoxia_induced_EMT_in_cancer_and_fibrosis_3')
-        for key, value in dnodes.iteritems():
-            node = Node.objects.get(pathway=p, name=key)
-            node1 = Node.objects.get(pathway=p1, name=key)
-            comp = Component(name=value, node=node)
-            comp1 = Component(name=value, node=node1)
-            comp.save()
-            comp1.save()
-            
         
+        new_path_primary_new = read_excel(settings.MEDIA_ROOT+"/primary_new_pathways_renaming.xlsx",
+                                         sheetname=0, 
+                                         index_col='Old Pathway Name')
+        
+        ps = Pathway.objects.filter(organism='human', database='primary_new')
+        
+        lll = []
+        
+        for pathway in ps:
+            print pathway.name
+            ddd = {}
+            
+            try:
+                new_name = new_path_primary_new.loc[pathway.name]['Pathway Name']
+            except:
+                new_name = pathway.name
+                
+            ddd['Pathway'] = new_name
+            ddd['Number of Proteins'] = pathway.gene_set.count()
+            
+            aaa = list(pathway.gene_set.all().values_list('name', flat=True))
+            bbb = ', '.join(aaa)
+            
+            ddd['Main Proteins'] = bbb
+            
+            lll.append(ddd)
+            
+        df = DataFrame(lll)
+        df = df[['Pathway', 'Number of Proteins', 'Main Proteins']]
+        df.to_csv(settings.MEDIA_ROOT+"/4Jane.csv")
         raise Exception('stop')
         
         lpath = []
