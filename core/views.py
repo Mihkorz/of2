@@ -1056,36 +1056,23 @@ class Test(TemplateView):
         context = super(Test, self).get_context_data(**kwargs)
         
         
-        new_path_primary_new = read_excel(settings.MEDIA_ROOT+"/primary_new_pathways_renaming.xlsx",
-                                         sheetname=0, 
-                                         index_col='Old Pathway Name')
+        ldb = ['primary_old', 'primary_new', 'metabolism', 'cytoskeleton',
+               'kegg', 'nci', 'biocarta', 'reactome', 'kegg_adjusted']
         
-        ps = Pathway.objects.filter(organism='human', database='primary_new')
-        
-        lll = []
-        
-        for pathway in ps:
-            print pathway.name
-            ddd = {}
-            
-            try:
-                new_name = new_path_primary_new.loc[pathway.name]['Pathway Name']
-            except:
-                new_name = pathway.name
+        for db in ldb:
+            print db
+            ps = Pathway.objects.filter(database=db, organism='human')
+            dpath = {}
+            for p in ps:
+                lgene = []
+                for g in p.gene_set.all():
+                    lgene.append(g.name)
+                    
+                dpath[p.name] = lgene
+            df = DataFrame.from_dict(dpath, orient='index')
+            df = df.transpose()
+            df.to_csv(settings.MEDIA_ROOT+"/"+db+"_genes.csv")
                 
-            ddd['Pathway'] = new_name
-            ddd['Number of Proteins'] = pathway.gene_set.count()
-            
-            aaa = list(pathway.gene_set.all().values_list('name', flat=True))
-            bbb = ', '.join(aaa)
-            
-            ddd['Main Proteins'] = bbb
-            
-            lll.append(ddd)
-            
-        df = DataFrame(lll)
-        df = df[['Pathway', 'Number of Proteins', 'Main Proteins']]
-        df.to_csv(settings.MEDIA_ROOT+"/4Jane.csv", sep='\t', encoding='utf-8')
         raise Exception('stop')
         
         lpath = []
