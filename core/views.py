@@ -1056,23 +1056,47 @@ class Test(TemplateView):
         context = super(Test, self).get_context_data(**kwargs)
         
         
-        ldb = ['primary_old', 'primary_new', 'metabolism', 'cytoskeleton',
-               'kegg', 'nci', 'biocarta', 'reactome', 'kegg_adjusted']
+        df_genes = read_excel(settings.MEDIA_ROOT+'/triplneg Main Pathway.xls', sheetname='genes', header=None)
+        df_nodes = read_excel(settings.MEDIA_ROOT+'/triplneg Main Pathway.xls', sheetname='nodes', header=None)
+        df_edges = read_excel(settings.MEDIA_ROOT+'/triplneg Main Pathway.xls', sheetname='edges', header=None)
         
-        for db in ldb:
-            print db
-            ps = Pathway.objects.filter(database=db, organism='human')
-            dpath = {}
-            for p in ps:
-                lgene = []
-                for g in p.gene_set.all():
-                    lgene.append(g.name)
-                    
-                dpath[p.name] = lgene
-            df = DataFrame.from_dict(dpath, orient='index')
-            df = df.transpose()
-            df.to_csv(settings.MEDIA_ROOT+"/"+db+"_genes.csv")
+        path = Pathway.objects.get_or_create(name='Triplneg_Main_Pathway', database='primary_new', organism='human')
+        
+        def add_genes(row):
+            
+            gene = Gene.objects.get_or_create(name=row[0], arr=row[1], pathway=path[0])
+            
+        
+        df_genes.apply(add_genes, axis=1)
+        
+        def add_nodes(row):
+            
+            
+            node = Node.objects.get_or_create(name=row[0], pathway=path[0])
+            comp = Component.objects.get_or_create(name=row[0], node=node[0])
+            
+        
+        df_nodes.apply(add_nodes, axis=1)
+        
+        def add_edges(row):
+            
+            fn = Node.objects.get(name=row[0], pathway=path[0])
+            tn = Node.objects.get(name=row[1], pathway=path[0])
+            
+            reltype = 2
+            if row[2]=='activation':
+                reltype = 1
+            if row[2]=='inhibition':
+                reltype = 0
+            if row[2]=='unknown':
+                reltype = 2
                 
+            rel = Relation.objects.get_or_create(fromnode=fn, tonode=tn, reltype=reltype)
+            
+            
+        
+        df_edges.apply(add_edges, axis=1)
+        
         raise Exception('stop')
         
         lpath = []
