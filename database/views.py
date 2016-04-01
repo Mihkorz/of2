@@ -67,13 +67,51 @@ class PathwayDetail(DetailView):
         df.set_index([0], inplace=True)
         df = df.fillna('suka')
         """
-        
+        lnodes = ['AATK',
+'B3GNT2',
+'BARD1',
+'C1QA',
+'CCND1',
+'CLCF1',
+'CNOT7',
+'CPOX',
+'DYRK2',
+'ELMO3',
+'GAK',
+'GALNT1',
+'GPX7',
+'ITGA6',
+'MAP3K7',
+'MDH1',
+'MSH6',
+'NDUFB6',
+'PPM1D',
+'RAP2A',
+'RARA',
+'RNF138',
+'SEC63',
+'SMURF2',
+'SRSF2',
+'SULT1A2',
+'TAF11',
+'TFDP1',
+'TRA2B',
+'UBE2J1',
+'USP1']        
         G=nx.DiGraph() #drawing static picture
         for node in self.object.node_set.all():
-            G.add_node(node, color='black',style='filled',
+            if node.name in lnodes:
+                G.add_node(node, color='black',style='filled',
+                               fillcolor='#FFCCAA')
+            else:
+                
+                G.add_node(node, color='black',style='filled',
                                fillcolor='white')
         
         dRelations = []
+        
+
+        #raise Exception('path')
         for node in self.object.node_set.all(): # drawing relations
              
             for inrel in node.inrelations.all():

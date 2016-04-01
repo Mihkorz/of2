@@ -13,7 +13,7 @@ from website.report_views import LorealReport, \
                                  ReportGeneTableJson, ReportGeneScatterJson, ReportGeneDetailJson, ReportGeneBoxplotJson, \
                                  ReportPathwayScatterJson, ReportPathwayTableJson, ReportAjaxPathDetail, \
                                  ReportAjaxPathwayVenn, ReportAjaxPathwayVennTable
-                                 
+from website.pathdemo_report_views import PathDemoReport                                 
 from website.lrl_report_views import LRLReport,\
                                      LRLReportGeneScatterJson, LRLReportGeneTableJson, LRLReportGeneDetailJson, \
                                      LRLGeneVolcanoJson, LRLReportPathwayTableJson, LRLReportSideEffTableJson, \
@@ -188,6 +188,9 @@ urlpatterns = patterns('',
     ################### REPORT DEMO ###############################################
     url(r'^report-portal/report/demo/$', DemoReport.as_view(), name="demo-report"),
     url(r'^report-portal/demo/json/$', ReportJson.as_view(), name="report-json"),
+    
+    ################### REPORT PATH DEMO ###############################################
+    url(r'^report-portal/report/path-analysis-demo/$', PathDemoReport.as_view(), name="loreal-report"),
     
     ################### BLOOD NN ###############################################
     url(r'^nn-blood/$', nnBloodView.as_view(), name="nn-blood"),

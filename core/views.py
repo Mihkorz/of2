@@ -1056,76 +1056,33 @@ class Test(TemplateView):
         context = super(Test, self).get_context_data(**kwargs)
         
         
-        df_genes = read_excel(settings.MEDIA_ROOT+'/triplneg Main Pathway.xls', sheetname='genes', header=None)
-        df_nodes = read_excel(settings.MEDIA_ROOT+'/triplneg Main Pathway.xls', sheetname='nodes', header=None)
-        df_edges = read_excel(settings.MEDIA_ROOT+'/triplneg Main Pathway.xls', sheetname='edges', header=None)
         
-        path = Pathway.objects.get_or_create(name='Triplneg_Main_Pathway', database='primary_new', organism='human')
+        df =read_csv(settings.MEDIA_ROOT+"/USDA/WEIGHT.txt", sep='^', quotechar='~', header=None)
+        df.columns = ['NDB_No', 'Seq', 'Amount', 'Msre_Desc', 'Gm_Wgt', 'Num_Data_Pts', 'Std_Dev']
+                       #'Deriv_Cd', 'Ref_NDB_No', 'Add_Nutr_Mark', 'Num_Studies', 'Min', 'Max', 'DF',
+                       # 'Low_EB', 'Up_EB', 'Stat_cmt', 'AddMod_Date', 'CC' ]
         
-        def add_genes(row):
-            
-            gene = Gene.objects.get_or_create(name=row[0], arr=row[1], pathway=path[0])
-            
         
-        df_genes.apply(add_genes, axis=1)
+        from pandas.io import sql
+        import MySQLdb
         
-        def add_nodes(row):
-            
-            
-            node = Node.objects.get_or_create(name=row[0], pathway=path[0])
-            comp = Component.objects.get_or_create(name=row[0], node=node[0])
-            
+        import sqlalchemy 
+        from sqlalchemy import create_engine
         
-        df_nodes.apply(add_nodes, axis=1)
         
-        def add_edges(row):
-            
-            fn = Node.objects.get(name=row[0], pathway=path[0])
-            tn = Node.objects.get(name=row[1], pathway=path[0])
-            
-            reltype = 2
-            if row[2]=='activation':
-                reltype = 1
-            if row[2]=='inhibition':
-                reltype = 0
-            if row[2]=='unknown':
-                reltype = 2
-                
-            rel = Relation.objects.get_or_create(fromnode=fn, tonode=tn, reltype=reltype)
-            
-            
+        engine = create_engine('mysql://root:mysqlpass@localhost/USDA National Nutrient Database')
+        con = engine.connect().connection
         
-        df_edges.apply(add_edges, axis=1)
+  
+
         
-        raise Exception('stop')
+
+        #con = MySQLdb.connect(host="localhost",user="root",
+        #          passwd="mysqlpass",db="USDA National Nutrient Database")  # may need to add some other options to connect
         
-        lpath = []
-        hps = Pathway.objects.filter(organism='human', database='primary_old', name__in=lpath)
-        
-        for hp in hps:
-            print hp.name
-            mp = Pathway.objects.get(organism='mouse', database='primary_old', name=hp.name)
-            
-            for hn in hp.node_set.all():
-                mn = Node(name=hn.name, comment=hn.comment, pathway=mp)
-                mn.save()
-                for hc in hn.component_set.all():
-                    try:
-                        mmap = MouseMapping.objects.filter(human_gene_symbol=hc.name)[0]
-                        mc = Component(name=mmap.mouse_gene_symbol.upper(), node=mn)
-                        
-                    except:
-                        mc = Component(name=hc.name, node=mn)
-                    mc.save()
-                    
-            
-            for hn in hp.node_set.all():
-                for inrel in hn.inrelations.all():
-                    mfn = Node.objects.filter(name=inrel.fromnode.name, pathway=mp)[0]
-                    mtn = Node.objects.filter(name=inrel.tonode.name, pathway=mp)[0]
-                    mr = Relation(fromnode=mfn, tonode=mtn)
-                    mr.save()
-             
+    
+        df.to_sql(con=con, name='WEIGHT', if_exists='replace', flavor='mysql', dtype={'Msre_Desc': 'VARCHAR(256)', 'Ref_desc': 'VARCHAR(256)',
+                                                                                        'ComName': 'VARCHAR(256)', 'ManufacName': 'VARCHAR(256)'})    
         
        
             
