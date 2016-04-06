@@ -1057,35 +1057,46 @@ class Test(TemplateView):
         
         
         
-        df =read_csv(settings.MEDIA_ROOT+"/USDA/WEIGHT.txt", sep='^', quotechar='~', header=None)
-        df.columns = ['NDB_No', 'Seq', 'Amount', 'Msre_Desc', 'Gm_Wgt', 'Num_Data_Pts', 'Std_Dev']
-                       #'Deriv_Cd', 'Ref_NDB_No', 'Add_Nutr_Mark', 'Num_Studies', 'Min', 'Max', 'DF',
-                       # 'Low_EB', 'Up_EB', 'Stat_cmt', 'AddMod_Date', 'CC' ]
+        df_genes = read_excel(settings.MEDIA_ROOT+'/8 genes_1 Main Pathway.xls.xls', sheetname='genes', header=None)
+        df_nodes = read_excel(settings.MEDIA_ROOT+'/8 genes_1 Main Pathway.xls.xls', sheetname='nodes', header=None)
+        df_edges = read_excel(settings.MEDIA_ROOT+'/8 genes_1 Main Pathway.xls.xls', sheetname='edges', header=None)
         
+        path = Pathway.objects.get_or_create(name='8_genes_1_Main Pathway.xls', database='primary_new', organism='human')
         
-        from pandas.io import sql
-        import MySQLdb
-        
-        import sqlalchemy 
-        from sqlalchemy import create_engine
-        
-        
-        engine = create_engine('mysql://root:mysqlpass@localhost/USDA National Nutrient Database')
-        con = engine.connect().connection
-        
-  
-
-        
-
-        #con = MySQLdb.connect(host="localhost",user="root",
-        #          passwd="mysqlpass",db="USDA National Nutrient Database")  # may need to add some other options to connect
-        
-    
-        df.to_sql(con=con, name='WEIGHT', if_exists='replace', flavor='mysql', dtype={'Msre_Desc': 'VARCHAR(256)', 'Ref_desc': 'VARCHAR(256)',
-                                                                                        'ComName': 'VARCHAR(256)', 'ManufacName': 'VARCHAR(256)'})    
-        
-       
+        def add_genes(row):
             
+            gene = Gene.objects.get_or_create(name=row[0], arr=row[1], pathway=path[0])
+            
+        
+        df_genes.apply(add_genes, axis=1)
+        
+        def add_nodes(row):
+            
+            
+            node = Node.objects.get_or_create(name=row[0], pathway=path[0])
+            comp = Component.objects.get_or_create(name=row[0], node=node[0])
+            
+        
+        df_nodes.apply(add_nodes, axis=1)
+        
+        def add_edges(row):
+            
+            fn = Node.objects.get(name=row[0], pathway=path[0])
+            tn = Node.objects.get(name=row[1], pathway=path[0])
+            
+            reltype = 2
+            if row[2]=='activation':
+                reltype = 1
+            if row[2]=='inhibition':
+                reltype = 0
+            if row[2]=='unknown':
+                reltype = 2
+                
+            rel = Relation.objects.get_or_create(fromnode=fn, tonode=tn, reltype=reltype)
+            
+            
+        
+        df_edges.apply(add_edges, axis=1)
         
         raise Exception('test top')
         nodes = Node.objects.filter(pathway__database='primary_new')
