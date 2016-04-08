@@ -509,7 +509,7 @@ class LRLReportAjaxPathDetail(TemplateView):
     def get_context_data(self, *args, **kwargs):
         context = super(LRLReportAjaxPathDetail, self).get_context_data(**kwargs)
         
-        pathway = Pathway.objects.filter(organism='human', name=self.request.GET['pathway']).exclude(database='primary_old')[0]
+        pathway = Pathway.objects.filter(organism='human', name=self.request.GET['pathway']).exclude(database__in=['primary_old', 'aging'])[0]
         
         gene_data = []
         for gene in pathway.gene_set.all():
