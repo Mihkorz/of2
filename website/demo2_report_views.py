@@ -15,16 +15,16 @@ from django.contrib.auth.decorators import login_required
 
 from core.models import Pathway, Node, Component
 
-class BTReport(TemplateView):
-    template_name = "website/bt_report.html"
+class Demo2Report(TemplateView):
+    template_name = "website/demo2_report.html"
     
     def dispatch(self, request, *args, **kwargs):
         
-        return super(BTReport, self).dispatch(request, *args, **kwargs)
+        return super(Demo2Report, self).dispatch(request, *args, **kwargs)
     
     def get_context_data(self, **kwargs):
               
-        context = super(BTReport, self).get_context_data(**kwargs)
+        context = super(Demo2Report, self).get_context_data(**kwargs)
         
         lEmbryonicGenes =[ 'PCDHB2', 'PCDHB17', 'CSTF3', 'LOC644919', 'ITGA11', 'SMA4',
                           'LOC727877', 'MAST2', 'TMEM18', 'LOC100130914', 'ADSSL1', 'ZNF767',
@@ -712,21 +712,8 @@ class BTReportAjaxPathwayVennTable(TemplateView):
         path_gene = self.request.GET.get('path_gene')
         
         lMembers = members.split('vs')
-        ######## for DEMO2 report
-        from itertools import chain
         
-        rep = {'Group1': 'ES',
-               'Group2':'ASC',
-               'Group3':'ABC',
-               'Group4':'AEC',
-               'Group5':'ANC',
-               'Group6':'CCL'}
         
-        for m in lMembers:
-            if rep[m]:
-                lMembers[lMembers.index(m)] = rep[m]
-        
-        ######## for DEMO2 report
         
         if inter_num == 1:
             if path_gene == 'pathways':

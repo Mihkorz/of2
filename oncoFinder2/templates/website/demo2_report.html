@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title> Demo2 Report | Insilico Medicine</title>
+    <link href="/static/bower_components/bootstrap-stylus/dist/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <script src="//code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script>
+    <script src="/static/js/oncofinder2.js" type="text/javascript"></script>
+    <script src="/static/bower_components/bootstrap-stylus/dist/bootstrap.min.js" type="text/javascript"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore.js" type="text/javascript"></script>
+    <script src="/static/js/d3.v3.min.js" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="http://code.highcharts.com/highcharts.js" type="text/javascript"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"  type="text/javascript"></script>
+    <script src="https://code.highcharts.com/highcharts-3d.js"  type="text/javascript"></script>
+    <script src="http://code.highcharts.com/modules/exporting.js"  type="text/javascript"></script>
+    <link href="/static/css/report_style.css" rel="stylesheet" type="text/css">
+    <link href="https://cdn.datatables.net/1.10.10/css/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="https://cdn.datatables.net/buttons/1.0.3/css/buttons.dataTables.min.css" rel="stylesheet">
+    
+    <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+    
+    <link href="/static/report/bt/js/opentip.css" rel="stylesheet" type="text/css">
+    <link href="/static/report/bt/js/volcano.css" rel="stylesheet" type="text/css">
+    
+  </head>
+  <body style='font-size: 14px;'>
+    <div class="content h100">
+      <div class="main">
+        <div class="inner">
+         <div>
+         <span class='pull-left' style='font-size:11pt; margin:15px;'>
+         <img src='/static/images/insilico.png' style="width:40px;"/>
+         Insilico Medicine - Demo2 Report</span>
+         <span class='pull-right' style='font-size:11pt; margin:15px;'>Access Level: Z-II, <br/>Confidential </span>
+         </div><br style="clear:both;"/>
+          <div class='text-center'>
+            <h1>Demo report #2</h1>
+          </div>
+          
+          
+          <div style="margin: 50px 0 0 50px; padding: 0 50px 0 0;">
+            <h4 style='font-weight:bold; font-size:12pt;'>Organization: </h4>
+            <span style="font-size:11pt">Demo2</span>
+            <br/><br/>
+            <!-- <h4 style='font-weight:bold; font-size:12pt;'>Data Quality Assessment: </h4>-->
+            
+            <ul class="list-unstyled" style='font-size: 11pt; margin: 50px 0 0 0;' >
+            <li class="title">Table of contents: </li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#gene_analysis">Gene level analysis</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#path_analysis">Pathway analysis</a></li>
+
+          </ul>
+          
+          
+          
+          <h2 id='gene_analysis'>Gene level analysis</h2>
+          <hr/>
+          <!-- GENE Nav tabs -->
+         <ul class="nav nav-tabs" role="tablist">
+         <li role="presentation" class="active"><a href="#EPL_vs_ABC_tab" aria-controls="home1" role="tab" data-toggle="tab">Group1 vs Group7</a></li>
+         <li role="presentation" ><a href="#EPL_vs_AEC_tab" aria-controls="home" role="tab" data-toggle="tab">Group2 vs Group7</a></li>
+         <li role="presentation"><a href="#EPL_vs_ANC_tab" aria-controls="profile" role="tab" data-toggle="tab">Group3 vs Group7</a></li>
+         <li role="presentation"><a href="#EPL_vs_ASC_tab" aria-controls="messages" role="tab" data-toggle="tab">Group4 vs Group7</a></li>
+         <li role="presentation"><a href="#EPL_vs_CCL_tab" aria-controls="settings" role="tab" data-toggle="tab">Group5 vs Group7</a></li>
+         <li role="presentation"><a href="#EPL_vs_ES_tab" aria-controls="settings" role="tab" data-toggle="tab">Group6 vs Group7</a></li>
+         </ul>
+            <!-- GENE Tab panes -->
+  <div class="tab-content">
+   <div role="tabpanel" class="tab-pane fade in active" id="EPL_vs_ABC_tab">   
+   <div id="EPL_vs_ABC" style="min-width: 800px; height: 400px; max-width: 800px; margin: 0 auto"><span>Loading plot...</span></div>
+   <h4>Table 1. Group1 vs Group7</h4>
+      <table id="tbl-EPL_vs_ABC" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>Gene</th>
+           <th>log2FoldChange</th>
+           <th>adj. p-value</th>
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+   </div>
+   <div role="tabpanel" class="tab-pane fade " id="EPL_vs_AEC_tab">   
+   <div id="EPL_vs_AEC" style="min-width: 800px; height: 400px; max-width: 800px; margin: 0 auto"><span>Loading plot...</span></div>
+   <h4>Table 2. Group2 vs Group7</h4>
+      <table id="tbl-EPL_vs_AEC" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>Gene</th>
+           <th>log2FoldChange</th>
+           <th>adj. p-value</th>
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+   </div>
+   <div role="tabpanel" class="tab-pane fade " id="EPL_vs_ANC_tab">   
+   <div id="EPL_vs_ANC" style="min-width: 800px; height: 400px; max-width: 800px; margin: 0 auto"><span>Loading plot...</span></div>
+   <h4>Table 3. Group3 vs Group7</h4>
+      <table id="tbl-EPL_vs_ANC" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>Gene</th>
+           <th>log2FoldChange</th>
+           <th>adj. p-value</th>
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+   </div>
+   <div role="tabpanel" class="tab-pane fade " id="EPL_vs_ASC_tab">   
+   <div id="EPL_vs_ASC" style="min-width: 800px; height: 400px; max-width: 800px; margin: 0 auto"><span>Loading plot...</span></div>
+   <h4>Table 4. Group4 vs Group7</h4>
+      <table id="tbl-EPL_vs_ASC" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>Gene</th>
+           <th>log2FoldChange</th>
+           <th>adj. p-value</th>
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+   </div>
+   <div role="tabpanel" class="tab-pane fade " id="EPL_vs_CCL_tab">   
+   <div id="EPL_vs_CCL" style="min-width: 800px; height: 400px; max-width: 800px; margin: 0 auto"><span>Loading plot...</span></div>
+   <h4>Table 5. Group5 vs Group7</h4>
+      <table id="tbl-EPL_vs_CCL" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>Gene</th>
+           <th>log2FoldChange</th>
+           <th>adj. p-value</th>
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>   
+   </div>
+   <div role="tabpanel" class="tab-pane fade " id="EPL_vs_ES_tab">   
+   <div id="EPL_vs_ES" style="min-width: 800px; height: 400px; max-width: 800px; margin: 0 auto"><span>Loading plot...</span></div>
+   <h4>Table 6. Group6 vs Group7</h4>
+      <table id="tbl-EPL_vs_ES" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>Gene</th>
+           <th>log2FoldChange</th>
+           <th>adj. p-value</th>
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/> 
+   </div>
+ </div><!--  end of gene tab-content -->
+ 
+<hr/>
+
+<!-- -------------------- GENE VENN  -->
+<br/>
+<h3>Gene level comparison</h3>
+<br/>
+<!-- PAthway Nav tabs -->
+         <ul class="nav nav-tabs" role="tablist">
+         <li role="presentation" class="active"><a href="#gene_all_tab" aria-controls="settings" role="tab" data-toggle="tab">ALL</a></li>
+         <li role="presentation" ><a href="#gene_ESvsASCvsCCL_tab" aria-controls="settings" role="tab" data-toggle="tab">Group1vsGroup2vsGroup6</a></li>
+         <li role="presentation" ><a href="#gene_ESvsANCvsCCL_tab" aria-controls="home" role="tab" data-toggle="tab">Group1vsGroup5vsGroup6</a></li>
+         <li role="presentation"><a href="#gene_ESvsAECvsCCL_tab" aria-controls="profile" role="tab" data-toggle="tab">Group1vsGroup4vsGroup6</a></li>
+         <li role="presentation"><a href="#gene_ESvsABCvsCCL_tab" aria-controls="messages" role="tab" data-toggle="tab">Group1vsGroup3vsGroup6</a></li>
+        </ul>
+        
+           <!-- GEne VEnn Tab panes -->
+  <div class="tab-content">
+  
+  <div role="tabpanel" class="tab-pane fade in active " id="gene_all_tab">     <br/> 
+    <h4>Table 7. All genes</h4>
+    <table id="tbl-gene_all" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>Gene</th>
+           <th>Group1</th>
+           <th>Group2</th>
+           <th>Group3</th>
+           <th>Group4</th>
+           <th>Group5</th>
+           <th>Group6</th>
+          </tr>
+        </thead>  
+      </table>       
+   <br/>
+  
+  </div>
+  
+ <div role="tabpanel" class="tab-pane fade " id="gene_ESvsASCvsCCL_tab">     <br/> 
+    <table style='text-align:center;'>
+      <tr>
+       <td>
+       <div id="venn_gene-ESvsASCvsCCL-up" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Significantly upregulated genes
+       </td>
+       <td>
+       <div id="venn_gene-ESvsASCvsCCL-down" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Significantly downregulated genes
+       </td>
+      </tr>
+    </table>        
+   <br/>
+  <div id="venn_gene_dinamic_ESvsASCvsCCL" class="" style="max-width:1000px;"></div> <!--  div to place dinamic tables from Venn clicks -->
+  </div>
+  
+  <div role="tabpanel" class="tab-pane fade " id="gene_ESvsANCvsCCL_tab">     <br/> 
+    <table style='text-align:center;'>
+      <tr>
+       <td>
+       <div id="venn_gene-ESvsANCvsCCL-up" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Significantly upregulated genes
+       </td>
+       <td>
+       <div id="venn_gene-ESvsANCvsCCL-down" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Significantly downregulated genes
+       </td>
+      </tr>
+    </table>        
+    
+  <div id="venn_gene_dinamic_ESvsANCvsCCL" class="" style="max-width:1000px;"></div> <!--  div to place dinamic tables from Venn clicks -->
+  </div>
+  
+  <div role="tabpanel" class="tab-pane fade " id="gene_ESvsAECvsCCL_tab">     <br/> 
+    <table style='text-align:center;'>
+      <tr>
+       <td>
+       <div id="venn_gene-ESvsAECvsCCL-up" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Significantly upregulated genes
+       </td>
+       <td>
+       <div id="venn_gene-ESvsAECvsCCL-down" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Significantly downregulated genes
+       </td>
+      </tr>
+    </table>        
+    
+  <div id="venn_gene_dinamic_ESvsAECvsCCL" class="" style="max-width:1000px;"></div> <!--  div to place dinamic tables from Venn clicks -->
+  </div>
+  
+  <div role="tabpanel" class="tab-pane fade " id="gene_ESvsABCvsCCL_tab">     <br/> 
+    <table style='text-align:center;'>
+      <tr>
+       <td>
+       <div id="venn_gene-ESvsABCvsCCL-up" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Significantly upregulated genes
+       </td>
+       <td>
+       <div id="venn_gene-ESvsABCvsCCL-down" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Significantly downregulated genes
+       </td>
+      </tr>
+    </table>        
+    
+  <div id="venn_gene_dinamic_ESvsABCvsCCL" class="" style="max-width:1000px;"></div> <!--  div to place dinamic tables from Venn clicks -->
+  </div>
+  
+  
+  
+  </div><!-- ebd gene venn tab panes -->
+
+
+
+<!-- -------------------- END GENE VENN  -->
+<hr/>
+<h3>Notable genes</h3>
+<hr/>
+<div>
+<h4>Embryonic genes</h4>
+ <!-- Notable GENE Nav tabs -->
+         <ul class="nav nav-tabs" role="tablist">
+           {%for gene in lEmbryonicGenes%}
+           <li role="presentation" {%if forloop.counter == 1 %}class="active"{%endif%}><a href="#{{gene}}_tab" aria-controls="home1" role="tab" data-toggle="tab">{{gene}}</a></li>
+           {%endfor%}
+         </ul>
+
+   <div class="tab-content">
+    {%for gene in lEmbryonicGenes%}
+     {%if forloop.counter == 1 %}
+     <div role="tabpanel" class="tab-pane fade in active" id="{{gene}}_tab">
+     {%else%}
+     <div role="tabpanel" class="tab-pane fade " id="{{gene}}_tab">
+     {%endif%}
+     <div id="{{gene}}" style="min-width: 800px; height: 400px; max-width: 800px; margin: 0 auto">Loading box plot...</div>
+   
+     </div>
+    {%endfor%}
+   
+   </div> <!--  end of tab panel -->
+<hr/>   
+<h4>Adult genes</h4>
+ <!-- Notable GENE Nav tabs -->
+         <ul class="nav nav-tabs" role="tablist">
+           {%for gene in lAdultGenes%}
+           <li role="presentation" {%if forloop.counter == 1 %}class="active"{%endif%}><a href="#{{gene}}_tab" aria-controls="home1" role="tab" data-toggle="tab">{{gene}}</a></li>
+           {%endfor%}
+         </ul>
+
+   <div class="tab-content">
+    {%for gene in lAdultGenes%}
+     {%if forloop.counter == 1 %}
+     <div role="tabpanel" class="tab-pane fade in active" id="{{gene}}_tab">
+     {%else%}
+     <div role="tabpanel" class="tab-pane fade " id="{{gene}}_tab">
+     {%endif%}
+     <div id="{{gene}}" style="min-width: 800px; height: 400px; max-width: 800px; margin: 0 auto">Loading box plot...</div>
+   
+     </div>
+    {%endfor%}
+   
+   </div> <!--  end of tab panel -->
+</div> <!-- end of Notable genes -->
+
+
+<!-- ---------------------------------PATHWAY--------------------------------------------- -->
+ <hr/> 
+<h2 id='path_analysis'>Pathway Analysis</h2>
+<hr/>
+<h3>Signaling Pathways</h3>
+<hr/>
+
+<!-- PAthway Nav tabs -->
+         <ul class="nav nav-tabs" role="tablist">
+         <li role="presentation" class="active"><a href="#pah_all_tab" aria-controls="settings" role="tab" data-toggle="tab">ALL</a></li>
+         <li role="presentation" ><a href="#ESvsASCvsCCL_tab" aria-controls="settings" role="tab" data-toggle="tab">Group1vsGroup2vsGroup6</a></li>
+         <li role="presentation" ><a href="#ESvsANCvsCCL_tab" aria-controls="home" role="tab" data-toggle="tab">Group1vsGroup5vsGroup6</a></li>
+         <li role="presentation"><a href="#ESvsAECvsCCL_tab" aria-controls="profile" role="tab" data-toggle="tab">Group1vsGroup4vsGroup6</a></li>
+         <li role="presentation"><a href="#ESvsABCvsCCL_tab" aria-controls="messages" role="tab" data-toggle="tab">Group1vsGroup3vsGroup6</a></li>
+        </ul>
+         
+         <!-- PATHWAY Tab panes -->
+  <div class="tab-content">
+  
+  <div role="tabpanel" class="tab-pane fade in active " id="pah_all_tab">     <br/> 
+    <h4>Table 8. All signaling pathways</h4>
+    <table id="tbl-path_all" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>Pathway</th>
+           <th>Group1</th>
+           <th>Group2</th>
+           <th>Group3</th>
+           <th>Group4</th>
+           <th>Group5</th>
+           <th>Group6</th>
+          </tr>
+        </thead>  
+      </table>       
+   <br/>
+  
+  </div>
+  
+  
+  <div role="tabpanel" class="tab-pane fade " id="ESvsASCvsCCL_tab">     <br/> 
+    <table style='text-align:center;'>
+      <tr>
+       <td>
+       <div id="venn_path-ESvsASCvsCCL-up" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Upregulated pathways
+       </td>
+       <td>
+       <div id="venn_path-ESvsASCvsCCL-down" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Downregulated pathways
+       </td>
+      </tr>
+    </table>        
+   <br/>
+  <div id="venn_path_dinamic_ESvsASCvsCCL" class="" style="max-width:1000px;"></div> <!--  div to place dinamic tables from Venn clicks -->
+  </div>
+  
+  <div role="tabpanel" class="tab-pane fade " id="ESvsANCvsCCL_tab">     <br/> 
+    <table style='text-align:center;'>
+      <tr>
+       <td>
+       <div id="venn_path-ESvsANCvsCCL-up" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Upregulated pathways
+       </td>
+       <td>
+       <div id="venn_path-ESvsANCvsCCL-down" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Downregulated pathways
+       </td>
+      </tr>
+    </table>        
+    
+  <div id="venn_path_dinamic_ESvsANCvsCCL" class="" style="max-width:1000px;"></div> <!--  div to place dinamic tables from Venn clicks -->
+  </div>
+  
+  <div role="tabpanel" class="tab-pane fade " id="ESvsAECvsCCL_tab">     <br/> 
+    <table style='text-align:center;'>
+      <tr>
+       <td>
+       <div id="venn_path-ESvsAECvsCCL-up" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Upregulated pathways
+       </td>
+       <td>
+       <div id="venn_path-ESvsAECvsCCL-down" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Downregulated pathways
+       </td>
+      </tr>
+    </table>        
+    
+  <div id="venn_path_dinamic_ESvsAECvsCCL" class="" style="max-width:1000px;"></div> <!--  div to place dinamic tables from Venn clicks -->
+  </div>
+  
+  <div role="tabpanel" class="tab-pane fade " id="ESvsABCvsCCL_tab">     <br/> 
+    <table style='text-align:center;'>
+      <tr>
+       <td>
+       <div id="venn_path-ESvsABCvsCCL-up" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Upregulated pathways
+       </td>
+       <td>
+       <div id="venn_path-ESvsABCvsCCL-down" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Downregulated pathways
+       </td>
+      </tr>
+    </table>        
+    
+  <div id="venn_path_dinamic_ESvsABCvsCCL" class="" style="max-width:1000px;"></div> <!--  div to place dinamic tables from Venn clicks -->
+  </div>
+  </div> <!-- end of path tab-content -->
+
+
+<!-- ---------------------------- METABOLIC------------------------ -->
+<h3>Metabolic Pathways</h3>
+<hr/>
+<!-- Metabolic Nav tabs -->
+         <ul class="nav nav-tabs" role="tablist">
+         <li role="presentation" class="active"><a href="#meta_all_tab" aria-controls="settings" role="tab" data-toggle="tab">ALL</a></li>
+         <li role="presentation" ><a href="#meta_ESvsASCvsCCL_tab" aria-controls="settings" role="tab" data-toggle="tab">Group1vsGroup2vsGroup6</a></li>
+         <li role="presentation" ><a href="#meta_ESvsANCvsCCL_tab" aria-controls="home" role="tab" data-toggle="tab">Group1vsGroup5vsGroup6</a></li>
+         <li role="presentation"><a href="#meta_ESvsAECvsCCL_tab" aria-controls="profile" role="tab" data-toggle="tab">Group1vsGroup4vsGroup6</a></li>
+         <li role="presentation"><a href="#meta_ESvsABCvsCCL_tab" aria-controls="messages" role="tab" data-toggle="tab">Group1vsGroup3vsGroup6</a></li>
+        </ul>
+         
+         <!-- PATHWAY Tab panes -->
+  <div class="tab-content">
+   <div role="tabpanel" class="tab-pane fade in active " id="meta_all_tab">     <br/> 
+    <h4>Table 9. All metabolic pathways</h4>
+    <table id="tbl-meta_all" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>Pathway</th>
+           <th>Group1</th>
+           <th>Group2</th>
+           <th>Group3</th>
+           <th>Group4</th>
+           <th>Group5</th>
+           <th>Group6</th>
+          </tr>
+        </thead>  
+      </table>       
+   <br/>
+  
+  </div>
+  
+  <div role="tabpanel" class="tab-pane fade " id="meta_ESvsASCvsCCL_tab">     <br/> 
+    <table style='text-align:center;'>
+      <tr>
+       <td>
+       <div id="meta_venn_path-ESvsASCvsCCL-up" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Upregulated pathways
+       </td>
+       <td>
+       <div id="meta_venn_path-ESvsASCvsCCL-down" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Downregulated pathways
+       </td>
+      </tr>
+    </table>        
+   <br/>
+  <div id="meta_venn_path_dinamic_ESvsASCvsCCL" class="" style="max-width:1000px;"></div> <!--  div to place dinamic tables from Venn clicks -->
+  </div>
+  
+  <div role="tabpanel" class="tab-pane fade " id="meta_ESvsANCvsCCL_tab">     <br/> 
+    <table style='text-align:center;'>
+      <tr>
+       <td>
+       <div id="meta_venn_path-ESvsANCvsCCL-up" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Upregulated pathways
+       </td>
+       <td>
+       <div id="meta_venn_path-ESvsANCvsCCL-down" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Downregulated pathways
+       </td>
+      </tr>
+    </table>        
+    
+  <div id="meta_venn_path_dinamic_ESvsANCvsCCL" class="" style="max-width:1000px;"></div> <!--  div to place dinamic tables from Venn clicks -->
+  </div>
+  
+  <div role="tabpanel" class="tab-pane fade " id="meta_ESvsAECvsCCL_tab">     <br/> 
+    <table style='text-align:center;'>
+      <tr>
+       <td>
+       <div id="meta_venn_path-ESvsAECvsCCL-up" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Upregulated pathways
+       </td>
+       <td>
+       <div id="meta_venn_path-ESvsAECvsCCL-down" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Downregulated pathways
+       </td>
+      </tr>
+    </table>        
+    
+  <div id="meta_venn_path_dinamic_ESvsAECvsCCL" class="" style="max-width:1000px;"></div> <!--  div to place dinamic tables from Venn clicks -->
+  </div>
+  
+  <div role="tabpanel" class="tab-pane fade " id="meta_ESvsABCvsCCL_tab">     <br/> 
+    <table style='text-align:center;'>
+      <tr>
+       <td>
+       <div id="meta_venn_path-ESvsABCvsCCL-up" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Upregulated pathways
+       </td>
+       <td>
+       <div id="meta_venn_path-ESvsABCvsCCL-down" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Downregulated pathways
+       </td>
+      </tr>
+    </table>        
+    
+  <div id="meta_venn_path_dinamic_ESvsABCvsCCL" class="" style="max-width:1000px;"></div> <!--  div to place dinamic tables from Venn clicks -->
+  </div>
+  </div> <!-- end of path tab-content -->
+ 
+
+<hr/>  
+  
+
+</div>  
+
+
+<div style='min-height:500px'></div>
+            
+          </div>
+          
+          
+          
+        </div>
+      </div>
+      
+    </div>
+    <div class="bar" style="heigh:100%">
+      <div class="inner h100" style="heigh:100%">
+        <div class="top"><img src="/static/images/logo.svg"></div>
+        <div class="menu">
+          <ul class="list-unstyled" >
+            <li class="title">Table of contents: </li>
+            
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#gene_analysis">Gene level analysis</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#path_analysis">Pathway analysis</a></li>
+            
+          </ul>
+        </div>
+        <div class="bottom">
+          <div class="inner"> Insilico Medicine Inc., Johns Hopkins <br/>University Eastern, ETC B301, 1101 East <br/>33rd Street, Baltimore, MD 21218 </div>
+        </div>
+      </div>
+    </div>
+    
+      
+    <script src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/1.10.10/js/dataTables.bootstrap.min.js" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/buttons/1.1.0/js/dataTables.buttons.min.js" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/buttons/1.1.0/js/buttons.bootstrap.min.js" type="text/javascript"></script>
+    <script src="//cdn.datatables.net/buttons/1.1.0/js/buttons.flash.min.js" type="text/javascript"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js" type="text/javascript"></script>
+    <script src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js" type="text/javascript"></script>
+    <script src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js" type="text/javascript"></script>
+    <script src="//cdn.datatables.net/buttons/1.1.0/js/buttons.html5.min.js" type="text/javascript"></script>
+    <script src="//cdn.datatables.net/buttons/1.1.0/js/buttons.print.min.js" type="text/javascript"></script>
+    <script src="/static/report/bt/js/venn.js/venn.js" type="text/javascript"></script>
+    
+    <script src="/static/report/bt/js/tables.js" type="text/javascript"></script>
+    <script src="/static/report/bt/js/venn-diagram-demo2.js" type="text/javascript"></script>
+    <!--  
+    <script src="/static/report/loreal/js/venn.js/venn.js" type="text/javascript"></script>
+    
+    <script src="/static/report/loreal/js/scatter.js" type="text/javascript"></script>
+    <script src="/static/report/loreal/js/boxplot.js" type="text/javascript"></script>
+    
+    <script src="/static/report/loreal/js/venn-diagram.js" type="text/javascript"></script>
+    <script src="/static/report/loreal/js/3d.js" type="text/javascript"></script>
+    
+    -->
+    <script src="/static/report/bt/js/opentip.js" charset="utf-8"></script>
+    <script src="/static/report/bt/js/adapter-native.js" charset="utf-8"></script>
+    <script src="/static/report/bt/js/volcano.js" type="text/javascript"></script>
+    <script src="/static/report/bt/js/boxplot-demo2.js" type="text/javascript"></script>
+    
+    
+    <!-- MODAL FOR PATHS  -->
+    <div id="pathmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+ <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;  </button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body" id='modalBody'>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    <!--
+    script.
+      $(function () {
+        svgPanZoom('#pathway', {
+          zoomEnabled: true,
+          controlIconsEnabled: true,
+          fit: true,
+          center: true
+        });
+      });
+    -->
+  </body>
+</html>

@@ -163,8 +163,8 @@ function drawPathwayTable(id, file_name1, file_name2, is_metabolic){
 	    	var path_name_td = $("table#"+id+".path tr td:first-child()");
 	    	path_name_td.each(function(){
 	    		var path_long_name = $(this).text();
-	    		if(path_long_name.length > 70){
-		    		var short_name = $.trim(path_long_name).substring(0, 70)
+	    		if(path_long_name.length > 50){
+		    		var short_name = $.trim(path_long_name).substring(0, 50)
 	                .trim(this) + "...";
 		    		$(this).html("<span title='"+path_long_name+"'>"+short_name+"</span>");
 		    	}
@@ -191,8 +191,8 @@ function drawPathwayTable(id, file_name1, file_name2, is_metabolic){
 		    	var path_name_td = $("table#"+id+".path tr td:first-child()");
 		    	path_name_td.each(function(){
 		    		var path_long_name = $(this).text();
-		    		if(path_long_name.length > 70){
-			    		var short_name = $.trim(path_long_name).substring(0, 70)
+		    		if(path_long_name.length > 50){
+			    		var short_name = $.trim(path_long_name).substring(0, 50)
 		                .trim(this) + "...";
 			    		$(this).html("<span title='"+path_long_name+"'>"+short_name+"</span>");
 			    	}
@@ -250,6 +250,22 @@ function drawPathwayTable(id, file_name1, file_name2, is_metabolic){
 	}
 	
 	} // end of is_metabolic
+	else{
+         $('#'+id).on( 'draw.dt', function () {
+	    	
+	    	var path_name_td = $("table#"+id+".path tr td:first-child()");
+	    	path_name_td.each(function(){
+	    		var path_long_name = $(this).text();
+	    		if(path_long_name.length > 50){
+		    		var short_name = $.trim(path_long_name).substring(0, 50)
+	                .trim(this) + "...";
+		    		$(this).html("<span title='"+path_long_name+"'>"+short_name+"</span>");
+		    	}
+	    	});	    	
+    	    
+	    	
+        } );
+	}
 }
 
 
