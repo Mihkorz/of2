@@ -413,9 +413,26 @@ class BTReportAjaxPathDetail(TemplateView):
                 gene_data.append({'SYMBOL':gene.name.strip().upper(),
                                   'Node(s)':nodes })   
            
-        gene_df = pd.DataFrame(gene_data).set_index('SYMBOL')    
+        gene_df = pd.DataFrame(gene_data).set_index('SYMBOL')
         
-        filename = 'cnr_proc_EPL_vs_'+self.request.GET['filename']+'.csv'
+        
+        ######## for DEMO2 report
+        
+        
+        rep = {'Group1': 'ES',
+               'Group2':'ASC',
+               'Group3':'ABC',
+               'Group4':'AEC',
+               'Group5':'ANC',
+               'Group6':'CCL'}
+        
+        
+        if rep[self.request.GET['filename']]:
+                filename = 'cnr_proc_EPL_vs_'+rep[self.request.GET['filename']]+'.csv'
+        else:
+        ######## for DEMO2 report    
+        
+            filename = 'cnr_proc_EPL_vs_'+self.request.GET['filename']+'.csv'
         
         
         df_file_cnr = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/"+filename)
@@ -713,7 +730,7 @@ class BTReportAjaxPathwayVennTable(TemplateView):
         
         lMembers = members.split('vs')
         ######## for DEMO2 report
-        from itertools import chain
+        
         
         rep = {'Group1': 'ES',
                'Group2':'ASC',
