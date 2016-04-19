@@ -1,4 +1,4 @@
-function drawGeneBoxplot(name, renderTo, gene){
+function drawGeneBoxplot(reportID, name, renderTo, gene, categories){
 // BOX PLOT FOR GENES
 	
 	var options = {
@@ -18,7 +18,7 @@ function drawGeneBoxplot(name, renderTo, gene){
         },
 
         xAxis: {
-            categories: ['ES', 'EPL', 'ASC', 'ABC', 'AEC', 'ANC' , 'CCL'],
+            categories: categories.split(','),
             title: {
                 text: 'Group'
             }
@@ -47,8 +47,9 @@ function drawGeneBoxplot(name, renderTo, gene){
 
     }
 	
-	$.getJSON('/report-portal/bt-genesboxplotjson/',
-    		{    	     
+	$.getJSON('/report-portal/report-genesboxplotjson/',
+    		{
+		     reportID: reportID,
     	     gene: gene
     		},
     		function(data) { 
@@ -59,7 +60,7 @@ function drawGeneBoxplot(name, renderTo, gene){
     });
 }
 $(function () {
-	
+/*	
 	arEmbryonicGenes =[ 'PCDHB2', 'PCDHB17', 'CSTF3', 'LOC644919', 'ITGA11', 'SMA4',
                        'LOC727877', 'MAST2', 'TMEM18', 'LOC100130914', 'ADSSL1', 'ZNF767',
                        'C19orf25', 'C19orf6', 'NKTR', 'LOC286208', 'GOLGA8A', 'CDK5RAP3',
@@ -81,6 +82,6 @@ $(function () {
 		  
 		}
 	
-
+*/
     
 });

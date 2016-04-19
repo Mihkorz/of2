@@ -55,7 +55,13 @@
             {%endif%}
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#gene_analysis">Gene level analysis</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#path_analysis">Pathway analysis</a></li>
+            {%if report.conclusion_text%}
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#conclusions">Conclusions</a></li>
+            {%endif%}
+            {%if report.references_text%}
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#references">References</a></li>
+            {%endif%}
+            
           </ul>
           
           {%if report.input_data_text%}
@@ -83,7 +89,11 @@
    <!-- GENE Nav tabs -->      
    <ul class="nav nav-tabs" role="tablist">
      {%for group in report.genegroup_set.all%}
-       <li role="presentation" {%if forloop.counter == 1 %}class="active"{%endif%}><a href="#{{group.get_slug}}_tab" aria-controls="home1" role="tab" data-toggle="tab">{{group.name}}</a></li>
+       <li role="presentation" {%if forloop.counter == 1 %}class="active"{%endif%}>
+         <a href="#{{group.get_slug}}_tab" aria-controls="home1" role="tab" data-toggle="tab">
+           {{group.name}} vs {{report.norm_name}}
+         </a>
+       </li>
      {%endfor%}
    </ul>
          
@@ -100,7 +110,7 @@
        </div> <!-- Volcano plot div -->
        
        
-       <h4>Table <span class='tbl_num'></span>. {{group.name}}</h4>
+       <h4>Table <span class='tbl_num'></span>. {{group.name}} vs {{report.norm_name}}</h4>
        <table id="tbl-{{group.get_slug}}" class="path table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
           <tr>
@@ -117,10 +127,215 @@
     {%endfor%}
    
    </div> <!--  end of tab-content div -->
+   
+<!-- -------------------- GENE VENN  -->
+<br/>
+<h3>Gene level comparison</h3>
+<br/>
+
+<!-- Gene level comparison Nav tabs -->
+<ul class="nav nav-tabs" role="tablist">
+         <li role="presentation" class="active"><a href="#gene_all_tab" aria-controls="settings" role="tab" data-toggle="tab">ALL</a></li>
+         {%for perm in report.get_gene_permutations%}
+         <li role="presentation" ><a href="#gene_{{perm.strip}}_tab" aria-controls="settings" role="tab" data-toggle="tab">{{perm}}</a></li>
+         {%endfor%}
+</ul>
+
+<!-- GEne VEnn Tab panes -->
+  <div class="tab-content">
+  
+  <div role="tabpanel" class="tab-pane fade in active " id="gene_all_tab">     <br/> 
+    <h4>Table . All genes</h4>
+    <table id="tbl-gene_all" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>Gene</th>
+           {%for group in report.genegroup_set.all%}
+            <th>{{group.name}}</th>
+           {%endfor%}
+          </tr>
+        </thead>  
+      </table>       
+   <br/>
+  
+  </div>
+  
+  {%for perm in report.get_gene_permutations%}
+  <div role="tabpanel" class="tab-pane fade " id="gene_{{perm.strip}}_tab">     <br/> 
+    <table style='text-align:center;'>
+      <tr>
+       <td>
+       <div id="venn_gene-{{perm.strip}}-up" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Significantly upregulated genes
+       </td>
+       <td>
+       <div id="venn_gene-{{perm.strip}}-down" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Significantly downregulated genes
+       </td>
+      </tr>
+    </table>        
+   <br/>
+  <div id="venn_gene_dinamic_{{perm.strip}}" class="" style="max-width:1000px;"></div> <!--  div to place dinamic tables from Venn clicks -->
+  </div>
+  {%endfor%}
+  
+  </div>
+<hr/> 
+   <h3>Notable genes</h3>
+<hr/>
+
+ <!-- Notable GENE Nav tabs -->
+         <ul class="nav nav-tabs" role="tablist">
+           {%for gene in report.get_notable_genes_list%}
+           <li role="presentation" {%if forloop.counter == 1 %}class="active"{%endif%}><a href="#{{gene}}_tab" aria-controls="home1" role="tab" data-toggle="tab">{{gene}}</a></li>
+           {%endfor%}
+         </ul>
+
+   <div class="tab-content">
+    {%for gene in report.get_notable_genes_list%}
+     {%if forloop.counter == 1 %}
+     <div role="tabpanel" class="tab-pane fade in active" id="{{gene}}_tab">
+     {%else%}
+     <div role="tabpanel" class="tab-pane fade " id="{{gene}}_tab">
+     {%endif%}
+     <div id="{{gene}}" style="min-width: 800px; height: 400px; max-width: 800px; margin: 0 auto">Loading box plot...</div>
+   
+     </div>
+    {%endfor%}
+   
+   </div> <!--  end of tab panel -->
+
+
+<!-- ---------------------------------PATHWAY--------------------------------------------- -->
+ <hr/> 
+<h2 id='path_analysis'>Pathway Analysis</h2>
+<hr/>
+{%if report.path_text%}
+          {{report.path_text|safe}}
+          <br/><br/>
+          {%endif%}
           
-          
+<h3>Signaling Pathways</h3>
+<hr/> 
+
+<!-- Signaling Pathways level comparison Nav tabs -->
+<ul class="nav nav-tabs" role="tablist">
+         <li role="presentation" class="active"><a href="#path_all_tab" aria-controls="settings" role="tab" data-toggle="tab">ALL</a></li>
+         {%for perm in report.get_path_permutations%}
+         <li role="presentation" ><a href="#path_{{perm.strip}}_tab" aria-controls="settings" role="tab" data-toggle="tab">{{perm}}</a></li>
+         {%endfor%}
+</ul>
+
+<!-- PAth VEnn Tab panes -->
+  <div class="tab-content">
+  
+  <div role="tabpanel" class="tab-pane fade in active " id="path_all_tab">     <br/> 
+    <h4>Table . All signaling pathways</h4>
+    <table id="tbl-path_all" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>Pathway</th>
+           {%for group in report.pathwaygroup_set.all%}
+            <th>{{group.name}}</th>
+           {%endfor%}
+          </tr>
+        </thead>  
+      </table>       
+   <br/>
+  
+  </div>
+  
+  {%for perm in report.get_path_permutations%}
+  <div role="tabpanel" class="tab-pane fade " id="path_{{perm.strip}}_tab">     <br/> 
+    <table style='text-align:center;'>
+      <tr>
+       <td>
+       <div id="venn_path-{{perm.strip}}-up" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Upregulated pathways
+       </td>
+       <td>
+       <div id="venn_path-{{perm.strip}}-down" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Downregulated pathways
+       </td>
+      </tr>
+    </table>        
+   <br/>
+  <div id="venn_path_dinamic_{{perm.strip}}" class="" style="max-width:1000px;"></div> <!--  div to place dinamic tables from Venn clicks -->
+  </div>
+  {%endfor%}
+  
+  </div>
           
 
+<hr/>
+<h3>Metabolic Pathways</h3>
+<hr/>          
+       
+<!-- Metabolic Pathways level comparison Nav tabs -->
+<ul class="nav nav-tabs" role="tablist">
+         <li role="presentation" class="active"><a href="#meta_all_tab" aria-controls="settings" role="tab" data-toggle="tab">ALL</a></li>
+         {%for perm in report.get_path_permutations%}
+         <li role="presentation" ><a href="#meta_{{perm.strip}}_tab" aria-controls="settings" role="tab" data-toggle="tab">{{perm}}</a></li>
+         {%endfor%}
+</ul>
+
+<!-- Meta VEnn Tab panes -->
+  <div class="tab-content">
+  
+  <div role="tabpanel" class="tab-pane fade in active " id="meta_all_tab">     <br/> 
+    <h4>Table . All metabolic pathways</h4>
+    <table id="tbl-meta_all" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>Pathway</th>
+           {%for group in report.pathwaygroup_set.all%}
+            <th>{{group.name}}</th>
+           {%endfor%}
+          </tr>
+        </thead>  
+      </table>       
+   <br/>
+  
+  </div>
+  
+  {%for perm in report.get_path_permutations%}
+  <div role="tabpanel" class="tab-pane fade " id="meta_{{perm.strip}}_tab">     <br/> 
+    <table style='text-align:center;'>
+      <tr>
+       <td>
+       <div id="venn_meta-{{perm.strip}}-up" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Upregulated pathways
+       </td>
+       <td>
+       <div id="venn_meta-{{perm.strip}}-down" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Downregulated pathways
+       </td>
+      </tr>
+    </table>        
+   <br/>
+  <div id="venn_meta_dinamic_{{perm.strip}}" class="" style="max-width:1000px;"></div> <!--  div to place dinamic tables from Venn clicks -->
+  </div>
+  {%endfor%}
+  
+  </div>
+  
+  {%if report.conclusion_text%}
+          <h2 id="conclusions" >Conclusions</h2>
+          <hr/>
+          
+          {{report.conclusion_text|safe}}
+          
+          <hr/>
+  {%endif%}
+          
+  {%if report.references_text%}
+          <h2 id="references" >References</h2>
+          <hr/>
+          
+          {{report.references_text|safe}}
+          
+          <hr/>
+ {%endif%}
 
 </div>  
 
@@ -141,11 +356,20 @@
         <div class="menu">
           <ul class="list-unstyled" >
             <li class="title">Table of contents: </li>
+            {%if report.input_data_text%}
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#input_data">Input data</a></li>
+            {%endif%}
+            {%if report.methods_text%}
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#methods">Methods</a></li>
+            {%endif%}
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#gene_analysis">Gene level analysis</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#path_analysis">Pathway analysis</a></li>
+            {%if report.conclusion_text%}
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#conclusions">Conclusions</a></li>
+            {%endif%}
+            {%if report.references_text%}
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#references">References</a></li>
+            {%endif%}
           </ul>
         </div>
         <div class="bottom">
@@ -165,11 +389,17 @@
     <script src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js" type="text/javascript"></script>
     <script src="//cdn.datatables.net/buttons/1.1.0/js/buttons.html5.min.js" type="text/javascript"></script>
     <script src="//cdn.datatables.net/buttons/1.1.0/js/buttons.print.min.js" type="text/javascript"></script>
+    <script src="/static/report/portal/js/venn.js/venn.js" type="text/javascript"></script>
+    
+    
     
     <script src="/static/report/portal/js/opentip.js" charset="utf-8"></script>
     <script src="/static/report/bt/js/adapter-native.js" charset="utf-8"></script>
     <script src="/static/report/portal/js/volcano.js" type="text/javascript"></script>
     <script src="/static/report/portal/js/tables.js" type="text/javascript"></script>
+    <script src="/static/report/portal/js/boxplot.js" type="text/javascript"></script>
+    
+    <script src="/static/report/portal/js/venn-diagram.js" type="text/javascript"></script>
     
     
     
@@ -195,10 +425,64 @@
 
 $(function() {
 	{%for group in report.genegroup_set.all%}
-	drawVolcanoPlot('{{group.get_slug}}_volcano',  '{{group.document}}');
-	drawGeneTable('tbl-{{group.get_slug}}', '{{group.document}}'); 
+	  drawVolcanoPlot('{{group.get_slug}}_volcano',  '{{group.doc_logfc}}');
+	  drawGeneTable({{report.id}}, 'tbl-{{group.get_slug}}', '{{group.doc_logfc}}'); 
 	{%endfor%}
 	
+	{%for gene in report.get_notable_genes_list%}
+	  drawGeneBoxplot(reportID={{report.id}}, name='{{gene}}', renderTo='{{gene}}', gene='{{gene}}', categories='{{report.get_gene_groups}}');
+	{%endfor%}
+	
+	drawGeneTable({{report.id}}, 'tbl-gene_all', 'all');
+	
+	//GENES
+	{%for perm in report.get_gene_permutations%}
+	drawVenn({{report.id}},
+			'venn_gene-{{perm.strip}}-up',
+			'{{perm.strip}}',	 
+			false, 'up', 'venn_gene_dinamic_{{perm.strip}}', 'genes');
+	drawVenn({{report.id}},
+			'venn_gene-{{perm.strip}}-down',
+			'{{perm.strip}}',			
+			false, 'down', 'venn_gene_dinamic_{{perm.strip}}', 'genes');
+	{%endfor%}
+	
+	
+	// SIGNALING PATHs
+	
+	drawPathwayTable({{report.id}},
+			'tbl-path_all', 
+	         'all', 
+	         'all', false);
+	
+	{%for perm in report.get_path_permutations%}
+	drawVenn({{report.id}},
+		'venn_path-{{perm.strip}}-up',
+		'{{perm.strip}}',
+		false, 'up', 'venn_path_dinamic_{{perm.strip}}', 'pathways');
+	drawVenn({{report.id}},
+			'venn_path-{{perm.strip}}-down',
+			'{{perm.strip}}',
+			false, 'down', 'venn_path_dinamic_{{perm.strip}}', 'pathways');
+    {%endfor%}
+    
+ // METABOLIC PATHs
+  drawPathwayTable({{report.id}},
+		  'tbl-meta_all', 
+	         'all', 
+	         'all', true);
+ 
+	{%for perm in report.get_path_permutations%}
+	drawVenn({{report.id}},
+		'venn_meta-{{perm.strip}}-up',
+		'{{perm.strip}}',
+		true, 'up', 'venn_meta_dinamic_{{perm.strip}}', 'pathways');
+	drawVenn({{report.id}},
+			'venn_meta-{{perm.strip}}-down',
+			'{{perm.strip}}',
+			true, 'down', 'venn_meta_dinamic_{{perm.strip}}', 'pathways');
+    {%endfor%}
+
 });
 
 </script>

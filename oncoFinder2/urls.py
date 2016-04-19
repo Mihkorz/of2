@@ -55,7 +55,8 @@ from mirna.views import MirnaSetCalculationParameters
 from core.celery_views import Celery, TaskStatus
 
 from report.views import ReportList, ReportDetail, \
-                         ReportGeneVolcanoJson, ReportGeneTableJson
+                         ReportGeneVolcanoJson, ReportGeneTableJson, ReportGeneBoxplotJson, \
+                         ReportAjaxPathwayVenn, ReportAjaxPathwayVennTable, ReportPathwayTableJson
 
 urlpatterns = patterns('',
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
@@ -207,9 +208,13 @@ urlpatterns = patterns('',
     url(r'^report-portal/$', ReportList.as_view(), name="report-index"),
     url(r'^report-portal/report/(?P<slug>[-\w]+)/$', ReportDetail.as_view(), name="report-detail"),
     
-    url(r'^report-portal/report-genevolcanojson/$', ReportGeneVolcanoJson.as_view(), name="bt-gen-volcano-json"),
+    url(r'^report-portal/report-genevolcanojson/$', ReportGeneVolcanoJson.as_view(), name="gene-volcano-json"),
     url(r'^report-portal/report-genetablejson/$', ReportGeneTableJson.as_view(), name="gene_table_json"),
+    url(r'^report-portal/report-genesboxplotjson/$', ReportGeneBoxplotJson.as_view(), name="gene_boxplot_json"),
     
+    url(r'^report-portal/report-ajaxpathvenn/$', ReportAjaxPathwayVenn.as_view(), name="report_ajax_path_venn"),
+    url(r'^report-portal/report-ajaxpathvenntbl/$', ReportAjaxPathwayVennTable.as_view(), name="report_ajax_path_venn_tbl"),
+    url(r'^report-portal/report-pathwaytablejson/$', ReportPathwayTableJson.as_view(), name="report-pathway_table_json"),
     ################### BLOOD NN ###############################################
     url(r'^nn-blood/$', nnBloodView.as_view(), name="nn-blood"),
     url(r'^nn-blood/result/$', nnBloodResult.as_view(), name="nn-blood"),

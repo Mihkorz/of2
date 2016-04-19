@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+import itertools
 
 from django.db import models
 
@@ -21,19 +22,85 @@ class Report(models.Model):
     """ Gene level """
     notable_genes = models.CharField(help_text='List of notable genes, separated by comma', max_length=250, blank=True)
     
+    norm_name = models.CharField(verbose_name='Normal title', max_length=250, blank=False)
+    
     class Meta(object):
         ordering = ['created_at',]
+        
+    def get_notable_genes_list(self):
+        return [x.strip() for x in self.notable_genes.split(',')]
+    
+    def get_gene_groups(self):
+        lgroups = [self.norm_name]
+        for group in self.genegroup_set.all():
+            lgroups.append(group.name.split('vs')[0])
+        return ','.join(lgroups)
+    
+    def get_gene_permutations(self):
+        group_num = self.genegroup_set.all().count()
+        group_list = self.genegroup_set.all().values_list('name')
+        if group_num>3:
+            combinations= list(itertools.combinations(group_list, 3)) # get all triplets of items
+        
+        else:            
+            combinations= list(itertools.combinations(group_list, 2)) # get all pairs of items
+        
+        l_combination_names = []
+        for tlong in combinations:
+            lname =[]            
+            for tshort in tlong:
+                lname.append(tshort[0])
+            l_combination_names.append("vs".join(lname))
+        
+        return l_combination_names
+    
+    def get_path_permutations(self):
+        group_num = self.pathwaygroup_set.all().count()
+        group_list = self.pathwaygroup_set.all().values_list('name')
+        if group_num>3:
+            combinations= list(itertools.combinations(group_list, 3)) # get all triplets of items
+        
+        else:            
+            combinations= list(itertools.combinations(group_list, 2)) # get all pairs of items
+        
+        l_combination_names = []
+        for tlong in combinations:
+            lname =[]            
+            for tshort in tlong:
+                lname.append(tshort[0])
+            l_combination_names.append("vs".join(lname))
+        
+        return l_combination_names
+    
+    
 
 def get_document_upload_path(instance, file_name):
     return os.path.join('report-portal', instance.report.slug, file_name)
-
+def get_doclogfc_upload_path(instance, file_name):
+    return os.path.join('report-portal', instance.report.slug, 'logfc', file_name)
+def get_docboxplot_upload_path(instance, file_name):
+    return os.path.join('report-portal', instance.report.slug, 'boxplot', file_name)
 
 class GeneGroup(models.Model):
     name = models.CharField(verbose_name='Gene group name', max_length=250, blank=False)
     document = models.FileField(upload_to=get_document_upload_path, max_length=300,
-                                help_text='CSV file with columns: SYMBOL, logFC, adj.P.Val')
+                                help_text='CSV file with columns: SYMBOL, Tumour, Normal')
+    doc_logfc =  models.FileField(upload_to=get_doclogfc_upload_path, max_length=300, blank=True)
+    doc_boxplot = models.FileField(upload_to=get_docboxplot_upload_path, max_length=300, blank=True)
+    
     report = models.ForeignKey(Report)
     
     def get_slug(self):
         return self.name.replace(' ', '_')
+
+class PathwayGroup(models.Model):
+    name = models.CharField(verbose_name='Pathway group name', max_length=250, blank=False)
+    document = models.FileField(upload_to=get_document_upload_path, max_length=300,
+                                help_text='OncoFinder2 output file')
+    doc_proc =  models.FileField(upload_to=get_document_upload_path, max_length=300, blank=True)
+    report = models.ForeignKey(Report)
+    
+    def get_slug(self):
+        return self.name.replace(' ', '_')
+    
     

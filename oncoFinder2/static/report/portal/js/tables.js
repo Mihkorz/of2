@@ -90,7 +90,7 @@ function showPathDetails(path_name, filename){
 
 
 
-function drawGeneTable(id, file_name){
+function drawGeneTable(reportID, id, file_name){
 	
 	// FIRST DOC
 	var table = $('#'+id).DataTable( {
@@ -109,6 +109,7 @@ function drawGeneTable(id, file_name){
         "ajax": {'url':'/report-portal/report-genetablejson/',
         	     'type': 'GET',
         	     'data':{
+        	    	     reportID: reportID,
         	            'file_name': file_name,
         	            },        	      
         
@@ -132,7 +133,7 @@ function drawGeneTable(id, file_name){
 }
 
 
-function drawPathwayTable(id, file_name1, file_name2, is_metabolic){
+function drawPathwayTable(reportID, id, file_name1, file_name2, is_metabolic){
 	
 	
 	$('#'+id).DataTable( {
@@ -145,9 +146,10 @@ function drawPathwayTable(id, file_name1, file_name2, is_metabolic){
         "dom": 'Bfrtip',
         "buttons": [{extend: 'csv', title: id}, {extend: 'pdf', title: id} , {extend: 'print', title: id}],
         
-        "ajax": {'url':'/report-portal/bt-pathwaytablejson/',
+        "ajax": {'url':'/report-portal/report-pathwaytablejson/',
         	     'type': 'GET',
         	     'data':{
+        	    	    'reportID': reportID,
         	            'file_name1': file_name1,
         	            'file_name2': file_name2,
         	            'is_metabolic': is_metabolic}

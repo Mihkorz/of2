@@ -67,7 +67,11 @@ class PathwayDetail(DetailView):
         df.set_index([0], inplace=True)
         df = df.fillna('suka')
         """
-              
+        # color nodes 4 Max 
+        #df_genes = pd.read_csv(settings.MEDIA_ROOT+'/genes_in_DB.txt', header=None)
+        #l_genes = df_genes[0].tolist()        
+        
+           
         G=nx.DiGraph() #drawing static picture
         for node in self.object.node_set.all():
                 
