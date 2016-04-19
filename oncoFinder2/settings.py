@@ -157,6 +157,7 @@ INSTALLED_APPS = (
     'mouse',
     'medic',
     'mirna',
+    'report',
 
 )
 

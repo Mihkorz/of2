@@ -9,10 +9,10 @@ admin.autodiscover()
 
 from website.views import IndexPage, AboutPage, Logout
 
-from website.report_views import LorealReport, \
-                                 ReportGeneTableJson, ReportGeneScatterJson, ReportGeneDetailJson, ReportGeneBoxplotJson, \
-                                 ReportPathwayScatterJson, ReportPathwayTableJson, ReportAjaxPathDetail, \
-                                 ReportAjaxPathwayVenn, ReportAjaxPathwayVennTable
+from website.loreal_report_views import LorealReport, \
+                                 LorealReportGeneTableJson, LorealReportGeneScatterJson, LorealReportGeneDetailJson, LorealReportGeneBoxplotJson, \
+                                 LorealReportPathwayScatterJson, LorealReportPathwayTableJson, LorealReportAjaxPathDetail, \
+                                 LorealReportAjaxPathwayVenn, LorealReportAjaxPathwayVennTable
 from website.pathdemo_report_views import PathDemoReport
 from website.demo2_report_views import Demo2Report                                 
 from website.lrl_report_views import LRLReport,\
@@ -53,6 +53,9 @@ from medic.views import MedicNosologyList, MedicNosologyDetail, MedicTreatmentDe
 from mirna.views import MirnaSetCalculationParameters
 
 from core.celery_views import Celery, TaskStatus
+
+from report.views import ReportList, ReportDetail, \
+                         ReportGeneVolcanoJson, ReportGeneTableJson
 
 urlpatterns = patterns('',
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
@@ -146,17 +149,21 @@ urlpatterns = patterns('',
     url(r'^utils/path$', ConvertPath.as_view(), name="convert_path"),
     url(r'^utils/ksyu$', Ksyusha.as_view(), name="ksyusha"),
     
+    
+    ################### REPORT APP ################################################
+    url(r'^report-portal/$', ReportList.as_view(), name="report-index"),
+    
     ################### REPORT L'oreal ###############################################
     url(r'^report-portal/report/loreal/$', LorealReport.as_view(), name="loreal-report"),
-    url(r'^report-portal/genescatterjson/$', ReportGeneScatterJson.as_view(), name="gene_scatter_json"),
-    url(r'^report-portal/genetablejson/$', ReportGeneTableJson.as_view(), name="gene_table_json"),
-    url(r'^report-portal/genedetailjson/$', ReportGeneDetailJson.as_view(), name="gene_detail_json"),
-    url(r'^report-portal/genesboxplotjson/$', ReportGeneBoxplotJson.as_view(), name="gene_boxplot_json"),
-    url(r'^report-portal/pathscatterjson/$', ReportPathwayScatterJson.as_view(), name="path_scatter_json"),
-    url(r'^report-portal/pathwaytablejson/$', ReportPathwayTableJson.as_view(), name="pathway_table_json"),
-    url(r'^report-portal/report/ajaxpathdetail/$', ReportAjaxPathDetail.as_view(), name="report_ajax_path_detail"),
-    url(r'^report-portal/report/ajaxpathvenn/$', ReportAjaxPathwayVenn.as_view(), name="report_ajax_path_venn"),
-    url(r'^report-portal/report/ajaxpathvenntbl/$', ReportAjaxPathwayVennTable.as_view(), name="report_ajax_path_venn_tbl"),
+    url(r'^report-portal/genescatterjson/$', LorealReportGeneScatterJson.as_view(), name="gene_scatter_json"),
+    url(r'^report-portal/genetablejson/$', LorealReportGeneTableJson.as_view(), name="gene_table_json"),
+    url(r'^report-portal/genedetailjson/$', LorealReportGeneDetailJson.as_view(), name="gene_detail_json"),
+    url(r'^report-portal/genesboxplotjson/$', LorealReportGeneBoxplotJson.as_view(), name="gene_boxplot_json"),
+    url(r'^report-portal/pathscatterjson/$', LorealReportPathwayScatterJson.as_view(), name="path_scatter_json"),
+    url(r'^report-portal/pathwaytablejson/$', LorealReportPathwayTableJson.as_view(), name="pathway_table_json"),
+    url(r'^report-portal/report/ajaxpathdetail/$', LorealReportAjaxPathDetail.as_view(), name="report_ajax_path_detail"),
+    url(r'^report-portal/report/ajaxpathvenn/$', LorealReportAjaxPathwayVenn.as_view(), name="report_ajax_path_venn"),
+    url(r'^report-portal/report/ajaxpathvenntbl/$', LorealReportAjaxPathwayVennTable.as_view(), name="report_ajax_path_venn_tbl"),
     
     ################### REPORT LRL2016 ###############################################
     url(r'^report-portal/report/lrl2016/$', LRLReport.as_view(), name="lrl-report"),
@@ -195,13 +202,13 @@ urlpatterns = patterns('',
     
     ################### REPORT DEMO 2 (based on BT=report) ###############################################
     url(r'^report-portal/report/demo2/$', Demo2Report.as_view(), name="bt-report"),
-    url(r'^report-portal/demo2-genevolcanojson/$', BTGeneVolcanoJson.as_view(), name="bt-gen-volcano-json"),
-    url(r'^report-portal/demo2-genetablejson/$', BTReportGeneTableJson.as_view(), name="bt-gene_table_json"),
-    url(r'^report-portal/demo2-genesboxplotjson/$', BTReportGeneBoxplotJson.as_view(), name="bt-gene_boxplot_json"),
-    url(r'^report-portal/bt-pathwaytablejson/$', BTReportPathwayTableJson.as_view(), name="pathway_table_json"),
-    url(r'^report-portal/report/bt-ajaxpathdetail/$', BTReportAjaxPathDetail.as_view(), name="bt-report_ajax_path_detail"),
-    url(r'^report-portal/report/bt-ajaxpathvenn/$', BTReportAjaxPathwayVenn.as_view(), name="bt-report_ajax_path_venn"),
-    url(r'^report-portal/report/bt-ajaxpathvenntbl/$', BTReportAjaxPathwayVennTable.as_view(), name="bt-report_ajax_path_venn_tbl"),
+
+    ################### REPORT APP ################################################
+    url(r'^report-portal/$', ReportList.as_view(), name="report-index"),
+    url(r'^report-portal/report/(?P<slug>[-\w]+)/$', ReportDetail.as_view(), name="report-detail"),
+    
+    url(r'^report-portal/report-genevolcanojson/$', ReportGeneVolcanoJson.as_view(), name="bt-gen-volcano-json"),
+    url(r'^report-portal/report-genetablejson/$', ReportGeneTableJson.as_view(), name="gene_table_json"),
     
     ################### BLOOD NN ###############################################
     url(r'^nn-blood/$', nnBloodView.as_view(), name="nn-blood"),

@@ -427,7 +427,7 @@ class BTReportAjaxPathDetail(TemplateView):
                'Group6':'CCL'}
         
         
-        if rep[self.request.GET['filename']]:
+        if rep.has_key(self.request.GET['filename']):
                 filename = 'cnr_proc_EPL_vs_'+rep[self.request.GET['filename']]+'.csv'
         else:
         ######## for DEMO2 report    
@@ -740,7 +740,7 @@ class BTReportAjaxPathwayVennTable(TemplateView):
                'Group6':'CCL'}
         
         for m in lMembers:
-            if rep[m]:
+            if rep.has_key(m):
                 lMembers[lMembers.index(m)] = rep[m]
         
         ######## for DEMO2 report

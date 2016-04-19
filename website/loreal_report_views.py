@@ -34,11 +34,11 @@ class LorealReport(TemplateView):
         return context
 
 
-class ReportGeneScatterJson(TemplateView):
+class LorealReportGeneScatterJson(TemplateView):
     template_name="website/report.html"
     def dispatch(self, request, *args, **kwargs):
         
-        return super(ReportGeneScatterJson, self).dispatch(request, *args, **kwargs)
+        return super(LorealReportGeneScatterJson, self).dispatch(request, *args, **kwargs)
     
     def get(self, request, *args, **kwargs):
         
@@ -70,11 +70,11 @@ class ReportGeneScatterJson(TemplateView):
         response_data =  json.loads(df_output)
         return HttpResponse(json.dumps(response_data), content_type="application/json")
     
-class ReportGeneTableJson(TemplateView):
+class LorealReportGeneTableJson(TemplateView):
     template_name="website/report.html"
     def dispatch(self, request, *args, **kwargs):
         
-        return super(ReportGeneTableJson, self).dispatch(request, *args, **kwargs)
+        return super(LorealReportGeneTableJson, self).dispatch(request, *args, **kwargs)
     
     def get(self, request, *args, **kwargs):
         
@@ -103,11 +103,11 @@ class ReportGeneTableJson(TemplateView):
         response_data = {'data': json.loads(output_json)}
         return HttpResponse(json.dumps(response_data), content_type="application/json")
 
-class ReportGeneDetailJson(TemplateView):
+class LorealReportGeneDetailJson(TemplateView):
     template_name="website/report.html"
     def dispatch(self, request, *args, **kwargs):
         
-        return super(ReportGeneDetailJson, self).dispatch(request, *args, **kwargs)
+        return super(LorealReportGeneDetailJson, self).dispatch(request, *args, **kwargs)
     
     def get(self, request, *args, **kwargs):
         
@@ -149,11 +149,11 @@ class ReportGeneDetailJson(TemplateView):
         return HttpResponse(json.dumps(response_data), content_type="application/json")
 
 
-class ReportGeneBoxplotJson(TemplateView):
+class LorealReportGeneBoxplotJson(TemplateView):
     template_name="website/report.html"
     def dispatch(self, request, *args, **kwargs):
         
-        return super(ReportGeneBoxplotJson, self).dispatch(request, *args, **kwargs)
+        return super(LorealReportGeneBoxplotJson, self).dispatch(request, *args, **kwargs)
     
     def get(self, request, *args, **kwargs):
         
@@ -215,11 +215,11 @@ class ReportGeneBoxplotJson(TemplateView):
         
         return HttpResponse(json.dumps(response_data), content_type="application/json")
     
-class ReportPathwayScatterJson(TemplateView):
+class LorealReportPathwayScatterJson(TemplateView):
     template_name="website/report.html"
     def dispatch(self, request, *args, **kwargs):
         
-        return super(ReportPathwayScatterJson, self).dispatch(request, *args, **kwargs)
+        return super(LorealReportPathwayScatterJson, self).dispatch(request, *args, **kwargs)
     
     def get(self, request, *args, **kwargs):
         
@@ -272,11 +272,11 @@ class ReportPathwayScatterJson(TemplateView):
         return HttpResponse(json.dumps(response_data), content_type="application/json")
 
 
-class ReportPathwayTableJson(TemplateView):
+class LorealReportPathwayTableJson(TemplateView):
     template_name="website/report.html"
     def dispatch(self, request, *args, **kwargs):
         
-        return super(ReportPathwayTableJson, self).dispatch(request, *args, **kwargs)
+        return super(LorealReportPathwayTableJson, self).dispatch(request, *args, **kwargs)
     
     def get(self, request, *args, **kwargs):
         
@@ -407,16 +407,16 @@ def shiftedColorMap(cmap, start=0, midpoint=0, stop=1.0, name='shiftedcmap'):
 
     return newcmap
     
-class ReportAjaxPathDetail(TemplateView):
+class LorealReportAjaxPathDetail(TemplateView):
     template_name = 'website/report_ajax_pathway_detail.html'
     
    
     
     def dispatch(self, request, *args, **kwargs):
-        return super(ReportAjaxPathDetail, self).dispatch(request, *args, **kwargs)
+        return super(LorealReportAjaxPathDetail, self).dispatch(request, *args, **kwargs)
     
     def get_context_data(self, *args, **kwargs):
-        context = super(ReportAjaxPathDetail, self).get_context_data(**kwargs)
+        context = super(LorealReportAjaxPathDetail, self).get_context_data(**kwargs)
         
         pathway = Pathway.objects.filter(organism='human', name=self.request.GET['pathway']).exclude(database='primary_old')[0]
         
@@ -544,10 +544,10 @@ class ReportAjaxPathDetail(TemplateView):
         
         return context
     
-class ReportAjaxPathwayVenn(TemplateView):
+class LorealReportAjaxPathwayVenn(TemplateView):
     template_name="website/report_ajax_venn.html"
     def dispatch(self, request, *args, **kwargs):
-        return super(ReportAjaxPathwayVenn, self).dispatch(request, *args, **kwargs)
+        return super(LorealReportAjaxPathwayVenn, self).dispatch(request, *args, **kwargs)
     
     def get(self, request, *args, **kwargs):
                 
@@ -791,10 +791,10 @@ class ReportAjaxPathwayVenn(TemplateView):
         return HttpResponse(json.dumps(response_data), content_type="application/json")
     
     
-class ReportAjaxPathwayVennTable(TemplateView):
+class LorealReportAjaxPathwayVennTable(TemplateView):
     template_name="website/report_ajax_venn.html"
     def dispatch(self, request, *args, **kwargs):
-        return super(ReportAjaxPathwayVennTable, self).dispatch(request, *args, **kwargs)
+        return super(LorealReportAjaxPathwayVennTable, self).dispatch(request, *args, **kwargs)
     
     def get(self, request, *args, **kwargs):
         inter_num = int(self.request.GET.get('inter_num'))

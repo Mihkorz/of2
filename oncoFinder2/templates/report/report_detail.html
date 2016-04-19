@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title> {{report.title_short}} | Insilico Medicine</title>
+    <link href="/static/bower_components/bootstrap-stylus/dist/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <script src="//code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script>
+    <script src="/static/js/oncofinder2.js" type="text/javascript"></script>
+    <script src="/static/bower_components/bootstrap-stylus/dist/bootstrap.min.js" type="text/javascript"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore.js" type="text/javascript"></script>
+    <script src="/static/js/d3.v3.min.js" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="http://code.highcharts.com/highcharts.js" type="text/javascript"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"  type="text/javascript"></script>
+    <script src="https://code.highcharts.com/highcharts-3d.js"  type="text/javascript"></script>
+    <script src="http://code.highcharts.com/modules/exporting.js"  type="text/javascript"></script>
+    <link href="/static/css/report_style.css" rel="stylesheet" type="text/css">
+    <link href="https://cdn.datatables.net/1.10.10/css/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="https://cdn.datatables.net/buttons/1.0.3/css/buttons.dataTables.min.css" rel="stylesheet">
+    
+    <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+    
+    <link href="/static/report/bt/js/opentip.css" rel="stylesheet" type="text/css">
+    <link href="/static/report/bt/js/volcano.css" rel="stylesheet" type="text/css">
+    
+  </head>
+  <body style='font-size: 14px;'>
+    <div class="content h100">
+      <div class="main">
+        <div class="inner">
+         <div>
+         <span class='pull-left' style='font-size:11pt; margin:15px;'>
+         <img src='/static/images/insilico.png' style="width:40px;"/>
+         Insilico Medicine - {{report.title_short}}</span>
+         <span class='pull-right' style='font-size:11pt; margin:15px;'>Access Level: Z-II, <br/>Confidential </span>
+         </div><br style="clear:both;"/>
+          <div class='text-center'>
+            <h1>{{report.title}}</h1>
+          </div>
+          
+          
+          <div style="margin: 50px 0 0 50px; padding: 0 50px 0 0;">
+            <h4 style='font-weight:bold; font-size:12pt;'>Organization: </h4>
+            <span style="font-size:11pt">{{report.organization}}</span>
+            <br/><br/>
+            <!-- <h4 style='font-weight:bold; font-size:12pt;'>Data Quality Assessment: </h4>-->
+            
+            <ul class="list-unstyled" style='font-size: 11pt; margin: 50px 0 0 0;' >
+            <li class="title">Table of contents: </li>
+            {%if report.input_data_text%}
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#input_data">Input data</a></li>
+            {%endif%}
+            {%if report.methods_text%}
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#methods">Methods</a></li>
+            {%endif%}
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#gene_analysis">Gene level analysis</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#path_analysis">Pathway analysis</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#references">References</a></li>
+          </ul>
+          
+          {%if report.input_data_text%}
+          <h2 id="input_data">Input data</h2>
+          <hr/>
+          {{report.input_data_text|safe}}
+          
+          <hr/>
+          {%endif%}
+          {%if report.methods_text%}
+          <h2 id="methods" >Methods</h2>
+          <hr/>
+          
+          {{report.methods_text|safe}}
+          
+          <hr/>
+          {%endif%}
+          <h2 id='gene_analysis'>Gene level analysis</h2>
+          <hr/>
+          {%if report.gene_text%}
+          {{report.gene_text|safe}}
+          <br/><br/>
+          {%endif%}
+          
+   <!-- GENE Nav tabs -->      
+   <ul class="nav nav-tabs" role="tablist">
+     {%for group in report.genegroup_set.all%}
+       <li role="presentation" {%if forloop.counter == 1 %}class="active"{%endif%}><a href="#{{group.get_slug}}_tab" aria-controls="home1" role="tab" data-toggle="tab">{{group.name}}</a></li>
+     {%endfor%}
+   </ul>
+         
+   <div class="tab-content">
+    {%for group in report.genegroup_set.all%}
+     {%if forloop.counter == 1 %}
+     <div role="tabpanel" class="tab-pane fade in active" id="{{group.get_slug}}_tab">
+     {%else%}
+     <div role="tabpanel" class="tab-pane fade " id="{{group.get_slug}}_tab">
+     {%endif%}
+       <div id="{{group.get_slug}}_volcano" 
+            style="min-width: 800px; height: 400px; max-width: 800px; margin: 5px auto">
+            <span>Loading plot...</span>
+       </div> <!-- Volcano plot div -->
+       
+       
+       <h4>Table <span class='tbl_num'></span>. {{group.name}}</h4>
+       <table id="tbl-{{group.get_slug}}" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>Gene</th>
+           <th>log2FoldChange</th>
+           <th>adj. p-value</th>
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+     
+     
+     </div> <!-- end of tabpanel div -->
+    {%endfor%}
+   
+   </div> <!--  end of tab-content div -->
+          
+          
+          
+
+
+</div>  
+
+
+<div style='min-height:500px'></div>
+            
+          </div>
+          
+          
+          
+        </div>
+      </div>
+      
+    </div>
+    <div class="bar" style="heigh:100%">
+      <div class="inner h100" style="heigh:100%">
+        <div class="top"><img src="/static/images/logo.svg"></div>
+        <div class="menu">
+          <ul class="list-unstyled" >
+            <li class="title">Table of contents: </li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#input_data">Input data</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#methods">Methods</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#gene_analysis">Gene level analysis</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#path_analysis">Pathway analysis</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#references">References</a></li>
+          </ul>
+        </div>
+        <div class="bottom">
+          <div class="inner"> Insilico Medicine Inc., Johns Hopkins <br/>University Eastern, ETC B301, 1101 East <br/>33rd Street, Baltimore, MD 21218 </div>
+        </div>
+      </div>
+    </div>
+    
+      
+    <script src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/1.10.10/js/dataTables.bootstrap.min.js" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/buttons/1.1.0/js/dataTables.buttons.min.js" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/buttons/1.1.0/js/buttons.bootstrap.min.js" type="text/javascript"></script>
+    <script src="//cdn.datatables.net/buttons/1.1.0/js/buttons.flash.min.js" type="text/javascript"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js" type="text/javascript"></script>
+    <script src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js" type="text/javascript"></script>
+    <script src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js" type="text/javascript"></script>
+    <script src="//cdn.datatables.net/buttons/1.1.0/js/buttons.html5.min.js" type="text/javascript"></script>
+    <script src="//cdn.datatables.net/buttons/1.1.0/js/buttons.print.min.js" type="text/javascript"></script>
+    
+    <script src="/static/report/portal/js/opentip.js" charset="utf-8"></script>
+    <script src="/static/report/bt/js/adapter-native.js" charset="utf-8"></script>
+    <script src="/static/report/portal/js/volcano.js" type="text/javascript"></script>
+    <script src="/static/report/portal/js/tables.js" type="text/javascript"></script>
+    
+    
+    
+    <!-- MODAL FOR PATHS  -->
+    <div id="pathmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+ <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;  </button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body" id='modalBody'>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+    
+<script>
+
+$(function() {
+	{%for group in report.genegroup_set.all%}
+	drawVolcanoPlot('{{group.get_slug}}_volcano',  '{{group.document}}');
+	drawGeneTable('tbl-{{group.get_slug}}', '{{group.document}}'); 
+	{%endfor%}
+	
+});
+
+</script>
+  </body>
+</html>

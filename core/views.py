@@ -1057,11 +1057,11 @@ class Test(TemplateView):
         
         
         
-        df_genes = read_excel(settings.MEDIA_ROOT+'/8 genes_1 Main Pathway.xls.xls', sheetname='genes', header=None)
-        df_nodes = read_excel(settings.MEDIA_ROOT+'/8 genes_1 Main Pathway.xls.xls', sheetname='nodes', header=None)
-        df_edges = read_excel(settings.MEDIA_ROOT+'/8 genes_1 Main Pathway.xls.xls', sheetname='edges', header=None)
+        df_genes = read_excel(settings.MEDIA_ROOT+'/8_genes_1_Main_Pathway.xls', sheetname='genes', header=None)
+        df_nodes = read_excel(settings.MEDIA_ROOT+'/8_genes_1_Main_Pathway.xls', sheetname='nodes', header=None)
+        df_edges = read_excel(settings.MEDIA_ROOT+'/8_genes_1_Main_Pathway.xls', sheetname='edges', header=None)
         
-        path = Pathway.objects.get_or_create(name='8_genes_1_Main Pathway.xls', database='primary_new', organism='human')
+        path = Pathway.objects.get_or_create(name='8_genes_1_Main Pathway', database='primary_new', organism='human')
         
         def add_genes(row):
             
@@ -1098,6 +1098,71 @@ class Test(TemplateView):
         
         df_edges.apply(add_edges, axis=1)
         
+        #######################################################3
+        df_genes = read_excel(settings.MEDIA_ROOT+'/triplneg Main Pathway.xls', sheetname='genes', header=None)
+        df_nodes = read_excel(settings.MEDIA_ROOT+'/triplneg Main Pathway.xls', sheetname='nodes', header=None)
+        df_edges = read_excel(settings.MEDIA_ROOT+'/triplneg Main Pathway.xls', sheetname='edges', header=None)
+        
+        path = Pathway.objects.get_or_create(name='Triplneg_Main_Pathway', database='primary_new', organism='human')
+        
+        def add_genes_1(row):
+            
+            gene = Gene.objects.get_or_create(name=row[0], arr=row[1], pathway=path[0])
+            
+        
+        df_genes.apply(add_genes_1, axis=1)
+        
+        def add_nodes_1(row):
+            
+            
+            node = Node.objects.get_or_create(name=row[0], pathway=path[0])
+            comp = Component.objects.get_or_create(name=row[0], node=node[0])
+            
+        
+        df_nodes.apply(add_nodes_1, axis=1)
+        
+        def add_edges_1(row):
+            
+            fn = Node.objects.get(name=row[0], pathway=path[0])
+            tn = Node.objects.get(name=row[1], pathway=path[0])
+            
+            reltype = 2
+            if row[2]=='activation':
+                reltype = 1
+            if row[2]=='inhibition':
+                reltype = 0
+            if row[2]=='unknown':
+                reltype = 2
+                
+            rel = Relation.objects.get_or_create(fromnode=fn, tonode=tn, reltype=reltype)
+            
+            
+        
+        df_edges.apply(add_edges_1, axis=1)
+        
+        ######################################
+        df_genes = read_excel(settings.MEDIA_ROOT+'/triplneg_2_main_pathway.xlsx', sheetname='genes', header=None)
+
+        
+        path = Pathway.objects.get_or_create(name='Triplneg_2_Main_Pathway', database='primary_new', organism='human')
+        
+        def add_genes_2(row):
+            
+            gene = Gene.objects.get_or_create(name=row[0], arr=row[1], pathway=path[0])
+            
+        
+        df_genes.apply(add_genes_2, axis=1)
+        ######################################3
+        df_genes = read_excel(settings.MEDIA_ROOT+'/triplneg_3_main_pathway.xlsx', sheetname='genes', header=None)
+        
+        path = Pathway.objects.get_or_create(name='Triplneg_3_Main_Pathway', database='primary_new', organism='human')
+        
+        def add_genes_3(row):
+            
+            gene = Gene.objects.get_or_create(name=row[0], arr=row[1], pathway=path[0])
+            
+        
+        df_genes.apply(add_genes_3, axis=1)
         raise Exception('test top')
         nodes = Node.objects.filter(pathway__database='primary_new')
         
