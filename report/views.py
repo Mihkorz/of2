@@ -12,6 +12,8 @@ from django.shortcuts import redirect
 from django.contrib.auth import logout
 from django.http import HttpResponse
 from django.conf import settings
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 
 from .models import Report, GeneGroup, PathwayGroup
 
@@ -21,7 +23,7 @@ class ReportList(ListView):
     context_object_name = 'reports'
     paginate_by = 100
     
-    
+    @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super(ReportList, self).dispatch(request, *args, **kwargs)
     
