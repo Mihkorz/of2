@@ -426,25 +426,25 @@
 $(function() {
 	{%for group in report.genegroup_set.all%}
 	  drawVolcanoPlot('{{group.get_slug}}_volcano',  '{{group.doc_logfc}}');
-	  drawGeneTable({{report.id}}, 'tbl-{{group.get_slug}}', '{{group.doc_logfc}}'); 
+	  drawGeneTable({{report.id}}, 'tbl-{{group.get_slug}}', '{{group.doc_logfc}}', categories='{{report.get_gene_groups}}'); 
 	{%endfor%}
 	
 	{%for gene in report.get_notable_genes_list%}
 	  drawGeneBoxplot(reportID={{report.id}}, name='{{gene}}', renderTo='{{gene}}', gene='{{gene}}', categories='{{report.get_gene_groups}}');
 	{%endfor%}
 	
-	drawGeneTable({{report.id}}, 'tbl-gene_all', 'all');
+	drawGeneTable({{report.id}}, 'tbl-gene_all', 'all', categories='{{report.get_gene_groups}}');
 	
 	//GENES
 	{%for perm in report.get_gene_permutations%}
 	drawVenn({{report.id}},
 			'venn_gene-{{perm.strip}}-up',
 			'{{perm.strip}}',	 
-			false, 'up', 'venn_gene_dinamic_{{perm.strip}}', 'genes');
+			false, 'up', 'venn_gene_dinamic_{{perm.strip}}', 'genes', categories='{{report.get_gene_groups}}');
 	drawVenn({{report.id}},
 			'venn_gene-{{perm.strip}}-down',
 			'{{perm.strip}}',			
-			false, 'down', 'venn_gene_dinamic_{{perm.strip}}', 'genes');
+			false, 'down', 'venn_gene_dinamic_{{perm.strip}}', 'genes', categories='{{report.get_gene_groups}}');
 	{%endfor%}
 	
 	

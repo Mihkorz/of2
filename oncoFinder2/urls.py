@@ -56,7 +56,7 @@ from core.celery_views import Celery, TaskStatus
 
 from report.views import ReportList, ReportDetail, \
                          ReportGeneVolcanoJson, ReportGeneTableJson, ReportGeneBoxplotJson, \
-                         ReportAjaxPathwayVenn, ReportAjaxPathwayVennTable, ReportPathwayTableJson
+                         ReportAjaxPathwayVenn, ReportAjaxPathwayVennTable, ReportPathwayTableJson, ReportAjaxPathDetail
 
 urlpatterns = patterns('',
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
@@ -215,6 +215,7 @@ urlpatterns = patterns('',
     url(r'^report-portal/report-ajaxpathvenn/$', ReportAjaxPathwayVenn.as_view(), name="report_ajax_path_venn"),
     url(r'^report-portal/report-ajaxpathvenntbl/$', ReportAjaxPathwayVennTable.as_view(), name="report_ajax_path_venn_tbl"),
     url(r'^report-portal/report-pathwaytablejson/$', ReportPathwayTableJson.as_view(), name="report-pathway_table_json"),
+    url(r'^report-portal/report-ajaxpathdetail/$', ReportAjaxPathDetail.as_view(), name="report_ajax_path_detail"),
     ################### BLOOD NN ###############################################
     url(r'^nn-blood/$', nnBloodView.as_view(), name="nn-blood"),
     url(r'^nn-blood/result/$', nnBloodResult.as_view(), name="nn-blood"),

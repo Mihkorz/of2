@@ -16,6 +16,7 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 
 from .models import Report, GeneGroup, PathwayGroup
+from core.models import Pathway, Node, Component
 
 class ReportList(ListView):
     model = Report
@@ -670,5 +671,177 @@ class ReportAjaxPathwayVennTable(TemplateView):
         response_data = {'aaData': json.loads(df_json)}
         return HttpResponse(json.dumps(response_data), content_type="application/json")
 
+import matplotlib.pyplot as plt
+import matplotlib.colors as colors
+import matplotlib.cm as cmx
+import matplotlib as mpl
+import struct
+
+def shiftedColorMap(cmap, start=0, midpoint=0, stop=1.0, name='shiftedcmap'):
+
+    cdict = {
+        'red': [],
+        'green': [],
+        'blue': [],
+        'alpha': []
+    }
+
+    # regular index to compute the colors
+    reg_index = np.linspace(start, stop, 257)
+
+    # shifted index to match the data
+    shift_index = np.hstack([
+        np.linspace(0.0, midpoint, 128, endpoint=False), 
+        np.linspace(midpoint, 1.0, 129, endpoint=True)
+    ])
+
+    for ri, si in zip(reg_index, shift_index):
+        r, g, b, a = cmap(ri)
+
+        cdict['red'].append((si, r, r))
+        cdict['green'].append((si, g, g))
+        cdict['blue'].append((si, b, b))
+        cdict['alpha'].append((si, a, a))
+
+    newcmap = mpl.colors.LinearSegmentedColormap(name, cdict)
+    plt.register_cmap(cmap=newcmap)
+
+    return newcmap
     
+class ReportAjaxPathDetail(TemplateView):
+    template_name = 'website/report_ajax_pathway_detail.html'
+    
+   
+    
+    def dispatch(self, request, *args, **kwargs):
+        return super(ReportAjaxPathDetail, self).dispatch(request, *args, **kwargs)
+    
+    def get_context_data(self, *args, **kwargs):
+        context = super(ReportAjaxPathDetail, self).get_context_data(**kwargs)
+        
+        report = Report.objects.get(pk=self.request.GET['reportID'])
+        group = GeneGroup.objects.get(report=report, name=self.request.GET['group_name'])
+        
+        pathway = Pathway.objects.filter(organism='human', name=self.request.GET['pathway']).exclude(database__in=['primary_old', 'aging'])[0]
+        
+        gene_data = []
+        for gene in pathway.gene_set.all():
+                nodes = ','.join([str(i) for i in Node.objects.filter(pathway=pathway, component__name=gene.name).distinct()])
+                
+                gene_data.append({'SYMBOL':gene.name.strip().upper(),
+                                  'Node(s)':nodes })   
+           
+        gene_df = pd.DataFrame(gene_data).set_index('SYMBOL')
+               
+        df_file_cnr = pd.read_csv(group.doc_logfc.path, index_col='SYMBOL')        
+        df_file_cnr = df_file_cnr[(df_file_cnr['adj.P.Val']<0.05) & (np.absolute(df_file_cnr['logFC'])>0.4)] 
+        df_file_cnr = df_file_cnr['logFC'].round(decimals=2)
+        
+        
+        df_file_cnr.name = 'log2(Fold-change)' #log2(Fold-change)
+        
+        joined_df = gene_df.join(df_file_cnr, how='inner')
+        joined_df.reset_index(inplace=True)
+        
+        joined_df.index += 1
+        
+        context['joined'] = joined_df[['SYMBOL', 'Node(s)', 'log2(Fold-change)']].to_html(classes=['table', 'table-bordered', 'table-striped'])
+        context['diff_genes_count'] = len(joined_df.index)
+         
+        nComp = []
+        
+        G=nx.DiGraph()
+        
+        for _, row in joined_df.iterrows():                
+            
+            loComp = Component.objects.filter(name = row['SYMBOL'], node__pathway=pathway)
+            
+            for comp in loComp:
+                comp.cnr = np.power(2, row['log2(Fold-change)'])
+                nComp.append(comp)
+                    
+        lNodes = []
+        lNEL = []        
+        
+        for node in pathway.node_set.all():
+            
+            lcurrentComponents = [i.name for i in node.component_set.all()]
+            
+            node.nel = 0.0
+            node.numDiffComp = 0
+            node.sumDiffComp = 0.0
+            node.color = "grey"
+            node.strokeWidth = 1
+            for component in nComp:
+                if component.name in lcurrentComponents: 
+                    if component.cnr != 0:
+                        node.numDiffComp += 1
+                        node.sumDiffComp += float(component.cnr)
+            if node.numDiffComp >0 :
+                node.nel = node.sumDiffComp / node.numDiffComp
+                lNEL.append(node.sumDiffComp / node.numDiffComp)
+            lNodes.append(node)
+                
+        if lNEL: #check if list is not empty
+            #choosing colormap for static image
+            lNEL = np.log(lNEL)
+            mmin = np.min(lNEL)
+            mmax = np.max(np.absolute(lNEL)) # absolute was made for Aliper special, remove if needed
+            mid = 1 - mmax/(mmax + abs(mmin))
+        
+            if mmax<0 and mmin<0:                    
+                shifted_cmap = plt.get_cmap('Reds_r')
+                mmax = 0
+            if  mmax>0 and mmin>0:
+                shifted_cmap = plt.get_cmap('Greens')
+                mmin = 0
+            else:  
+                cmap = plt.get_cmap('PiYG')
+                shifted_cmap = shiftedColorMap(cmap, start=0, midpoint=mid, stop=1, name='shrunk')
+            cNormp  = colors.Normalize(vmin=mmin, vmax=mmax)
+            scalarMap = cmx.ScalarMappable(norm=cNormp, cmap=shifted_cmap)
+        
+        finalNodes = []
+        for nod in lNodes:
+            if nod.nel > 1:
+                nod.color = "green"
+                nod.strokeWidth = np.log2(nod.nel)
+            if nod.nel <= 1 and nod.nel > 0:
+                nod.color = "red"
+                nod.strokeWidth = np.log2(nod.nel)
+            finalNodes.append(nod)
+            
+            if nod.nel!=0:
+                ffil = "#"+struct.pack('BBB',*scalarMap.to_rgba(np.log(nod.nel), bytes=True)[:3]).encode('hex').upper()
+            else:
+                ffil = "grey"
+            G.add_node(nod.name, color='black',style='filled',
+                               fillcolor=ffil)            
+        
+        context['colorNodes'] = finalNodes              
+        
+        dRelations = []
+        for node in pathway.node_set.all():
+            for inrel in node.inrelations.all():
+                relColor = 'black'
+                if inrel.reltype == '1':
+                    relColor = 'green'
+                if inrel.reltype == '0':
+                    relColor = 'red'
+                dRelations.append({ inrel.fromnode.name : [inrel.tonode.name, relColor] })
+                G.add_edge(inrel.fromnode.name.encode('ascii','ignore'), inrel.tonode.name.encode('ascii','ignore'), color=relColor)      
+        
+        # DRAW STATIC IMAGE
+        A=nx.to_agraph(G)
+        A.layout(prog='dot')
+        A.draw(settings.MEDIA_ROOT+"/pathway.svg")
+        
+        context['pathway'] = pathway
+        context['dRelations'] = dRelations
+        import random 
+        context['rand'] = random.random() 
+        
+        
+        
+        return context    
     

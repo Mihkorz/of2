@@ -1,4 +1,4 @@
-function drawDinamicTable(reportID, idx, tblRenderTo, path_gene){
+function drawDinamicTable(reportID, idx, tblRenderTo, path_gene, categories){
 	
 	var arParams = idx.split("_");
 	var inter_num = arParams[0];
@@ -103,26 +103,26 @@ function drawDinamicTable(reportID, idx, tblRenderTo, path_gene){
 	    	    var path_name = $(this).prev().find('span').attr('title');    	
 	    	    var $th = $(this).closest('table').find('th').eq($(this).index());
 	    	    var group = $th.text();
-	    	    showPathDetails(path_name, group);    	    	
+	    	    showPathDetails(reportID, path_name, group);    	    	
 	                                                                              });
 			$('#'+tblId+' tbody').on( 'click', 'tr td:nth-child(3)', function () {    	
 	    	    var path_name = $(this).prev().prev().find('span').attr('title');    	
 	    	    var $th = $(this).closest('table').find('th').eq($(this).index());
 	    	    var group = $th.text();
-	    	    showPathDetails(path_name, group);    	    	
+	    	    showPathDetails(reportID, path_name, group);    	    	
 	                                                                              });
 			$('#'+tblId+' tbody').on( 'click', 'tr td:nth-child(4)', function () {    	
 	    	    var path_name = $(this).prev().prev().prev().find('span').attr('title');    	
 	    	    var $th = $(this).closest('table').find('th').eq($(this).index());
 	    	    var group = $th.text();
-	    	    showPathDetails(path_name, group);    	    	
+	    	    showPathDetails(reportID, path_name, group);    	    	
 	                                                                              });
 			} // end of if path_gene==paths
 			else{
 				
 				$('#'+tblId+' tbody').on( 'click', 'tr td:first-child', function () {				    	
 				    	var gene_name = $(this).text();				    	
-				    	drawGeneChart(gene_name);				    	
+				    	drawGeneChart(reportID, gene_name, categories);				    	
 				    });
 				
 			}
@@ -138,7 +138,9 @@ function drawDinamicTable(reportID, idx, tblRenderTo, path_gene){
 
 function drawVenn(reportID, renderTo, 
 		                      group_names,		                      
-		                      is_metabolic, reg, tblRenderTo, path_gene){
+		                      is_metabolic, reg, tblRenderTo, path_gene, categories){
+	
+	
 	$.get("/report-portal/report-ajaxpathvenn/",
 			{
 		reportID: reportID,
@@ -194,10 +196,10 @@ function drawVenn(reportID, renderTo,
                                .style("stroke-opacity", 0);
                                                  })
                  .on("click", function(d, i){
-                	 
+                	
                 	 venn.sortAreas(div, d);
                      var idx = d.id;
-                     drawDinamicTable(reportID, idx, tblRenderTo, path_gene);
+                     drawDinamicTable(reportID, idx, tblRenderTo, path_gene, categories);
                 	 
                  });
 			}

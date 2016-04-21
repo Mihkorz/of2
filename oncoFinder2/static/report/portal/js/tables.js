@@ -47,39 +47,51 @@
     }
 
 	
-function drawGeneChart(gene_name, file_name){
-		$("#modalBody").html('<h4 id="loading">Not done yet ...</h4><div id="gene_plot" style="width: 500px; height: 400px; margin: 0 auto"></div>');
+function drawGeneChart(reportID, gene_name, categories){
+		
+		$("#modalBody").html('<h4 id="loading">Loading ...</h4><div id="gene_plot" style="width: 500px; height: 400px; margin: 0 auto"></div>');
 		
 		$("#myModalLabel").text(gene_name);
 		
 		$('#pathmodal').modal('show');
-		/*
-		$.getJSON('/report-portal/bt-genesboxplotjson/',
+		
+		$.getJSON('/report-portal/report-genesboxplotjson/',
 				{
+			     'reportID': reportID,
 			     'gene': gene_name,
 			     },
-			     function(data) { 
+			     function(data) {
+			    	 
 			    	 $("#loading").empty();
 			     	options.series[0] = data;
 			     	options.title.text = gene_name;
 			     	
-			     	
+			     	options.xAxis.categories = categories.split(',');
 			        var chart = new Highcharts.Chart(options);
-			     });*/
+			        
+			     }).fail(function( jqxhr, textStatus, error ) {
+			    	    var err = textStatus + ", " + error;
+			    	    console.log( "Request Failed: " + err );
+			    	    
+			    	    $("#loading").empty().text(err);
+			    	    
+			    	    
+			    	});
 
 	}
 	
-function showPathDetails(path_name, filename){
+function showPathDetails(reportID, path_name, group_name){
 	$("#modalBody").html('<h4 id="loading">Loading ...</h4><div id="gene_plot" style="width: 800px; height: 400px; margin: 0 auto"></div>');
 	
 	$("#myModalLabel").text(path_name);
 	
 	$('#pathmodal').modal('show');
 	
-	$.get("/report-portal/report/bt-ajaxpathdetail/",
+	$.get("/report-portal/report-ajaxpathdetail/",
 			{
+		     reportID: reportID,
 		     pathway: path_name,
-		     filename: filename,
+		     group_name: group_name,
 		     		
 			},
 			function(data){
@@ -90,7 +102,7 @@ function showPathDetails(path_name, filename){
 
 
 
-function drawGeneTable(reportID, id, file_name){
+function drawGeneTable(reportID, id, file_name, categories){
 	
 	// FIRST DOC
 	var table = $('#'+id).DataTable( {
@@ -127,7 +139,7 @@ function drawGeneTable(reportID, id, file_name){
     	
     	var gene_name = $(this).text();
     	
-    	drawGeneChart(gene_name);    	
+    	drawGeneChart(reportID, gene_name, categories);    	
     	
     });
 }
@@ -178,12 +190,14 @@ function drawPathwayTable(reportID, id, file_name1, file_name2, is_metabolic){
 	
         $('#'+id+' tbody').on( 'click', 'tr td:nth-child(2)', function () {    	
     	    var path_name = $(this).prev().text();    	
-    	    showPathDetails(path_name, file_name1);    	
+    	    showPathDetails(reportID, path_name, file_name1);
+    	   
     	
                                                                         });
         $('#'+id+' tbody').on( 'click', 'tr td:nth-child(3)', function () {    	
     	    var path_name = $(this).prev().prev().text();    	
-    	    showPathDetails(path_name, file_name2);    	
+    	    showPathDetails(reportID, path_name, file_name2);
+    	    
     	
                                                                         });
 	    }
@@ -216,37 +230,37 @@ function drawPathwayTable(reportID, id, file_name1, file_name2, is_metabolic){
 	    	    var path_name = $(this).prev().find('span').attr('title');    	
 	    	    var $th = $(this).closest('table').find('th').eq($(this).index());
 	    	    var group = $th.text();
-	    	    showPathDetails(path_name, group);    	    	
+	    	    showPathDetails(reportID, path_name, group);    	    	
 	                                                                              });
 		    $('#'+id+' tbody').on( 'click', 'tr td:nth-child(3)', function () {    	
 	    	    var path_name = $(this).prev().prev().find('span').attr('title');    	
 	    	    var $th = $(this).closest('table').find('th').eq($(this).index());
 	    	    var group = $th.text();
-	    	    showPathDetails(path_name, group);    	    	
+	    	    showPathDetails(reportID, path_name, group);    	    	
 	                                                                              });
 		    $('#'+id+' tbody').on( 'click', 'tr td:nth-child(4)', function () {    	
 	    	    var path_name = $(this).prev().prev().prev().find('span').attr('title');    	
 	    	    var $th = $(this).closest('table').find('th').eq($(this).index());
 	    	    var group = $th.text();
-	    	    showPathDetails(path_name, group);    	    	
+	    	    showPathDetails(reportID, path_name, group);    	    	
 	                                                                              });
 		    $('#'+id+' tbody').on( 'click', 'tr td:nth-child(5)', function () {    	
 	    	    var path_name = $(this).prev().prev().prev().prev().find('span').attr('title');    	
 	    	    var $th = $(this).closest('table').find('th').eq($(this).index());
 	    	    var group = $th.text();
-	    	    showPathDetails(path_name, group);    	    	
+	    	    showPathDetails(reportID, path_name, group);    	    	
 	                                                                              });
 		    $('#'+id+' tbody').on( 'click', 'tr td:nth-child(6)', function () {    	
 	    	    var path_name = $(this).prev().prev().prev().prev().prev().find('span').attr('title');    	
 	    	    var $th = $(this).closest('table').find('th').eq($(this).index());
 	    	    var group = $th.text();
-	    	    showPathDetails(path_name, group);    	    	
+	    	    showPathDetails(reportID, path_name, group);    	    	
 	                                                                              });
 		    $('#'+id+' tbody').on( 'click', 'tr td:nth-child(7)', function () {    	
 	    	    var path_name = $(this).prev().prev().prev().prev().prev().prev().find('span').attr('title');    	
 	    	    var $th = $(this).closest('table').find('th').eq($(this).index());
 	    	    var group = $th.text();
-	    	    showPathDetails(path_name, group);    	    	
+	    	    showPathDetails(reportID, path_name, group);    	    	
 	                                                                              });
 		
 	}
