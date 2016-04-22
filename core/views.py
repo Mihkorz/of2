@@ -578,7 +578,7 @@ class CoreSetCalculationParameters(FormView):
             s_target_path = Series()
             for target in targets:
                 paths = Pathway.objects.filter(gene__name=target, organism=organism_choice,
-                                                 database__in=db_choice).values_list('name', 'amcf', 'gene__arr')
+                                                 database__in=db_choice).exclude(name='Target_drugs_pathway').values_list('name', 'amcf', 'gene__arr')
                 
                 s_target_path =  s_target_path.set_value(target, paths)
                 
@@ -727,7 +727,7 @@ class CoreSetCalculationParameters(FormView):
             output_ds1b_df.sort(axis=1, inplace=True)
             output_ds2_df.sort(axis=1, inplace=True)                
         
-        
+        print "DS done"
         """ Genegate Patient Report """
         if (calculate_ds1b and calculate_ds2 and len(tumour_columns)==1 ):
              
