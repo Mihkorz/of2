@@ -578,7 +578,7 @@ class CoreSetCalculationParameters(FormView):
             s_target_path = Series()
             for target in targets:
                 paths = Pathway.objects.filter(gene__name=target, organism=organism_choice,
-                                                 database__in=db_choice).exclude(name='Target_drugs_pathway').values_list('name', 'amcf', 'gene__arr')
+                                                 database__in=db_choice).values_list('name', 'amcf', 'gene__arr')
                 
                 s_target_path =  s_target_path.set_value(target, paths)
                 
@@ -628,13 +628,13 @@ class CoreSetCalculationParameters(FormView):
                         amcf = float(path_details[1])
                         arr = float(path_details[2])
                         
-                        ds1a_s = output_pas_df.loc[path_details[0]][tumour_columns]
-                        ds1a_df[str(t)+'_'+path_name] = ds1a_s
+                        if path_details[0] != 'Target_drugs_pathway':
                         
+                            ds1a_s = output_pas_df.loc[path_details[0]][tumour_columns]
+                            ds1a_df[str(t)+'_'+path_name] = ds1a_s
                         
-                        
-                        ds1b_s = output_pas2_df.loc[path_details[0]][tumour_columns]
-                        ds1b_df[str(t)+'_'+path_name] = ds1b_s*amcf
+                            ds1b_s = output_pas2_df.loc[path_details[0]][tumour_columns]
+                            ds1b_df[str(t)+'_'+path_name] = ds1b_s*amcf
                         
                         try:
                             cnr_s = process_doc_df.loc[target.name][tumour_columns]
