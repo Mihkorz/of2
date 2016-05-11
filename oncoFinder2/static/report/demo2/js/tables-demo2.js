@@ -276,12 +276,12 @@ $(document).ready(function() {
 	
 	// GENES
 	
-	drawGeneTable('tbl-EPL_vs_ABC', 'EPL_vs_ABC.DE.tab');
-	drawGeneTable('tbl-EPL_vs_AEC', 'EPL_vs_AEC.DE.tab');
-	drawGeneTable('tbl-EPL_vs_ANC', 'EPL_vs_ANC.DE.tab');
-	drawGeneTable('tbl-EPL_vs_ASC', 'EPL_vs_ASC.DE.tab');
-	drawGeneTable('tbl-EPL_vs_CCL', 'EPL_vs_CCL.DE.tab');
-	drawGeneTable('tbl-EPL_vs_ES', 'EPL_vs_ES.DE.tab');
+	drawGeneTable('tbl-Group7_vs_Group1', 'EPL_vs_ABC.DE.tab');
+	drawGeneTable('tbl-Group7_vs_Group2', 'EPL_vs_AEC.DE.tab');
+	drawGeneTable('tbl-Group7_vs_Group3', 'EPL_vs_ANC.DE.tab');
+	drawGeneTable('tbl-Group7_vs_Group4', 'EPL_vs_ASC.DE.tab');
+	drawGeneTable('tbl-Group7_vs_Group5', 'EPL_vs_CCL.DE.tab');
+	drawGeneTable('tbl-Group7_vs_Group6', 'EPL_vs_ES.DE.tab');
 	
 	drawGeneTable('tbl-gene_all', 'all');
 		

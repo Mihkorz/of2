@@ -211,140 +211,140 @@ function drawVenn(renderTo, file_name1, name1,
 
 $(document).ready(function(){
 	// GENES
-	drawVenn('venn_gene-ESvsASCvsCCL-up',
+	drawVenn('venn_gene-Group1vsGroup2vsGroup6-up',
 			'EPL_vs_ES.DE.tab', 'Group1',
 			'EPL_vs_ASC.DE.tab', 'Group2',
 			'EPL_vs_CCL.DE.tab', 'Group6', 
-			false, 'up', 'venn_gene_dinamic_ESvsASCvsCCL', 'genes');
-		drawVenn('venn_gene-ESvsASCvsCCL-down',
+			false, 'up', 'venn_gene_dinamic_Group1vsGroup2vsGroup6', 'genes');
+		drawVenn('venn_gene-Group1vsGroup2vsGroup6-down',
 				'EPL_vs_ES.DE.tab', 'Group1',
 				'EPL_vs_ASC.DE.tab', 'Group2',
 				'EPL_vs_CCL.DE.tab', 'Group6', 
-				false, 'down', 'venn_gene_dinamic_ESvsASCvsCCL', 'genes');
+				false, 'down', 'venn_gene_dinamic_Group1vsGroup2vsGroup6', 'genes');
 		
-		drawVenn('venn_gene-ESvsANCvsCCL-up',
+		drawVenn('venn_gene-Group1vsGroup5vsGroup6-up',
 				'EPL_vs_ES.DE.tab', 'Group1',
 				'EPL_vs_ANC.DE.tab', 'Group5',
 				'EPL_vs_CCL.DE.tab', 'Group6', 
-				false, 'up', 'venn_gene_dinamic_ESvsANCvsCCL', 'genes');
-		drawVenn('venn_gene-ESvsANCvsCCL-down',
+				false, 'up', 'venn_gene_dinamic_Group1vsGroup5vsGroup6', 'genes');
+		drawVenn('venn_gene-Group1vsGroup5vsGroup6-down',
 					'EPL_vs_ES.DE.tab', 'Group1',
 					'EPL_vs_ANC.DE.tab', 'Group5',
 					'EPL_vs_CCL.DE.tab', 'Group6', 
-					false, 'down', 'venn_gene_dinamic_ESvsANCvsCCL', 'genes');
+					false, 'down', 'venn_gene_dinamic_Group1vsGroup5vsGroup6', 'genes');
 		
-		drawVenn('venn_gene-ESvsAECvsCCL-up',
+		drawVenn('venn_gene-Group1vsGroup4vsGroup6-up',
 				'EPL_vs_ES.DE.tab', 'Group1',
 				'EPL_vs_AEC.DE.tab', 'Group4',
 				'EPL_vs_CCL.DE.tab', 'Group6', 
-				false, 'up', 'venn_gene_dinamic_ESvsAECvsCCL', 'genes');
-		drawVenn('venn_gene-ESvsAECvsCCL-down',
+				false, 'up', 'venn_gene_dinamic_Group1vsGroup4vsGroup6', 'genes');
+		drawVenn('venn_gene-Group1vsGroup4vsGroup6-down',
 					'EPL_vs_ES.DE.tab', 'Group1',
 					'EPL_vs_AEC.DE.tab', 'Group4',
 					'EPL_vs_CCL.DE.tab', 'Group6', 
-					false, 'down', 'venn_gene_dinamic_ESvsAECvsCCL', 'genes');
+					false, 'down', 'venn_gene_dinamic_Group1vsGroup4vsGroup6', 'genes');
 			
-		drawVenn('venn_gene-ESvsABCvsCCL-up',
+		drawVenn('venn_gene-Group1vsGroup3vsGroup6-up',
 					'EPL_vs_ES.DE.tab', 'Group1',
 					'EPL_vs_ABC.DE.tab', 'Group3',
 					'EPL_vs_CCL.DE.tab', 'Group6', 
-					false, 'up', 'venn_gene_dinamic_ESvsABCvsCCL', 'genes');
-		drawVenn('venn_gene-ESvsABCvsCCL-down',
+					false, 'up', 'venn_gene_dinamic_Group1vsGroup3vsGroup6', 'genes');
+		drawVenn('venn_gene-Group1vsGroup3vsGroup6-down',
 						'EPL_vs_ES.DE.tab', 'Group1',
 						'EPL_vs_ABC.DE.tab', 'Group3',
 						'EPL_vs_CCL.DE.tab', 'Group6', 
-						false, 'down', 'venn_gene_dinamic_ESvsABCvsCCL', 'genes');
+						false, 'down', 'venn_gene_dinamic_Group1vsGroup3vsGroup6', 'genes');
 	
 	// SIGNALING
 	
-		drawVenn('venn_path-ESvsASCvsCCL-up',
+		drawVenn('venn_path-Group1vsGroup2vsGroup6-up',
 			'pros_output_EPL_vs_ES.csv', 'Group1',
 			'pros_output_EPL_vs_ASC.csv', 'Group2',
 			'pros_output_EPL_vs_CCL.csv', 'Group6', 
-			false, 'up', 'venn_path_dinamic_ESvsASCvsCCL', 'pathways');
-		drawVenn('venn_path-ESvsASCvsCCL-down',
+			false, 'up', 'venn_path_dinamic_Group1vsGroup2vsGroup6', 'pathways');
+		drawVenn('venn_path-Group1vsGroup2vsGroup6-down',
 				'pros_output_EPL_vs_ES.csv', 'Group1',
 				'pros_output_EPL_vs_ASC.csv', 'Group2',
 				'pros_output_EPL_vs_CCL.csv', 'Group6', 
-				false, 'down', 'venn_path_dinamic_ESvsASCvsCCL', 'pathways');
+				false, 'down', 'venn_path_dinamic_Group1vsGroup2vsGroup6', 'pathways');
 		
-		drawVenn('venn_path-ESvsANCvsCCL-up',
+		drawVenn('venn_path-Group1vsGroup5vsGroup6-up',
 				'pros_output_EPL_vs_ES.csv', 'Group1',
 				'pros_output_EPL_vs_ANC.csv', 'Group5',
 				'pros_output_EPL_vs_CCL.csv', 'Group6', 
-				false, 'up', 'venn_path_dinamic_ESvsANCvsCCL', 'pathways');
-		drawVenn('venn_path-ESvsANCvsCCL-down',
+				false, 'up', 'venn_path_dinamic_Group1vsGroup5vsGroup6', 'pathways');
+		drawVenn('venn_path-Group1vsGroup5vsGroup6-down',
 					'pros_output_EPL_vs_ES.csv', 'Group1',
 					'pros_output_EPL_vs_ANC.csv', 'Group5',
 					'pros_output_EPL_vs_CCL.csv', 'Group6', 
-					false, 'down', 'venn_path_dinamic_ESvsANCvsCCL', 'pathways');
+					false, 'down', 'venn_path_dinamic_Group1vsGroup5vsGroup6', 'pathways');
 		
-		drawVenn('venn_path-ESvsAECvsCCL-up',
+		drawVenn('venn_path-Group1vsGroup4vsGroup6-up',
 				'pros_output_EPL_vs_ES.csv', 'Group1',
 				'pros_output_EPL_vs_AEC.csv', 'Group4',
 				'pros_output_EPL_vs_CCL.csv', 'Group6', 
-				false, 'up', 'venn_path_dinamic_ESvsAECvsCCL', 'pathways');
-		drawVenn('venn_path-ESvsAECvsCCL-down',
+				false, 'up', 'venn_path_dinamic_Group1vsGroup4vsGroup6', 'pathways');
+		drawVenn('venn_path-Group1vsGroup4vsGroup6-down',
 					'pros_output_EPL_vs_ES.csv', 'Group1',
 					'pros_output_EPL_vs_AEC.csv', 'Group4',
 					'pros_output_EPL_vs_CCL.csv', 'Group6', 
-					false, 'down', 'venn_path_dinamic_ESvsAECvsCCL', 'pathways');
+					false, 'down', 'venn_path_dinamic_Group1vsGroup4vsGroup6', 'pathways');
 			
-		drawVenn('venn_path-ESvsABCvsCCL-up',
+		drawVenn('venn_path-Group1vsGroup3vsGroup6-up',
 					'pros_output_EPL_vs_ES.csv', 'Group1',
 					'pros_output_EPL_vs_ABC.csv', 'Group3',
 					'pros_output_EPL_vs_CCL.csv', 'Group6', 
-					false, 'up', 'venn_path_dinamic_ESvsABCvsCCL', 'pathways');
-		drawVenn('venn_path-ESvsABCvsCCL-down',
+					false, 'up', 'venn_path_dinamic_Group1vsGroup3vsGroup6', 'pathways');
+		drawVenn('venn_path-Group1vsGroup3vsGroup6-down',
 						'pros_output_EPL_vs_ES.csv', 'Group1',
 						'pros_output_EPL_vs_ABC.csv', 'Group3',
 						'pros_output_EPL_vs_CCL.csv', 'Group6', 
-						false, 'down', 'venn_path_dinamic_ESvsABCvsCCL', 'pathways');
+						false, 'down', 'venn_path_dinamic_Group1vsGroup3vsGroup6', 'pathways');
 		
 		// METABOLIC
 		
-		drawVenn('meta_venn_path-ESvsASCvsCCL-up',
+		drawVenn('meta_venn_path-Group1vsGroup2vsGroup6-up',
 			'pros_output_EPL_vs_ES.csv', 'Group1',
 			'pros_output_EPL_vs_ASC.csv', 'Group2',
 			'pros_output_EPL_vs_CCL.csv', 'Group6', 
-			true, 'up', 'meta_venn_path_dinamic_ESvsASCvsCCL', 'pathways');
-		drawVenn('meta_venn_path-ESvsASCvsCCL-down',
+			true, 'up', 'meta_venn_path_dinamic_Group1vsGroup2vsGroup6', 'pathways');
+		drawVenn('meta_venn_path-Group1vsGroup2vsGroup6-down',
 				'pros_output_EPL_vs_ES.csv', 'Group1',
 				'pros_output_EPL_vs_ASC.csv', 'Group2',
 				'pros_output_EPL_vs_CCL.csv', 'Group6', 
-				true, 'down', 'meta_venn_path_dinamic_ESvsASCvsCCL', 'pathways');
+				true, 'down', 'meta_venn_path_dinamic_Group1vsGroup2vsGroup6', 'pathways');
 		
-		drawVenn('meta_venn_path-ESvsANCvsCCL-up',
+		drawVenn('meta_venn_path-Group1vsGroup5vsGroup6-up',
 				'pros_output_EPL_vs_ES.csv', 'Group1',
 				'pros_output_EPL_vs_ANC.csv', 'Group5',
 				'pros_output_EPL_vs_CCL.csv', 'Group6', 
-				true, 'up', 'meta_venn_path_dinamic_ESvsANCvsCCL', 'pathways');
-		drawVenn('meta_venn_path-ESvsANCvsCCL-down',
+				true, 'up', 'meta_venn_path_dinamic_Group1vsGroup5vsGroup6', 'pathways');
+		drawVenn('meta_venn_path-Group1vsGroup5vsGroup6-down',
 					'pros_output_EPL_vs_ES.csv', 'Group1',
 					'pros_output_EPL_vs_ANC.csv', 'Group5',
 					'pros_output_EPL_vs_CCL.csv', 'Group6', 
-					true, 'down', 'meta_venn_path_dinamic_ESvsANCvsCCL', 'pathways');
+					true, 'down', 'meta_venn_path_dinamic_Group1vsGroup5vsGroup6', 'pathways');
 		
-		drawVenn('meta_venn_path-ESvsAECvsCCL-up',
+		drawVenn('meta_venn_path-Group1vsGroup4vsGroup6-up',
 				'pros_output_EPL_vs_ES.csv', 'Group1',
 				'pros_output_EPL_vs_AEC.csv', 'Group4',
 				'pros_output_EPL_vs_CCL.csv', 'Group6', 
-				true, 'up', 'venn_path_dinamic_ESvsAECvsCCL', 'pathways');
-		drawVenn('venn_path-ESvsAECvsCCL-down',
+				true, 'up', 'venn_path_dinamic_Group1vsGroup4vsGroup6', 'pathways');
+		drawVenn('venn_path-Group1vsGroup4vsGroup6-down',
 					'pros_output_EPL_vs_ES.csv', 'Group1',
 					'pros_output_EPL_vs_AEC.csv', 'Group4',
 					'pros_output_EPL_vs_CCL.csv', 'Group6', 
-					true, 'down', 'meta_venn_path_dinamic_ESvsAECvsCCL', 'pathways');
+					true, 'down', 'meta_venn_path_dinamic_Group1vsGroup4vsGroup6', 'pathways');
 			
-		drawVenn('meta_venn_path-ESvsABCvsCCL-up',
+		drawVenn('meta_venn_path-Group1vsGroup3vsGroup6-up',
 					'pros_output_EPL_vs_ES.csv', 'Group1',
 					'pros_output_EPL_vs_ABC.csv', 'Group3',
 					'pros_output_EPL_vs_CCL.csv', 'Group6', 
-					true, 'up', 'meta_venn_path_dinamic_ESvsABCvsCCL', 'pathways');
-		drawVenn('meta_venn_path-ESvsABCvsCCL-down',
+					true, 'up', 'meta_venn_path_dinamic_Group1vsGroup3vsGroup6', 'pathways');
+		drawVenn('meta_venn_path-Group1vsGroup3vsGroup6-down',
 						'pros_output_EPL_vs_ES.csv', 'Group1',
 						'pros_output_EPL_vs_ABC.csv', 'Group3',
 						'pros_output_EPL_vs_CCL.csv', 'Group6', 
-						true, 'down', 'meta_venn_path_dinamic_ESvsABCvsCCL', 'pathways');
+						true, 'down', 'meta_venn_path_dinamic_Group1vsGroup3vsGroup6', 'pathways');
 	
 });

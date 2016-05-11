@@ -258,11 +258,11 @@ function drawVolcanoPlot(renderTo,  file_name){
 
 $(function(){
 	
-	drawVolcanoPlot('EPL_vs_ABC',  'EPL_vs_ABC.DE.tab');
-	drawVolcanoPlot('EPL_vs_AEC',  'EPL_vs_AEC.DE.tab');
-	drawVolcanoPlot('EPL_vs_ANC',  'EPL_vs_ANC.DE.tab');
-	drawVolcanoPlot('EPL_vs_ASC',  'EPL_vs_ASC.DE.tab');
-	drawVolcanoPlot('EPL_vs_CCL',  'EPL_vs_CCL.DE.tab');
-	drawVolcanoPlot('EPL_vs_ES',   'EPL_vs_ES.DE.tab');
+	drawVolcanoPlot('Group7_vs_Group1',  'EPL_vs_ABC.DE.tab');
+	drawVolcanoPlot('Group7_vs_Group2',  'EPL_vs_AEC.DE.tab');
+	drawVolcanoPlot('Group7_vs_Group3',  'EPL_vs_ANC.DE.tab');
+	drawVolcanoPlot('Group7_vs_Group4',  'EPL_vs_ASC.DE.tab');
+	drawVolcanoPlot('Group7_vs_Group5',  'EPL_vs_CCL.DE.tab');
+	drawVolcanoPlot('Group7_vs_Group6',   'EPL_vs_ES.DE.tab');
 	
 });
