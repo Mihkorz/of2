@@ -14,7 +14,9 @@ from website.loreal_report_views import LorealReport, \
                                  LorealReportPathwayScatterJson, LorealReportPathwayTableJson, LorealReportAjaxPathDetail, \
                                  LorealReportAjaxPathwayVenn, LorealReportAjaxPathwayVennTable
 from website.pathdemo_report_views import PathDemoReport
-from website.demo2_report_views import Demo2Report                                 
+from website.demo2_report_views import Demo2Report, Demo2GeneVolcanoJson, Demo2ReportGeneTableJson, Demo2ReportGeneBoxplotJson,\
+                                    Demo2ReportPathwayTableJson, Demo2ReportAjaxPathDetail, \
+                                    Demo2ReportAjaxPathwayVenn, Demo2ReportAjaxPathwayVennTable                                
 from website.lrl_report_views import LRLReport,\
                                      LRLReportGeneScatterJson, LRLReportGeneTableJson, LRLReportGeneDetailJson, \
                                      LRLGeneVolcanoJson, LRLReportPathwayTableJson, LRLReportSideEffTableJson, \
@@ -203,6 +205,13 @@ urlpatterns = patterns('',
     
     ################### REPORT DEMO 2 (based on BT=report) ###############################################
     url(r'^report-portal/report/demo2/$', Demo2Report.as_view(), name="bt-report"),
+    url(r'^report-portal/demo2-genevolcanojson/$', Demo2GeneVolcanoJson.as_view(), name="bt-gen-volcano-json"),
+    url(r'^report-portal/demo2-genetablejson/$', Demo2ReportGeneTableJson.as_view(), name="bt-gene_table_json"),
+    url(r'^report-portal/demo2-genesboxplotjson/$', Demo2ReportGeneBoxplotJson.as_view(), name="bt-gene_boxplot_json"),
+    url(r'^report-portal/demo2-pathwaytablejson/$', Demo2ReportPathwayTableJson.as_view(), name="pathway_table_json"),
+    url(r'^report-portal/report/demo2-ajaxpathdetail/$', Demo2ReportAjaxPathDetail.as_view(), name="bt-report_ajax_path_detail"),
+    url(r'^report-portal/report/demo2-ajaxpathvenn/$', Demo2ReportAjaxPathwayVenn.as_view(), name="bt-report_ajax_path_venn"),
+    url(r'^report-portal/report/demo2-ajaxpathvenntbl/$', Demo2ReportAjaxPathwayVennTable.as_view(), name="bt-report_ajax_path_venn_tbl"),
 
     ################### REPORT APP ################################################
     url(r'^report-portal/$', ReportList.as_view(), name="report-index"),

@@ -143,7 +143,7 @@ class BTReportGeneTableJson(TemplateView):
             df_gene['logFC'] = df_gene['logFC'].round(decimals=2)         
         
             df_gene = df_gene[(df_gene['adj.P.Val']<0.05) & (np.absolute(df_gene['logFC'])>0.4)] 
-        
+            
             
         
         else:

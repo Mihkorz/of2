@@ -39,15 +39,16 @@ class Demo2Report(TemplateView):
         
         context['lAdultGenes'] = lAdultGenes
         
+        
         return context
     
     
-class BTGeneVolcanoJson(TemplateView):
+class Demo2GeneVolcanoJson(TemplateView):
     template_name="website/bt_report.html"
     
     def dispatch(self, request, *args, **kwargs):
         
-        return super(BTGeneVolcanoJson, self).dispatch(request, *args, **kwargs)
+        return super(Demo2GeneVolcanoJson, self).dispatch(request, *args, **kwargs)
     
     def post(self, request, *args, **kwargs):
         
@@ -56,6 +57,10 @@ class BTGeneVolcanoJson(TemplateView):
         df_gene = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/"+file_name, sep='\t')
         
         df_gene = df_gene[['gene', 'logFC', 'adj.P.Val']]
+        
+        df_fake = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/demo2_gene_mapping.csv")
+            
+        df_gene['gene'] = df_fake['fake']
         
         df_gene.rename(columns={'gene': 'Symbol'}, inplace=True)
         
@@ -123,12 +128,12 @@ class BTGeneVolcanoJson(TemplateView):
         
         raise Exception('stop') 
 
-class BTReportGeneTableJson(TemplateView):
+class Demo2ReportGeneTableJson(TemplateView):
     template_name="website/bt_report.html"
     
     def dispatch(self, request, *args, **kwargs):
         
-        return super(BTReportGeneTableJson, self).dispatch(request, *args, **kwargs)
+        return super(Demo2ReportGeneTableJson, self).dispatch(request, *args, **kwargs)
     
     def get(self, request, *args, **kwargs):
         
@@ -143,8 +148,12 @@ class BTReportGeneTableJson(TemplateView):
             df_gene['logFC'] = df_gene['logFC'].round(decimals=2)         
         
             df_gene = df_gene[(df_gene['adj.P.Val']<0.05) & (np.absolute(df_gene['logFC'])>0.4)] 
-        
             
+            df_fake = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/demo2_gene_mapping.csv")
+            
+            df_gene['gene'] = df_fake['fake']
+            
+            #raise Exception('gene table')
         
         else:
             df_ES = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/EPL_vs_ES.DE.tab",
@@ -169,20 +178,23 @@ class BTReportGeneTableJson(TemplateView):
             df_gene['6'] = df_CCL['logFC'].round(decimals=2)
             
             
-            
             df_gene.reset_index(inplace=True)
-            #raise Exception('gene table')
+            
+            df_fake = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/demo2_gene_mapping.csv")
+            df_gene['gene'] = df_fake['fake']
+            
+            #raise Exception('gene table ALL')
 
         output_json = df_gene.to_json(orient='values')
         response_data = {'data': json.loads(output_json)}
         return HttpResponse(json.dumps(response_data), content_type="application/json")
     
-class BTReportGeneBoxplotJson(TemplateView):
+class Demo2ReportGeneBoxplotJson(TemplateView):
     template_name="website/report.html"
     
     def dispatch(self, request, *args, **kwargs):
         
-        return super(BTReportGeneBoxplotJson, self).dispatch(request, *args, **kwargs)
+        return super(Demo2ReportGeneBoxplotJson, self).dispatch(request, *args, **kwargs)
     
     def get(self, request, *args, **kwargs):
         
@@ -203,6 +215,10 @@ class BTReportGeneBoxplotJson(TemplateView):
         df_CCL = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/box_EPL_vs_CCL.onc.tab",
                                 index_col='SYMBOL', sep='\t')
         
+        df_fake = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/demo2_gene_mapping.csv",
+                              index_col='fake')
+        
+        gene = df_fake.loc[gene, 'gene']
         #raise Exception('boxplot')
         series_tumour = []
         series_norm = []
@@ -257,11 +273,11 @@ class BTReportGeneBoxplotJson(TemplateView):
         
         return HttpResponse(json.dumps(response_data), content_type="application/json")
 
-class BTReportPathwayTableJson(TemplateView):
+class Demo2ReportPathwayTableJson(TemplateView):
     template_name="website/report.html"
     def dispatch(self, request, *args, **kwargs):
         
-        return super(BTReportPathwayTableJson, self).dispatch(request, *args, **kwargs)
+        return super(Demo2ReportPathwayTableJson, self).dispatch(request, *args, **kwargs)
     
     def get(self, request, *args, **kwargs):
         
@@ -394,16 +410,16 @@ def shiftedColorMap(cmap, start=0, midpoint=0, stop=1.0, name='shiftedcmap'):
 
     return newcmap
     
-class BTReportAjaxPathDetail(TemplateView):
+class Demo2ReportAjaxPathDetail(TemplateView):
     template_name = 'website/report_ajax_pathway_detail.html'
     
    
     
     def dispatch(self, request, *args, **kwargs):
-        return super(BTReportAjaxPathDetail, self).dispatch(request, *args, **kwargs)
+        return super(Demo2ReportAjaxPathDetail, self).dispatch(request, *args, **kwargs)
     
     def get_context_data(self, *args, **kwargs):
-        context = super(BTReportAjaxPathDetail, self).get_context_data(**kwargs)
+        context = super(Demo2ReportAjaxPathDetail, self).get_context_data(**kwargs)
         
         pathway = Pathway.objects.filter(organism='human', name=self.request.GET['pathway']).exclude(database='primary_old')[0]
         
@@ -413,9 +429,25 @@ class BTReportAjaxPathDetail(TemplateView):
                 gene_data.append({'SYMBOL':gene.name.strip().upper(),
                                   'Node(s)':nodes })   
            
-        gene_df = pd.DataFrame(gene_data).set_index('SYMBOL')    
+        gene_df = pd.DataFrame(gene_data).set_index('SYMBOL')
         
-        filename = 'cnr_proc_EPL_vs_'+self.request.GET['filename']+'.csv'
+        ######## for DEMO2 report
+        
+        
+        rep = {'Group1': 'ES',
+               'Group2':'ASC',
+               'Group3':'ABC',
+               'Group4':'AEC',
+               'Group5':'ANC',
+               'Group6':'CCL'}
+        
+        
+        if rep.has_key(self.request.GET['filename']):
+                filename = 'cnr_proc_EPL_vs_'+rep[self.request.GET['filename']]+'.csv'
+        else:
+        ######## for DEMO2 report     
+        
+            filename = 'cnr_proc_EPL_vs_'+self.request.GET['filename']+'.csv'
         
         
         df_file_cnr = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/"+filename)
@@ -434,7 +466,16 @@ class BTReportAjaxPathDetail(TemplateView):
         joined_df.reset_index(inplace=True)
         joined_df['log2(Fold-change)'] = np.log2(joined_df['CNR']).round(decimals=2)
         joined_df.index += 1
-        context['joined'] = joined_df[['SYMBOL', 'Node(s)', 'log2(Fold-change)']].to_html(classes=['table', 'table-bordered', 'table-striped'])
+        
+        table_df = joined_df.copy()
+        table_df.set_index('SYMBOL', inplace=True)
+        df_fake = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/demo2_gene_mapping.csv",
+                              index_col='gene')        
+        table_df = table_df.join(df_fake, how='inner')        
+        table_df.rename(columns={'fake': 'SYMBOL'}, inplace=True)
+        table_df.index = np.arange(1, len(table_df)+1)        
+        
+        context['joined'] = table_df[['SYMBOL', 'Node(s)', 'log2(Fold-change)']].to_html(classes=['table', 'table-bordered', 'table-striped'])
         context['diff_genes_count'] = len(joined_df.index)
         
         
@@ -536,10 +577,10 @@ class BTReportAjaxPathDetail(TemplateView):
         return context
     
     
-class BTReportAjaxPathwayVenn(TemplateView):
+class Demo2ReportAjaxPathwayVenn(TemplateView):
     template_name="website/report_ajax_venn.html"
     def dispatch(self, request, *args, **kwargs):
-        return super(BTReportAjaxPathwayVenn, self).dispatch(request, *args, **kwargs)
+        return super(Demo2ReportAjaxPathwayVenn, self).dispatch(request, *args, **kwargs)
     
     def get(self, request, *args, **kwargs):
           
@@ -699,10 +740,10 @@ class BTReportAjaxPathwayVenn(TemplateView):
 
         return HttpResponse(json.dumps(response_data), content_type="application/json")
     
-class BTReportAjaxPathwayVennTable(TemplateView):
+class Demo2ReportAjaxPathwayVennTable(TemplateView):
     template_name="website/report_ajax_venn.html"
     def dispatch(self, request, *args, **kwargs):
-        return super(BTReportAjaxPathwayVennTable, self).dispatch(request, *args, **kwargs)
+        return super(Demo2ReportAjaxPathwayVennTable, self).dispatch(request, *args, **kwargs)
     
     def get(self, request, *args, **kwargs):
         inter_num = int(self.request.GET.get('inter_num'))
@@ -712,6 +753,22 @@ class BTReportAjaxPathwayVennTable(TemplateView):
         path_gene = self.request.GET.get('path_gene')
         
         lMembers = members.split('vs')
+        
+        ######## for DEMO2 report
+        
+        
+        rep = {'Group1': 'ES',
+               'Group2':'ASC',
+               'Group3':'ABC',
+               'Group4':'AEC',
+               'Group5':'ANC',
+               'Group6':'CCL'}
+        
+        for m in lMembers:
+            if rep.has_key(m):
+                lMembers[lMembers.index(m)] = rep[m]
+        
+        ######## for DEMO2 report
         
         
         
@@ -733,6 +790,8 @@ class BTReportAjaxPathwayVennTable(TemplateView):
                 df_1 = pd.DataFrame(df_1['logFC'])
                 df_1.columns = ['0']
                 
+                   
+                
             s_tumour = df_1['0'].round(decimals=2)
             s_tumour.name = lMembers[0]
             if regulation == 'updown':
@@ -743,7 +802,19 @@ class BTReportAjaxPathwayVennTable(TemplateView):
                 s_tumour = s_tumour[s_tumour<0]
             
             df_1_tumour = pd.DataFrame(s_tumour)
-            df_1_tumour.reset_index(inplace=True)
+            
+            
+            if path_gene =='genes':                
+                                
+                df_fake = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/demo2_gene_mapping.csv",
+                              index_col='gene')        
+               
+                df_1_tumour = df_fake.join(df_1_tumour, how='inner')
+                #raise Exception('fff')
+                
+            
+            
+            
             df_json = df_1_tumour.to_json(orient='values')
             
         
@@ -796,7 +867,16 @@ class BTReportAjaxPathwayVennTable(TemplateView):
                 s_tumour2 = s_tumour2[s_tumour2<0]
                 joined_df = pd.DataFrame(s_tumour1).join(pd.DataFrame(s_tumour2), how='inner')
             
-            joined_df.reset_index(inplace=True)
+            #joined_df.reset_index(inplace=True)
+            
+            if path_gene =='genes':                
+                df_fake = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/demo2_gene_mapping.csv",
+                              index_col='gene')        
+               
+                joined_df = df_fake.join(joined_df, how='inner')
+                
+                #raise Exception('couple')
+            
             df_json = joined_df.to_json(orient='values')
             
         elif inter_num == 3:
@@ -872,9 +952,17 @@ class BTReportAjaxPathwayVennTable(TemplateView):
                 joined_df = pd.DataFrame(s_tumour1).join(pd.DataFrame(s_tumour2), how='inner')
                 joined_df = joined_df.join(pd.DataFrame(s_tumour3), how='inner')
             
-            joined_df.reset_index(inplace=True)
+            #joined_df.reset_index(inplace=True)            
+            
+            if path_gene =='genes':                
+                df_fake = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/demo2_gene_mapping.csv",
+                              index_col='gene')        
+               
+                joined_df = df_fake.join(joined_df, how='inner')
+            
             df_json = joined_df.to_json(orient='values')
             
+        #raise Exception('haha')    
         response_data = {'aaData': json.loads(df_json)}
         return HttpResponse(json.dumps(response_data), content_type="application/json")
 
