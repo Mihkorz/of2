@@ -811,6 +811,8 @@ class Demo2ReportAjaxPathwayVennTable(TemplateView):
                
                 df_1_tumour = df_fake.join(df_1_tumour, how='inner')
                 #raise Exception('fff')
+            else:
+                df_1_tumour.reset_index(inplace=True) 
                 
             
             
@@ -874,6 +876,8 @@ class Demo2ReportAjaxPathwayVennTable(TemplateView):
                               index_col='gene')        
                
                 joined_df = df_fake.join(joined_df, how='inner')
+            else:
+                joined_df.reset_index(inplace=True) 
                 
                 #raise Exception('couple')
             
@@ -952,13 +956,15 @@ class Demo2ReportAjaxPathwayVennTable(TemplateView):
                 joined_df = pd.DataFrame(s_tumour1).join(pd.DataFrame(s_tumour2), how='inner')
                 joined_df = joined_df.join(pd.DataFrame(s_tumour3), how='inner')
             
-            #joined_df.reset_index(inplace=True)            
+                       
             
             if path_gene =='genes':                
                 df_fake = pd.read_csv(settings.MEDIA_ROOT+"/../static/report/bt/demo2_gene_mapping.csv",
                               index_col='gene')        
                
                 joined_df = df_fake.join(joined_df, how='inner')
+            else:
+                joined_df.reset_index(inplace=True) 
             
             df_json = joined_df.to_json(orient='values')
             
