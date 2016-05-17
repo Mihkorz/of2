@@ -80,7 +80,7 @@ function drawGeneChart(reportID, gene_name, categories){
 
 	}
 	
-function showPathDetails(reportID, path_name, group_name){
+function showPathDetails(reportID, path_name, group_name, organism){
 	$("#modalBody").html('<h4 id="loading">Loading ...</h4><div id="gene_plot" style="width: 800px; height: 400px; margin: 0 auto"></div>');
 	
 	$("#myModalLabel").text(path_name);
@@ -92,6 +92,7 @@ function showPathDetails(reportID, path_name, group_name){
 		     reportID: reportID,
 		     pathway: path_name,
 		     group_name: group_name,
+		     organism: organism,
 		     		
 			},
 			function(data){
@@ -145,7 +146,7 @@ function drawGeneTable(reportID, id, file_name, categories){
 }
 
 
-function drawPathwayTable(reportID, id, file_name1, file_name2, is_metabolic){
+function drawPathwayTable(reportID, id, file_name1, file_name2, is_metabolic, organism){
 	
 	
 	$('#'+id).DataTable( {
@@ -230,37 +231,37 @@ function drawPathwayTable(reportID, id, file_name1, file_name2, is_metabolic){
 	    	    var path_name = $(this).prev().find('span').attr('title');    	
 	    	    var $th = $(this).closest('table').find('th').eq($(this).index());
 	    	    var group = $th.text();
-	    	    showPathDetails(reportID, path_name, group);    	    	
+	    	    showPathDetails(reportID, path_name, group, organism);    	    	
 	                                                                              });
 		    $('#'+id+' tbody').on( 'click', 'tr td:nth-child(3)', function () {    	
 	    	    var path_name = $(this).prev().prev().find('span').attr('title');    	
 	    	    var $th = $(this).closest('table').find('th').eq($(this).index());
 	    	    var group = $th.text();
-	    	    showPathDetails(reportID, path_name, group);    	    	
+	    	    showPathDetails(reportID, path_name, group, organism);    	    	
 	                                                                              });
 		    $('#'+id+' tbody').on( 'click', 'tr td:nth-child(4)', function () {    	
 	    	    var path_name = $(this).prev().prev().prev().find('span').attr('title');    	
 	    	    var $th = $(this).closest('table').find('th').eq($(this).index());
 	    	    var group = $th.text();
-	    	    showPathDetails(reportID, path_name, group);    	    	
+	    	    showPathDetails(reportID, path_name, group, organism);    	    	
 	                                                                              });
 		    $('#'+id+' tbody').on( 'click', 'tr td:nth-child(5)', function () {    	
 	    	    var path_name = $(this).prev().prev().prev().prev().find('span').attr('title');    	
 	    	    var $th = $(this).closest('table').find('th').eq($(this).index());
 	    	    var group = $th.text();
-	    	    showPathDetails(reportID, path_name, group);    	    	
+	    	    showPathDetails(reportID, path_name, group, organism);    	    	
 	                                                                              });
 		    $('#'+id+' tbody').on( 'click', 'tr td:nth-child(6)', function () {    	
 	    	    var path_name = $(this).prev().prev().prev().prev().prev().find('span').attr('title');    	
 	    	    var $th = $(this).closest('table').find('th').eq($(this).index());
 	    	    var group = $th.text();
-	    	    showPathDetails(reportID, path_name, group);    	    	
+	    	    showPathDetails(reportID, path_name, group, organism);    	    	
 	                                                                              });
 		    $('#'+id+' tbody').on( 'click', 'tr td:nth-child(7)', function () {    	
 	    	    var path_name = $(this).prev().prev().prev().prev().prev().prev().find('span').attr('title');    	
 	    	    var $th = $(this).closest('table').find('th').eq($(this).index());
 	    	    var group = $th.text();
-	    	    showPathDetails(reportID, path_name, group);    	    	
+	    	    showPathDetails(reportID, path_name, group, organism);    	    	
 	                                                                              });
 		
 	}

@@ -453,34 +453,34 @@ $(function() {
 	drawPathwayTable({{report.id}},
 			'tbl-path_all', 
 	         'all', 
-	         'all', false);
+	         'all', false, '{{report.organism}}');
 	
 	{%for perm in report.get_path_permutations%}
 	drawVenn({{report.id}},
 		'venn_path-{{perm.strip}}-up',
 		'{{perm.strip}}',
-		false, 'up', 'venn_path_dinamic_{{perm.strip}}', 'pathways');
+		false, 'up', 'venn_path_dinamic_{{perm.strip}}', 'pathways', '{{report.organism}}');
 	drawVenn({{report.id}},
 			'venn_path-{{perm.strip}}-down',
 			'{{perm.strip}}',
-			false, 'down', 'venn_path_dinamic_{{perm.strip}}', 'pathways');
+			false, 'down', 'venn_path_dinamic_{{perm.strip}}', 'pathways', '{{report.organism}}');
     {%endfor%}
     
  // METABOLIC PATHs
   drawPathwayTable({{report.id}},
 		  'tbl-meta_all', 
 	         'all', 
-	         'all', true);
+	         'all', true, '{{report.organism}}');
  
 	{%for perm in report.get_path_permutations%}
 	drawVenn({{report.id}},
 		'venn_meta-{{perm.strip}}-up',
 		'{{perm.strip}}',
-		true, 'up', 'venn_meta_dinamic_{{perm.strip}}', 'pathways');
+		true, 'up', 'venn_meta_dinamic_{{perm.strip}}', 'pathways', '{{report.organism}}');
 	drawVenn({{report.id}},
 			'venn_meta-{{perm.strip}}-down',
 			'{{perm.strip}}',
-			true, 'down', 'venn_meta_dinamic_{{perm.strip}}', 'pathways');
+			true, 'down', 'venn_meta_dinamic_{{perm.strip}}', 'pathways', '{{report.organism}}');
     {%endfor%}
 
 });

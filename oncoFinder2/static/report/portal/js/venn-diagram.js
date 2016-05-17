@@ -1,4 +1,4 @@
-function drawDinamicTable(reportID, idx, tblRenderTo, path_gene, categories){
+function drawDinamicTable(reportID, idx, tblRenderTo, path_gene, categories, organism){
 	
 	var arParams = idx.split("_");
 	var inter_num = arParams[0];
@@ -103,19 +103,19 @@ function drawDinamicTable(reportID, idx, tblRenderTo, path_gene, categories){
 	    	    var path_name = $(this).prev().find('span').attr('title');    	
 	    	    var $th = $(this).closest('table').find('th').eq($(this).index());
 	    	    var group = $th.text();
-	    	    showPathDetails(reportID, path_name, group);    	    	
+	    	    showPathDetails(reportID, path_name, group, categories);    	    	
 	                                                                              });
 			$('#'+tblId+' tbody').on( 'click', 'tr td:nth-child(3)', function () {    	
 	    	    var path_name = $(this).prev().prev().find('span').attr('title');    	
 	    	    var $th = $(this).closest('table').find('th').eq($(this).index());
 	    	    var group = $th.text();
-	    	    showPathDetails(reportID, path_name, group);    	    	
+	    	    showPathDetails(reportID, path_name, group, categories);    	    	
 	                                                                              });
 			$('#'+tblId+' tbody').on( 'click', 'tr td:nth-child(4)', function () {    	
 	    	    var path_name = $(this).prev().prev().prev().find('span').attr('title');    	
 	    	    var $th = $(this).closest('table').find('th').eq($(this).index());
 	    	    var group = $th.text();
-	    	    showPathDetails(reportID, path_name, group);    	    	
+	    	    showPathDetails(reportID, path_name, group, categories);    	    	
 	                                                                              });
 			} // end of if path_gene==paths
 			else{
@@ -138,9 +138,9 @@ function drawDinamicTable(reportID, idx, tblRenderTo, path_gene, categories){
 
 function drawVenn(reportID, renderTo, 
 		                      group_names,		                      
-		                      is_metabolic, reg, tblRenderTo, path_gene, categories){
+		                      is_metabolic, reg, tblRenderTo, path_gene, categories, organism){
 	
-	
+	alert(categories)
 	$.get("/report-portal/report-ajaxpathvenn/",
 			{
 		reportID: reportID,

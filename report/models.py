@@ -4,12 +4,19 @@ import itertools
 
 from django.db import models
 
+PATHWAY_ORGANISM = (
+    ('human', 'Human'),
+    ('mouse', 'Mouse'),
+) 
+
 class Report(models.Model):
     """ Text data """
     title = models.CharField(verbose_name='Report title', max_length=250, blank=False)
     title_short = models.CharField(verbose_name='Short title', max_length=250, blank=True)
     slug = models.SlugField(verbose_name='URL', max_length=50, blank=False,
                              help_text='url for /report-portal/report/%url%/')    
+    organism = models.CharField(verbose_name=u'Organism', max_length=5, blank=False,
+                                choices = PATHWAY_ORGANISM, default='human') 
     organization = models.CharField(max_length=250, blank=True)
     input_data_text = models.TextField(verbose_name='Text for Input Data section', blank=True)
     methods_text = models.TextField(verbose_name='Text for Methods section', blank=True)
