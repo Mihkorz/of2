@@ -140,7 +140,7 @@ function drawVenn(reportID, renderTo,
 		                      group_names,		                      
 		                      is_metabolic, reg, tblRenderTo, path_gene, categories, organism){
 	
-	alert(categories)
+	
 	$.get("/report-portal/report-ajaxpathvenn/",
 			{
 		reportID: reportID,
