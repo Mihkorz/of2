@@ -838,7 +838,21 @@ class MedicAjaxGenerateFullReport(TemplateView):
                 cells = table.add_row().cells
                 cells[0].text = str(i)
                 cells[1].text = request.POST.get('t_treatment'+treat_id)
-                cells[2].text = request.POST.get('t_hormone'+treat_id)
+                
+                er = request.POST.get('t_hormone'+treat_id)
+                if er=='ER negative':
+                    er='ER-'
+                if er=='ER positive':
+                    er='ER+'
+                    
+                her = request.POST.get('t_her2'+treat_id)
+                if her=='negative':
+                    her='HER-'
+                if her=='positive':
+                    her='HER+'                    
+                rec = er+' '+her
+                
+                cells[2].text = rec
                 if request.POST.get('t_responder'+treat_id) == 'responder':
                     resp = 'Yes'
                 if request.POST.get('t_responder'+treat_id) == 'non-responder':

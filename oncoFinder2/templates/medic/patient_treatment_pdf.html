@@ -107,13 +107,17 @@ function requestData{{treatment.id}}() {
 	    		{csrfmiddlewaretoken: '{{csrf_token}}'},
 	    		function(data){
 	    			
+	    			acc = data['accuracy']
+	    			if (parseFloat(acc)==1) acc='0.95'
+	    			if(parseFloat(acc)<0.5) acc='Low'
+	    			
 	    			chart{{treatment.id}}.setTitle({text: data['treatment']},
 	    				   {text: 'Patient is a '+data['responder']+'. \
  		                   Response score = '+ data['patient_votes']+ ' \
  		                   Specificity='+ data['specificity']+ ' \
  		                   Sensitivity='+ data['sensitivity']+ ' \
  		                   AUC='+ data['AUC']+ ' \
-		                   Accuracy='+data['accuracy'], style:{'font-weight':'bold'}} ,
+		                   Accuracy='+acc, style:{'font-weight':'bold'}} ,
 		                   0);
 	    			
 	    			chart{{treatment.id}}.addSeries({
@@ -160,22 +164,26 @@ function requestData{{treatment.id}}() {
 	    			// Fill Treatment Table
 	    			
 	    			er = data['hormone_receptor_status']
-	    			if (er=='ER negative') er='ER- '
-	    			if (er=='ER positive') er='ER+ '
+	    			if (er=='ER negative') er='ER-'
+	    			if (er=='ER positive') er='ER+'
 	    			
 	    			her = data['her2_status']
 	    			if (her=='negative') her='HER-'
 	    			if (her=='positive') her='HER+'	    			
-	    			rec = er+her
+	    			rec = er+' '+her
 	    			
 	    			acc = data['accuracy']
 	    			if (parseFloat(acc)==1) acc='0.95'
 	    			if(parseFloat(acc)<0.5) acc='Low'
 	    			
+	    			res = data['responder']
+	    			if (res=='responder') res='Yes'
+	    			if (res=='non-responder') res='No'
+	    			
 	    			$('#treatmentTbl > tbody:last-child').append('<tr><td></td> \
 	    			<td>'+data['treatment']+'</td> \
 	    			<td>'+rec+'</td>\
-	    			<td>'+data['responder']+'</td>\
+	    			<td>'+res+'</td>\
 	    			<td>'+acc+'</td>\
 	    			</tr>');
 	    			
