@@ -165,22 +165,26 @@ function requestData{{treatment.id}}() {
 	    			
 	    			er = data['hormone_receptor_status']
 	    			if (er=='ER negative') er='ER-'
-	    			if (er=='ER positive') er='ER+'
+	    			if (er=='ER positive') er='ER+';
 	    			
 	    			her = data['her2_status']
-	    			if (her=='negative') her='HER-'
-	    			if (her=='positive') her='HER+'	    			
-	    			rec = er+' '+her
+	    			if (her=='negative') her='HER-';
+	    			if (her=='positive') her='HER+';	    			
+	    			rec = er+' '+her;
 	    			
 	    			acc = data['accuracy']
-	    			if (parseFloat(acc)==1) acc='0.95'
-	    			if(parseFloat(acc)<0.5) acc='Low'
+	    			if (parseFloat(acc)==1) acc='0.95';
+	    			if(parseFloat(acc)<0.5) acc='Low';
 	    			
 	    			res = data['responder']
-	    			if (res=='responder') res='Yes'
-	    			if (res=='non-responder') res='No'
+	    			if (res=='responder') {res='Yes';
+	    			                       tr1='<tr class="success">';}
+	    			if (res=='non-responder') {res='No';
+	    			                         tr1='<tr>'
+	    			}
 	    			
-	    			$('#treatmentTbl > tbody:last-child').append('<tr><td></td> \
+	    			
+	    			$('#treatmentTbl > tbody:last-child').append(tr1+'<td></td> \
 	    			<td>'+data['treatment']+'</td> \
 	    			<td>'+rec+'</td>\
 	    			<td>'+res+'</td>\
