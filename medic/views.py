@@ -847,7 +847,7 @@ class MedicAjaxGenerateFullReport(TemplateView):
                 
                 acc = request.POST.get('t_acc'+treat_id)
                 if float(acc) == 1:
-                    acc = 0.95
+                    acc = '0.95'
                 elif float(acc) <0.5:
                     acc = 'Low'   
                 
