@@ -823,20 +823,39 @@ class MedicAjaxGenerateFullReport(TemplateView):
         table.style = 'TableGrid'
         # populate header row --------
         heading_cells = table.rows[0].cells
-        heading_cells[0].text = 'Treatment'
-        heading_cells[1].text = 'Patient status'
+        heading_cells[0].text = '#'
+        heading_cells[1].text = 'Treatment'
+        heading_cells[2].text = 'ER/HER'
+        heading_cells[3].text = 'Responce status'
+        heading_cells[4].text = 'Accuracy'
         
         
         
-        
+        i=1
         for treat in TreatmentMethod.objects.filter(nosology = 1):
             try:
                 treat_id = str(treat.id)
                 cells = table.add_row().cells
-                cells[0].text = request.POST.get('t_treatment'+treat_id)
-                cells[1].text = request.POST.get('t_responder'+treat_id)
+                cells[0].text = str(i)
+                cells[1].text = request.POST.get('t_treatment'+treat_id)
+                cells[2].text = request.POST.get('t_hormone'+treat_id)
+                if request.POST.get('t_responder'+treat_id) == 'responder':
+                    resp = 'Yes'
+                if request.POST.get('t_responder'+treat_id) == 'non-responder':
+                    resp = 'No'
+                cells[3].text = resp
+                
+                acc = request.POST.get('t_acc'+treat_id)
+                if acc == 1:
+                    acc = 0.95
+                elif acc <0.5:
+                    acc = 'Low'   
+                
+                cells[4].text = acc
+                
+                i=i+1
             except:
-                pass
+                raise
         document.add_page_break()
         
         for treat in TreatmentMethod.objects.filter(nosology = 1):

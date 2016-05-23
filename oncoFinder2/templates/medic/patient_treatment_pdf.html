@@ -122,6 +122,7 @@ function requestData{{treatment.id}}() {
 	    				      <div id="t_treatment"><strong>Treatment:</strong> '+ data["treatment"]+'</div> \
 	    				      <div id="t_cit"><strong>Citation(s):</strong> '+ data["citation"]+'</div> \
 	    				      <div id="t_org"><strong>Organization name:</strong> '+ data["organization_name"]+'</div> \
+	    				      
 	    					');
 	    			
 	    			var jsonArr = {
@@ -134,8 +135,8 @@ function requestData{{treatment.id}}() {
 	    					'treatment': data['treatment'],
 	    					'citation': data['citation'],
 	    					'organization_name': data['organization_name'],
-	    					'responder': data['responder']
-	    					
+	    					'responder': data['responder'],
+	    					'accuracy': data['accuracy']
 	    			              }
 	    			
 	    			chart{{treatment.id}}.treat_details = jsonArr
@@ -170,6 +171,7 @@ Highcharts.exportCharts = function(charts, options) {
     	
     	svg = svg.replace(/["]/g, "&quot;").replace(/[']/g, "&#39;");
     	
+    	inputs+= '<input type="hidden" name="t_acc'+chart.t_id+'" value="'+ chart.treat_details.accuracy +'" />';
     	inputs+= '<input type="hidden" name="t_n_patients'+chart.t_id+'" value="'+ chart.treat_details.num_of_patients +'" />';
     	inputs+= '<input type="hidden" name="t_hist'+chart.t_id+'" value="'+ chart.treat_details.histological_type +'" />'; 
     	inputs+= '<input type="hidden" name="t_grade'+chart.t_id+'" value="'+ chart.treat_details.grade +'" />'; 
