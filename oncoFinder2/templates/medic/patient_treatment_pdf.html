@@ -33,6 +33,21 @@
 <img src="/static/images/ajax-loader.gif" id="loader" style="margin: 0px 0 0 0;"  />
 </h2>
 
+<div style='display:block' id='treatmentTblDiv'>
+
+<table class='table table-striped table-bordered' id='treatmentTbl'>
+  <tr>
+    <th>#</th>
+    <th>Treatment</th>
+    <th>ER/HER</th>
+    <th>Response status</th>
+    <th>Accuracy</th>
+  </tr>
+
+
+</table>
+
+</div>
 
 <div style="display: block" id="reportDiv" >
 {%for treatment in treatments%}
@@ -141,6 +156,15 @@ function requestData{{treatment.id}}() {
 	    			
 	    			chart{{treatment.id}}.treat_details = jsonArr
 	    			chart{{treatment.id}}.t_id = {{treatment.id}}
+	    			
+	    			// Fill Treatment Table
+	    			
+	    			$('#treatmentTbl > tbody:last-child').append('<tr><td></td> \
+	    			<td>'+data['treatment']+'</td> \
+	    			<td>'+data['hormone_receptor_status']+'</td>\
+	    			<td>'+data['responder']+'</td>\
+	    			<td>'+data['accuracy']+'</td>\
+	    			</tr>');
 	    			
 	    		});
 }
