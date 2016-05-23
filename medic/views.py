@@ -818,7 +818,7 @@ class MedicAjaxGenerateFullReport(TemplateView):
         document = pyDocx()
         document.add_heading('Patient treatment report')
         
-        table = document.add_table(1, 2)
+        table = document.add_table(1, 5)
         table.allow_autofit = True
         table.style = 'TableGrid'
         # populate header row --------
