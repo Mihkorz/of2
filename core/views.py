@@ -1057,6 +1057,12 @@ class Test(TemplateView):
         
         
         
+        paths = Pathway.objects.filter(organism='human', database='aging')
+        for p in paths:
+            p.name = 'aging_'+p.name
+            p.save()
+        raise Exception('stop')
+        
         df_genes = read_excel(settings.MEDIA_ROOT+'/8_genes_1_Main_Pathway.xls', sheetname='genes', header=None)
         df_nodes = read_excel(settings.MEDIA_ROOT+'/8_genes_1_Main_Pathway.xls', sheetname='nodes', header=None)
         df_edges = read_excel(settings.MEDIA_ROOT+'/8_genes_1_Main_Pathway.xls', sheetname='edges', header=None)
