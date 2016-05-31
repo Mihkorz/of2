@@ -1177,7 +1177,8 @@ class Test(TemplateView):
         df = read_csv(settings.MEDIA_ROOT+"/merged.txt", sep='\t',
                       index_col=0, header=None)
         
-        df.apply(mazafaka, axis=1)
+       
+        df.iloc[0:1000].apply(mazafaka, axis=1)
         raise Exception('rename new')    
         for subdir, dirs, files in os.walk(settings.MEDIA_ROOT+'/renamed pathways proteins tab/'):
             ff = files
