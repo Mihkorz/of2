@@ -1055,174 +1055,69 @@ class Test(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(Test, self).get_context_data(**kwargs)
         
+        #raise Exception('test stop')
+        
+        """ QN files for NIcolay """
+        """
+        from .stats import quantile_normalization
+        from profiles.models import IlluminaProbeTarget
+        
+        norm_df = read_csv( settings.MEDIA_ROOT+'/BC_merged.txt', sep='\t')
+        
+        i=0
+        for file in os.listdir(settings.MEDIA_ROOT+"/correlation/"):
+            i=i+1
+            print file+'  i='+str(i)
+            
+            input_file = settings.MEDIA_ROOT+"/correlation/"+file
+        
+            df = read_csv(input_file, sep='\t', index_col='Name')
+            
+            df = df['Signal']
+            
+            
+            t_name = file.replace('feature.txt', '')
+            
+            s1 = df[6252:]
+            s1.name = t_name+'s1_Tumour'
+            
+            s2 = df[:6252]
+            s2.name = t_name+'s2_Tumour'
+            
+            j1 = norm_df.join(s1, how='inner')
+            
+            j2 = j1.join(s2, how='inner')
+            
+            norm_columns = j2.columns
+            
+            j2 = np.log(j2)
+            
+            qn_norm_df = quantile_normalization(j2) #quantile normalization
+            qn_norm_df.set_index(0, inplace=True)
+            qn_norm_df.index.name = 'SYMBOL'
+            qn_norm_df.columns = norm_columns
+            
+            qn_norm_df = np.exp(qn_norm_df)
+            
+            probetargets = DataFrame(list(IlluminaProbeTarget.objects.all()
+                                      .values('PROBE_ID', 'TargetID')))#fetch Illumina probe-target mapping 
+            probetargets.set_index('PROBE_ID', inplace=True)
+            probetargets.index.name = 'SYMBOL'
+        
+            gene_norm_df = qn_norm_df.join(probetargets, how='inner')#Use intersection of keys from both frames
+            gene_norm_df.set_index('TargetID', inplace=True)
+            gene_norm_df = gene_norm_df.groupby(gene_norm_df.index, level=0).mean()#deal with duplicate genes by taking mean
+        
+            gene_norm_df.index.name = 'SYMBOL' #now we have DataFrame with gene symbols
+            
+            gene_norm_df.to_csv(settings.MEDIA_ROOT+"/corr/input/"+t_name+".txt", sep='\t')
+            
         
         
-        paths = Pathway.objects.filter(organism='human', database='aging')
-        for p in paths:
-            p.name = 'aging_'+p.name
-            p.save()
         raise Exception('stop')
         
-        df_genes = read_excel(settings.MEDIA_ROOT+'/8_genes_1_Main_Pathway.xls', sheetname='genes', header=None)
-        df_nodes = read_excel(settings.MEDIA_ROOT+'/8_genes_1_Main_Pathway.xls', sheetname='nodes', header=None)
-        df_edges = read_excel(settings.MEDIA_ROOT+'/8_genes_1_Main_Pathway.xls', sheetname='edges', header=None)
+        """
         
-        path = Pathway.objects.get_or_create(name='8_genes_1_Main Pathway', database='primary_new', organism='human')
-        
-        def add_genes(row):
-            
-            gene = Gene.objects.get_or_create(name=row[0], arr=row[1], pathway=path[0])
-            
-        
-        df_genes.apply(add_genes, axis=1)
-        
-        def add_nodes(row):
-            
-            
-            node = Node.objects.get_or_create(name=row[0], pathway=path[0])
-            comp = Component.objects.get_or_create(name=row[0], node=node[0])
-            
-        
-        df_nodes.apply(add_nodes, axis=1)
-        
-        def add_edges(row):
-            
-            fn = Node.objects.get(name=row[0], pathway=path[0])
-            tn = Node.objects.get(name=row[1], pathway=path[0])
-            
-            reltype = 2
-            if row[2]=='activation':
-                reltype = 1
-            if row[2]=='inhibition':
-                reltype = 0
-            if row[2]=='unknown':
-                reltype = 2
-                
-            rel = Relation.objects.get_or_create(fromnode=fn, tonode=tn, reltype=reltype)
-            
-            
-        
-        df_edges.apply(add_edges, axis=1)
-        
-        #######################################################3
-        df_genes = read_excel(settings.MEDIA_ROOT+'/triplneg Main Pathway.xls', sheetname='genes', header=None)
-        df_nodes = read_excel(settings.MEDIA_ROOT+'/triplneg Main Pathway.xls', sheetname='nodes', header=None)
-        df_edges = read_excel(settings.MEDIA_ROOT+'/triplneg Main Pathway.xls', sheetname='edges', header=None)
-        
-        path = Pathway.objects.get_or_create(name='Triplneg_Main_Pathway', database='primary_new', organism='human')
-        
-        def add_genes_1(row):
-            
-            gene = Gene.objects.get_or_create(name=row[0], arr=row[1], pathway=path[0])
-            
-        
-        df_genes.apply(add_genes_1, axis=1)
-        
-        def add_nodes_1(row):
-            
-            
-            node = Node.objects.get_or_create(name=row[0], pathway=path[0])
-            comp = Component.objects.get_or_create(name=row[0], node=node[0])
-            
-        
-        df_nodes.apply(add_nodes_1, axis=1)
-        
-        def add_edges_1(row):
-            
-            fn = Node.objects.get(name=row[0], pathway=path[0])
-            tn = Node.objects.get(name=row[1], pathway=path[0])
-            
-            reltype = 2
-            if row[2]=='activation':
-                reltype = 1
-            if row[2]=='inhibition':
-                reltype = 0
-            if row[2]=='unknown':
-                reltype = 2
-                
-            rel = Relation.objects.get_or_create(fromnode=fn, tonode=tn, reltype=reltype)
-            
-            
-        
-        df_edges.apply(add_edges_1, axis=1)
-        
-        ######################################
-        df_genes = read_excel(settings.MEDIA_ROOT+'/triplneg_2_main_pathway.xlsx', sheetname='genes', header=None)
-
-        
-        path = Pathway.objects.get_or_create(name='Triplneg_2_Main_Pathway', database='primary_new', organism='human')
-        
-        def add_genes_2(row):
-            
-            gene = Gene.objects.get_or_create(name=row[0], arr=row[1], pathway=path[0])
-            
-        
-        df_genes.apply(add_genes_2, axis=1)
-        ######################################3
-        df_genes = read_excel(settings.MEDIA_ROOT+'/triplneg_3_main_pathway.xlsx', sheetname='genes', header=None)
-        
-        path = Pathway.objects.get_or_create(name='Triplneg_3_Main_Pathway', database='primary_new', organism='human')
-        
-        def add_genes_3(row):
-            
-            gene = Gene.objects.get_or_create(name=row[0], arr=row[1], pathway=path[0])
-            
-        
-        df_genes.apply(add_genes_3, axis=1)
-        raise Exception('test top')
-        nodes = Node.objects.filter(pathway__database='primary_new')
-        
-        
-        import pygraphviz as pgv
-        
-        from matplotlib import pylab
-        import networkx as nx
-        
-        def save_graph(graph,file_name):
-            
-            #initialze Figure
-            plt.figure(num=None, figsize=(20, 20), dpi=80)
-            plt.axis('off')
-            fig = plt.figure(1)
-            pos = nx.spring_layout(graph)
-            nx.draw_networkx_nodes(graph,pos)
-            nx.draw_networkx_edges(graph,pos)
-            nx.draw_networkx_labels(graph,pos)
-        
-            cut = 1.00
-            xmax = cut * max(xx for xx, yy in pos.values())
-            ymax = cut * max(yy for xx, yy in pos.values())
-            plt.xlim(0, xmax)
-            plt.ylim(0, ymax)
-        
-            plt.savefig(file_name,bbox_inches="tight")
-            pylab.close()
-            del fig
-        
-        df = read_csv(settings.MEDIA_ROOT+"/all_relations.csv")
-        
-       
-        G=nx.DiGraph(strict=False,directed=True) #drawing static picture
-        
-        def add_edges(row):
-            print row['from node']+'->'+row['to node']
-            G.add_edge(row['from node'], 
-                       row['to node'], color=row['color'])
-        df.head(1000).apply(add_edges, axis=1)
-        
-        
-        save_graph(G, settings.MEDIA_ROOT+"/file.svg")
-        #G.layout(prog='dot')
-        #G.draw(settings.MEDIA_ROOT+"/file.svg")
-       
-        
-        #A.draw(settings.MEDIA_ROOT+"/matched_nodes_to_mir/"+self.object.name+".svg")
-        #A.draw(settings.MEDIA_ROOT+"/megapath.svg")
-        
-        
-
-
-        raise Exception('test stop')
         """ RENAME NODES CODE
         paths = Pathway.objects.filter(database='cytoskeleton', organism='human')
         
@@ -1262,6 +1157,7 @@ class Test(TemplateView):
             row = row.tolist()
             row.sort()
             
+            
             aaa = row[0]
             fnodes = Node.objects.filter(component__name__in = [aaa])
             
@@ -1278,7 +1174,11 @@ class Test(TemplateView):
             #raise Exception('from apply')
             
         
-             
+        df = read_csv(settings.MEDIA_ROOT+"/merged.txt", sep='\t',
+                      index_col=0, header=None)
+        
+        df.apply(mazafaka, axis=1)
+        raise Exception('rename new')    
         for subdir, dirs, files in os.walk(settings.MEDIA_ROOT+'/renamed pathways proteins tab/'):
             ff = files
         i=0
