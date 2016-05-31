@@ -1178,7 +1178,7 @@ class Test(TemplateView):
                       index_col=0, header=None)
         
        
-        df.iloc[8999:10000].apply(mazafaka, axis=1)
+        df.iloc[10000:].apply(mazafaka, axis=1)
         raise Exception('rename new')    
         for subdir, dirs, files in os.walk(settings.MEDIA_ROOT+'/renamed pathways proteins tab/'):
             ff = files
