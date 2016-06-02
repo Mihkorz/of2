@@ -1055,68 +1055,10 @@ class Test(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(Test, self).get_context_data(**kwargs)
         
-        #raise Exception('test stop')
+        raise Exception('test stop')
         
-        """ QN files for NIcolay """
-        """
-        from .stats import quantile_normalization
-        from profiles.models import IlluminaProbeTarget
+                
         
-        norm_df = read_csv( settings.MEDIA_ROOT+'/BC_merged.txt', sep='\t')
-        
-        i=0
-        for file in os.listdir(settings.MEDIA_ROOT+"/correlation/"):
-            i=i+1
-            print file+'  i='+str(i)
-            
-            input_file = settings.MEDIA_ROOT+"/correlation/"+file
-        
-            df = read_csv(input_file, sep='\t', index_col='Name')
-            
-            df = df['Signal']
-            
-            
-            t_name = file.replace('feature.txt', '')
-            
-            s1 = df[6252:]
-            s1.name = t_name+'s1_Tumour'
-            
-            s2 = df[:6252]
-            s2.name = t_name+'s2_Tumour'
-            
-            j1 = norm_df.join(s1, how='inner')
-            
-            j2 = j1.join(s2, how='inner')
-            
-            norm_columns = j2.columns
-            
-            j2 = np.log(j2)
-            
-            qn_norm_df = quantile_normalization(j2) #quantile normalization
-            qn_norm_df.set_index(0, inplace=True)
-            qn_norm_df.index.name = 'SYMBOL'
-            qn_norm_df.columns = norm_columns
-            
-            qn_norm_df = np.exp(qn_norm_df)
-            
-            probetargets = DataFrame(list(IlluminaProbeTarget.objects.all()
-                                      .values('PROBE_ID', 'TargetID')))#fetch Illumina probe-target mapping 
-            probetargets.set_index('PROBE_ID', inplace=True)
-            probetargets.index.name = 'SYMBOL'
-        
-            gene_norm_df = qn_norm_df.join(probetargets, how='inner')#Use intersection of keys from both frames
-            gene_norm_df.set_index('TargetID', inplace=True)
-            gene_norm_df = gene_norm_df.groupby(gene_norm_df.index, level=0).mean()#deal with duplicate genes by taking mean
-        
-            gene_norm_df.index.name = 'SYMBOL' #now we have DataFrame with gene symbols
-            
-            gene_norm_df.to_csv(settings.MEDIA_ROOT+"/corr/input/"+t_name+".txt", sep='\t')
-            
-        
-        
-        raise Exception('stop')
-        
-        """
         
         """ RENAME NODES CODE
         paths = Pathway.objects.filter(database='cytoskeleton', organism='human')

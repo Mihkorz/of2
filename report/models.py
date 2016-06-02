@@ -2,6 +2,7 @@
 import os
 import itertools
 
+
 from django.db import models
 
 PATHWAY_ORGANISM = (
@@ -31,51 +32,77 @@ class Report(models.Model):
     
     norm_name = models.CharField(verbose_name='Normal title', max_length=250, blank=False)
     
+    
+    compare_groups = models.CharField(verbose_name='Comparison groups', max_length=250, blank=True, null=True,
+                                      help_text="""List of group names separated by "vs". 
+                                      If several groups are required separate them by comma (G1vsG2vsG3, G4vsG5vsG6).  
+                                      Leave empty for permutations of all groups""") 
+    
     class Meta(object):
         ordering = ['created_at',]
         
     def get_notable_genes_list(self):
         return [x.strip() for x in self.notable_genes.split(',')]
     
+    
+    
     def get_gene_groups(self):
         lgroups = [self.norm_name]
-        for group in self.genegroup_set.all():
-            lgroups.append(group.name.split('vs')[0])
-        return ','.join(lgroups)
+        if not self.compare_groups:
+            for group in self.genegroup_set.all():
+                lgroups.append(group.name.split('vs')[0])
+            joined = ','.join(lgroups)
+        else:
+            l_combination_names = [x.strip() for x in self.compare_groups.split(',')]
+            l_names = []
+            for com in l_combination_names:
+                l_names+=com.split('vs')
+            l_names = list(set(l_names))
+            joined = lgroups+l_names  # delete duplicates
+            
+        return joined
     
     def get_gene_permutations(self):
         group_num = self.genegroup_set.all().count()
         group_list = self.genegroup_set.all().values_list('name')
-        if group_num>3:
-            combinations= list(itertools.combinations(group_list, 3)) # get all triplets of items
         
-        else:            
-            combinations= list(itertools.combinations(group_list, 2)) # get all pairs of items
+        if not self.compare_groups:
+            if group_num>3:
+                combinations= list(itertools.combinations(group_list, 3)) # get all triplets of items
         
-        l_combination_names = []
-        for tlong in combinations:
-            lname =[]            
-            for tshort in tlong:
-                lname.append(tshort[0])
-            l_combination_names.append("vs".join(lname))
+            else:            
+                combinations= list(itertools.combinations(group_list, 2)) # get all pairs of items
+        
+            l_combination_names = []
+            for tlong in combinations:
+                lname =[]            
+                for tshort in tlong:
+                    lname.append(tshort[0])
+                l_combination_names.append("vs".join(lname))
+        else:
+            l_combination_names = [x.strip() for x in self.compare_groups.split(',')]
         
         return l_combination_names
     
     def get_path_permutations(self):
         group_num = self.pathwaygroup_set.all().count()
         group_list = self.pathwaygroup_set.all().values_list('name')
-        if group_num>3:
-            combinations= list(itertools.combinations(group_list, 3)) # get all triplets of items
         
-        else:            
-            combinations= list(itertools.combinations(group_list, 2)) # get all pairs of items
+        if not self.compare_groups:
+            if group_num>3:
+                combinations= list(itertools.combinations(group_list, 3)) # get all triplets of items
         
-        l_combination_names = []
-        for tlong in combinations:
-            lname =[]            
-            for tshort in tlong:
-                lname.append(tshort[0])
-            l_combination_names.append("vs".join(lname))
+            else:            
+                combinations= list(itertools.combinations(group_list, 2)) # get all pairs of items
+        
+            l_combination_names = []
+            for tlong in combinations:
+                lname =[]            
+                for tshort in tlong:
+                    lname.append(tshort[0])
+                l_combination_names.append("vs".join(lname))
+        else:
+            l_combination_names = [x.strip() for x in self.compare_groups.split(',')]
         
         return l_combination_names
     

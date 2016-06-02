@@ -150,8 +150,8 @@
         <thead>
           <tr>
            <th>Gene</th>
-           {%for group in report.genegroup_set.all%}
-            <th>{{group.name}}</th>
+           {%for group in report.get_gene_groups%}
+            {% if forloop.counter > 1 %}<th>{{group}}</th> {%endif%}
            {%endfor%}
           </tr>
         </thead>  
@@ -235,8 +235,8 @@
         <thead>
           <tr>
            <th>Pathway</th>
-           {%for group in report.pathwaygroup_set.all%}
-            <th>{{group.name}}</th>
+           {%for group in report.get_gene_groups%}
+            {% if forloop.counter > 1 %}<th>{{group}}</th> {%endif%}
            {%endfor%}
           </tr>
         </thead>  
@@ -288,8 +288,8 @@
         <thead>
           <tr>
            <th>Pathway</th>
-           {%for group in report.pathwaygroup_set.all%}
-            <th>{{group.name}}</th>
+           {%for group in report.get_gene_groups%}
+            {% if forloop.counter > 1 %}<th>{{group}}</th> {%endif%}
            {%endfor%}
           </tr>
         </thead>  
