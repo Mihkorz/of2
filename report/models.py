@@ -62,6 +62,12 @@ class Report(models.Model):
             
         return joined
     
+    def get_gene_groups_as_list(self):
+        if not self.compare_groups:
+            return self.get_gene_groups().split(',')
+        else:
+            return self.get_gene_groups()
+    
     def get_gene_permutations(self):
         group_num = self.genegroup_set.all().count()
         group_list = self.genegroup_set.all().values_list('name')
