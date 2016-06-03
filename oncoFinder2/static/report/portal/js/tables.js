@@ -113,6 +113,7 @@ function drawGeneTable(reportID, id, file_name, categories){
         "order": [[ 1, "desc" ]],
         "info":     false,
         "dom": 'Bfrtip',
+        "scrollX": true,
         "buttons": [
                    {extend: 'csv', title: file_name},
                    {extend: 'print', title: file_name}
@@ -156,6 +157,7 @@ function drawGeneTableScatter(reportID, id, file_name, categories){
         "order": [[ 1, "desc" ]],
         "info":     false,
         "dom": 'Bfrtip',
+        "scrollX": true,
         "buttons": [
                    {extend: 'csv', title: file_name},
                    {extend: 'print', title: file_name}
@@ -197,7 +199,7 @@ function drawPathwayTable(reportID, id, file_name1, file_name2, is_metabolic, or
         "ordering": true,
         "order": [[ 1, "desc" ]],
         "info":     false,
-        
+        "scrollX": true
         "dom": 'Bfrtip',
         "buttons": [{extend: 'csv', title: id}, {extend: 'pdf', title: id} , {extend: 'print', title: id}],
         
