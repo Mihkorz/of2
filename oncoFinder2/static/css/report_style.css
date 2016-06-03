@@ -16,3 +16,8 @@
         width: 900px;
         margin: 0 auto;
     }
+    
+div.dataTables_wrapper {
+        width: 800px;
+       
+    }
