@@ -146,6 +146,48 @@ function drawGeneTable(reportID, id, file_name, categories){
 }
 
 
+function drawGeneTableScatter(reportID, id, file_name, categories){
+	
+	// FIRST DOC
+	var table = $('#'+id).DataTable( {
+    	"paging":   true,
+        "iDisplayLength": 20,
+        "ordering": true,
+        "order": [[ 1, "desc" ]],
+        "info":     false,
+        "dom": 'Bfrtip',
+        "buttons": [
+                   {extend: 'csv', title: file_name},
+                   {extend: 'print', title: file_name}
+                   
+              ],
+        
+        "ajax": {'url':'/report-portal/report-genetablescatterjson/',
+        	     'type': 'GET',
+        	     'data':{
+        	    	     reportID: reportID,
+        	            'file_name': file_name,
+        	            },        	      
+        
+    },"deferRender": true });	
+	
+	
+	table.buttons().container()
+    .appendTo( $('.col-sm-6:eq(0)', table.table().container() ) );
+	
+	$('#'+id).on( 'draw.dt', function () {
+    	$("table#"+id+".path tr td:first-child").wrapInner('<a href="#/"></a>')
+    } );
+	
+    $('#'+id+' tbody').on( 'click', 'tr td:first-child', function () {
+    	
+    	var gene_name = $(this).text();
+    	
+    	drawGeneChart(reportID, gene_name, categories);    	
+    	
+    });
+}
+
 function drawPathwayTable(reportID, id, file_name1, file_name2, is_metabolic, organism){
 	
 	

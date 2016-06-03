@@ -396,6 +396,7 @@
     <script src="/static/report/portal/js/opentip.js" charset="utf-8"></script>
     <script src="/static/report/bt/js/adapter-native.js" charset="utf-8"></script>
     <script src="/static/report/portal/js/volcano.js" type="text/javascript"></script>
+    <script src="/static/report/portal/js/scatter.js" type="text/javascript"></script>
     <script src="/static/report/portal/js/tables.js" type="text/javascript"></script>
     <script src="/static/report/portal/js/boxplot.js" type="text/javascript"></script>
     
@@ -424,10 +425,23 @@
 <script>
 
 $(function() {
+	
+	{%if report.gene_plot == 'vulcano'%}
 	{%for group in report.genegroup_set.all%}
 	  drawVolcanoPlot('{{group.get_slug}}_volcano',  '{{group.doc_logfc}}');
 	  drawGeneTable({{report.id}}, 'tbl-{{group.get_slug}}', '{{group.doc_logfc}}', categories='{{report.get_gene_groups}}'); 
 	{%endfor%}
+	{%endif%}
+	{%if  report.gene_plot == 'scatter'%}
+	{%for group in report.genegroup_set.all%}
+	  drawGeneScatter(name='{{group.name}} VS {{report.norm_name}}',
+			          renderTo='{{group.get_slug}}_volcano',
+			          xname='log2({{group.name}} Expression level)',
+			          yname='log2({{report.norm_name}} Expression level)',
+			          file_name='{{group.document}}');
+	  drawGeneTableScatter({{report.id}}, 'tbl-{{group.get_slug}}', '{{group.doc_logfc}}', categories='{{report.get_gene_groups}}'); 
+	{%endfor%}
+	{%endif%}
 	
 	{%for gene in report.get_notable_genes_list%}
 	  drawGeneBoxplot(reportID={{report.id}}, name='{{gene}}', renderTo='{{gene}}', gene='{{gene}}', categories='{{report.get_gene_groups}}');

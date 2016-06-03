@@ -1,6 +1,6 @@
 function drawDinamicTable(reportID, idx, tblRenderTo, path_gene, categories, organism){
 	
-	var arParams = idx.split("_");
+	var arParams = idx.split("+");
 	var inter_num = arParams[0];
     var regulation = arParams[1];
     var members = arParams[2];
@@ -199,6 +199,7 @@ function drawVenn(reportID, renderTo,
                 	
                 	 venn.sortAreas(div, d);
                      var idx = d.id;
+                     
                      drawDinamicTable(reportID, idx, tblRenderTo, path_gene, categories);
                 	 
                  });

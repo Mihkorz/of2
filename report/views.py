@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 import networkx as nx
 import itertools
+import csv
 
 from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
@@ -146,8 +147,111 @@ class ReportGeneTableJson(TemplateView):
 
         output_json = df_gene.to_json(orient='values')
         response_data = {'data': json.loads(output_json)}
+        
         return HttpResponse(json.dumps(response_data), content_type="application/json")
+
+class ReportGeneScatterJson(TemplateView):
+    template_name="report/report_detail.html"
     
+    def dispatch(self, request, *args, **kwargs):
+        
+        return super(ReportGeneScatterJson, self).dispatch(request, *args, **kwargs)
+    
+    def get(self, request, *args, **kwargs):
+        
+        file_name = settings.MEDIA_ROOT+'/'+request.GET.get('file_name')
+        
+        with open(file_name, 'rb') as csvfile:
+            sniffer = csv.Sniffer()
+            dialect = sniffer.sniff(csvfile.read(), delimiters='\t,;')
+            csvfile.seek(0)
+            
+        df_gene = pd.read_csv(file_name, delimiter=dialect.delimiter,
+                                 index_col='SYMBOL')
+        
+        
+        df_tumour = df_gene[[x for x in df_gene.columns if 'Tumour' in x]]
+        s_tumour = df_tumour.mean(axis=1).round(decimals=2)
+        
+        df_norm = df_gene[[x for x in df_gene.columns if 'Norm' in x]]
+        s_norm = df_norm.mean(axis=1).round(decimals=2)        
+        
+        df_output = pd.DataFrame()
+        
+        df_output['x'] = s_tumour
+        df_output['y'] = s_norm
+        
+        df_output['FC'] = s_tumour.divide(s_norm)
+        
+        df_output = np.log2(df_output)
+        
+        df_output = df_output[np.absolute(df_output['FC'])>2]
+        
+        
+        
+        df_output = df_output[df_output['x']>0 ]
+        df_output = df_output[df_output['y']>0 ]
+        #raise Exception('scatter')
+        df_output.index.name='name'
+        df_output.reset_index(inplace=True)
+        
+        df_output = df_output.to_json(orient='records')        
+        
+        
+        response_data =  json.loads(df_output)
+        return HttpResponse(json.dumps(response_data), content_type="application/json")
+        
+class ReportGeneTableScatterJson(TemplateView): 
+    template_name="report/report_detail.html"
+    
+    def dispatch(self, request, *args, **kwargs):
+        
+        return super(ReportGeneTableScatterJson, self).dispatch(request, *args, **kwargs)
+    
+    def get(self, request, *args, **kwargs):
+        
+        file_name = request.GET.get('file_name')
+        
+        
+        if file_name!='all':
+            
+            
+            
+            
+            df_gene = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name)
+            try:
+                df_gene = df_gene[['gene', 'logFC', 'adj.P.Val']]
+            except:
+                df_gene = df_gene[['SYMBOL', 'logFC', 'adj.P.Val']]
+                
+            df_gene['logFC'] = df_gene['logFC'].round(decimals=2)
+                     
+            df_gene.replace([np.inf, -np.inf], np.nan, inplace=True)
+            df_gene = df_gene[(np.absolute(df_gene['logFC'])>2)] 
+            #raise Exception('scatter table')
+            
+        
+        else:
+            report = Report.objects.get(pk=request.GET.get('reportID'))
+            lgroups = []
+            for group in report.genegroup_set.all():
+                lgroups.append(pd.read_csv(group.doc_logfc.path, index_col='SYMBOL'))
+            
+            df_gene = pd.DataFrame()
+            
+            for idx, val in enumerate(lgroups):
+                df_gene[idx] = val['logFC'].round(decimals=2)
+
+            df_gene.reset_index(inplace=True)
+            #raise Exception('gene table')
+
+        output_json = df_gene.to_json(orient='values')
+        response_data = {'data': json.loads(output_json)}
+        
+        return HttpResponse(json.dumps(response_data), content_type="application/json")        
+    
+    
+        
 class ReportGeneBoxplotJson(TemplateView):
     
     template_name="report/report_detail.html"
@@ -359,11 +463,21 @@ class ReportAjaxPathwayVenn(TemplateView):
             file_name3 = group3.doc_logfc.path
             
             df1 = pd.read_csv(file_name1, index_col='SYMBOL')
-            df1 = df1[(df1['adj.P.Val']<0.05) & (np.absolute(df1['logFC'])>0.4)] 
+            if df1['adj.P.Val'].all() == 1:
+                df1 = df1[(np.absolute(df1['logFC'])>2)]                
+            else:
+                df1 = df1[(df1['adj.P.Val']<0.05) & (np.absolute(df1['logFC'])>0.4)]         
+            
             df2 = pd.read_csv(file_name2, index_col='SYMBOL')
-            df2 = df2[(df2['adj.P.Val']<0.05) & (np.absolute(df2['logFC'])>0.4)] 
+            if df2['adj.P.Val'].all() == 1:
+                df2 = df2[(np.absolute(df2['logFC'])>2)]
+            else:
+                df2 = df2[(df2['adj.P.Val']<0.05) & (np.absolute(df2['logFC'])>0.4)] 
             df3 = pd.read_csv(file_name3, index_col='SYMBOL')
-            df3 = df3[(df3['adj.P.Val']<0.05) & (np.absolute(df3['logFC'])>0.4)] 
+            if df1['adj.P.Val'].all() == 1:
+                df3 = df3[(np.absolute(df3['logFC'])>2)]
+            else:
+                df3 = df3[(df3['adj.P.Val']<0.05) & (np.absolute(df3['logFC'])>0.4)] 
             
             df1 = pd.DataFrame(df1['logFC']) 
             df2 = pd.DataFrame(df2['logFC'])
@@ -382,13 +496,13 @@ class ReportAjaxPathwayVenn(TemplateView):
         st1_tumour_down = st1_tumour[st1_tumour<0]
         if regulation == 'updown':
             venn_cyrcles.append({'sets': [name1], 'size': (st1_tumour_up.count()+st1_tumour_down.count()),
-                                     'id': '1_updown_'+name1+'_'+is_metabolic})
+                                     'id': '1+updown+'+name1+'+'+is_metabolic})
         elif regulation == 'up':
             venn_cyrcles.append({'sets': [name1], 'size': (st1_tumour_up.count()),
-                                     'id': '1_up_'+name1+'_'+is_metabolic})
+                                     'id': '1+up+'+name1+'+'+is_metabolic})
         elif regulation == 'down':
             venn_cyrcles.append({'sets': [name1], 'size': (st1_tumour_down.count()),
-                                     'id': '1_down_'+name1+'_'+is_metabolic})
+                                     'id': '1+down+'+name1+'+'+is_metabolic})
         dict_s[name1] = st1_tumour
         dict_s[name1+' up'] = st1_tumour_up.index
         dict_s[name1+' down'] = st1_tumour_down.index        
@@ -399,13 +513,13 @@ class ReportAjaxPathwayVenn(TemplateView):
         st2_tumour_down = st2_tumour[st2_tumour<0]
         if regulation == 'updown':
             venn_cyrcles.append({'sets': [name2], 'size': (st2_tumour_up.count()+st2_tumour_down.count()),
-                                     'id': '1_updown_'+name2+'_'+is_metabolic})
+                                     'id': '1+updown+'+name2+'+'+is_metabolic})
         elif regulation == 'up':
             venn_cyrcles.append({'sets': [name2], 'size': (st2_tumour_up.count()),
-                                     'id': '1_up_'+name2+'_'+is_metabolic})
+                                     'id': '1+up+'+name2+'+'+is_metabolic})
         elif regulation == 'down':
             venn_cyrcles.append({'sets': [name2], 'size': (st2_tumour_down.count()),
-                                     'id': '1_down_'+name2+'_'+is_metabolic})    
+                                     'id': '1+down+'+name2+'+'+is_metabolic})    
         dict_s[name2] = st2_tumour
         dict_s[name2+' up'] = st2_tumour_up.index
         dict_s[name2+' down'] = st2_tumour_down.index
@@ -415,13 +529,13 @@ class ReportAjaxPathwayVenn(TemplateView):
         st3_tumour_down = st3_tumour[st3_tumour<0]
         if regulation == 'updown':
                 venn_cyrcles.append({'sets': [name3], 'size': (st3_tumour_up.count()+st3_tumour_down.count()),
-                                     'id': '1_updown_'+name3+'_'+is_metabolic})
+                                     'id': '1+updown+'+name3+'+'+is_metabolic})
         elif regulation == 'up':
                 venn_cyrcles.append({'sets': [name3], 'size': (st3_tumour_up.count()),
-                                     'id': '1_up_'+name3+'_'+is_metabolic})
+                                     'id': '1+up+'+name3+'+'+is_metabolic})
         elif regulation == 'down':
                 venn_cyrcles.append({'sets': [name3], 'size': (st3_tumour_down.count()),
-                                     'id': '1_down_'+name3+'_'+is_metabolic})
+                                     'id': '1+down+'+name3+'+'+is_metabolic})
         dict_s[name3] = st3_tumour
         dict_s[name3+' up'] = st3_tumour_up.index
         dict_s[name3+' down'] = st3_tumour_down.index
@@ -438,13 +552,13 @@ class ReportAjaxPathwayVenn(TemplateView):
             index2_down = dict_s[combination[1]+' down']
             if regulation == 'updown':
                 intersection = len(index1_up.intersection(index2_up))+len(index1_down.intersection(index2_down))
-                id_x = '2_updown_'+combination[0]+'vs'+ combination[1]+'_'+is_metabolic
+                id_x = '2+updown+'+combination[0]+'vs'+ combination[1]+'+'+is_metabolic
             elif regulation == 'up':
                 intersection = len(index1_up.intersection(index2_up))
-                id_x = '2_up_'+combination[0]+'vs'+ combination[1]+'_'+is_metabolic
+                id_x = '2+up+'+combination[0]+'vs'+ combination[1]+'+'+is_metabolic
             elif regulation == 'down':
                 intersection = len(index1_down.intersection(index2_down))
-                id_x = '2_down_'+combination[0]+'vs'+ combination[1]+'_'+is_metabolic
+                id_x = '2+down+'+combination[0]+'vs'+ combination[1]+'+'+is_metabolic
             venn_cyrcles.append({'sets': [combination[0], combination[1]],
                                      'size': intersection,
                                      'id': id_x })
@@ -463,13 +577,13 @@ class ReportAjaxPathwayVenn(TemplateView):
             inter_down = (index1_down.intersection(index2_down)).intersection(index3_down)
             if regulation == 'updown':
                 intersection = len(inter_up)+len(inter_down)
-                id_x = '3_updown_'+combination[0]+'vs'+combination[1]+'vs'+combination[2]+'_'+is_metabolic
+                id_x = '3+updown+'+combination[0]+'vs'+combination[1]+'vs'+combination[2]+'+'+is_metabolic
             elif regulation == 'up':
                 intersection = len(inter_up)
-                id_x = '3_up_'+combination[0]+'vs'+combination[1]+'vs'+combination[2]+'_'+is_metabolic
+                id_x = '3+up+'+combination[0]+'vs'+combination[1]+'vs'+combination[2]+'+'+is_metabolic
             elif regulation == 'down':
                 intersection = len(inter_down)
-                id_x = '3_down_'+combination[0]+'vs'+combination[1]+'vs'+combination[2]+'_'+is_metabolic
+                id_x = '3+down+'+combination[0]+'vs'+combination[1]+'vs'+combination[2]+'+'+is_metabolic
             venn_cyrcles.append({'sets': [combination[0], combination[1], combination[2]],
                                      'size': intersection,
                                      'id': id_x})
@@ -512,8 +626,11 @@ class ReportAjaxPathwayVennTable(TemplateView):
                 
                 group1 = GeneGroup.objects.get(name=lMembers[0], report=report)
                 
-                df_1 = pd.read_csv(group1.doc_logfc.path,  index_col='SYMBOL')           
-                df_1 = df_1[(df_1['adj.P.Val']<0.05) & (np.absolute(df_1['logFC'])>0.4)]
+                df_1 = pd.read_csv(group1.doc_logfc.path,  index_col='SYMBOL')
+                if df_1['adj.P.Val'].all() == 1:
+                    df_1 = df_1[(np.absolute(df_1['logFC'])>2)]
+                else:            
+                    df_1 = df_1[(df_1['adj.P.Val']<0.05) & (np.absolute(df_1['logFC'])>0.4)]
                 df_1 = pd.DataFrame(df_1['logFC'])
                 df_1.columns = ['0']
                 
@@ -554,9 +671,15 @@ class ReportAjaxPathwayVennTable(TemplateView):
                 
                 df_1 = pd.read_csv(group1.doc_logfc.path,  index_col='SYMBOL')
                 df_2 = pd.read_csv(group2.doc_logfc.path,  index_col='SYMBOL') 
-                           
-                df_1 = df_1[(df_1['adj.P.Val']<0.05) & (np.absolute(df_1['logFC'])>0.4)]
-                df_2 = df_2[(df_2['adj.P.Val']<0.05) & (np.absolute(df_2['logFC'])>0.4)]
+                
+                if df_1['adj.P.Val'].all() == 1:
+                    df_1 = df_1[(np.absolute(df_1['logFC'])>2)]
+                else:           
+                    df_1 = df_1[(df_1['adj.P.Val']<0.05) & (np.absolute(df_1['logFC'])>0.4)]
+                if df_2['adj.P.Val'].all() == 1:
+                    df_2 = df_2[(np.absolute(df_2['logFC'])>2)]
+                else:
+                    df_2 = df_2[(df_2['adj.P.Val']<0.05) & (np.absolute(df_2['logFC'])>0.4)]
                 
                 df_1 = pd.DataFrame(df_1['logFC'])
                 df_2 = pd.DataFrame(df_2['logFC'])
@@ -618,10 +741,19 @@ class ReportAjaxPathwayVennTable(TemplateView):
                 df_1 = pd.read_csv(group1.doc_logfc.path,  index_col='SYMBOL')
                 df_2 = pd.read_csv(group2.doc_logfc.path,  index_col='SYMBOL') 
                 df_3 = pd.read_csv(group3.doc_logfc.path,  index_col='SYMBOL') 
-                               
-                df_1 = df_1[(df_1['adj.P.Val']<0.05) & (np.absolute(df_1['logFC'])>0.4)]
-                df_2 = df_2[(df_2['adj.P.Val']<0.05) & (np.absolute(df_2['logFC'])>0.4)]
-                df_3 = df_3[(df_3['adj.P.Val']<0.05) & (np.absolute(df_3['logFC'])>0.4)]                
+                
+                if df_1['adj.P.Val'].all() == 1:
+                    df_1 = df_1[(np.absolute(df_1['logFC'])>2)]
+                else:               
+                    df_1 = df_1[(df_1['adj.P.Val']<0.05) & (np.absolute(df_1['logFC'])>0.4)]
+                if df_2['adj.P.Val'].all() == 1:
+                    df_2 = df_2[(np.absolute(df_2['logFC'])>2)]
+                else:
+                    df_2 = df_2[(df_2['adj.P.Val']<0.05) & (np.absolute(df_2['logFC'])>0.4)]
+                if df_3['adj.P.Val'].all() == 1:
+                    df_3 = df_3[(np.absolute(df_3['logFC'])>2)]
+                else:
+                    df_3 = df_3[(df_3['adj.P.Val']<0.05) & (np.absolute(df_3['logFC'])>0.4)]                
                 
                 df_1 = pd.DataFrame(df_1['logFC'])
                 df_2 = pd.DataFrame(df_2['logFC'])

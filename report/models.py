@@ -8,7 +8,12 @@ from django.db import models
 PATHWAY_ORGANISM = (
     ('human', 'Human'),
     ('mouse', 'Mouse'),
-) 
+)
+
+GENE_PLOT = (
+    ('vulcano', 'Vulcano Plot'),
+    ('scatter', 'Scatter Plot'),
+)  
 
 class Report(models.Model):
     """ Text data """
@@ -37,6 +42,8 @@ class Report(models.Model):
                                       help_text="""List of group names separated by "vs". 
                                       If several groups are required separate them by comma (G1vsG2vsG3, G4vsG5vsG6).  
                                       Leave empty for permutations of all groups""") 
+    gene_plot = models.CharField(verbose_name=u'Gene plot type', max_length=15, blank=False,
+                                choices = GENE_PLOT, default='vulcano') 
     
     class Meta(object):
         ordering = ['created_at',]
