@@ -418,7 +418,16 @@ class ReportAjaxPathwayVenn(TemplateView):
         
         name1 = lgroup[0]
         name2 = lgroup[1]
-        name3 = lgroup[2]
+        try:
+            name3 = lgroup[2]
+            compare3 = True
+        except:
+            compare3 = False
+        try:
+            name4 = lgroup[3]
+            compare4 = True
+        except:
+            compare4 = False
         #raise Exception('VENN!!!!')
         
         venn_cyrcles = []
@@ -428,16 +437,22 @@ class ReportAjaxPathwayVenn(TemplateView):
             
             group1 = PathwayGroup.objects.get(name=lgroup[0], report=report)
             file_name1 = group1.doc_proc
+            df1 = pd.read_csv(file_name1, index_col='Pathway')
             
             group2 = PathwayGroup.objects.get(name=lgroup[1], report=report)
             file_name2 = group2.doc_proc
-            
-            group3 = PathwayGroup.objects.get(name=lgroup[2], report=report)
-            file_name3 = group3.doc_proc
-            
-            df1 = pd.read_csv(file_name1, index_col='Pathway')
             df2 = pd.read_csv(file_name2, index_col='Pathway')
-            df3 = pd.read_csv(file_name3, index_col='Pathway')
+            
+            if compare3:
+                group3 = PathwayGroup.objects.get(name=lgroup[2], report=report)
+                file_name3 = group3.doc_proc
+                df3 = pd.read_csv(file_name3, index_col='Pathway')           
+            
+            if compare4:
+                group4 = PathwayGroup.objects.get(name=lgroup[3], report=report)
+                file_name4 = group4.doc_proc
+                df4 = pd.read_csv(file_name4, index_col='Pathway') 
+                
                                     
             
             #raise Exception('VENN!!!!')           
@@ -445,51 +460,79 @@ class ReportAjaxPathwayVenn(TemplateView):
             if is_metabolic=='true':
                 df1 = df1[df1['Database']=='metabolism']
                 df2 = df2[df2['Database']=='metabolism']
-                df3 = df3[df3['Database']=='metabolism']
+                if compare3:
+                    df3 = df3[df3['Database']=='metabolism']
+                if compare4:
+                    df4 = df4[df4['Database']=='metabolism']
             else:
                 df1 = df1[df1['Database']!='metabolism']
                 df2 = df2[df2['Database']!='metabolism']
-                df3 = df3[df3['Database']!='metabolism']
+                if compare3:
+                    df3 = df3[df3['Database']!='metabolism']
+                if compare4:
+                    df4 = df4[df4['Database']!='metabolism']
                 
         elif path_gene == 'genes':
             
             group1 = GeneGroup.objects.get(name=lgroup[0], report=report)
             file_name1 = group1.doc_logfc.path
+            df1 = pd.read_csv(file_name1, index_col='SYMBOL')
+            df1.replace([np.inf, -np.inf], 0, inplace=True)
+            if df1['adj.P.Val'].all() == 1:
+                df1 = df1[(np.absolute(df1['logFC'])>2)]          
+            else:
+                df1 = df1[(df1['adj.P.Val']<0.05) & (np.absolute(df1['logFC'])>0.4)]
+                
+                
+            df1 = pd.DataFrame(df1['logFC'])
+            df1.columns = ['0'] 
             
             group2 = GeneGroup.objects.get(name=lgroup[1], report=report)
             file_name2 = group2.doc_logfc.path
-            
-            group3 = GeneGroup.objects.get(name=lgroup[2], report=report)
-            file_name3 = group3.doc_logfc.path
-            
-            df1 = pd.read_csv(file_name1, index_col='SYMBOL')
-            if df1['adj.P.Val'].all() == 1:
-                df1 = df1[(np.absolute(df1['logFC'])>2)]                
-            else:
-                df1 = df1[(df1['adj.P.Val']<0.05) & (np.absolute(df1['logFC'])>0.4)]         
-            
             df2 = pd.read_csv(file_name2, index_col='SYMBOL')
+            df2.replace([np.inf, -np.inf], 0, inplace=True)
             if df2['adj.P.Val'].all() == 1:
                 df2 = df2[(np.absolute(df2['logFC'])>2)]
             else:
-                df2 = df2[(df2['adj.P.Val']<0.05) & (np.absolute(df2['logFC'])>0.4)] 
-            df3 = pd.read_csv(file_name3, index_col='SYMBOL')
-            if df1['adj.P.Val'].all() == 1:
-                df3 = df3[(np.absolute(df3['logFC'])>2)]
-            else:
-                df3 = df3[(df3['adj.P.Val']<0.05) & (np.absolute(df3['logFC'])>0.4)] 
+                df2 = df2[(df2['adj.P.Val']<0.05) & (np.absolute(df2['logFC'])>0.4)]
             
-            df1 = pd.DataFrame(df1['logFC']) 
             df2 = pd.DataFrame(df2['logFC'])
-            df3 = pd.DataFrame(df3['logFC'])
-            df1.columns = ['0']
             df2.columns = ['0']
-            df3.columns = ['0']
             
+            if compare3:
+                group3 = GeneGroup.objects.get(name=lgroup[2], report=report)
+                file_name3 = group3.doc_logfc.path
+                df3 = pd.read_csv(file_name3, index_col='SYMBOL')
+                df3.replace([np.inf, -np.inf], 0, inplace=True)
+                if df3['adj.P.Val'].all() == 1:
+                    df3 = df3[(np.absolute(df3['logFC'])>2)]
+                else:
+                    df3 = df3[(df3['adj.P.Val']<0.05) & (np.absolute(df3['logFC'])>0.4)]
+                    
+                df3 = pd.DataFrame(df3['logFC'])
+                df3.columns = ['0']
+                    
+            if compare4:
+                group4 = GeneGroup.objects.get(name=lgroup[3], report=report)
+                file_name4 = group4.doc_logfc.path
+                df4 = pd.read_csv(file_name4, index_col='SYMBOL')
+                df4.replace([np.inf, -np.inf], 0, inplace=True)
+                if df4['adj.P.Val'].all() == 1:
+                    df4 = df4[(np.absolute(df4['logFC'])>2)]
+                else:
+                    df4 = df4[(df4['adj.P.Val']<0.05) & (np.absolute(df4['logFC'])>0.4)]
+                    
+                df4 = pd.DataFrame(df4['logFC'])
+                df4.columns = ['0']        
             
         
         dict_s = {}
-        list_s = [name1, name2, name3]
+        list_s = [name1, name2]
+        if compare3:
+            list_s.append(name3) 
+        if compare4:
+            list_s.append(name4)
+        
             
         st1_tumour = df1['0']
         st1_tumour_up = st1_tumour[st1_tumour>0]
@@ -523,25 +566,42 @@ class ReportAjaxPathwayVenn(TemplateView):
         dict_s[name2] = st2_tumour
         dict_s[name2+' up'] = st2_tumour_up.index
         dict_s[name2+' down'] = st2_tumour_down.index
-          
-        st3_tumour = df3['0']
-        st3_tumour_up = st3_tumour[st3_tumour>0]
-        st3_tumour_down = st3_tumour[st3_tumour<0]
-        if regulation == 'updown':
-                venn_cyrcles.append({'sets': [name3], 'size': (st3_tumour_up.count()+st3_tumour_down.count()),
+        
+        if compare3:  
+            st3_tumour = df3['0']
+            st3_tumour_up = st3_tumour[st3_tumour>0]
+            st3_tumour_down = st3_tumour[st3_tumour<0]
+            if regulation == 'updown':
+                    venn_cyrcles.append({'sets': [name3], 'size': (st3_tumour_up.count()+st3_tumour_down.count()),
                                      'id': '1+updown+'+name3+'+'+is_metabolic})
-        elif regulation == 'up':
-                venn_cyrcles.append({'sets': [name3], 'size': (st3_tumour_up.count()),
+            elif regulation == 'up':
+                    venn_cyrcles.append({'sets': [name3], 'size': (st3_tumour_up.count()),
                                      'id': '1+up+'+name3+'+'+is_metabolic})
-        elif regulation == 'down':
-                venn_cyrcles.append({'sets': [name3], 'size': (st3_tumour_down.count()),
+            elif regulation == 'down':
+                    venn_cyrcles.append({'sets': [name3], 'size': (st3_tumour_down.count()),
                                      'id': '1+down+'+name3+'+'+is_metabolic})
-        dict_s[name3] = st3_tumour
-        dict_s[name3+' up'] = st3_tumour_up.index
-        dict_s[name3+' down'] = st3_tumour_down.index
+            dict_s[name3] = st3_tumour
+            dict_s[name3+' up'] = st3_tumour_up.index
+            dict_s[name3+' down'] = st3_tumour_down.index
         
+        if compare4:  
+            st4_tumour = df4['0']
+            st4_tumour_up = st4_tumour[st4_tumour>0]
+            st4_tumour_down = st4_tumour[st4_tumour<0]
+            if regulation == 'updown':
+                    venn_cyrcles.append({'sets': [name4], 'size': (st4_tumour_up.count()+st4_tumour_down.count()),
+                                     'id': '1+updown+'+name4+'+'+is_metabolic})
+            elif regulation == 'up':
+                    venn_cyrcles.append({'sets': [name4], 'size': (st4_tumour_up.count()),
+                                     'id': '1+up+'+name4+'+'+is_metabolic})
+            elif regulation == 'down':
+                    venn_cyrcles.append({'sets': [name4], 'size': (st4_tumour_down.count()),
+                                     'id': '1+down+'+name4+'+'+is_metabolic})
+            dict_s[name4] = st4_tumour
+            dict_s[name4+' up'] = st4_tumour_up.index
+            dict_s[name4+' down'] = st4_tumour_down.index
         
-         
+        #raise Exception('VENN!!')        
             
         combinations_2= list(itertools.combinations(list_s, 2)) # get all pairs of items
         for idx, combination in enumerate(combinations_2):
@@ -562,33 +622,62 @@ class ReportAjaxPathwayVenn(TemplateView):
             venn_cyrcles.append({'sets': [combination[0], combination[1]],
                                      'size': intersection,
                                      'id': id_x })
-             
-        combinations_3= list(itertools.combinations(list_s, 3)) # get all triplets of items
-        for idx, combination in enumerate(combinations_3):
+        if compare3:    
+            combinations_3= list(itertools.combinations(list_s, 3)) # get all triplets of items
+            for idx, combination in enumerate(combinations_3):
                 
-            index1_up = dict_s[combination[0]+' up']
-            index1_down = dict_s[combination[0]+' down']
-            index2_up = dict_s[combination[1]+' up']                
-            index2_down = dict_s[combination[1]+' down']
-            index3_up = dict_s[combination[2]+' up']                
-            index3_down = dict_s[combination[2]+' down']
+                index1_up = dict_s[combination[0]+' up']
+                index1_down = dict_s[combination[0]+' down']
+                index2_up = dict_s[combination[1]+' up']                
+                index2_down = dict_s[combination[1]+' down']
+                index3_up = dict_s[combination[2]+' up']                
+                index3_down = dict_s[combination[2]+' down']
                 
-            inter_up = (index1_up.intersection(index2_up)).intersection(index3_up)
-            inter_down = (index1_down.intersection(index2_down)).intersection(index3_down)
-            if regulation == 'updown':
-                intersection = len(inter_up)+len(inter_down)
-                id_x = '3+updown+'+combination[0]+'vs'+combination[1]+'vs'+combination[2]+'+'+is_metabolic
-            elif regulation == 'up':
-                intersection = len(inter_up)
-                id_x = '3+up+'+combination[0]+'vs'+combination[1]+'vs'+combination[2]+'+'+is_metabolic
-            elif regulation == 'down':
-                intersection = len(inter_down)
-                id_x = '3+down+'+combination[0]+'vs'+combination[1]+'vs'+combination[2]+'+'+is_metabolic
-            venn_cyrcles.append({'sets': [combination[0], combination[1], combination[2]],
+                inter_up = (index1_up.intersection(index2_up)).intersection(index3_up)
+                inter_down = (index1_down.intersection(index2_down)).intersection(index3_down)
+                if regulation == 'updown':
+                    intersection = len(inter_up)+len(inter_down)
+                    id_x = '3+updown+'+combination[0]+'vs'+combination[1]+'vs'+combination[2]+'+'+is_metabolic
+                elif regulation == 'up':
+                    intersection = len(inter_up)
+                    id_x = '3+up+'+combination[0]+'vs'+combination[1]+'vs'+combination[2]+'+'+is_metabolic
+                elif regulation == 'down':
+                    intersection = len(inter_down)
+                    id_x = '3+down+'+combination[0]+'vs'+combination[1]+'vs'+combination[2]+'+'+is_metabolic
+                venn_cyrcles.append({'sets': [combination[0], combination[1], combination[2]],
+                                     'size': intersection,
+                                     'id': id_x})
+            
+        if compare4:    
+            combinations_4= list(itertools.combinations(list_s, 4)) # get all triplets of items
+            for idx, combination in enumerate(combinations_4):
+                
+                index1_up = dict_s[combination[0]+' up']
+                index1_down = dict_s[combination[0]+' down']
+                index2_up = dict_s[combination[1]+' up']                
+                index2_down = dict_s[combination[1]+' down']
+                index3_up = dict_s[combination[2]+' up']                
+                index3_down = dict_s[combination[2]+' down']
+                index4_up = dict_s[combination[3]+' up']                
+                index4_down = dict_s[combination[3]+' down']
+                
+                inter_up = (index1_up.intersection(index2_up)).intersection(index3_up).intersection(index4_up)
+                inter_down = (index1_down.intersection(index2_down)).intersection(index3_down).intersection(index4_down)
+                if regulation == 'updown':
+                    intersection = len(inter_up)+len(inter_down)
+                    id_x = '4+updown+'+combination[0]+'vs'+combination[1]+'vs'+combination[2]+'vs'+combination[3]+'+'+is_metabolic
+                elif regulation == 'up':
+                    intersection = len(inter_up)
+                    id_x = '4+up+'+combination[0]+'vs'+combination[1]+'vs'+combination[2]+'vs'+combination[3]+'+'+is_metabolic
+                elif regulation == 'down':
+                    intersection = len(inter_down)
+                    id_x = '4+down+'+combination[0]+'vs'+combination[1]+'vs'+combination[2]+'vs'+combination[3]+'+'+is_metabolic
+                venn_cyrcles.append({'sets': [combination[0], combination[1], combination[2], combination[3]],
                                      'size': intersection,
                                      'id': id_x})
  
             #raise Exception('venn all')
+        #raise Exception('VENN!!')
 
         response_data= venn_cyrcles
 
@@ -609,7 +698,7 @@ class ReportAjaxPathwayVennTable(TemplateView):
         lMembers = members.split('vs')
         
         report = Report.objects.get(pk=self.request.GET.get('reportID'))
-        
+        #raise Exception('venn table')
         
         if inter_num == 1:
             if path_gene == 'pathways':
@@ -799,7 +888,124 @@ class ReportAjaxPathwayVennTable(TemplateView):
             
             joined_df.reset_index(inplace=True)
             df_json = joined_df.to_json(orient='values')
+        
+        
+        elif inter_num == 4:
+            if path_gene == 'pathways':
+                group1 = PathwayGroup.objects.get(name=lMembers[0], report=report)
+                df_1 = pd.read_csv(group1.doc_proc.path, index_col='Pathway')
+                
+                group2 = PathwayGroup.objects.get(name=lMembers[1], report=report)
+                df_2 = pd.read_csv(group2.doc_proc.path, index_col='Pathway')
+               
+                group3 = PathwayGroup.objects.get(name=lMembers[2], report=report)
+                df_3 = pd.read_csv(group3.doc_proc.path,  index_col='Pathway')
+                
+                group4 = PathwayGroup.objects.get(name=lMembers[3], report=report)
+                df_4 = pd.read_csv(group4.doc_proc.path,  index_col='Pathway')
             
+                if is_metabolic=='true':
+                    df_1 = df_1[df_1['Database']=='metabolism']
+                    df_2 = df_2[df_2['Database']=='metabolism']
+                    df_3 = df_3[df_3['Database']=='metabolism']
+                    df_4 = df_4[df_4['Database']=='metabolism']
+                else:                
+                    df_1 = df_1[df_1['Database']!='metabolism']
+                    df_2 = df_2[df_2['Database']!='metabolism']
+                    df_3 = df_3[df_3['Database']!='metabolism']
+                    df_4 = df_4[df_4['Database']!='metabolism']
+            
+            elif path_gene =='genes':
+                group1 = GeneGroup.objects.get(name=lMembers[0], report=report)
+                group2 = GeneGroup.objects.get(name=lMembers[1], report=report)
+                group3 = GeneGroup.objects.get(name=lMembers[2], report=report)
+                group4 = GeneGroup.objects.get(name=lMembers[3], report=report)
+                
+                df_1 = pd.read_csv(group1.doc_logfc.path,  index_col='SYMBOL')
+                df_1.replace([np.inf, -np.inf], 0, inplace=True)
+                df_2 = pd.read_csv(group2.doc_logfc.path,  index_col='SYMBOL')
+                df_2.replace([np.inf, -np.inf], 0, inplace=True) 
+                df_3 = pd.read_csv(group3.doc_logfc.path,  index_col='SYMBOL')
+                df_3.replace([np.inf, -np.inf], 0, inplace=True)
+                df_4 = pd.read_csv(group4.doc_logfc.path,  index_col='SYMBOL') 
+                df_4.replace([np.inf, -np.inf], 0, inplace=True)
+                
+                if df_1['adj.P.Val'].all() == 1:
+                    df_1 = df_1[(np.absolute(df_1['logFC'])>2)]
+                else:               
+                    df_1 = df_1[(df_1['adj.P.Val']<0.05) & (np.absolute(df_1['logFC'])>0.4)]
+                if df_2['adj.P.Val'].all() == 1:
+                    df_2 = df_2[(np.absolute(df_2['logFC'])>2)]
+                else:
+                    df_2 = df_2[(df_2['adj.P.Val']<0.05) & (np.absolute(df_2['logFC'])>0.4)]
+                if df_3['adj.P.Val'].all() == 1:
+                    df_3 = df_3[(np.absolute(df_3['logFC'])>2)]
+                else:
+                    df_3 = df_3[(df_3['adj.P.Val']<0.05) & (np.absolute(df_3['logFC'])>0.4)]    
+                if df_4['adj.P.Val'].all() == 1:
+                    df_4 = df_4[(np.absolute(df_4['logFC'])>2)]
+                else:
+                    df_4 = df_4[(df_4['adj.P.Val']<0.05) & (np.absolute(df_4['logFC'])>0.4)]                 
+                
+                df_1 = pd.DataFrame(df_1['logFC'])
+                df_2 = pd.DataFrame(df_2['logFC'])
+                df_3 = pd.DataFrame(df_3['logFC'])
+                df_4 = pd.DataFrame(df_4['logFC'])
+                df_1.columns = ['0']
+                df_2.columns = ['0']
+                df_3.columns = ['0']
+                df_4.columns = ['0']
+            
+            
+            s_tumour1 = df_1['0'].round(decimals=2)
+            s_tumour1.name = lMembers[0]
+           
+            s_tumour2 = df_2['0'].round(decimals=2)
+            s_tumour2.name = lMembers[1]
+            
+            s_tumour3 = df_3['0'].round(decimals=2)
+            s_tumour3.name = lMembers[2]
+            
+            s_tumour4 = df_4['0'].round(decimals=2)
+            s_tumour4.name = lMembers[3]
+            
+            if regulation == 'updown':
+                s_tumour1_up = s_tumour1[s_tumour1>0]
+                s_tumour1_down = s_tumour1[s_tumour1<0]
+                s_tumour2_up = s_tumour2[s_tumour2>0]
+                s_tumour2_down = s_tumour2[s_tumour2<0]
+                s_tumour3_up = s_tumour3[s_tumour3>0]
+                s_tumour3_down = s_tumour3[s_tumour3<0]
+                s_tumour4_up = s_tumour4[s_tumour4>0]
+                s_tumour4_down = s_tumour4[s_tumour4<0]
+                
+                df_up = pd.DataFrame(s_tumour1_up).join(pd.DataFrame(s_tumour2_up), how='inner', sort=True)
+                df_up = df_up.join(pd.DataFrame(s_tumour3_up), how='inner', sort=True)
+                df_up = df_up.join(pd.DataFrame(s_tumour4_up), how='inner', sort=True)         
+                df_down = pd.DataFrame(s_tumour1_down).join(pd.DataFrame(s_tumour2_down), how='inner', sort=True)
+                df_down = df_down.join(pd.DataFrame(s_tumour3_down), how='inner', sort=True)
+                df_down = df_down.join(pd.DataFrame(s_tumour4_down), how='inner', sort=True) 
+                joined_df = df_up.append(df_down)
+            elif regulation == 'up':            
+                s_tumour1 = s_tumour1[s_tumour1>0]
+                s_tumour2 = s_tumour2[s_tumour2>0]
+                s_tumour3 = s_tumour3[s_tumour3>0]
+                s_tumour4 = s_tumour4[s_tumour4>0]
+                joined_df = pd.DataFrame(s_tumour1).join(pd.DataFrame(s_tumour2), how='inner')
+                joined_df = joined_df.join(pd.DataFrame(s_tumour3), how='inner')
+                joined_df = joined_df.join(pd.DataFrame(s_tumour4), how='inner')
+            elif regulation == 'down':  
+                s_tumour1 = s_tumour1[s_tumour1<0]
+                s_tumour2 = s_tumour2[s_tumour2<0]
+                s_tumour3 = s_tumour3[s_tumour3<0]
+                s_tumour4 = s_tumour4[s_tumour4<0]
+                joined_df = pd.DataFrame(s_tumour1).join(pd.DataFrame(s_tumour2), how='inner')
+                joined_df = joined_df.join(pd.DataFrame(s_tumour3), how='inner')
+                joined_df = joined_df.join(pd.DataFrame(s_tumour4), how='inner')
+            
+            joined_df.reset_index(inplace=True)
+            df_json = joined_df.to_json(orient='values')
+                
         response_data = {'aaData': json.loads(df_json)}
         return HttpResponse(json.dumps(response_data), content_type="application/json")
 

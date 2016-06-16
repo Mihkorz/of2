@@ -5,7 +5,7 @@ function drawDinamicTable(reportID, idx, tblRenderTo, path_gene, categories, org
     var regulation = arParams[1];
     var members = arParams[2];
     var is_metabolic = arParams[3];
-	
+    
     tblId = members.split(' ').join('_')
     tblId = tblId.replace(/\(/g, '').replace(/\)/g, '')
     tblId+=regulation
@@ -17,7 +17,7 @@ function drawDinamicTable(reportID, idx, tblRenderTo, path_gene, categories, org
     $('#'+tblRenderTo+' > div.dataTables_wrapper').fadeOut('fast');
     
     
-	if (arParams[0]<4){
+	if (arParams[0]<5){
 		if($( "#"+tblId ).length){ //check if required table already exists
 			$("#"+tblId+"_wrapper").fadeIn();
 		}

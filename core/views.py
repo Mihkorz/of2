@@ -1055,6 +1055,29 @@ class Test(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(Test, self).get_context_data(**kwargs)
         
+        PATHWAY_DATABASE = (
+    ('primary_old', 'Primary Pathway Database (old)'),
+    ('primary_new', 'Primary Pathway Database (new)'),
+    ('metabolism', 'Metabolism Pathway Database'),
+    ('cytoskeleton', 'Cytoskeleton Pathway Database'),
+    ('kegg', 'KEGG Pathway Database'),
+    ('nci', 'NCI Pathway Database'),
+    ('biocarta', 'Biocarta'),
+    ('reactome', 'Reactome'),
+    ('kegg_adjusted', 'KEGG Adjusted Pathway Database'),
+    ('kegg_10', 'KEGG 10'),
+    ('kegg_adjusted_10', 'KEGG Adjusted 10'),
+    ('aging', 'Aging related'), 
+) 
+        
+        for key in PATHWAY_DATABASE:
+            aaa = key[0]
+            genes = Gene.objects.filter(pathway__database=key[0]).values_list('name', flat=True).distinct()
+            
+            df = Series(genes)
+            
+            df.to_csv(settings.MEDIA_ROOT+'/genes/'+key[0]+'.csv', encoding='utf-8') 
+        
         raise Exception('test stop')
         
                 
