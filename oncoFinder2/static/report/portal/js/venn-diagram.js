@@ -98,6 +98,7 @@ function drawDinamicTable(reportID, idx, tblRenderTo, path_gene, categories, org
 		        } 
 		   
 			});
+			
 			if(path_gene == 'pathways'){
 			$('#'+tblId+' tbody').on( 'click', 'tr td:nth-child(2)', function () {    	
 	    	    var path_name = $(this).prev().find('span').attr('title');    	
@@ -121,7 +122,8 @@ function drawDinamicTable(reportID, idx, tblRenderTo, path_gene, categories, org
 			else{
 				
 				$('#'+tblId+' tbody').on( 'click', 'tr td:first-child', function () {				    	
-				    	var gene_name = $(this).text();				    	
+				    	var gene_name = $(this).text();	
+				    	
 				    	drawGeneChart(reportID, gene_name, categories);				    	
 				    });
 				

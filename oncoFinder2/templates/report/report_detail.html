@@ -238,6 +238,7 @@
            <th>Pathway</th>
            {%for group in report.get_all_gene_groups_as_list%}
             <!--  {% if forloop.counter > 1 %}<th>{{group}}</th> {%endif%}-->
+            <th>{{group}}</th>
            {%endfor%}
           </tr>
         </thead>  
@@ -441,7 +442,7 @@ $(function() {
 			          xname='log2({{group.name}} Expression level)',
 			          yname='log2({{report.norm_name}} Expression level)',
 			          file_name='{{group.document}}');
-	  drawGeneTableScatter({{report.id}}, 'tbl-{{group.get_slug}}', '{{group.doc_logfc}}', categories='{{report.get_gene_groups}}'); 
+	  drawGeneTableScatter({{report.id}}, 'tbl-{{group.get_slug}}', '{{group.doc_logfc}}', categories='{{report.get_all_gene_groups_norm_as_list}}'); 
 	{%endfor%}
 	{%endif%}
 	

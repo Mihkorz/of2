@@ -162,7 +162,7 @@ function drawGeneTableScatter(reportID, id, file_name, categories){
         "order": [[ 1, "desc" ]],
         "info":     false,
         "dom": 'Bfrtip',
-        //"scrollX": true,
+        "scrollX": true,
         "buttons": [
                    {extend: 'csv', title: file_name},
                    {extend: 'print', title: file_name}
