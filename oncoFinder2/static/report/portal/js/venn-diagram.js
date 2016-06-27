@@ -46,7 +46,7 @@ function drawDinamicTable(reportID, idx, tblRenderTo, path_gene, categories, org
 		        "ordering": true,
 		        "order": [[ 1, "desc" ]],
 		        "info":     false,
-		        
+		        "scrollX": true,
 		        "dom": 'Bfrtip',
 		        "buttons": [
 		                  {extend: 'csv',
@@ -92,6 +92,7 @@ function drawDinamicTable(reportID, idx, tblRenderTo, path_gene, categories, org
 		    	$("table#"+tblId+".path tr td:nth-child(2)").wrapInner('<a href="#/"></a>');
 	    	    $("table#"+tblId+".path tr td:nth-child(3)").wrapInner('<a href="#/"></a>');
 	    	    $("table#"+tblId+".path tr td:nth-child(4)").wrapInner('<a href="#/"></a>');
+	    	    $("table#"+tblId+".path tr td:nth-child(5)").wrapInner('<a href="#/"></a>');
 		   }
 		   else{
 			   $("table#"+tblId+".path tr td:first-child()").wrapInner('<a href="#/"></a>');
@@ -118,6 +119,13 @@ function drawDinamicTable(reportID, idx, tblRenderTo, path_gene, categories, org
 	    	    var group = $th.text();
 	    	    showPathDetails(reportID, path_name, group, categories);    	    	
 	                                                                              });
+			$('#'+tblId+' tbody').on( 'click', 'tr td:nth-child(5)', function () {    	
+	    	    var path_name = $(this).prev().prev().prev().prev().find('span').attr('title');    	
+	    	    var $th = $(this).closest('table').find('th').eq($(this).index());
+	    	    var group = $th.text();
+	    	    showPathDetails(reportID, path_name, group, categories);    	    	
+	                                                                              });
+			
 			} // end of if path_gene==paths
 			else{
 				

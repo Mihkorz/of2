@@ -1076,7 +1076,7 @@ class ReportAjaxPathDetail(TemplateView):
         df_file_cnr = pd.read_csv(group.doc_logfc.path, index_col='SYMBOL')
         
         if df_file_cnr['adj.P.Val'].all() == 1:
-                    df_file_cnr = df_file_cnr[(np.absolute(df_file_cnr['logFC'])>2)]
+                    df_file_cnr = df_file_cnr[(np.absolute(df_file_cnr['logFC'])>1)]
         else:        
             df_file_cnr = df_file_cnr[(df_file_cnr['adj.P.Val']<0.05) & (np.absolute(df_file_cnr['logFC'])>0.4)] 
         df_file_cnr = df_file_cnr['logFC'].round(decimals=2)

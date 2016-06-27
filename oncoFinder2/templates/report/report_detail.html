@@ -457,11 +457,11 @@ $(function() {
 	drawVenn({{report.id}},
 			'venn_gene-{{perm.strip}}-up',
 			'{{perm.strip}}',	 
-			false, 'up', 'venn_gene_dinamic_{{perm.strip}}', 'genes', categories='{{report.get_gene_groups}}');
+			false, 'up', 'venn_gene_dinamic_{{perm.strip}}', 'genes', categories='{{report.get_all_gene_groups_norm_as_list}}');
 	drawVenn({{report.id}},
 			'venn_gene-{{perm.strip}}-down',
 			'{{perm.strip}}',			
-			false, 'down', 'venn_gene_dinamic_{{perm.strip}}', 'genes', categories='{{report.get_gene_groups}}');
+			false, 'down', 'venn_gene_dinamic_{{perm.strip}}', 'genes', categories='{{report.get_all_gene_groups_norm_as_list}}');
 	{%endfor%}
 	
 	
