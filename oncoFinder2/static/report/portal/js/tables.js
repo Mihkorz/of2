@@ -55,6 +55,11 @@ function drawGeneChart(reportID, gene_name, categories){
 		
 		$('#pathmodal').modal('show');
 		
+		categories = categories.replace(/u&#39;/g, "");
+		categories = categories.replace(/&#39;/g, "");
+		categories = categories.replace('[', "");
+		categories = categories.replace(']', "");
+		
 		$.getJSON('/report-portal/report-genesboxplotjson/',
 				{
 			     'reportID': reportID,

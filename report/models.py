@@ -69,6 +69,21 @@ class Report(models.Model):
             
         return joined
     
+    
+    def get_all_gene_groups_as_list(self):
+        lgroups = []
+        for group in self.genegroup_set.all():
+                lgroups.append(group.name.split('vs')[0])
+        
+        return lgroups
+    
+    def get_all_gene_groups_norm_as_list(self):
+        lgroups = [self.norm_name]
+        for group in self.genegroup_set.all():
+                lgroups.append(group.name.split('vs')[0])
+        
+        return lgroups
+    
     def get_gene_groups_as_list(self):
         if not self.compare_groups:
             return self.get_gene_groups().split(',')

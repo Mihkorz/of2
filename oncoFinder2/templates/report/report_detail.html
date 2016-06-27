@@ -150,8 +150,9 @@
         <thead>
           <tr>
            <th>Gene</th>
-           {%for group in report.get_gene_groups_as_list%}
-            {% if forloop.counter > 1 %}<th>{{group}}</th> {%endif%}
+           {%for group in report.get_all_gene_groups_as_list%}
+            <!--  {% if forloop.counter > 1 %}<th>{{group}}</th> {%endif%}-->
+            <th>{{group}}</th>
            {%endfor%}
           </tr>
         </thead>  
@@ -235,8 +236,8 @@
         <thead>
           <tr>
            <th>Pathway</th>
-           {%for group in report.get_gene_groups_as_list%}
-            {% if forloop.counter > 1 %}<th>{{group}}</th> {%endif%}
+           {%for group in report.get_all_gene_groups_as_list%}
+            <!--  {% if forloop.counter > 1 %}<th>{{group}}</th> {%endif%}-->
            {%endfor%}
           </tr>
         </thead>  
@@ -288,8 +289,9 @@
         <thead>
           <tr>
            <th>Pathway</th>
-           {%for group in report.get_gene_groups_as_list%}
-            {% if forloop.counter > 1 %}<th>{{group}}</th> {%endif%}
+           {%for group in report.get_all_gene_groups_as_list%}
+            <!--  {% if forloop.counter > 1 %}<th>{{group}}</th> {%endif%}-->
+            <th>{{group}}</th>
            {%endfor%}
           </tr>
         </thead>  
@@ -444,10 +446,10 @@ $(function() {
 	{%endif%}
 	
 	{%for gene in report.get_notable_genes_list%}
-	  drawGeneBoxplot(reportID={{report.id}}, name='{{gene}}', renderTo='{{gene}}', gene='{{gene}}', categories='{{report.get_gene_groups}}');
+	  drawGeneBoxplot(reportID={{report.id}}, name='{{gene}}', renderTo='{{gene}}', gene='{{gene}}', categories='{{report.get_all_gene_groups_norm_as_list}}');
 	{%endfor%}
 	
-	drawGeneTable({{report.id}}, 'tbl-gene_all', 'all', categories='{{report.get_gene_groups}}');
+	drawGeneTable({{report.id}}, 'tbl-gene_all', 'all', categories='{{report.get_all_gene_groups_norm_as_list}}');
 	
 	//GENES
 	{%for perm in report.get_gene_permutations%}
