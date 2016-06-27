@@ -182,8 +182,10 @@
   
   </div>
 <hr/> 
+{%if report.notable_genes%}
    <h3>Notable genes</h3>
 <hr/>
+
 
  <!-- Notable GENE Nav tabs -->
          <ul class="nav nav-tabs" role="tablist">
@@ -205,7 +207,7 @@
     {%endfor%}
    
    </div> <!--  end of tab panel -->
-
+{%endif%}
 
 <!-- ---------------------------------PATHWAY--------------------------------------------- -->
  <hr/> 
