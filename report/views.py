@@ -1008,7 +1008,7 @@ class ReportAjaxPathwayVennTable(TemplateView):
             
             joined_df.reset_index(inplace=True)
             df_json = joined_df.to_json(orient='values')
-                
+        raise Exception('venn table')       
         response_data = {'aaData': json.loads(df_json)}
         return HttpResponse(json.dumps(response_data), content_type="application/json")
 
