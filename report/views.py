@@ -293,6 +293,8 @@ class ReportGeneBoxplotJson(TemplateView):
             series_tumour.append(lSerie)
             
             if i==0:
+                pass
+            """
                 filered_df = df[[x for x in df if 'Norm' in x]]
                 
                 row_gene = filered_df.loc[gene]      
@@ -305,7 +307,7 @@ class ReportGeneBoxplotJson(TemplateView):
               
                 lSerie = [lower_whisker, lower_quartile, median, upper_quartile, upper_whisker]
                 series_tumour.append(lSerie)                
-            
+            """
             i=i+1        
         #raise Exception('boxplot') 
         s1 = {
