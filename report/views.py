@@ -801,6 +801,7 @@ class ReportAjaxPathwayVennTable(TemplateView):
                 s_tumour2 = s_tumour2[s_tumour2<0]
                 joined_df = pd.DataFrame(s_tumour1).join(pd.DataFrame(s_tumour2), how='inner')
             
+            joined_df = joined_df.groupby(joined_df.index, level=0).mean()
             joined_df.reset_index(inplace=True)
             df_json = joined_df.to_json(orient='values')
             
@@ -889,6 +890,7 @@ class ReportAjaxPathwayVennTable(TemplateView):
                 joined_df = pd.DataFrame(s_tumour1).join(pd.DataFrame(s_tumour2), how='inner')
                 joined_df = joined_df.join(pd.DataFrame(s_tumour3), how='inner')
             
+            joined_df = joined_df.groupby(joined_df.index, level=0).mean()
             joined_df.reset_index(inplace=True)
             df_json = joined_df.to_json(orient='values')
         
@@ -1006,9 +1008,10 @@ class ReportAjaxPathwayVennTable(TemplateView):
                 joined_df = joined_df.join(pd.DataFrame(s_tumour3), how='inner')
                 joined_df = joined_df.join(pd.DataFrame(s_tumour4), how='inner')
             
+            joined_df = joined_df.groupby(joined_df.index, level=0).mean()
             joined_df.reset_index(inplace=True)
             df_json = joined_df.to_json(orient='values')
-        raise Exception('venn table')       
+        #raise Exception('venn table')       
         response_data = {'aaData': json.loads(df_json)}
         return HttpResponse(json.dumps(response_data), content_type="application/json")
 
