@@ -25,7 +25,7 @@ class ReportList(ListView):
     context_object_name = 'reports'
     paginate_by = 100
     
-    @method_decorator(login_required)
+    #@method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super(ReportList, self).dispatch(request, *args, **kwargs)
     
@@ -42,7 +42,7 @@ class ReportDetail(DetailView):
     model = Report
     template_name = 'report/report_detail.html'
     
-    @method_decorator(login_required)
+    #@method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super(ReportDetail, self).dispatch(request, *args, **kwargs)
     
