@@ -348,6 +348,7 @@ class ReportPathwayTableJson(TemplateView):
                     df_path = df_path[df_path['Database']=='metabolism']
                 else:
                     df_path = df_path[df_path['Database']!='metabolism']
+                    df_path = df_path[df_path['Database']!='kegg']
                 lgroups.append(df_path)
             
             df_output = pd.DataFrame()
@@ -374,7 +375,9 @@ class ReportPathwayTableJson(TemplateView):
                 df_2 = df_2[df_2['Database']=='metabolism']
             else:
                 df_1 = df_1[df_1['Database']!='metabolism']
+                df_1 = df_1[df_1['Database']!='kegg']
                 df_2 = df_2[df_2['Database']!='metabolism']
+                df_2 = df_2[df_2['Database']!='kegg']
             
             df1_tumour = df_1[[x for x in df_1.columns if 'Tumour' in x]]
             s1_tumour = df1_tumour.mean(axis=1).round(decimals=2)
@@ -1063,7 +1066,8 @@ class ReportAjaxPathDetail(TemplateView):
 
         
         pathway = Pathway.objects.filter(organism=organism, name=self.request.GET['pathway']).exclude(database__in=['primary_old'])[0]
-        
+        if report.id==2:
+            pathway.exclude(database__in=['kegg'])
         gene_data = []
         for gene in pathway.gene_set.all():
                 nodes = ','.join([str(i) for i in Node.objects.filter(pathway=pathway, component__name=gene.name).distinct()])
