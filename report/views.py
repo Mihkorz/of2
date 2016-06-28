@@ -1064,10 +1064,10 @@ class ReportAjaxPathDetail(TemplateView):
         group = GeneGroup.objects.get(report=report, name=self.request.GET['group_name'])
         organism = self.request.GET['organism']
 
-        
-        pathway = Pathway.objects.filter(organism=organism, name=self.request.GET['pathway']).exclude(database__in=['primary_old'])[0]
         if report.id==2:
-            pathway.exclude(database__in=['kegg'])
+            pathway = Pathway.objects.filter(organism=organism, name=self.request.GET['pathway']).exclude(database__in=['primary_old', 'kegg'])[0]
+        else: 
+            pathway = Pathway.objects.filter(organism=organism, name=self.request.GET['pathway']).exclude(database__in=['primary_old'])[0]
         gene_data = []
         for gene in pathway.gene_set.all():
                 nodes = ','.join([str(i) for i in Node.objects.filter(pathway=pathway, component__name=gene.name).distinct()])
