@@ -44,6 +44,10 @@ class CalculationParametersForm(forms.Form):
     pvalue_threshold = forms.FloatField( label="p-value threshold", initial=0.05, required=False)
     qvalue_threshold = forms.FloatField( label="q-value threshold", initial=0.05, required=False)
     
+    use_percent_single = forms.BooleanField(label="One-sample expression filter", initial=False, required=False)
+    use_percent_all = forms.BooleanField(label="Overall expression filter", initial=False, required=False)
+    percent_threshold = forms.FloatField( label="percentage threshold", initial=6, required=False)
+    
     #For OF_cnr_stat files only!
     use_ttest_stat = forms.BooleanField(label="Use p-values",
                                    initial=True, required=False)
@@ -83,6 +87,7 @@ class CalculationParametersForm(forms.Form):
         self.fields['sigma_num'].widget.attrs.update({'class' : 'form-control input-sm'})
         self.fields['pvalue_threshold'].widget.attrs.update({'class' : 'form-control input-sm', 'style':'width:60px; display:inline'})
         self.fields['qvalue_threshold'].widget.attrs.update({'class' : 'form-control input-sm', 'style':'width:60px; display:inline'})
+        self.fields['percent_threshold'].widget.attrs.update({'class' : 'form-control input-sm', 'style':'width:60px; display:inline'})
         self.fields['cnr_low'].widget.attrs.update({'class' : 'form-control input-sm'})
         self.fields['cnr_up'].widget.attrs.update({'class' : 'form-control input-sm'})
        

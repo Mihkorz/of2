@@ -77,6 +77,9 @@ class CoreSetCalculationParameters(FormView):
         use_ttest_1sam = form.cleaned_data.get('use_ttest_1sam', False) 
         pvalue_threshold = form.cleaned_data.get('pvalue_threshold', 0.05)
         qvalue_threshold = form.cleaned_data.get('qvalue_threshold', 0.05)        
+        use_percent_single = form.cleaned_data.get('use_percent_single', False)
+        use_percent_all = form.cleaned_data.get('use_percent_all', False)
+        percent_threshold = form.cleaned_data.get('percent_threshold', 6)
         use_cnr = form.cleaned_data.get('use_cnr', True)
         cnr_low = form.cleaned_data.get('cnr_low', 0.67)
         cnr_up =  form.cleaned_data.get('cnr_up', 1.5)
@@ -128,6 +131,8 @@ class CoreSetCalculationParameters(FormView):
                                  'use_fdr': use_fdr,
                                  'use_new_fdr': use_new_fdr,
                                  'use_ttest_1sam': use_ttest_1sam,
+                                 'use_percent_single': use_percent_single,
+                                 'use_percent_all': use_percent_all,
                                  'norm_algirothm': 'geometric' if int(norm_choice)>1 else 'arithmetic',
                                  'organism': organism_choice, 
                                  'db': db_choice,
@@ -240,13 +245,20 @@ class CoreSetCalculationParameters(FormView):
                 process_doc_df = process_doc_df[process_doc_df['p_value']<pvalue_threshold]
             
             
-        print 't-test done'         
+        
+                 
         """ T-test 1 sample CNR filter and Sigma filter for genes """
-        if use_ttest_1sam or use_cnr or use_sigma:
+        if use_ttest_1sam or use_cnr or use_sigma or use_percent_single or use_percent_all:
             norms_df = process_doc_df[normal_columns]
             log_norms_df = np.log(norms_df)#use this for t-test, assuming log(norm) is distributed normally
             
             df_for_pq_val = DataFrame()
+            
+            if use_percent_all:
+                    s_max_expression = process_doc_df.max()
+                    max_expression = s_max_expression.max()                    
+                    global_max = max_expression*(percent_threshold/100)
+            
             def filter_diff_genes(col):
                 if ('Tumour' in col.name) or ('Norm' in col.name):
                     if input_document.doc_format!='OF_cnr' and input_document.doc_format!='OF_cnr_stat':
@@ -282,6 +294,13 @@ class CoreSetCalculationParameters(FormView):
                         col_CNR[((col<(process_doc_df['mean']+sigma_num*std)) &
                                        (col>=(process_doc_df['mean']-sigma_num*std)))] = 1 
                     
+                    if use_percent_all:
+                            col_CNR[col<global_max] = 1
+                    if use_percent_single:
+                            local_max_expression = col.max()                            
+                            local_max = local_max_expression*(percent_threshold/100)
+                            col_CNR[col<local_max] = 1 
+                    
                     return col_CNR
                        
                 else:
@@ -290,6 +309,8 @@ class CoreSetCalculationParameters(FormView):
             
             process_doc_df = process_doc_df.apply(filter_diff_genes, axis=0)
             #raise Exception('single t-test')
+            
+            
             cnr_df_diff_genes = process_doc_df.copy() 
             if input_document.doc_format!='OF_cnr' and input_document.doc_format!='OF_cnr_stat':
                 oldstd = cnr_doc_df['std']
@@ -342,7 +363,7 @@ class CoreSetCalculationParameters(FormView):
                                          sheetname=0, 
                                          index_col='Old Pathway Name')
             
-        
+        print 'Filters done...'
         #raise Exception('before cycle')
         """ START CYCLE """
         output_pas_df  = DataFrame()

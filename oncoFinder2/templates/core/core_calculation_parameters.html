@@ -109,6 +109,22 @@
                 
             </div>
           </div>
+          <hr/>
+          <div class="form-group form-group-sm">
+            <label for="" class="col-sm-4 control-label">Expression filter</label>
+            <div class="col-sm-8">
+            
+            {{ form.use_percent_single.label_tag }}&nbsp;&nbsp;
+            {{ form.use_percent_single }}
+            
+            {{ form.use_percent_all.label_tag }}&nbsp;&nbsp;
+            {{ form.use_percent_all }}
+            
+            {{ form.percent_threshold.label_tag }}
+            {{ form.percent_threshold }}
+            
+            </div>
+          </div>
           {% endif %}
           
           {% if document.doc_format == 'OF_cnr_stat'%}
@@ -117,7 +133,7 @@
           {{ form.use_fdr_stat.label_tag }}
                 {{ form.use_fdr_stat }}
           {%endif%}
-          
+          <hr/>
           <div class="form-group form-group-sm">
             <label for="{{ form.cnr_low.auto_id }}" class="col-sm-4 control-label">{{ form.cnr_low.label }}</label>            
             <div class="col-sm-8">
