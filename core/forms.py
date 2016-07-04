@@ -46,7 +46,7 @@ class CalculationParametersForm(forms.Form):
     
     use_percent_single = forms.BooleanField(label="One-sample expression filter", initial=False, required=False)
     use_percent_all = forms.BooleanField(label="Overall expression filter", initial=False, required=False)
-    percent_threshold = forms.FloatField( label="percentage threshold", initial=6, required=False)
+    percent_threshold = forms.FloatField( label="percentage threshold", initial=5, required=False)
     
     #For OF_cnr_stat files only!
     use_ttest_stat = forms.BooleanField(label="Use p-values",

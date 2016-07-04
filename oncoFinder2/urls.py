@@ -37,7 +37,8 @@ from profiles.views import ProfileIndex, SettingsProfile, SettingsBilling, Creat
                            DeleteProject, ProjectDetail, CreateDocument, DeleteDocument, \
                            DocumentDetail, SampleDetail, AjaxPathDetail
                            
-from core.views import CoreSetCalculationParameters, CoreCalculation, Test 
+from core.views import CoreSetCalculationParameters, CoreCalculation, Test
+from core.of3_views import OF3CalculationParameters 
 from core.harmony_views import ShambalaForm, ShambalaDone, \
                                HarmonyForm, HarmonyDone, HarmonyPrevFiles, \
                                breastmodule
@@ -98,6 +99,10 @@ urlpatterns = patterns('',
     ################### Core App ##############################
     url(r'^calculation-parameters/doc(?P<pk>\d+)/$', CoreSetCalculationParameters.as_view(), name="core_set_calculation_parameters"),
     url(r'^calculation/doc(?P<pk>\d+)/$', CoreCalculation.as_view(), name="core_calculation"),
+    
+    # OF3 TEST CALCULATIONS
+    
+    url(r'^of3-calculation-parameters/doc(?P<pk>\d+)/$', OF3CalculationParameters.as_view(), name="of3_calculation_parameters"),
     
     url(r'^test/$', Test.as_view()),
     url(r'^celery/$', Celery.as_view()),

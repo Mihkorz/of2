@@ -79,7 +79,7 @@ class CoreSetCalculationParameters(FormView):
         qvalue_threshold = form.cleaned_data.get('qvalue_threshold', 0.05)        
         use_percent_single = form.cleaned_data.get('use_percent_single', False)
         use_percent_all = form.cleaned_data.get('use_percent_all', False)
-        percent_threshold = form.cleaned_data.get('percent_threshold', 6)
+        percent_threshold = form.cleaned_data.get('percent_threshold', 5)
         use_cnr = form.cleaned_data.get('use_cnr', True)
         cnr_low = form.cleaned_data.get('cnr_low', 0.67)
         cnr_up =  form.cleaned_data.get('cnr_up', 1.5)
