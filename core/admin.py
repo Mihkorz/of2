@@ -16,7 +16,7 @@ def copy_pathway(modeladmin, request, queryset):
                 new_component.save()
         
         for gene in path.gene_set.all():
-            new_gene = Gene(name = gene.name, arr=gene.arr, comment=gene.comment, pathway=path_copy, node=new_node)
+            new_gene = Gene(name = gene.name, arr=gene.arr, comment=gene.comment, pathway=path_copy)
             new_gene.save()
             
         for node in path.node_set.all():

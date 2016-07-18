@@ -85,7 +85,7 @@ class OF3CalculationParameters(FormView):
         diff_genes_amount = form.cleaned_data.get('diff_genes_amount', False)
         
         
-        filers = {               'sigma_num': sigma_num,
+        filters = {               'sigma_num': sigma_num,
                                  'use_sigma': use_sigma,
                                  'cnr_low': cnr_low,
                                  'cnr_up': cnr_up,
