@@ -691,6 +691,8 @@ class AjaxPathDetail(TemplateView):
     def get_context_data(self, request, **kwargs):
         context = super(AjaxPathDetail, self).get_context_data(**kwargs)    
         
+        
+        
         pathway = Pathway.objects.get(pk = int(request.POST['pathway']))
         
         gene_objects = pathway.gene_set.all()
@@ -723,7 +725,9 @@ class AjaxPathDetail(TemplateView):
         context['joined'] = joined_df.to_html(classes=['table', 'table-bordered', 'table-striped'])
         context['diff_genes_count'] = len(joined_df.index)
         
+        scale = request.POST['scale']
         
+        context['scale'] = scale
         
         nComp = []
         
@@ -761,8 +765,19 @@ class AjaxPathDetail(TemplateView):
         if lNEL: #check if list is not empty
             #choosing colormap for static image
             lNEL = np.log(lNEL)
-            mmin = np.min(lNEL)
-            mmax = np.max(np.absolute(lNEL)) # absolute was made for Aliper special, remove if needed
+            if scale=='default':
+                mmin = np.min(lNEL)
+                mmax = np.max(np.absolute(lNEL)) # absolute was made for Aliper special, remove if needed
+            if scale=='2':
+                mmin = -2
+                mmax = 2.0
+            if scale=='5':
+                mmin = -5
+                mmax = 5.0
+            if scale=='10':
+                mmin = -10
+                mmax = 10.0
+            
             mid = 1 - mmax/(mmax + abs(mmin))
         
             if mmax<0 and mmin<0:                    
@@ -773,6 +788,7 @@ class AjaxPathDetail(TemplateView):
                 mmin = 0
             else:  
                 cmap = plt.get_cmap('PiYG')
+                
                 shifted_cmap = shiftedColorMap(cmap, start=0, midpoint=mid, stop=1, name='shrunk')
             
             fig = plt.figure(figsize=(8,3))

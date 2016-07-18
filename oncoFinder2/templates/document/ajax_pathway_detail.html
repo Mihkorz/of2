@@ -2,13 +2,13 @@
 AMCF = {{pathway.amcf}}
 
     <ul class="nav nav-tabs">
-        <li class="active"><a href="#fragment-1" data-toggle="tab"><span>Differential Genes </span></a></li>
+        <li ><a href="#fragment-1" data-toggle="tab"><span>Differential Genes </span></a></li>
         <li><a href="#fragment-2" data-toggle="tab"><span>Nodes and Components</span></a></li>
         <li><a href="#fragment-3" data-toggle="tab"><span>Dinamic Graphic Scheme</span></a></li>
-        <li><a href="#fragment-4" data-toggle="tab"><span>Static Graphic Scheme</span></a></li>
+        <li class="active"><a href="#fragment-4" data-toggle="tab"><span>Static Graphic Scheme</span></a></li>
     </ul>
     <div id="tabContent" class="tab-content">
-		<div id="fragment-1" class="tab-pane fade in active well">
+		<div id="fragment-1" class="tab-pane fade in well">
 		Total = {{diff_genes_count}}
 		<small>
 		{{joined|safe}}
@@ -87,11 +87,22 @@ AMCF = {{pathway.amcf}}
    </small>
  </div>
 </div>
-<div id="fragment-4" class="tab-pane  well">
+<div id="fragment-4" class="tab-pane active well">
+    Scale:
+    <div class="btn-group" role="group" aria-label="...">
+    
+       <button type="button" class="btn btn-default {%if scale == 'default'%}active{%endif%}" onClick="fetchPathwayDetails({{pathway.id}}, '{{pathway.name}}', 'default')">Default</button>
+       <button type="button" class="btn btn-default {%if scale == '2'%}active{%endif%}" onClick="fetchPathwayDetails({{pathway.id}}, '{{pathway.name}}', 2)">[-2, 2]</button>
+       <button type="button" class="btn btn-default {%if scale == '5'%}active{%endif%}" onClick="fetchPathwayDetails({{pathway.id}}, '{{pathway.name}}', 5)">[-5, 5]</button>
+       <button type="button" class="btn btn-default {%if scale == '10'%}active{%endif%}" onClick="fetchPathwayDetails({{pathway.id}}, '{{pathway.name}}', 10)">[-10, 10]</button>
+     </div>
+    <hr/>
+    
 	<a target="_blank" href='/media/pathway.svg?path={{pathway.name}}&r={{rand}}' >	
     <img src='/media/pathway.svg?path={{pathway.name}}&r={{rand}}' style="width:100%"/>
     </a>
     
+    <hr/>
     <img src='/media/path_scale.png?path={{pathway.name}}&r={{rand}}' style="width:100%"/>
 
 		
