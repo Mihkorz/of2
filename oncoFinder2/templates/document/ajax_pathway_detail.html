@@ -92,9 +92,12 @@ AMCF = {{pathway.amcf}}
     <div class="btn-group" role="group" aria-label="...">
     
        <button type="button" class="btn btn-default {%if scale == 'default'%}active{%endif%}" onClick="fetchPathwayDetails({{pathway.id}}, '{{pathway.name}}', 'default')">Default</button>
+       <button type="button" class="btn btn-default {%if scale == '0.5'%}active{%endif%}" onClick="fetchPathwayDetails({{pathway.id}}, '{{pathway.name}}', 0.5)">[-0.5, 0.5]</button>
        <button type="button" class="btn btn-default {%if scale == '2'%}active{%endif%}" onClick="fetchPathwayDetails({{pathway.id}}, '{{pathway.name}}', 2)">[-2, 2]</button>
        <button type="button" class="btn btn-default {%if scale == '5'%}active{%endif%}" onClick="fetchPathwayDetails({{pathway.id}}, '{{pathway.name}}', 5)">[-5, 5]</button>
        <button type="button" class="btn btn-default {%if scale == '10'%}active{%endif%}" onClick="fetchPathwayDetails({{pathway.id}}, '{{pathway.name}}', 10)">[-10, 10]</button>
+       
+     
      </div>
     <hr/>
     
