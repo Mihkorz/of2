@@ -1074,18 +1074,46 @@ class Test(TemplateView):
         
     
     def get_context_data(self, **kwargs):
-        context = super(Test, self).get_context_data(**kwargs)
         
-        old = Pathway.objects.get(organism='human', database='primary_old', name='Hypoxia_induced_EMT_in_cancer_and_fibrosis_3')
+        from sklearn import preprocessing
         
-        new = Pathway.objects.get_or_create(organism='human', database='primary_new', name='Hypoxia_induced_EMT_in_cancer_and_fibrosis')
+        input = read_csv(settings.MEDIA_ROOT+'/breast_expression/GSE20194_GSE9574_normalized_ERN_HER2N.txt',
+                         sep='\t', index_col='SYMBOL')
         
-        for og in old.gene_set.all():
-            ng = Gene.objects.get_or_create(name=og.name, pathway=new, arr=og.arr)
+        tumour_cols = [col for col in input.columns if 'Tumour' in col]
+        norm_cols = [col for col in input.columns if 'Norm' in col]
+        
+        df_tumour = input[tumour_cols]
+        df_norm = input[norm_cols]
+        
+        pathways = Pathway.objects.filter(organism='human', database='primary_new')
+        
+        for path in pathways:
             
-        
+            gene_objects = path.gene_set.all()
+              
+            gene_data = []
+            for gene in gene_objects:
+                gene_data.append({'SYMBOL':gene.name.strip().upper(),
+                                  'ARR':float(gene.arr) })   
+           
+            gene_df = DataFrame(gene_data).set_index('SYMBOL')
             
-        
+            
+            
+            gene_df = gene_df.groupby(gene_df.index, level=0).mean() # take average value for duplicate genes 
+            
+            joined = gene_df.join(df_tumour, how='inner') #intersect DataFrames to acquire only genes in current pathway
+            
+            joined.drop(['ARR'], axis=1, inplace=True)
+            
+            joined_scaled = preprocessing.scale(joined)
+            
+            print "shape=", joined_scaled.shape
+            print joined_scaled.mean(axis=0)
+            print joined_scaled.std(axis=0)
+            
+            raise Exception('path')
         
         raise Exception('test stop')
         

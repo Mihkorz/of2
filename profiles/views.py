@@ -803,7 +803,10 @@ class AjaxPathDetail(TemplateView):
                                    norm=cNormp,
                                    orientation='horizontal')
             cb1.set_label('nodes activation')
-            plt.savefig(settings.MEDIA_ROOT+'/path_scale.png') 
+            try:
+                plt.savefig(settings.MEDIA_ROOT+'/path_scale.png')
+            except:
+                pass 
         
         finalNodes = []
         for nod in lNodes:
