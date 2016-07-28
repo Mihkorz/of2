@@ -764,7 +764,12 @@ class AjaxPathDetail(TemplateView):
                    
         if lNEL: #check if list is not empty
             #choosing colormap for static image
+            lNEL = [abs(number) for number in lNEL]
             lNEL = np.log(lNEL)
+            
+            mmin = 0
+            mmax = 1
+            
             if scale=='default':
                 mmin = np.min(lNEL)
                 mmax = np.max(np.absolute(lNEL)) # absolute was made for Aliper special, remove if needed
@@ -796,6 +801,9 @@ class AjaxPathDetail(TemplateView):
             
             fig = plt.figure(figsize=(8,3))
             ax1 = fig.add_axes([0.05, 0.80, 0.9, 0.15]) 
+            
+             
+            
             cNormp  = colors.Normalize(vmin=mmin, vmax=mmax)
             scalarMap = cmx.ScalarMappable(norm=cNormp, cmap=shifted_cmap)
             
@@ -803,10 +811,12 @@ class AjaxPathDetail(TemplateView):
                                    norm=cNormp,
                                    orientation='horizontal')
             cb1.set_label('nodes activation')
+            
+            
             try:
                 plt.savefig(settings.MEDIA_ROOT+'/path_scale.png')
             except:
-                pass 
+                raise Exception(str(mmin)+ '  max='+str(mmax)) 
         
         finalNodes = []
         for nod in lNodes:
