@@ -43,7 +43,7 @@ class ProfileIndex(DetailView):
     
     def get_context_data(self, **kwargs):              
         context = super(ProfileIndex, self).get_context_data(**kwargs)  
-        all_users = User.objects.exclude(username = self.get_object().username)
+        all_users = User.objects.filter(is_active=True).exclude(username = self.get_object().username)
         context['all_users'] = all_users
         
         my_projects = Project.objects.filter(owner=self.get_object())
