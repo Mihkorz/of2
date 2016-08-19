@@ -42,7 +42,14 @@ class UploadDocumentForm(forms.ModelForm):
             widget=forms.HiddenInput())
     
     """ Norms choice for Custom Array file """
-    norms_file = forms.ModelChoiceField(queryset=TreatmentNorms.objects.all(), required=False)
+    norms_file = forms.ModelMultipleChoiceField(queryset=TreatmentNorms.objects.all(), required=False)
+    
+    def __init__(self, *args, **kwargs):
+        super(UploadDocumentForm, self).__init__(*args, **kwargs)
+        
+        self.fields['document'].widget.attrs.update({'class' : 'form-control input-sm'})
+        self.fields['doc_format'].widget.attrs.update({'class' : 'form-control input-sm'})
+        self.fields['norms_file'].widget.attrs.update({'class' : 'form-control norm-select'})
     
     def clean_document(self):
         try:

@@ -134,7 +134,9 @@
         <h4 class="modal-title" id="myModalLabel">Upload new document</h4>
       </div>
       <div class="modal-body">
+        <small>
         <div class="alert alert-warning">
+        
          <h4>Important!</h4>
 	      Accepted file formats are: <b>CSV, TXT, XLS, XLSX</b> with delimeters <b>\t , ;</b> <br/>
 	      Files should have names in English letters only! <br/>
@@ -142,6 +144,7 @@
 	      Columns with Samples should contain <strong>"Tumour"</strong> in it's name <br/>
 	      Columns with Norms should contain <strong>"Norm"</strong> in it's name <br/>
 	      If an error occurs, please contact OncoFinder administration.
+       
         </div>
         <form action="/document/new/" id="doc_create_form" method="post" enctype="multipart/form-data">
             {% csrf_token %}
@@ -152,6 +155,7 @@
         <button type="submit" class="btn btn-primary" data-loading-text="Uploading..." id="uploadButton">Upload</button>
         </form>
       </div>
+      </small>
     </div>
   </div>
 </div>
@@ -215,14 +219,15 @@ $(function(){
 
 <!-- Show/Hide Norms file choice in case of Custom Array File -->
 $(function(){
-	$("#id_norms_file").hide();
+	$("#id_norms_file").parent().hide();
+	$("#id_norms_file").height(200);
 	$("label[for='id_norms_file']").hide();
 	
 	$("select#id_doc_format").change(function(){
 	    if($("option[value=CustomArray]").is(":selected")){
-	    	     $("#id_norms_file").show();
+	    	     $("#id_norms_file").parent().show();
 	    	     $("label[for='id_norms_file']").show();
-	    } else { $("#id_norms_file").hide();
+	    } else { $("#id_norms_file").parent().hide();
 		          $("label[for='id_norms_file']").hide(); } 
 	});
 	

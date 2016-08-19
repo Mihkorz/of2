@@ -320,11 +320,41 @@ class CustomArrayPreprocess(FormView):
         """ get Nomrs file and convert to Pandas DF """
         norms = form.cleaned_data['norms_file']
         
-        dialect = sniffer.sniff(norms.file_norms.read(), delimiters='\t,;')
-        norms.file_norms.seek(0)
-        norms_df = read_csv(norms.file_norms, delimiter=dialect.delimiter)
+        if len(norms)>1:
+            norms_df = DataFrame()
+            for i, norm in enumerate(norms):
+                if i>0:
+                    dialect = sniffer.sniff(norm.file_norms.read(), delimiters='\t,;')
+                    norm.file_norms.seek(0)
+                    iter_norms_df = read_csv(norm.file_norms, delimiter=dialect.delimiter)
+                    
+                    try:
+                        iter_norms_df.set_index('ID', inplace=True)
+                    except:
+                        if not iter_norms_df.index.name!='SYMBOL':
+                            iter_norms_df.set_index('SYMBOL', inplace=True)
+                        else:
+                            iter_norms_df.index.name='SYMBOL'
+                    
+                    norms_df = norms_df.join(iter_norms_df, how='inner', lsuffix=str(i))
+                    
+                else:
+                    dialect = sniffer.sniff(norm.file_norms.read(), delimiters='\t,;')
+                    norm.file_norms.seek(0)
+                    norms_df = read_csv(norm.file_norms, delimiter=dialect.delimiter)
+                    
+                    try:
+                        norms_df.set_index('ID', inplace=True)
+                    except:
+                        if not norms_df.index.name!='SYMBOL':
+                            norms_df.set_index('SYMBOL', inplace=True)
+                        else:
+                            norms_df.index.name='SYMBOL'
         
-        
+        else:
+            dialect = sniffer.sniff(norms.file_norms.read(), delimiters='\t,;')
+            norms.file_norms.seek(0)
+            norms_df = read_csv(norms.file_norms, delimiter=dialect.delimiter)       
         
         try:
             norms_df.set_index('ID', inplace=True)
