@@ -352,6 +352,7 @@ class CustomArrayPreprocess(FormView):
                             norms_df.index.name='SYMBOL'
         
         else:
+            norms = norms[0]
             dialect = sniffer.sniff(norms.file_norms.read(), delimiters='\t,;')
             norms.file_norms.seek(0)
             norms_df = read_csv(norms.file_norms, delimiter=dialect.delimiter)       

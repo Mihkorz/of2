@@ -23,6 +23,10 @@
     {%endif%}  
    </span>
   {% if document.doc_type == 1 %}
+  &nbsp;&nbsp;&nbsp;&nbsp;<a class="btn btn-default btn-sm " href="{{MEDIA_URL}}{{document.document}}">
+      <span class="glyphicon glyphicon-download-alt"></span> &nbsp;<b>Download file</b>
+     </a>
+     
     <a class="btn btn-default btn-sm pull-right" href="{% url 'mirna_set_calculation_parameters' document.id %}">
       <span class="glyphicon glyphicon-play"></span> &nbsp;<b>Start calculation</b>
      </a>
@@ -42,6 +46,8 @@
 
   </div>
 {% if document.doc_type == 1%}
+
+     
 <div class="wrapper1">
         <div class="upper_scroll"></div>
        </div>

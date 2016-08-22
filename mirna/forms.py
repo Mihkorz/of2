@@ -75,6 +75,7 @@ class CalculationParametersForm(forms.Form):
     cnr_up = forms.FloatField(label="CNR upper limit", initial=1.5, required=False)
     use_cnr = forms.BooleanField(label="Use CNR filter", initial=True, required=False)
     
+    calculate_norms_pas = forms.BooleanField(label="PAS1 for Norms(requires at least 3 norms)", initial=True, required=False)
     
     
     def __init__(self, *args, **kwargs):

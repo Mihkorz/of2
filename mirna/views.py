@@ -99,6 +99,8 @@ class MirnaSetCalculationParameters(FormView):
         path_db_choice = form.cleaned_data['path_db_choice']
         organism_choice = form.cleaned_data['organism_choice']
         
+        calculate_norms_pas = form.cleaned_data.get('calculate_norms_pas', False)
+        
     
         context = self.get_context_data()
         
@@ -149,6 +151,9 @@ class MirnaSetCalculationParameters(FormView):
                                   sep='\t', index_col='SYMBOL',  converters = {'SYMBOL' : strip}).fillna(0)        
         
         tumour_columns = [col for col in process_doc_df.columns if 'Tumour' in col] #get sample columns
+        norm_columns = [col for col in process_doc_df.columns if 'Norm' in col] #get norm columns
+        
+        all_columns = tumour_columns+norm_columns
         
         miPAS_list = []
         miPI_list = []
@@ -156,7 +161,14 @@ class MirnaSetCalculationParameters(FormView):
         pathway_objects = Pathway.objects.filter(organism=organism_choice, 
                                                  database__in=path_db_choice).prefetch_related('gene_set')
         
+        if organism_choice == 'human':
+                original_mapping_df = read_csv(settings.MEDIA_ROOT+'/mirna/mirtarbase_human_df.csv')
+        if organism_choice == 'mouse':
+                original_mapping_df = read_csv(settings.MEDIA_ROOT+'/mirna/mirtarbase_mice_df.csv')
+        
         for pathway in pathway_objects:
+            
+            print pathway.name
             
             gene_name = []
             gene_arr = []
@@ -165,6 +177,7 @@ class MirnaSetCalculationParameters(FormView):
             
             for gene in gene_objects:
                 if db_choice == 'Diana TarBase':
+                    
                     mapping_mirna_genes = MirnaMapping.objects.filter(Gene=gene.name, Sourse=db_choice)
                     for mirna_gene in mapping_mirna_genes:
                         gene_name.append(mirna_gene.miRNA_ID.strip())
@@ -181,12 +194,9 @@ class MirnaSetCalculationParameters(FormView):
             gene_df = gene_df.groupby(gene_df.index, level=0).mean() # ignore duplicate genes if exist
             
             if db_choice == 'miRTarBase':
-                if organism_choice == 'human':
-                    mapping_df = read_csv(settings.MEDIA_ROOT+'/mirna/mirtarbase_human_df.csv')
-                if organism_choice == 'mouse':
-                    mapping_df = read_csv(settings.MEDIA_ROOT+'/mirna/mirtarbase_mice_df.csv')
+                
                     
-                mapping_df = mapping_df[['miRNA.ID', 'Gene']]
+                mapping_df = original_mapping_df[['miRNA.ID', 'Gene']]
                 mapping_df['Gene'] = mapping_df['Gene'].str.upper()
                 mapping_df.set_index('Gene', inplace=True)
                 
@@ -211,7 +221,7 @@ class MirnaSetCalculationParameters(FormView):
             
             miPAS_dict['Pathway'] = miPI_dict['Pathway'] = pathway.name.strip()
             
-            for tumour in tumour_columns: #loop thought samples columns                
+            for tumour in all_columns: #loop thought samples columns                
                 summ = 0
                 
                 for index, row in joined_df.iterrows():
@@ -249,10 +259,15 @@ class MirnaSetCalculationParameters(FormView):
             miPAS_list.append(miPAS_dict)
             miPI_list.append(miPI_dict)
             
-            output_miPAS_df = DataFrame(miPAS_list)
-            output_miPAS_df = output_miPAS_df.set_index('Pathway')
-            output_miPI_df = DataFrame(miPI_list)
-            output_miPI_df = output_miPI_df.set_index('Pathway')
+        output_miPAS_df = DataFrame(miPAS_list)
+        output_miPAS_df = output_miPAS_df.set_index('Pathway')
+        output_miPI_df = DataFrame(miPI_list)
+        output_miPI_df = output_miPI_df.set_index('Pathway')
+        
+        if not calculate_norms_pas: #exclude norms from DF if checkbox is not selected
+                output_miPAS_df.drop(norm_columns, axis=1, inplace=True)
+                output_miPI_df.drop(norm_columns, axis=1,  inplace=True)
+                
             
         """ Saving results to Excel file and to database """
         path = os.path.join('users', str(input_document.project.owner),

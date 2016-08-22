@@ -93,11 +93,26 @@
           </div>
           <div class="form-group form-group-sm">
             <label for="{{ form.cnr_up.auto_id }}" class="col-sm-4 control-label">{{ form.cnr_up.label }}</label>            
-            <div class="col-sm-8">
+            <div class="col-sm-8" >
                 {{ form.cnr_up }}
                 {{ form.use_cnr.label_tag }}&nbsp;&nbsp; 
                 {{ form.use_cnr }}
             </div>
+            <br/>&nbsp;
+            <div class="form-group form-group-sm" style='margin: 15px 0 0 15px;'>
+              <div class="col-sm-12">
+                <label>Include in the report following values: 
+                     <!--  <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip"  data-placement="top" 
+                                             title="Here will be description of what PAS and DS means"  ></span>
+                    -->
+              </label>
+              <div>
+                {{ form.calculate_norms_pas.label_tag }}&nbsp;
+                {{ form.calculate_norms_pas }}<br/>
+              </div>
+              </div>
+            </div>
+            
           </div>
           </small>
           
