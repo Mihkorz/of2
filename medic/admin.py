@@ -189,7 +189,7 @@ class TreatmentMethodAdmin(admin.ModelAdmin):
 admin.site.register(TreatmentMethod, TreatmentMethodAdmin)
 
 class TreatmentNormsAdmin(admin.ModelAdmin):
-    list_display = ('name', 'nosology', 'file_norms', 'num_of_norms')
+    list_display = ('name', 'nosology', 'file_norms', 'num_of_norms', 'is_active')
     
     def save_model(self, request, obj, form, change):
         

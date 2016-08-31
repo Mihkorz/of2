@@ -65,6 +65,7 @@ class TreatmentNorms(models.Model):
     file_norms = models.FileField(upload_to=get_document_upload_path, max_length=350)
     file_norms_processed = models.FileField(upload_to=get_document_upload_path, 
                                             max_length=350, blank=True, null=True)
+    is_active = models.BooleanField(default=True)
     class Meta:
         ordering = ('nosology',)
         
