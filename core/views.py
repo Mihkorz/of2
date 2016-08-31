@@ -1077,6 +1077,29 @@ class Test(TemplateView):
         
         from sklearn import preprocessing
         
+        df = read_csv("/home/mikhail/Downloads/OncoFinder/CA Norms/Blood_Norma/Blood_Norma_30.06.16/82215_Blood_norma,N2_1,N2_2,N2_3_probe.txt",
+                      sep='\t')
+        
+        index = 3
+        name = 'donor3'
+        prefix = 'blood'
+        
+        df = df[['Array #', 'Name', 'Mean']]
+        
+        df.rename(columns={'Array #': 'array', 'Name':'ID', 'Mean':name+'_'+prefix}, inplace=True)
+        
+        df = df[df['array']==index]
+        
+        df = df[['ID', name+'_'+prefix]]
+        
+        df.to_csv("/home/mikhail/Downloads/OncoFinder/CA Norms/Processed/"+prefix+"/82215_3_"+name+".csv", index=False)
+        
+        
+        
+        
+        
+        
+        raise Exception('patients')
         input = read_csv(settings.MEDIA_ROOT+'/breast_expression/GSE20194_GSE9574_normalized_ERN_HER2N.txt',
                          sep='\t', index_col='SYMBOL')
         

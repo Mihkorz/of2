@@ -42,7 +42,7 @@ class UploadDocumentForm(forms.ModelForm):
             widget=forms.HiddenInput())
     
     """ Norms choice for Custom Array file """
-    norms_file = forms.ModelMultipleChoiceField(queryset=TreatmentNorms.objects.all(), required=False,
+    norms_file = forms.ModelMultipleChoiceField(queryset=TreatmentNorms.objects.filter(is_active=True), required=False,
                                                 )#widget=forms.CheckboxSelectMultiple)
     
     def __init__(self, *args, **kwargs):
