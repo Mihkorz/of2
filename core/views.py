@@ -1077,6 +1077,27 @@ class Test(TemplateView):
         
         from sklearn import preprocessing
         
+        
+        genes = Gene.objects.filter(name='MYC')
+        ll = []
+        
+        for gene in genes:
+            
+            dg = {'Name': gene.name,
+                  'Database': gene.pathway.database,
+                  'Pathway': gene.pathway.name,
+                  'Organism': gene.pathway.organism
+                  }
+            ll.append(dg)
+            
+        df = DataFrame(ll)
+        
+        df = df[['Name', 'Database', 'Organism', 'Pathway']]
+        
+        df.to_csv(settings.MEDIA_ROOT+'/myc_pathways.csv')
+        
+        raise Exception('MYC')
+        
         df = read_csv("/home/mikhail/Downloads/OncoFinder/CA Norms/Blood_Norma/Blood_Norma_30.06.16/82215_Blood_norma,N2_1,N2_2,N2_3_probe.txt",
                       sep='\t')
         
