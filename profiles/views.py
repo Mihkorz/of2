@@ -775,9 +775,12 @@ class AjaxPathDetail(TemplateView):
                 mmax = np.max(np.absolute(lNEL)) # absolute was made for Aliper special, remove if needed
             if scale=='0.5':
                 mmin = -0.5
-                mmax = 0.5            
+                mmax = 0.5
+            if scale=='1':
+                mmin = -1.0
+                mmax = 1.0            
             if scale=='2':
-                mmin = -2
+                mmin = -2.0
                 mmax = 2.0
             if scale=='5':
                 mmin = -5
