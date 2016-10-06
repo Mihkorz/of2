@@ -1078,6 +1078,17 @@ class Test(TemplateView):
         from sklearn import preprocessing
         
         
+        df = read_csv('/home/mikhail/Downloads/miRNA_1.txt', sep='\t', index_col='SYMBOL')
+        original_mapping_df = read_csv(settings.MEDIA_ROOT+'/mirna/mirtarbase_mice_df.csv')
+        
+        mapping_df = original_mapping_df[['miRNA.ID', 'Gene']]
+        mapping_df['Gene'] = mapping_df['Gene'].str.upper()
+        mapping_df.set_index('Gene', inplace=True)
+        
+        mirna_gene = mapping_df.join(df, how='inner')
+        
+        raise Exception('mirna')
+        
         genes = Gene.objects.filter(name='MYC')
         ll = []
         

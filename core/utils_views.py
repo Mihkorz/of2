@@ -190,7 +190,7 @@ class ConvertPath(TemplateView):
         
         
                     
-        raise Exception('just stop exception. Check view!')
+        #raise Exception('just stop exception. Check view!')
         """
         #human metabolism
         for mpath in MetabolismPathway.objects.all():
@@ -280,11 +280,12 @@ class ConvertPath(TemplateView):
          
         #human new
         
-        delete_paths = Pathway.objects.filter( organism='human', database='reactome')
+        delete_paths = Pathway.objects.filter( organism='human', database='primary_new')
         for dpath in delete_paths:
-            dpath.delete()
+            pass
+            #dpath.delete()
         
-        pathh = settings.MEDIA_ROOT+'/reactome/'
+        pathh = settings.MEDIA_ROOT+'/ivan/'
         
         i=0
         for ffile in os.listdir(pathh):
@@ -295,10 +296,10 @@ class ConvertPath(TemplateView):
             
             pathname = ffile.replace('.xls', '').replace(' ', '_')
             try:
-                npath = Pathway.objects.get(name=pathname, organism='human', database='reactome' )               
+                npath = Pathway.objects.get(name=pathname, organism='human', database='primary_new' )               
             except:                 
             
-                npath = Pathway(name=pathname, amcf=0, organism='human', database='reactome')
+                npath = Pathway(name=pathname, amcf=0, organism='human', database='primary_new')
                 npath.save()
                 
             def add_gene(row, path):
