@@ -1,14 +1,14 @@
  $(function(){
-	 
-	 
+
+
 	 $('div.pr_header_menu, span').tooltip();
-	 
+
 	 $('.with-tooltip').tooltip();
- 
- 
- 
+
+
+
  });
- 
+
  function getCookie(name) {
      var cookieValue = null;
      if (document.cookie && document.cookie != '') {
@@ -24,7 +24,7 @@
      }
      return cookieValue;
  }
- 
+
  function csrfSafeMethod(method) {
 	    // these HTTP methods do not require CSRF protection
 	    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
@@ -42,7 +42,7 @@
 	        // or any other URL that isn't scheme relative or absolute i.e relative.
 	        !(/^(\/\/|http:|https:).*/.test(url));
 	}
- 
+
  $.ajaxSetup({
 	    beforeSend: function(xhr, settings) {
 	    	if (!csrfSafeMethod(settings.type) && sameOrigin(settings.url)) {
@@ -50,25 +50,29 @@
 	        }
 	    }
 	});
- 
- function autocompleteAjaxSearch(searchObj, organism, database, loadObj, url){
-	 var query = $(searchObj).val();
-	 
-	 if (query.length == 0) {
-		 //alert($(location).attr('href') + "#"+$(loadObj).attr('id'))
-		 $(loadObj).load($(location).attr('href') + " #"+$(loadObj).attr('id'));
-	 }
-	 
-	 if (query.length >= 3){
-		 
-		 $(loadObj).fadeOut('slow', function(){
-			                 $(loadObj).load(url+"/search/?q="+query+"&o="+organism+"&db="+database, function(){
-			                	 $(loadObj).fadeIn('slow');
-			                  });
-			                  
-		 });
-		 
-	 }
-	
-	 
- }
+
+/** organism and database arguments may be nulls. */
+function autocompleteAjaxSearch(searchObj, organism, database, loadObj, url) {
+    var query = $(searchObj).val();
+
+    if (query.length == 0) {
+        //alert($(location).attr('href') + "#"+$(loadObj).attr('id'))
+        $(loadObj).load($(location).attr('href') + " #" + $(loadObj).attr('id'));
+    }
+
+    if (query.length >= 3) {
+        var fullQuery = url + "/search/?q=" + query;
+        if (organism != null) {
+            fullQuery += "&o=" + organism;
+        }
+        if (database != null) {
+            fullQuery += "&db=" + database;
+        }
+
+        $(loadObj).fadeOut('slow', function () {
+            $(loadObj).load(fullQuery, function () {
+                $(loadObj).fadeIn('slow');
+            });
+        });
+    }
+}
