@@ -22,7 +22,8 @@ PATHWAY_DATABASE = (
     ('kegg_10', 'KEGG 10'),
     ('kegg_adjusted_10', 'KEGG Adjusted 10'),
     ('aging', 'Aging related'), 
-) 
+    ('sandbox', 'Sandbox'),
+)
 
 PATHWAY_ORGANISM = (
     ('human', 'Human'),

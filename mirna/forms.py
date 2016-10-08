@@ -60,7 +60,9 @@ class CalculationParametersForm(forms.Form):
                   ('nci', 'NCI Pathway Database'),
                   ('kegg_adjusted', 'KEGG Adjusted Pathway Database'),
                   ('kegg_10', 'KEGG >10 genes'),
-                  ('kegg_adjusted_10', 'KEGG Adjusted >10 genes'),)
+                  ('kegg_adjusted_10', 'KEGG Adjusted >10 genes'),
+                  ('sandbox', 'Sandbox'),
+    )
     
     organism_choice = forms.ChoiceField(label="Organism",
                                      widget=forms.RadioSelect, choices=ORGANISM_CHOICES, initial='human')
