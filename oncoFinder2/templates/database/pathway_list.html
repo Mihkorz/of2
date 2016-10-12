@@ -5,34 +5,45 @@
 {% block content %}
 <div class="container">
     <h1> <img src='/static/images/laboratory_info.png' style="width: 100px;"/>Biochem DataBase </h1> 
-    <div class="pull-left">
-    <span style="font-size:14px; ">Human:</span> <div class="btn-group btn-group-xs"> 
-        <button type="button" class="btn btn-primary human primary_old" onClick="location.href='/db/pathways/human/primary_old/'" >Pr. old</button>
-        <button type="button" class="btn btn-primary human primary_new"   onClick="location.href='/db/pathways/human/primary_new/'">Pr. new</button>
-        <button type="button" class="btn btn-primary human metabolism"  onClick="location.href='/db/pathways/human/metabolism/'" >Metabolism</button>
-        <button type="button" class="btn btn-primary human cytoskeleton"   onClick="location.href='/db/pathways/human/cytoskeleton/'">Cytoskeleton</button>
-        <button type="button" class="btn btn-primary human kegg"   onClick="location.href='/db/pathways/human/kegg/'">KEGG</button>
-        <button type="button" class="btn btn-primary human kegg_adjusted"   onClick="location.href='/db/pathways/human/kegg_adjusted/'">KEGG adj</button>
-        <button type="button" class="btn btn-primary human nci"   onClick="location.href='/db/pathways/human/nci/'">NCI</button>
-        <button type="button" class="btn btn-primary human biocarta"   onClick="location.href='/db/pathways/human/biocarta/'">Biocarta</button>
-        <button type="button" class="btn btn-primary human reactome"   onClick="location.href='/db/pathways/human/reactome/'">Reactome</button>
-    </div>
-    
-    <span style="font-size:14px; margin-left:10px;">Mouse: </span><div class="btn-group btn-group-xs">
-        <button type="button" class="btn btn-primary mouse primary_old" onClick="location.href='/db/pathways/mouse/primary_old/'" >Primary old</button>
-        <button type="button" class="btn btn-primary mouse primary_new"   onClick="location.href='/db/pathways/mouse/primary_new/'">Primary new</button>
-        <button type="button" class="btn btn-primary mouse metabolism"  onClick="location.href='/db/pathways/mouse/metabolism/'" >Metabolism</button>
-        <button type="button" class="btn btn-primary mouse cytoskeleton"  onClick="location.href='/db/pathways/mouse/cytoskeleton/'" >Cytoskeleton</button>
-        <button type="button" class="btn btn-primary mouse kegg"   onClick="location.href='/db/pathways/mouse/kegg/'">KEGG</button>
-        <button type="button" class="btn btn-primary mouse kegg_adjusted"   onClick="location.href='/db/pathways/mouse/kegg_adjusted/'">KEGG adj</button>
-        <button type="button" class="btn btn-primary mouse nci"   onClick="location.href='/db/pathways/mouse/nci/'">NCI</button>
-        <button type="button" class="btn btn-primary mouse biocarta"   onClick="location.href='/db/pathways/mouse/biocarta/'">Biocarta</button>
-        
-                                               </div>
-     </div>  
-    <br/><br/>
+
+    <table>
+        <tr>
+            <td class="of-table-key">Human:</td>
+            <td class="of-table-value">
+                <div class="btn-group btn-group-xs">
+                    <button type="button" class="btn btn-primary human primary_old" onClick="location.href='/db/pathways/human/primary_old/'">Pr. old</button>
+                    <button type="button" class="btn btn-primary human primary_new" onClick="location.href='/db/pathways/human/primary_new/'">Pr. new</button>
+                    <button type="button" class="btn btn-primary human metabolism" onClick="location.href='/db/pathways/human/metabolism/'">Metabolism</button>
+                    <button type="button" class="btn btn-primary human cytoskeleton" onClick="location.href='/db/pathways/human/cytoskeleton/'">Cytoskeleton</button>
+                    <button type="button" class="btn btn-primary human kegg" onClick="location.href='/db/pathways/human/kegg/'">KEGG</button>
+                    <button type="button" class="btn btn-primary human kegg_adjusted" onClick="location.href='/db/pathways/human/kegg_adjusted/'">KEGG adj</button>
+                    <button type="button" class="btn btn-primary human nci" onClick="location.href='/db/pathways/human/nci/'">NCI</button>
+                    <button type="button" class="btn btn-primary human biocarta" onClick="location.href='/db/pathways/human/biocarta/'">Biocarta</button>
+                    <button type="button" class="btn btn-primary human reactome" onClick="location.href='/db/pathways/human/reactome/'">Reactome</button>
+                </div>
+                <div class="btn-group btn-group-xs">
+                    <button type="button" class="btn btn-primary human sandbox" onClick="location.href='/db/pathways/human/sandbox/'">Sandbox</button>
+                </div>
+            </td>
+        </tr><tr>
+            <td class="of-table-key">Mouse:</td>
+            <td class="of-table-value">
+                <div class="btn-group btn-group-xs">
+                    <button type="button" class="btn btn-primary mouse primary_old" onClick="location.href='/db/pathways/mouse/primary_old/'">Pr. old</button>
+                    <button type="button" class="btn btn-primary mouse primary_new" onClick="location.href='/db/pathways/mouse/primary_new/'">Pr. new</button>
+                    <button type="button" class="btn btn-primary mouse metabolism" onClick="location.href='/db/pathways/mouse/metabolism/'">Metabolism</button>
+                    <button type="button" class="btn btn-primary mouse cytoskeleton" onClick="location.href='/db/pathways/mouse/cytoskeleton/'">Cytoskeleton</button>
+                    <button type="button" class="btn btn-primary mouse kegg" onClick="location.href='/db/pathways/mouse/kegg/'">KEGG</button>
+                    <button type="button" class="btn btn-primary mouse kegg_adjusted" onClick="location.href='/db/pathways/mouse/kegg_adjusted/'">KEGG adj</button>
+                    <button type="button" class="btn btn-primary mouse nci" onClick="location.href='/db/pathways/mouse/nci/'">NCI</button>
+                    <button type="button" class="btn btn-primary mouse biocarta" onClick="location.href='/db/pathways/mouse/biocarta/'">Biocarta</button>
+                </div>
+            </td>
+        </tr>
+    </table>
+
     <span class="text-muted">
-    Total ammount = <strong>{{allPathways}}</strong>  pathways
+    Total pathways: <strong>{{allPathways}}</strong>
     </span>
     {%if organism == 'mouse' %}
      | <a href="/mouse/mapping/">Human-mouse genes mapping</a>

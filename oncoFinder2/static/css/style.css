@@ -180,3 +180,14 @@
 	color: #fff;
 	height: 100px;
 }
+
+
+/* Table that contains key-value pairs */
+
+.of-table-key {
+	padding: 2px 2px 2px 0;
+}
+
+.of-table-value {
+	padding: 2px 0 2px 2px;
+}
