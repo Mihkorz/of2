@@ -591,7 +591,7 @@ class ReportAjaxPathwayVenn(TemplateView):
                 if df3['adj.P.Val'].isin([1]).all() == 1:
                     df3 = df3[(np.absolute(df3['logFC'])>2)]
                 else:
-                    df3 = df3[(df3['adj.P.Val']<0.05) & (np.absolute(df3['logFC'])>0.4)]
+                    df3 = df3[(df3['adj.P.Val']<0.05) & (np.absolute(df3['logFC'])>0.2)]
                     
                 df3 = pd.DataFrame(df3['logFC'])
                 df3.columns = ['0']
@@ -607,7 +607,7 @@ class ReportAjaxPathwayVenn(TemplateView):
                 if df4['adj.P.Val'].isin([1]).all() == 1:
                     df4 = df4[(np.absolute(df4['logFC'])>2)]
                 else:
-                    df4 = df4[(df4['adj.P.Val']<0.05) & (np.absolute(df4['logFC'])>0.4)]
+                    df4 = df4[(df4['adj.P.Val']<0.05) & (np.absolute(df4['logFC'])>0.2)]
                     
                 df4 = pd.DataFrame(df4['logFC'])
                 df4.columns = ['0']        
