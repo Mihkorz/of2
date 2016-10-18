@@ -225,7 +225,7 @@
 <ul class="nav nav-tabs" role="tablist">
          <li role="presentation" class="active"><a href="#path_all_tab" aria-controls="settings" role="tab" data-toggle="tab">ALL</a></li>
          {%for perm in report.get_path_permutations%}
-         <li role="presentation" ><a href="#path_{{perm.strip}}_tab" aria-controls="settings" role="tab" data-toggle="tab">{{perm}}</a></li>
+         <li role="presentation" ><a href="#path_{{perm.strip}}_tab" aria-controls="settings" role="tab" data-toggle="tab" id="venn_boot_path_{{perm.strip}}">{{perm}}</a></li>
          {%endfor%}
 </ul>
 
@@ -447,6 +447,9 @@ $(function() {
 	         'all', false, '{{report.organism}}');
 	
 	{%for perm in report.get_path_permutations%}
+	
+	$("#venn_boot_path_{{perm.strip}}").click(function(){
+	
 	drawVenn({{report.id}},
 		'venn_path-{{perm.strip}}-up',
 		'{{perm.strip}}',
@@ -455,6 +458,7 @@ $(function() {
 			'venn_path-{{perm.strip}}-down',
 			'{{perm.strip}}',
 			false, 'down', 'venn_path_dinamic_{{perm.strip}}', 'pathways', '{{report.organism}}');
+	});
     {%endfor%}
     
  /* METABOLIC PATHs
