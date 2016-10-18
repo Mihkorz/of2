@@ -272,57 +272,7 @@
           
 
 <hr/>
-<h3>Metabolic Pathways</h3>
-<hr/>          
-       
-<!-- Metabolic Pathways level comparison Nav tabs -->
-<ul class="nav nav-tabs" role="tablist">
-         <li role="presentation" class="active"><a href="#meta_all_tab" aria-controls="settings" role="tab" data-toggle="tab">ALL</a></li>
-         {%for perm in report.get_path_permutations%}
-         <li role="presentation" ><a href="#meta_{{perm.strip}}_tab" aria-controls="settings" role="tab" data-toggle="tab">{{perm}}</a></li>
-         {%endfor%}
-</ul>
 
-<!-- Meta VEnn Tab panes -->
-  <div class="tab-content">
-  
-  <div role="tabpanel" class="tab-pane fade in active " id="meta_all_tab">     <br/> 
-    <h4>Table . All metabolic pathways</h4>
-    <table id="tbl-meta_all" class="path table table-striped table-bordered" cellspacing="0" width="100%">
-        <thead>
-          <tr>
-           <th>Pathway</th>
-           {%for group in report.get_all_gene_groups_as_list%}
-            <!--  {% if forloop.counter > 1 %}<th>{{group}}</th> {%endif%}-->
-            <th>{{group}}</th>
-           {%endfor%}
-          </tr>
-        </thead>  
-      </table>       
-   <br/>
-  
-  </div>
-  
-  {%for perm in report.get_path_permutations%}
-  <div role="tabpanel" class="tab-pane fade " id="meta_{{perm.strip}}_tab">     <br/> 
-    <table style='text-align:center;'>
-      <tr>
-       <td>
-       <div id="venn_meta-{{perm.strip}}-up" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
-       Upregulated pathways
-       </td>
-       <td>
-       <div id="venn_meta-{{perm.strip}}-down" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
-       Downregulated pathways
-       </td>
-      </tr>
-    </table>        
-   <br/>
-  <div id="venn_meta_dinamic_{{perm.strip}}" class="" style="max-width:1000px;"></div> <!--  div to place dinamic tables from Venn clicks -->
-  </div>
-  {%endfor%}
-  
-  </div>
   
   {%if report.conclusion_text%}
           <h2 id="conclusions" >Conclusions</h2>
@@ -507,7 +457,7 @@ $(function() {
 			false, 'down', 'venn_path_dinamic_{{perm.strip}}', 'pathways', '{{report.organism}}');
     {%endfor%}
     
- // METABOLIC PATHs
+ /* METABOLIC PATHs
   drawPathwayTable({{report.id}},
 		  'tbl-meta_all', 
 	         'all', 
@@ -523,7 +473,7 @@ $(function() {
 			'{{perm.strip}}',
 			true, 'down', 'venn_meta_dinamic_{{perm.strip}}', 'pathways', '{{report.organism}}');
     {%endfor%}
-
+*/
 });
 
 </script>

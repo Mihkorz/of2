@@ -44,6 +44,10 @@ class ReportDetail(DetailView):
     
     #@method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
+        
+        if self.get_object().id==4 or self.get_object().id==8:
+            self.template_name = 'report/report_detail_az.html'    
+        
         return super(ReportDetail, self).dispatch(request, *args, **kwargs)
     
     def get_context_data(self, **kwargs):
