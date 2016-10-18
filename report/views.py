@@ -1208,6 +1208,8 @@ class ReportAjaxPathDetail(TemplateView):
         
         joined_df.index += 1
         
+        joined_df.fillna(0, inplace=True)
+        
         context['joined'] = joined_df[['SYMBOL', 'Node(s)', 'log2(Fold-change)']].to_html(classes=['table', 'table-bordered', 'table-striped'])
         context['diff_genes_count'] = len(joined_df.index)
          
@@ -1275,6 +1277,7 @@ class ReportAjaxPathDetail(TemplateView):
             finalNodes.append(nod)
             
             if nod.nel!=0:
+                
                 ffil = "#"+struct.pack('BBB',*scalarMap.to_rgba(np.log(nod.nel), bytes=True)[:3]).encode('hex').upper()
             else:
                 ffil = "grey"
