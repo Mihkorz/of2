@@ -1078,47 +1078,59 @@ class Test(TemplateView):
         from sklearn import preprocessing
         
         
-        pahs = Pathway.objects.filter(organism='mouse', database='primary_old')
         
-        lgenes = []
-        for p in pahs:
-            for g in p.gene_set.all():
-                lgenes.append(g.name)
+        lgroup = ['10_C_100_celltype_A549.tab',
+                   '10_C_100_celltype_MCF7.tab',
+                    '10_C_1000_celltype_A549.tab',
+                     '10_C_1000_celltype_MCF7.tab',
+                     '12_C_100_celltype_A549.tab',
+                     '12_C_100_celltype_MCF7.tab',
+                     '12_C_1000_celltype_A549.tab',
+                     '12_C_1000_celltype_MCF7.tab',
+                     '15_C_100_celltype_A549.tab',
+                     '15_C_100_celltype_MCF7.tab',
+                     '15_C_1000_celltype_A549.tab',
+                     '15_C_1000_celltype_MCF7.tab',
+                     '29_C_80_celltype_A549.tab',
+                     '29_C_80_celltype_MCF7.tab',
+                     '29_C_360_celltype_A549.tab',
+                     '29_C_360_celltype_MCF7.tab']
         
-        lgenes = list(set(lgenes))
+        for group in lgroup:
         
-        df = DataFrame({'gene': lgenes})
-        
-        df.to_csv('/home/mikhail/Downloads/genes_mouse.csv')
-        
-        raise Exception('mirna')
-        
-        genes = Gene.objects.filter(name='MYC')
-        ll = []
-        
-        for gene in genes:
+            #panda_kegg_10_C_100_celltype_A549.tab
+            df1 = read_csv('/home/mikhail/Downloads/AZ/panda/kegg/panda_kegg_'+group, sep=' ')
+            df2 = read_csv('/home/mikhail/Downloads/AZ/panda/nci/panda_nci_'+group, sep=' ')
+            df3 = read_csv('/home/mikhail/Downloads/AZ/panda/primary_new/panda_primary_new_'+group, sep=' ')
+            df4 = read_csv('/home/mikhail/Downloads/AZ/panda/reactome/panda_reactome_'+group, sep=' ')
             
-            dg = {'Name': gene.name,
-                  'Database': gene.pathway.database,
-                  'Pathway': gene.pathway.name,
-                  'Organism': gene.pathway.organism
-                  }
-            ll.append(dg)
+            df1['Database'] = 'kegg'
+            df2['Database'] = 'nci'
+            df3['Database'] = 'primary_new'
+            df4['Database'] = 'reactome'
             
-        df = DataFrame(ll)
         
-        df = df[['Name', 'Database', 'Organism', 'Pathway']]
+            result = df1.append([df2, df3, df4])
         
-        df.to_csv(settings.MEDIA_ROOT+'/myc_pathways.csv')
+            result.index.name = 'Pathway'
         
-        raise Exception('MYC')
+            result.to_csv('/home/mikhail/Downloads/AZ/panda/combined/'+group, encoding='utf-8')    
         
-        df = read_csv("/home/mikhail/Downloads/OncoFinder/CA Norms/Blood_Norma/Blood_Norma_30.06.16/82215_Blood_norma,N2_1,N2_2,N2_3_probe.txt",
+        
+        
+        raise Exception('panda')
+        ############ NORMS ADD
+        folname = 'Zavgorodniy, Norm3_1,2,3_13.09.16'
+        fname = '82224_BN_6_7_8_9_probe.txt'
+        
+        df = read_csv("/home/mikhail/Downloads/OncoFinder/breastnew/"+fname,
                       sep='\t')
         
-        index = 3
-        name = 'donor3'
-        prefix = 'blood'
+        
+        
+        index = 4
+        name = 'donor9'
+        prefix = 'breast'
         
         df = df[['Array #', 'Name', 'Mean']]
         
@@ -1128,7 +1140,9 @@ class Test(TemplateView):
         
         df = df[['ID', name+'_'+prefix]]
         
-        df.to_csv("/home/mikhail/Downloads/OncoFinder/CA Norms/Processed/"+prefix+"/82215_3_"+name+".csv", index=False)
+        
+        
+        df.to_csv("/home/mikhail/Downloads/OncoFinder/done/"+prefix+"/"+prefix+"_"+name+".csv", index=False)
         
         
         

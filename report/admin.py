@@ -158,9 +158,13 @@ class ReportAdmin(admin.ModelAdmin):
                 #raise Exception('group')
                 g_group.save()
             else:
-                            
-                df_doc = pd.read_excel(g_group.document, sheetname='PAS1',
+                try:            
+                    df_doc = pd.read_excel(g_group.document, sheetname='PAS1',
                                  index_col='Pathway')
+                except:
+                    g_group.document.seek(0)
+                    df_doc = pd.read_csv(g_group.document, index_col='Pathway', encoding='utf-8')
+                    
                 tumour_columns = [col for col in df_doc.columns if 'Tumour' in col] #get sample columns
                 
                 mean = df_doc[tumour_columns].mean(1)

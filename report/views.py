@@ -1184,8 +1184,10 @@ class ReportAjaxPathDetail(TemplateView):
            
         gene_df = pd.DataFrame(gene_data).set_index('SYMBOL')
                
-        df_file_cnr = pd.read_csv(group.doc_logfc.path, index_col='SYMBOL')
-        
+        try:
+            df_file_cnr = pd.read_csv(group.doc_logfc.path, index_col='SYMBOL')
+        except:
+            df_file_cnr = pd.read_csv(group.doc_logfc.path, index_col='SYMBOL', sep='\t')
         """
         if df_file_cnr['adj.P.Val'].all() == 1:
                     df_file_cnr = df_file_cnr[(np.absolute(df_file_cnr['logFC'])>2)]
