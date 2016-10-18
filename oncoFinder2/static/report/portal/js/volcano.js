@@ -7,7 +7,7 @@ function drawVolcanoPlot(renderTo,  file_name){
 	};
 
 	var getSymbol = function(d) {
-	    return d["Symbol"];
+	    return d["SYMBOL"];
 	};
 
 	var getX = function(d) {
@@ -29,7 +29,7 @@ function drawVolcanoPlot(renderTo,  file_name){
 	// This is a predicate (returns true or false) depending on whether a data point
 	// is statistically significant.
 	var isSignificant = function(d) {
-	    return !!(Math.abs(getX(d)) > 0.4 && -1*Math.pow(10, getY(d)) < 0.05);
+	    return !!(Math.abs(getX(d)) > 0.2 && -1*Math.pow(10, getY(d)) < 0.05);
 	};
 
 	var margin = {top: 20, right: 20, bottom: 40, left: 40},

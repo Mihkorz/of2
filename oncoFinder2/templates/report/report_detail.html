@@ -90,7 +90,7 @@
    <ul class="nav nav-tabs" role="tablist">
      {%for group in report.genegroup_set.all%}
        <li role="presentation" {%if forloop.counter == 1 %}class="active"{%endif%}>
-         <a href="#{{group.get_slug}}_tab" aria-controls="home1" role="tab" data-toggle="tab">
+         <a href="#{{group.get_slug}}_tab" aria-controls="home1" role="tab" data-toggle="tab" id='vol_boot_{{group.get_slug}}'>
            {{group.name}} vs {{report.norm_name}}
          </a>
        </li>
@@ -137,7 +137,7 @@
 <ul class="nav nav-tabs" role="tablist">
          <li role="presentation" class="active"><a href="#gene_all_tab" aria-controls="settings" role="tab" data-toggle="tab">ALL</a></li>
          {%for perm in report.get_gene_permutations%}
-         <li role="presentation" ><a href="#gene_{{perm.strip}}_tab" aria-controls="settings" role="tab" data-toggle="tab">{{perm}}</a></li>
+         <li role="presentation" ><a href="#gene_{{perm.strip}}_tab" aria-controls="settings" role="tab" data-toggle="tab" id='venn_boot_gene_{{perm.strip}}'>{{perm}}</a></li>
          {%endfor%}
 </ul>
 
@@ -432,10 +432,27 @@
 $(function() {
 	
 	{%if report.gene_plot == 'vulcano'%}
-	{%for group in report.genegroup_set.all%}
-	  drawVolcanoPlot('{{group.get_slug}}_volcano',  '{{group.doc_logfc}}');
-	  drawGeneTable({{report.id}}, 'tbl-{{group.get_slug}}', '{{group.doc_logfc}}', categories='{{report.get_gene_groups}}'); 
-	{%endfor%}
+	  {%for group in report.genegroup_set.all%}
+	  
+	  {%if forloop.counter = 1%}
+	      drawVolcanoPlot('{{group.get_slug}}_volcano',  '{{group.doc_logfc}}');
+	      drawGeneTable({{report.id}}, 'tbl-{{group.get_slug}}', '{{group.doc_logfc}}', categories='{{report.get_gene_groups}}'); 
+	  
+	  {%else%}
+	  $('#vol_boot_{{group.get_slug}}').click(function(){
+			
+			if($("#{{group.get_slug}}_volcano span").html() == 'Loading plot...'){
+				drawVolcanoPlot('{{group.get_slug}}_volcano',  '{{group.doc_logfc}}');
+			}
+			if ( !$.fn.dataTable.isDataTable( '#tbl-{{group.get_slug}}' ) ) {
+				 drawGeneTable({{report.id}}, 'tbl-{{group.get_slug}}', '{{group.doc_logfc}}', categories='{{report.get_gene_groups}}'); 
+				}
+		   });
+	  
+	  {%endif%}
+	  
+	  
+	  {%endfor%}
 	{%endif%}
 	{%if  report.gene_plot == 'scatter'%}
 	{%for group in report.genegroup_set.all%}
@@ -456,14 +473,19 @@ $(function() {
 	
 	//GENES
 	{%for perm in report.get_gene_permutations%}
-	drawVenn({{report.id}},
-			'venn_gene-{{perm.strip}}-up',
-			'{{perm.strip}}',	 
-			false, 'up', 'venn_gene_dinamic_{{perm.strip}}', 'genes', categories='{{report.get_all_gene_groups_norm_as_list}}');
-	drawVenn({{report.id}},
-			'venn_gene-{{perm.strip}}-down',
-			'{{perm.strip}}',			
-			false, 'down', 'venn_gene_dinamic_{{perm.strip}}', 'genes', categories='{{report.get_all_gene_groups_norm_as_list}}');
+	
+	$("#venn_boot_gene_{{perm.strip}}").click(function(){
+		drawVenn({{report.id}},
+				'venn_gene-{{perm.strip}}-up',
+				'{{perm.strip}}',	 
+				false, 'up', 'venn_gene_dinamic_{{perm.strip}}', 'genes', categories='{{report.get_all_gene_groups_norm_as_list}}');
+		drawVenn({{report.id}},
+				'venn_gene-{{perm.strip}}-down',
+				'{{perm.strip}}',			
+				false, 'down', 'venn_gene_dinamic_{{perm.strip}}', 'genes', categories='{{report.get_all_gene_groups_norm_as_list}}');
+		
+	});
+	
 	{%endfor%}
 	
 	

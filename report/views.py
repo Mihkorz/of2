@@ -65,20 +65,26 @@ class ReportGeneVolcanoJson(TemplateView):
     def post(self, request, *args, **kwargs):
         
         file_name = request.POST.get('file_name')
+                
         
-        df_gene = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name)
         try:
+            df_gene = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name)
             df_gene = df_gene[['gene', 'logFC', 'adj.P.Val']]
-            df_gene.rename(columns={'gene': 'Symbol'}, inplace=True)
+            #df_gene.rename(columns={'gene': 'Symbol'}, inplace=True)
         except:
+            df_gene = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name, sep='\t')
             df_gene = df_gene[['SYMBOL', 'logFC', 'adj.P.Val']]
-            df_gene.rename(columns={'SYMBOL': 'Symbol'}, inplace=True)
+                            
+            df_gene.fillna(0, inplace=True)
+            
+            #df_gene = df_gene[['SYMBOL', 'logFC', 'adj.P.Val']]
+            #df_gene.rename(columns={'SYMBOL': 'Symbol'}, inplace=True)
             
         df_gene['logFC'] = df_gene['logFC'].round(decimals=2)
         
         df_gene['_row'] = df_gene['adj.P.Val'].round(decimals=2)
          
-        df_gene = df_gene[(df_gene['adj.P.Val']<0.05) & (np.absolute(df_gene['logFC'])>0.4)] 
+        df_gene = df_gene[(df_gene['adj.P.Val']<0.05) & (np.absolute(df_gene['logFC'])>0.2)] 
          
         df_gene['adj.P.Val'] = -1*np.log10(df_gene['adj.P.Val'])        
          
@@ -118,16 +124,31 @@ class ReportGeneTableJson(TemplateView):
         
         if file_name!='all':
             
+            #sniffer = csv.Sniffer()
+            #dialect = sniffer.sniff(settings.MEDIA_ROOT+"/"+file_name, delimiters='\t,;')
+            #settings.MEDIA_ROOT+"/"+file_name.seek(0)
             
-            df_gene = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name)
+            
             try:
+                df_gene = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name)
                 df_gene = df_gene[['gene', 'logFC', 'adj.P.Val']]
             except:
-                df_gene = df_gene[['SYMBOL', 'logFC', 'adj.P.Val']]
                 
-            df_gene['logFC'] = df_gene['logFC'].round(decimals=2)         
+                df_gene = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name,
+                                  sep='\t')
+                
+                df_gene = df_gene[['SYMBOL', 'logFC', 'adj.P.Val']] #AZ report
+                
+                df_gene.fillna(1, inplace=True)
+                
+                
+                
+            df_gene['logFC'] = df_gene['logFC'].round(decimals=2)
+            
+            
+            #raise Exception('stop')         
         
-            df_gene = df_gene[(df_gene['adj.P.Val']<0.05) & (np.absolute(df_gene['logFC'])>0.4)] 
+            df_gene = df_gene[(df_gene['adj.P.Val']<0.05) & (np.absolute(df_gene['logFC'])>0.2)] 
         
             
         
@@ -135,7 +156,15 @@ class ReportGeneTableJson(TemplateView):
             report = Report.objects.get(pk=request.GET.get('reportID'))
             lgroups = []
             for group in report.genegroup_set.all():
-                lgroups.append(pd.read_csv(group.doc_logfc.path, index_col='SYMBOL'))
+                
+                df = pd.read_csv(group.doc_logfc.path, sep='\t', index_col='SYMBOL')
+                
+                
+                #df.rename(columns={'log2FoldChange': 'logFC'}, inplace=True)
+                
+                #raise Exception('stop')
+                
+                lgroups.append(df)
             
             df_gene = pd.DataFrame()
             
@@ -267,49 +296,88 @@ class ReportGeneBoxplotJson(TemplateView):
         
         df_list = []
         
-        for group in report.genegroup_set.all():
+        try: #old report with precalculated box plot file
+            for group in report.genegroup_set.all():
             
-            df_group = pd.read_csv(group.doc_boxplot.path,
-                                   index_col='SYMBOL')
-            df_list.append(df_group)
+                df_group = pd.read_csv(group.doc_boxplot.path,
+                                   index_col='SYMBOL', sep='\t')
+                df_list.append(df_group)
         
-        series_tumour = []
-        series_norm = []
-        i=0
-        for df in df_list:          
+            series_tumour = []
+            series_norm = []
+            i=0
+            for df in df_list:          
                 
-            filered_df = df[[x for x in df if 'Tumour' in x]]
-                
-            row_gene = filered_df.loc[gene]      
-        
-            median = np.around(np.log2(row_gene['Tumour_median']), decimals=2)  
-            upper_quartile = np.around(np.log2(row_gene['Tumour_upper_quartile']), decimals=2) 
-            lower_quartile = np.around(np.log2(row_gene['Tumour_lower_quartile'] ), decimals=2)           
-            upper_whisker = np.around(np.log2(row_gene['Tumour_upper_whisker']), decimals=2) 
-            lower_whisker = np.around(np.log2(row_gene['Tumour_lower_whisker']), decimals=2) 
-              
-            lSerie = [lower_whisker, lower_quartile, median, upper_quartile, upper_whisker]
-                 
-            series_tumour.append(lSerie)
-            
-            if i==0:
-                pass
-            """
-                filered_df = df[[x for x in df if 'Norm' in x]]
+                filered_df = df[[x for x in df if 'Tumour' in x]]
                 
                 row_gene = filered_df.loc[gene]      
         
-                median = np.around(np.log2(row_gene['Normal_median']), decimals=2) 
-                upper_quartile = np.around(np.log2(row_gene['Normal_upper_quartile']), decimals=2) 
-                lower_quartile = np.around(np.log2(row_gene['Normal_lower_quartile']), decimals=2)            
-                upper_whisker = np.around(np.log2(row_gene['Normal_upper_whisker']), decimals=2) 
-                lower_whisker = np.around(np.log2(row_gene['Normal_lower_whisker']), decimals=2)
+                median = np.around(np.log2(row_gene['Tumour_median']), decimals=2)  
+                upper_quartile = np.around(np.log2(row_gene['Tumour_upper_quartile']), decimals=2) 
+                lower_quartile = np.around(np.log2(row_gene['Tumour_lower_quartile'] ), decimals=2)           
+                upper_whisker = np.around(np.log2(row_gene['Tumour_upper_whisker']), decimals=2) 
+                lower_whisker = np.around(np.log2(row_gene['Tumour_lower_whisker']), decimals=2) 
               
                 lSerie = [lower_whisker, lower_quartile, median, upper_quartile, upper_whisker]
-                series_tumour.append(lSerie)                
-            """
-            i=i+1        
-        #raise Exception('boxplot') 
+                 
+                series_tumour.append(lSerie)
+            
+                if i==0:
+                    pass
+                """
+                    filered_df = df[[x for x in df if 'Norm' in x]]
+                
+                    row_gene = filered_df.loc[gene]      
+        
+                    median = np.around(np.log2(row_gene['Normal_median']), decimals=2) 
+                    upper_quartile = np.around(np.log2(row_gene['Normal_upper_quartile']), decimals=2) 
+                    lower_quartile = np.around(np.log2(row_gene['Normal_lower_quartile']), decimals=2)            
+                    upper_whisker = np.around(np.log2(row_gene['Normal_upper_whisker']), decimals=2) 
+                    lower_whisker = np.around(np.log2(row_gene['Normal_lower_whisker']), decimals=2)
+              
+                    lSerie = [lower_whisker, lower_quartile, median, upper_quartile, upper_whisker]
+                    series_tumour.append(lSerie)                
+                """
+                i=i+1
+        except:
+            
+            for group in report.genegroup_set.all():
+            
+                df_group = pd.read_csv(group.document.path,
+                                   index_col='SYMBOL', sep='\t')
+                df_list.append(df_group.loc[gene])
+            
+            series_tumour = []
+            
+            i=0
+            for df in df_list:
+                
+                r_tumour = df.filter(like='Tumour')
+                
+                median = np.around(np.median(r_tumour), decimals=0) 
+                upper_quartile = np.around(np.percentile(r_tumour, 75), decimals=0)
+                lower_quartile = np.around(np.percentile(r_tumour, 25), decimals=0)
+                iqr = upper_quartile - lower_quartile
+                upper_whisker = np.around(r_tumour[r_tumour<=upper_quartile+1.5*iqr], decimals=0).max()
+                lower_whisker = np.around(r_tumour[r_tumour>=lower_quartile-1.5*iqr], decimals=0).min()
+
+        
+                median = np.around(np.log2(median), decimals=2)  
+                upper_quartile = np.around(np.log2(upper_quartile), decimals=2) 
+                lower_quartile = np.around(np.log2(lower_quartile), decimals=2)           
+                upper_whisker = np.around(np.log2(upper_whisker), decimals=2) 
+                lower_whisker = np.around(np.log2(lower_whisker), decimals=2) 
+              
+                lSerie = [lower_whisker, lower_quartile, median, upper_quartile, upper_whisker]
+                
+                #lSerie[lSerie == -np.inf] = 0
+                
+                
+                #lSerie.replace([np.inf, -np.inf], 0)
+                 
+                series_tumour.append(lSerie)
+                    
+            #raise Exception('boxplot') 
         s1 = {
               'name': 'boxplot',              
               'data': series_tumour,
@@ -481,25 +549,33 @@ class ReportAjaxPathwayVenn(TemplateView):
             
             group1 = GeneGroup.objects.get(name=lgroup[0], report=report)
             file_name1 = group1.doc_logfc.path
-            df1 = pd.read_csv(file_name1, index_col='SYMBOL')
+            try:
+                df1 = pd.read_csv(file_name1, index_col='SYMBOL')
+            except:
+                df1 = pd.read_csv(file_name1, index_col='SYMBOL', sep='\t')
             df1.replace([np.inf, -np.inf], 0, inplace=True)
-            if df1['adj.P.Val'].all() == 1:
-                df1 = df1[(np.absolute(df1['logFC'])>2)]          
+            
+            
+            if df1['adj.P.Val'].isin([1]).all():
+                df1 = df1[(np.absolute(df1['logFC'])>2)]         
             else:
-                df1 = df1[(df1['adj.P.Val']<0.05) & (np.absolute(df1['logFC'])>0.4)]
-                
-                
+                df1 = df1[(df1['adj.P.Val']<0.05) & (np.absolute(df1['logFC'])>0.2)]
+                   
             df1 = pd.DataFrame(df1['logFC'])
             df1.columns = ['0'] 
             
             group2 = GeneGroup.objects.get(name=lgroup[1], report=report)
             file_name2 = group2.doc_logfc.path
-            df2 = pd.read_csv(file_name2, index_col='SYMBOL')
+            try:
+                df2 = pd.read_csv(file_name2, index_col='SYMBOL')
+            except:
+                df2 = pd.read_csv(file_name2, index_col='SYMBOL', sep='\t')
             df2.replace([np.inf, -np.inf], 0, inplace=True)
-            if df2['adj.P.Val'].all() == 1:
+            
+            if df2['adj.P.Val'].isin([1]).all() == 1:
                 df2 = df2[(np.absolute(df2['logFC'])>2)]
             else:
-                df2 = df2[(df2['adj.P.Val']<0.05) & (np.absolute(df2['logFC'])>0.4)]
+                df2 = df2[(df2['adj.P.Val']<0.05) & (np.absolute(df2['logFC'])>0.2)]
             
             df2 = pd.DataFrame(df2['logFC'])
             df2.columns = ['0']
@@ -507,9 +583,12 @@ class ReportAjaxPathwayVenn(TemplateView):
             if compare3:
                 group3 = GeneGroup.objects.get(name=lgroup[2], report=report)
                 file_name3 = group3.doc_logfc.path
-                df3 = pd.read_csv(file_name3, index_col='SYMBOL')
+                try:
+                    df3 = pd.read_csv(file_name3, index_col='SYMBOL')
+                except:
+                    df3 = pd.read_csv(file_name3, index_col='SYMBOL', sep='\t')
                 df3.replace([np.inf, -np.inf], 0, inplace=True)
-                if df3['adj.P.Val'].all() == 1:
+                if df3['adj.P.Val'].isin([1]).all() == 1:
                     df3 = df3[(np.absolute(df3['logFC'])>2)]
                 else:
                     df3 = df3[(df3['adj.P.Val']<0.05) & (np.absolute(df3['logFC'])>0.4)]
@@ -520,9 +599,12 @@ class ReportAjaxPathwayVenn(TemplateView):
             if compare4:
                 group4 = GeneGroup.objects.get(name=lgroup[3], report=report)
                 file_name4 = group4.doc_logfc.path
-                df4 = pd.read_csv(file_name4, index_col='SYMBOL')
+                try:
+                    df4 = pd.read_csv(file_name4, index_col='SYMBOL')
+                except:
+                    df4 = pd.read_csv(file_name4, index_col='SYMBOL', sep='\t')
                 df4.replace([np.inf, -np.inf], 0, inplace=True)
-                if df4['adj.P.Val'].all() == 1:
+                if df4['adj.P.Val'].isin([1]).all() == 1:
                     df4 = df4[(np.absolute(df4['logFC'])>2)]
                 else:
                     df4 = df4[(df4['adj.P.Val']<0.05) & (np.absolute(df4['logFC'])>0.4)]
@@ -720,11 +802,15 @@ class ReportAjaxPathwayVennTable(TemplateView):
                 
                 group1 = GeneGroup.objects.get(name=lMembers[0], report=report)
                 
-                df_1 = pd.read_csv(group1.doc_logfc.path,  index_col='SYMBOL')
-                if df_1['adj.P.Val'].all() == 1:
+                try:
+                    df_1 = pd.read_csv(group1.doc_logfc.path,  index_col='SYMBOL')
+                except:
+                    df_1 = pd.read_csv(group1.doc_logfc.path,  index_col='SYMBOL', sep='\t')
+                
+                if df_1['adj.P.Val'].isin([1]).all() == 1:
                     df_1 = df_1[(np.absolute(df_1['logFC'])>2)]
                 else:            
-                    df_1 = df_1[(df_1['adj.P.Val']<0.05) & (np.absolute(df_1['logFC'])>0.4)]
+                    df_1 = df_1[(df_1['adj.P.Val']<0.05) & (np.absolute(df_1['logFC'])>0.2)]
                 df_1 = pd.DataFrame(df_1['logFC'])
                 df_1.columns = ['0']
                 
@@ -763,17 +849,21 @@ class ReportAjaxPathwayVennTable(TemplateView):
                 group1 = GeneGroup.objects.get(name=lMembers[0], report=report)
                 group2 = GeneGroup.objects.get(name=lMembers[1], report=report)
                 
-                df_1 = pd.read_csv(group1.doc_logfc.path,  index_col='SYMBOL')
-                df_2 = pd.read_csv(group2.doc_logfc.path,  index_col='SYMBOL') 
+                try:
+                    df_1 = pd.read_csv(group1.doc_logfc.path,  index_col='SYMBOL')
+                    df_2 = pd.read_csv(group2.doc_logfc.path,  index_col='SYMBOL') 
+                except:
+                    df_1 = pd.read_csv(group1.doc_logfc.path,  index_col='SYMBOL', sep='\t')
+                    df_2 = pd.read_csv(group2.doc_logfc.path,  index_col='SYMBOL', sep='\t') 
                 
-                if df_1['adj.P.Val'].all() == 1:
+                if df_1['adj.P.Val'].isin([1]).all() == 1:
                     df_1 = df_1[(np.absolute(df_1['logFC'])>2)]
                 else:           
-                    df_1 = df_1[(df_1['adj.P.Val']<0.05) & (np.absolute(df_1['logFC'])>0.4)]
-                if df_2['adj.P.Val'].all() == 1:
+                    df_1 = df_1[(df_1['adj.P.Val']<0.05) & (np.absolute(df_1['logFC'])>0.2)]
+                if df_2['adj.P.Val'].isin([1]).all() == 1:
                     df_2 = df_2[(np.absolute(df_2['logFC'])>2)]
                 else:
-                    df_2 = df_2[(df_2['adj.P.Val']<0.05) & (np.absolute(df_2['logFC'])>0.4)]
+                    df_2 = df_2[(df_2['adj.P.Val']<0.05) & (np.absolute(df_2['logFC'])>0.2)]
                 
                 df_1 = pd.DataFrame(df_1['logFC'])
                 df_2 = pd.DataFrame(df_2['logFC'])
@@ -833,22 +923,27 @@ class ReportAjaxPathwayVennTable(TemplateView):
                 group2 = GeneGroup.objects.get(name=lMembers[1], report=report)
                 group3 = GeneGroup.objects.get(name=lMembers[2], report=report)
                 
-                df_1 = pd.read_csv(group1.doc_logfc.path,  index_col='SYMBOL')
-                df_2 = pd.read_csv(group2.doc_logfc.path,  index_col='SYMBOL') 
-                df_3 = pd.read_csv(group3.doc_logfc.path,  index_col='SYMBOL') 
-                
-                if df_1['adj.P.Val'].all() == 1:
+                try:
+                    df_1 = pd.read_csv(group1.doc_logfc.path,  index_col='SYMBOL')
+                    df_2 = pd.read_csv(group2.doc_logfc.path,  index_col='SYMBOL') 
+                    df_3 = pd.read_csv(group3.doc_logfc.path,  index_col='SYMBOL') 
+                except:
+                    df_1 = pd.read_csv(group1.doc_logfc.path,  index_col='SYMBOL', sep='\t')
+                    df_2 = pd.read_csv(group2.doc_logfc.path,  index_col='SYMBOL', sep='\t') 
+                    df_3 = pd.read_csv(group3.doc_logfc.path,  index_col='SYMBOL', sep='\t') 
+                    
+                if df_1['adj.P.Val'].isin([1]).all() == 1:
                     df_1 = df_1[(np.absolute(df_1['logFC'])>2)]
                 else:               
-                    df_1 = df_1[(df_1['adj.P.Val']<0.05) & (np.absolute(df_1['logFC'])>0.4)]
-                if df_2['adj.P.Val'].all() == 1:
+                    df_1 = df_1[(df_1['adj.P.Val']<0.05) & (np.absolute(df_1['logFC'])>0.2)]
+                if df_2['adj.P.Val'].isin([1]).all() == 1:
                     df_2 = df_2[(np.absolute(df_2['logFC'])>2)]
                 else:
-                    df_2 = df_2[(df_2['adj.P.Val']<0.05) & (np.absolute(df_2['logFC'])>0.4)]
-                if df_3['adj.P.Val'].all() == 1:
+                    df_2 = df_2[(df_2['adj.P.Val']<0.05) & (np.absolute(df_2['logFC'])>0.2)]
+                if df_3['adj.P.Val'].isin([1]).all() == 1:
                     df_3 = df_3[(np.absolute(df_3['logFC'])>2)]
                 else:
-                    df_3 = df_3[(df_3['adj.P.Val']<0.05) & (np.absolute(df_3['logFC'])>0.4)]                
+                    df_3 = df_3[(df_3['adj.P.Val']<0.05) & (np.absolute(df_3['logFC'])>0.2)]                
                 
                 df_1 = pd.DataFrame(df_1['logFC'])
                 df_2 = pd.DataFrame(df_2['logFC'])
@@ -928,31 +1023,38 @@ class ReportAjaxPathwayVennTable(TemplateView):
                 group3 = GeneGroup.objects.get(name=lMembers[2], report=report)
                 group4 = GeneGroup.objects.get(name=lMembers[3], report=report)
                 
-                df_1 = pd.read_csv(group1.doc_logfc.path,  index_col='SYMBOL')
-                df_1.replace([np.inf, -np.inf], 0, inplace=True)
-                df_2 = pd.read_csv(group2.doc_logfc.path,  index_col='SYMBOL')
-                df_2.replace([np.inf, -np.inf], 0, inplace=True) 
-                df_3 = pd.read_csv(group3.doc_logfc.path,  index_col='SYMBOL')
-                df_3.replace([np.inf, -np.inf], 0, inplace=True)
-                df_4 = pd.read_csv(group4.doc_logfc.path,  index_col='SYMBOL') 
+                try:
+                    df_1 = pd.read_csv(group1.doc_logfc.path,  index_col='SYMBOL')
+                    df_2 = pd.read_csv(group2.doc_logfc.path,  index_col='SYMBOL') 
+                    df_3 = pd.read_csv(group3.doc_logfc.path,  index_col='SYMBOL')
+                    df_4 = pd.read_csv(group4.doc_logfc.path,  index_col='SYMBOL')
+                except:
+                    df_1 = pd.read_csv(group1.doc_logfc.path,  index_col='SYMBOL', sep='\t')
+                    df_2 = pd.read_csv(group2.doc_logfc.path,  index_col='SYMBOL', sep='\t') 
+                    df_3 = pd.read_csv(group3.doc_logfc.path,  index_col='SYMBOL', sep='\t')
+                    df_4 = pd.read_csv(group4.doc_logfc.path,  index_col='SYMBOL', sep='\t')
+                
+                df_1.replace([np.inf, -np.inf], 0, inplace=True)                
+                df_2.replace([np.inf, -np.inf], 0, inplace=True)                
+                df_3.replace([np.inf, -np.inf], 0, inplace=True)                 
                 df_4.replace([np.inf, -np.inf], 0, inplace=True)
                 
-                if df_1['adj.P.Val'].all() == 1:
+                if df_1['adj.P.Val'].isin([1]).all() == 1:
                     df_1 = df_1[(np.absolute(df_1['logFC'])>2)]
                 else:               
-                    df_1 = df_1[(df_1['adj.P.Val']<0.05) & (np.absolute(df_1['logFC'])>0.4)]
-                if df_2['adj.P.Val'].all() == 1:
+                    df_1 = df_1[(df_1['adj.P.Val']<0.05) & (np.absolute(df_1['logFC'])>0.2)]
+                if df_2['adj.P.Val'].isin([1]).all() == 1:
                     df_2 = df_2[(np.absolute(df_2['logFC'])>2)]
                 else:
-                    df_2 = df_2[(df_2['adj.P.Val']<0.05) & (np.absolute(df_2['logFC'])>0.4)]
-                if df_3['adj.P.Val'].all() == 1:
+                    df_2 = df_2[(df_2['adj.P.Val']<0.05) & (np.absolute(df_2['logFC'])>0.2)]
+                if df_3['adj.P.Val'].isin([1]).all() == 1:
                     df_3 = df_3[(np.absolute(df_3['logFC'])>2)]
                 else:
-                    df_3 = df_3[(df_3['adj.P.Val']<0.05) & (np.absolute(df_3['logFC'])>0.4)]    
-                if df_4['adj.P.Val'].all() == 1:
+                    df_3 = df_3[(df_3['adj.P.Val']<0.05) & (np.absolute(df_3['logFC'])>0.2)]    
+                if df_4['adj.P.Val'].isin([1]).all() == 1:
                     df_4 = df_4[(np.absolute(df_4['logFC'])>2)]
                 else:
-                    df_4 = df_4[(df_4['adj.P.Val']<0.05) & (np.absolute(df_4['logFC'])>0.4)]                 
+                    df_4 = df_4[(df_4['adj.P.Val']<0.05) & (np.absolute(df_4['logFC'])>0.2)]                 
                 
                 df_1 = pd.DataFrame(df_1['logFC'])
                 df_2 = pd.DataFrame(df_2['logFC'])

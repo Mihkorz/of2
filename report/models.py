@@ -141,15 +141,15 @@ class Report(models.Model):
 def get_document_upload_path(instance, file_name):
     return os.path.join('report-portal', instance.report.slug, file_name)
 def get_doclogfc_upload_path(instance, file_name):
-    return os.path.join('report-portal', instance.report.slug, 'logfc', file_name)
+    return os.path.join('report-portal', instance.report.slug, 'logfc', 'logfc_'+instance.name+'.csv')#file_name)
 def get_docboxplot_upload_path(instance, file_name):
     return os.path.join('report-portal', instance.report.slug, 'boxplot', file_name)
 
 class GeneGroup(models.Model):
     name = models.CharField(verbose_name='Gene group name', max_length=250, blank=False)
-    document = models.FileField(upload_to=get_document_upload_path, max_length=300,
+    document = models.FileField(verbose_name='Gene expression', upload_to=get_document_upload_path, max_length=300,
                                 help_text='CSV file with columns: SYMBOL, Tumour, Normal')
-    doc_logfc =  models.FileField(upload_to=get_doclogfc_upload_path, max_length=300, blank=True)
+    doc_logfc =  models.FileField(verbose_name='LogFC and p-val', upload_to=get_doclogfc_upload_path, max_length=300, blank=True)
     doc_boxplot = models.FileField(upload_to=get_docboxplot_upload_path, max_length=300, blank=True)
     
     report = models.ForeignKey(Report)

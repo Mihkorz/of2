@@ -1078,14 +1078,18 @@ class Test(TemplateView):
         from sklearn import preprocessing
         
         
-        df = read_csv('/home/mikhail/Downloads/miRNA_1.txt', sep='\t', index_col='SYMBOL')
-        original_mapping_df = read_csv(settings.MEDIA_ROOT+'/mirna/mirtarbase_mice_df.csv')
+        pahs = Pathway.objects.filter(organism='mouse', database='primary_old')
         
-        mapping_df = original_mapping_df[['miRNA.ID', 'Gene']]
-        mapping_df['Gene'] = mapping_df['Gene'].str.upper()
-        mapping_df.set_index('Gene', inplace=True)
+        lgenes = []
+        for p in pahs:
+            for g in p.gene_set.all():
+                lgenes.append(g.name)
         
-        mirna_gene = mapping_df.join(df, how='inner')
+        lgenes = list(set(lgenes))
+        
+        df = DataFrame({'gene': lgenes})
+        
+        df.to_csv('/home/mikhail/Downloads/genes_mouse.csv')
         
         raise Exception('mirna')
         

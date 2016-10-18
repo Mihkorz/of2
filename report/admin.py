@@ -16,7 +16,7 @@ from core.stats import fdr_corr
 
 class GeneGroupInline(admin.TabularInline):
     model = GeneGroup
-    exclude = ['doc_logfc', 'doc_boxplot']
+    exclude = [ 'doc_boxplot']
 
 class PathwayGroupInline(admin.TabularInline):
     model = PathwayGroup
@@ -45,7 +45,7 @@ class ReportAdmin(admin.ModelAdmin):
            
                 print g_group.name
                 sniffer = csv.Sniffer()
-                dialect = sniffer.sniff(g_group.document.read(), delimiters='\t,;')
+                dialect = sniffer.sniff(g_group.document.read(), delimiters='\t,; ')
                 g_group.document.seek(0)
             
                 df_doc = pd.read_csv(g_group.document, delimiter=dialect.delimiter,
@@ -54,8 +54,8 @@ class ReportAdmin(admin.ModelAdmin):
                 normal_columns = [col for col in df_doc.columns if 'Norm' in col] #get normal columns
             
             
-                """ Creating DataFrame for doc_boxplot file """
-            
+                """ Creating DataFrame for doc_boxplot file """                    
+
                 def boxplot(row):
             
                     sss = pd.Series()
@@ -93,65 +93,69 @@ class ReportAdmin(admin.ModelAdmin):
                     return sss
             
             
-                df_boxplot = df_doc.apply(boxplot ,axis=1)
+                #df_boxplot = df_doc.apply(boxplot ,axis=1)
                 print "Boxplot done"
-                """ Creating DataFrame for doc_logFC file """
+                
+                if not g_group.doc_logfc:
+                    """ Creating DataFrame for doc_logFC file """
             
-                df_doc_log = np.log(df_doc.astype('float32')).fillna(0)
-                if len(tumour_columns)>1: # use group t-test
+                    df_doc_log = np.log(df_doc.astype('float32')).fillna(0)
+                    if len(tumour_columns)>1: # use group t-test
                     
-                
-                    def calculate_ttest(row):
-                        tumours = row[tumour_columns]
-                        norms = row[normal_columns]
+                        def calculate_ttest(row):
+                            tumours = row[tumour_columns]
+                            norms = row[normal_columns]
                  
-                        _, p_val = ttest_ind(tumours, norms)
+                            _, p_val = ttest_ind(tumours, norms)
                 
-                        return p_val
+                            return p_val
                 
-                    series_p_values = df_doc_log.apply(calculate_ttest, axis=1).fillna(1)
-                    df_doc_log['P.Value'] = series_p_values
-                
-                    fdr_q_values = fdr_corr(np.array(series_p_values))
-                    df_doc_log['adj.P.Val'] = fdr_q_values
-            
-                else: # use single sample t-test
-                    log_norms_df = df_doc_log[normal_columns]
-                    def calculate_1sample_ttest(col):
-                        _, p_value = ttest_1samp(log_norms_df, np.log(col), axis=1)
-                        series_p_values = pd.Series(p_value, index = col.index).fillna(1)
+                        series_p_values = df_doc_log.apply(calculate_ttest, axis=1).fillna(1)
                         df_doc_log['P.Value'] = series_p_values
+                
                         fdr_q_values = fdr_corr(np.array(series_p_values))
                         df_doc_log['adj.P.Val'] = fdr_q_values
-                    
-                
-                    df_doc_log[tumour_columns].apply(calculate_1sample_ttest, axis=0)
-                
-                
-                    
-                cnr_gMean_norm = df_doc[normal_columns].apply(gmean, axis=1).fillna(1)
-                df_doc = df_doc.div(cnr_gMean_norm, axis='index')
-                cnr_gMean_tumour = df_doc[tumour_columns].apply(gmean, axis=1).fillna(1)
-                cnr_gMean_tumour = np.log2(cnr_gMean_tumour)
             
-                #combining all together
-                df_logfc = pd.DataFrame(index=df_doc.index)
-                df_logfc['logFC'] = cnr_gMean_tumour
-                df_logfc['adj.P.Val'] = df_doc_log['adj.P.Val']
-                df_logfc['P.Value'] = df_doc_log['P.Value']
-                print g_group.name+" logfc done"
+                    else: # use single sample t-test
+                        log_norms_df = df_doc_log[normal_columns]
+                        def calculate_1sample_ttest(col):
+                            _, p_value = ttest_1samp(log_norms_df, np.log(col), axis=1)
+                            series_p_values = pd.Series(p_value, index = col.index).fillna(1)
+                            df_doc_log['P.Value'] = series_p_values
+                            fdr_q_values = fdr_corr(np.array(series_p_values))
+                            df_doc_log['adj.P.Val'] = fdr_q_values
+                    
+                
+                        df_doc_log[tumour_columns].apply(calculate_1sample_ttest, axis=0)
+                
+                
+                    
+                    cnr_gMean_norm = df_doc[normal_columns].apply(gmean, axis=1).fillna(1)
+                    df_doc = df_doc.div(cnr_gMean_norm, axis='index')
+                    cnr_gMean_tumour = df_doc[tumour_columns].apply(gmean, axis=1).fillna(1)
+                    cnr_gMean_tumour = np.log2(cnr_gMean_tumour)
+            
+                    #combining all together
+                    df_logfc = pd.DataFrame(index=df_doc.index)
+                    df_logfc['logFC'] = cnr_gMean_tumour
+                    df_logfc['adj.P.Val'] = df_doc_log['adj.P.Val']
+                    df_logfc['P.Value'] = df_doc_log['P.Value']
+                    print g_group.name+" logfc done"
             
             
                 """ Saving to files and to database """
             
                 path = os.path.join('report-portal', g_group.report.slug)
-                file_logfc = default_storage.save(path+"/logfc_"+g_group.name+".csv", ContentFile('') )
-                file_boxplot = default_storage.save(path+"/boxplot_"+g_group.name+".csv", ContentFile('') )
-                df_logfc.to_csv(settings.MEDIA_ROOT+"/"+file_logfc)
-                df_boxplot.to_csv(settings.MEDIA_ROOT+"/"+file_boxplot)
-                g_group.doc_logfc = file_logfc
-                g_group.doc_boxplot = file_boxplot
-               
+                if not g_group.doc_logfc:
+                    file_logfc = default_storage.save(path+"/logfc_"+g_group.name+".csv", ContentFile('') )
+                    df_logfc.to_csv(settings.MEDIA_ROOT+"/"+file_logfc)
+                    g_group.doc_logfc = file_logfc
+                
+                #file_boxplot = default_storage.save(path+"/boxplot_"+g_group.name+".csv", ContentFile('') )
+                #df_boxplot.to_csv(settings.MEDIA_ROOT+"/"+file_boxplot)
+                
+                #g_group.doc_boxplot = file_boxplot
+                #raise Exception('group')
                 g_group.save()
             else:
                             
