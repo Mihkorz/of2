@@ -21,3 +21,7 @@ div.dataTables_wrapper {
         width: 900px;
        
     }
+    
+.modal-dialog {
+	width: 80%;
+}

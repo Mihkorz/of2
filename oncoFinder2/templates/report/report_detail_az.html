@@ -271,8 +271,54 @@
   </div>
           
 
+<!-- ---------------------------------Transcription Factor--------------------------------------------- -->
+ <hr/> 
+<h2 id='tf_analysis'>Transcription Factor Analysis</h2>
 <hr/>
 
+   <!-- TF Nav tabs -->      
+   <ul class="nav nav-tabs" role="tablist">
+     {%for group in report.genegroup_set.all%}
+       <li role="presentation" {%if forloop.counter == 1 %}class="active"{%endif%}>
+         <a href="#{{group.get_slug}}_tf_tab" aria-controls="home1" role="tab" data-toggle="tab" id='tf_boot_{{group.get_slug}}'>
+           {{group.name}}
+         </a>
+       </li>
+     {%endfor%}
+   </ul>
+         
+   <div class="tab-content">
+    {%for group in report.genegroup_set.all%}
+     {%if forloop.counter == 1 %}
+     <div role="tabpanel" class="tab-pane fade in active" id="{{group.get_slug}}_tf_tab">
+     {%else%}
+     <div role="tabpanel" class="tab-pane fade " id="{{group.get_slug}}_tf_tab">
+     {%endif%}
+             
+       <h4>Table <span class='tbl_num'></span>Transcription Factor for {{group.name}} </h4>
+       <table id="tbl-tf-{{group.get_slug}}" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>Factor</th>
+           <th>underTF_DEG</th>
+           <th>underTF_nonDEG</th>
+           <th>notunderTF_DEG</th>
+           <th>notunderTF_nonDEG</th>
+           <th>p-value</th>
+           <th>OR</th>
+           <th>adj. p-value</th>
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+     
+     
+     </div> <!-- end of tabpanel div -->
+    {%endfor%}
+   
+   </div> <!--  end of tab-content div -->
+
+<!-- End of TF -->
   
   {%if report.conclusion_text%}
           <h2 id="conclusions" >Conclusions</h2>
@@ -353,14 +399,14 @@
     <script src="/static/report/portal/js/volcano.js" type="text/javascript"></script>
     <script src="/static/report/portal/js/scatter.js" type="text/javascript"></script>
     <script src="/static/report/portal/js/tables.js" type="text/javascript"></script>
-    <script src="/static/report/portal/js/boxplot.js" type="text/javascript"></script>
-    
+    <script src="/static/report/portal/js/boxplot.js" type="text/javascript"></script>    
     <script src="/static/report/portal/js/venn-diagram.js" type="text/javascript"></script>
+    <script src="/static/report/portal/js/tf.js" type="text/javascript"></script>
     
     
     
     <!-- MODAL FOR PATHS  -->
-    <div id="pathmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div id="pathmodal" class="modal fade large" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
  <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -388,6 +434,7 @@ $(function() {
 	      drawVolcanoPlot('{{group.get_slug}}_volcano',  '{{group.doc_logfc}}');
 	      drawGeneTable({{report.id}}, 'tbl-{{group.get_slug}}', '{{group.doc_logfc}}', categories='{{report.get_gene_groups}}'); 
 	  
+	      
 	  {%else%}
 	  $('#vol_boot_{{group.get_slug}}').click(function(){
 			
@@ -459,6 +506,28 @@ $(function() {
 			'{{perm.strip}}',
 			false, 'down', 'venn_path_dinamic_{{perm.strip}}', 'pathways', '{{report.organism}}');
 	});
+    {%endfor%}
+    
+/////////////////// Transcription Factor     
+    {%for group in report.tfgroup_set.all%}
+    
+        {%if forloop.counter = 1%}        
+          
+	      drawTFTable({{report.id}}, 'tbl-tf-{{group.get_slug}}', '{{group.document}}', categories='{{group.name}}'); 
+	      
+        {%else%}
+        
+        $('#tf_boot_{{group.get_slug}}').click(function(){
+        	
+        	if ( !$.fn.dataTable.isDataTable( '#tbl-tf-{{group.get_slug}}' ) ) {
+        		drawTFTable({{report.id}}, 'tbl-tf-{{group.get_slug}}', '{{group.document}}', categories='{{group.name}}'); 
+				}
+        	
+        });
+        
+        {%endif%}
+    
+    
     {%endfor%}
     
  /* METABOLIC PATHs

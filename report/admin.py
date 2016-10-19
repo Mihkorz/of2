@@ -11,7 +11,7 @@ from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from django.conf import settings
 
-from .models import Report, GeneGroup, PathwayGroup
+from .models import Report, GeneGroup, PathwayGroup, TfGroup
 from core.stats import fdr_corr
 
 class GeneGroupInline(admin.TabularInline):
@@ -21,7 +21,10 @@ class GeneGroupInline(admin.TabularInline):
 class PathwayGroupInline(admin.TabularInline):
     model = PathwayGroup
     exclude = ['doc_proc',]
-    
+
+class TfGroupInline(admin.TabularInline):
+    model = TfGroup
+       
      
 class ReportAdmin(admin.ModelAdmin):
     def targets_list(self):
@@ -34,6 +37,7 @@ class ReportAdmin(admin.ModelAdmin):
     inlines = [
         GeneGroupInline,
         PathwayGroupInline,
+        TfGroupInline,
     ]
     
     def save_formset(self, request, form, formset, change):
@@ -157,7 +161,7 @@ class ReportAdmin(admin.ModelAdmin):
                 #g_group.doc_boxplot = file_boxplot
                 #raise Exception('group')
                 g_group.save()
-            else:
+            elif g_group.__class__.__name__=='PathwayGroup':
                 try:            
                     df_doc = pd.read_excel(g_group.document, sheetname='PAS1',
                                  index_col='Pathway')
@@ -176,7 +180,15 @@ class ReportAdmin(admin.ModelAdmin):
                 df_doc.to_csv(settings.MEDIA_ROOT+"/"+file_proc, encoding='utf-8')
                 g_group.doc_proc = file_proc
                 
-                g_group.save() # in case it's not GeneGroup object
+                g_group.save() # in case it's PathwayGroup object
+            
+            elif g_group.__class__.__name__=='TfGroup':
+                
+                #df_doc = pd.read_csv(g_group.document, sep=' ')
+                
+                #raise Exception('TF')
+                
+                g_group.save() # in case it's TfGroup object
         formset.save_m2m()
 
 class GeneGroupAdmin(admin.ModelAdmin):

@@ -5,6 +5,7 @@ import numpy as np
 import networkx as nx
 import itertools
 import csv
+import random 
 
 from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
@@ -16,7 +17,7 @@ from django.conf import settings
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 
-from .models import Report, GeneGroup, PathwayGroup
+from .models import Report, GeneGroup, PathwayGroup, TfGroup
 from core.models import Pathway, Node, Component
 
 class ReportList(ListView):
@@ -1304,10 +1305,233 @@ class ReportAjaxPathDetail(TemplateView):
         
         context['pathway'] = pathway
         context['dRelations'] = dRelations
-        import random 
+        
         context['rand'] = random.random() 
         
         
         
         return context    
+
+
+class ReportTfTableJson(TemplateView): 
+    template_name="report/report_detail.html"
+    
+    def dispatch(self, request, *args, **kwargs):
+        
+        return super(ReportTfTableJson, self).dispatch(request, *args, **kwargs)
+    
+    def get(self, request, *args, **kwargs):
+        
+        file_name = request.GET.get('file_name')            
+            
+        df_tf = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name,
+                                  sep=' ')
+                
+        df_tf.fillna(1, inplace=True)                 
+         
+        df_tf = df_tf[(df_tf['padj']<0.05)]         
+        
+        #raise Exception('tf') 
+        
+        output_json = df_tf.to_json(orient='values')
+        response_data = {'data': json.loads(output_json)}
+        
+        return HttpResponse(json.dumps(response_data), content_type="application/json") 
+
+
+class ReportAjaxTfDetail(TemplateView):
+    template_name = 'report/report_ajax_tf_detail.html'
+    
+   
+    
+    def dispatch(self, request, *args, **kwargs):
+        return super(ReportAjaxTfDetail, self).dispatch(request, *args, **kwargs)
+    
+    def get_context_data(self, *args, **kwargs):
+        context = super(ReportAjaxTfDetail, self).get_context_data(**kwargs)
+        
+        report = Report.objects.get(pk=self.request.GET['reportID'])
+        group = TfGroup.objects.get(report=report, name=self.request.GET['group_name'])
+        tf_name = self.request.GET['tf_name']
+        
+        df_tf = pd.read_csv(group.document.path, sep=' ')
+        df_tf.fillna(1, inplace=True)      
+        df_tf = df_tf[(df_tf['padj']<0.05)]
+        ldifferential = df_tf['factor'].tolist()
+        
+        
+        # Get logFC values to color nodes
+        gene_group = GeneGroup.objects.get(report=report, name=self.request.GET['group_name'])
+        df_logfc = pd.read_csv(gene_group.doc_logfc.path, sep='\t')
+                        
+        df_logfc = df_logfc[['SYMBOL', 'logFC']]
+        df_logfc = df_logfc[df_logfc['SYMBOL'].isin(ldifferential)]
+        df_logfc.dropna(inplace=True)
+        df_logfc.set_index('SYMBOL', inplace=True)
+        df_logfc.index.name = 'to'
+        
+        
+        
+        ##### Use specific file for each cell line
+        if 'A549' in group.name:
+            specific_df = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/adenocarcinoma_cell_line.txt',
+                                    sep='\t' , header=None)
+            s_file_name = 'adenocarcinoma_cell_line'
+        elif 'MCF7' in group.name:
+            specific_df = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/breast_carcinoma_cell_line.txt',
+                                    sep='\t' , header=None)
+            s_file_name = 'breast_carcinoma_cell_line'
+        
+        specific_df.columns = ['from', 'to', 'source']
+        specific_df = specific_df[specific_df['from']==tf_name]
+        
+        lStargets = specific_df['to'].tolist()  
+        s_intersection =  list(set(lStargets).intersection(ldifferential))
+        specific_intersect = specific_df[specific_df['to'].isin(s_intersection)]
+        
+        # join with logfc
+        specific_intersect.set_index('to', inplace=True)
+        
+        specific_joined = specific_intersect.join(df_logfc, how='inner')
+        specific_joined.reset_index(inplace=True)
+        
+        lNEL = specific_joined['logFC']
+        mmin = np.min(lNEL)
+        mmax = np.max(np.absolute(lNEL)) # absolute was made for Aliper special, remove if needed
+        mid = 1 - mmax/(mmax + abs(mmin))
+        
+        if mmax<0 and mmin<0:                    
+            shifted_cmap = plt.get_cmap('Reds_r')
+            mmax = 0
+        if  mmax>0 and mmin>0:
+            shifted_cmap = plt.get_cmap('Greens')
+            mmin = 0
+        else:  
+            cmap = plt.get_cmap('PiYG')
+            shifted_cmap = shiftedColorMap(cmap, start=0, midpoint=mid, stop=1, name='shrunk')
+        cNormp  = colors.Normalize(vmin=mmin, vmax=mmax)
+        scalarMap = cmx.ScalarMappable(norm=cNormp, cmap=shifted_cmap)
+        
+        #raise Exception('TF detail')
+        # Draw Graph
+        
+        G_spe=nx.DiGraph()
+        
+        for index, row in specific_joined.iterrows():
+            
+            if row['logFC']!=0:                
+                ffil = "#"+struct.pack('BBB',*scalarMap.to_rgba(row['logFC'], bytes=True)[:3]).encode('hex').upper()
+            else:
+                ffil = "grey"
+            
+            G_spe.add_node(row['to'], color='black',style='filled',
+                               fillcolor=ffil)
+            
+            relColor = 'black'
+            """  As there is no relation type in specific file!!!!
+            if row['relType'] == 'Activation':
+                relColor = 'green'
+            if row['relType'] == 'Repression':
+                relColor = 'red'
+            """
+            G_spe.add_edge(row['from'], row['to'], color=relColor)
+            
+        
+        # DRAW STATIC IMAGE
+        A_spe=nx.to_agraph(G_spe)
+        A_spe.layout(prog='circo')
+        A_spe.draw(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/tf_specific.svg')
+        
+        #raise Exception('TF detail')
+        
+        ##### Use common file for each cell line
+        common_df = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/trrust_rawdata.txt',
+                                  sep='\t', header=None)        
+        common_df.columns = ['from', 'to', 'relType', 'source']
+        
+        common_df = common_df[common_df['from']==tf_name] #filter related to current tf
+        
+        lCtargets = common_df['to'].tolist()  
+        c_intersection =  list(set(lCtargets).intersection(ldifferential))
+        common_intersect = common_df[common_df['to'].isin(c_intersection)]
+        
+        # join with logfc
+        common_intersect.set_index('to', inplace=True)
+        
+        common_joined = common_intersect.join(df_logfc, how='inner')
+        common_joined.reset_index(inplace=True)
+        
+        
+        lNEL = common_joined['logFC']
+        mmin = np.min(lNEL)
+        mmax = np.max(np.absolute(lNEL)) # absolute was made for Aliper special, remove if needed
+        mid = 1 - mmax/(mmax + abs(mmin))
+        
+        if mmax<0 and mmin<0:                    
+            shifted_cmap = plt.get_cmap('Reds_r')
+            mmax = 0
+        if  mmax>0 and mmin>0:
+            shifted_cmap = plt.get_cmap('Greens')
+            mmin = 0
+        else:  
+            cmap = plt.get_cmap('PiYG')
+            shifted_cmap = shiftedColorMap(cmap, start=0, midpoint=mid, stop=1, name='shrunk')
+        cNormp  = colors.Normalize(vmin=mmin, vmax=mmax)
+        scalarMap = cmx.ScalarMappable(norm=cNormp, cmap=shifted_cmap)
+       
+        # Draw Graph
+        
+        G_com=nx.DiGraph()
+        
+        for index, row in common_joined.iterrows():
+            
+            if row['logFC']!=0:                
+                ffil = "#"+struct.pack('BBB',*scalarMap.to_rgba(row['logFC'], bytes=True)[:3]).encode('hex').upper()
+            else:
+                ffil = "grey"
+            
+            G_com.add_node(row['to'], color='black',style='filled',
+                               fillcolor=ffil)
+                       
+            relColor = 'black'
+            if row['relType'] == 'Activation':
+                relColor = 'green'
+            if row['relType'] == 'Repression':
+                relColor = 'red'
+            
+            G_com.add_edge(row['from'], row['to'], color=relColor)
+            
+        
+        # DRAW STATIC IMAGE
+        A_com=nx.to_agraph(G_com)
+        A_com.layout(prog='dot')
+        A_com.draw(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/tf_common.svg')
+        
+        context['s_file_name'] = s_file_name
+        context['c_file_name'] = 'trrust_rawdata'
+        context['report_slug'] = report.slug
+        context['tf_name'] = tf_name
+        context['rand'] = random.random()
+        
+        #raise Exception('TF detail')
+        
+        return context
+    
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
