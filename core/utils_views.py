@@ -188,14 +188,14 @@ class ConvertPath(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(ConvertPath, self).get_context_data(**kwargs)
         
-        """
-        dfg = read_csv(settings.MEDIA_ROOT+'/ivan/newArr_mycnResponse.csv', index_col='gene')
+        
+        dfg = read_csv(settings.MEDIA_ROOT+'/ivan/Arr_mycnResponse_AGIL.csv', index_col='gene')
         
         index = list(dfg.index)
         
         
         
-        path = Pathway.objects.get(name='mycn_Response_Pathway_updown_arr', database='sandbox')
+        path = Pathway.objects.get(name='mycn_Response_new_updown_AGIL', database='sandbox')
         
         for gene in path.gene_set.all():
             if gene.name in index:
@@ -203,8 +203,21 @@ class ConvertPath(TemplateView):
                 gene.save()
         
         
+        dfg = read_csv(settings.MEDIA_ROOT+'/ivan/Arr_mycnResponse_CA.csv', index_col='gene')
         
-        path1=Pathway.objects.get(name='mycn_Response_Pathway_arr1', database='sandbox')
+        index = list(dfg.index)
+        
+        
+        
+        path = Pathway.objects.get(name='mycn_Response_new_updown_CA', database='sandbox')
+        
+        for gene in path.gene_set.all():
+            if gene.name in index:
+                gene.arr = dfg.loc[gene.name]['newARR']
+                gene.save()
+        
+        
+        path1=Pathway.objects.get(name='mycn_Response_new_arr1', database='sandbox')
         
         
         for gene in path1.gene_set.all():
@@ -213,10 +226,10 @@ class ConvertPath(TemplateView):
             gene.save()
             
         
-        """
+        
         
                     
-        #raise Exception('just stop exception. Check view!')
+        raise Exception('just stop exception. Check view!')
         """
         #human metabolism
         for mpath in MetabolismPathway.objects.all():
