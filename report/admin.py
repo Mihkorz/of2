@@ -173,10 +173,12 @@ class ReportAdmin(admin.ModelAdmin):
                     df_doc = pd.read_excel(g_group.document, sheetname='PAS1',
                                  index_col='Pathway')
                 except:
-                    g_group.document.seek(0)
-                    try:                        
+                    
+                    try:
+                        g_group.document.seek(0)                        
                         df_doc = pd.read_csv(g_group.document, index_col='Pathway', encoding='utf-8')
                     except:
+                        g_group.document.seek(0)
                         df_doc = pd.read_csv(g_group.document, index_col='Pathway', encoding='utf-8', sep='\t')
                         
                     
