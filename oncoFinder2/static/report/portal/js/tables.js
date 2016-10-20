@@ -64,6 +64,7 @@ function drawGeneChart(reportID, gene_name, categories){
 				{
 			     'reportID': reportID,
 			     'gene': gene_name,
+			     'categories': categories
 			     },
 			     function(data) {
 			    	 
@@ -71,6 +72,7 @@ function drawGeneChart(reportID, gene_name, categories){
 			     	options.series[0] = data;
 			     	options.title.text = gene_name;
 			     	
+			     	categories+=',DMSO_A549,DMSO_MCF7'
 			     	options.xAxis.categories = categories.split(',');
 			        var chart = new Highcharts.Chart(options);
 			        
@@ -130,6 +132,7 @@ function drawGeneTable(reportID, id, file_name, categories){
         	     'data':{
         	    	     reportID: reportID,
         	            'file_name': file_name,
+        	            'categories': categories
         	            },        	      
         
     },"deferRender": true });	
@@ -174,6 +177,7 @@ function drawGeneTableScatter(reportID, id, file_name, categories){
         	     'data':{
         	    	     reportID: reportID,
         	            'file_name': file_name,
+        	            'categories': categories
         	            },        	      
         
     },"deferRender": true });	

@@ -298,6 +298,9 @@ class ReportGeneBoxplotJson(TemplateView):
         
         gene  = request.GET.get('gene')        
         report = Report.objects.get(pk=request.GET.get('reportID'))
+        categories = request.GET.get('categories')
+        
+         
         
         df_list = []
         
@@ -344,9 +347,10 @@ class ReportGeneBoxplotJson(TemplateView):
                     series_tumour.append(lSerie)                
                 """
                 i=i+1
-        except:
+        except: # AZ report style
             
-            for group in report.genegroup_set.all().order_by('name'):
+        
+            for group in report.genegroup_set.all():
             
                 df_group = pd.read_csv(group.document.path,
                                    index_col='SYMBOL', sep='\t')
@@ -356,22 +360,17 @@ class ReportGeneBoxplotJson(TemplateView):
             
             i=0
             for df in df_list:
-                i=i+1
+                
                 r_tumour = df.filter(like='Tumour')
                 
-                median = np.around(np.median(r_tumour), decimals=0) 
-                upper_quartile = np.around(np.percentile(r_tumour, 75), decimals=0)
-                lower_quartile = np.around(np.percentile(r_tumour, 25), decimals=0)
+                
+                median = np.log2(np.median(r_tumour)) 
+                upper_quartile = np.log2(np.percentile(r_tumour, 75))
+                lower_quartile = np.log2(np.percentile(r_tumour, 25))
                 iqr = upper_quartile - lower_quartile
-                upper_whisker = np.around(r_tumour[r_tumour<=upper_quartile+1.5*iqr], decimals=0).max()
-                lower_whisker = np.around(r_tumour[r_tumour>=lower_quartile-1.5*iqr], decimals=0).min()
-
+                upper_whisker = np.log2(r_tumour[r_tumour<=upper_quartile+1.5*iqr].max())
+                lower_whisker = np.log2(r_tumour[r_tumour>=lower_quartile-1.5*iqr].min())
         
-                median = np.around(np.log2(median), decimals=2)  
-                upper_quartile = np.around(np.log2(upper_quartile), decimals=2) 
-                lower_quartile = np.around(np.log2(lower_quartile), decimals=2)           
-                upper_whisker = np.around(np.log2(upper_whisker), decimals=2) 
-                lower_whisker = np.around(np.log2(lower_whisker), decimals=2)
                 
                 if np.isnan(lower_whisker):
                     lower_whisker = lower_quartile
@@ -387,6 +386,44 @@ class ReportGeneBoxplotJson(TemplateView):
                  
                 series_tumour.append(lSerie)
                     
+            #Get Norms boxplot
+            ldf_norm = []
+            
+            group_a549 = report.genegroup_set.filter(name__icontains='A549')[0] 
+            df_norm_a549 = pd.read_csv(group_a549.document.path,
+                                   index_col='SYMBOL', sep='\t')
+            group_mcf7 = report.genegroup_set.filter(name__icontains='MCF7')[0]
+            df_norm_mcf7 = pd.read_csv(group_mcf7.document.path,
+                                   index_col='SYMBOL', sep='\t')
+            
+            ldf_norm.append(df_norm_a549.loc[gene])
+            ldf_norm.append(df_norm_mcf7.loc[gene])
+            
+            
+              
+            
+            for df_norm in ldf_norm:       
+                
+                
+                r_norm = df_norm.filter(like='Norm')
+                
+                median = np.log2(np.median(r_norm)) 
+                upper_quartile = np.log2(np.percentile(r_norm, 75))
+                lower_quartile = np.log2(np.percentile(r_norm, 25))
+                iqr = upper_quartile - lower_quartile
+                upper_whisker = np.log2(r_norm[r_norm<=upper_quartile+1.5*iqr].max())
+                lower_whisker = np.log2(r_norm[r_norm>=lower_quartile-1.5*iqr].min())
+                
+                if np.isnan(lower_whisker):
+                    lower_whisker = lower_quartile
+                if np.isnan(upper_whisker):
+                    upper_whisker = upper_quartile
+                
+                lNorm = [lower_whisker, lower_quartile, median, upper_quartile, upper_whisker]
+                
+                series_tumour.append(lNorm)
+                
+            
             #raise Exception('boxplot') 
         s1 = {
               'name': 'boxplot',              
