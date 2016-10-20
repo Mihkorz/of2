@@ -1518,7 +1518,61 @@ class ReportAjaxTfDetail(TemplateView):
         return context
     
         
+class ReportDlFarmJson(TemplateView):
+    template_name="report/report_detail.html"
     
+    def dispatch(self, request, *args, **kwargs):
+        
+        return super(ReportDlFarmJson, self).dispatch(request, *args, **kwargs)
+    
+    def get(self, request, *args, **kwargs):
+        
+        report = Report.objects.get(pk=self.request.GET['report_id'])
+        group = TfGroup.objects.get(report=report, name=self.request.GET['group_name'])
+        
+        deeplearning = report.deeplearning_set.all()[0]
+        
+        df_farm = pd.read_csv(deeplearning.farmclass.path, index_col='Name', sep='\t')
+        
+        lGname = group.name.split('_')
+        lGname[0] = lGname[0].replace('D', '')
+        
+        df_farm['biolName'] = df_farm['biolName'].astype('string')
+        
+        s_threshold = df_farm.iloc[0, 7:]
+        
+        
+        df_farm = df_farm[(df_farm['compound']== int(lGname[0])) & 
+                           (df_farm['concentration']==int(lGname[1])) &
+                            (df_farm['celltype']==lGname[2] )]
+        
+        s_features = df_farm.iloc[:, 7:] # leave only columns with features, excluding 'Best threshold'
+        
+        s_features = s_features.mean()        
+        
+        barplot_data = []
+        threshold = []
+        for index, value in s_features.iteritems():
+            value = "%.2f" % value
+            if float(value)>0:
+                barplot_data.append([index, float(value)])
+                threshold.append(s_threshold[index])
+            
+        
+        
+        
+        #raise Exception('stop11')
+            
+        
+        
+        #df_output = df_output.to_json(orient='records')        
+        
+        output = {'barplot': barplot_data,
+                  'threshold': threshold
+                  }
+        
+        response_data =  json.dumps(output)
+        return HttpResponse(json.dumps(response_data), content_type="application/json") 
     
     
     

@@ -11,7 +11,7 @@ from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from django.conf import settings
 
-from .models import Report, GeneGroup, PathwayGroup, TfGroup
+from .models import Report, GeneGroup, PathwayGroup, TfGroup, DeepLearning
 from core.stats import fdr_corr
 
 class GeneGroupInline(admin.TabularInline):
@@ -24,6 +24,9 @@ class PathwayGroupInline(admin.TabularInline):
 
 class TfGroupInline(admin.TabularInline):
     model = TfGroup
+    
+class DeepLearningInline(admin.TabularInline):
+    model = DeepLearning
        
      
 class ReportAdmin(admin.ModelAdmin):
@@ -38,6 +41,7 @@ class ReportAdmin(admin.ModelAdmin):
         GeneGroupInline,
         PathwayGroupInline,
         TfGroupInline,
+        DeepLearningInline,
     ]
     
     def save_formset(self, request, form, formset, change):
@@ -189,6 +193,9 @@ class ReportAdmin(admin.ModelAdmin):
                 #raise Exception('TF')
                 
                 g_group.save() # in case it's TfGroup object
+            elif g_group.__class__.__name__=='DeepLearning':
+                
+                g_group.save()
         formset.save_m2m()
 
 class GeneGroupAdmin(admin.ModelAdmin):

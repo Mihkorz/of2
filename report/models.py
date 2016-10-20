@@ -176,4 +176,15 @@ class TfGroup(models.Model):
     def get_slug(self):
         return self.name.replace(' ', '_')
     
+class DeepLearning(models.Model):
+    name = models.CharField(verbose_name='Deep learning name', max_length=250, blank=False)
+    farmclass = models.FileField(upload_to=get_document_upload_path, max_length=300,
+                                help_text='Farm classes file')
+    sideeff = models.FileField(upload_to=get_document_upload_path, max_length=300,
+                                help_text='Side Effects file', blank=True)
+    report = models.ForeignKey(Report)
+    
+    def get_slug(self):
+        return self.name.replace(' ', '_')
+    
     

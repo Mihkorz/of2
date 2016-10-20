@@ -319,6 +319,42 @@
    </div> <!--  end of tab-content div -->
 
 <!-- End of TF -->
+
+<!-- ---------------------------------Deep Learning--------------------------------------------- -->
+ <hr/> 
+<h2 id='dl_analysis'>Deep Learnings</h2>
+<hr/>
+
+   <!-- DL Nav tabs -->      
+   <ul class="nav nav-tabs" role="tablist">
+     {%for group in report.genegroup_set.all%}
+       <li role="presentation" {%if forloop.counter == 1 %}class="active"{%endif%}>
+         <a href="#{{group.get_slug}}_dlfc_tab" aria-controls="home1" role="tab" data-toggle="tab" id='dlfc_boot_{{group.get_slug}}'>
+           {{group.name}}
+         </a>
+       </li>
+     {%endfor%}
+   </ul>
+         
+   <div class="tab-content">
+    {%for group in report.genegroup_set.all%}
+     {%if forloop.counter == 1 %}
+     <div role="tabpanel" class="tab-pane fade in active" id="{{group.get_slug}}_dlfc_tab">
+     {%else%}
+     <div role="tabpanel" class="tab-pane fade " id="{{group.get_slug}}_dlfc_tab">
+     {%endif%}
+             
+       <div id="dlfc_{{group.get_slug}}" style="min-width: 800px; height: 400px; max-width: 800px; margin: 0 auto">
+         <span>Loading bar plot...</span>
+       </div>
+     
+     
+     </div> <!-- end of tabpanel div -->
+    {%endfor%}
+   
+   </div> <!--  end of tab-content div -->
+
+<!-- End of DeepLearning -->
   
   {%if report.conclusion_text%}
           <h2 id="conclusions" >Conclusions</h2>
@@ -402,6 +438,7 @@
     <script src="/static/report/portal/js/boxplot.js" type="text/javascript"></script>    
     <script src="/static/report/portal/js/venn-diagram.js" type="text/javascript"></script>
     <script src="/static/report/portal/js/tf.js" type="text/javascript"></script>
+    <script src="/static/report/portal/js/deeplearning.js" type="text/javascript"></script>
     
     
     
@@ -524,6 +561,35 @@ $(function() {
 				}
         	
         });
+        
+        {%endif%}
+    
+    
+    {%endfor%}
+
+/////////////////// Deep Learning    
+    {%for group in report.tfgroup_set.all%}
+    
+        {%if forloop.counter = 1%}        
+          
+          drawDLColumn({{report.id}}, 'dlfc_{{group.get_slug}}',
+        		  '{{group.get_slug}}'); 
+	      
+        {%else%}
+        
+        
+        
+        $('#dlfc_boot_{{group.get_slug}}').click(function(){
+            	
+        	if($("#dlfc_{{group.get_slug}} span").html() == 'Loading bar plot...'){
+        		drawDLColumn({{report.id}}, 'dlfc_{{group.get_slug}}',
+      		                 '{{group.get_slug}}');
+			}
+        	
+        	
+        	
+        	
+         });
         
         {%endif%}
     
