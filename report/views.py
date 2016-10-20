@@ -1576,7 +1576,30 @@ class ReportDlFarmJson(TemplateView):
         return HttpResponse(json.dumps(response_data), content_type="application/json") 
     
     
+
+class ReportCorrelationTableJson(TemplateView): 
+    template_name="report/report_detail.html"
     
+    def dispatch(self, request, *args, **kwargs):
+        
+        return super(ReportCorrelationTableJson, self).dispatch(request, *args, **kwargs)
+    
+    def get(self, request, *args, **kwargs):
+        
+        file_name = request.GET.get('file_name')            
+            
+        df_corr = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name)
+                
+        df_corr = df_corr[['sample','plate','correlation','series','platform','title']]        
+        
+        df_corr.fillna('No data', inplace=True)
+        
+        #raise Exception('corr') 
+        
+        output_json = df_corr.to_json(orient='values')
+        response_data = {'data': json.loads(output_json)}
+        
+        return HttpResponse(json.dumps(response_data), content_type="application/json")    
     
     
     

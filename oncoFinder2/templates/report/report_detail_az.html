@@ -363,6 +363,53 @@
 <!-- End of TF -->
 
 
+<!-- ---------------------------------Correlation --------------------------------------------- -->
+ <hr/> 
+<h2 id='tf_analysis'>Correlation Analysis</h2>
+<hr/>
+
+   <!-- TF Nav tabs -->      
+   <ul class="nav nav-tabs" role="tablist">
+     {%for group in report.genegroup_set.all%}
+       <li role="presentation" {%if forloop.counter == 1 %}class="active"{%endif%}>
+         <a href="#{{group.get_slug}}_cor_tab" aria-controls="home1" role="tab" data-toggle="tab" id='cor_boot_{{group.get_slug}}'>
+           {{group.name}}
+         </a>
+       </li>
+     {%endfor%}
+   </ul>
+         
+   <div class="tab-content">
+    {%for group in report.genegroup_set.all%}
+     {%if forloop.counter == 1 %}
+     <div role="tabpanel" class="tab-pane fade in active" id="{{group.get_slug}}_cor_tab">
+     {%else%}
+     <div role="tabpanel" class="tab-pane fade " id="{{group.get_slug}}_cor_tab">
+     {%endif%}
+             
+       <h4>Table <span class='tbl_num'></span>Correlation for {{group.name}} </h4>
+       <table id="tbl-cor-{{group.get_slug}}" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>Sample</th>
+           <th>Plate</th>
+           <th>Correlation</th>
+           <th>Series</th>
+           <th>Platform</th>
+           <th>Title</th>
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+     
+     
+     </div> <!-- end of tabpanel div -->
+    {%endfor%}
+   
+   </div> <!--  end of tab-content div -->
+
+<!-- End of Correlation -->
+
   
   {%if report.conclusion_text%}
           <h2 id="conclusions" >Conclusions</h2>
@@ -447,6 +494,7 @@
     <script src="/static/report/portal/js/venn-diagram.js" type="text/javascript"></script>
     <script src="/static/report/portal/js/tf.js" type="text/javascript"></script>
     <script src="/static/report/portal/js/deeplearning.js" type="text/javascript"></script>
+    <script src="/static/report/portal/js/correlation.js" type="text/javascript"></script>
     
     
     
@@ -508,7 +556,7 @@ $(function() {
 	{%endif%}
 	
 	{%for gene in report.get_notable_genes_list%}
-	  drawGeneBoxplot(reportID={{report.id}}, name='{{gene}}', renderTo='{{gene}}', gene='{{gene}}', categories='{{report.get_all_gene_groups_norm_as_list}}');
+	  //drawGeneBoxplot(reportID={{report.id}}, name='{{gene}}', renderTo='{{gene}}', gene='{{gene}}', categories='{{report.get_all_gene_groups_norm_as_list}}');
 	{%endfor%}
 	
 	drawGeneTable({{report.id}}, 'tbl-gene_all', 'all', categories='{{report.get_all_gene_groups_norm_as_list}}');
@@ -578,26 +626,37 @@ $(function() {
 /////////////////// Deep Learning    
     {%for group in report.tfgroup_set.all%}
     
-        {%if forloop.counter = 1%}        
-          
+        {%if forloop.counter = 1%}           
           drawDLColumn({{report.id}}, 'dlfc_{{group.get_slug}}',
-        		  '{{group.get_slug}}'); 
-	      
-        {%else%}
-        
-        
+        		  '{{group.get_slug}}');	      
+        {%else%}        
         
         $('#dlfc_boot_{{group.get_slug}}').click(function(){
             	
         	if($("#dlfc_{{group.get_slug}} span").html() == 'Loading bar plot...'){
         		drawDLColumn({{report.id}}, 'dlfc_{{group.get_slug}}',
       		                 '{{group.get_slug}}');
-			}
+			}     	
+         });        
+        {%endif%}  
+    {%endfor%}
+
+/////////////////// Correlation     
+    {%for group in report.correlationgroup_set.all%}
+    
+        {%if forloop.counter = 1%}        
+          
+	      drawCorrelationTable({{report.id}}, 'tbl-cor-{{group.get_slug}}', '{{group.document}}', categories='{{group.name}}'); 
+	      
+        {%else%}
+        
+        $('#cor_boot_{{group.get_slug}}').click(function(){
         	
+        	if ( !$.fn.dataTable.isDataTable( '#tbl-cor-{{group.get_slug}}' ) ) {
+        		drawCorrelationTable({{report.id}}, 'tbl-cor-{{group.get_slug}}', '{{group.document}}', categories='{{group.name}}'); 
+				}
         	
-        	
-        	
-         });
+        });
         
         {%endif%}
     

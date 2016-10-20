@@ -187,4 +187,11 @@ class DeepLearning(models.Model):
     def get_slug(self):
         return self.name.replace(' ', '_')
     
+class CorrelationGroup(models.Model):
+    name = models.CharField(verbose_name='Correlation group name', max_length=250, blank=False)
+    document = models.FileField(upload_to=get_document_upload_path, max_length=300,
+                                help_text='Correlation file')
+    report = models.ForeignKey(Report)
     
+    def get_slug(self):
+        return self.name.replace(' ', '_')   
