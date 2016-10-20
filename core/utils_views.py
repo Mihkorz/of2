@@ -188,7 +188,7 @@ class ConvertPath(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(ConvertPath, self).get_context_data(**kwargs)
         
-        
+        """
         dfg = read_csv(settings.MEDIA_ROOT+'/ivan/newArr_mycnResponse.csv', index_col='gene')
         
         index = list(dfg.index)
@@ -213,10 +213,10 @@ class ConvertPath(TemplateView):
             gene.save()
             
         
-        
+        """
         
                     
-        raise Exception('just stop exception. Check view!')
+        #raise Exception('just stop exception. Check view!')
         """
         #human metabolism
         for mpath in MetabolismPathway.objects.all():
@@ -322,10 +322,10 @@ class ConvertPath(TemplateView):
             
             pathname = ffile.replace('.xls', '').replace(' ', '_')
             try:
-                npath = Pathway.objects.get(name=pathname, organism='human', database='primary_new' )               
+                npath = Pathway.objects.get(name=pathname, organism='human', database='sandbox' )               
             except:                 
             
-                npath = Pathway(name=pathname, amcf=0, organism='human', database='primary_new')
+                npath = Pathway(name=pathname, amcf=0, organism='human', database='sandbox')
                 npath.save()
                 
             def add_gene(row, path):
