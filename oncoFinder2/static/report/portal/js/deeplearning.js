@@ -19,7 +19,7 @@ var options = {
 	        },
 	        credits:{enabled:false},
 	        title: {
-	            text: 'Farmacological clases'
+	            text: 'Pharmacological Classes'
 	        },
 	        subtitle: {
 	            text: ''
