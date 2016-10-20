@@ -1528,23 +1528,32 @@ class ReportDlFarmJson(TemplateView):
     def get(self, request, *args, **kwargs):
         
         report = Report.objects.get(pk=self.request.GET['report_id'])
-        group = TfGroup.objects.get(report=report, name=self.request.GET['group_name'])
+        group = self.request.GET['group_name']
+        
+        
         
         deeplearning = report.deeplearning_set.all()[0]
         
         df_farm = pd.read_csv(deeplearning.farmclass.path, index_col='Name', sep='\t')
         
-        lGname = group.name.split('_')
-        lGname[0] = lGname[0].replace('D', '')
+        lGname = group.split('_')
         
+        if lGname[0]!='overall':
+            lGname[0] = lGname[0].replace('D', '') # in case of groups not overall
+        
+             
         df_farm['biolName'] = df_farm['biolName'].astype('string')
         
         s_threshold = df_farm.iloc[0, 7:]
         
-        
-        df_farm = df_farm[(df_farm['compound']== int(lGname[0])) & 
+        if lGname[0]!='overall':
+            df_farm = df_farm[(df_farm['compound']== int(lGname[0])) & 
                            (df_farm['concentration']==int(lGname[1])) &
                             (df_farm['celltype']==lGname[2] )]
+        else:
+            df_farm = df_farm[(df_farm['compound']== int(lGname[1]))]
+        
+        #raise Exception('stop')
         
         s_features = df_farm.iloc[:, 7:] # leave only columns with features, excluding 'Best threshold'
         
