@@ -356,7 +356,7 @@ class ReportGeneBoxplotJson(TemplateView):
             
             i=0
             for df in df_list:
-                
+                i=i+1
                 r_tumour = df.filter(like='Tumour')
                 
                 median = np.around(np.median(r_tumour), decimals=0) 
@@ -371,7 +371,12 @@ class ReportGeneBoxplotJson(TemplateView):
                 upper_quartile = np.around(np.log2(upper_quartile), decimals=2) 
                 lower_quartile = np.around(np.log2(lower_quartile), decimals=2)           
                 upper_whisker = np.around(np.log2(upper_whisker), decimals=2) 
-                lower_whisker = np.around(np.log2(lower_whisker), decimals=2) 
+                lower_whisker = np.around(np.log2(lower_whisker), decimals=2)
+                
+                if np.isnan(lower_whisker):
+                    lower_whisker = lower_quartile
+                if np.isnan(upper_whisker):
+                    upper_whisker = upper_quartile
               
                 lSerie = [lower_whisker, lower_quartile, median, upper_quartile, upper_whisker]
                 
@@ -1587,7 +1592,7 @@ class ReportDlFarmJson(TemplateView):
         if lGname[0]!='overall':
             plot_subtitle = group
         else:
-            plot_subtitle = plot_subtitle = 'Drug ' + lGname[1]     
+            plot_subtitle = plot_subtitle = 'Overall for Drug ' + lGname[1]     
         
         output = {'barplot': barplot_data,
                   'threshold': threshold,

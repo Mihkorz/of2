@@ -49,7 +49,7 @@
 	
 function drawGeneChart(reportID, gene_name, categories){
 		
-		$("#modalBody").html('<h4 id="loading">Loading ...</h4><div id="gene_plot" style="width: 500px; height: 400px; margin: 0 auto"></div>');
+		$("#modalBody").html('<h4 id="loading">Loading ...</h4><div id="gene_plot" style="width: 80%; height: 400px; margin: 0 auto"></div>');
 		
 		$("#myModalLabel").text(gene_name);
 		
@@ -86,7 +86,7 @@ function drawGeneChart(reportID, gene_name, categories){
 	}
 	
 function showPathDetails(reportID, path_name, group_name, organism){
-	$("#modalBody").html('<h4 id="loading">Loading ...</h4><div id="gene_plot" style="width: 800px; height: 400px; margin: 0 auto"></div>');
+	$("#modalBody").html('<h4 id="loading">Loading ...</h4><div id="f" style="width: 800px; height: 400px; margin: 0 auto"></div>');
 	
 	$("#myModalLabel").text(path_name);
 	
