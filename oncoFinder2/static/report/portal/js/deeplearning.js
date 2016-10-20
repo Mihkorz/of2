@@ -5,7 +5,7 @@ Highcharts.Renderer.prototype.symbols.hline = function(x, y, width, height) {
 //-------------------------------------------------------
 
 
-function drawDLColumn(report_id, renderTo, group_name){
+function drawDLColumn(report_id, renderTo, group_name, type){
 	
 var options = {
 			
@@ -19,7 +19,7 @@ var options = {
 	        },
 	        credits:{enabled:false},
 	        title: {
-	            text: 'Pharmacological Classes'
+	            text: 'Side Effects'
 	        },
 	        subtitle: {
 	            text: ''
@@ -95,13 +95,16 @@ var options = {
     $.getJSON('/report-portal/report-deeplearningfarmjson/',
     		{
     	     'report_id': report_id,
-    	     'group_name': group_name
+    	     'group_name': group_name,
+    	     'type': type
     		},
     		function(data) {
     	data = $.parseJSON(data);
     	
     	options.series[0].data = data['barplot'];
     	options.series[1].data = data['threshold'];
+    	options.title.text = data['title']
+    	options.subtitle.text = data['subtitle']
     	
     	
         var chart = new Highcharts.Chart(options);

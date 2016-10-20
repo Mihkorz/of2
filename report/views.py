@@ -1530,20 +1530,21 @@ class ReportDlFarmJson(TemplateView):
         report = Report.objects.get(pk=self.request.GET['report_id'])
         group = self.request.GET['group_name']
         
+        file_type = self.request.GET['type']
         
         
         deeplearning = report.deeplearning_set.all()[0]
         
-        df_farm = pd.read_csv(deeplearning.farmclass.path, index_col='Name', sep='\t')
+        if file_type == 'fc':
+            df_farm = pd.read_csv(deeplearning.farmclass.path, index_col='Name', sep='\t')
+        elif file_type == 'se':
+            df_farm = pd.read_csv(deeplearning.sideeff.path, index_col='Name', sep='\t')
         
         lGname = group.split('_')
         
         if lGname[0]!='overall':
             lGname[0] = lGname[0].replace('D', '') # in case of groups not overall
-        
-             
-        df_farm['biolName'] = df_farm['biolName'].astype('string')
-        
+ 
         s_threshold = df_farm.iloc[0, 7:]
         
         if lGname[0]!='overall':
@@ -1560,6 +1561,10 @@ class ReportDlFarmJson(TemplateView):
         s_features = s_features.mean()        
         s_features.sort(ascending=False)
         
+        if file_type == 'se': # leave only top-30 Side Effects
+            s_features = s_features[:30]
+        
+        
         barplot_data = []
         threshold = []
         for index, value in s_features.iteritems():
@@ -1572,13 +1577,22 @@ class ReportDlFarmJson(TemplateView):
         
         
         #raise Exception('stop11')
+        if file_type == 'fc':
+            plot_title = 'Pharmacological Classes'
             
-        
-        
-        #df_output = df_output.to_json(orient='records')        
+        elif file_type == 'se':
+            plot_title = 'Side Effects'
+            
+            
+        if lGname[0]!='overall':
+            plot_subtitle = group
+        else:
+            plot_subtitle = plot_subtitle = 'Drug ' + lGname[1]     
         
         output = {'barplot': barplot_data,
-                  'threshold': threshold
+                  'threshold': threshold,
+                  'title': plot_title,
+                  'subtitle': plot_subtitle
                   }
         
         response_data =  json.dumps(output)

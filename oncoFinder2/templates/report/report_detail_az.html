@@ -84,7 +84,8 @@
  <hr/> 
 <h2 id='dl_analysis'>Deep Learning</h2>
 <hr/>
-
+<h3>Pharmacological Classes</h3>
+<hr/>
    <!-- DL Nav tabs -->      
    <ul class="nav nav-tabs" role="tablist">
      <li role="presentation" class="active">
@@ -164,6 +165,90 @@
     {%endfor%}
    
    </div> <!--  end of tab-content div -->
+
+
+<h3>Side Effects</h3>
+<hr/>
+   <!-- DL Nav tabs -->      
+   <ul class="nav nav-tabs" role="tablist">
+     <li role="presentation" class="active">
+         <a href="#overall_dlse_tab" aria-controls="home1" role="tab" data-toggle="tab" id='dlse_boot_overall'>
+           Overall
+         </a>
+       </li>
+     {%for group in report.genegroup_set.all%}
+       <li role="presentation" >
+         <a href="#{{group.get_slug}}_dlse_tab" aria-controls="home1" role="tab" data-toggle="tab" id='dlse_boot_{{group.get_slug}}'>
+           {{group.name}}
+         </a>
+       </li>
+     {%endfor%}
+   </ul>
+         
+   <div class="tab-content">
+     <div role="tabpanel" class="tab-pane fade in active" id="overall_dlse_tab">
+     
+      <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active">
+          <a href="#overall_dlse_tab10"  role="tab" data-toggle="tab" id='dlse_boot_overall10'>
+          Drug 10</a>
+          </li>
+          <li role="presentation" >
+          <a href="#overall_dlse_tab12"  role="tab" data-toggle="tab" id='dlse_boot_overall12'>
+          Drug 12</a>
+          </li>
+          <li role="presentation" >
+          <a href="#overall_dlse_tab15"  role="tab" data-toggle="tab" id='dlse_boot_overall15'>
+          Drug 15</a>
+          </li>
+          <li role="presentation" >
+          <a href="#overall_dlse_tab29"  role="tab" data-toggle="tab" id='dlse_boot_overall29'>
+          Drug 29</a>
+          </li>
+      </ul>
+      
+      <div class="tab-content">
+        <div role="tabpanel" class="tab-pane fade in active" id="overall_dlse_tab10">
+          <div id="dlse_overall10" style="min-width: 800px; height: 500px; max-width: 800px; margin: 0 auto">
+            <span>Loading bar plot...</span>
+          </div>
+        </div>
+        <div role="tabpanel" class="tab-pane fade " id="overall_dlse_tab12">
+          <div id="dlse_overall12" style="min-width: 800px; height: 500px; max-width: 800px; margin: 0 auto">
+            <span>Loading bar plot...</span>
+          </div>
+        </div>
+        <div role="tabpanel" class="tab-pane fade " id="overall_dlse_tab15">
+          <div id="dlse_overall15" style="min-width: 800px; height: 500px; max-width: 800px; margin: 0 auto">
+            <span>Loading bar plot...</span>
+          </div>
+        </div>
+        <div role="tabpanel" class="tab-pane fade " id="overall_dlse_tab29">
+          <div id="dlse_overall29" style="min-width: 800px; height: 500px; max-width: 800px; margin: 0 auto">
+            <span>Loading bar plot...</span>
+          </div>
+        </div>
+      
+      
+      </div> <!-- end of inner tab content -->
+           
+                  
+     
+     </div>
+   
+    {%for group in report.genegroup_set.all%}
+     
+     <div role="tabpanel" class="tab-pane fade " id="{{group.get_slug}}_dlse_tab">     
+             
+       <div id="dlse_{{group.get_slug}}" style="min-width: 800px; height: 500px; max-width: 800px; margin: 0 auto">
+         <span>Loading bar plot...</span>
+       </div>     
+     
+     </div> <!-- end of tabpanel div -->
+    {%endfor%}
+   
+   </div> <!--  end of tab-content div -->
+
 
 <!-- End of DeepLearning -->
           
@@ -675,30 +760,32 @@ $(function() {
     {%endfor%}
 
 /////////////////// Deep Learning
+
+// Pharm Classes
 //Overal tabs
 
   drawDLColumn({{report.id}}, 'dlfc_overall10',
-      		                 'overall_10');
+      		                 'overall_10', 'fc');
   
   $('#dlfc_boot_overall12').click(function(){
             	
         	if($("#dlfc_overall12 span").html() == 'Loading bar plot...'){
         		drawDLColumn({{report.id}}, 'dlfc_overall12',
-      		                 'overall_12');
+      		                 'overall_12', 'fc');
 			}     	
          });
   $('#dlfc_boot_overall15').click(function(){
   	
   	if($("#dlfc_overall15 span").html() == 'Loading bar plot...'){
   		drawDLColumn({{report.id}}, 'dlfc_overall15',
-		                 'overall_15');
+		                 'overall_15', 'fc');
 		}     	
    });
   $('#dlfc_boot_overall29').click(function(){
   	
   	if($("#dlfc_overall29 span").html() == 'Loading bar plot...'){
   		drawDLColumn({{report.id}}, 'dlfc_overall29',
-		                 'overall_29');
+		                 'overall_29', 'fc');
 		}     	
    });
 
@@ -709,12 +796,53 @@ $(function() {
             	
         	if($("#dlfc_{{group.get_slug}} span").html() == 'Loading bar plot...'){
         		drawDLColumn({{report.id}}, 'dlfc_{{group.get_slug}}',
-      		                 '{{group.get_slug}}');
+      		                 '{{group.get_slug}}', 'fc');
 			}     	
          });        
           
     {%endfor%}
 
+///////////// Side Effects
+//Overal tabs
+
+    drawDLColumn({{report.id}}, 'dlse_overall10',
+        		                 'overall_10', 'se');
+    
+    $('#dlse_boot_overall12').click(function(){
+              	
+          	if($("#dlse_overall12 span").html() == 'Loading bar plot...'){
+          		drawDLColumn({{report.id}}, 'dlse_overall12',
+        		                 'overall_12', 'se');
+  			}     	
+           });
+    $('#dlse_boot_overall15').click(function(){
+    	
+    	if($("#dlse_overall15 span").html() == 'Loading bar plot...'){
+    		drawDLColumn({{report.id}}, 'dlse_overall15',
+  		                 'overall_15', 'se');
+  		}     	
+     });
+    $('#dlse_boot_overall29').click(function(){
+    	
+    	if($("#dlse_overall29 span").html() == 'Loading bar plot...'){
+    		drawDLColumn({{report.id}}, 'dlse_overall29',
+  		                 'overall_29', 'se');
+  		}     	
+     });
+
+  //Group tabs
+      {%for group in report.tfgroup_set.all%}              
+          
+          $('#dlse_boot_{{group.get_slug}}').click(function(){
+              	
+          	if($("#dlse_{{group.get_slug}} span").html() == 'Loading bar plot...'){
+          		drawDLColumn({{report.id}}, 'dlse_{{group.get_slug}}',
+        		                 '{{group.get_slug}}', 'se');
+  			}     	
+           });        
+            
+      {%endfor%}    
+    
 /////////////////// Correlation     
     {%for group in report.correlationgroup_set.all%}
     
