@@ -346,7 +346,7 @@ class ReportGeneBoxplotJson(TemplateView):
                 i=i+1
         except:
             
-            for group in report.genegroup_set.all():
+            for group in report.genegroup_set.all().order_by('name'):
             
                 df_group = pd.read_csv(group.document.path,
                                    index_col='SYMBOL', sep='\t')
