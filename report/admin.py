@@ -174,7 +174,11 @@ class ReportAdmin(admin.ModelAdmin):
                                  index_col='Pathway')
                 except:
                     g_group.document.seek(0)
-                    df_doc = pd.read_csv(g_group.document, index_col='Pathway', encoding='utf-8')
+                    try:                        
+                        df_doc = pd.read_csv(g_group.document, index_col='Pathway', encoding='utf-8')
+                    except:
+                        df_doc = pd.read_csv(g_group.document, index_col='Pathway', encoding='utf-8', sep='\t')
+                        
                     
                 tumour_columns = [col for col in df_doc.columns if 'Tumour' in col] #get sample columns
                 

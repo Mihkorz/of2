@@ -372,9 +372,9 @@ class ReportGeneBoxplotJson(TemplateView):
                 lower_whisker = np.log2(r_tumour[r_tumour>=lower_quartile-1.5*iqr].min())
         
                 
-                if np.isnan(lower_whisker):
+                if np.isnan(lower_whisker) or np.isinf(lower_whisker):
                     lower_whisker = lower_quartile
-                if np.isnan(upper_whisker):
+                if np.isnan(upper_whisker) or np.isinf(upper_whisker):
                     upper_whisker = upper_quartile
               
                 lSerie = [lower_whisker, lower_quartile, median, upper_quartile, upper_whisker]
@@ -414,9 +414,9 @@ class ReportGeneBoxplotJson(TemplateView):
                 upper_whisker = np.log2(r_norm[r_norm<=upper_quartile+1.5*iqr].max())
                 lower_whisker = np.log2(r_norm[r_norm>=lower_quartile-1.5*iqr].min())
                 
-                if np.isnan(lower_whisker):
+                if np.isnan(lower_whisker) or np.isinf(lower_whisker):
                     lower_whisker = lower_quartile
-                if np.isnan(upper_whisker):
+                if np.isnan(upper_whisker) or np.isinf(upper_whisker):
                     upper_whisker = upper_quartile
                 
                 lNorm = [lower_whisker, lower_quartile, median, upper_quartile, upper_whisker]
