@@ -1549,6 +1549,7 @@ class ReportDlFarmJson(TemplateView):
         s_features = df_farm.iloc[:, 7:] # leave only columns with features, excluding 'Best threshold'
         
         s_features = s_features.mean()        
+        s_features.sort(ascending=False)
         
         barplot_data = []
         threshold = []

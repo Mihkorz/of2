@@ -75,16 +75,58 @@
           <h2 id="methods" >Methods</h2>
           <hr/>
           
-          {{report.methods_text|safe}}
-          
+          {{report.methods_text|safe}}          
           <hr/>
           {%endif%}
+          
+          
+<!-- ---------------------------------Deep Learning--------------------------------------------- -->
+ <hr/> 
+<h2 id='dl_analysis'>Deep Learning</h2>
+<hr/>
+
+   <!-- DL Nav tabs -->      
+   <ul class="nav nav-tabs" role="tablist">
+     {%for group in report.genegroup_set.all%}
+       <li role="presentation" {%if forloop.counter == 1 %}class="active"{%endif%}>
+         <a href="#{{group.get_slug}}_dlfc_tab" aria-controls="home1" role="tab" data-toggle="tab" id='dlfc_boot_{{group.get_slug}}'>
+           {{group.name}}
+         </a>
+       </li>
+     {%endfor%}
+   </ul>
+         
+   <div class="tab-content">
+    {%for group in report.genegroup_set.all%}
+     {%if forloop.counter == 1 %}
+     <div role="tabpanel" class="tab-pane fade in active" id="{{group.get_slug}}_dlfc_tab">
+     {%else%}
+     <div role="tabpanel" class="tab-pane fade " id="{{group.get_slug}}_dlfc_tab">
+     {%endif%}
+             
+       <div id="dlfc_{{group.get_slug}}" style="min-width: 800px; height: 500px; max-width: 800px; margin: 0 auto">
+         <span>Loading bar plot...</span>
+       </div>
+     
+     
+     </div> <!-- end of tabpanel div -->
+    {%endfor%}
+   
+   </div> <!--  end of tab-content div -->
+
+<!-- End of DeepLearning -->
+          
+          
+          <hr/>
           <h2 id='gene_analysis'>Gene level analysis</h2>
           <hr/>
           {%if report.gene_text%}
           {{report.gene_text|safe}}
           <br/><br/>
           {%endif%}
+
+
+
           
    <!-- GENE Nav tabs -->      
    <ul class="nav nav-tabs" role="tablist">
@@ -320,41 +362,7 @@
 
 <!-- End of TF -->
 
-<!-- ---------------------------------Deep Learning--------------------------------------------- -->
- <hr/> 
-<h2 id='dl_analysis'>Deep Learnings</h2>
-<hr/>
 
-   <!-- DL Nav tabs -->      
-   <ul class="nav nav-tabs" role="tablist">
-     {%for group in report.genegroup_set.all%}
-       <li role="presentation" {%if forloop.counter == 1 %}class="active"{%endif%}>
-         <a href="#{{group.get_slug}}_dlfc_tab" aria-controls="home1" role="tab" data-toggle="tab" id='dlfc_boot_{{group.get_slug}}'>
-           {{group.name}}
-         </a>
-       </li>
-     {%endfor%}
-   </ul>
-         
-   <div class="tab-content">
-    {%for group in report.genegroup_set.all%}
-     {%if forloop.counter == 1 %}
-     <div role="tabpanel" class="tab-pane fade in active" id="{{group.get_slug}}_dlfc_tab">
-     {%else%}
-     <div role="tabpanel" class="tab-pane fade " id="{{group.get_slug}}_dlfc_tab">
-     {%endif%}
-             
-       <div id="dlfc_{{group.get_slug}}" style="min-width: 800px; height: 400px; max-width: 800px; margin: 0 auto">
-         <span>Loading bar plot...</span>
-       </div>
-     
-     
-     </div> <!-- end of tabpanel div -->
-    {%endfor%}
-   
-   </div> <!--  end of tab-content div -->
-
-<!-- End of DeepLearning -->
   
   {%if report.conclusion_text%}
           <h2 id="conclusions" >Conclusions</h2>
