@@ -1594,6 +1594,8 @@ class ReportCorrelationTableJson(TemplateView):
         
         df_corr.fillna('No data', inplace=True)
         
+        df_corr['plate'] = df_corr['plate'].str.replace('Tumour_', '')
+        
         #raise Exception('corr') 
         
         output_json = df_corr.to_json(orient='values')
