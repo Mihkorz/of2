@@ -181,6 +181,9 @@ class ReportAdmin(admin.ModelAdmin):
                         g_group.document.seek(0)
                         df_doc = pd.read_csv(g_group.document, index_col='Pathway', encoding='utf-8', sep='\t')
                         
+                
+                if not 'DataBase' in df_doc.columns:
+                    df_doc['Database'] = 'database'
                     
                 tumour_columns = [col for col in df_doc.columns if 'Tumour' in col] #get sample columns
                 
