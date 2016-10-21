@@ -546,6 +546,35 @@
 
 <!-- End of Correlation -->
 
+<!-- ---------------------------------Artem table--------------------------------------------- -->
+ <hr/> 
+<h2 id='at_analysis'>Similarity to known drug- and knockdown-induced expression signatures</h2>
+<hr/>
+
+<h4>Table <span class='tbl_num'></span>Similarity to known drug- and knockdown-induced expression signatures </h4>
+       <table id="tbl-similarity" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>experiment</th>
+           <th>compound</th>
+           <th>concentration</th>
+           <th>cellline</th>
+           <th>p-value</th>
+           <th>adj. p-value</th>
+           <th>effect</th>
+           <th>brd</th>
+           <th>drug</th>
+           <th>time</th>
+           <th>conc</th>
+           <th>cl</th>
+           <th>gene</th>
+          </tr>
+        </thead>  
+      </table>
+
+<!-- --------------------------------- end of Artem table--------------------------------------------- -->
+ 
+
   
   {%if report.conclusion_text%}
           <h2 id="conclusions" >Conclusions</h2>
@@ -864,6 +893,11 @@ $(function() {
     
     
     {%endfor%}
+    
+////// Similarity
+
+    drawSimilarityTable({{report.id}}, 'tbl-similarity');
+
     
  /* METABOLIC PATHs
   drawPathwayTable({{report.id}},

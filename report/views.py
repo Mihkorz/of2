@@ -1681,6 +1681,34 @@ class ReportDlFarmJson(TemplateView):
         return HttpResponse(json.dumps(response_data), content_type="application/json") 
     
     
+class ReportSimilarityJson(TemplateView): 
+    template_name="report/report_detail.html"
+    
+    def dispatch(self, request, *args, **kwargs):
+        
+        return super(ReportSimilarityJson, self).dispatch(request, *args, **kwargs)
+    
+    def get(self, request, *args, **kwargs):
+        report = Report.objects.get(pk=self.request.GET['reportID'])        
+        
+        similarity = report.deeplearning_set.all()[1]            
+            
+        df_sim = pd.read_csv(similarity.farmclass.path)
+                
+        df_sim = df_sim[['experiment','compound','concentration',
+                         'cellline','pval','padj',
+                         'effect', 'brd', 'drug',
+                         'time', 'conc', 'cl', 'gene'
+                         ]]        
+        
+        df_sim.fillna(' ', inplace=True)        
+        
+        #raise Exception('corr') 
+        
+        output_json = df_sim.to_json(orient='values')
+        response_data = {'data': json.loads(output_json)}
+        
+        return HttpResponse(json.dumps(response_data), content_type="application/json")
 
 class ReportCorrelationTableJson(TemplateView): 
     template_name="report/report_detail.html"
