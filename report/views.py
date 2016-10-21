@@ -54,8 +54,38 @@ class ReportDetail(DetailView):
     def get_context_data(self, **kwargs):
               
         context = super(ReportDetail, self).get_context_data(**kwargs)
+        """
+        df = pd.read_csv('/home/mikhail/Downloads/pathways_OF_allpathways.csv', index_col='Pathway')
+        
+        def fuckfuck(col):
+            
+            
+            ddd = pd.DataFrame(col)
+            ddd.columns = ['Tumour']
+            
+            #panda_modules_off_15_C_100_celltype_MCF7_1.tab
+            #                  15_C_100_celltype_MCF7_1 
+            #15_100_MCF7
+            
+            name = col.name
+            
+            ln = name.split('_')
+            
+            lnn = ['C', 'celltype', '1']
+            
+            fn = [ln[0], lnn[0], ln[1], lnn[1], ln[2], lnn[2]]
+            
+            new_name = '_'.join(fn)
+            
+            
+            ddd.to_csv('/home/mikhail/Downloads/AZ/of/panda_modules_off_'+new_name+'.tab')
+            
+            #raise Exception('cycle')
         
         
+        df.apply(fuckfuck)
+        raise Exception('fuck')
+        """
         context['test'] = "Test"
         
         return context
@@ -77,7 +107,10 @@ class ReportGeneVolcanoJson(TemplateView):
             df_gene = df_gene[['gene', 'logFC', 'adj.P.Val']]
             #df_gene.rename(columns={'gene': 'Symbol'}, inplace=True)
         except:
-            df_gene = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name, sep='\t')
+            try:
+                df_gene = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name)
+            except:
+                df_gene = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name, sep='\t')
             df_gene = df_gene[['SYMBOL', 'logFC', 'adj.P.Val']]
                             
             df_gene.fillna(0, inplace=True)
@@ -138,10 +171,11 @@ class ReportGeneTableJson(TemplateView):
                 df_gene = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name)
                 df_gene = df_gene[['gene', 'logFC', 'adj.P.Val']]
             except:
-                
-                df_gene = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name,
+                try:
+                    df_gene = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name)
+                except:
+                    df_gene = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name,
                                   sep='\t')
-                
                 df_gene = df_gene[['SYMBOL', 'logFC', 'adj.P.Val']] #AZ report
                 
                 df_gene.fillna(1, inplace=True)
@@ -162,8 +196,10 @@ class ReportGeneTableJson(TemplateView):
             lgroups = []
             for group in report.genegroup_set.all():
                 
-                df = pd.read_csv(group.doc_logfc.path, sep='\t', index_col='SYMBOL')
-                
+                try:
+                    df = pd.read_csv(group.doc_logfc.path, sep='\t', index_col='SYMBOL')
+                except:
+                    df = pd.read_csv(group.doc_logfc.path, index_col='SYMBOL')
                 
                 #df.rename(columns={'log2FoldChange': 'logFC'}, inplace=True)
                 
@@ -478,9 +514,14 @@ class ReportPathwayTableJson(TemplateView):
             except:
                 pass
             df_output.reset_index(inplace=True)
+            #raise Exception('maza faka')
+            df_output.to_csv('/home/mikhail/Downloads/AZ/fuck.csv')
+            
             
             
         else:
+            
+            
             df_1 = pd.read_excel(settings.MEDIA_ROOT+"/../static/report/loreal/"+file_name1,
                                 sheetname='PAS1', index_col='Pathway')
             df_2 = pd.read_excel(settings.MEDIA_ROOT+"/../static/report/loreal/"+file_name2,
