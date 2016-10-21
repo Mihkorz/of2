@@ -514,8 +514,7 @@ class ReportPathwayTableJson(TemplateView):
             except:
                 pass
             df_output.reset_index(inplace=True)
-            #raise Exception('maza faka')
-            df_output.to_csv('/home/mikhail/Downloads/AZ/fuck.csv')
+            
             
             
             
