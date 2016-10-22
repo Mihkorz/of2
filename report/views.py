@@ -1279,7 +1279,7 @@ class ReportAjaxPathDetail(TemplateView):
         if df_file_cnr['adj.P.Val'].isin([1]).all() == 1:
                     df_file_cnr = df_file_cnr[(np.absolute(df_file_cnr['logFC'])>2)]
         else:        
-            df_file_cnr = df_file_cnr[(df_file_cnr['adj.P.Val']<0.05)] 
+            df_file_cnr = df_file_cnr[(df_file_cnr['adj.P.Val']<1)] #take all the genes 
         
         df_file_cnr = df_file_cnr['logFC'].round(decimals=2)
         

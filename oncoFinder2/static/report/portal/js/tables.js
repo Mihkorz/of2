@@ -284,6 +284,11 @@ function drawPathwayTable(reportID, id, file_name1, file_name2, is_metabolic, or
 	    	    $("table#"+id+".path tr td:nth-child(11)").wrapInner('<a href="#/"></a>');
 	    	    $("table#"+id+".path tr td:nth-child(12)").wrapInner('<a href="#/"></a>');
 	    	    $("table#"+id+".path tr td:nth-child(13)").wrapInner('<a href="#/"></a>');
+	    	    $("table#"+id+".path tr td:nth-child(14)").wrapInner('<a href="#/"></a>');
+	    	    $("table#"+id+".path tr td:nth-child(15)").wrapInner('<a href="#/"></a>');
+	    	    $("table#"+id+".path tr td:nth-child(16)").wrapInner('<a href="#/"></a>');
+	    	    $("table#"+id+".path tr td:nth-child(17)").wrapInner('<a href="#/"></a>');
+	    	    
 	    	    
 	        } );
 		
@@ -355,6 +360,31 @@ function drawPathwayTable(reportID, id, file_name1, file_name2, is_metabolic, or
 	                                                                              });
 		    $('#'+id+' tbody').on( 'click', 'tr td:nth-child(13)', function () {    	
 	    	    var path_name = $(this).prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().find('span').attr('title');    	
+	    	    var $th = $(this).closest('table').find('th').eq($(this).index());
+	    	    var group = $th.text();
+	    	    showPathDetails(reportID, path_name, group, organism);    	    	
+	                                                                              });
+		    //////
+		    $('#'+id+' tbody').on( 'click', 'tr td:nth-child(14)', function () {    	
+	    	    var path_name = $(this).prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().find('span').attr('title');    	
+	    	    var $th = $(this).closest('table').find('th').eq($(this).index());
+	    	    var group = $th.text();
+	    	    showPathDetails(reportID, path_name, group, organism);    	    	
+	                                                                              });
+		    $('#'+id+' tbody').on( 'click', 'tr td:nth-child(15)', function () {    	
+	    	    var path_name = $(this).prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().find('span').attr('title');    	
+	    	    var $th = $(this).closest('table').find('th').eq($(this).index());
+	    	    var group = $th.text();
+	    	    showPathDetails(reportID, path_name, group, organism);    	    	
+	                                                                              });
+		    $('#'+id+' tbody').on( 'click', 'tr td:nth-child(16)', function () {    	
+	    	    var path_name = $(this).prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().find('span').attr('title');    	
+	    	    var $th = $(this).closest('table').find('th').eq($(this).index());
+	    	    var group = $th.text();
+	    	    showPathDetails(reportID, path_name, group, organism);    	    	
+	                                                                              });
+		    $('#'+id+' tbody').on( 'click', 'tr td:nth-child(17)', function () {    	
+	    	    var path_name = $(this).prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().find('span').attr('title');    	
 	    	    var $th = $(this).closest('table').find('th').eq($(this).index());
 	    	    var group = $th.text();
 	    	    showPathDetails(reportID, path_name, group, organism);    	    	
