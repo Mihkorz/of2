@@ -113,7 +113,7 @@ var options = {
 
 }
 
-function drawSimilarityTable(reportID, id){
+function drawSimilarityTable(reportID, id, file_name, sim_group_name){
 	
 	// FIRST DOC
 	var table = $('#'+id).DataTable( {
@@ -133,7 +133,8 @@ function drawSimilarityTable(reportID, id){
         "ajax": {'url':'/report-portal/report-similaritytablejson/',
         	     'type': 'GET',
         	     'data':{
-        	    	     reportID: reportID,
+        	    	     'reportID': reportID,
+        	    	     'sim_group_name': sim_group_name,
         	            
         	            },        	      
         
@@ -145,3 +146,39 @@ function drawSimilarityTable(reportID, id){
 	
 	
 }
+
+function drawPotentialTargetsTable(reportID, id, file_name, pt_group_name){
+	
+	// FIRST DOC
+	var table = $('#'+id).DataTable( {
+    	"paging":   true,
+        "iDisplayLength": 20,
+        "ordering": true,
+        "order": [[ 1, "desc" ]],
+        "info":     false,
+        "dom": 'Bfrtip',
+        "scrollX": true,
+        "buttons": [
+                   {extend: 'csv', title: 'similarity table'},
+                   {extend: 'print', title: 'similarity table'}
+                   
+              ],
+        
+        "ajax": {'url':'/report-portal/report-potenttargetstablejson/',
+        	     'type': 'GET',
+        	     'data':{
+        	    	     'reportID': reportID,
+        	    	     'pt_group_name': pt_group_name,
+        	            
+        	            },        	      
+        
+    },"deferRender": true });	
+	
+	
+	table.buttons().container()
+    .appendTo( $('.col-sm-6:eq(0)', table.table().container() ) );
+	
+	
+}
+
+

@@ -61,7 +61,8 @@ from report.views import ReportList, ReportDetail, \
                          ReportGeneVolcanoJson, ReportGeneScatterJson, ReportGeneTableJson, ReportGeneTableScatterJson,\
                          ReportGeneBoxplotJson, \
                          ReportAjaxPathwayVenn, ReportAjaxPathwayVennTable, ReportPathwayTableJson, ReportAjaxPathDetail, \
-                         ReportTfTableJson, ReportAjaxTfDetail, ReportDlFarmJson, ReportCorrelationTableJson, ReportSimilarityJson
+                         ReportTfTableJson, ReportAjaxTfDetail, ReportDlFarmJson, ReportCorrelationTableJson, ReportSimilarityJson, \
+                         ReportPotentialTargetsJson
 
 urlpatterns = patterns('',
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
@@ -240,6 +241,7 @@ urlpatterns = patterns('',
     
     url(r'^report-portal/report-deeplearningfarmjson/$', ReportDlFarmJson.as_view(), name="df_farm_json"),
     url(r'^report-portal/report-similaritytablejson/$', ReportSimilarityJson.as_view(), name="df_similarity_json"),
+    url(r'^report-portal/report-potenttargetstablejson/$', ReportPotentialTargetsJson.as_view(), name="df_pottargets_json"),    
     
     url(r'^report-portal/report-corrtablejson/$', ReportCorrelationTableJson.as_view(), name="corr_table_json"),
     ################### BLOOD NN ###############################################

@@ -1691,19 +1691,31 @@ class ReportSimilarityJson(TemplateView):
     def get(self, request, *args, **kwargs):
         report = Report.objects.get(pk=self.request.GET['reportID'])        
         
-        similarity = report.deeplearning_set.all()[1]            
-            
+        similarity = report.deeplearning_set.all()[1]
+        sim_group_name = self.request.GET['sim_group_name']            
+        
+        lsim_group = sim_group_name.split('_')
+        lsim_group[0] = lsim_group[0].replace('D', '')
+        
         df_sim = pd.read_csv(similarity.farmclass.path)
                 
         df_sim = df_sim[['experiment','compound','concentration',
                          'cellline','pval','padj',
                          'effect', 'brd', 'drug',
                          'time', 'conc', 'cl', 'gene'
-                         ]]        
+                         ]]
         
-        df_sim.fillna(' ', inplace=True)        
+        df_sim = df_sim[(df_sim['compound']==int(lsim_group[0])) &
+                        (df_sim['concentration']==int(lsim_group[1])) & 
+                        (df_sim['cellline']==lsim_group[2])]        
         
-        #raise Exception('corr') 
+        df_sim.fillna(' ', inplace=True)
+        
+        df_sim.sort('padj', inplace=True)
+        
+        df_sim = df_sim.head(100)        
+        
+        #raise Exception('sim-sim')   
         
         output_json = df_sim.to_json(orient='values')
         response_data = {'data': json.loads(output_json)}
@@ -1736,7 +1748,56 @@ class ReportCorrelationTableJson(TemplateView):
         
         return HttpResponse(json.dumps(response_data), content_type="application/json")    
     
+
+class ReportPotentialTargetsJson(TemplateView): 
+    template_name="report/report_detail.html"
     
+    def dispatch(self, request, *args, **kwargs):
+        
+        return super(ReportPotentialTargetsJson, self).dispatch(request, *args, **kwargs)
+    
+    def get(self, request, *args, **kwargs):
+        report = Report.objects.get(pk=self.request.GET['reportID'])        
+        
+        pottargs = report.deeplearning_set.all()[2]
+        pottargs_group_name = self.request.GET['pt_group_name']            
+        
+        
+        lpottargs_group = pottargs_group_name.split('_')
+        lpottargs_group[0] = lpottargs_group[0].replace('D', '')
+        
+        df_pottargs = pd.read_csv(pottargs.farmclass.path, sep='\t')
+        
+        column_name = 'SPS_'+lpottargs_group[0]+'_C_'+lpottargs_group[1]+'_celltype_'+lpottargs_group[2]+'.tab'# like SPS_10_C_100_celltype_A549.tab
+                
+        df_pottargs = df_pottargs[['Entrez ID','Gene Symbol', column_name]]
+        
+        #interset with genes df
+        gene_group = GeneGroup.objects.get(report=report, name=self.request.GET['pt_group_name'])
+        
+        df_gene_group = pd.read_csv(gene_group.document.path, sep='\t', index_col='SYMBOL')
+        
+        df_pottargs.set_index('Gene Symbol', inplace=True)
+        
+        joinded_df = df_pottargs.join(df_gene_group, how='inner')
+        
+        joinded_df.index.name = 'Gene Symbol'
+        joinded_df.reset_index(inplace=True)
+        
+        joinded_df = joinded_df[['Entrez ID','Gene Symbol', column_name]]        
+        
+        joinded_df.sort(column_name, inplace=True)
+        
+        joinded_df = joinded_df.head(100) 
+               
+        #raise Exception('stop')           
+        
+        #raise Exception('sim-sim')   
+        
+        output_json = joinded_df.to_json(orient='values')
+        response_data = {'data': json.loads(output_json)}
+        
+        return HttpResponse(json.dumps(response_data), content_type="application/json")    
     
     
     

@@ -546,21 +546,40 @@
 
 <!-- End of Correlation -->
 
-<!-- ---------------------------------Artem table--------------------------------------------- -->
+<!-- ---------------------------------Similarity table--------------------------------------------- -->
  <hr/> 
-<h2 id='at_analysis'>Similarity to known drug- and knockdown-induced expression signatures</h2>
+<h2 id='sim_analysis'>Similarity to known drug- and knockdown-induced expression signatures</h2>
 <hr/>
 
-<h4>Table <span class='tbl_num'></span>Similarity to known drug- and knockdown-induced expression signatures </h4>
-       <table id="tbl-similarity" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+   <!-- Similarity Nav tabs -->      
+   <ul class="nav nav-tabs" role="tablist">
+     {%for group in report.genegroup_set.all%}
+       <li role="presentation" {%if forloop.counter == 1 %}class="active"{%endif%}>
+         <a href="#{{group.get_slug}}_sim_tab" aria-controls="home1" role="tab" data-toggle="tab" id='sim_boot_{{group.get_slug}}'>
+           {{group.name}}
+         </a>
+       </li>
+     {%endfor%}
+   </ul>
+          
+   <div class="tab-content">
+    {%for group in report.genegroup_set.all%}
+     {%if forloop.counter == 1 %}
+     <div role="tabpanel" class="tab-pane fade in active" id="{{group.get_slug}}_sim_tab">
+     {%else%}
+     <div role="tabpanel" class="tab-pane fade " id="{{group.get_slug}}_sim_tab">
+     {%endif%}
+
+     <h4>Table <span class='tbl_num'></span>Similarity to known drug- and knockdown-induced expression signatures </h4>
+       <table id="tbl-sim-{{group.get_slug}}" class="path table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
           <tr>
            <th>experiment</th>
            <th>compound</th>
            <th>concentration</th>
            <th>cellline</th>
-           <th>p-value</th>
-           <th>adj. p-value</th>
+           <th>pval</th>
+           <th>padj</th>
            <th>effect</th>
            <th>brd</th>
            <th>drug</th>
@@ -571,8 +590,59 @@
           </tr>
         </thead>  
       </table>
+      <br/><br/>
+     
+     
+     </div> <!-- end of tabpanel div -->
+    {%endfor%}
+   
+   </div> <!--  end of tab-content div -->
 
-<!-- --------------------------------- end of Artem table--------------------------------------------- -->
+<!-- end of Similarity table -->
+
+<!-- ---------------------------------Potential targets--------------------------------------------- -->
+ <hr/> 
+<h2 id='pt_analysis'>Scoring of potential targets</h2>
+<hr/>
+
+   <!-- Potential targets Nav tabs -->      
+   <ul class="nav nav-tabs" role="tablist">
+     {%for group in report.genegroup_set.all%}
+       <li role="presentation" {%if forloop.counter == 1 %}class="active"{%endif%}>
+         <a href="#{{group.get_slug}}_pt_tab" aria-controls="home1" role="tab" data-toggle="tab" id='pt_boot_{{group.get_slug}}'>
+           {{group.name}}
+         </a>
+       </li>
+     {%endfor%}
+   </ul>
+          
+   <div class="tab-content">
+    {%for group in report.genegroup_set.all%}
+     {%if forloop.counter == 1 %}
+     <div role="tabpanel" class="tab-pane fade in active" id="{{group.get_slug}}_pt_tab">
+     {%else%}
+     <div role="tabpanel" class="tab-pane fade " id="{{group.get_slug}}_pt_tab">
+     {%endif%}
+
+     <h4>Table <span class='tbl_num'></span>Scoring of potential targets for {{group.name}} </h4>
+       <table id="tbl-pt-{{group.get_slug}}" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>Entrez ID</th>
+           <th>Gene Symbol</th>
+           <th>SPS_{{group.get_slug}}.tab</th>
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+     
+     
+     </div> <!-- end of tabpanel div -->
+    {%endfor%}
+   
+   </div> <!--  end of tab-content div -->
+
+<!-- end of Potential targets table -->
  
 
   
@@ -896,7 +966,49 @@ $(function() {
     
 ////// Similarity
 
-    drawSimilarityTable({{report.id}}, 'tbl-similarity');
+    {%for group in report.genegroup_set.all%}
+    
+        {%if forloop.counter = 1%}        
+          
+        drawSimilarityTable({{report.id}}, 'tbl-sim-{{group.get_slug}}', '{{group.document}}', categories='{{group.name}}'); 
+	      
+        {%else%}
+        
+        $('#sim_boot_{{group.get_slug}}').click(function(){
+        	
+        	if ( !$.fn.dataTable.isDataTable( '#tbl-sim-{{group.get_slug}}' ) ) {
+        		drawSimilarityTable({{report.id}}, 'tbl-sim-{{group.get_slug}}', '{{group.document}}', categories='{{group.name}}'); 
+				}
+        	
+        });
+        
+        {%endif%}   
+    
+    {%endfor%}
+    
+//////Potential Targets
+
+    {%for group in report.genegroup_set.all%}
+    
+        {%if forloop.counter = 1%}        
+          
+        drawPotentialTargetsTable({{report.id}}, 'tbl-pt-{{group.get_slug}}', '{{group.document}}', categories='{{group.name}}'); 
+	      
+        {%else%}
+        
+        $('#pt_boot_{{group.get_slug}}').click(function(){
+        	
+        	if ( !$.fn.dataTable.isDataTable( '#tbl-pt-{{group.get_slug}}' ) ) {
+        		drawPotentialTargetsTable({{report.id}}, 'tbl-pt-{{group.get_slug}}', '{{group.document}}', categories='{{group.name}}'); 
+				}
+        	
+        });
+        
+        {%endif%}   
+    
+    {%endfor%}
+
+    
 
     
  /* METABOLIC PATHs
