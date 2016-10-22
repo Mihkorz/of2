@@ -1444,9 +1444,13 @@ class ReportAjaxTfDetail(TemplateView):
         
         # Get logFC values to color nodes
         gene_group = GeneGroup.objects.get(report=report, name=self.request.GET['group_name'])
-        df_logfc = pd.read_csv(gene_group.doc_logfc.path, sep='\t')
-                        
-        df_logfc = df_logfc[['SYMBOL', 'logFC']]
+        try:
+            df_logfc = pd.read_csv(gene_group.doc_logfc.path)                        
+            df_logfc = df_logfc[['SYMBOL', 'logFC']]
+        except:
+            df_logfc = pd.read_csv(gene_group.doc_logfc.path, sep='\t')                        
+            df_logfc = df_logfc[['SYMBOL', 'logFC']]
+            
         df_logfc = df_logfc[df_logfc['SYMBOL'].isin(ldifferential)]
         df_logfc.dropna(inplace=True)
         df_logfc.set_index('SYMBOL', inplace=True)

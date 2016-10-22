@@ -163,10 +163,10 @@ class ReportAdmin(admin.ModelAdmin):
                     g_group.doc_logfc = file_logfc
                 else:
                     
-                    ###################3 -1 #################
+                    
                     df_logfc = pd.read_csv(g_group.doc_logfc, delimiter=dialect.delimiter,
                                  index_col='SYMBOL')
-                    df_logfc['logFC'] = -1*df_logfc['logFC']
+                    
                     file_logfc = default_storage.save(path+"/logfc_"+g_group.name+".csv", ContentFile('') )
                     df_logfc.to_csv(settings.MEDIA_ROOT+"/"+file_logfc)
                     g_group.doc_logfc = file_logfc
@@ -193,8 +193,8 @@ class ReportAdmin(admin.ModelAdmin):
                         g_group.document.seek(0)
                         df_doc = pd.read_csv(g_group.document, index_col='Pathway', encoding='utf-8', sep='\t')
                         
-                ###################3 -1 #################
-                df_doc = df_doc*(-1)
+                
+                
                 
                 
                 if not 'DataBase' in df_doc.columns:
