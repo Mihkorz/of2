@@ -261,10 +261,11 @@ function drawPathwayTable(reportID, id, file_name1, file_name2, is_metabolic, or
 		    	var path_name_td = $("table#"+id+".path tr td:first-child()");
 		    	path_name_td.each(function(){
 		    		var path_long_name = $(this).text();
+		    		if (path_long_name.indexOf("...") >= 0) path_long_name = $(this).attr('long_name');
 		    		if(path_long_name.length > 50){
 			    		var short_name = $.trim(path_long_name).substring(0, 50)
 		                .trim(this) + "...";
-			    		$(this).html("<span title='"+path_long_name+"'>"+short_name+"</span>");
+			    		$(this).html("<span title='"+path_long_name+"' long_name='"+path_long_name+"'>"+short_name+"</span>");
 			    	}
 		    		else {
 		    			$(this).html("<span title='"+path_long_name+"'>"+path_long_name+"</span>");
