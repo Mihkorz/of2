@@ -556,7 +556,7 @@ class ReportPathwayTableJson(TemplateView):
                 pass
             df_output.reset_index(inplace=True)
         
-        
+        df_output.fillna(0, inplace=True)
         
         df_json = df_output.to_json(orient='values')
         

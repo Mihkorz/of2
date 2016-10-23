@@ -207,8 +207,10 @@ function drawPathwayTable(reportID, id, file_name1, file_name2, is_metabolic, or
     	"iDisplayLength": 20,
         "ordering": true,
         "order": [[ 1, "desc" ]],
+        
         "info":     false,
-        "scrollX": true,
+        "autoWidth": false,
+        "scrollX": false,
         "dom": 'Bfrtip',
         "buttons": [{extend: 'csv', title: id}, {extend: 'pdf', title: id} , {extend: 'print', title: id}],
         
@@ -260,10 +262,17 @@ function drawPathwayTable(reportID, id, file_name1, file_name2, is_metabolic, or
 		    	
 		    	var path_name_td = $("table#"+id+".path tr td:first-child()");
 		    	//alert('draw')
+		    	
+		    	
+		    	
 		    	path_name_td.each(function(){
-		    		var path_long_name = $(this).text();
-		    		if (path_long_name.indexOf("...") >= 0) path_long_name = $(this).attr('long_name');
-		    		if(path_long_name.length > 50){
+		    		var path_long_name = $(this).text();	    		
+		    		
+		    		
+		    		
+		    		if ($(this).text().indexOf("...") >= 0) $(this).text($(this).attr('long_name'));
+		    		
+		    		if($(this).text().length > 50){
 			    		var short_name = $.trim(path_long_name).substring(0, 50)
 		                .trim(this) + "...";
 			    		$(this).html("<span title='"+path_long_name+"' long_name='"+path_long_name+"'>"+short_name+"</span>");
@@ -272,7 +281,12 @@ function drawPathwayTable(reportID, id, file_name1, file_name2, is_metabolic, or
 		    			//alert(path_long_name)
 		    			$(this).html("<span title='"+path_long_name+"'>"+path_long_name+"</span>");
 		    		}
+		    		
+		    		
+		    		
+		    		
 		    	});	  
+		    	
 		    	
 		    	
 	    	    $("table#"+id+".path tr td:nth-child(2)").wrapInner('<a href="#/"></a>');

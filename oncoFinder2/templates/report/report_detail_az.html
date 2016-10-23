@@ -508,7 +508,7 @@
 </center>
 
 <div id='hide_path' style='display:none;'> <!-- Div to hide and load on button click -->
-          
+         
 <h3>Signaling Pathways</h3>
 <hr/> 
 
@@ -523,12 +523,12 @@
 <!-- PAth VEnn Tab panes -->
   <div class="tab-content">
   
-  <div role="tabpanel" class="tab-pane fade in active " id="path_all_tab">     <br/> 
+  <div role="tabpanel" class="tab-pane fade in active " id="path_all_tab" style='overflow-x: auto;'>     <br/> 
     <h4>Table . All signaling pathways</h4>
     <table id="tbl-path_all" class="path table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
           <tr>
-           <th style='width:300px;'>Pathway</th>
+           <th id='pathname_th'>Pathway</th>
            {%for group in report.get_all_gene_groups_as_list%}
             <!--  {% if forloop.counter > 1 %}<th>{{group}}</th> {%endif%}-->
             <th>{{group}}</th>
@@ -561,7 +561,7 @@
   
   </div>
           
-</div><!--  end of hide div -->
+</div>  <!-- end of hide div -->
 <!------------- End of Pathway Analysis -->
 
 <!-- ---------------------------------Correlation --------------------------------------------- -->
@@ -969,7 +969,7 @@ $("#btn_show_path").click(function(){
 	
 });
 	
-	
+
 	
 	{%for perm in report.get_path_permutations%}
 	
