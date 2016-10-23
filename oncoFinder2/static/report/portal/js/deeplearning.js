@@ -182,3 +182,188 @@ function drawPotentialTargetsTable(reportID, id, file_name, pt_group_name){
 }
 
 
+function drawAntineoplasticColumn(report_id, renderTo){
+	
+	var options = {
+				
+			
+		        chart: {
+		        	renderTo: renderTo,
+		            type: 'column',
+		            marginLeft: 100,
+		            height: 500,
+		            
+		        },
+		        credits:{enabled:false},
+		        title: {
+		            text: 'Antineoplastic potential'
+		        },
+		        subtitle: {
+		            text: ''
+		        },
+		        xAxis: {
+		            type: 'category',
+		            labels: {
+		            	step:1,
+		                rotation: -45,
+		                style: {
+		                    fontSize: '10px',
+		                    fontFamily: 'Verdana, sans-serif'
+		                }
+		            }
+		        },
+		        yAxis: {
+		            min: 0,
+		            title: {
+		                text: 'Value'
+		            },
+		            
+		        },
+		        legend: {
+		            enabled: false
+		        },
+		        tooltip: {
+		            pointFormat: 'Mean Value: <b>{point.y:.2f}</b>'
+		        },
+		        
+		        plotOptions:{
+		            
+		            scatter:{
+		                marker:{
+		                    symbol:'hline',
+		                    lineWidth:2,
+		                    radius:9,
+		                    lineColor:'#333'
+		                }
+		            }
+		        },
+		        
+		        series: [{
+		        	type: 'column',
+		            name: 'Farm classes',
+		            data: [['INS-541', 0.82],
+		                   ['INS-186', 0.76],
+		                   ['INS-523', 0.86],
+		                   [' ', 0],
+		                   [' ', 0],
+		                   [' ', 0],
+		                   ['Drug 10', 0.07],
+		                   ['Drug 12', 0.09],
+		                   ['Drug 15', 0.10],
+		                   ['Drug 29', 0.10],
+		            ],
+		            dataLabels: {
+		                enabled: true,
+		                rotation: -90,
+		                color: '#FFFFFF',
+		                align: 'right',
+		                format: '{point.y:.2f}', // one decimal
+		                y: 10, // 10 pixels down from the top
+		                style: {
+		                    fontSize: '13px',
+		                    fontFamily: 'Verdana, sans-serif'
+		                }
+		            }
+		        },
+		        ]
+		    }
+		
+		    
+	var chart = new Highcharts.Chart(options); 
+	   		
+
+	}
+
+function drawNumSideEffColumn(report_id, renderTo){
+	
+	var options = {
+				
+			
+		        chart: {
+		        	renderTo: renderTo,
+		            type: 'column',
+		            marginLeft: 100,
+		            height: 500,
+		            
+		        },
+		        credits:{enabled:false},
+		        title: {
+		            text: 'Number of predicted side effects'
+		        },
+		        subtitle: {
+		            text: ''
+		        },
+		        xAxis: {
+		            type: 'category',
+		            labels: {
+		            	step:1,
+		                rotation: -45,
+		                style: {
+		                    fontSize: '10px',
+		                    fontFamily: 'Verdana, sans-serif'
+		                }
+		            }
+		        },
+		        yAxis: {
+		            min: 0,
+		            title: {
+		                text: 'Number'
+		            },
+		            
+		        },
+		        legend: {
+		            enabled: false
+		        },
+		        tooltip: {
+		            pointFormat: 'Side Effects number: <b>{point.y}</b>'
+		        },
+		        
+		        plotOptions:{
+		            
+		            scatter:{
+		                marker:{
+		                    symbol:'hline',
+		                    lineWidth:2,
+		                    radius:9,
+		                    lineColor:'#333'
+		                }
+		            }
+		        },
+		        
+		        series: [{
+		        	type: 'column',
+		            name: 'Farm classes',
+		            data: [
+                           ['Drug 10', 48],
+                           ['Drug 12', 39],
+                           ['Drug 15', 46],
+                           ['Drug 29', 50],
+		                   [' ', 0],
+		                   [' ', 0],
+		                   [' ', 0],
+		                   ['INS-541', 23],
+		                   ['INS-186', 29],
+		                   ['INS-523', 40],
+		                   
+		            ],
+		            dataLabels: {
+		                enabled: true,
+		                rotation: -90,
+		                color: '#FFFFFF',
+		                align: 'right',
+		                format: '{point.y}', // one decimal
+		                y: 10, // 10 pixels down from the top
+		                style: {
+		                    fontSize: '13px',
+		                    fontFamily: 'Verdana, sans-serif'
+		                }
+		            }
+		        },
+		        ]
+		    }
+		
+		    
+	var chart = new Highcharts.Chart(options); 
+	   		
+
+	}

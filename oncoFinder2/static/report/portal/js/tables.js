@@ -202,7 +202,7 @@ function drawGeneTableScatter(reportID, id, file_name, categories){
 function drawPathwayTable(reportID, id, file_name1, file_name2, is_metabolic, organism){
 	
 	
-	$('#'+id).DataTable( {
+	var table = $('#'+id).DataTable( {
     	"paging":   true,
     	"iDisplayLength": 20,
         "ordering": true,
@@ -228,7 +228,7 @@ function drawPathwayTable(reportID, id, file_name1, file_name2, is_metabolic, or
 	
 	    $('#'+id).on( 'draw.dt', function () {
 	    	
-	    	var path_name_td = $("table#"+id+".path tr td:first-child()");
+	    	var path_name_td = $(table).find(" tr td:first-child()");
 	    	path_name_td.each(function(){
 	    		var path_long_name = $(this).text();
 	    		if(path_long_name.length > 50){
@@ -237,11 +237,11 @@ function drawPathwayTable(reportID, id, file_name1, file_name2, is_metabolic, or
 		    		$(this).html("<span title='"+path_long_name+"'>"+short_name+"</span>");
 		    	}
 	    	});	    	
-    	    
+	    	
 	    	$("table#"+id+".path tr td:nth-child(2)").wrapInner('<a href="#/"></a>');
     	    $("table#"+id+".path tr td:nth-child(3)").wrapInner('<a href="#/"></a>')
         } );
-	
+	    
         $('#'+id+' tbody').on( 'click', 'tr td:nth-child(2)', function () {    	
     	    var path_name = $(this).prev().text();    	
     	    showPathDetails(reportID, path_name, file_name1);
@@ -259,6 +259,7 @@ function drawPathwayTable(reportID, id, file_name1, file_name2, is_metabolic, or
 		    $('#'+id).on( 'draw.dt', function () {
 		    	
 		    	var path_name_td = $("table#"+id+".path tr td:first-child()");
+		    	//alert('draw')
 		    	path_name_td.each(function(){
 		    		var path_long_name = $(this).text();
 		    		if (path_long_name.indexOf("...") >= 0) path_long_name = $(this).attr('long_name');
@@ -268,6 +269,7 @@ function drawPathwayTable(reportID, id, file_name1, file_name2, is_metabolic, or
 			    		$(this).html("<span title='"+path_long_name+"' long_name='"+path_long_name+"'>"+short_name+"</span>");
 			    	}
 		    		else {
+		    			//alert(path_long_name)
 		    			$(this).html("<span title='"+path_long_name+"'>"+path_long_name+"</span>");
 		    		}
 		    	});	  
@@ -292,6 +294,8 @@ function drawPathwayTable(reportID, id, file_name1, file_name2, is_metabolic, or
 	    	    
 	    	    
 	        } );
+		    
+		    table.columns.adjust().draw();
 		
 		    $('#'+id+' tbody').on( 'click', 'tr td:nth-child(2)', function () {    	
 	    	    var path_name = $(this).prev().find('span').attr('title');    	

@@ -65,25 +65,36 @@
           </ul>
           
           {%if report.input_data_text%}
-          <h2 id="input_data">Input data</h2>
+          <h2 id="input_data">RNA-seq data analysis</h2>
           <hr/>
           {{report.input_data_text|safe}}
-          
-          <hr/>
+
           {%endif%}
-          {%if report.methods_text%}
-          <h2 id="methods" >Methods</h2>
-          <hr/>
           
-          {{report.methods_text|safe}}          
-          <hr/>
-          {%endif%}
           
           
 <!-- ---------------------------------Deep Learning--------------------------------------------- -->
  <hr/> 
 <h2 id='dl_analysis'>Deep Learning</h2>
 <hr/>
+
+{%if report.methods_text%}
+      {{report.methods_text|safe}}          
+{%endif%}
+<hr/>
+
+<center>
+<img src='/media/report-portal/{{report.slug}}/dlnn.png' style='width: 800px; ' />
+</center>
+
+<hr/>
+<center>
+<button type="button"  class="btn btn-success btn-lg center" id='btn_show_dl'>Show Data</button>
+</center>
+
+<div id='hide_dl' style='display:none;'> <!-- Div to hide and load on button click -->
+
+
 <h3>Pharmacological Classes</h3>
 <hr/>
    <!-- DL Nav tabs -->      
@@ -249,10 +260,21 @@
    
    </div> <!--  end of tab-content div -->
 
+  <h3>Comparative assessment. Antineoplastic potential</h3>
+   <div id="dl_ap_plot" style="min-width: 800px; height: 500px; max-width: 800px; margin: 0 auto">
+         <span>Loading bar plot...</span>
+       </div> 
+   <h3>Comparative assessment. Number of predicted side effects</h3>
+   <div id="dl_nse_plot" style="min-width: 800px; height: 500px; max-width: 800px; margin: 0 auto">
+         <span>Loading bar plot...</span>
+       </div> 
 
+
+</div> <!--  end of hiding div -->
 <!-- End of DeepLearning -->
           
-          
+
+<!-------------------------------------  GENE level  -->          
           <hr/>
           <h2 id='gene_analysis'>Gene level analysis</h2>
           <hr/>
@@ -262,7 +284,11 @@
           {%endif%}
 
 
+<center>
+<button type="button"  class="btn btn-success btn-lg center" id='btn_show_genes'>Show Data</button>
+</center>
 
+<div id='hide_genes' style='display:none;'> <!-- Div to hide and load on button click -->
           
    <!-- GENE Nav tabs -->      
    <ul class="nav nav-tabs" role="tablist">
@@ -387,169 +413,24 @@
    </div> <!--  end of tab panel -->
 {%endif%}
 
-<!-- ---------------------------------PATHWAY--------------------------------------------- -->
- <hr/> 
-<h2 id='path_analysis'>Pathway Analysis</h2>
-<hr/>
-{%if report.path_text%}
-          {{report.path_text|safe}}
-          <br/><br/>
-          {%endif%}
-          
-<h3>Signaling Pathways</h3>
-<hr/> 
+</div> <!--  end of hide div -->
 
-<!-- Signaling Pathways level comparison Nav tabs -->
-<ul class="nav nav-tabs" role="tablist">
-         <li role="presentation" class="active"><a href="#path_all_tab" aria-controls="settings" role="tab" data-toggle="tab">ALL</a></li>
-         {%for perm in report.get_path_permutations%}
-         <li role="presentation" ><a href="#path_{{perm.strip}}_tab" aria-controls="settings" role="tab" data-toggle="tab" id="venn_boot_path_{{perm.strip}}">{{perm}}</a></li>
-         {%endfor%}
-</ul>
-
-<!-- PAth VEnn Tab panes -->
-  <div class="tab-content">
-  
-  <div role="tabpanel" class="tab-pane fade in active " id="path_all_tab">     <br/> 
-    <h4>Table . All signaling pathways</h4>
-    <table id="tbl-path_all" class="path table table-striped table-bordered" cellspacing="0" width="100%">
-        <thead>
-          <tr>
-           <th>Pathway</th>
-           {%for group in report.get_all_gene_groups_as_list%}
-            <!--  {% if forloop.counter > 1 %}<th>{{group}}</th> {%endif%}-->
-            <th>{{group}}</th>
-           {%endfor%}
-          </tr>
-        </thead>  
-      </table>       
-   <br/>
-  
-  </div>
-  
-  {%for perm in report.get_path_permutations%}
-  <div role="tabpanel" class="tab-pane fade " id="path_{{perm.strip}}_tab">     <br/> 
-    <table style='text-align:center;'>
-      <tr>
-       <td>
-       <div id="venn_path-{{perm.strip}}-up" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
-       Upregulated pathways
-       </td>
-       <td>
-       <div id="venn_path-{{perm.strip}}-down" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
-       Downregulated pathways
-       </td>
-      </tr>
-    </table>        
-   <br/>
-  <div id="venn_path_dinamic_{{perm.strip}}" class="" style="max-width:1000px;"></div> <!--  div to place dinamic tables from Venn clicks -->
-  </div>
-  {%endfor%}
-  
-  </div>
-          
-
-<!-- ---------------------------------Transcription Factor--------------------------------------------- -->
- <hr/> 
-<h2 id='tf_analysis'>Transcription Factor Analysis</h2>
-<hr/>
-
-   <!-- TF Nav tabs -->      
-   <ul class="nav nav-tabs" role="tablist">
-     {%for group in report.genegroup_set.all%}
-       <li role="presentation" {%if forloop.counter == 1 %}class="active"{%endif%}>
-         <a href="#{{group.get_slug}}_tf_tab" aria-controls="home1" role="tab" data-toggle="tab" id='tf_boot_{{group.get_slug}}'>
-           {{group.name}}
-         </a>
-       </li>
-     {%endfor%}
-   </ul>
-         
-   <div class="tab-content">
-    {%for group in report.genegroup_set.all%}
-     {%if forloop.counter == 1 %}
-     <div role="tabpanel" class="tab-pane fade in active" id="{{group.get_slug}}_tf_tab">
-     {%else%}
-     <div role="tabpanel" class="tab-pane fade " id="{{group.get_slug}}_tf_tab">
-     {%endif%}
-             
-       <h4>Table <span class='tbl_num'></span>Transcription Factor for {{group.name}} </h4>
-       <table id="tbl-tf-{{group.get_slug}}" class="path table table-striped table-bordered" cellspacing="0" width="100%">
-        <thead>
-          <tr>
-           <th>Factor</th>
-           <th>underTF_DEG</th>
-           <th>underTF_nonDEG</th>
-           <th>notunderTF_DEG</th>
-           <th>notunderTF_nonDEG</th>
-           <th>p-value</th>
-           <th>OR</th>
-           <th>adj. p-value</th>
-          </tr>
-        </thead>  
-      </table>
-      <br/><br/>
-     
-     
-     </div> <!-- end of tabpanel div -->
-    {%endfor%}
-   
-   </div> <!--  end of tab-content div -->
-
-<!-- End of TF -->
-
-
-<!-- ---------------------------------Correlation --------------------------------------------- -->
- <hr/> 
-<h2 id='tf_analysis'>Correlation Analysis</h2>
-<hr/>
-
-   <!-- TF Nav tabs -->      
-   <ul class="nav nav-tabs" role="tablist">
-     {%for group in report.genegroup_set.all%}
-       <li role="presentation" {%if forloop.counter == 1 %}class="active"{%endif%}>
-         <a href="#{{group.get_slug}}_cor_tab" aria-controls="home1" role="tab" data-toggle="tab" id='cor_boot_{{group.get_slug}}'>
-           {{group.name}}
-         </a>
-       </li>
-     {%endfor%}
-   </ul>
-         
-   <div class="tab-content">
-    {%for group in report.genegroup_set.all%}
-     {%if forloop.counter == 1 %}
-     <div role="tabpanel" class="tab-pane fade in active" id="{{group.get_slug}}_cor_tab">
-     {%else%}
-     <div role="tabpanel" class="tab-pane fade " id="{{group.get_slug}}_cor_tab">
-     {%endif%}
-             
-       <h4>Table <span class='tbl_num'></span>Correlation for {{group.name}} </h4>
-       <table id="tbl-cor-{{group.get_slug}}" class="path table table-striped table-bordered" cellspacing="0" width="100%">
-        <thead>
-          <tr>
-           <th>Sample</th>
-           <th>Plate</th>
-           <th>Correlation</th>
-           <th>Series</th>
-           <th>Platform</th>
-           <th>Title</th>
-          </tr>
-        </thead>  
-      </table>
-      <br/><br/>
-     
-     
-     </div> <!-- end of tabpanel div -->
-    {%endfor%}
-   
-   </div> <!--  end of tab-content div -->
-
-<!-- End of Correlation -->
 
 <!-- ---------------------------------Similarity table--------------------------------------------- -->
  <hr/> 
 <h2 id='sim_analysis'>Similarity to known drug- and knockdown-induced expression signatures</h2>
 <hr/>
+
+  {%if report.gene_text%}
+          {{report.sim_text|safe}}
+          <br/><br/>
+  {%endif%}
+
+<center>
+<button type="button"  class="btn btn-success btn-lg center" id='btn_show_sim'>Show Data</button>
+</center>
+
+<div id='hide_sim' style='display:none;'> <!-- Div to hide and load on button click -->
 
    <!-- Similarity Nav tabs -->      
    <ul class="nav nav-tabs" role="tablist">
@@ -597,13 +478,155 @@
     {%endfor%}
    
    </div> <!--  end of tab-content div -->
-
+</div> <!--  end of hide div -->
 <!-- end of Similarity table -->
+
+<!-- ---------------------------------PATHWAY--------------------------------------------- -->
+ <hr/> 
+<h2 id='path_analysis'>Pathway Analysis</h2>
+<hr/>
+{%if report.path_text%}
+          {{report.path_text|safe}}
+          <br/><br/>
+          {%endif%}
+
+<center>
+<button type="button"  class="btn btn-success btn-lg center" id='btn_show_path'>Show Data</button>
+</center>
+
+<div id='hide_path' style='display:none;'> <!-- Div to hide and load on button click -->
+          
+<h3>Signaling Pathways</h3>
+<hr/> 
+
+<!-- Signaling Pathways level comparison Nav tabs -->
+<ul class="nav nav-tabs" role="tablist">
+         <li role="presentation" class="active"><a href="#path_all_tab" aria-controls="settings" role="tab" data-toggle="tab">ALL</a></li>
+         {%for perm in report.get_path_permutations%}
+         <li role="presentation" ><a href="#path_{{perm.strip}}_tab" aria-controls="settings" role="tab" data-toggle="tab" id="venn_boot_path_{{perm.strip}}">{{perm}}</a></li>
+         {%endfor%}
+</ul>
+
+<!-- PAth VEnn Tab panes -->
+  <div class="tab-content">
+  
+  <div role="tabpanel" class="tab-pane fade in active " id="path_all_tab">     <br/> 
+    <h4>Table . All signaling pathways</h4>
+    <table id="tbl-path_all" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th style='width:300px;'>Pathway</th>
+           {%for group in report.get_all_gene_groups_as_list%}
+            <!--  {% if forloop.counter > 1 %}<th>{{group}}</th> {%endif%}-->
+            <th>{{group}}</th>
+           {%endfor%}
+          </tr>
+        </thead>  
+      </table>       
+   <br/>
+  
+  </div>
+  
+  {%for perm in report.get_path_permutations%}
+  <div role="tabpanel" class="tab-pane fade " id="path_{{perm.strip}}_tab">     <br/> 
+    <table style='text-align:center;'>
+      <tr>
+       <td>
+       <div id="venn_path-{{perm.strip}}-up" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Upregulated pathways
+       </td>
+       <td>
+       <div id="venn_path-{{perm.strip}}-down" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Downregulated pathways
+       </td>
+      </tr>
+    </table>        
+   <br/>
+  <div id="venn_path_dinamic_{{perm.strip}}" class="" style="max-width:1000px;"></div> <!--  div to place dinamic tables from Venn clicks -->
+  </div>
+  {%endfor%}
+  
+  </div>
+          
+</div><!--  end of hide div -->
+<!------------- End of Pathway Analysis -->
+
+<!-- ---------------------------------Correlation --------------------------------------------- -->
+ <hr/> 
+<h2 id='cor_analysis'>Public domain screening</h2>
+<hr/>
+{%if report.path_text%}
+          {{report.corr_text|safe}}
+          <br/><br/>
+{%endif%}
+
+<center>
+<button type="button"  class="btn btn-success btn-lg center" id='btn_show_corr'>Show Data</button>
+</center>
+
+<div id='hide_corr' style='display:none;'> <!-- Div to hide and load on button click -->
+
+<h3 id='cor_analysis'>Correlation Analysis</h3>
+   <!-- TF Nav tabs -->      
+   <ul class="nav nav-tabs" role="tablist">
+     {%for group in report.genegroup_set.all%}
+       <li role="presentation" {%if forloop.counter == 1 %}class="active"{%endif%}>
+         <a href="#{{group.get_slug}}_cor_tab" aria-controls="home1" role="tab" data-toggle="tab" id='cor_boot_{{group.get_slug}}'>
+           {{group.name}}
+         </a>
+       </li>
+     {%endfor%}
+   </ul>
+         
+   <div class="tab-content">
+    {%for group in report.genegroup_set.all%}
+     {%if forloop.counter == 1 %}
+     <div role="tabpanel" class="tab-pane fade in active" id="{{group.get_slug}}_cor_tab">
+     {%else%}
+     <div role="tabpanel" class="tab-pane fade " id="{{group.get_slug}}_cor_tab">
+     {%endif%}
+             
+       <h4>Table <span class='tbl_num'></span>Correlation for {{group.name}} </h4>
+       <table id="tbl-cor-{{group.get_slug}}" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>Sample</th>
+           <th>Plate</th>
+           <th>Correlation</th>
+           <th>Series</th>
+           <th>Platform</th>
+           <th>Title</th>
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+     
+     
+     </div> <!-- end of tabpanel div -->
+    {%endfor%}
+   
+   </div> <!--  end of tab-content div -->
+</div><!--  end of hide div -->
+<!-- End of Correlation -->
+
+
+
 
 <!-- ---------------------------------Potential targets--------------------------------------------- -->
  <hr/> 
 <h2 id='pt_analysis'>Scoring of potential targets</h2>
 <hr/>
+
+{%if report.path_text%}
+          {{report.targets_text|safe}}
+          <br/><br/>
+{%endif%}
+
+<center>
+<button type="button"  class="btn btn-success btn-lg center" id='btn_show_pt'>Show Data</button>
+</center>
+
+<div id='hide_pt' style='display:none;'> <!-- Div to hide and load on button click -->
 
    <!-- Potential targets Nav tabs -->      
    <ul class="nav nav-tabs" role="tablist">
@@ -642,8 +665,82 @@
    
    </div> <!--  end of tab-content div -->
 
+</div> <!--  end of hide div -->
 <!-- end of Potential targets table -->
- 
+
+<!-- ---------------------------------Transcription Factor--------------------------------------------- -->
+ <hr/> 
+<h2 id='tf_analysis'>Transcription Factor Analysis</h2>
+<hr/>
+
+{%if report.path_text%}
+          {{report.tf_text|safe}}
+          <br/><br/>
+{%endif%}
+
+<center>
+<button type="button"  class="btn btn-success btn-lg center" id='btn_show_tf'>Show Data</button>
+</center>
+
+<div id='hide_tf' style='display:none;'> <!-- Div to hide and load on button click -->
+
+   <!-- TF Nav tabs -->      
+   <ul class="nav nav-tabs" role="tablist">
+     {%for group in report.genegroup_set.all%}
+       <li role="presentation" {%if forloop.counter == 1 %}class="active"{%endif%}>
+         <a href="#{{group.get_slug}}_tf_tab" aria-controls="home1" role="tab" data-toggle="tab" id='tf_boot_{{group.get_slug}}'>
+           {{group.name}}
+         </a>
+       </li>
+     {%endfor%}
+   </ul>
+         
+   <div class="tab-content">
+    {%for group in report.genegroup_set.all%}
+     {%if forloop.counter == 1 %}
+     <div role="tabpanel" class="tab-pane fade in active" id="{{group.get_slug}}_tf_tab">
+     {%else%}
+     <div role="tabpanel" class="tab-pane fade " id="{{group.get_slug}}_tf_tab">
+     {%endif%}
+             
+       <h4>Table <span class='tbl_num'></span>Transcription Factor for {{group.name}} </h4>
+       <table id="tbl-tf-{{group.get_slug}}" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>Factor</th>
+           <th>underTF_DEG</th>
+           <th>underTF_nonDEG</th>
+           <th>notunderTF_DEG</th>
+           <th>notunderTF_nonDEG</th>
+           <th>p-value</th>
+           <th>OR</th>
+           <th>adj. p-value</th>
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+     
+     
+     </div> <!-- end of tabpanel div -->
+    {%endfor%}
+   
+   </div> <!--  end of tab-content div -->
+
+</div> <!--  end of hide div -->
+<!-- End of TF -->
+
+
+<!-- ---------------------------------Kinetic pathway modeling--------------------------------------------- -->
+ <hr/> 
+<h2 id='kinetic_analysis'>Kinetic pathway modeling</h2>
+<hr/>
+
+{%if report.path_text%}
+          {{report.kinetic_text|safe}}
+          <br/><br/>
+{%endif%}
+
+<!--  end of  Kinetic pathway modeling--> 
 
   
   {%if report.conclusion_text%}
@@ -755,13 +852,48 @@
 
 $(function() {
 	
+	
+	$("#btn_show_genes").click(function(){
+		
+		$(this).hide();
+		$("#hide_genes").slideDown('slow');
+		 
+		{%for group in report.genegroup_set.all%}
+		  {%if forloop.counter = 1%}
+		
+		     drawVolcanoPlot('{{group.get_slug}}_volcano',  '{{group.doc_logfc}}');
+	         drawGeneTable({{report.id}}, 'tbl-{{group.get_slug}}', '{{group.doc_logfc}}', categories='{{report.get_all_gene_groups_norm_as_list}}'); 
+	     
+	       {%endif%}
+	     {%endfor%}
+	     
+	     drawGeneTable({{report.id}}, 'tbl-gene_all', 'all', categories='{{report.get_all_gene_groups_norm_as_list}}');
+	 	 
+	     
+	   //GENES
+	 	{%for perm in report.get_gene_permutations%}
+	 	
+	 	$("#venn_boot_gene_{{perm.strip}}").click(function(){
+	 		drawVenn({{report.id}},
+	 				'venn_gene-{{perm.strip}}-up',
+	 				'{{perm.strip}}',	 
+	 				false, 'up', 'venn_gene_dinamic_{{perm.strip}}', 'genes', categories='{{report.get_all_gene_groups_norm_as_list}}');
+	 		drawVenn({{report.id}},
+	 				'venn_gene-{{perm.strip}}-down',
+	 				'{{perm.strip}}',			
+	 				false, 'down', 'venn_gene_dinamic_{{perm.strip}}', 'genes', categories='{{report.get_all_gene_groups_norm_as_list}}');
+	 		
+	 	});
+	 	
+	 	{%endfor%}
+		
+	});
+	
 	{%if report.gene_plot == 'vulcano'%}
 	  {%for group in report.genegroup_set.all%}
 	  
 	  {%if forloop.counter = 1%}
-	      drawVolcanoPlot('{{group.get_slug}}_volcano',  '{{group.doc_logfc}}');
-	      drawGeneTable({{report.id}}, 'tbl-{{group.get_slug}}', '{{group.doc_logfc}}', categories='{{report.get_all_gene_groups_norm_as_list}}'); 
-	  
+	     
 	      
 	  {%else%}
 	  $('#vol_boot_{{group.get_slug}}').click(function(){
@@ -794,32 +926,24 @@ $(function() {
 	  //drawGeneBoxplot(reportID={{report.id}}, name='{{gene}}', renderTo='{{gene}}', gene='{{gene}}', categories='{{report.get_all_gene_groups_norm_as_list}}');
 	{%endfor%}
 	
-	drawGeneTable({{report.id}}, 'tbl-gene_all', 'all', categories='{{report.get_all_gene_groups_norm_as_list}}');
-	
-	//GENES
-	{%for perm in report.get_gene_permutations%}
-	
-	$("#venn_boot_gene_{{perm.strip}}").click(function(){
-		drawVenn({{report.id}},
-				'venn_gene-{{perm.strip}}-up',
-				'{{perm.strip}}',	 
-				false, 'up', 'venn_gene_dinamic_{{perm.strip}}', 'genes', categories='{{report.get_all_gene_groups_norm_as_list}}');
-		drawVenn({{report.id}},
-				'venn_gene-{{perm.strip}}-down',
-				'{{perm.strip}}',			
-				false, 'down', 'venn_gene_dinamic_{{perm.strip}}', 'genes', categories='{{report.get_all_gene_groups_norm_as_list}}');
-		
-	});
-	
-	{%endfor%}
 	
 	
-	// SIGNALING PATHs
+	
+	
+///////////// SIGNALING PATHs
+
+$("#btn_show_path").click(function(){
+	$(this).hide();
+	$("#hide_path").slideDown('slow');
 	
 	drawPathwayTable({{report.id}},
 			'tbl-path_all', 
 	         'all', 
 	         'all', false, '{{report.organism}}');
+	
+});
+	
+	
 	
 	{%for perm in report.get_path_permutations%}
 	
@@ -836,13 +960,25 @@ $(function() {
 	});
     {%endfor%}
     
-/////////////////// Transcription Factor     
+/////////////////// Transcription Factor
+$("#btn_show_tf").click(function(){
+	$(this).hide();
+	$("#hide_tf").slideDown('slow');
+	
+	{%for group in report.tfgroup_set.all%}
+    
+      {%if forloop.counter = 1%}   
+        drawTFTable({{report.id}}, 'tbl-tf-{{group.get_slug}}', '{{group.document}}', categories='{{group.name}}'); 
+      {%endif%}
+    {%endfor%}
+	
+});
+
     {%for group in report.tfgroup_set.all%}
     
         {%if forloop.counter = 1%}        
           
-	      drawTFTable({{report.id}}, 'tbl-tf-{{group.get_slug}}', '{{group.document}}', categories='{{group.name}}'); 
-	      
+
         {%else%}
         
         $('#tf_boot_{{group.get_slug}}').click(function(){
@@ -863,91 +999,116 @@ $(function() {
 // Pharm Classes
 //Overal tabs
 
-  drawDLColumn({{report.id}}, 'dlfc_overall10',
-      		                 'overall_10', 'fc');
+$("#btn_show_dl").click(function(){
   
-  $('#dlfc_boot_overall12').click(function(){
-            	
-        	if($("#dlfc_overall12 span").html() == 'Loading bar plot...'){
-        		drawDLColumn({{report.id}}, 'dlfc_overall12',
-      		                 'overall_12', 'fc');
-			}     	
-         });
-  $('#dlfc_boot_overall15').click(function(){
-  	
-  	if($("#dlfc_overall15 span").html() == 'Loading bar plot...'){
-  		drawDLColumn({{report.id}}, 'dlfc_overall15',
-		                 'overall_15', 'fc');
+	$(this).hide();
+	$("#hide_dl").slideDown('slow');
+	
+	drawDLColumn({{report.id}}, 'dlfc_overall10',
+              'overall_10', 'fc');
+	drawAntineoplasticColumn({{report.id}}, 'dl_ap_plot'); 
+    drawNumSideEffColumn({{report.id}}, 'dl_nse_plot');
+    
+    $('#dlfc_boot_overall12').click(function(){
+    	
+    	if($("#dlfc_overall12 span").html() == 'Loading bar plot...'){
+    		drawDLColumn({{report.id}}, 'dlfc_overall12',
+  		                 'overall_12', 'fc');
 		}     	
-   });
-  $('#dlfc_boot_overall29').click(function(){
-  	
-  	if($("#dlfc_overall29 span").html() == 'Loading bar plot...'){
-  		drawDLColumn({{report.id}}, 'dlfc_overall29',
-		                 'overall_29', 'fc');
-		}     	
-   });
+     });
+$('#dlfc_boot_overall15').click(function(){
+	
+	if($("#dlfc_overall15 span").html() == 'Loading bar plot...'){
+		drawDLColumn({{report.id}}, 'dlfc_overall15',
+	                 'overall_15', 'fc');
+	}     	
+});
+$('#dlfc_boot_overall29').click(function(){
+	
+	if($("#dlfc_overall29 span").html() == 'Loading bar plot...'){
+		drawDLColumn({{report.id}}, 'dlfc_overall29',
+	                 'overall_29', 'fc');
+	}     	
+});
 
 //Group tabs
-    {%for group in report.tfgroup_set.all%}              
-        
-        $('#dlfc_boot_{{group.get_slug}}').click(function(){
-            	
-        	if($("#dlfc_{{group.get_slug}} span").html() == 'Loading bar plot...'){
-        		drawDLColumn({{report.id}}, 'dlfc_{{group.get_slug}}',
-      		                 '{{group.get_slug}}', 'fc');
-			}     	
-         });        
-          
-    {%endfor%}
+{%for group in report.tfgroup_set.all%}              
+    
+    $('#dlfc_boot_{{group.get_slug}}').click(function(){
+        	
+    	if($("#dlfc_{{group.get_slug}} span").html() == 'Loading bar plot...'){
+    		drawDLColumn({{report.id}}, 'dlfc_{{group.get_slug}}',
+  		                 '{{group.get_slug}}', 'fc');
+		}     	
+     });        
+      
+{%endfor%}
+
+
 
 ///////////// Side Effects
 //Overal tabs
 
-    drawDLColumn({{report.id}}, 'dlse_overall10',
-        		                 'overall_10', 'se');
-    
-    $('#dlse_boot_overall12').click(function(){
-              	
-          	if($("#dlse_overall12 span").html() == 'Loading bar plot...'){
-          		drawDLColumn({{report.id}}, 'dlse_overall12',
-        		                 'overall_12', 'se');
-  			}     	
-           });
-    $('#dlse_boot_overall15').click(function(){
-    	
-    	if($("#dlse_overall15 span").html() == 'Loading bar plot...'){
-    		drawDLColumn({{report.id}}, 'dlse_overall15',
-  		                 'overall_15', 'se');
-  		}     	
-     });
-    $('#dlse_boot_overall29').click(function(){
-    	
-    	if($("#dlse_overall29 span").html() == 'Loading bar plot...'){
-    		drawDLColumn({{report.id}}, 'dlse_overall29',
-  		                 'overall_29', 'se');
-  		}     	
-     });
+drawDLColumn({{report.id}}, 'dlse_overall10',
+    		                 'overall_10', 'se');
 
-  //Group tabs
-      {%for group in report.tfgroup_set.all%}              
-          
-          $('#dlse_boot_{{group.get_slug}}').click(function(){
-              	
-          	if($("#dlse_{{group.get_slug}} span").html() == 'Loading bar plot...'){
-          		drawDLColumn({{report.id}}, 'dlse_{{group.get_slug}}',
-        		                 '{{group.get_slug}}', 'se');
-  			}     	
-           });        
-            
-      {%endfor%}    
+$('#dlse_boot_overall12').click(function(){
+          	
+      	if($("#dlse_overall12 span").html() == 'Loading bar plot...'){
+      		drawDLColumn({{report.id}}, 'dlse_overall12',
+    		                 'overall_12', 'se');
+			}     	
+       });
+$('#dlse_boot_overall15').click(function(){
+	
+	if($("#dlse_overall15 span").html() == 'Loading bar plot...'){
+		drawDLColumn({{report.id}}, 'dlse_overall15',
+		                 'overall_15', 'se');
+		}     	
+ });
+$('#dlse_boot_overall29').click(function(){
+	
+	if($("#dlse_overall29 span").html() == 'Loading bar plot...'){
+		drawDLColumn({{report.id}}, 'dlse_overall29',
+		                 'overall_29', 'se');
+		}     	
+ });
+
+//Group tabs
+  {%for group in report.tfgroup_set.all%}              
+      
+      $('#dlse_boot_{{group.get_slug}}').click(function(){
+          	
+      	if($("#dlse_{{group.get_slug}} span").html() == 'Loading bar plot...'){
+      		drawDLColumn({{report.id}}, 'dlse_{{group.get_slug}}',
+    		                 '{{group.get_slug}}', 'se');
+			}     	
+       });        
+        
+  {%endfor%} 
+
+}); 
     
-/////////////////// Correlation     
+/////////////////// Correlation
+
+$("#btn_show_corr").click(function(){
+	$(this).hide();
+	$("#hide_corr").slideDown('slow');
+	
+	{%for group in report.correlationgroup_set.all%}
+    
+      {%if forloop.counter = 1%}        
+      
+        drawCorrelationTable({{report.id}}, 'tbl-cor-{{group.get_slug}}', '{{group.document}}', categories='{{group.name}}'); 
+      {%endif%}
+    {%endfor%}
+	
+});
     {%for group in report.correlationgroup_set.all%}
     
         {%if forloop.counter = 1%}        
           
-	      drawCorrelationTable({{report.id}}, 'tbl-cor-{{group.get_slug}}', '{{group.document}}', categories='{{group.name}}'); 
+	      //drawCorrelationTable({{report.id}}, 'tbl-cor-{{group.get_slug}}', '{{group.document}}', categories='{{group.name}}'); 
 	      
         {%else%}
         
@@ -966,11 +1127,24 @@ $(function() {
     
 ////// Similarity
 
+ $("#btn_show_sim").click(function(){
+	 
+	 $(this).hide();
+	 $("#hide_sim").slideDown('slow');
+	 
+	 {%for group in report.genegroup_set.all%}
+	   {%if forloop.counter = 1%}        
+       
+          drawSimilarityTable({{report.id}}, 'tbl-sim-{{group.get_slug}}', '{{group.document}}', categories='{{group.name}}'); 
+	   {%endif%}
+	 {%endfor%}
+ });
+
     {%for group in report.genegroup_set.all%}
     
         {%if forloop.counter = 1%}        
           
-        drawSimilarityTable({{report.id}}, 'tbl-sim-{{group.get_slug}}', '{{group.document}}', categories='{{group.name}}'); 
+        //drawSimilarityTable({{report.id}}, 'tbl-sim-{{group.get_slug}}', '{{group.document}}', categories='{{group.name}}'); 
 	      
         {%else%}
         
@@ -988,11 +1162,25 @@ $(function() {
     
 //////Potential Targets
 
+
+$("#btn_show_pt").click(function(){
+	 
+	 $(this).hide();
+	 $("#hide_pt").slideDown('slow');
+	 
+	 {%for group in report.genegroup_set.all%}
+	   {%if forloop.counter = 1%}        
+      
+	     drawPotentialTargetsTable({{report.id}}, 'tbl-pt-{{group.get_slug}}', '{{group.document}}', categories='{{group.name}}'); 
+	   {%endif%}
+	 {%endfor%}
+});
+
     {%for group in report.genegroup_set.all%}
     
         {%if forloop.counter = 1%}        
           
-        drawPotentialTargetsTable({{report.id}}, 'tbl-pt-{{group.get_slug}}', '{{group.document}}', categories='{{group.name}}'); 
+        //drawPotentialTargetsTable({{report.id}}, 'tbl-pt-{{group.get_slug}}', '{{group.document}}', categories='{{group.name}}'); 
 	      
         {%else%}
         

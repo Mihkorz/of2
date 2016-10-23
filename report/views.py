@@ -109,9 +109,11 @@ class ReportGeneVolcanoJson(TemplateView):
         except:
             try:
                 df_gene = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name)
+                df_gene = df_gene[['SYMBOL', 'logFC', 'adj.P.Val']]
             except:
                 df_gene = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name, sep='\t')
-            df_gene = df_gene[['SYMBOL', 'logFC', 'adj.P.Val']]
+                df_gene = df_gene[['SYMBOL', 'logFC', 'adj.P.Val']]
+            
                             
             df_gene.fillna(0, inplace=True)
             
@@ -173,10 +175,12 @@ class ReportGeneTableJson(TemplateView):
             except:
                 try:
                     df_gene = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name)
+                    df_gene = df_gene[['SYMBOL', 'logFC', 'adj.P.Val']]
                 except:
                     df_gene = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name,
                                   sep='\t')
-                df_gene = df_gene[['SYMBOL', 'logFC', 'adj.P.Val']] #AZ report
+                    df_gene = df_gene[['SYMBOL', 'logFC', 'adj.P.Val']]
+                
                 
                 df_gene.fillna(1, inplace=True)
                 
@@ -1261,7 +1265,13 @@ class ReportAjaxPathDetail(TemplateView):
         if report.id==2:
             pathway = Pathway.objects.filter(organism=organism, name=self.request.GET['pathway']).exclude(database__in=['primary_old'])[0]
         else: 
-            pathway = Pathway.objects.filter(organism=organism, name=self.request.GET['pathway']).exclude(database__in=['primary_old'])[0]
+            try:
+                pathway = Pathway.objects.filter(organism=organism, name=self.request.GET['pathway']).exclude(database__in=['primary_old'])[0]
+            except:
+                name=str(self.request.GET['pathway'].replace('.', '('))
+                name = name[:-1] + ')'
+                pathway = Pathway.objects.filter(organism=organism, name=name).exclude(database__in=['primary_old'])[0]
+                
         gene_data = []
         for gene in pathway.gene_set.all():
                 nodes = ','.join([str(i) for i in Node.objects.filter(pathway=pathway, component__name=gene.name).distinct()])
@@ -1405,9 +1415,13 @@ class ReportTfTableJson(TemplateView):
     def get(self, request, *args, **kwargs):
         
         file_name = request.GET.get('file_name')            
-            
-        df_tf = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name,
+        
+        try:    
+            df_tf = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name,
                                   sep=' ')
+        except:
+            df_tf = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name,
+                                  )
                 
         df_tf.fillna(1, inplace=True)                 
          
@@ -1623,15 +1637,16 @@ class ReportDlFarmJson(TemplateView):
         
         if file_type == 'fc':
             df_farm = pd.read_csv(deeplearning.farmclass.path, index_col='Name', sep='\t')
+            s_threshold = df_farm.iloc[0, 7:]
         elif file_type == 'se':
             df_farm = pd.read_csv(deeplearning.sideeff.path, index_col='Name', sep='\t')
+            s_threshold = df_farm.iloc[0, 33:]
         
         lGname = group.split('_')
         
         if lGname[0]!='overall':
-            lGname[0] = lGname[0].replace('D', '') # in case of groups not overall
- 
-        s_threshold = df_farm.iloc[0, 7:]
+            lGname[0] = lGname[0].replace('D', '') # in case of groups not overall 
+        
         
         if lGname[0]!='overall':
             df_farm = df_farm[(df_farm['compound']== int(lGname[0])) & 
@@ -1640,12 +1655,26 @@ class ReportDlFarmJson(TemplateView):
         else:
             df_farm = df_farm[(df_farm['compound']== int(lGname[1]))]
         
-        #raise Exception('stop')
+       
         
-        s_features = df_farm.iloc[:, 7:] # leave only columns with features, excluding 'Best threshold'
+        
+        
+        if file_type == 'fc':
+            s_features = df_farm.iloc[:, 7:] # leave only columns with features, excluding 'Best threshold'
+        if file_type == 'se':
+            s_features = df_farm.iloc[:, 33:] # leave only columns with features, excluding 'Best threshold'
+        
         
         s_features = s_features.mean()        
         s_features.sort(ascending=False)
+        
+        """
+        aaa = s_features['Neoplastic and ectopic endocrinopathies']
+        
+        bbb = s_features[s_features>0.5].count()
+        
+        raise Exception('stop')
+        """
         
         if file_type == 'se': # leave only top-30 Side Effects
             s_features = s_features[:30]
