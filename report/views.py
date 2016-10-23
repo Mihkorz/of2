@@ -1669,7 +1669,7 @@ class ReportDlFarmJson(TemplateView):
         s_features.sort(ascending=False)
         
         """
-        aaa = s_features['Neoplastic and ectopic endocrinopathies']
+        aaa = s_features['Antineoplastic Agents']
         
         bbb = s_features[s_features>0.5].count()
         
