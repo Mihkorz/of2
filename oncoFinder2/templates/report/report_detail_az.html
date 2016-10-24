@@ -888,7 +888,7 @@ $(function() {
 		  {%if forloop.counter = 1%}
 		
 		     drawVolcanoPlot('{{group.get_slug}}_volcano',  '{{group.doc_logfc}}');
-	         drawGeneTable({{report.id}}, 'tbl-{{group.get_slug}}', '{{group.doc_logfc}}', categories='{{report.get_all_gene_groups_norm_as_list}}'); 
+	         drawGeneTable({{report.id}}, 'tbl-{{group.get_slug}}', '{{group.doc_logfc}}', categories='{{group.get_slug}}'); 
 	     
 	       {%endif%}
 	     {%endfor%}
@@ -928,7 +928,7 @@ $(function() {
 				drawVolcanoPlot('{{group.get_slug}}_volcano',  '{{group.doc_logfc}}');
 			}
 			if ( !$.fn.dataTable.isDataTable( '#tbl-{{group.get_slug}}' ) ) {
-				 drawGeneTable({{report.id}}, 'tbl-{{group.get_slug}}', '{{group.doc_logfc}}', categories='{{report.get_all_gene_groups_norm_as_list}}'); 
+				 drawGeneTable({{report.id}}, 'tbl-{{group.get_slug}}', '{{group.doc_logfc}}', categories='{{group.get_slug}}'); 
 				}
 		   });
 	  

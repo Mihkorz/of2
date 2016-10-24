@@ -389,8 +389,15 @@ class ReportGeneBoxplotJson(TemplateView):
                 i=i+1
         except: # AZ report style
             
+            lcategories = categories.split(',')
+                
+            if len(lcategories)<2: # if there is only one category. 4 volcano table only
+                groups = GeneGroup.objects.filter(name=lcategories[0], report=report)
+                 
+            else:
+                groups = report.genegroup_set.all()           
         
-            for group in report.genegroup_set.all():
+            for group in groups:
             
                 df_group = pd.read_csv(group.document.path,
                                    index_col='SYMBOL', sep='\t')
@@ -436,10 +443,15 @@ class ReportGeneBoxplotJson(TemplateView):
             df_norm_mcf7 = pd.read_csv(group_mcf7.document.path,
                                    index_col='SYMBOL', sep='\t')
             
-            ldf_norm.append(df_norm_a549.loc[gene])
-            ldf_norm.append(df_norm_mcf7.loc[gene])
-            
-            
+            if len(lcategories)<2:
+                if 'A549' in lcategories[0]:
+                    ldf_norm.append(df_norm_a549.loc[gene])
+                if 'MCF7' in lcategories[0]:
+                    ldf_norm.append(df_norm_mcf7.loc[gene])
+            else:
+                ldf_norm.append(df_norm_a549.loc[gene])
+                ldf_norm.append(df_norm_mcf7.loc[gene])
+                           
               
             
             for df_norm in ldf_norm:       
@@ -463,6 +475,8 @@ class ReportGeneBoxplotJson(TemplateView):
                 
                 series_tumour.append(lNorm)
                 
+                
+                
             
             #raise Exception('boxplot') 
         s1 = {
@@ -472,6 +486,7 @@ class ReportGeneBoxplotJson(TemplateView):
                           'headerFormat': '<em>Group: {point.key}</em><br/>'
                           }
               }        
+        
         
         response_data = s1
         #raise Exception('boxplot') 
