@@ -191,7 +191,11 @@ class ReportGeneTableJson(TemplateView):
             
             #raise Exception('stop')         
         
-            df_gene = df_gene[(df_gene['adj.P.Val']<0.05) & (np.absolute(df_gene['logFC'])>0.2)] 
+            df_gene = df_gene[(df_gene['adj.P.Val']<0.05) & (np.absolute(df_gene['logFC'])>0.2)]
+            
+            
+            df_gene['adj.P.Val'] = df_gene['adj.P.Val'].map('{:,.2e}'.format)
+            df_gene['adj.P.Val'] = df_gene['adj.P.Val'].apply(str) 
         
             
         
@@ -1442,9 +1446,14 @@ class ReportTfTableJson(TemplateView):
          
         df_tf = df_tf[(df_tf['padj']<0.05)]         
         
-        #raise Exception('tf') 
+        df_tf['padj'] = df_tf['padj'].map('{:,.2e}'.format)
+        df_tf['p.value'] = df_tf['p.value'].map('{:,.2e}'.format)
+        
+        df_tf['padj'] = df_tf['padj'].apply(str)
+        df_tf['p.value'] = df_tf['p.value'].apply(str)
         
         output_json = df_tf.to_json(orient='values')
+        #raise Exception('tf') 
         response_data = {'data': json.loads(output_json)}
         
         return HttpResponse(json.dumps(response_data), content_type="application/json") 
