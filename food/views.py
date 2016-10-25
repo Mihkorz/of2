@@ -42,12 +42,15 @@ class FoodSearch(TemplateView):
         food_groups = json.loads(request.GET.get('food_groups'))
         
         try:
-            best_search = Mainfooddesc.objects.using('food').get(main_food_description=search_text+', NFS')
+            best_search = Mainfooddesc.objects.using('food').get(main_food_description=search_text)
         except:
             try:
-                best_search = Mainfooddesc.objects.using('food').get(main_food_description=search_text+', raw')
+                best_search = Mainfooddesc.objects.using('food').get(main_food_description=search_text+', NFS')
             except:
-                best_search = 'Nothing found'
+                try:
+                    best_search = Mainfooddesc.objects.using('food').get(main_food_description=search_text+', raw')
+                except:
+                    best_search = 'Nothing found'
             
         primary_search = Mainfooddesc.objects.using('food').filter(main_food_description__istartswith=search_text)
         secondary_search = Mainfooddesc.objects.using('food').filter(main_food_description__icontains=search_text)
