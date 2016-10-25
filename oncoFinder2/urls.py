@@ -63,6 +63,7 @@ from report.views import ReportList, ReportDetail, \
                          ReportAjaxPathwayVenn, ReportAjaxPathwayVennTable, ReportPathwayTableJson, ReportAjaxPathDetail, \
                          ReportTfTableJson, ReportAjaxTfDetail, ReportDlFarmJson, ReportCorrelationTableJson, ReportSimilarityJson, \
                          ReportPotentialTargetsJson
+from food.views import FoodIndex, FoodSearch
 
 urlpatterns = patterns('',
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
@@ -247,6 +248,10 @@ urlpatterns = patterns('',
     ################### BLOOD NN ###############################################
     url(r'^nn-blood/$', nnBloodView.as_view(), name="nn-blood"),
     url(r'^nn-blood/result/$', nnBloodResult.as_view(), name="nn-blood"),
+    
+    ################### FOOD testing mode ###############################################
+    url(r'^food/$', FoodIndex.as_view(), name="food_index"),
+    url(r'^food/search/$', FoodSearch.as_view(), name="food_search"),
     
     
 
