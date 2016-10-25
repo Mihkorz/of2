@@ -43,12 +43,15 @@ class FoodSearch(TemplateView):
         
         try:
             best_search = Mainfooddesc.objects.using('food').get(main_food_description=search_text)
+            best_search = best_search.main_food_description
         except:
             try:
                 best_search = Mainfooddesc.objects.using('food').get(main_food_description=search_text+', NFS')
+                best_search = best_search.main_food_description
             except:
                 try:
                     best_search = Mainfooddesc.objects.using('food').get(main_food_description=search_text+', raw')
+                    best_search = best_search.main_food_description
                 except:
                     best_search = 'Nothing found'
             
@@ -84,7 +87,7 @@ class FoodSearch(TemplateView):
         
          
         response_data = {
-                         'best_search': best_search.main_food_description,
+                         'best_search': best_search,
                          'primary_search': lprim_reponse,
                          'secondary_search': lsec_reponse
                          }
