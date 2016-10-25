@@ -1,6 +1,7 @@
 
 import json
 import pandas as pd
+import operator
 
 from django.views.generic.base import TemplateView
 from django.http import HttpResponse
@@ -54,10 +55,15 @@ class FoodSearch(TemplateView):
                     best_search = best_search.main_food_description
                 except:
                     best_search = 'Nothing found'
-            
-        primary_search = Mainfooddesc.objects.using('food').filter(main_food_description__istartswith=search_text)
-        secondary_search = Mainfooddesc.objects.using('food').filter(main_food_description__icontains=search_text)
         
+        
+        prim_qs = reduce(operator.and_, (Q(main_food_description__icontains=x.strip()) for x in search_text.split(' ')))
+        sec_qs = reduce(operator.or_, (Q(main_food_description__icontains=x.strip()) for x in search_text.split(' ')))
+        
+        primary_search = Mainfooddesc.objects.using('food').filter(prim_qs)
+        secondary_search = Mainfooddesc.objects.using('food').filter(sec_qs)
+        
+          
         pr_query = Q()
         sec_query = Q()
         
@@ -73,8 +79,13 @@ class FoodSearch(TemplateView):
         secondary_search = secondary_search.exclude(food_code__in=blocked_id)        
             
         
-        lprim = primary_search.values_list('main_food_description', flat=True)
-        lsec = secondary_search.values_list('main_food_description', flat=True)
+        lprim = []
+        for food in primary_search:
+            lprim.append('Food code: '+str(food.food_code)+'. '+food.main_food_description)
+        
+        lsec = []
+        for food in secondary_search:
+            lsec.append('Food code: '+str(food.food_code)+'. '+food.main_food_description)
         
         if not lprim:
             lprim_reponse = ['Nothing Found']

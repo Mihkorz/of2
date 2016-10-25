@@ -322,6 +322,9 @@ class Mainfooddesc(models.Model):
     class Meta:
         
         db_table = 'mainfooddesc'
+        
+    def __unicode__(self):
+        return self.main_food_description
 
 
 class MealPatternDiet(models.Model):
