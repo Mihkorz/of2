@@ -1751,7 +1751,7 @@ class ReportDlFarmJson(TemplateView):
         
         #raise Exception('stop11')
         if file_type == 'fc':
-            plot_title = 'Pharmacological Classes'
+            plot_title = 'Therapeutic use'
             
         elif file_type == 'se':
             plot_title = 'Side Effects'
