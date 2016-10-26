@@ -38,7 +38,7 @@ var options = {
 	        yAxis: {
 	            min: 0,
 	            title: {
-	                text: 'Value'
+	                text: 'Probability'
 	            }
 	        },
 	        legend: {
@@ -215,7 +215,7 @@ function drawAntineoplasticColumn(report_id, renderTo){
 		        yAxis: {
 		            min: 0,
 		            title: {
-		                text: 'Value'
+		                text: 'Probability'
 		            },
 		            
 		        },
