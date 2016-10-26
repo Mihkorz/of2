@@ -176,6 +176,8 @@ class TfGroup(models.Model):
     name = models.CharField(verbose_name='Transcription Factor group name', max_length=250, blank=False)
     document = models.FileField(upload_to=get_document_upload_path, max_length=300,
                                 help_text='Transcription Factor file')
+    trrust = models.FileField(upload_to=get_document_upload_path, max_length=300,
+                                help_text='Trrust file', blank=True, null=True)
     report = models.ForeignKey(Report)
     
     def get_slug(self):

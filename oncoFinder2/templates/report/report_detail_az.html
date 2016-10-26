@@ -749,6 +749,49 @@
     {%endfor%}
    
    </div> <!--  end of tab-content div -->
+   
+   
+   <!-- TF Nav tabs -->      
+   <ul class="nav nav-tabs" role="tablist">
+     {%for group in report.genegroup_set.all%}
+       <li role="presentation" {%if forloop.counter == 1 %}class="active"{%endif%}>
+         <a href="#{{group.get_slug}}_tftrrust_tab" aria-controls="home1" role="tab" data-toggle="tab" id='tftrrust_boot_{{group.get_slug}}'>
+           {{group.name}}
+         </a>
+       </li>
+     {%endfor%}
+   </ul>
+         
+   <div class="tab-content">
+    {%for group in report.genegroup_set.all%}
+     {%if forloop.counter == 1 %}
+     <div role="tabpanel" class="tab-pane fade in active" id="{{group.get_slug}}_tftrrust_tab">
+     {%else%}
+     <div role="tabpanel" class="tab-pane fade " id="{{group.get_slug}}_tftrrust_tab">
+     {%endif%}
+             
+       <h4>Table <span class='tbl_num'></span>Transcription Factor Analysis (TRRUST database) for {{group.name}} </h4>
+       <table id="tbl-tftrrust-{{group.get_slug}}" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>Factor</th>
+           <th>underTF_DEG</th>
+           <th>underTF_nonDEG</th>
+           <th>notunderTF_DEG</th>
+           <th>notunderTF_nonDEG</th>
+           <th>p-value</th>
+           <th>OR</th>
+           <th>adj. p-value</th>
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+     
+     
+     </div> <!-- end of tabpanel div -->
+    {%endfor%}
+   
+   </div> <!--  end of tab-content div -->
 
 </div> <!--  end of hide div -->
 <!-- End of TF -->
@@ -996,6 +1039,7 @@ $("#btn_show_tf").click(function(){
     
       {%if forloop.counter = 1%}   
         drawTFTable({{report.id}}, 'tbl-tf-{{group.get_slug}}', '{{group.document}}', categories='{{group.name}}'); 
+        drawTFTrrustTable({{report.id}}, 'tbl-tftrrust-{{group.get_slug}}', '{{group.trrust}}', categories='{{group.name}}'); 
       {%endif%}
     {%endfor%}
 	
@@ -1014,7 +1058,16 @@ $("#btn_show_tf").click(function(){
         		drawTFTable({{report.id}}, 'tbl-tf-{{group.get_slug}}', '{{group.document}}', categories='{{group.name}}'); 
 				}
         	
+        	
         });
+        
+        $('#tftrrust_boot_{{group.get_slug}}').click(function(){
+        	if ( !$.fn.dataTable.isDataTable( '#tbl-tftrrust-{{group.get_slug}}' ) ) {
+        		drawTFTrrustTable({{report.id}}, 'tbl-tftrrust-{{group.get_slug}}', '{{group.trrust}}', categories='{{group.name}}'); 
+				}
+        	
+        });
+        
         
         {%endif%}
     

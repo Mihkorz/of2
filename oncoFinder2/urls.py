@@ -62,7 +62,7 @@ from report.views import ReportList, ReportDetail, \
                          ReportGeneBoxplotJson, \
                          ReportAjaxPathwayVenn, ReportAjaxPathwayVennTable, ReportPathwayTableJson, ReportAjaxPathDetail, \
                          ReportTfTableJson, ReportAjaxTfDetail, ReportDlFarmJson, ReportCorrelationTableJson, ReportSimilarityJson, \
-                         ReportPotentialTargetsJson
+                         ReportPotentialTargetsJson, ReportTfTrrustTableJson
 from food.views import FoodIndex, FoodSearch
 
 urlpatterns = patterns('',
@@ -238,6 +238,7 @@ urlpatterns = patterns('',
     url(r'^report-portal/report-ajaxpathdetail/$', ReportAjaxPathDetail.as_view(), name="report_ajax_path_detail"),
     
     url(r'^report-portal/report-tftablejson/$', ReportTfTableJson.as_view(), name="tf_table_json"),
+    url(r'^report-portal/report-tftrrusttablejson/$', ReportTfTrrustTableJson.as_view(), name="tftrrust_table_json"),
     url(r'^report-portal/report-ajaxtfdetail/$', ReportAjaxTfDetail.as_view(), name="report_ajax_tf_detail"),
     
     url(r'^report-portal/report-deeplearningfarmjson/$', ReportDlFarmJson.as_view(), name="df_farm_json"),

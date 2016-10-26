@@ -1458,6 +1458,39 @@ class ReportTfTableJson(TemplateView):
         
         return HttpResponse(json.dumps(response_data), content_type="application/json") 
 
+class ReportTfTrrustTableJson(TemplateView): 
+    template_name="report/report_detail.html"
+    
+    def dispatch(self, request, *args, **kwargs):
+        
+        return super(ReportTfTrrustTableJson, self).dispatch(request, *args, **kwargs)
+    
+    def get(self, request, *args, **kwargs):
+        
+        file_name = request.GET.get('file_name')            
+        
+        try:    
+            df_tf = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name,
+                                  sep=' ')
+        except:
+            df_tf = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name,
+                                  )
+                
+        df_tf.fillna(1, inplace=True)                 
+         
+        df_tf = df_tf[(df_tf['padj']<0.05)]         
+        
+        df_tf['padj'] = df_tf['padj'].map('{:,.2e}'.format)
+        df_tf['p.value'] = df_tf['p.value'].map('{:,.2e}'.format)
+        
+        df_tf['padj'] = df_tf['padj'].apply(str)
+        df_tf['p.value'] = df_tf['p.value'].apply(str)
+        
+        output_json = df_tf.to_json(orient='values')
+        #raise Exception('tf') 
+        response_data = {'data': json.loads(output_json)}
+        
+        return HttpResponse(json.dumps(response_data), content_type="application/json") 
 
 class ReportAjaxTfDetail(TemplateView):
     template_name = 'report/report_ajax_tf_detail.html'
@@ -1640,7 +1673,8 @@ class ReportAjaxTfDetail(TemplateView):
         #raise Exception('TF detail')
         
         return context
-    
+
+   
         
 class ReportDlFarmJson(TemplateView):
     template_name="report/report_detail.html"
