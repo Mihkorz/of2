@@ -43,7 +43,7 @@ class ReportDetail(DetailView):
     model = Report
     template_name = 'report/report_detail.html'
     
-    #@method_decorator(login_required)
+    @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         
         if self.get_object().id==4 or self.get_object().id==8:
