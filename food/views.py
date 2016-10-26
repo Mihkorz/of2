@@ -3,9 +3,14 @@ import json
 import pandas as pd
 import operator
 
+from django.utils.decorators import method_decorator
+from django.utils.text import slugify
+from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 from django.views.generic.base import TemplateView
 from django.http import HttpResponse
 from django.db.models import Q
+
 
 from .models import Mainfooddesc
 
@@ -13,7 +18,7 @@ class FoodIndex(TemplateView):
     
     template_name = 'food/index.html'
     
-    #@method_decorator(login_required)
+    @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):  
         
         return super(FoodIndex, self).dispatch(request, *args, **kwargs)
