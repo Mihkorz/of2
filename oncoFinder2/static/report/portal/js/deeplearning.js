@@ -102,7 +102,7 @@ var options = {
     	data = $.parseJSON(data);
     	
     	options.series[0].data = data['barplot'];
-    	options.series[1].data = data['threshold'];
+    	//options.series[1].data = data['threshold'];
     	options.title.text = data['title']
     	options.subtitle.text = data['subtitle']
     	
