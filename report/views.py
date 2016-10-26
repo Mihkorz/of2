@@ -16,6 +16,7 @@ from django.http import HttpResponse
 from django.conf import settings
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 
 from .models import Report, GeneGroup, PathwayGroup, TfGroup
 from core.models import Pathway, Node, Component
@@ -26,7 +27,7 @@ class ReportList(ListView):
     context_object_name = 'reports'
     paginate_by = 100
     
-    #@method_decorator(login_required)
+    @method_decorator(staff_member_required)
     def dispatch(self, request, *args, **kwargs):
         return super(ReportList, self).dispatch(request, *args, **kwargs)
     
