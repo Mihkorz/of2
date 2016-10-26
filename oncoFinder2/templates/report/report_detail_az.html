@@ -78,7 +78,7 @@
           </ul>
           
           {%if report.input_data_text%}
-          <h2 id="input_data">RNA-seq data analysis</h2>
+          <h2 id="input_data">Experimental design and RNA-seq data analysis</h2>
           <hr/>
           {{report.input_data_text|safe}}
 
@@ -727,7 +727,7 @@
      <div role="tabpanel" class="tab-pane fade " id="{{group.get_slug}}_tf_tab">
      {%endif%}
              
-       <h4>Table <span class='tbl_num'></span>Transcription Factor for {{group.name}} </h4>
+       <h4>Table <span class='tbl_num'></span>Table Transcription Factor (FANTOM5) for {{group.name}} </h4>
        <table id="tbl-tf-{{group.get_slug}}" class="path table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
           <tr>
