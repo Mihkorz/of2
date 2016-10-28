@@ -44,8 +44,9 @@ class ProfileIndex(DetailView):
     
     def get_context_data(self, **kwargs):              
         context = super(ProfileIndex, self).get_context_data(**kwargs)  
-        all_users = User.objects.filter(is_active=True).exclude(username = self.get_object().username)
-        context['all_users'] = all_users
+
+        users = User.objects.filter(is_active=True)
+        context['usernames'] = sorted([u.username for u in users], key=lambda s: s.lower())
         
         my_projects = Project.objects.filter(owner=self.get_object())
         context['my_projects'] = my_projects
@@ -55,6 +56,7 @@ class ProfileIndex(DetailView):
         
         return context
         
+
 class SettingsProfile(UpdateView):
     model = User
     form_class = SettingsUserForm
@@ -863,4 +865,3 @@ class AjaxPathDetail(TemplateView):
         context['rand'] = random.random() 
         
         return context  
-    
