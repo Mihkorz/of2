@@ -49,7 +49,7 @@ class ReportDetail(DetailView):
         
         if self.get_object().id==4 or self.get_object().id==8:
             self.template_name = 'report/report_detail_az.html' 
-        if self.get_object().id==5 or self.get_object().id==9:
+        if self.get_object().id==6 or self.get_object().id==9:
             self.template_name = 'report/report_detail_jjms.html'    
         
         return super(ReportDetail, self).dispatch(request, *args, **kwargs)
@@ -483,7 +483,7 @@ class ReportGeneBoxplotJson(TemplateView):
                     
             #Get Norms boxplot
             ldf_norm = []
-            if report.id==8 and report.id==4:
+            if report.id==8 and report.id==6:
                 group_a549 = report.genegroup_set.filter(name__icontains='A549')[0] 
                 df_norm_a549 = pd.read_csv(group_a549.document.path,
                                    index_col='SYMBOL', sep='\t')
