@@ -163,19 +163,23 @@ class ReportAdmin(admin.ModelAdmin):
                     g_group.doc_logfc = file_logfc
                 else:
                     
-                    
-                    df_logfc = pd.read_csv(g_group.doc_logfc, delimiter=dialect.delimiter,
+                    try:
+                        df_logfc = pd.read_csv(g_group.doc_logfc, delimiter=dialect.delimiter,
                                  index_col='SYMBOL')
+                    except:
+                        df_logfc = pd.read_csv(g_group.doc_logfc, sep='\t',
+                                 index_col='SYMBOL')
+                        
                     
                     file_logfc = default_storage.save(path+"/logfc_"+g_group.name+".csv", ContentFile('') )
                     df_logfc.to_csv(settings.MEDIA_ROOT+"/"+file_logfc)
                     g_group.doc_logfc = file_logfc
                     
                 
-                #file_boxplot = default_storage.save(path+"/boxplot_"+g_group.name+".csv", ContentFile('') )
-                #df_boxplot.to_csv(settings.MEDIA_ROOT+"/"+file_boxplot)
+                file_boxplot = default_storage.save(path+"/boxplot_"+g_group.name+".csv", ContentFile('') )
+                df_boxplot.to_csv(settings.MEDIA_ROOT+"/"+file_boxplot)
                 
-                #g_group.doc_boxplot = file_boxplot
+                g_group.doc_boxplot = file_boxplot
                 #raise Exception('group')
                 g_group.save()
             elif g_group.__class__.__name__=='PathwayGroup':

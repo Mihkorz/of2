@@ -48,7 +48,9 @@ class ReportDetail(DetailView):
     def dispatch(self, request, *args, **kwargs):
         
         if self.get_object().id==4 or self.get_object().id==8:
-            self.template_name = 'report/report_detail_az.html'    
+            self.template_name = 'report/report_detail_az.html' 
+        if self.get_object().id==5 or self.get_object().id==9:
+            self.template_name = 'report/report_detail_jjms.html'    
         
         return super(ReportDetail, self).dispatch(request, *args, **kwargs)
     
@@ -105,15 +107,29 @@ class ReportGeneVolcanoJson(TemplateView):
         
         try:
             df_gene = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name)
-            df_gene = df_gene[['gene', 'logFC', 'adj.P.Val']]
+            df_gene = df_gene[['gene', 'logFC', 'adj.P.Val', 'P.Value']]
             #df_gene.rename(columns={'gene': 'Symbol'}, inplace=True)
         except:
             try:
                 df_gene = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name)
-                df_gene = df_gene[['SYMBOL', 'logFC', 'adj.P.Val']]
+                df_gene = df_gene[['SYMBOL', 'logFC', 'adj.P.Val', 'P.Value']]
             except:
-                df_gene = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name, sep='\t')
-                df_gene = df_gene[['SYMBOL', 'logFC', 'adj.P.Val']]
+                try:
+                    df_gene = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name, sep='\t')
+                    df_gene = df_gene[['SYMBOL', 'logFC', 'adj.P.Val', 'P.Value']]
+                except:
+                    try:
+                        df_gene = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name)
+                        df_gene = df_gene[['SYMBOL', 'logFC', 'adj.P.Val']]
+                    except:
+                        try:
+                            df_gene = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name, sep='\t')
+                            df_gene = df_gene[['SYMBOL', 'logFC', 'adj.P.Val']]
+                        except:
+                            raise
+                            
+                    
+                
             
                             
             df_gene.fillna(0, inplace=True)
@@ -124,8 +140,14 @@ class ReportGeneVolcanoJson(TemplateView):
         df_gene['logFC'] = df_gene['logFC'].round(decimals=2)
         
         df_gene['_row'] = df_gene['adj.P.Val'].round(decimals=2)
+        
+        df_gene_copy = df_gene.copy()  
          
-        df_gene = df_gene[(df_gene['adj.P.Val']<0.05) & (np.absolute(df_gene['logFC'])>0.2)] 
+        df_gene = df_gene[(df_gene['adj.P.Val']<0.05) & (np.absolute(df_gene['logFC'])>0.2)]
+        
+        if df_gene.empty:
+                df_gene = df_gene_copy[(df_gene_copy['P.Value']<0.05) & (np.absolute(df_gene_copy['logFC'])>0.2)]    
+                df_gene['adj.P.Val'] = df_gene['P.Value'] 
          
         df_gene['adj.P.Val'] = -1*np.log10(df_gene['adj.P.Val'])        
          
@@ -172,15 +194,27 @@ class ReportGeneTableJson(TemplateView):
             
             try:
                 df_gene = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name)
-                df_gene = df_gene[['gene', 'logFC', 'adj.P.Val']]
+                df_gene = df_gene[['gene', 'logFC', 'adj.P.Val', 'P.Value']]
+                #df_gene.rename(columns={'gene': 'Symbol'}, inplace=True)
             except:
                 try:
                     df_gene = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name)
-                    df_gene = df_gene[['SYMBOL', 'logFC', 'adj.P.Val']]
+                    df_gene = df_gene[['SYMBOL', 'logFC', 'adj.P.Val', 'P.Value']]
                 except:
-                    df_gene = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name,
-                                  sep='\t')
-                    df_gene = df_gene[['SYMBOL', 'logFC', 'adj.P.Val']]
+                    try:
+                        df_gene = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name, sep='\t')
+                        df_gene = df_gene[['SYMBOL', 'logFC', 'adj.P.Val', 'P.Value']]
+                    except:
+                        try:
+                            df_gene = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name)
+                            df_gene = df_gene[['SYMBOL', 'logFC', 'adj.P.Val']]
+                        except:
+                            try:
+                                df_gene = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name, sep='\t')
+                                df_gene = df_gene[['SYMBOL', 'logFC', 'adj.P.Val']]
+                            except:
+                                raise
+                            
                 
                 
                 df_gene.fillna(1, inplace=True)
@@ -190,10 +224,17 @@ class ReportGeneTableJson(TemplateView):
             df_gene['logFC'] = df_gene['logFC'].round(decimals=2)
             
             
-            #raise Exception('stop')         
+            df_gene_copy = df_gene.copy()        
         
             df_gene = df_gene[(df_gene['adj.P.Val']<0.05) & (np.absolute(df_gene['logFC'])>0.2)]
             
+            if df_gene.empty:
+                if "noresponse" in file_name:
+                    df_gene = df_gene_copy[(np.absolute(df_gene_copy['logFC'])>0.2)]
+                else:    
+                    df_gene = df_gene_copy[(df_gene_copy['P.Value']<0.05) & (np.absolute(df_gene_copy['logFC'])>0.2)]    
+                df_gene['adj.P.Val'] = df_gene['P.Value']
+            #raise Exception('stop') 
             
             df_gene['adj.P.Val'] = df_gene['adj.P.Val'].map('{:,.2e}'.format)
             df_gene['adj.P.Val'] = df_gene['adj.P.Val'].apply(str) 
@@ -264,7 +305,7 @@ class ReportGeneScatterJson(TemplateView):
         
         df_output = np.log2(df_output)
         
-        df_output = df_output[np.absolute(df_output['FC'])>2]
+        df_output = df_output[np.absolute(df_output['FC'])>0.2]
         
         
         
@@ -400,7 +441,9 @@ class ReportGeneBoxplotJson(TemplateView):
                 groups = GeneGroup.objects.filter(name=lcategories[0], report=report)
                  
             else:
-                groups = report.genegroup_set.all()           
+                groups = report.genegroup_set.all()
+                
+                       
         
             for group in groups:
             
@@ -440,25 +483,28 @@ class ReportGeneBoxplotJson(TemplateView):
                     
             #Get Norms boxplot
             ldf_norm = []
-            
-            group_a549 = report.genegroup_set.filter(name__icontains='A549')[0] 
-            df_norm_a549 = pd.read_csv(group_a549.document.path,
+            if report.id==8 and report.id==4:
+                group_a549 = report.genegroup_set.filter(name__icontains='A549')[0] 
+                df_norm_a549 = pd.read_csv(group_a549.document.path,
                                    index_col='SYMBOL', sep='\t')
-            group_mcf7 = report.genegroup_set.filter(name__icontains='MCF7')[0]
-            df_norm_mcf7 = pd.read_csv(group_mcf7.document.path,
+                group_mcf7 = report.genegroup_set.filter(name__icontains='MCF7')[0]
+                df_norm_mcf7 = pd.read_csv(group_mcf7.document.path,
                                    index_col='SYMBOL', sep='\t')
             
-            if len(lcategories)<2:
-                if 'A549' in lcategories[0]:
+                if len(lcategories)<2:
+                    if 'A549' in lcategories[0]:
+                        ldf_norm.append(df_norm_a549.loc[gene])
+                    if 'MCF7' in lcategories[0]:
+                        ldf_norm.append(df_norm_mcf7.loc[gene])
+                else:
                     ldf_norm.append(df_norm_a549.loc[gene])
-                if 'MCF7' in lcategories[0]:
                     ldf_norm.append(df_norm_mcf7.loc[gene])
             else:
-                ldf_norm.append(df_norm_a549.loc[gene])
-                ldf_norm.append(df_norm_mcf7.loc[gene])
+                ldf_norm.append(df_group.loc[gene])
+                
                            
               
-            
+            #raise Exception('haha')
             for df_norm in ldf_norm:       
                 
                 
@@ -667,8 +713,8 @@ class ReportAjaxPathwayVenn(TemplateView):
             df1.replace([np.inf, -np.inf], 0, inplace=True)
             
             
-            if df1['adj.P.Val'].isin([1]).all():
-                df1 = df1[(np.absolute(df1['logFC'])>2)]         
+            if (df1['adj.P.Val']>0.05).all():
+                df1 = df1[(np.absolute(df1['logFC'])>0.2)]         
             else:
                 df1 = df1[(df1['adj.P.Val']<0.05) & (np.absolute(df1['logFC'])>0.2)]
                    
@@ -683,8 +729,8 @@ class ReportAjaxPathwayVenn(TemplateView):
                 df2 = pd.read_csv(file_name2, index_col='SYMBOL', sep='\t')
             df2.replace([np.inf, -np.inf], 0, inplace=True)
             
-            if df2['adj.P.Val'].isin([1]).all() == 1:
-                df2 = df2[(np.absolute(df2['logFC'])>2)]
+            if (df2['adj.P.Val']>0.05).all():
+                df2 = df2[(np.absolute(df2['logFC'])>0.2)]
             else:
                 df2 = df2[(df2['adj.P.Val']<0.05) & (np.absolute(df2['logFC'])>0.2)]
             
@@ -699,8 +745,9 @@ class ReportAjaxPathwayVenn(TemplateView):
                 except:
                     df3 = pd.read_csv(file_name3, index_col='SYMBOL', sep='\t')
                 df3.replace([np.inf, -np.inf], 0, inplace=True)
-                if df3['adj.P.Val'].isin([1]).all() == 1:
-                    df3 = df3[(np.absolute(df3['logFC'])>2)]
+                
+                if (df3['adj.P.Val']>0.05).all():
+                    df3 = df3[(np.absolute(df3['logFC'])>0.2)]
                 else:
                     df3 = df3[(df3['adj.P.Val']<0.05) & (np.absolute(df3['logFC'])>0.2)]
                     
@@ -715,7 +762,7 @@ class ReportAjaxPathwayVenn(TemplateView):
                 except:
                     df4 = pd.read_csv(file_name4, index_col='SYMBOL', sep='\t')
                 df4.replace([np.inf, -np.inf], 0, inplace=True)
-                if df4['adj.P.Val'].isin([1]).all() == 1:
+                if (df4['adj.P.Val']>0.05).all():
                     df4 = df4[(np.absolute(df4['logFC'])>2)]
                 else:
                     df4 = df4[(df4['adj.P.Val']<0.05) & (np.absolute(df4['logFC'])>0.2)]
@@ -918,8 +965,8 @@ class ReportAjaxPathwayVennTable(TemplateView):
                 except:
                     df_1 = pd.read_csv(group1.doc_logfc.path,  index_col='SYMBOL', sep='\t')
                 
-                if df_1['adj.P.Val'].isin([1]).all() == 1:
-                    df_1 = df_1[(np.absolute(df_1['logFC'])>2)]
+                if (df_1['adj.P.Val']>0.05).all():
+                    df_1 = df_1[(np.absolute(df_1['logFC'])>0.2)]
                 else:            
                     df_1 = df_1[(df_1['adj.P.Val']<0.05) & (np.absolute(df_1['logFC'])>0.2)]
                 df_1 = pd.DataFrame(df_1['logFC'])
@@ -967,12 +1014,12 @@ class ReportAjaxPathwayVennTable(TemplateView):
                     df_1 = pd.read_csv(group1.doc_logfc.path,  index_col='SYMBOL', sep='\t')
                     df_2 = pd.read_csv(group2.doc_logfc.path,  index_col='SYMBOL', sep='\t') 
                 
-                if df_1['adj.P.Val'].isin([1]).all() == 1:
-                    df_1 = df_1[(np.absolute(df_1['logFC'])>2)]
+                if (df_1['adj.P.Val']>0.05).all():
+                    df_1 = df_1[(np.absolute(df_1['logFC'])>0.2)]
                 else:           
                     df_1 = df_1[(df_1['adj.P.Val']<0.05) & (np.absolute(df_1['logFC'])>0.2)]
-                if df_2['adj.P.Val'].isin([1]).all() == 1:
-                    df_2 = df_2[(np.absolute(df_2['logFC'])>2)]
+                if (df_2['adj.P.Val']>0.05).all():
+                    df_2 = df_2[(np.absolute(df_2['logFC'])>0.2)]
                 else:
                     df_2 = df_2[(df_2['adj.P.Val']<0.05) & (np.absolute(df_2['logFC'])>0.2)]
                 
@@ -1043,15 +1090,15 @@ class ReportAjaxPathwayVennTable(TemplateView):
                     df_2 = pd.read_csv(group2.doc_logfc.path,  index_col='SYMBOL', sep='\t') 
                     df_3 = pd.read_csv(group3.doc_logfc.path,  index_col='SYMBOL', sep='\t') 
                     
-                if df_1['adj.P.Val'].isin([1]).all() == 1:
-                    df_1 = df_1[(np.absolute(df_1['logFC'])>2)]
+                if (df_1['adj.P.Val']>0.05).all():
+                    df_1 = df_1[(np.absolute(df_1['logFC'])>0.2)]
                 else:               
                     df_1 = df_1[(df_1['adj.P.Val']<0.05) & (np.absolute(df_1['logFC'])>0.2)]
-                if df_2['adj.P.Val'].isin([1]).all() == 1:
-                    df_2 = df_2[(np.absolute(df_2['logFC'])>2)]
+                if (df_2['adj.P.Val']>0.05).all():
+                    df_2 = df_2[(np.absolute(df_2['logFC'])>0.2)]
                 else:
                     df_2 = df_2[(df_2['adj.P.Val']<0.05) & (np.absolute(df_2['logFC'])>0.2)]
-                if df_3['adj.P.Val'].isin([1]).all() == 1:
+                if (df_3['adj.P.Val']>0.05).all():
                     df_3 = df_3[(np.absolute(df_3['logFC'])>2)]
                 else:
                     df_3 = df_3[(df_3['adj.P.Val']<0.05) & (np.absolute(df_3['logFC'])>0.2)]                
@@ -1150,20 +1197,20 @@ class ReportAjaxPathwayVennTable(TemplateView):
                 df_3.replace([np.inf, -np.inf], 0, inplace=True)                 
                 df_4.replace([np.inf, -np.inf], 0, inplace=True)
                 
-                if df_1['adj.P.Val'].isin([1]).all() == 1:
-                    df_1 = df_1[(np.absolute(df_1['logFC'])>2)]
+                if (df_1['adj.P.Val']>0.05).all():
+                    df_1 = df_1[(np.absolute(df_1['logFC'])>0.2)]
                 else:               
                     df_1 = df_1[(df_1['adj.P.Val']<0.05) & (np.absolute(df_1['logFC'])>0.2)]
-                if df_2['adj.P.Val'].isin([1]).all() == 1:
-                    df_2 = df_2[(np.absolute(df_2['logFC'])>2)]
+                if (df_2['adj.P.Val']>0.05).all():
+                    df_2 = df_2[(np.absolute(df_2['logFC'])>0.2)]
                 else:
                     df_2 = df_2[(df_2['adj.P.Val']<0.05) & (np.absolute(df_2['logFC'])>0.2)]
-                if df_3['adj.P.Val'].isin([1]).all() == 1:
-                    df_3 = df_3[(np.absolute(df_3['logFC'])>2)]
+                if (df_3['adj.P.Val']>0.05).all():
+                    df_3 = df_3[(np.absolute(df_3['logFC'])>0.2)]
                 else:
                     df_3 = df_3[(df_3['adj.P.Val']<0.05) & (np.absolute(df_3['logFC'])>0.2)]    
-                if df_4['adj.P.Val'].isin([1]).all() == 1:
-                    df_4 = df_4[(np.absolute(df_4['logFC'])>2)]
+                if (df_4['adj.P.Val']>0.05).all():
+                    df_4 = df_4[(np.absolute(df_4['logFC'])>0.2)]
                 else:
                     df_4 = df_4[(df_4['adj.P.Val']<0.05) & (np.absolute(df_4['logFC'])>0.2)]                 
                 
@@ -1306,8 +1353,8 @@ class ReportAjaxPathDetail(TemplateView):
         except:
             df_file_cnr = pd.read_csv(group.doc_logfc.path, index_col='SYMBOL', sep='\t')
         
-        if df_file_cnr['adj.P.Val'].isin([1]).all() == 1:
-                    df_file_cnr = df_file_cnr[(np.absolute(df_file_cnr['logFC'])>2)]
+        if (df_file_cnr['adj.P.Val']>0.05).all():
+                    df_file_cnr = df_file_cnr[(np.absolute(df_file_cnr['logFC'])>0.2)]
         else:        
             df_file_cnr = df_file_cnr[(df_file_cnr['adj.P.Val']<1)] #take all the genes 
         
