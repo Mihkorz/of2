@@ -176,10 +176,10 @@ class ReportAdmin(admin.ModelAdmin):
                     g_group.doc_logfc = file_logfc
                     
                 
-                file_boxplot = default_storage.save(path+"/boxplot_"+g_group.name+".csv", ContentFile('') )
-                df_boxplot.to_csv(settings.MEDIA_ROOT+"/"+file_boxplot)
+                #file_boxplot = default_storage.save(path+"/boxplot_"+g_group.name+".csv", ContentFile('') )
+                #df_boxplot.to_csv(settings.MEDIA_ROOT+"/"+file_boxplot)
                 
-                g_group.doc_boxplot = file_boxplot
+                #g_group.doc_boxplot = file_boxplot
                 #raise Exception('group')
                 g_group.save()
             elif g_group.__class__.__name__=='PathwayGroup':
