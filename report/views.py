@@ -229,7 +229,7 @@ class ReportGeneTableJson(TemplateView):
             df_gene = df_gene[(df_gene['adj.P.Val']<0.05) & (np.absolute(df_gene['logFC'])>0.2)]
             
             if df_gene.empty:
-                if "noresponse" in file_name:
+                if "NAB" in file_name:
                     df_gene = df_gene_copy[(np.absolute(df_gene_copy['logFC'])>0.2)]
                 else:    
                     df_gene = df_gene_copy[(df_gene_copy['P.Value']<0.05) & (np.absolute(df_gene_copy['logFC'])>0.2)]    
@@ -1334,11 +1334,11 @@ class ReportAjaxPathDetail(TemplateView):
             pathway = Pathway.objects.filter(organism=organism, name=self.request.GET['pathway']).exclude(database__in=['primary_old'])[0]
         else: 
             try:
-                pathway = Pathway.objects.filter(organism=organism, name=self.request.GET['pathway']).exclude(database__in=['primary_old'])[0]
+                pathway = Pathway.objects.filter(organism=organism, name=self.request.GET['pathway']).exclude(database__in=['primary_old', 'kegg'])[0]
             except:
                 name=str(self.request.GET['pathway'].replace('.', '('))
                 name = name[:-1] + ')'
-                pathway = Pathway.objects.filter(organism=organism, name=name).exclude(database__in=['primary_old'])[0]
+                pathway = Pathway.objects.filter(organism=organism, name=name).exclude(database__in=['primary_old', 'kegg'])[0]
                 
         gene_data = []
         for gene in pathway.gene_set.all():
