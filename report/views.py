@@ -1334,11 +1334,17 @@ class ReportAjaxPathDetail(TemplateView):
             pathway = Pathway.objects.filter(organism=organism, name=self.request.GET['pathway']).exclude(database__in=['primary_old'])[0]
         else: 
             try:
-                pathway = Pathway.objects.filter(organism=organism, name=self.request.GET['pathway']).exclude(database__in=['primary_old', 'kegg'])[0]
+                pathway = Pathway.objects.filter(organism=organism, name=self.request.GET['pathway']).exclude(database__in=['primary_old',
+                                                                                                                             'kegg',
+                                                                                                                              'kegg_10',
+                                                                                                                              'kegg_adjusted_10'])[0]
             except:
                 name=str(self.request.GET['pathway'].replace('.', '('))
                 name = name[:-1] + ')'
-                pathway = Pathway.objects.filter(organism=organism, name=name).exclude(database__in=['primary_old', 'kegg'])[0]
+                pathway = Pathway.objects.filter(organism=organism, name=name).exclude(database__in=['primary_old',
+                                                                                                                             'kegg',
+                                                                                                                              'kegg_10',
+                                                                                                                              'kegg_adjusted_10'])[0]
                 
         gene_data = []
         for gene in pathway.gene_set.all():
@@ -1348,7 +1354,7 @@ class ReportAjaxPathDetail(TemplateView):
                                   'Node(s)':nodes })   
            
         gene_df = pd.DataFrame(gene_data).set_index('SYMBOL')
-               
+            
         try:
             df_file_cnr = pd.read_csv(group.doc_logfc.path, index_col='SYMBOL')
         except:
