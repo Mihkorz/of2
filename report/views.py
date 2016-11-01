@@ -1099,7 +1099,7 @@ class ReportAjaxPathwayVennTable(TemplateView):
                 else:
                     df_2 = df_2[(df_2['adj.P.Val']<0.05) & (np.absolute(df_2['logFC'])>0.2)]
                 if (df_3['adj.P.Val']>0.05).all():
-                    df_3 = df_3[(np.absolute(df_3['logFC'])>2)]
+                    df_3 = df_3[(np.absolute(df_3['logFC'])>0.2)]
                 else:
                     df_3 = df_3[(df_3['adj.P.Val']<0.05) & (np.absolute(df_3['logFC'])>0.2)]                
                 
