@@ -1339,12 +1339,20 @@ class ReportAjaxPathDetail(TemplateView):
                                                                                                                               'kegg_10',
                                                                                                                               'kegg_adjusted_10'])[0]
             except:
-                name=str(self.request.GET['pathway'].replace('.', '('))
-                name = name[:-1] + ')'
-                pathway = Pathway.objects.filter(organism=organism, name=name).exclude(database__in=['primary_old',
-                                                                                                                             'kegg',
-                                                                                                                              'kegg_10',
-                                                                                                                              'kegg_adjusted_10'])[0]
+                try:
+                    name=str(self.request.GET['pathway'].replace('.', '-'))
+                    
+                    pathway = Pathway.objects.filter(organism=organism, name=name).exclude(database__in=['primary_old', 'kegg',                      
+                                                                                                                        'kegg_10',
+                                                                                                                        'kegg_adjusted_10'])[0]
+                except:
+                    name=str(self.request.GET['pathway'].replace('.', '('))
+                    name = name[:-1] + ')'
+                    pathway = Pathway.objects.filter(organism=organism, name=name).exclude(database__in=['primary_old', 'kegg',                      
+                                                                                                                        'kegg_10',
+                                                                                                                        'kegg_adjusted_10'])[0]
+                      
+                    
                 
         gene_data = []
         for gene in pathway.gene_set.all():
