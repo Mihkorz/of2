@@ -390,8 +390,8 @@ $(function() {
 	  {%else%}
 	  $('#vol_boot_{{group.get_slug}}').click(function(){
 			
-		  if ('{{group.get_slug}}' == 'FNAB' || 
-				  '{{group.get_slug}}' == 'VNAB'){
+		  if ('{{group.get_slug}}' == 'FNBA' || 
+				  '{{group.get_slug}}' == 'VNBA'){
 			  
 			  drawGeneScatter(name='{{group.name}}',
 			          renderTo='{{group.get_slug}}_volcano',

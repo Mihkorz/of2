@@ -229,7 +229,7 @@ class ReportGeneTableJson(TemplateView):
             df_gene = df_gene[(df_gene['adj.P.Val']<0.05) & (np.absolute(df_gene['logFC'])>0.2)]
             
             if df_gene.empty:
-                if "NAB" in file_name:
+                if "NBA" in file_name:
                     df_gene = df_gene_copy[(np.absolute(df_gene_copy['logFC'])>0.2)]
                 else:    
                     df_gene = df_gene_copy[(df_gene_copy['P.Value']<0.05) & (np.absolute(df_gene_copy['logFC'])>0.2)]    
