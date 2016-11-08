@@ -772,26 +772,20 @@ class AjaxPathDetail(TemplateView):
             
             mmin = 0
             mmax = 1
-            
-            if scale=='default':
-                mmin = np.min(lNEL)
-                mmax = np.max(np.absolute(lNEL)) # absolute was made for Aliper special, remove if needed
-            if scale=='0.5':
-                mmin = -0.5
-                mmax = 0.5
-            if scale=='1':
-                mmin = -1.0
-                mmax = 1.0            
-            if scale=='2':
-                mmin = -2.0
-                mmax = 2.0
-            if scale=='5':
-                mmin = -5
-                mmax = 5.0
-            if scale=='10':
-                mmin = -10
-                mmax = 10.0
-            
+
+            try:
+                scale = float(scale)
+                if scale <= 0:
+                    raise ValueError('Negative value')
+
+                mmin = -scale
+                mmax = scale
+
+            except ValueError:  # scale is not a float
+                if scale == 'default':
+                    mmin = np.min(lNEL)
+                    mmax = np.max(np.absolute(lNEL))  # absolute was made for Aliper special, remove if needed
+
             mid = 1 - mmax/(mmax + abs(mmin))
         
             if mmax<0 and mmin<0:                    

@@ -81,35 +81,46 @@ AMCF = {{pathway.amcf}}
    <table class="table table-bordered  table-striped">
       <tr><th>Node</th><th>NEL = 1\n * &#931 CNR</th><th>Color</th></tr>
           {% for node in colorNodes %}
-          <tr><td>{{node.name}}</th><td>{{node.nel}}</td><td style="color:{{node.color}}">{{node.color}}</td></tr>
+          <tr><td>{{node.name}}</td><td>{{node.nel}}</td><td style="color:{{node.color}}">{{node.color}}</td></tr>
           {% endfor %}
    </table>
    </small>
  </div>
 </div>
+
 <div id="fragment-4" class="tab-pane active well">
+  <div class="form-group-sm form-inline">
     Scale:
     <div class="btn-group" role="group" aria-label="...">
-    
-       <button type="button" class="btn btn-default {%if scale == 'default'%}active{%endif%}" onClick="fetchPathwayDetails({{pathway.id}}, '{{pathway.name}}', 'default')">Default</button>
-       <button type="button" class="btn btn-default {%if scale == '0.5'%}active{%endif%}" onClick="fetchPathwayDetails({{pathway.id}}, '{{pathway.name}}', 0.5)">[-0.5, 0.5]</button>
-       <button type="button" class="btn btn-default {%if scale == '1'%}active{%endif%}" onClick="fetchPathwayDetails({{pathway.id}}, '{{pathway.name}}', 1)">[-1, 1]</button>
-       <button type="button" class="btn btn-default {%if scale == '2'%}active{%endif%}" onClick="fetchPathwayDetails({{pathway.id}}, '{{pathway.name}}', 2)">[-2, 2]</button>
-       <button type="button" class="btn btn-default {%if scale == '5'%}active{%endif%}" onClick="fetchPathwayDetails({{pathway.id}}, '{{pathway.name}}', 5)">[-5, 5]</button>
-       <button type="button" class="btn btn-default {%if scale == '10'%}active{%endif%}" onClick="fetchPathwayDetails({{pathway.id}}, '{{pathway.name}}', 10)">[-10, 10]</button>
-       
-     
-     </div>
-    <hr/>
-    
-	<a target="_blank" href='/media/pathway.svg?path={{pathway.name}}&r={{rand}}' >	
-    <img src='/media/pathway.svg?path={{pathway.name}}&r={{rand}}' style="width:100%"/>
-    </a>
-    
-    <hr/>
-    <img src='/media/path_scale.png?path={{pathway.name}}&r={{rand}}' style="width:100%"/>
 
-		
+      <button type="button" class="btn btn-default {%if scale == 'default'%}active{%endif%}" onClick="fetchPathwayDetails({{pathway.id}}, '{{pathway.name}}', 'default')">Default</button>
+      <button type="button" class="btn btn-default {%if scale == '0.5'%}active{%endif%}" onClick="fetchPathwayDetails({{pathway.id}}, '{{pathway.name}}', 0.5)">[-0.5, 0.5]</button>
+      <button type="button" class="btn btn-default {%if scale == '1'%}active{%endif%}" onClick="fetchPathwayDetails({{pathway.id}}, '{{pathway.name}}', 1)">[-1, 1]</button>
+      <button type="button" class="btn btn-default {%if scale == '2'%}active{%endif%}" onClick="fetchPathwayDetails({{pathway.id}}, '{{pathway.name}}', 2)">[-2, 2]</button>
+      <button type="button" class="btn btn-default {%if scale == '5'%}active{%endif%}" onClick="fetchPathwayDetails({{pathway.id}}, '{{pathway.name}}', 5)">[-5, 5]</button>
+      <button type="button" class="btn btn-default {%if scale == '10'%}active{%endif%}" onClick="fetchPathwayDetails({{pathway.id}}, '{{pathway.name}}', 10)">[-10, 10]</button>
+
+    </div>
+    &nbsp;
+    Custom:
+    <input type="number" class="form-control" id="range_input"
+      title="Scale is [-value, value]"
+      value="{%if scale != 'default'%}{{scale}}{%else%}1{%endif%}"
+      onkeypress="if (event.keyCode == 13) document.getElementById('set_range_button').click()"
+      min=0
+    />
+    <button type="button" class="btn btn-default" id="set_range_button" onClick="fetchPathwayDetails({{pathway.id}}, '{{pathway.name}}', $('#range_input').val())">Set</button>
+  </div>
+
+  <hr/>
+    
+  <a target="_blank" href='/media/pathway.svg?path={{pathway.name}}&r={{rand}}' >
+    <img src='/media/pathway.svg?path={{pathway.name}}&r={{rand}}' style="width:100%"/>
+  </a>
+    
+  <hr/>
+  <img src='/media/path_scale.png?path={{pathway.name}}&r={{rand}}' style="width:100%"/>
+
 </div>
     
 </div>
