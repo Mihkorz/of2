@@ -24,7 +24,7 @@
           {% if username != user_profile.username %}
             <li><a href="/user/{{username}}">{{username}}</a></li>
           {% else %}
-            <li>{{username}} (current)</li>
+            <li>{{username}} (selected)</li>
           {% endif %}
           {% endfor %}
           </ul>
