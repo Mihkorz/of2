@@ -46,7 +46,7 @@ class ConvertPath(TemplateView):
         
             for hp in hpaths:
              
-                print hp.name
+                #print hp.name
                 
                 try:
             
