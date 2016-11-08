@@ -42,7 +42,7 @@ from core.of3_views import OF3CalculationParameters
 from core.harmony_views import ShambalaForm, ShambalaDone, \
                                HarmonyForm, HarmonyDone, HarmonyPrevFiles, \
                                breastmodule
-from core.utils_views import ConvertPath, Ksyusha
+from core.utils_views import ConvertPath
 from database.views import PathwayList, PathwayDetail, PathwayAjaxSearch, \
                            DrugList, DrugDetail, DrugAjaxSearch
 from metabolism.views import MetabolismPathwayList, MetabolismPathwayDetail, \
@@ -159,7 +159,7 @@ urlpatterns = patterns('',
     
     ################### Different usefull stuff ##############################
     url(r'^utils/path$', ConvertPath.as_view(), name="convert_path"),
-    url(r'^utils/ksyu$', Ksyusha.as_view(), name="ksyusha"),
+    
     
     
     ################### REPORT APP ################################################

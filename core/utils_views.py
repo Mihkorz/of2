@@ -19,158 +19,6 @@ from metabolism.models import MetabolismPathway
 from mouse.models import MouseMetabolismPathway, MousePathway, MouseMapping
 from .stats import fdr_corr
 
-class Ksyusha(TemplateView):
-    """
-    Just Testing Playground
-    """
-    template_name = 'core/test.html'
-    
-    
-    
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super(Ksyusha, self).dispatch(request, *args, **kwargs)
-        
-    
-    def get_context_data(self, **kwargs):
-        context = super(Ksyusha, self).get_context_data(**kwargs)
-        
-        """
-        res_df = read_csv(settings.MEDIA_ROOT+"/auc.csv")
-        _, p_value = ttest_1samp(np.array(res_df['AUC']), 0.742342342342)
-        raise Exception('permutation')
-        """
-        
-        import scipy.stats as sstats
-        import matplotlib.pyplot as plt
-        fig, ax = plt.subplots(1, 1)
-        res_file = settings.MEDIA_ROOT+'/FilesForBCModule/GSE5462_GSE9574_normalized_responders.txt'
-        res_df = read_csv(res_file, delimiter='\t',
-                          index_col='SYMBOL') #create DataFrame for responders
-        col = sstats.uniform.rvs(size = 100)#np.array(res_df.loc['A2M'])
-        ax.hist(col, normed=True, histtype='stepfilled', alpha=0.2)
-        ax.legend(loc='best', frameon=False)
-        plt.show()
-        
-        haha = sstats.normaltest(col)
-        raise Exception('plot')
-        
-        #0.742342342342 
-        arttrue = [ 1,  1,  1,  1,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,
-        1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,
-        1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  0.,  0.,
-        0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.]
-        aaa=list(itertools.permutations([1,2,3]))
-        #pppp=list(itertools.islice(, 10))
-         
-        
-        
-        """ reading responders and non-resonders files """
-        res_file = settings.MEDIA_ROOT+'/FilesForBCModule/GSE5462_GSE9574_normalized_responders.txt'
-        res_df = read_csv(res_file, delimiter='\t',
-                          index_col='SYMBOL') #create DataFrame for responders
-        res_df.drop([x for x in res_df.columns if 'Normal' in x], axis=1, inplace=True)
-                
-        nres_file = settings.MEDIA_ROOT+'/FilesForBCModule/GSE5462_GSE9574_normalized_nonresponders.txt'
-        nres_df = read_csv(nres_file, delimiter='\t',
-                           index_col='SYMBOL') #create DataFrame for non-responderss
-        
-        
-        
-        joined_df = df_for_pas1 = res_df.join(nres_df, how='inner') #merging 2 files together
-        
-        original_res_columns = [col for col in joined_df.columns if '_RES' in col]#store original column names
-        len_o_r_c = len(original_res_columns)
-        original_nres_columns = [col for col in joined_df.columns if '_NRES' in col]
-        len_o_nr_c = len(original_nres_columns)
- 
-        
-        norms_df = df_for_pas1[[norm for norm in [col for col in df_for_pas1.columns if 'Norm' in col]]]
-        log_norms_df = np.log(norms_df)#use this for t-test, assuming log(norm) is distributed normally
-        s_mean_norm = norms_df.apply(gmean, axis=1) #series of mean norms for CNR
-        
-        df_for_pas1.drop(norms_df.columns, axis=1, inplace=True)
-        
-        def apply_filter(col):
-            _, p_value = ttest_1samp(log_norms_df, np.log(col), axis=1)
-            s_p_value = Series(p_value, index = col.index).fillna(0)
-            fdr_q_values = fdr_corr(np.array(s_p_value))
-            col = col[(fdr_q_values<0.05)]
-            return col
-        
-        df_for_pas1 = df_for_pas1.apply(apply_filter, axis=0).fillna(0)
-        
-        df_for_pas1 = df_for_pas1.divide(s_mean_norm, axis=0).fillna(0) #acquire CNR values
-        df_for_pas1.replace(0, 1, inplace=True)
-        df_for_pas1 = np.log(df_for_pas1) # now we have log(CNR)
-        
-        pas1_all_paths = DataFrame()
-        marker_pathways = []
-        dIterations = {}
-        lAUC = [] 
-        
-        sample_names = []
-        for col in df_for_pas1.columns:
-            sample_names+=[{'Sample': col, 'group': 'NonResponders' },
-                           {'Sample': col, 'group': 'Responders'}]
-        df_probability = DataFrame(sample_names)
-        
-         
-        """Start cycle """
-        for pathway in Pathway.objects.filter(organism='human', database='primary_old').prefetch_related('gene_set'):
-            ar_probabilities = np.array([])
-            
-                       
-            
-            genes = DataFrame(list(pathway.gene_set.all()
-                                      .values('name', 'arr'))).set_index('name')#fetch genes 
-            
-            genes.index.name = 'SYMBOL'
-           
-            joined = genes.join(df_for_pas1, how='inner').drop(['arr'], axis=1) 
-            pas1_for_pathway = joined.apply(lambda x: x*genes['arr'].astype('float')).sum()            
-            pas1_for_pathway = pas1_for_pathway.set_value('Pathway', pathway.name)
-            pas1_for_pathway = DataFrame(pas1_for_pathway).T.set_index('Pathway')
-            
-            pas1_all_paths = pas1_all_paths.append(pas1_for_pathway)
-            
-            """ AUC calculations and determining Marker paths """
-            df_res = pas1_for_pathway[original_res_columns]
-            df_nres = pas1_for_pathway[original_nres_columns]
-            arScore = np.append(np.array(df_res.values, dtype='float64'), np.array(df_nres.values, dtype='float64'))            
-            arRes = np.ones(len_o_r_c)
-            arNRes = np.zeros(len_o_nr_c)
-            arTrue = np.append(arRes, arNRes)
-            
-            if pathway.name == 'Caspase_Cascade_Activated_Tissue_Trans_glutaminase':
-                AUC = roc_auc_score(arTrue, arScore) #calculate AUC
-                raise Exception(AUC)
-            
-                for i in range(1000):
-                    
-                    np.random.shuffle(arTrue)
-            
-                    
-                    lAUC.append(AUC)
-            
-                #if AUC>0.7:
-                #    marker_pathways.append(pathway.name)
-                    
-                
-                    
-            
-            
-            #raise Exception('from within cycle')  
-            
-             
-        #pas1_all_paths.to_csv(settings.MEDIA_ROOT+"/pas1.csv")
-        dAUC = {}
-        dAUC['AUC'] = lAUC
-        df = DataFrame(dAUC)
-        df.to_csv(settings.MEDIA_ROOT+"/auc.csv")
-        raise Exception('ksyusha')
-        
-        return context
 
 class ConvertPath(TemplateView):
     """
@@ -188,7 +36,42 @@ class ConvertPath(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(ConvertPath, self).get_context_data(**kwargs)
         
+        ldb = ['primary_old', 'primary_new', 'metabolism',
+               'cytoskeleton', 'kegg', 'nci', 'biocarta', 'reactome', 
+               'kegg_adjusted', 'kegg_10', 'kegg_adjusted_10']
         
+        for db in ldb:
+        
+            hpaths = Pathway.objects.filter(organism='human', database=db)
+        
+            for hp in hpaths:
+             
+                print hp.name
+            
+                mp = Pathway.objects.get(name=hp.name, organism='mouse', database=db)
+            
+                for hnode in hp.node_set.all():
+                
+                
+                    for hrel in hnode.inrelations.all():
+                     
+                        hfrom = hrel.fromnode
+                        hto = hrel.tonode
+                    
+                        mfrom = Node.objects.filter(name=hfrom.name, pathway=mp)[0]
+                        mto = Node.objects.filter(name=hto.name, pathway=mp)[0]
+                    
+                        mrel = Relation.objects.filter(fromnode=mfrom, tonode=mto)
+                        for mr in mrel:
+                            mr.reltype = hrel.reltype
+                    
+                            mr.save()
+            
+            
+            
+        
+        
+        raise Exception('mouse')
         dfg = read_csv(settings.MEDIA_ROOT+'/ivan/Arr_mycnResponse_AGIL.csv', index_col='gene')
         
         index = list(dfg.index)
