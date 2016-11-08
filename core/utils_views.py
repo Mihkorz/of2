@@ -47,25 +47,29 @@ class ConvertPath(TemplateView):
             for hp in hpaths:
              
                 print hp.name
+                
+                try:
             
-                mp = Pathway.objects.get(name=hp.name, organism='mouse', database=db)
+                    mp = Pathway.objects.get(name=hp.name, organism='mouse', database=db)
             
-                for hnode in hp.node_set.all():
+                    for hnode in hp.node_set.all():
                 
                 
-                    for hrel in hnode.inrelations.all():
+                        for hrel in hnode.inrelations.all():
                      
-                        hfrom = hrel.fromnode
-                        hto = hrel.tonode
+                            hfrom = hrel.fromnode
+                            hto = hrel.tonode
                     
-                        mfrom = Node.objects.filter(name=hfrom.name, pathway=mp)[0]
-                        mto = Node.objects.filter(name=hto.name, pathway=mp)[0]
+                            mfrom = Node.objects.filter(name=hfrom.name, pathway=mp)[0]
+                            mto = Node.objects.filter(name=hto.name, pathway=mp)[0]
                     
-                        mrel = Relation.objects.filter(fromnode=mfrom, tonode=mto)
-                        for mr in mrel:
-                            mr.reltype = hrel.reltype
+                            mrel = Relation.objects.filter(fromnode=mfrom, tonode=mto)
+                            for mr in mrel:
+                                mr.reltype = hrel.reltype
                     
-                            mr.save()
+                                mr.save()
+                except:
+                    pass
             
             
             
