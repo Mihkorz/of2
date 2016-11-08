@@ -36,7 +36,7 @@ class ConvertPath(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(ConvertPath, self).get_context_data(**kwargs)
         
-        ldb = ['primary_old', 'primary_new', 'metabolism',
+        ldb = [ 'primary_new', 'metabolism',
                'cytoskeleton', 'kegg', 'nci', 'biocarta', 'reactome', 
                'kegg_adjusted', 'kegg_10', 'kegg_adjusted_10']
         
