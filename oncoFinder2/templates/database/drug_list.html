@@ -53,9 +53,8 @@
 <script>
 $(function(){
 	$("#drug_search").keyup(function(){ 
-		autocompleteAjaxSearch(this, $("#drug_list_container"), "/db/drugs");
+		autocompleteAjaxSearch(this, null, null, $("#drug_list_container"), "/db/drugs");
 	});
-	
 });
 
 
