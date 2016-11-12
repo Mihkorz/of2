@@ -1,3 +1,5 @@
+import socket
+
 
 INTERNAL_IPS = ('127.0.0.1',)
 
@@ -20,3 +22,7 @@ DATABASES = {
     }
              
 }
+
+if socket.gethostname() == 'ubu-node304':
+    DATABASES['default']['NAME'] = 'oncoFinder2'
+    DATABASES['default']['PASSWORD'] = '123'

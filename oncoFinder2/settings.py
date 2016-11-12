@@ -281,9 +281,9 @@ LOGGING = {
 
 
 
-if socket.gethostname() == 'mikhail' or socket.gethostname() == 'mikhailComp':
+if socket.gethostname() in ['mikhail', 'mikhailComp', 'ubu-node304']:
     try:
         from settings_local import *
-        INSTALLED_APPS+=('debug_toolbar',)
+        INSTALLED_APPS += ('debug_toolbar',)
     except ImportError:
         pass
