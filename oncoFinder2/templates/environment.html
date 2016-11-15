@@ -1,0 +1,7 @@
+{% if APP_ENVIRONMENT != 'PROD' %}
+    <!-- Environment -->
+    <div>
+        <p style="background: {% if APP_ENVIRONMENT == 'UAT' %}lightgreen{% else %}lightblue{% endif %}">
+            Environment: {{ APP_ENVIRONMENT }}
+        </p></div>
+{% endif %}

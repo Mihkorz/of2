@@ -34,3 +34,7 @@ if socket.gethostname() in ['mikhail', 'mikhailComp', 'ubu-node304']:
     INSTALLED_APPS += ('debug_toolbar',)
 
     APP_ENVIRONMENT = 'DEV'
+
+
+if socket.gethostname() == 'of-uat':
+    APP_ENVIRONMENT = 'UAT'

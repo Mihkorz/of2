@@ -40,15 +40,17 @@
      
     </div>
   </div>
-     {% block content %}{% endblock %}
-  <!-- FOOTER -->
-    <div id="footer">
-      <div class="container">
-        <!-- <p class="pull-left">Footer.</p> -->
-        <p class="pull-right">© 2012-{% now "Y" %} OncoFinder</p>
-      </div>
+
+    {% include "environment.html" %}
+
+    <!-- Content -->
+    <div{% if APP_ENVIRONMENT == 'PROD' %}{% else %}
+        style="{% if APP_ENVIRONMENT == 'UAT' %}border-left: 6px dashed lightgreen;{% else %}border-left: 6px dashed lightblue;{% endif %}"{% endif %}>
+        {% block content %}{% endblock %}
     </div>
-    
+
+    {% include "footer.html" %}
+
     <script src="/static/js/bootstrap.js"></script>
- </body>
- </html>
+</body>
+</html>
