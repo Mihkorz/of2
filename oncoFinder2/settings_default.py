@@ -114,6 +114,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.media',
     'django.core.context_processors.static',
     'django.core.context_processors.request',
+
+    'oncoFinder2.context_processor.app_settings',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -189,6 +191,9 @@ PATIENT_UPLOAD_FILES_SUPPORTED_FORMATS = (
     'xls',
     'xlsx',
 )
+
+APP_ENVIRONMENT = 'PROD'
+
 
 ###################### Logging settings #######################################
 LOG_ROOT = os.path.join(PROJECT_DIR, '..', 'log')

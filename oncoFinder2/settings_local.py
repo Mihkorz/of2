@@ -32,3 +32,5 @@ if socket.gethostname() in ['mikhail', 'mikhailComp', 'ubu-node304']:
         DATABASES['default']['PASSWORD'] = '123'
 
     INSTALLED_APPS += ('debug_toolbar',)
+
+    APP_ENVIRONMENT = 'DEV'

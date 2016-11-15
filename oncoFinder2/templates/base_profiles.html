@@ -73,11 +73,20 @@
      
     </div>
   </div>
-     {% block content %}{% endblock %}
+  {% if APP_ENVIRONMENT != 'PROD' %}
+  <!-- Environment -->
+  <div>
+    <p style="background: {% if APP_ENVIRONMENT == 'UAT' %}lightgreen{% else %}lightblue{% endif %}">
+      Environment: {{ APP_ENVIRONMENT }}
+    </p></div>
+  {% endif %}
+  <!-- Content -->
+  <div{% if APP_ENVIRONMENT == 'PROD' %}{% else %} style="{% if APP_ENVIRONMENT == 'UAT' %}border-left: 6px dashed lightgreen;{% else %}border-left: 6px dashed lightblue;{% endif %}"{% endif %}>
+    {% block content %}{% endblock %}
+  </div>
   <!-- FOOTER -->
     <div id="footer">
       <div class="container">
-        <!--  <p class="pull-left">Footer.</p>-->
         <p class="pull-right">© 2012-{% now "Y" %} OncoFinder</p>
       </div>
     </div>
