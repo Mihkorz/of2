@@ -8,7 +8,7 @@ To install OncoFinder (on Ubuntu 14.04.3 LTS, Python 2.7) go to `environment` di
 
 1) Install Ubuntu packages:
 ```
-sudo ./install_packages
+sudo ./install_packages.sh
 ```
 
 Probably you need MySQL and Python virtual environment as well:
