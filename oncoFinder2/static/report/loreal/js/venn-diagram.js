@@ -1,4 +1,4 @@
-function drawDinamicTable(idx){
+function drawDynamicTable(idx){
 	
 	var arParams = idx.split("_");
 	var inter_num = arParams[0];
@@ -12,8 +12,8 @@ function drawDinamicTable(idx){
     
     arMembers = members.split('vs');
     
-    if(is_metabolic=='true'){$('#venn_meta_dinamic > div.dataTables_wrapper').fadeOut('fast');}
-    else{$('#venn_path_dinamic > div.dataTables_wrapper').fadeOut('fast');}
+    if(is_metabolic=='true'){$('#venn_meta_dynamic > div.dataTables_wrapper').fadeOut('fast');}
+    else{$('#venn_path_dynamic > div.dataTables_wrapper').fadeOut('fast');}
     
     
 	if (arParams[0]<4){
@@ -21,8 +21,8 @@ function drawDinamicTable(idx){
 			$("#"+tblId+"_wrapper").fadeIn();
 		}
 		else{
-			if(is_metabolic=='true'){htmlTable = '<table id="'+tblId+'" class="path table table-striped table-bordered meta-dinamic" width="100%" >'}
-			else {htmlTable = '<table id="'+tblId+'" class="path table table-striped table-bordered path-dinamic" width="100%" >'}
+			if(is_metabolic=='true'){htmlTable = '<table id="'+tblId+'" class="path table table-striped table-bordered meta-dynamic" width="100%" >'}
+			else {htmlTable = '<table id="'+tblId+'" class="path table table-striped table-bordered path-dynamic" width="100%" >'}
 			
 			htmlTable+='<thead><tr>';
 			htmlTable+='<th>Pathway Name</th>';
@@ -34,8 +34,8 @@ function drawDinamicTable(idx){
 			htmlTable+='</tr></thead>';
 			htmlTable+='</table>';			
 			
-			if(is_metabolic=='true'){$("#venn_meta_dinamic").append(htmlTable);}			    
-			else{$("#venn_path_dinamic").append(htmlTable);}
+			if(is_metabolic=='true'){$("#venn_meta_dynamic").append(htmlTable);}
+			else{$("#venn_path_dynamic").append(htmlTable);}
 			
 			$('#'+tblId).DataTable( {
 		    	"paging":   true,
@@ -149,7 +149,7 @@ function drawVenn(renderTo, file_name1, file_name2, name1, name2, is_metabolic, 
                 	 
                 	 venn.sortAreas(div, d);
                      var idx = d.id;
-                     drawDinamicTable(idx);
+                     drawDynamicTable(idx);
                 	 
                  });
 			}

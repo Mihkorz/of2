@@ -176,7 +176,7 @@
       </tr>
     </table>        
    <br/>
-  <div id="venn_gene_dinamic_{{perm.strip}}" class="" style="max-width:1000px;"></div> <!--  div to place dinamic tables from Venn clicks -->
+  <div id="venn_gene_dynamic_{{perm.strip}}" class="" style="max-width:1000px;"></div> <!--  div to place dynamic tables from Venn clicks -->
   </div>
   {%endfor%}
   
@@ -264,7 +264,7 @@
       </tr>
     </table>        
    <br/>
-  <div id="venn_path_dinamic_{{perm.strip}}" class="" style="max-width:1000px;"></div> <!--  div to place dinamic tables from Venn clicks -->
+  <div id="venn_path_dynamic_{{perm.strip}}" class="" style="max-width:1000px;"></div> <!--  div to place dynamic tables from Venn clicks -->
   </div>
   {%endfor%}
   
@@ -318,7 +318,7 @@
       </tr>
     </table>        
    <br/>
-  <div id="venn_meta_dinamic_{{perm.strip}}" class="" style="max-width:1000px;"></div> <!--  div to place dinamic tables from Venn clicks -->
+  <div id="venn_meta_dynamic_{{perm.strip}}" class="" style="max-width:1000px;"></div> <!--  div to place dynamic tables from Venn clicks -->
   </div>
   {%endfor%}
   
@@ -478,11 +478,11 @@ $(function() {
 		drawVenn({{report.id}},
 				'venn_gene-{{perm.strip}}-up',
 				'{{perm.strip}}',	 
-				false, 'up', 'venn_gene_dinamic_{{perm.strip}}', 'genes', categories='{{report.get_all_gene_groups_norm_as_list}}');
+				false, 'up', 'venn_gene_dynamic_{{perm.strip}}', 'genes', categories='{{report.get_all_gene_groups_norm_as_list}}');
 		drawVenn({{report.id}},
 				'venn_gene-{{perm.strip}}-down',
 				'{{perm.strip}}',			
-				false, 'down', 'venn_gene_dinamic_{{perm.strip}}', 'genes', categories='{{report.get_all_gene_groups_norm_as_list}}');
+				false, 'down', 'venn_gene_dynamic_{{perm.strip}}', 'genes', categories='{{report.get_all_gene_groups_norm_as_list}}');
 		
 	});
 	
@@ -500,11 +500,11 @@ $(function() {
 	drawVenn({{report.id}},
 		'venn_path-{{perm.strip}}-up',
 		'{{perm.strip}}',
-		false, 'up', 'venn_path_dinamic_{{perm.strip}}', 'pathways', '{{report.organism}}');
+		false, 'up', 'venn_path_dynamic_{{perm.strip}}', 'pathways', '{{report.organism}}');
 	drawVenn({{report.id}},
 			'venn_path-{{perm.strip}}-down',
 			'{{perm.strip}}',
-			false, 'down', 'venn_path_dinamic_{{perm.strip}}', 'pathways', '{{report.organism}}');
+			false, 'down', 'venn_path_dynamic_{{perm.strip}}', 'pathways', '{{report.organism}}');
     {%endfor%}
     
  // METABOLIC PATHs
@@ -517,11 +517,11 @@ $(function() {
 	drawVenn({{report.id}},
 		'venn_meta-{{perm.strip}}-up',
 		'{{perm.strip}}',
-		true, 'up', 'venn_meta_dinamic_{{perm.strip}}', 'pathways', '{{report.organism}}');
+		true, 'up', 'venn_meta_dynamic_{{perm.strip}}', 'pathways', '{{report.organism}}');
 	drawVenn({{report.id}},
 			'venn_meta-{{perm.strip}}-down',
 			'{{perm.strip}}',
-			true, 'down', 'venn_meta_dinamic_{{perm.strip}}', 'pathways', '{{report.organism}}');
+			true, 'down', 'venn_meta_dynamic_{{perm.strip}}', 'pathways', '{{report.organism}}');
     {%endfor%}
 
 });

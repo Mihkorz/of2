@@ -1,4 +1,4 @@
-function drawDinamicTable(idx, tblRenderTo, path_gene){
+function drawDynamicTable(idx, tblRenderTo, path_gene){
 	
 	var arParams = idx.split("_");
 	var inter_num = arParams[0];
@@ -22,8 +22,8 @@ function drawDinamicTable(idx, tblRenderTo, path_gene){
 			$("#"+tblId+"_wrapper").fadeIn();
 		}
 		else{
-			if(is_metabolic=='true'){htmlTable = '<table id="'+tblId+'" class="path table table-striped table-bordered meta-dinamic" width="100%" >'}
-			else {htmlTable = '<table id="'+tblId+'" class="path table table-striped table-bordered path-dinamic" width="100%" >'}
+			if(is_metabolic=='true'){htmlTable = '<table id="'+tblId+'" class="path table table-striped table-bordered meta-dynamic" width="100%" >'}
+			else {htmlTable = '<table id="'+tblId+'" class="path table table-striped table-bordered path-dynamic" width="100%" >'}
 			
 			htmlTable+='<thead><tr>';
 			if(path_gene=='pathways') htmlTable+='<th>Pathway Name</th>';
@@ -201,7 +201,7 @@ function drawVenn(renderTo, file_name1, name1,
                 	 
                 	 venn.sortAreas(div, d);
                      var idx = d.id;
-                     drawDinamicTable(idx, tblRenderTo, path_gene);
+                     drawDynamicTable(idx, tblRenderTo, path_gene);
                 	 
                  });
 			}
@@ -215,45 +215,45 @@ $(document).ready(function(){
 			'EPL_vs_ES.DE.tab', 'Group1',
 			'EPL_vs_ASC.DE.tab', 'Group2',
 			'EPL_vs_CCL.DE.tab', 'Group6', 
-			false, 'up', 'venn_gene_dinamic_Group1vsGroup2vsGroup6', 'genes');
+			false, 'up', 'venn_gene_dynamic_Group1vsGroup2vsGroup6', 'genes');
 		drawVenn('venn_gene-Group1vsGroup2vsGroup6-down',
 				'EPL_vs_ES.DE.tab', 'Group1',
 				'EPL_vs_ASC.DE.tab', 'Group2',
 				'EPL_vs_CCL.DE.tab', 'Group6', 
-				false, 'down', 'venn_gene_dinamic_Group1vsGroup2vsGroup6', 'genes');
+				false, 'down', 'venn_gene_dynamic_Group1vsGroup2vsGroup6', 'genes');
 		
 		drawVenn('venn_gene-Group1vsGroup5vsGroup6-up',
 				'EPL_vs_ES.DE.tab', 'Group1',
 				'EPL_vs_ANC.DE.tab', 'Group5',
 				'EPL_vs_CCL.DE.tab', 'Group6', 
-				false, 'up', 'venn_gene_dinamic_Group1vsGroup5vsGroup6', 'genes');
+				false, 'up', 'venn_gene_dynamic_Group1vsGroup5vsGroup6', 'genes');
 		drawVenn('venn_gene-Group1vsGroup5vsGroup6-down',
 					'EPL_vs_ES.DE.tab', 'Group1',
 					'EPL_vs_ANC.DE.tab', 'Group5',
 					'EPL_vs_CCL.DE.tab', 'Group6', 
-					false, 'down', 'venn_gene_dinamic_Group1vsGroup5vsGroup6', 'genes');
+					false, 'down', 'venn_gene_dynamic_Group1vsGroup5vsGroup6', 'genes');
 		
 		drawVenn('venn_gene-Group1vsGroup4vsGroup6-up',
 				'EPL_vs_ES.DE.tab', 'Group1',
 				'EPL_vs_AEC.DE.tab', 'Group4',
 				'EPL_vs_CCL.DE.tab', 'Group6', 
-				false, 'up', 'venn_gene_dinamic_Group1vsGroup4vsGroup6', 'genes');
+				false, 'up', 'venn_gene_dynamic_Group1vsGroup4vsGroup6', 'genes');
 		drawVenn('venn_gene-Group1vsGroup4vsGroup6-down',
 					'EPL_vs_ES.DE.tab', 'Group1',
 					'EPL_vs_AEC.DE.tab', 'Group4',
 					'EPL_vs_CCL.DE.tab', 'Group6', 
-					false, 'down', 'venn_gene_dinamic_Group1vsGroup4vsGroup6', 'genes');
+					false, 'down', 'venn_gene_dynamic_Group1vsGroup4vsGroup6', 'genes');
 			
 		drawVenn('venn_gene-Group1vsGroup3vsGroup6-up',
 					'EPL_vs_ES.DE.tab', 'Group1',
 					'EPL_vs_ABC.DE.tab', 'Group3',
 					'EPL_vs_CCL.DE.tab', 'Group6', 
-					false, 'up', 'venn_gene_dinamic_Group1vsGroup3vsGroup6', 'genes');
+					false, 'up', 'venn_gene_dynamic_Group1vsGroup3vsGroup6', 'genes');
 		drawVenn('venn_gene-Group1vsGroup3vsGroup6-down',
 						'EPL_vs_ES.DE.tab', 'Group1',
 						'EPL_vs_ABC.DE.tab', 'Group3',
 						'EPL_vs_CCL.DE.tab', 'Group6', 
-						false, 'down', 'venn_gene_dinamic_Group1vsGroup3vsGroup6', 'genes');
+						false, 'down', 'venn_gene_dynamic_Group1vsGroup3vsGroup6', 'genes');
 	
 	// SIGNALING
 	
@@ -261,45 +261,45 @@ $(document).ready(function(){
 			'pros_output_EPL_vs_ES.csv', 'Group1',
 			'pros_output_EPL_vs_ASC.csv', 'Group2',
 			'pros_output_EPL_vs_CCL.csv', 'Group6', 
-			false, 'up', 'venn_path_dinamic_Group1vsGroup2vsGroup6', 'pathways');
+			false, 'up', 'venn_path_dynamic_Group1vsGroup2vsGroup6', 'pathways');
 		drawVenn('venn_path-Group1vsGroup2vsGroup6-down',
 				'pros_output_EPL_vs_ES.csv', 'Group1',
 				'pros_output_EPL_vs_ASC.csv', 'Group2',
 				'pros_output_EPL_vs_CCL.csv', 'Group6', 
-				false, 'down', 'venn_path_dinamic_Group1vsGroup2vsGroup6', 'pathways');
+				false, 'down', 'venn_path_dynamic_Group1vsGroup2vsGroup6', 'pathways');
 		
 		drawVenn('venn_path-Group1vsGroup5vsGroup6-up',
 				'pros_output_EPL_vs_ES.csv', 'Group1',
 				'pros_output_EPL_vs_ANC.csv', 'Group5',
 				'pros_output_EPL_vs_CCL.csv', 'Group6', 
-				false, 'up', 'venn_path_dinamic_Group1vsGroup5vsGroup6', 'pathways');
+				false, 'up', 'venn_path_dynamic_Group1vsGroup5vsGroup6', 'pathways');
 		drawVenn('venn_path-Group1vsGroup5vsGroup6-down',
 					'pros_output_EPL_vs_ES.csv', 'Group1',
 					'pros_output_EPL_vs_ANC.csv', 'Group5',
 					'pros_output_EPL_vs_CCL.csv', 'Group6', 
-					false, 'down', 'venn_path_dinamic_Group1vsGroup5vsGroup6', 'pathways');
+					false, 'down', 'venn_path_dynamic_Group1vsGroup5vsGroup6', 'pathways');
 		
 		drawVenn('venn_path-Group1vsGroup4vsGroup6-up',
 				'pros_output_EPL_vs_ES.csv', 'Group1',
 				'pros_output_EPL_vs_AEC.csv', 'Group4',
 				'pros_output_EPL_vs_CCL.csv', 'Group6', 
-				false, 'up', 'venn_path_dinamic_Group1vsGroup4vsGroup6', 'pathways');
+				false, 'up', 'venn_path_dynamic_Group1vsGroup4vsGroup6', 'pathways');
 		drawVenn('venn_path-Group1vsGroup4vsGroup6-down',
 					'pros_output_EPL_vs_ES.csv', 'Group1',
 					'pros_output_EPL_vs_AEC.csv', 'Group4',
 					'pros_output_EPL_vs_CCL.csv', 'Group6', 
-					false, 'down', 'venn_path_dinamic_Group1vsGroup4vsGroup6', 'pathways');
+					false, 'down', 'venn_path_dynamic_Group1vsGroup4vsGroup6', 'pathways');
 			
 		drawVenn('venn_path-Group1vsGroup3vsGroup6-up',
 					'pros_output_EPL_vs_ES.csv', 'Group1',
 					'pros_output_EPL_vs_ABC.csv', 'Group3',
 					'pros_output_EPL_vs_CCL.csv', 'Group6', 
-					false, 'up', 'venn_path_dinamic_Group1vsGroup3vsGroup6', 'pathways');
+					false, 'up', 'venn_path_dynamic_Group1vsGroup3vsGroup6', 'pathways');
 		drawVenn('venn_path-Group1vsGroup3vsGroup6-down',
 						'pros_output_EPL_vs_ES.csv', 'Group1',
 						'pros_output_EPL_vs_ABC.csv', 'Group3',
 						'pros_output_EPL_vs_CCL.csv', 'Group6', 
-						false, 'down', 'venn_path_dinamic_Group1vsGroup3vsGroup6', 'pathways');
+						false, 'down', 'venn_path_dynamic_Group1vsGroup3vsGroup6', 'pathways');
 		
 		// METABOLIC
 		
@@ -307,44 +307,44 @@ $(document).ready(function(){
 			'pros_output_EPL_vs_ES.csv', 'Group1',
 			'pros_output_EPL_vs_ASC.csv', 'Group2',
 			'pros_output_EPL_vs_CCL.csv', 'Group6', 
-			true, 'up', 'meta_venn_path_dinamic_Group1vsGroup2vsGroup6', 'pathways');
+			true, 'up', 'meta_venn_path_dynamic_Group1vsGroup2vsGroup6', 'pathways');
 		drawVenn('meta_venn_path-Group1vsGroup2vsGroup6-down',
 				'pros_output_EPL_vs_ES.csv', 'Group1',
 				'pros_output_EPL_vs_ASC.csv', 'Group2',
 				'pros_output_EPL_vs_CCL.csv', 'Group6', 
-				true, 'down', 'meta_venn_path_dinamic_Group1vsGroup2vsGroup6', 'pathways');
+				true, 'down', 'meta_venn_path_dynamic_Group1vsGroup2vsGroup6', 'pathways');
 		
 		drawVenn('meta_venn_path-Group1vsGroup5vsGroup6-up',
 				'pros_output_EPL_vs_ES.csv', 'Group1',
 				'pros_output_EPL_vs_ANC.csv', 'Group5',
 				'pros_output_EPL_vs_CCL.csv', 'Group6', 
-				true, 'up', 'meta_venn_path_dinamic_Group1vsGroup5vsGroup6', 'pathways');
+				true, 'up', 'meta_venn_path_dynamic_Group1vsGroup5vsGroup6', 'pathways');
 		drawVenn('meta_venn_path-Group1vsGroup5vsGroup6-down',
 					'pros_output_EPL_vs_ES.csv', 'Group1',
 					'pros_output_EPL_vs_ANC.csv', 'Group5',
 					'pros_output_EPL_vs_CCL.csv', 'Group6', 
-					true, 'down', 'meta_venn_path_dinamic_Group1vsGroup5vsGroup6', 'pathways');
+					true, 'down', 'meta_venn_path_dynamic_Group1vsGroup5vsGroup6', 'pathways');
 		
 		drawVenn('meta_venn_path-Group1vsGroup4vsGroup6-up',
 				'pros_output_EPL_vs_ES.csv', 'Group1',
 				'pros_output_EPL_vs_AEC.csv', 'Group4',
 				'pros_output_EPL_vs_CCL.csv', 'Group6', 
-				true, 'up', 'venn_path_dinamic_Group1vsGroup4vsGroup6', 'pathways');
+				true, 'up', 'venn_path_dynamic_Group1vsGroup4vsGroup6', 'pathways');
 		drawVenn('venn_path-Group1vsGroup4vsGroup6-down',
 					'pros_output_EPL_vs_ES.csv', 'Group1',
 					'pros_output_EPL_vs_AEC.csv', 'Group4',
 					'pros_output_EPL_vs_CCL.csv', 'Group6', 
-					true, 'down', 'meta_venn_path_dinamic_Group1vsGroup4vsGroup6', 'pathways');
+					true, 'down', 'meta_venn_path_dynamic_Group1vsGroup4vsGroup6', 'pathways');
 			
 		drawVenn('meta_venn_path-Group1vsGroup3vsGroup6-up',
 					'pros_output_EPL_vs_ES.csv', 'Group1',
 					'pros_output_EPL_vs_ABC.csv', 'Group3',
 					'pros_output_EPL_vs_CCL.csv', 'Group6', 
-					true, 'up', 'meta_venn_path_dinamic_Group1vsGroup3vsGroup6', 'pathways');
+					true, 'up', 'meta_venn_path_dynamic_Group1vsGroup3vsGroup6', 'pathways');
 		drawVenn('meta_venn_path-Group1vsGroup3vsGroup6-down',
 						'pros_output_EPL_vs_ES.csv', 'Group1',
 						'pros_output_EPL_vs_ABC.csv', 'Group3',
 						'pros_output_EPL_vs_CCL.csv', 'Group6', 
-						true, 'down', 'meta_venn_path_dinamic_Group1vsGroup3vsGroup6', 'pathways');
+						true, 'down', 'meta_venn_path_dynamic_Group1vsGroup3vsGroup6', 'pathways');
 	
 });

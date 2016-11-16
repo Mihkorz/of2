@@ -1,4 +1,4 @@
-function drawDinamicTable(idx, tblRenderTo, path_gene){
+function drawDynamicTable(idx, tblRenderTo, path_gene){
 	
 	var arParams = idx.split("_");
 	var inter_num = arParams[0];
@@ -22,8 +22,8 @@ function drawDinamicTable(idx, tblRenderTo, path_gene){
 			$("#"+tblId+"_wrapper").fadeIn();
 		}
 		else{
-			if(is_metabolic=='true'){htmlTable = '<table id="'+tblId+'" class="path table table-striped table-bordered meta-dinamic" width="100%" >'}
-			else {htmlTable = '<table id="'+tblId+'" class="path table table-striped table-bordered path-dinamic" width="100%" >'}
+			if(is_metabolic=='true'){htmlTable = '<table id="'+tblId+'" class="path table table-striped table-bordered meta-dynamic" width="100%" >'}
+			else {htmlTable = '<table id="'+tblId+'" class="path table table-striped table-bordered path-dynamic" width="100%" >'}
 			
 			htmlTable+='<thead><tr>';
 			if(path_gene=='pathways') htmlTable+='<th>Pathway Name</th>';
@@ -204,7 +204,7 @@ function drawVenn(renderTo, file_name1, name1,
                 	 
                 	 venn.sortAreas(div, d);
                      var idx = d.id;
-                     drawDinamicTable(idx, tblRenderTo, path_gene);
+                     drawDynamicTable(idx, tblRenderTo, path_gene);
                 	 
                  });
 			}
@@ -221,24 +221,24 @@ $(document).ready(function(){
 			'output_drug_BRD-K59058747_perttime_6_dose_10um.txt.xlsx', 'N-acetylcysteine',
 			'output_drug_BRD-K43149758_perttime_6_dose_10um.txt.xlsx', 'Myricetin',
 			'output_drug_BRD-K55591206_perttime_6_dose_10um.txt.xlsx', 'Epigallocatechin gallate', 
-			'path', 'up', 'venn_path_dinamic', 'pathways');
+			'path', 'up', 'venn_path_dynamic', 'pathways');
 		drawVenn('venn_path-down',
 				'output_drug_BRD-K59058747_perttime_6_dose_10um.txt.xlsx', 'N-acetylcysteine',
 				'output_drug_BRD-K43149758_perttime_6_dose_10um.txt.xlsx', 'Myricetin',
 				'output_drug_BRD-K55591206_perttime_6_dose_10um.txt.xlsx', 'Epigallocatechin gallate', 
-				'path', 'down', 'venn_path_dinamic', 'pathways');
+				'path', 'down', 'venn_path_dynamic', 'pathways');
 		
 		*/
 		drawVenn('MCF7_venn_path-up',
 				'output_N-acetylcysteine.xlsx', 'N-acetylcysteine',
 				'output_Myricetin.xlsx', 'Myricetin',
 				'output_Epigallocatechin gallate.xlsx', 'Epigallocatechin gallate', 
-				'path', 'up', 'MCF7_venn_path_dinamic', 'MCF7');
+				'path', 'up', 'MCF7_venn_path_dynamic', 'MCF7');
 		drawVenn('MCF7_venn_path-down',
 					'output_N-acetylcysteine.xlsx', 'N-acetylcysteine',
 					'output_Myricetin.xlsx', 'Myricetin',
 					'output_Epigallocatechin gallate.xlsx', 'Epigallocatechin gallate', 
-					'path', 'down', 'MCF7_venn_path_dinamic', 'MCF7');
+					'path', 'down', 'MCF7_venn_path_dynamic', 'MCF7');
 		
 		
 		// METABOLIC
@@ -247,23 +247,23 @@ $(document).ready(function(){
 			'output_drug_BRD-K59058747_perttime_6_dose_10um.txt.xlsx', 'N-acetylcysteine',
 			'output_drug_BRD-K43149758_perttime_6_dose_10um.txt.xlsx', 'Myricetin',
 			'output_drug_BRD-K55591206_perttime_6_dose_10um.txt.xlsx', 'Epigallocatechin gallate', 
-			'meta', 'up', 'venn_meta_dinamic', 'pathways');
+			'meta', 'up', 'venn_meta_dynamic', 'pathways');
 		drawVenn('venn_meta-down',
 				'output_drug_BRD-K59058747_perttime_6_dose_10um.txt.xlsx', 'N-acetylcysteine',
 				'output_drug_BRD-K43149758_perttime_6_dose_10um.txt.xlsx', 'Myricetin',
 				'output_drug_BRD-K55591206_perttime_6_dose_10um.txt.xlsx', 'Epigallocatechin gallate', 
-				'meta', 'down', 'venn_meta_dinamic', 'pathways');
+				'meta', 'down', 'venn_meta_dynamic', 'pathways');
 		*/
 		drawVenn('meta_MCF7_venn_path-up',
 				'output_N-acetylcysteine.xlsx', 'N-acetylcysteine',
 				'output_Myricetin.xlsx', 'Myricetin',
 				'output_Epigallocatechin gallate.xlsx', 'Epigallocatechin gallate', 
-				'meta', 'up', 'MCF7_venn_meta_dinamic', 'MCF7');
+				'meta', 'up', 'MCF7_venn_meta_dynamic', 'MCF7');
 		drawVenn('meta_MCF7_venn_path-down',
 					'output_N-acetylcysteine.xlsx', 'N-acetylcysteine',
 					'output_Myricetin.xlsx', 'Myricetin',
 					'output_Epigallocatechin gallate.xlsx', 'Epigallocatechin gallate', 
-					'meta', 'down', 'MCF7_venn_meta_dinamic', 'MCF7');
+					'meta', 'down', 'MCF7_venn_meta_dynamic', 'MCF7');
 		
 // Aging
 		/*
@@ -271,23 +271,23 @@ $(document).ready(function(){
 			'output_drug_BRD-K59058747_perttime_6_dose_10um.txt.xlsx', 'N-acetylcysteine',
 			'output_drug_BRD-K43149758_perttime_6_dose_10um.txt.xlsx', 'Myricetin',
 			'output_drug_BRD-K55591206_perttime_6_dose_10um.txt.xlsx', 'Epigallocatechin gallate', 
-			'age', 'up', 'venn_meta_dinamic', 'pathways');
+			'age', 'up', 'venn_meta_dynamic', 'pathways');
 		drawVenn('venn_age-down',
 				'output_drug_BRD-K59058747_perttime_6_dose_10um.txt.xlsx', 'N-acetylcysteine',
 				'output_drug_BRD-K43149758_perttime_6_dose_10um.txt.xlsx', 'Myricetin',
 				'output_drug_BRD-K55591206_perttime_6_dose_10um.txt.xlsx', 'Epigallocatechin gallate', 
-				'age', 'down', 'venn_meta_dinamic', 'pathways');
+				'age', 'down', 'venn_meta_dynamic', 'pathways');
 		*/
 		drawVenn('MCF7_venn_age-up',
 				'output_N-acetylcysteine.xlsx', 'N-acetylcysteine',
 				'output_Myricetin.xlsx', 'Myricetin',
 				'output_Epigallocatechin gallate.xlsx', 'Epigallocatechin gallate', 
-				'age', 'up', 'MCF7_venn_age_dinamic', 'MCF7');
+				'age', 'up', 'MCF7_venn_age_dynamic', 'MCF7');
 		drawVenn('MCF7_venn_age-down',
 					'output_N-acetylcysteine.xlsx', 'N-acetylcysteine',
 					'output_Myricetin.xlsx', 'Myricetin',
 					'output_Epigallocatechin gallate.xlsx', 'Epigallocatechin gallate', 
-					'age', 'down', 'MCF7_venn_age_dinamic', 'MCF7');
+					'age', 'down', 'MCF7_venn_age_dynamic', 'MCF7');
 		
 		
 		
