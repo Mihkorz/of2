@@ -33,6 +33,10 @@ function drawCorrelationTable(reportID, id, file_name, tf_group_name){
 	
 	$('#'+id).on( 'draw.dt', function () {
 		
+		var substring = 'MEXP'
+		
+		if ($(this).text().indexOf(substring) == -1) {
+		
     	$("table#"+id+".path tr td:first-child").each(function(){
     		$(this).wrapInner('<a target="_blanc" href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc='+$(this).text()+'"></a>');
     	});
@@ -40,6 +44,16 @@ function drawCorrelationTable(reportID, id, file_name, tf_group_name){
     	$("table#"+id+".path tr td:nth-child(4)").each(function(){
     		$(this).wrapInner('<a target="_blanc" href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc='+$(this).text()+'"></a>');
     	});
+		}
+		else{
+			$("table#"+id+".path tr td:first-child").each(function(){
+	    		$(this).wrapInner('<a target="_blanc" href="https://www.ebi.ac.uk/arrayexpress/experiments/'+$(this).text()+'/"></a>');
+	    	});
+	    	        
+	    	$("table#"+id+".path tr td:nth-child(4)").each(function(){
+	    		$(this).wrapInner('<a target="_blanc" href="https://www.ebi.ac.uk/arrayexpress/experiments/'+$(this).text()+'/"></a>');
+	    	});
+		}
     
 	} );
 	
