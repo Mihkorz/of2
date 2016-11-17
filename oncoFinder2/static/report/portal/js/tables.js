@@ -87,6 +87,12 @@ function drawGeneChart(reportID, gene_name, categories){
 			     	
 			     	options.xAxis.categories = categories.split(',');
 			     	
+			     	if (reportID == 9){
+			     		
+			     		if (categories.length<=2) options.xAxis.categories = ['Case', 'Reference'];
+			     		
+			     	}
+			     	
 			        var chart = new Highcharts.Chart(options);
 			        
 			     }).fail(function( jqxhr, textStatus, error ) {
