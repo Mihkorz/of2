@@ -524,7 +524,10 @@ class ReportGeneBoxplotJson(TemplateView):
                 
                 lNorm = [lower_whisker, lower_quartile, median, upper_quartile, upper_whisker]
                 
-                series_tumour.append(lNorm)
+                
+                if report.id!=6:
+                
+                    series_tumour.append(lNorm)
                 
                 
                 
