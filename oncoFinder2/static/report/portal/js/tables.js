@@ -87,7 +87,7 @@ function drawGeneChart(reportID, gene_name, categories){
 			     	
 			     	options.xAxis.categories = categories.split(',');
 			     	
-			     	if (reportID == 9){
+			     	if (reportID == 6){
 			     		
 			     		if (categories.length<=2) options.xAxis.categories = ['Case', 'Reference'];
 			     		
