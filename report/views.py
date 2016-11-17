@@ -526,8 +526,11 @@ class ReportGeneBoxplotJson(TemplateView):
                 
                 
                 if report.id!=6:
+                    series_tumour.append(lNorm)
+                else:
                     if len(lcategories)<2:
                         series_tumour.append(lNorm)
+                    
                 
                 
                 
