@@ -86,6 +86,12 @@ function drawGeneChart(reportID, gene_name, categories){
 			       }
 			     	
 			     	options.xAxis.categories = categories.split(',');
+			     	
+			     	if (reportID == 6){
+			     	
+			     		options.xAxis.categories = categories.split(',').splice(-1,1);
+			     	}
+			     	
 			        var chart = new Highcharts.Chart(options);
 			        
 			     }).fail(function( jqxhr, textStatus, error ) {
