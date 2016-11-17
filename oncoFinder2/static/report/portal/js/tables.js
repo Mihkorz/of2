@@ -72,15 +72,18 @@ function drawGeneChart(reportID, gene_name, categories){
 			     	options.series[0] = data;
 			     	options.title.text = gene_name;
 			     	
-			     	//if only one category for vulcano
-			     	lcategories = categories.split(',')
-			     	if (lcategories.length<2){
-			     		if(lcategories[0].indexOf('A549') !== -1) categories+=',DMSO_A549';
-			     		if(lcategories[0].indexOf('MCF7') !== -1) categories+=',DMSO_MCF7';
-			     	}
-			     	else{
+			     	if (reportID == 4){
+			     	  //if only one category for vulcano
+			     	  lcategories = categories.split(',')
+			     	  if (lcategories.length<2){
+			     		  if(lcategories[0].indexOf('A549') !== -1) categories+=',DMSO_A549';
+			     		  if(lcategories[0].indexOf('MCF7') !== -1) categories+=',DMSO_MCF7';
+			     	  }
+			     	  else{
 			     		categories+=',DMSO_A549,DMSO_MCF7';
-			     	}
+			     	  }
+			     	
+			       }
 			     	
 			     	options.xAxis.categories = categories.split(',');
 			        var chart = new Highcharts.Chart(options);
