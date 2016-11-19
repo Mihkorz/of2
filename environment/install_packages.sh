@@ -20,4 +20,4 @@ if [ ! -f /etc/apt/sources.list.d/R.list ]; then
 fi
 
 echo "Installing required packages..."
-apt-get install -y $(cat pkg.list | grep -v "^#")
+apt-get install -y $(cat packages.list | grep -v "^#")

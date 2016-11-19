@@ -1,3 +1,5 @@
+# Ubuntu 14.04
+
 python-dev
 
 libmysqlclient-dev
@@ -20,3 +22,6 @@ r-base-dev
 
 # pygraphviz
 graphviz libgraphviz-dev pkg-config
+
+# for rJava:
+# liblzma-dev
