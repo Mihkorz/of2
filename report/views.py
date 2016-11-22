@@ -50,7 +50,9 @@ class ReportDetail(DetailView):
         if self.get_object().id==4 or self.get_object().id==8:
             self.template_name = 'report/report_detail_az.html' 
         if self.get_object().id==6 or self.get_object().id==9:
-            self.template_name = 'report/report_detail_jjms.html'    
+            self.template_name = 'report/report_detail_jjms.html'
+        if self.get_object().id==7 or self.get_object().id==13:
+            self.template_name = 'report/report_detail_abovebeyond.html'    
         
         return super(ReportDetail, self).dispatch(request, *args, **kwargs)
     
@@ -126,7 +128,9 @@ class ReportGeneVolcanoJson(TemplateView):
                             df_gene = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name, sep='\t')
                             df_gene = df_gene[['SYMBOL', 'logFC', 'adj.P.Val']]
                         except:
-                            raise
+                            df_gene = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name, sep=None)
+                            df_gene = df_gene[['SYMBOL', 'log2FoldChange', 'padj']]
+                            df_gene.rename(columns={'log2FoldChange': 'logFC', 'padj': 'adj.P.Val'}, inplace=True)
                             
                     
                 
@@ -213,10 +217,12 @@ class ReportGeneTableJson(TemplateView):
                                 df_gene = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name, sep='\t')
                                 df_gene = df_gene[['SYMBOL', 'logFC', 'adj.P.Val']]
                             except:
-                                raise
+                                df_gene = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name, sep=None)
+                                df_gene = df_gene[['SYMBOL', 'log2FoldChange', 'padj']]
+                                df_gene.rename(columns={'log2FoldChange': 'logFC', 'padj': 'adj.P.Val'}, inplace=True)
                             
                 
-                
+                #raise Exception('stop')
                 df_gene.fillna(1, inplace=True)
                 
                 
@@ -247,9 +253,12 @@ class ReportGeneTableJson(TemplateView):
             for group in report.genegroup_set.all():
                 
                 try:
-                    df = pd.read_csv(group.doc_logfc.path, sep='\t', index_col='SYMBOL')
+                    df = pd.read_csv(group.doc_logfc.path, sep=None, index_col='SYMBOL')
+                    df = df[['logFC', 'adj.P.Val']]
                 except:
-                    df = pd.read_csv(group.doc_logfc.path, index_col='SYMBOL')
+                    df = pd.read_csv(group.doc_logfc.path, sep=None, index_col='SYMBOL')
+                    df = df[['log2FoldChange', 'padj']]
+                    df.rename(columns={'log2FoldChange': 'logFC', 'padj': 'adj.P.Val'}, inplace=True)
                 
                 #df.rename(columns={'log2FoldChange': 'logFC'}, inplace=True)
                 
@@ -713,9 +722,12 @@ class ReportAjaxPathwayVenn(TemplateView):
             group1 = GeneGroup.objects.get(name=lgroup[0], report=report)
             file_name1 = group1.doc_logfc.path
             try:
-                df1 = pd.read_csv(file_name1, index_col='SYMBOL')
+                df1 = pd.read_csv(file_name1, index_col='SYMBOL', sep=None)
+                df1 = df1[['logFC', 'adj.P.Val']]
             except:
-                df1 = pd.read_csv(file_name1, index_col='SYMBOL', sep='\t')
+                df1 = pd.read_csv(file_name1, index_col='SYMBOL', sep=None)
+                df1 = df1[['log2FoldChange', 'padj']]
+                df1.rename(columns={'log2FoldChange': 'logFC', 'padj': 'adj.P.Val'}, inplace=True)
             df1.replace([np.inf, -np.inf], 0, inplace=True)
             
             
@@ -730,9 +742,12 @@ class ReportAjaxPathwayVenn(TemplateView):
             group2 = GeneGroup.objects.get(name=lgroup[1], report=report)
             file_name2 = group2.doc_logfc.path
             try:
-                df2 = pd.read_csv(file_name2, index_col='SYMBOL')
+                df2 = pd.read_csv(file_name2, index_col='SYMBOL', sep=None)
+                df2 = df2[['logFC', 'adj.P.Val']]
             except:
-                df2 = pd.read_csv(file_name2, index_col='SYMBOL', sep='\t')
+                df2 = pd.read_csv(file_name2, index_col='SYMBOL', sep=None)
+                df2 = df2[['log2FoldChange', 'padj']]
+                df2.rename(columns={'log2FoldChange': 'logFC', 'padj': 'adj.P.Val'}, inplace=True)
             df2.replace([np.inf, -np.inf], 0, inplace=True)
             
             if (df2['adj.P.Val']>0.05).all():
@@ -747,9 +762,12 @@ class ReportAjaxPathwayVenn(TemplateView):
                 group3 = GeneGroup.objects.get(name=lgroup[2], report=report)
                 file_name3 = group3.doc_logfc.path
                 try:
-                    df3 = pd.read_csv(file_name3, index_col='SYMBOL')
+                    df3 = pd.read_csv(file_name3, index_col='SYMBOL', sep=None)
+                    df3 = df3[['logFC', 'adj.P.Val']]
                 except:
-                    df3 = pd.read_csv(file_name3, index_col='SYMBOL', sep='\t')
+                    df3 = pd.read_csv(file_name3, index_col='SYMBOL', sep=None)
+                    df3 = df3[['log2FoldChange', 'padj']]
+                    df3.rename(columns={'log2FoldChange': 'logFC', 'padj': 'adj.P.Val'}, inplace=True)
                 df3.replace([np.inf, -np.inf], 0, inplace=True)
                 
                 if (df3['adj.P.Val']>0.05).all():
@@ -764,9 +782,12 @@ class ReportAjaxPathwayVenn(TemplateView):
                 group4 = GeneGroup.objects.get(name=lgroup[3], report=report)
                 file_name4 = group4.doc_logfc.path
                 try:
-                    df4 = pd.read_csv(file_name4, index_col='SYMBOL')
+                    df4 = pd.read_csv(file_name4, index_col='SYMBOL', sep=None)
+                    df4 = df4[['logFC', 'adj.P.Val']]
                 except:
-                    df4 = pd.read_csv(file_name4, index_col='SYMBOL', sep='\t')
+                    df4 = pd.read_csv(file_name4, index_col='SYMBOL', sep=None)
+                    df4 = df4[['log2FoldChange', 'padj']]
+                    df4.rename(columns={'log2FoldChange': 'logFC', 'padj': 'adj.P.Val'}, inplace=True)
                 df4.replace([np.inf, -np.inf], 0, inplace=True)
                 if (df4['adj.P.Val']>0.05).all():
                     df4 = df4[(np.absolute(df4['logFC'])>2)]
@@ -967,9 +988,12 @@ class ReportAjaxPathwayVennTable(TemplateView):
                 group1 = GeneGroup.objects.get(name=lMembers[0], report=report)
                 
                 try:
-                    df_1 = pd.read_csv(group1.doc_logfc.path,  index_col='SYMBOL')
+                    df_1 = pd.read_csv(group1.doc_logfc.path,  index_col='SYMBOL', sep=None)
+                    df_1 = df_1[['logFC', 'adj.P.Val']]
                 except:
-                    df_1 = pd.read_csv(group1.doc_logfc.path,  index_col='SYMBOL', sep='\t')
+                    df_1 = pd.read_csv(group1.doc_logfc.path,  index_col='SYMBOL', sep=None)
+                    df_1 = df_1[['log2FoldChange', 'padj']]
+                    df_1.rename(columns={'log2FoldChange': 'logFC', 'padj': 'adj.P.Val'}, inplace=True)
                 
                 if (df_1['adj.P.Val']>0.05).all():
                     df_1 = df_1[(np.absolute(df_1['logFC'])>0.2)]
@@ -1014,11 +1038,17 @@ class ReportAjaxPathwayVennTable(TemplateView):
                 group2 = GeneGroup.objects.get(name=lMembers[1], report=report)
                 
                 try:
-                    df_1 = pd.read_csv(group1.doc_logfc.path,  index_col='SYMBOL')
-                    df_2 = pd.read_csv(group2.doc_logfc.path,  index_col='SYMBOL') 
+                    df_1 = pd.read_csv(group1.doc_logfc.path,  index_col='SYMBOL', sep=None)
+                    df_1 = df_1[['logFC', 'adj.P.Val']]
+                    df_2 = pd.read_csv(group2.doc_logfc.path,  index_col='SYMBOL', sep=None)
+                    df_2 = df_2[['logFC', 'adj.P.Val']] 
                 except:
-                    df_1 = pd.read_csv(group1.doc_logfc.path,  index_col='SYMBOL', sep='\t')
-                    df_2 = pd.read_csv(group2.doc_logfc.path,  index_col='SYMBOL', sep='\t') 
+                    df_1 = pd.read_csv(group1.doc_logfc.path,  index_col='SYMBOL', sep=None)
+                    df_1 = df_1[['log2FoldChange', 'padj']]
+                    df_1.rename(columns={'log2FoldChange': 'logFC', 'padj': 'adj.P.Val'}, inplace=True)
+                    df_2 = pd.read_csv(group2.doc_logfc.path,  index_col='SYMBOL', sep=None)
+                    df_2 = df_2[['log2FoldChange', 'padj']]
+                    df_2.rename(columns={'log2FoldChange': 'logFC', 'padj': 'adj.P.Val'}, inplace=True) 
                 
                 if (df_1['adj.P.Val']>0.05).all():
                     df_1 = df_1[(np.absolute(df_1['logFC'])>0.2)]

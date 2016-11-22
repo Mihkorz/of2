@@ -164,7 +164,7 @@ class ReportAdmin(admin.ModelAdmin):
                 else:
                     
                     try:
-                        df_logfc = pd.read_csv(g_group.doc_logfc,
+                        df_logfc = pd.read_csv(g_group.doc_logfc, sep=None,
                                  index_col='SYMBOL')
                     except:
                         df_logfc = pd.read_csv(g_group.doc_logfc, sep='\t',
