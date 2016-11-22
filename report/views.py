@@ -1538,7 +1538,7 @@ class ReportTfTableJson(TemplateView):
             df_tf = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name,
                                   sep=' ')
         except:
-            df_tf = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name,
+            df_tf = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name, sep=None
                                   )
                 
         df_tf.fillna(1, inplace=True)                 
@@ -1615,11 +1615,12 @@ class ReportAjaxTfDetail(TemplateView):
         # Get logFC values to color nodes
         gene_group = GeneGroup.objects.get(report=report, name=self.request.GET['group_name'])
         try:
-            df_logfc = pd.read_csv(gene_group.doc_logfc.path)                        
+            df_logfc = pd.read_csv(gene_group.doc_logfc.path, sep=None)                        
             df_logfc = df_logfc[['SYMBOL', 'logFC']]
         except:
-            df_logfc = pd.read_csv(gene_group.doc_logfc.path, sep='\t')                        
-            df_logfc = df_logfc[['SYMBOL', 'logFC']]
+            df_logfc = pd.read_csv(gene_group.doc_logfc.path, sep=None)                        
+            df_logfc = df_logfc[['SYMBOL', 'log2FoldChange', 'padj']]
+            df_logfc.rename(columns={'log2FoldChange': 'logFC', 'padj': 'adj.P.Val'}, inplace=True)
             
         df_logfc = df_logfc[df_logfc['SYMBOL'].isin(ldifferential)]
         df_logfc.dropna(inplace=True)
