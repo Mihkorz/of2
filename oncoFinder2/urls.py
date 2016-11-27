@@ -253,8 +253,7 @@ urlpatterns = patterns('',
     ################### FOOD testing mode ###############################################
     url(r'^food/$', FoodIndex.as_view(), name="food_index"),
     url(r'^food/search/$', FoodSearch.as_view(), name="food_search"),
-    
-    
 
-   
+    ################### Housekeeping ###############################################
+    url(r'^housekeeping/', include('housekeeping.urls')),
 )

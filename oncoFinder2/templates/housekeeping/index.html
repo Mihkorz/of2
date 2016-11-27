@@ -1,0 +1,70 @@
+{% extends "base_profiles.html" %}
+
+{% block title %}Housekeeping | OncoFinder v2.0{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <h1>Housekeeping</h1>
+
+{#    <a href="pathway">Pathway</a>#}
+
+    <h2>Update pathway</h2>
+  </div>
+  <div class="row">
+    <div class="form-group">
+      File at the server:
+{#      <input type="text" class="form-control" id="file-input" value="/home/victor/prj/bio/oncofinder/tasks/20161125_upload_path/mycn_Response_final.xls">#}
+      <input type="text" class="form-control" id="file-input">
+    </div>
+    <div class="form-group">
+      Organism:
+{#      <input type="text" class="form-control" id="organism-input" value="human2">#}
+      <input type="text" class="form-control" id="organism-input">
+    </div>
+    <div class="form-group">
+      Database:
+{#      <input type="text" class="form-control" id="database-input" value="sandbox">#}
+      <input type="text" class="form-control" id="database-input">
+    </div>
+    <div class="form-group">
+      <button class="btn btn-primary" onclick="updatePathway()">Upload</button>
+    </div>
+  </div>
+  <div class="row">
+    <div id="update-pathway-result"></div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  function updatePathway() {
+    // TODO: progress indicator
+    $.ajax({
+      type: 'POST',
+      url: '/housekeeping/ajax/',
+      dataType: 'json',
+      data: JSON.stringify({
+        task: 'update_pathway',
+        args: {
+          filepath: $('#file-input').val(),
+          organism: $('#organism-input').val(),
+          database: $('#database-input').val()
+        }
+      }),
+      contentType: 'application/json; charset=utf-8',
+      success: function (response) {
+        $('#update-pathway-result').html(
+            '<div class="alert alert-warning">Result is unreliable; there are too many "try-except: everything".</div>' +
+            '<div class="alert alert-success">Success.</div>'
+        );
+      },
+      error: function (response) {
+        $('#update-pathway-result').html(
+            '<div class="alert alert-danger">Error.</div>' +
+            '<pre>' + response.responseText + '</pre>'
+        );
+      }
+    });
+  }
+</script>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "base_profiles.html" %}
+
+{% block title %}Housekeeping | OncoFinder v2.0{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <h1>Housekeeping &gt; Pathway</h1>
+    <h2>Upload pathway</h2>
+  </div>
+  <div class="row">
+    <form action="/housekeeping/pathway/" id="doc_create_form" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <input type="submit" class="btn btn-primary" value="Submit"/>
+    </form>
+  </div>
+  <div class="row">
+    <div id="update-pathway-result"></div>
+  </div>
+</div>
+{% endblock %}
