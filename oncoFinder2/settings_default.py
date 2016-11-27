@@ -1,6 +1,7 @@
 import os
 import socket
 
+
 PROJECT_DIR = os.path.realpath(os.path.dirname(__file__))
 
 # CELERY SETTINGS
@@ -233,6 +234,11 @@ LOGGING = {
             'class': 'logging.StreamHandler',
             'formatter': 'simple'
         },
+        'console_full': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose'
+        },
         'mail_admins': {
             'level': 'ERROR',
             'filters': ['require_debug_false'],
@@ -251,7 +257,7 @@ LOGGING = {
             'propagate': False
         },
         'oncoFinder': {
-            'handlers': ['log_file', 'syslog', 'mail_admins'],
+            'handlers': ['console_full', 'log_file', 'syslog', 'mail_admins'],
             'level': 'INFO',
         },
         'oncoFinder.email': {

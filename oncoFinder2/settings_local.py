@@ -1,5 +1,5 @@
 """
-Environment-specific settings.
+Machine-specific settings.
 """
 from settings_default import *
 
@@ -34,6 +34,9 @@ if socket.gethostname() in ['mikhail', 'mikhailComp', 'ubu-node304']:
     INSTALLED_APPS += ('debug_toolbar',)
 
     APP_ENVIRONMENT = 'DEV'
+
+    if socket.gethostname() == 'ubu-node304':
+        LOGGING['loggers']['oncoFinder']['level'] = 'DEBUG'
 
 
 if socket.gethostname() == 'of-uat':
