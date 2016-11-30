@@ -5,7 +5,7 @@ from pandas import read_excel
 from core.models import Pathway, Gene, Node, Component, Relation
 
 
-def maxim_format_pathway(filepath, organism, database):
+def maxim_format_pathway(filepath, organism, database, message_log):
     """
     Add new pathway to OF database
     using Maxim pathway file format
@@ -22,7 +22,11 @@ def maxim_format_pathway(filepath, organism, database):
     try:  # check if pathway already exists
         new_path = Pathway.objects.get(name=pathname, organism=organism, database=database)
     except:  # if not, add new
-        log.info('Missing pathway ({}, {}, {})'.format(pathname, organism, database), exc_info=1)
+        msg = 'Missing pathway ({}, {}, {})'.format(pathname, organism, database)
+        log.info(msg, exc_info=1)
+        if message_log:
+            message_log.info(msg)
+
         new_path = Pathway(name=pathname, amcf=0, organism=organism, database=database)
         new_path.save()
 
@@ -40,7 +44,10 @@ def maxim_format_pathway(filepath, organism, database):
         df_genes.columns = ['gene', 'arr']
         df_genes.apply(add_gene, axis=1, path=new_path)
     except:
-        log.info('Failed to load genes from Excel file "{}".'.format(filepath), exc_info=1)
+        msg = 'Failed to load genes from Excel file "{}".'.format(filepath)
+        log.warning(msg, exc_info=1)
+        if message_log:
+            message_log.error(msg)
 
     ##############################################################################
     # Add Nodes and Components. Update Node names
@@ -71,7 +78,10 @@ def maxim_format_pathway(filepath, organism, database):
 
         df_nodes.apply(add_node_and_components, axis=1, path=new_path)
     except:
-        log.info('Failed to load nodes from Excel file "{}".'.format(filepath), exc_info=1)
+        msg = 'Failed to load nodes from Excel file "{}".'.format(filepath)
+        log.warning(msg, exc_info=1)
+        if message_log:
+            message_log.error(msg)
 
     # Update Node names
 
@@ -88,7 +98,10 @@ def maxim_format_pathway(filepath, organism, database):
         df_node_names.columns = ['new name']
         df_node_names.apply(update_node_name, axis=1, path=new_path)
     except:
-        log.info('Failed to load node_names from Excel file "{}".'.format(filepath), exc_info=1)
+        msg = 'Failed to load node_names from Excel file "{}".'.format(filepath)
+        log.warning(msg, exc_info=1)
+        if message_log:
+            message_log.error(msg)
 
     ##############################################################################
     # Add Relations
@@ -117,4 +130,7 @@ def maxim_format_pathway(filepath, organism, database):
         df_rels.columns = ['from', 'to', 'reltype']
         df_rels.apply(add_relation, axis=1, sNodes=df_nodes_name, path=new_path)
     except:
-        log.info('Failed to load edges from Excel file "{}".'.format(filepath), exc_info=1)
+        msg = 'Failed to load edges from Excel file "{}".'.format(filepath)
+        log.warning(msg, exc_info=1)
+        if message_log:
+            message_log.error(msg)

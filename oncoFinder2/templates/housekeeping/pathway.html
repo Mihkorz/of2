@@ -5,14 +5,18 @@
 {% block content %}
 <div class="container">
   <div class="row">
+    {% include "messages.html" %}
+  </div>
+
+  <div class="row">
     <h1>Housekeeping &gt; Pathway</h1>
-    <h2>Upload pathway</h2>
+    <h2>Update pathway</h2>
   </div>
   <div class="row">
     <form action="/housekeeping/pathway/" id="doc_create_form" method="post" enctype="multipart/form-data">
       {% csrf_token %}
       {{ form.as_p }}
-      <input type="submit" class="btn btn-primary" value="Submit"/>
+      <input type="submit" class="btn btn-primary" value="Update"/>
     </form>
   </div>
   <div class="row">

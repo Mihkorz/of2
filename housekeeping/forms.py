@@ -3,4 +3,6 @@ from django import forms
 
 class UpdatePathwayForm(forms.Form):
 
-    pathway = forms.CharField(label='Pathway', max_length=255)
+    filename = forms.CharField(label='File', max_length=255)
+    database = forms.CharField(label='Database', max_length=255)
+    organism = forms.CharField(label='Organism', max_length=255)
