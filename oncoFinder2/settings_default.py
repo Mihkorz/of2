@@ -1,6 +1,8 @@
 import os
 import socket
 
+from django.contrib.messages import constants as messages_constants
+
 
 PROJECT_DIR = os.path.realpath(os.path.dirname(__file__))
 
@@ -115,6 +117,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.media',
     'django.core.context_processors.static',
     'django.core.context_processors.request',
+    'django.contrib.messages.context_processors.messages',
 
     'oncoFinder2.context_processor.app_settings',
 )
@@ -192,6 +195,8 @@ PATIENT_UPLOAD_FILES_SUPPORTED_FORMATS = (
     'xls',
     'xlsx',
 )
+
+MESSAGE_LEVEL = messages_constants.DEBUG
 
 APP_ENVIRONMENT = 'PROD'
 
