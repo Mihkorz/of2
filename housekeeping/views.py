@@ -7,7 +7,7 @@ from django.utils.decorators import method_decorator
 from django.views.generic import FormView
 from django.views.generic.base import TemplateView, View
 
-from essence.pathways import maxim_format_pathway
+from core.models import maxim_format_pathway
 from housekeeping.forms import UpdatePathwayForm
 from oncofinder_utils.django_helpers import MessageLog
 
@@ -55,6 +55,7 @@ class HousekeepingPathwayView(FormView):
 
     def form_valid(self, form):
         dct = form.cleaned_data
-        message_log = MessageLog(self.request)
-        maxim_format_pathway(dct['filename'], dct['organism'], dct['database'], message_log)
+        file_obj = self.request.FILES['filename']
+        maxim_format_pathway(file_obj, dct['organism'], dct['database'], MessageLog(self.request))
+
         return super(HousekeepingPathwayView, self).form_valid(form)

@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
+import logging
 import os
 
 from django.db import models
+from pandas import read_excel
 
 from .utils import link_to_object
+
 
 def get_document_upload_path(instance, file_name):
     return os.path.join('Pathway_images', file_name)
@@ -19,16 +22,16 @@ PATHWAY_DATABASE = (
     ('biocarta', 'Biocarta'),
     ('reactome', 'Reactome'),
     ('kegg_adjusted', 'KEGG Adjusted Pathway Database'),
-    ('kegg_10', 'KEGG 10'),
-    ('kegg_adjusted_10', 'KEGG Adjusted 10'),
-    ('aging', 'Aging related'), 
+    ('kegg_10', 'KEGG 10+ genes'),
+    ('kegg_adjusted_10', 'KEGG Adjusted 10+ genes'),
+    ('aging', 'Aging related'),
     ('sandbox', 'Sandbox'),
 )
 
 PATHWAY_ORGANISM = (
     ('human', 'Human'),
     ('mouse', 'Mouse'),
-) 
+)
 
 class Pathway(models.Model):
     pathway_id = models.CharField(verbose_name='ID', max_length=30, blank=True)
@@ -79,7 +82,8 @@ class Gene(models.Model):
     def clean(self):
         super(Gene, self).clean()
         self.name = self.name.strip(" \t").replace(" ", "_")
- 
+
+
 class Node(models.Model):
     name = models.CharField(verbose_name='Node name', max_length=250, blank=False)
     comment =  models.TextField(blank=True)
@@ -102,9 +106,11 @@ class Node(models.Model):
     def in_rel(self):
         return link_to_object(self.inrelations.all())
     in_rel.allow_tags = True
+
     def out_rel(self):
         return link_to_object(self.outrelations.all())
     out_rel.allow_tags = True
+
 
 class Component(models.Model):
     name = models.CharField(verbose_name='Component name', max_length=250, blank=False)
@@ -123,7 +129,8 @@ class Component(models.Model):
     def clean(self):
         super(Component, self).clean()
         self.name = self.name.strip(" \t").replace(" ", "_")
-        
+
+
 RELATION_INHIBITOR = '0'
 RELATION_ACTIVATOR = '1'
 RELATION_UNKNOWN = '2'
@@ -131,9 +138,8 @@ RELATION_TYPES = (
     (RELATION_INHIBITOR, 'inhibition'),
     (RELATION_ACTIVATOR, 'activation'),
     (RELATION_UNKNOWN, 'unknown'),
-   
 )
-    
+
 class Relation(models.Model):
     reltype = models.CharField(max_length=250, blank=False, choices=RELATION_TYPES, default=1)
     comment = models.TextField(blank=True)
@@ -148,3 +154,138 @@ class Relation(models.Model):
     
     def pathway(self):
         return self.fromnode.pathway
+
+
+def _pathway_name_for_file(file_obj):
+    file_name = os.path.basename(file_obj.name)
+    pathway_name = file_name.replace('.xls', '').replace(' ', '_')  # get pathname from filename
+    return pathway_name
+
+
+def maxim_format_pathway(file_obj, organism, database, message_log):
+    """
+    Add new pathway to OF database
+    using Maxim pathway file format
+    Format: Excel file with corresponding sheetnames
+
+    All code with 'apply' functions is wrapped in try-except for debugging reasons if needed
+    """
+    log = logging.getLogger('oncoFinder')
+
+    pathname = _pathway_name_for_file(file_obj)
+
+    try:  # check if pathway already exists
+        new_path = Pathway.objects.get(name=pathname, organism=organism, database=database)
+    except:  # if not, add new
+        msg = 'Adding missing pathway ({}, {}, {}).'.format(pathname, organism, database)
+        log.info(msg, exc_info=1)
+        if message_log:
+            message_log.info(msg)
+
+        new_path = Pathway(name=pathname, amcf=0, organism=organism, database=database)
+        new_path.save()
+
+    ##############################################################################
+    # Add Genes
+    ##############################################################################
+
+    def add_gene(row, path):
+        if row['arr'] != 'missing':
+            g = Gene(name=row['gene'], arr=row['arr'], pathway=path)
+            g.save()
+
+    try:
+        df_genes = read_excel(file_obj, sheetname='genes', header=None).fillna('missing')
+        df_genes.columns = ['gene', 'arr']
+        df_genes.apply(add_gene, axis=1, path=new_path)
+    except:
+        msg = 'Failed to load genes from Excel file "{}".'.format(file_obj.name)
+        log.warning(msg, exc_info=1)
+        if message_log:
+            message_log.error(msg)
+
+    ##############################################################################
+    # Add Nodes and Components. Update Node names
+    ##############################################################################
+
+    def add_node_and_components(row, path):
+
+        node_name = row.name
+        try:
+            new_node = Node.objects.get(name=node_name, pathway=path)
+        except:
+            log.info('Missing node ({}, {})'.format(node_name, path), exc_info=1)
+            new_node = Node(name=node_name, pathway=path)
+            new_node.save()
+        row = row[row != 1]
+        row.dropna(inplace=True)  # taking into account different row lengths for different nodes
+        for component in row:
+            new_component = Component(name=component, node=new_node)
+            new_component.save()
+
+    try:
+        df_nodes = read_excel(file_obj, sheetname='nodes', header=None, index_col=0)
+        df_nodes.drop(1, axis=1, inplace=True)
+        df_nodes_name = df_nodes[2]
+
+        # Node name = name of the first component in row
+        # see file for more details
+
+        df_nodes.apply(add_node_and_components, axis=1, path=new_path)
+    except:
+        msg = 'Failed to load nodes from Excel file "{}".'.format(file_obj.name)
+        log.warning(msg, exc_info=1)
+        if message_log:
+            message_log.error(msg)
+
+    # Update Node names
+
+    def update_node_name(row, path):
+        name = row.name
+        normal_name = row['new name']
+
+        node = Node.objects.get(name=name, pathway=path)
+        node.name = normal_name
+        node.save()
+
+    try:
+        df_node_names = read_excel(file_obj, sheetname='node_names', header=None, index_col=0)
+        df_node_names.columns = ['new name']
+        df_node_names.apply(update_node_name, axis=1, path=new_path)
+    except:
+        msg = 'Failed to load node_names from Excel file "{}".'.format(file_obj.name)
+        log.warning(msg, exc_info=1)
+        if message_log:
+            message_log.error(msg)
+
+    ##############################################################################
+    # Add Relations
+    ##############################################################################
+
+    def add_relation(row, sNodes, path):
+        from_node_name = row['from']
+        to_node_name = row['to']
+
+        reltype = 2  # default value=2(unknown) to draw black arrows
+        if row['reltype'] == 'activation':
+            reltype = 1
+        if row['reltype'] == 'inhibition':
+            reltype = 0
+        if row['reltype'] == 'unknown':
+            reltype = 2
+
+        db_node_from = Node.objects.get(name=from_node_name, pathway=path)
+        db_nodeto = Node.objects.get(name=to_node_name, pathway=path)
+
+        nrel = Relation(fromnode=db_node_from, tonode=db_nodeto, reltype=reltype)
+        nrel.save()
+
+    try:
+        df_rels = read_excel(file_obj, sheetname='edges', header=None)
+        df_rels.columns = ['from', 'to', 'reltype']
+        df_rels.apply(add_relation, axis=1, sNodes=df_nodes_name, path=new_path)
+    except:
+        msg = 'Failed to load edges from Excel file "{}".'.format(file_obj.name)
+        log.warning(msg, exc_info=1)
+        if message_log:
+            message_log.error(msg)

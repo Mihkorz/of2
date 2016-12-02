@@ -1,31 +1,20 @@
 # -*- coding: utf-8 -*-
 
 from django import forms
+
+from core.models import PATHWAY_DATABASE, PATHWAY_ORGANISM
 from profiles.models import ShambalaDocument
+
 
 class CalculationParametersForm(forms.Form):
     
     NORM_CHOICES = (('2', 'Geometric',),
                     ('1', 'Arithmetic',))
     
-    ORGANISM_CHOICES = (('human', 'Human',),
-                       ('mouse', 'Mouse',))
-    
-    DB_CHOICES = (('primary_old', 'Primary Pathway Database (old)'),
-                  ('primary_new', 'Primary Pathway Database (new)'),
-                  ('metabolism', 'Metabolism Pathway Database'),
-                  ('cytoskeleton', 'Cytoskeleton Pathway Database'),
-                  ('kegg', 'KEGG Pathway Database'),
-                  ('nci', 'NCI Pathway Database'),
-                  ('biocarta', 'Biocarta'),
-                  ('reactome', 'Reactome'),
-                  ('kegg_adjusted', 'KEGG Adjusted Pathway Database'),
-                  ('kegg_10', 'KEGG >10 genes'),
-                  ('kegg_adjusted_10', 'KEGG Adjusted >10 genes'),
-                  ('aging', 'Aging related'),
-                  ('sandbox', 'Sandbox'),
-        )
-    
+    ORGANISM_CHOICES = PATHWAY_ORGANISM
+
+    DB_CHOICES = PATHWAY_DATABASE
+
     DB_CHOICES_DRUG = (('oncofinder', 'OncoFinder'),
                        ('geroscope', 'GeroScope'),
                       )
