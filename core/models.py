@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-import logging
 import os
 
-from django.db import models
+from django.db import models, transaction
 from pandas import read_excel
 
 from .utils import link_to_object
@@ -162,28 +161,29 @@ def _pathway_name_for_file(file_obj):
     return pathway_name
 
 
-def maxim_format_pathway(file_obj, organism, database, message_log):
-    """
-    Add new pathway to OF database
-    using Maxim pathway file format
-    Format: Excel file with corresponding sheetnames
+def import_pathway(file_obj, organism, database):
+    with transaction.atomic():
+        _import_pathway_unsafe(file_obj, organism, database)
 
-    All code with 'apply' functions is wrapped in try-except for debugging reasons if needed
-    """
-    log = logging.getLogger('oncoFinder')
 
+def _import_pathway_unsafe(file_obj, organism, database):
+    # try to load objects from file to fail early
+    file_obj.seek(0)
+    df_genes = read_excel(file_obj, sheetname='genes', header=None).fillna('missing')
+    file_obj.seek(0)
+    df_nodes = read_excel(file_obj, sheetname='nodes', header=None, index_col=0)
+    file_obj.seek(0)
+    df_node_names = read_excel(file_obj, sheetname='node_names', header=None, index_col=0)
+    file_obj.seek(0)
+    df_rels = read_excel(file_obj, sheetname='edges', header=None)
+
+    # create new pathway
     pathname = _pathway_name_for_file(file_obj)
+    if Pathway.objects.filter(name=pathname, organism=organism, database=database).exists():
+        raise RuntimeError('Pathway "{}" already exists.'.format(pathname))
 
-    try:  # check if pathway already exists
-        new_path = Pathway.objects.get(name=pathname, organism=organism, database=database)
-    except:  # if not, add new
-        msg = 'Adding missing pathway ({}, {}, {}).'.format(pathname, organism, database)
-        log.info(msg, exc_info=1)
-        if message_log:
-            message_log.info(msg)
-
-        new_path = Pathway(name=pathname, amcf=0, organism=organism, database=database)
-        new_path.save()
+    new_path = Pathway(name=pathname, amcf=0, organism=organism, database=database)
+    new_path.save()
 
     ##############################################################################
     # Add Genes
@@ -194,52 +194,39 @@ def maxim_format_pathway(file_obj, organism, database, message_log):
             g = Gene(name=row['gene'], arr=row['arr'], pathway=path)
             g.save()
 
-    try:
-        df_genes = read_excel(file_obj, sheetname='genes', header=None).fillna('missing')
-        df_genes.columns = ['gene', 'arr']
-        df_genes.apply(add_gene, axis=1, path=new_path)
-    except:
-        msg = 'Failed to load genes from Excel file "{}".'.format(file_obj.name)
-        log.warning(msg, exc_info=1)
-        if message_log:
-            message_log.error(msg)
+    df_genes.columns = ['gene', 'arr']
+    df_genes.apply(add_gene, axis=1, path=new_path)
 
     ##############################################################################
     # Add Nodes and Components. Update Node names
     ##############################################################################
 
     def add_node_and_components(row, path):
-
         node_name = row.name
-        try:
-            new_node = Node.objects.get(name=node_name, pathway=path)
-        except:
-            log.info('Missing node ({}, {})'.format(node_name, path), exc_info=1)
-            new_node = Node(name=node_name, pathway=path)
-            new_node.save()
+
+        if Node.objects.filter(name=node_name, pathway=path).exists():
+            raise RuntimeError('Node "{}" already exists for pathway "{}".'.format(node_name, path))
+
+        new_node = Node(name=node_name, pathway=path)
+        new_node.save()
+
         row = row[row != 1]
         row.dropna(inplace=True)  # taking into account different row lengths for different nodes
         for component in row:
             new_component = Component(name=component, node=new_node)
             new_component.save()
 
-    try:
-        df_nodes = read_excel(file_obj, sheetname='nodes', header=None, index_col=0)
-        df_nodes.drop(1, axis=1, inplace=True)
-        df_nodes_name = df_nodes[2]
+    df_nodes.drop(1, axis=1, inplace=True)
+    df_nodes_name = df_nodes[2]
 
-        # Node name = name of the first component in row
-        # see file for more details
+    # Node name = name of the first component in row
+    # see file for more details
 
-        df_nodes.apply(add_node_and_components, axis=1, path=new_path)
-    except:
-        msg = 'Failed to load nodes from Excel file "{}".'.format(file_obj.name)
-        log.warning(msg, exc_info=1)
-        if message_log:
-            message_log.error(msg)
+    df_nodes.apply(add_node_and_components, axis=1, path=new_path)
 
     # Update Node names
 
+    # TODO: why do we need it?
     def update_node_name(row, path):
         name = row.name
         normal_name = row['new name']
@@ -248,15 +235,8 @@ def maxim_format_pathway(file_obj, organism, database, message_log):
         node.name = normal_name
         node.save()
 
-    try:
-        df_node_names = read_excel(file_obj, sheetname='node_names', header=None, index_col=0)
-        df_node_names.columns = ['new name']
-        df_node_names.apply(update_node_name, axis=1, path=new_path)
-    except:
-        msg = 'Failed to load node_names from Excel file "{}".'.format(file_obj.name)
-        log.warning(msg, exc_info=1)
-        if message_log:
-            message_log.error(msg)
+    df_node_names.columns = ['new name']
+    df_node_names.apply(update_node_name, axis=1, path=new_path)
 
     ##############################################################################
     # Add Relations
@@ -266,26 +246,18 @@ def maxim_format_pathway(file_obj, organism, database, message_log):
         from_node_name = row['from']
         to_node_name = row['to']
 
-        reltype = 2  # default value=2(unknown) to draw black arrows
         if row['reltype'] == 'activation':
-            reltype = 1
-        if row['reltype'] == 'inhibition':
-            reltype = 0
-        if row['reltype'] == 'unknown':
-            reltype = 2
+            reltype = RELATION_ACTIVATOR
+        elif row['reltype'] == 'inhibition':
+            reltype = RELATION_INHIBITOR
+        else:
+            reltype = RELATION_UNKNOWN  # to draw black arrows
 
         db_node_from = Node.objects.get(name=from_node_name, pathway=path)
-        db_nodeto = Node.objects.get(name=to_node_name, pathway=path)
+        db_node_to = Node.objects.get(name=to_node_name, pathway=path)
 
-        nrel = Relation(fromnode=db_node_from, tonode=db_nodeto, reltype=reltype)
+        nrel = Relation(fromnode=db_node_from, tonode=db_node_to, reltype=reltype)
         nrel.save()
 
-    try:
-        df_rels = read_excel(file_obj, sheetname='edges', header=None)
-        df_rels.columns = ['from', 'to', 'reltype']
-        df_rels.apply(add_relation, axis=1, sNodes=df_nodes_name, path=new_path)
-    except:
-        msg = 'Failed to load edges from Excel file "{}".'.format(file_obj.name)
-        log.warning(msg, exc_info=1)
-        if message_log:
-            message_log.error(msg)
+    df_rels.columns = ['from', 'to', 'reltype']
+    df_rels.apply(add_relation, axis=1, sNodes=df_nodes_name, path=new_path)

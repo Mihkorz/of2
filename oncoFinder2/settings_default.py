@@ -200,6 +200,9 @@ MESSAGE_LEVEL = messages_constants.DEBUG
 
 APP_ENVIRONMENT = 'PROD'
 
+APP_RESUORCES_ROOT = os.path.normpath(os.path.join(PROJECT_DIR, '..', '..', 'of2_resources'))
+# TODO: warn about missing resources?
+
 
 ###################### Logging settings #######################################
 LOG_ROOT = os.path.join(PROJECT_DIR, '..', 'log')

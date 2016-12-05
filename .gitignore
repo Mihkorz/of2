@@ -39,6 +39,7 @@ nosetests.xml
 .idea
 .db
 .settings
+.cache
 
 # R
 .Rhistory
