@@ -2,7 +2,6 @@ import os
 
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
-from django.db import transaction
 from django.db.transaction import TransactionManagementError
 from mixer.backend.django import mixer
 import pytest
@@ -88,12 +87,12 @@ class TestImportPathway(object):
         assert pw.organism == 'alien'
         assert pw.database == 'deep space'
 
-        # see the file
+        # see data file
         assert len(Node.objects.all()) == 131
         assert len(Component.objects.all()) == 131
         assert len(Relation.objects.all()) == 132
 
-    @pytest.mark.skip(reason='victk: looks like a bug; will ask Maxim/Mikhail')
+    @pytest.mark.skip(reason='bug; confirmed by Mikhail')
     def test_component_names(self):
         fname = os.path.join(settings.APP_RESUORCES_ROOT, 'data_test', 'core', 'reactome Viral mRNA Translation Main Pathway.xls')
         with open(fname, 'rb') as f:
@@ -107,7 +106,7 @@ class TestImportPathway(object):
         assert pw.organism == 'alien'
         assert pw.database == 'deep space'
 
-        # see the file
+        # see data file
         assert False, 'This test is failing'
         assert len(Node.objects.all()) == -1
         assert len(Component.objects.all()) == -1
