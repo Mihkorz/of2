@@ -1,6 +1,7 @@
 *.py[cod]
 *.log
 *~
+.DS_Store
 
 # C extensions
 *.so
@@ -43,3 +44,6 @@ nosetests.xml
 
 # R
 .Rhistory
+
+# External libraries
+oncoFinder2/static/components
