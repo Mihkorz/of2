@@ -21,13 +21,13 @@
     Your form has some errors. Please try again.
   </div>
   {% endif %}
-  
+
   <div class="panel panel-primary login_panel">
     <div class="panel-heading">
       <h3 class="panel-title">Calculation parameters</h3>
     </div>
     <div class="panel-body">
-       
+
          <!-- MEDICAL FORM -->
           {% if document.project.field = 'med' %}
           <form class="form-horizontal" role="form" action="/medic/calculate/" method="post"  id="calculation_parameters_form">
@@ -64,14 +64,14 @@
                 <td>{{form.db_choice }}</td>
                 <td valign='top' style="padding-left:15px">{{form.db_choice_drug }}</td>
               </tr>
-            </table>          
+            </table>
           </div>
-          
-          
-          
-	
+
+
+
+
 	     </div>
-          
+
           <div class="form-group form-group-sm">
           <div class="col-sm-10">
           {{ form.norm_choice.label_tag }}
@@ -86,47 +86,53 @@
           <hr/>
           {% if document.doc_format != 'OF_cnr' and document.doc_format != 'OF_cnr_stat' %}
           <div class="form-group form-group-sm">
-            <label for="{{ form.pvalue_num.auto_id }}" class="col-sm-4 control-label">P-value filter</label>            
+            <label for="{{ form.pvalue_num.auto_id }}" class="col-sm-4 control-label">P-value filter</label>
             <div class="col-sm-8">
-                
-                {{ form.use_ttest.label_tag }}&nbsp;&nbsp;
+
+                {{ form.use_ttest.label_tag }}
+                <span id="t-test-help" class="label of-label-help">?</span>&nbsp;&nbsp;
                 {{ form.use_ttest }}
-                {{ form.use_fdr.label_tag }} <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip"  data-placement="top" 
-                 title="False discovery rate "  ></span>&nbsp;&nbsp;
+                {{ form.use_fdr.label_tag }}
+                <span id="benjamini-fdr-help" class="label of-label-help">?</span>&nbsp;&nbsp;
                 {{ form.use_fdr }}
-                
+
                 {{ form.use_new_fdr.label_tag }}
+                <span id="storey-fdr-help" class="label of-label-help">?</span>&nbsp;&nbsp;
                 {{ form.use_new_fdr }}
-                
-                {{ form.use_ttest_1sam.label_tag }}&nbsp;&nbsp;
+
+                {{ form.use_ttest_1sam.label_tag }}
+                <span id="t-test-1-sample-help" class="label of-label-help">?</span>&nbsp;&nbsp;
                 {{ form.use_ttest_1sam }}
-                
+
                 {{ form.pvalue_threshold.label_tag }}
                 {{ form.pvalue_threshold }}
                 {{ form.qvalue_threshold.label_tag }}
                 {{ form.qvalue_threshold }}
-                
-                
+
+
             </div>
           </div>
           <hr/>
           <div class="form-group form-group-sm">
-            <label for="" class="col-sm-4 control-label">Expression filter</label>
+            <label for="" class="col-sm-4 control-label">Expression&nbsp;filter&nbsp;<span id="expression-filter-help" class="label of-label-help">?</span></label>
+
             <div class="col-sm-8">
-            
-            {{ form.use_percent_single.label_tag }}&nbsp;&nbsp;
+
+            {{ form.use_percent_single.label_tag }}
+            <span id="one-sample-expression-test-help" class="label of-label-help">?</span>&nbsp;&nbsp;
             {{ form.use_percent_single }}
-            
-            {{ form.use_percent_all.label_tag }}&nbsp;&nbsp;
+
+            {{ form.use_percent_all.label_tag }}
+            <span id="overall-expression-filter-help" class="label of-label-help">?</span>&nbsp;&nbsp;
             {{ form.use_percent_all }}
-            
+
             {{ form.percent_threshold.label_tag }}
             {{ form.percent_threshold }}
-            
+
             </div>
           </div>
           {% endif %}
-          
+
           {% if document.doc_format == 'OF_cnr_stat'%}
           {{ form.use_ttest_stat.label_tag }}
                 {{ form.use_ttest_stat }} &nbsp;&nbsp;&nbsp;
@@ -135,25 +141,27 @@
           {%endif%}
           <hr/>
           <div class="form-group form-group-sm">
-            <label for="{{ form.cnr_low.auto_id }}" class="col-sm-4 control-label">{{ form.cnr_low.label }}</label>            
+            <label for="{{ form.cnr_low.auto_id }}" class="col-sm-4 control-label">{{ form.cnr_low.label }}</label>
             <div class="col-sm-8">
                 {{ form.cnr_low }}
             </div>
           </div>
           <div class="form-group form-group-sm">
-            <label for="{{ form.cnr_up.auto_id }}" class="col-sm-4 control-label">{{ form.cnr_up.label }}</label>            
+            <label for="{{ form.cnr_up.auto_id }}" class="col-sm-4 control-label">{{ form.cnr_up.label }}</label>
             <div class="col-sm-8">
                 {{ form.cnr_up }}
-                {{ form.use_cnr.label_tag }}&nbsp;&nbsp; 
+                {{ form.use_cnr.label_tag }}
+                <span id="cnr-filter-help" class="label of-label-help">?</span>&nbsp;&nbsp;
                 {{ form.use_cnr }}
             </div>
           </div>
           {% if document.doc_format != 'OF_cnr' and document.doc_format != 'OF_cnr_stat'  %}
           <div class="form-group form-group-sm">
-            <label for="{{ form.sigma_num.auto_id }}" class="col-sm-4 control-label">{{ form.sigma_num.label }}</label>            
+            <label for="{{ form.sigma_num.auto_id }}" class="col-sm-4 control-label">{{ form.sigma_num.label }}</label>
             <div class="col-sm-8">
                 {{ form.sigma_num }}
-                {{ form.use_sigma.label_tag|safe }}&nbsp;&nbsp;
+                {{ form.use_sigma.label_tag|safe }}
+                <span id="sigma-filter-help" class="label of-label-help">?</span>&nbsp;&nbsp;
                 {{ form.use_sigma }}
             </div>
           </div>
@@ -161,84 +169,315 @@
           <hr/>
           <div class="form-group form-group-sm">
             <div class="col-sm-12">
-              <label>Include in the report following values: 
-                     <!--  <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip"  data-placement="top" 
-                                             title="Here will be description of what PAS and DS means"  ></span>
-                    -->
+              <label>Include in the report following values:
+                <span id="report-help" class="label of-label-help">?</span>
               </label>
               <div>
-                {{ form.calculate_pas.label_tag }}&nbsp; 
+                {{ form.calculate_pas.label_tag }}&nbsp;
                 {{ form.calculate_pas }} &nbsp;&nbsp;
-                {{ form.calculate_pas1.label_tag }}&nbsp; 
+                {{ form.calculate_pas1.label_tag }}&nbsp;
+                <span id="pas1-help" class="label of-label-help">?</span>
                 {{ form.calculate_pas1 }}&nbsp;&nbsp;
-                {{ form.calculate_pas2.label_tag }}&nbsp; 
+                {{ form.calculate_pas2.label_tag }}&nbsp;
+                <span id="pas2-help" class="label of-label-help">?</span>
                 {{ form.calculate_pas2 }}&nbsp;&nbsp;<br/>
-                {{ form.calculate_ds1a.label_tag }}&nbsp; 
+                {{ form.calculate_ds1a.label_tag }}
+                <span id="ds1a-help" class="label of-label-help">?</span>&nbsp;
                 {{ form.calculate_ds1a }}&nbsp;&nbsp;
-                {{ form.calculate_ds2.label_tag }}&nbsp; 
+                {{ form.calculate_ds2.label_tag }}
+                <span id="ds2-help" class="label of-label-help">?</span>&nbsp;
                 {{ form.calculate_ds2 }}
-                {{ form.calculate_ds1b.label_tag }}&nbsp; 
+                {{ form.calculate_ds1b.label_tag }}
+                <span id='ds1b-help' class="label of-label-help">?</span>&nbsp;
                 {{ form.calculate_ds1b }}<br/>
             {% if document.doc_format != 'OF_cnr' and document.doc_format != 'OF_cnr_stat' %}
                 {{ form.calculate_norms_pas.label_tag }}&nbsp;
                 {{ form.calculate_norms_pas }}<br/>
-                {{ form.calculate_pvalue_each.label_tag }}&nbsp; 
+                {{ form.calculate_pvalue_each.label_tag }}
+                <span id="p-value-each" class="label of-label-help">?</span>&nbsp;
                 {{ form.calculate_pvalue_each }} &nbsp;with FDR {{ form.calculate_FDR_each }}<br/>
-                {{ form.calculate_pvalue_all.label_tag }}&nbsp;
-                {{ form.calculate_pvalue_all }} &nbsp;with FDR {{ form.calculate_FDR_all }}
+                {{ form.calculate_pvalue_all.label_tag }}
+                <span id="p-value-all" class="label of-label-help">?</span>&nbsp;
+                {{ form.calculate_pvalue_all }}, FDR&nbsp;{{ form.calculate_FDR_all }}
+                <br>
             {% endif %}
                 {{ form.new_pathway_names.label_tag }}&nbsp;
                 {{ form.new_pathway_names }}<br/>
-                
+
                 {{ form.diff_genes_amount.label_tag }}&nbsp;
                 {{ form.diff_genes_amount }}
-                
-      
+
+
       </small>
-                
-              </div>                                   
+
+              </div>
             </div>
-          </div> 
-          
-         {%endif%} 
-          
+          </div>
+
+         {%endif%}
+
     </div>
     <div class="panel-footer">
       <button class="btn btn-primary" data-loading-text="Calculating..." id="startButton">Start Calculation</button>
-      
+
           <img src="/static/images/ajax-loader.gif" id="loader" style="margin: 10px 0 0 0; display:none" class="pull-right" />
-     
+
     </div>
   </div>
+
+
+
+
+
+
 </div>
 
 <script>
 $(function() {
-	
+
 	$("#id_db_choice").css({"height":"100px"});
 	$("#id_db_choice_drug").css({"width":"145px", "height":"100px" });
-	
-	
+
+
 	$('#startButton').click(function () {
 	    var btn = $(this)
 	    btn.button('loading');
 	    $("#loader").fadeIn();
-	    
+
 
 	  });
-	
+
 	// disable DS1 and DS2 if Metabolism DB was selected
-    $("#calculation_parameters_form").click(function(){ 
-    	var checked = $("input[type='radio'][name='db_choice']:checked");
-    	if(checked.val() == 2){ 
-    		$("#id_calculate_ds1").prop('checked', false).prop('disabled', true);
-    		$("#id_calculate_ds2").prop('checked', false).prop('disabled', true);
-    	}
-    	else{
-    		$("#id_calculate_ds1").prop('disabled', false);
-    		$("#id_calculate_ds2").prop('disabled', false);
-    	}
-    });
+  $("#calculation_parameters_form").click(function(){
+    var checked = $("input[type='radio'][name='db_choice']:checked");
+    if(checked.val() == 2){
+      $("#id_calculate_ds1").prop('checked', false).prop('disabled', true);
+      $("#id_calculate_ds2").prop('checked', false).prop('disabled', true);
+    }
+    else{
+      $("#id_calculate_ds1").prop('disabled', false);
+      $("#id_calculate_ds2").prop('disabled', false);
+    }
+  });
+
+  $('#t-test-help').clickover({
+    html: true,
+    title: "Student's t-test",
+    content: '\
+      <div class="of-clickover-content">\
+        <p>Each gene"s expression distributions in normal and tumour classes are\
+        compared using Welch"s T-test. If p < 0.05 (configurable) gene is considered\
+        differentially expressed and is taken into account during PAS calculation (if\
+        its CNR passes all other tests).</p>\
+        <p>Resulting p-values can be adjusted for multiple comparisons, thus obtaining\
+        q-values.</p>\
+      </div>',
+    width: 2000
+  });
+
+  $('#benjamini-fdr-help').clickover({
+    html: true,
+    title: 'Benjamini FDR',
+    content: '\
+      <div class="of-clickover-content">\
+        <p>False discovery rate.</p>\
+        <p>Obtained p-values are adjusted according to Benjamini, 1995.</p>\
+      </div>',
+    width: 2000
+  });
+
+  $('#storey-fdr-help').clickover({
+    html: true,
+    title: 'Storey FDR',
+    content: '\
+      <div class="of-clickover-content">\
+        Obtained p-values are adjusted according to Storey, 2003.\
+      </div>',
+    width: 2000
+  });
+
+  $('#t-test-1-sample-help').clickover({
+    html: true,
+    title: 'Single sample t-test',
+    content: '\
+      <div class="of-clickover-content">\
+        <p>This test compares given gene"s expression value in one tumor sample\
+        with the distribution of norms. It asks the following question: &quot;How likely\
+        this gene"s expression in given tumor is actually an expected value in the\
+        expression distribution of norms?&quot;</p>\
+        <p>It has been established experimentally that this test produces very low\
+        p-values in almost every case.</p>\
+      </div>',
+    width: 2000
+  });
+
+  $('#expression-filter-help').clickover({
+    html: true,
+    title: 'Expression filter',
+    content: '\
+      <div class="of-clickover-content">\
+        <p>This filter is designed to increase stability of the results by excluding\
+        lowly-expressed genes from the PAS and DS calculations as their expression\
+        measurement quality is most likely poor. It is particularly applicable to\
+        CustomArray data.</p>\
+        <p>Note: This feature should be (theoretically) used prior to quantile normalisation,\
+        as the procedure fills columns of the expression matrix with the set\
+        of the same values, which can lead to removal of unreasonably high amount\
+        of genes.</p>\
+      </div>',
+    width: 2000
+  });
+
+  $('#one-sample-expression-test-help').clickover({
+    html: true,
+    title: 'One-sample expression filter',
+    content: '\
+      <div class="of-clickover-content">\
+        <p>It consists of the following steps:</p>\
+        <ol>\
+        <li>For each tumor sample maximum expression value is obtained;\
+        <li>For each tumor sample, genes with expressions less than 5% (configurable)\
+        of respective maximum value are marked to be removed from\
+        the analysis;\
+        <li>Genes marked for exclusion for all samples are combined into one set\
+        which is removed from the data.\
+        </ul>\
+      </div>',
+    width: 2000
+  });
+
+  $('#overall-expression-filter-help').clickover({
+    html: true,
+    title: 'Overall expression filter',
+    content: '\
+      <div class="of-clickover-content">\
+        The same procedure is performed, but the maxima is global and hence\
+        gene set is different from the previous case. If a particular gene contains at\
+        least one sufficiently low value, it is removed from the data.\
+      </div>',
+    width: 2000
+  });
+
+  $('#cnr-filter-help').clickover({
+    html: true,
+    title: 'CNR filter',
+    content: '\
+      <div class="of-clickover-content">\
+        Checks if CNR for a particular gene is outside of tolerance interval of\
+        [0.66; 1.5]. If CNR falls withing the interval, this gene\'s expression difference\
+        from normal level is considered non-significant and does not contribute to PAS\
+        score. Tolerance interval can be changed manually. This filter can be used\
+        together with the sigma filter for stricter statistical filtering.\
+      </div>',
+    width: 2000
+  });
+
+  $('#sigma-filter-help').clickover({
+    html: true,
+    title: 'Sigma filter',
+    content: '\
+      <div class="of-clickover-content">\
+        A z-score for given gene\'s CNR relative to this gene\'s CNR distribution\
+        within normal samples is calculated. If it’s not far enough from the mean (2 sigma\
+        by default), this gene\'s expression difference from normal level is considered\
+        non-significant and does nщt contribute to PAS score. This filter can be used\
+        together with the CNR filter for stricter statistical filtering.\
+      </div>',
+    width: 2000
+  });
+
+  $('#report-help').clickover({
+    html: true,
+    title: 'Report',
+    content: '\
+      <div class="of-clickover-content">\
+        Output can be customized in a number of ways: p-values can be included\
+        or excluded as well as various pathway activation scores (PAS) and drug scores (DS).\
+      </div>',
+    width: 2000
+  });
+
+  $('#pas1-help').clickover({
+    html: true,
+    title: 'Pathway Activation Score 1 (PAS1)',
+    content: '\
+      <div class="of-clickover-content">\
+        <div class="alert alert-warning">TODO: formula</div>\
+        <p>PAS1 corresponds to pathway activation strength with respect to specified normal samples.</p>\
+      </div>',
+    width: 2000
+  });
+
+  $('#pas2-help').clickover({
+    html: true,
+    title: 'Pathway Activation Score 2 (PAS2)',
+    content: '\
+      <div class="of-clickover-content">\
+        <div class="alert alert-warning">TODO: formula</div>\
+        <p>PAS2 is absolute pathway activation score (PAS1) normalized for different\
+        pathway sizes. Good for plotting heatmaps as it doesn"t usually suppress\
+        the color scheme with strong outliers like PAS1.</p>\
+      </div>',
+    width: 2000
+  });
+
+  $('#ds1a-help').clickover({
+    html: true,
+    title: 'Drug Score 1A (DS1A)',
+    content: '\
+      <div class="of-clickover-content">\
+        <div class="alert alert-warning">TODO: formula</div>\
+      </div>',
+    width: 2000
+  });
+
+  $('#ds2-help').clickover({
+    html: true,
+    title: 'Drug Score 2 (DS2)',
+    content: '\
+      <div class="of-clickover-content">\
+        <div class="alert alert-warning">TODO: formula</div>\
+      </div>',
+    width: 2000
+  });
+
+  $('#ds1b-help').clickover({
+    html: true,
+    title: 'Drug Score 1B (DS1B)',
+    content: '\
+      <div class="of-clickover-content">\
+        <div class="alert alert-warning">TODO: formula</div>\
+      </div>',
+    width: 2000
+  });
+
+  $('#p-value-each').clickover({
+    html: true,
+    title: 'P-value for each sample',
+    content: '\
+      <div class="of-clickover-content">\
+        <p>&quot;P-values for samples&quot; option adds columns with p-values for each sample\
+        to the output table. This is either group T-test values or 1-sample T-test\
+        values.</p>\
+        <div class="alert alert-warning">TODO: requires additional info</div>\
+      </div>',
+    width: 2000
+  });
+
+  $('#p-value-all').clickover({
+    html: true,
+    title: 'P-value for each pathway',
+    content: '\
+      <div class="of-clickover-content">\
+        <div class="alert alert-warning">TODO: copy-pasted</div>\
+        <p>&quot;P-values for samples&quot; option adds columns with p-values for each sample\
+        to the output table. This is either group T-test values or 1-sample T-test\
+        values.</p>\
+        <div class="alert alert-warning">TODO: requires additional info</div>\
+      </div>',
+    width: 2000
+  });
+
 });
 </script>
 
