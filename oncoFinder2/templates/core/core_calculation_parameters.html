@@ -194,10 +194,10 @@
                 {{ form.calculate_norms_pas.label_tag }}&nbsp;
                 {{ form.calculate_norms_pas }}<br/>
                 {{ form.calculate_pvalue_each.label_tag }}
-                <span id="p-value-each" class="label of-label-help">?</span>&nbsp;
+                <span id="p-value-each-help" class="label of-label-help">?</span>&nbsp;
                 {{ form.calculate_pvalue_each }} &nbsp;with FDR {{ form.calculate_FDR_each }}<br/>
                 {{ form.calculate_pvalue_all.label_tag }}
-                <span id="p-value-all" class="label of-label-help">?</span>&nbsp;
+                <span id="p-value-all-help" class="label of-label-help">?</span>&nbsp;
                 {{ form.calculate_pvalue_all }}, FDR&nbsp;{{ form.calculate_FDR_all }}
                 <br>
             {% endif %}
@@ -224,11 +224,6 @@
 
     </div>
   </div>
-
-
-
-
-
 
 </div>
 
@@ -264,14 +259,12 @@ $(function() {
     html: true,
     title: "Student's t-test",
     content: '\
-      <div class="of-clickover-content">\
-        <p>Each gene"s expression distributions in normal and tumour classes are\
-        compared using Welch"s T-test. If p < 0.05 (configurable) gene is considered\
-        differentially expressed and is taken into account during PAS calculation (if\
-        its CNR passes all other tests).</p>\
-        <p>Resulting p-values can be adjusted for multiple comparisons, thus obtaining\
-        q-values.</p>\
-      </div>',
+      <p>Each gene"s expression distributions in normal and tumour classes are\
+      compared using Welch"s T-test. If p < 0.05 (configurable) gene is considered\
+      differentially expressed and is taken into account during PAS calculation (if\
+      its CNR passes all other tests).</p>\
+      <p>Resulting p-values can be adjusted for multiple comparisons, thus obtaining\
+      q-values.</p>',
     width: 2000
   });
 
@@ -279,10 +272,8 @@ $(function() {
     html: true,
     title: 'Benjamini FDR',
     content: '\
-      <div class="of-clickover-content">\
-        <p>False discovery rate.</p>\
-        <p>Obtained p-values are adjusted according to Benjamini, 1995.</p>\
-      </div>',
+      <p>False discovery rate.</p>\
+      <p>Obtained p-values are adjusted according to Benjamini, 1995.</p>',
     width: 2000
   });
 
@@ -290,9 +281,7 @@ $(function() {
     html: true,
     title: 'Storey FDR',
     content: '\
-      <div class="of-clickover-content">\
-        Obtained p-values are adjusted according to Storey, 2003.\
-      </div>',
+      Obtained p-values are adjusted according to Storey, 2003.',
     width: 2000
   });
 
@@ -300,14 +289,12 @@ $(function() {
     html: true,
     title: 'Single sample t-test',
     content: '\
-      <div class="of-clickover-content">\
-        <p>This test compares given gene"s expression value in one tumor sample\
-        with the distribution of norms. It asks the following question: &quot;How likely\
-        this gene"s expression in given tumor is actually an expected value in the\
-        expression distribution of norms?&quot;</p>\
-        <p>It has been established experimentally that this test produces very low\
-        p-values in almost every case.</p>\
-      </div>',
+      <p>This test compares given gene"s expression value in one tumor sample\
+      with the distribution of norms. It asks the following question: &quot;How likely\
+      this gene"s expression in given tumor is actually an expected value in the\
+      expression distribution of norms?&quot;</p>\
+      <p>It has been established experimentally that this test produces very low\
+      p-values in almost every case.</p>',
     width: 2000
   });
 
@@ -315,16 +302,14 @@ $(function() {
     html: true,
     title: 'Expression filter',
     content: '\
-      <div class="of-clickover-content">\
-        <p>This filter is designed to increase stability of the results by excluding\
-        lowly-expressed genes from the PAS and DS calculations as their expression\
-        measurement quality is most likely poor. It is particularly applicable to\
-        CustomArray data.</p>\
-        <p>Note: This feature should be (theoretically) used prior to quantile normalisation,\
-        as the procedure fills columns of the expression matrix with the set\
-        of the same values, which can lead to removal of unreasonably high amount\
-        of genes.</p>\
-      </div>',
+      <p>This filter is designed to increase stability of the results by excluding\
+      lowly-expressed genes from the PAS and DS calculations as their expression\
+      measurement quality is most likely poor. It is particularly applicable to\
+      CustomArray data.</p>\
+      <p>Note: This feature should be (theoretically) used prior to quantile normalisation,\
+      as the procedure fills columns of the expression matrix with the set\
+      of the same values, which can lead to removal of unreasonably high amount\
+      of genes.</p>',
     width: 2000
   });
 
@@ -332,17 +317,15 @@ $(function() {
     html: true,
     title: 'One-sample expression filter',
     content: '\
-      <div class="of-clickover-content">\
-        <p>It consists of the following steps:</p>\
-        <ol>\
-        <li>For each tumor sample maximum expression value is obtained;\
-        <li>For each tumor sample, genes with expressions less than 5% (configurable)\
-        of respective maximum value are marked to be removed from\
-        the analysis;\
-        <li>Genes marked for exclusion for all samples are combined into one set\
-        which is removed from the data.\
-        </ul>\
-      </div>',
+      <p>It consists of the following steps:</p>\
+      <ol>\
+      <li>For each tumor sample maximum expression value is obtained;\
+      <li>For each tumor sample, genes with expressions less than 5% (configurable)\
+      of respective maximum value are marked to be removed from\
+      the analysis;\
+      <li>Genes marked for exclusion for all samples are combined into one set\
+      which is removed from the data.\
+      </ul>',
     width: 2000
   });
 
@@ -350,11 +333,9 @@ $(function() {
     html: true,
     title: 'Overall expression filter',
     content: '\
-      <div class="of-clickover-content">\
-        The same procedure is performed, but the maxima is global and hence\
-        gene set is different from the previous case. If a particular gene contains at\
-        least one sufficiently low value, it is removed from the data.\
-      </div>',
+      The same procedure is performed, but the maxima is global and hence\
+      gene set is different from the previous case. If a particular gene contains at\
+      least one sufficiently low value, it is removed from the data.',
     width: 2000
   });
 
@@ -362,13 +343,11 @@ $(function() {
     html: true,
     title: 'CNR filter',
     content: '\
-      <div class="of-clickover-content">\
-        Checks if CNR for a particular gene is outside of tolerance interval of\
-        [0.66; 1.5]. If CNR falls withing the interval, this gene\'s expression difference\
-        from normal level is considered non-significant and does not contribute to PAS\
-        score. Tolerance interval can be changed manually. This filter can be used\
-        together with the sigma filter for stricter statistical filtering.\
-      </div>',
+      Checks if CNR for a particular gene is outside of tolerance interval of\
+      [0.66; 1.5]. If CNR falls withing the interval, this gene\'s expression difference\
+      from normal level is considered non-significant and does not contribute to PAS\
+      score. Tolerance interval can be changed manually. This filter can be used\
+      together with the sigma filter for stricter statistical filtering.',
     width: 2000
   });
 
@@ -376,13 +355,11 @@ $(function() {
     html: true,
     title: 'Sigma filter',
     content: '\
-      <div class="of-clickover-content">\
-        A z-score for given gene\'s CNR relative to this gene\'s CNR distribution\
-        within normal samples is calculated. If it’s not far enough from the mean (2 sigma\
-        by default), this gene\'s expression difference from normal level is considered\
-        non-significant and does nщt contribute to PAS score. This filter can be used\
-        together with the CNR filter for stricter statistical filtering.\
-      </div>',
+      A z-score for given gene\'s CNR relative to this gene\'s CNR distribution\
+      within normal samples is calculated. If it’s not far enough from the mean (2 sigma\
+      by default), this gene\'s expression difference from normal level is considered\
+      non-significant and does nщt contribute to PAS score. This filter can be used\
+      together with the CNR filter for stricter statistical filtering.',
     width: 2000
   });
 
@@ -390,10 +367,8 @@ $(function() {
     html: true,
     title: 'Report',
     content: '\
-      <div class="of-clickover-content">\
-        Output can be customized in a number of ways: p-values can be included\
-        or excluded as well as various pathway activation scores (PAS) and drug scores (DS).\
-      </div>',
+      Output can be customized in a number of ways: p-values can be included\
+      or excluded as well as various pathway activation scores (PAS) and drug scores (DS).',
     width: 2000
   });
 
@@ -401,10 +376,9 @@ $(function() {
     html: true,
     title: 'Pathway Activation Score 1 (PAS1)',
     content: '\
-      <div class="of-clickover-content">\
-        <div class="alert alert-warning">TODO: formula</div>\
-        <p>PAS1 corresponds to pathway activation strength with respect to specified normal samples.</p>\
-      </div>',
+      $$PAS1_p = \\sum_{i=1}^N ARR_i \\cdot \\ln CNR_i \\cdot \\delta_{CNR} \\, \\delta_{\\sigma} \\, \\delta_{T-test}$$\
+      <div class="alert alert-warning">TODO: formula</div>\
+      <p>PAS1 corresponds to pathway activation strength with respect to specified normal samples.</p>',
     width: 2000
   });
 
@@ -412,12 +386,10 @@ $(function() {
     html: true,
     title: 'Pathway Activation Score 2 (PAS2)',
     content: '\
-      <div class="of-clickover-content">\
-        <div class="alert alert-warning">TODO: formula</div>\
-        <p>PAS2 is absolute pathway activation score (PAS1) normalized for different\
-        pathway sizes. Good for plotting heatmaps as it doesn"t usually suppress\
-        the color scheme with strong outliers like PAS1.</p>\
-      </div>',
+      <div class="alert alert-warning">TODO: formula</div>\
+      <p>PAS2 is absolute pathway activation score (PAS1) normalized for different\
+      pathway sizes. Good for plotting heatmaps as it doesn"t usually suppress\
+      the color scheme with strong outliers like PAS1.</p>',
     width: 2000
   });
 
@@ -425,9 +397,7 @@ $(function() {
     html: true,
     title: 'Drug Score 1A (DS1A)',
     content: '\
-      <div class="of-clickover-content">\
-        <div class="alert alert-warning">TODO: formula</div>\
-      </div>',
+      <div class="alert alert-warning">TODO: formula</div>',
     width: 2000
   });
 
@@ -435,9 +405,7 @@ $(function() {
     html: true,
     title: 'Drug Score 2 (DS2)',
     content: '\
-      <div class="of-clickover-content">\
-        <div class="alert alert-warning">TODO: formula</div>\
-      </div>',
+      <div class="alert alert-warning">TODO: formula</div>',
     width: 2000
   });
 
@@ -445,36 +413,31 @@ $(function() {
     html: true,
     title: 'Drug Score 1B (DS1B)',
     content: '\
-      <div class="of-clickover-content">\
-        <div class="alert alert-warning">TODO: formula</div>\
-      </div>',
+      <div class="alert alert-warning">TODO: formula</div>',
+    onShown: MathJax.Hub.Queue(["Typeset", MathJax.Hub, "popover-content"]),
     width: 2000
   });
 
-  $('#p-value-each').clickover({
+  $('#p-value-each-help').clickover({
     html: true,
     title: 'P-value for each sample',
     content: '\
-      <div class="of-clickover-content">\
-        <p>&quot;P-values for samples&quot; option adds columns with p-values for each sample\
-        to the output table. This is either group T-test values or 1-sample T-test\
-        values.</p>\
-        <div class="alert alert-warning">TODO: requires additional info</div>\
-      </div>',
+      <p>&quot;P-values for samples&quot; option adds columns with p-values for each sample\
+      to the output table. This is either group T-test values or 1-sample T-test\
+      values.</p>\
+      <div class="alert alert-warning">TODO: requires additional info</div>',
     width: 2000
   });
 
-  $('#p-value-all').clickover({
+  $('#p-value-all-help').clickover({
     html: true,
     title: 'P-value for each pathway',
     content: '\
-      <div class="of-clickover-content">\
-        <div class="alert alert-warning">TODO: copy-pasted</div>\
-        <p>&quot;P-values for samples&quot; option adds columns with p-values for each sample\
-        to the output table. This is either group T-test values or 1-sample T-test\
-        values.</p>\
-        <div class="alert alert-warning">TODO: requires additional info</div>\
-      </div>',
+      <div class="alert alert-warning">TODO: copy-pasted</div>\
+      <p>&quot;P-values for samples&quot; option adds columns with p-values for each sample\
+      to the output table. This is either group T-test values or 1-sample T-test\
+      values.</p>\
+      <div class="alert alert-warning">TODO: requires additional info</div>',
     width: 2000
   });
 
