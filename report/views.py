@@ -1753,7 +1753,7 @@ class ReportDlFarmJson(TemplateView):
         deeplearning = report.deeplearning_set.all()[0]
         
         if file_type == 'fc':
-            df_farm = pd.read_csv(deeplearning.farmclass.path, index_col='Name', sep=None)
+            df_farm = pd.read_csv(deeplearning.farmclass.path, index_col='Name', sep='\t')
             s_threshold = df_farm.iloc[0, 7:]
         elif file_type == 'se':
             df_farm = pd.read_csv(deeplearning.sideeff.path, index_col='Name', sep='\t')
