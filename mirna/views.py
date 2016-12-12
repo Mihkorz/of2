@@ -37,7 +37,7 @@ class mirnaProjectDetail(DetailView):
         
         
         return context
-    
+
 class mirnaDocumentDetail(DetailView):
     model = Document
     template_name = "mirna/document_detail.html"

@@ -1,0 +1,4 @@
+{
+  "_comment": "'components' instead of 'bower_components' to avaid clush with existing 'bower_components' which is already used (improperly) in the project",
+  "directory": "oncoFinder2/static/components"
+}

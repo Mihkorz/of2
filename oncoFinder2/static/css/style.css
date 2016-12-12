@@ -90,7 +90,7 @@
 	
 }
 .pr_header_menu span{
-	color: ##428bca;
+	color: #428bca;
 	margin: 20px 0 0 15px;
 	height: 20px;
 }
@@ -190,4 +190,17 @@
 
 .of-table-value {
 	padding: 2px 0 2px 2px;
+}
+
+.clickover-content {
+	font-weight: normal;
+}
+
+.of-label-help {
+  background-color: #e6e6e6;
+  color: #666;
+}
+.of-label-help:hover {
+  background-color: #d4d4d4;
+  color: #666;
 }

@@ -1,5 +1,6 @@
 import json
 
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse_lazy
 from django.http.response import HttpResponse
@@ -7,9 +8,8 @@ from django.utils.decorators import method_decorator
 from django.views.generic import FormView
 from django.views.generic.base import TemplateView, View
 
-from essence.pathways import maxim_format_pathway
+from core.models import import_pathway
 from housekeeping.forms import UpdatePathwayForm
-from oncofinder_utils.django_helpers import MessageLog
 
 
 class HousekeepingView(TemplateView):
@@ -36,7 +36,7 @@ class HousekeepingAjaxView(View):
             if task_args is None:
                 raise ValueError('Missing "task_args" param.')
 
-            maxim_format_pathway(task_args['filepath'], task_args['organism'], task_args['database'], None)
+            import_pathway(task_args['filepath'], task_args['organism'], task_args['database'])
 
             return HttpResponse(json.dumps({}), mimetype='application/json; charset=utf-8')
         else:
@@ -55,6 +55,11 @@ class HousekeepingPathwayView(FormView):
 
     def form_valid(self, form):
         dct = form.cleaned_data
-        message_log = MessageLog(self.request)
-        maxim_format_pathway(dct['filename'], dct['organism'], dct['database'], message_log)
+        file_obj = self.request.FILES['filename']
+        try:
+            import_pathway(file_obj, dct['organism'], dct['database'])
+            messages.success(self.request, 'Successfully completed.')
+        except Exception as ex:
+            messages.error(self.request, 'Error: {}'.format(ex))
+
         return super(HousekeepingPathwayView, self).form_valid(form)

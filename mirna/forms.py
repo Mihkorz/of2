@@ -4,10 +4,12 @@ import logging
 from django import forms
 from django.forms.models import inlineformset_factory
 from django.core.files.temp import NamedTemporaryFile
-
 from django.contrib.auth.models import User
+
+from core.models import PATHWAY_DATABASE, PATHWAY_ORGANISM
 from profiles.models import Project, Document
 from profiles.utils import validate_file
+
 
 logger = logging.getLogger('oncoFinder')
 
@@ -49,21 +51,11 @@ class CalculationParametersForm(forms.Form):
     
     DB_CHOICES = (('Diana TarBase', 'Diana TarBase',),
                   ('miRTarBase', 'miRTarBase'))
-    ORGANISM_CHOICES = (('human', 'Human',),
-                       ('mouse', 'Mouse',))
-    
-    PATH_DB_CHOICES = (('primary_old', 'Primary Pathway Database (old)'),
-                  ('primary_new', 'Primary Pathway Database (new)'),
-                  ('metabolism', 'Metabolism Pathway Database'),
-                  ('cytoskeleton', 'Cytoskeleton Pathway Database'),
-                  ('kegg', 'KEGG Pathway Database'),
-                  ('nci', 'NCI Pathway Database'),
-                  ('kegg_adjusted', 'KEGG Adjusted Pathway Database'),
-                  ('kegg_10', 'KEGG >10 genes'),
-                  ('kegg_adjusted_10', 'KEGG Adjusted >10 genes'),
-                  ('sandbox', 'Sandbox'),
-    )
-    
+
+    ORGANISM_CHOICES = PATHWAY_ORGANISM
+
+    PATH_DB_CHOICES = PATHWAY_DATABASE
+
     organism_choice = forms.ChoiceField(label="Organism",
                                      widget=forms.RadioSelect, choices=ORGANISM_CHOICES, initial='human')
     

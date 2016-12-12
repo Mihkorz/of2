@@ -2,7 +2,7 @@
 
 python-dev
 
-libmysqlclient-dev
+dpkg libmysqlclient-dev
 
 gfortran
 libatlas-base-dev
