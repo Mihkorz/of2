@@ -5,6 +5,14 @@ import itertools
 
 from django.db import models
 
+REPORT_TEMPLATE = (
+    ('Original', 'Original'),
+    ('S1Report', 'S1Report'),
+    ('S2Report', 'S2Report'),
+    ('S3Report', 'S3Report'),
+    ('Extended', 'Extended')
+)
+
 PATHWAY_ORGANISM = (
     ('human', 'Human'),
     ('mouse', 'Mouse'),
@@ -24,6 +32,11 @@ class Report(models.Model):
     organism = models.CharField(verbose_name=u'Organism', max_length=5, blank=False,
                                 choices = PATHWAY_ORGANISM, default='human') 
     organization = models.CharField(max_length=250, blank=True)
+    
+    report_template = models.CharField(verbose_name=u'Report template', max_length=15, blank=False,
+                                choices = REPORT_TEMPLATE, default='Original') 
+    
+    header_data_text = models.TextField(verbose_name='Text for the beginning of the report', blank=True)
     input_data_text = models.TextField(verbose_name='Text for Input Data section', blank=True)
     methods_text = models.TextField(verbose_name='Text for Methods section', blank=True)
     gene_text = models.TextField(verbose_name='Text for Gene Level Analysis section', blank=True)
@@ -38,6 +51,19 @@ class Report(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     
     """ Gene level """
+    pval_theshold_plot = models.FloatField(verbose_name='p-val plot', help_text='Treshold in volcano and scatter plots',
+                                           blank=False, default=0.05)
+    logcf_theshold_plot = models.FloatField(verbose_name='|logFC| plot', help_text='Treshold in volcano and scatter plots', 
+                                            blank=False, default=0.2)
+    
+    pval_theshold_compare = models.FloatField(verbose_name='p-val comparison', help_text='Treshold in Gene level Comparison',
+                                           blank=False, default=0.05)
+    logcf_theshold_compare = models.FloatField(verbose_name='|logFC| comparison', help_text='Treshold in Gene level Comparison', 
+                                            blank=False, default=0.2)
+    
+    pas_theshold = models.FloatField(verbose_name='|PAS| comparison', help_text='Treshold in Pathway level Comparison', 
+                                            blank=False, default=0)
+    
     notable_genes = models.CharField(help_text='List of notable genes, separated by comma', max_length=250, blank=True)
     
     norm_name = models.CharField(verbose_name='Normal title', max_length=250, blank=False)

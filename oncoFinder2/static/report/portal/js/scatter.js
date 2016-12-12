@@ -1,5 +1,5 @@
 
-function drawGeneScatter(name, renderTo, xname, yname, file_name){
+function drawGeneScatter(name, renderTo, xname, yname, file_name, reportID){
 	
 var options = {
 			
@@ -66,7 +66,8 @@ var options = {
 	
     $.getJSON('/report-portal/report-genescatterjson/',
     		{
-    	     'file_name': file_name
+    	     'file_name': file_name,
+    	     'reportID': reportID
     		},
     		function(data) { 
     	

@@ -1,4 +1,4 @@
-function drawVolcanoPlot(renderTo,  file_name){
+function drawVolcanoPlot(renderTo,  reportID, file_name){
     
 	// The following are access function to extract the relevant information
 	// from each data point.
@@ -73,7 +73,8 @@ function drawVolcanoPlot(renderTo,  file_name){
 	d3.json('/report-portal/report-genevolcanojson/')
 	.header("X-CSRFToken", getCookie('csrftoken'))
 	.header("Content-Type", "application/x-www-form-urlencoded")
-	.post("file_name="+file_name ,function(error, root){
+	.post(JSON.stringify({file_name: file_name, reportID: reportID}),
+			function(error, root){
 	//d3.json("/static/report/bc/GSE55633_gene_expressions_de.json", function (error, root) {	
 		if (error) throw error;
 		

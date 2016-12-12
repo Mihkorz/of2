@@ -384,7 +384,7 @@ $(function() {
 	  {%for group in report.genegroup_set.all%}
 	  
 	  {%if forloop.counter = 1%}
-	      drawVolcanoPlot('{{group.get_slug}}_volcano',  '{{group.doc_logfc}}');
+	      drawVolcanoPlot('{{group.get_slug}}_volcano', {{report.id}}, '{{group.doc_logfc}}');
 	      drawGeneTable({{report.id}}, 'tbl-{{group.get_slug}}', '{{group.doc_logfc}}', categories='{{group.get_slug}}'); 
 	  
 	  {%else%}
@@ -397,7 +397,8 @@ $(function() {
 			          renderTo='{{group.get_slug}}_volcano',
 			          xname='log2({{group.name}} Expression level)',
 			          yname='log2({{report.norm_name}} Expression level)',
-			          file_name='{{group.document}}');
+			          file_name='{{group.document}}',
+			          reportID={{report.id}});
 			  
 			      
 			  if ( !$.fn.dataTable.isDataTable( '#tbl-{{group.get_slug}}' ) ) {
@@ -407,7 +408,7 @@ $(function() {
 				  }
 		  else { 
 			if($("#{{group.get_slug}}_volcano span").html() == 'Loading plot...'){
-				drawVolcanoPlot('{{group.get_slug}}_volcano',  '{{group.doc_logfc}}');
+				drawVolcanoPlot('{{group.get_slug}}_volcano', {{report.id}},  '{{group.doc_logfc}}');
 			}
 			if ( !$.fn.dataTable.isDataTable( '#tbl-{{group.get_slug}}' ) ) {
 				 drawGeneTable({{report.id}}, 'tbl-{{group.get_slug}}', '{{group.doc_logfc}}', categories='{{group.get_slug}}'); 
@@ -426,7 +427,8 @@ $(function() {
 			          renderTo='{{group.get_slug}}_volcano',
 			          xname='log2({{group.name}} Expression level)',
 			          yname='log2({{report.norm_name}} Expression level)',
-			          file_name='{{group.document}}');
+			          file_name='{{group.document}}',
+			          reportID={{report.id}});
 	  drawGeneTableScatter({{report.id}}, 'tbl-{{group.get_slug}}', '{{group.doc_logfc}}', categories='{{report.get_all_gene_groups_norm_as_list}}'); 
 	{%endfor%}
 	{%endif%}
