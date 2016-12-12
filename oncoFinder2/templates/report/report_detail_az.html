@@ -1391,7 +1391,9 @@ $('#dlfc_boot_overall29').click(function(){
 
 
 $(document).ready(function() {
-    $('#top_diseases_granularity').DataTable();
+    $('#top_diseases_granularity').DataTable({
+    	"order": [[ 4, "desc" ]]
+    });
 } );
 
 
