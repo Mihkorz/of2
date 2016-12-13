@@ -92,7 +92,7 @@ class TestImportPathway(object):
         assert len(Component.objects.all()) == 131
         assert len(Relation.objects.all()) == 132
 
-    @pytest.mark.skip(reason='bug; confirmed by Mikhail')
+    @pytest.mark.xfail(reason='bug; confirmed by Mikhail')
     def test_component_names(self):
         fname = os.path.join(settings.APP_RESUORCES_ROOT, 'data_test', 'core', 'reactome Viral mRNA Translation Main Pathway.xls')
         with open(fname, 'rb') as f:
