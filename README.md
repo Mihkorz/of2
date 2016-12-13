@@ -7,9 +7,10 @@ Tested on:
 - Ubuntu 14.04.3 LTS, Python 2.7
 - R version 3.2.3, 2015-12-10
 
+
 Install
 -------
-To install OncoFinder go to `environment` directory, then:
+Everything related to installations is in `environment` directory
 
 1) Install Ubuntu packages:
 ```
@@ -17,23 +18,40 @@ cd environment/packages
 sudo ./install_packages.sh
 ```
 
-Probably you need MySQL and Python virtual environment as well:
+Install MySQL if it is not installed:
 ```
 sudo apt-get install -y mysql-server
+```
+
+Optionally install Python virtual environment:
+```
 sudo apt-get install -y python-virtualenv
 ```
 
-2) Make sure `pip` is up-to-date (in virtual environment or globally, it's up to you):
+Make sure `pip` is up-to-date (in a virtual environment / globally):
 
 ```
 pip install -upgrade pip
 ```
 
-Then install required packages:
+2) Install Python packages:
+
 ```
-pip install -r python/requirements_<env>.txt
+cd environment/python
+pip install -r requirements_<env>.txt
 ```
 
 3) Install R packages listed in `R/R_reqs.txt`.
 
-4) Create MySQL database `oncoFinder2` (check the name in the `settings_*.py`) and populate it.
+4) Create MySQL database `oncoFinder2` (check the name in the `settings_*.py`).
+Populate it with data from backup (not included into the repository).
+
+
+Test
+----
+Powered by py.test. There are some predefined *.ini files: `pytest_TEST_TYPE.ini`.
+
+`test.sh` runs all tests (unit, functional, etc.):
+```
+./test.sh [OPTIONS]
+```
