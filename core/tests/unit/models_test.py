@@ -74,7 +74,7 @@ def _check_db_empty():
 class TestImportPathway(object):
 
     def test_basic(self):
-        fname = os.path.join(settings.APP_RESUORCES_ROOT, 'data_test', 'core', 'mycn_Response_final_test.xls')
+        fname = os.path.join(settings.APP_RESUORCES_ROOT,  'tests', 'unit', 'core', 'mycn_Response_final_test.xls')
         with open(fname, 'rb') as f:
             import_pathway(f, 'alien', 'deep space')
 
@@ -94,7 +94,7 @@ class TestImportPathway(object):
 
     @pytest.mark.xfail(reason='bug; confirmed by Mikhail')
     def test_component_names(self):
-        fname = os.path.join(settings.APP_RESUORCES_ROOT, 'data_test', 'core', 'reactome Viral mRNA Translation Main Pathway.xls')
+        fname = os.path.join(settings.APP_RESUORCES_ROOT,  'tests', 'unit', 'core', 'reactome Viral mRNA Translation Main Pathway.xls')
         with open(fname, 'rb') as f:
             import_pathway(f, 'alien', 'deep space')
 
@@ -113,7 +113,7 @@ class TestImportPathway(object):
         assert len(Relation.objects.all()) == -1
 
     def test_import_more_than_once(self):
-        fname = os.path.join(settings.APP_RESUORCES_ROOT, 'data_test', 'core', 'mycn_Response_final_test.xls')
+        fname = os.path.join(settings.APP_RESUORCES_ROOT,  'tests', 'unit', 'core', 'mycn_Response_final_test.xls')
         with open(fname, 'rb') as f:
             import_pathway(f, 'alien', 'deep space')
 
@@ -127,7 +127,7 @@ class TestImportPathway(object):
         assert 'exists' in excinfo.value.message
 
     def test_invalid_gene(self):
-        fname = os.path.join(settings.APP_RESUORCES_ROOT, 'data_test', 'core', 'invalid_gene.xls')
+        fname = os.path.join(settings.APP_RESUORCES_ROOT,  'tests', 'unit', 'core', 'invalid_gene.xls')
         with pytest.raises(TransactionManagementError):
             with open(fname, 'rb') as f:
                 import_pathway(f, 'alien', 'deep space')
@@ -135,7 +135,7 @@ class TestImportPathway(object):
         _check_db_empty()
 
     def test_invalid_edge(self):
-        fname = os.path.join(settings.APP_RESUORCES_ROOT, 'data_test', 'core', 'invalid_edge.xls')
+        fname = os.path.join(settings.APP_RESUORCES_ROOT,  'tests', 'unit', 'core', 'invalid_edge.xls')
         with pytest.raises(ObjectDoesNotExist) as excinfo:
             with open(fname, 'rb') as f:
                 import_pathway(f, 'alien', 'deep space')
@@ -145,7 +145,7 @@ class TestImportPathway(object):
         _check_db_empty()
 
     def test_invalid_node(self):
-        fname = os.path.join(settings.APP_RESUORCES_ROOT, 'data_test', 'core', 'invalid_node.xls')
+        fname = os.path.join(settings.APP_RESUORCES_ROOT,  'tests', 'unit', 'core', 'invalid_node.xls')
         with pytest.raises(ObjectDoesNotExist) as excinfo:
             with open(fname, 'rb') as f:
                 import_pathway(f, 'alien', 'deep space')

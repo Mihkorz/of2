@@ -25,14 +25,14 @@ class _FileWrapper(object):
 class TestValidateInputDocument(object):
 
     def test_validate_twice(self):
-        fname = os.path.join(settings.APP_RESUORCES_ROOT, 'data_test', 'profiles', 'ALdata_ivan_small.txt')
+        fname = os.path.join(settings.APP_RESUORCES_ROOT,  'tests', 'unit', 'profiles', 'ALdata_ivan_small.txt')
 
         with open(fname) as f:
             validate_input_document(f) # once
             validate_input_document(f) # twice
 
     def test_content_type(self):
-        fname = os.path.join(settings.APP_RESUORCES_ROOT, 'data_test', 'profiles', 'ALdata_ivan_small.txt')
+        fname = os.path.join(settings.APP_RESUORCES_ROOT,  'tests', 'unit', 'profiles', 'ALdata_ivan_small.txt')
         with open(fname) as f:
             wrapper = _FileWrapper(f)
             wrapper.content_type = 'xxx'
@@ -46,7 +46,7 @@ class TestValidateInputDocument(object):
             validate_input_document(wrapper)
 
     def test_invalid_symbol(self):
-        fname = os.path.join(settings.APP_RESUORCES_ROOT, 'data_test', 'profiles', 'ALdata_ivan_small_invalid_symbol.txt')
+        fname = os.path.join(settings.APP_RESUORCES_ROOT,  'tests', 'unit', 'profiles', 'ALdata_ivan_small_invalid_symbol.txt')
         with open(fname) as f:
             with pytest.raises(ValidationError) as exinfo:
                 validate_input_document(f)
@@ -54,7 +54,7 @@ class TestValidateInputDocument(object):
             assert 'SYMBOL' in str(exinfo)
 
     def test_invalid_value(self):
-        fname = os.path.join(settings.APP_RESUORCES_ROOT, 'data_test', 'profiles', 'ALdata_ivan_small_invalid_value.txt')
+        fname = os.path.join(settings.APP_RESUORCES_ROOT,  'tests', 'unit', 'profiles', 'ALdata_ivan_small_invalid_value.txt')
         with open(fname) as f:
             with pytest.raises(ValidationError) as exinfo:
                 validate_input_document(f)
