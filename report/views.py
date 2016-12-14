@@ -1362,6 +1362,7 @@ class ReportAjaxPathDetail(TemplateView):
             df_file_cnr = pd.read_csv(group.doc_logfc.path, index_col='SYMBOL')
         except:
             df_file_cnr = pd.read_csv(group.doc_logfc.path, index_col='SYMBOL', sep='\t')
+            df_file_cnr.rename(columns={'log2FoldChange': 'logFC', 'padj': 'adj.P.Val'}, inplace=True)
         
         if (df_file_cnr['adj.P.Val']>pval_tres).all():
                     df_file_cnr = df_file_cnr[(np.absolute(df_file_cnr['logFC'])>logFC_tres)]
