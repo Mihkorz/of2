@@ -8,8 +8,7 @@ from django.contrib.auth.models import User
 
 from core.models import PATHWAY_DATABASE, PATHWAY_ORGANISM
 from profiles.models import Project, Document
-from profiles.utils import validate_file
-
+from profiles.utils import validate_input_document
 
 logger = logging.getLogger('oncoFinder')
 
@@ -24,19 +23,8 @@ class UploadDocumentForm(forms.ModelForm):
     def clean_document(self):
         try:
             uploaded_file = self.cleaned_data['document']
-        
-            temp_doc = NamedTemporaryFile(mode='w+', delete=True)
-            temp_doc.write(uploaded_file.read())
-            temp_doc.flush()
-            temp_doc.seek(0)
-            
-            temp_doc._size = uploaded_file._size
-            temp_doc._content_type = uploaded_file.content_type
-            
-            validate_file(temp_doc)
-            
-            temp_doc.close()            
-  
+            validate_input_document(uploaded_file)
+
         except forms.ValidationError:
             logger.error(u'User was trying to upload file with wrong format.')
             raise 
