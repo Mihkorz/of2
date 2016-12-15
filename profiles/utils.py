@@ -45,7 +45,9 @@ def _validate_file(file_,):
     if not symbol and not name:
         raise forms.ValidationError(u"Document doesn't contain 'SYMBOL' or 'Name' column.")
 
-    for col_name in df.columns:
+    data_cols = [col for col in df.columns if ('Tumour' in col) or ('Norm' in col)]
+
+    for col_name in data_cols:
         try:
             df[col_name].astype(float)
         except ValueError as e:
