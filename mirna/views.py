@@ -13,7 +13,7 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.conf import settings
 
-from .models import MirnaMapping
+from .models import MirnaDb, MirnaMapping, load_mirna_mapping
 from .forms import UploadDocumentForm, CalculationParametersForm
 from profiles.models import Project, Document
 from core.models import Pathway, Gene
@@ -160,12 +160,9 @@ class MirnaSetCalculationParameters(FormView):
         
         pathway_objects = Pathway.objects.filter(organism=organism_choice, 
                                                  database__in=path_db_choice).prefetch_related('gene_set')
-        
-        if organism_choice == 'human':
-                original_mapping_df = read_csv(settings.MEDIA_ROOT+'/mirna/mirtarbase_human_df.csv')
-        if organism_choice == 'mouse':
-                original_mapping_df = read_csv(settings.MEDIA_ROOT+'/mirna/mirtarbase_mice_df.csv')
-        
+
+        original_mapping_df = load_mirna_mapping(db_choice, organism_choice)
+
         for pathway in pathway_objects:
             
             print pathway.name
@@ -177,6 +174,8 @@ class MirnaSetCalculationParameters(FormView):
             
             for gene in gene_objects:
                 if db_choice == 'Diana TarBase':
+                    # TODO: remove the obsolete DB
+                    raise RuntimeError('Unsupported database: "{}".'.format(db_choice))
                     
                     mapping_mirna_genes = MirnaMapping.objects.filter(Gene=gene.name, Sourse=db_choice)
                     for mirna_gene in mapping_mirna_genes:
@@ -193,7 +192,7 @@ class MirnaSetCalculationParameters(FormView):
             
             gene_df = gene_df.groupby(gene_df.index, level=0).mean() # ignore duplicate genes if exist
             
-            if db_choice == 'miRTarBase':
+            if db_choice in MirnaDb.ALL:
                 
                     
                 mapping_df = original_mapping_df[['miRNA.ID', 'Gene']]
@@ -213,6 +212,9 @@ class MirnaSetCalculationParameters(FormView):
                 
                 mirna_gene = mirna_gene.append(mirna_gene_copy)
                 gene_df = mirna_gene
+
+            else:
+                raise RuntimeError('Unknown miRNA database: "{}".'.format(db_choice))
                 
              
             
