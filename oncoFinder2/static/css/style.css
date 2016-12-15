@@ -1,3 +1,22 @@
+/* prefix "of-" = OncoFinder */
+
+.of-html {
+  position: relative;
+  min-height: 100%;
+}
+.of-body {
+  margin: 0 0 120px 0;
+}
+/* not used in OF; moved here from customized Bootstrap CSS */
+/*
+.navbar-inverse {
+  background-image:-webkit-linear-gradient(top,#3c3c3c 0,#222 100%);
+  background-image:linear-gradient(to bottom,#3c3c3c 0,#222 100%);
+  background-repeat:repeat-x;
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff3c3c3c', endColorstr='#ff222222', GradientType=0);filter:progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
+*/
+
 /* prefix ws = website */
 
 .ws_navbar{
