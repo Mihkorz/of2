@@ -1,120 +1,138 @@
+/* prefix "of-" = OncoFinder */
+
+.of-html {
+  position: relative;
+  min-height: 100%;
+}
+.of-body {
+  margin: 0 0 120px 0;
+}
+/* not used in OF; moved here from customized Bootstrap CSS */
+/*
+.navbar-inverse {
+  background-image:-webkit-linear-gradient(top,#3c3c3c 0,#222 100%);
+  background-image:linear-gradient(to bottom,#3c3c3c 0,#222 100%);
+  background-repeat:repeat-x;
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff3c3c3c', endColorstr='#ff222222', GradientType=0);filter:progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
+*/
+
 /* prefix ws = website */
 
 .ws_navbar{
-	margin-bottom:0px;
+  margin-bottom:0px;
 	border-bottom: 2px solid #e7e7e7;
 }
 #ws_nav {}
 #ws_nav a {
-	color: #aa2b8b;
-	
-	font-size: 28px;
-    line-height: 30px;
+  color: #aa2b8b;
+  
+  font-size: 28px;
+  line-height: 30px;
 }
 #ws_nav a:hover{
-	text-decoration: none;
+  text-decoration: none;
 }
 #ws_nav a #ws_finder{
-	color: #08C
+  color: #08C
 }
 #ws_nav a #ws_version {
-	
+  
 }
 #ws_nav a img {
-	height: 50px;
-	margin: 5px 0;
+  height: 50px;
+  margin: 5px 0;
 }
 .ws_upp_menu{
-	margin: 5px 0 0 0;
+  margin: 5px 0 0 0;
 }
 .ws_signin_but{
-	margin: 14px 0 0 50px;
+  margin: 14px 0 0 50px;
 }
 
 .ws_banner{
-	background: url(/static/images/black_thread.png) repeat;
-	color: #fff;
+  background: url(/static/images/black_thread.png) repeat;
+  color: #fff;
 }
 .ws_banner_form_div {
-	text-align: center;
-	float: right;
-	width: 350px;
+  text-align: center;
+  float: right;
+  width: 350px;
 }
 .ws_banner_form_div p{
-	font-size: 12px;
-	line-height: 14px;	
+  font-size: 12px;
+  line-height: 14px;  
 }
 .ws_banner_form input{
-	margin: 15px 0;
+  margin: 15px 0;
 }
 
 .login_panel {
-	width: 400px;
+  width: 400px;
     margin: 60px auto;
 }
 #login_form input[type="text"] {
-	margin: 0 0 10px 0 ;
-	
+  margin: 0 0 10px 0 ;
+  
 }
 
 
 
 /****************** PROFILES APP ******************/
 .of-table {
-	font-size: 12px;
+  font-size: 12px;
 }
 .of-table a {
-	font-size: 14px;
+  font-size: 14px;
 }
 .of-table tbody tr:hover th {
-	background-color: #428bca;
+  background-color: #428bca;
 }
 .pr_navbar{
-	background-color: #f3f3f3;
-    background-image: -moz-linear-gradient(#f9f9f9, #f3f3f3);
-    background-image: -webkit-linear-gradient(#f9f9f9, #f3f3f3); 
-    background-image: linear-gradient(#f9f9f9, #f3f3f3); 
-    background-repeat: repeat-x;
-    border-bottom: 1px solid #e5e5e5;
+  background-color: #f3f3f3;
+  background-image: -moz-linear-gradient(#f9f9f9, #f3f3f3);
+  background-image: -webkit-linear-gradient(#f9f9f9, #f3f3f3);
+  background-image: linear-gradient(#f9f9f9, #f3f3f3);
+  background-repeat: repeat-x;
+  border-bottom: 1px solid #e5e5e5;
 }
 .pr_upp_menu {
-	border-left: 1px solid #e5e5e5;
-	border-right: 1px solid #e5e5e5;
-	height: 60px;
-	margin: 0 0 0 50px;
+  border-left: 1px solid #e5e5e5;
+  border-right: 1px solid #e5e5e5;
+  height: 60px;
+  margin: 0 0 0 50px;
 } 
 .pr_upp_menu li a {
-	padding: 10px ;
+  padding: 10px ;
 }
 .pr_header_menu{
-	
+  
 }
 .pr_header_menu span{
-	color: #428bca;
-	margin: 20px 0 0 15px;
-	height: 20px;
+  color: #428bca;
+  margin: 20px 0 0 15px;
+  height: 20px;
 }
 .pr_header_menu span:hover{
-	color: #428bca;
-	cursor: pointer;
-	
+  color: #396294;
+  cursor: pointer;
 }
 #current_user_link {
-	color: #000;
+  color: #000;
 }
 #current_user_link:hover {
-	text-decoration: none;
+  text-decoration: none;
 }
 
 #profile_form label, #create_project_form label{
-	margin: 15px 0 5px 0 ;
+  margin: 15px 0 5px 0 ;
 }
 
 #create_project_form {
-	
+  
 }
 #create_project_form textarea, #doc_create_form textarea  {
-	height: 100px;
+  height: 100px;
 }
 
 .wrapper1, .wrapper2 {
@@ -133,33 +151,33 @@
 /***************** DOCUMENT */
 
 .out_doc_container {
-	margin:10px 0 0 0;
+  margin:10px 0 0 0;
 }
 #all_tumours {
-	display: none;
+  display: none;
 }
 #tumour-list {
-	list-style: none;
-	padding: 0;
+  list-style: none;
+  padding: 0;
 }
 .single_tumour_li{
-	border: 1px solid #ccc;
-	padding: 5px;
-	margin: 5px; 	
+  border: 1px solid #ccc;
+  padding: 5px;
+  margin: 5px;   
 }
 .norm-select{
-	height: 200px;
+  height: 200px;
 }
 /***************** DATABASE */
 
 .pathway_list_ul {
-	list-style:none;
-	margin: 0;
-	padding: 0;
+  list-style:none;
+  margin: 0;
+  padding: 0;
 }
 
 .path_list_picture img{
-	height: 70px; margin: 0 20px 0 0;
+  height: 70px; margin: 0 20px 0 0;
 }
 
 .chart {
@@ -171,29 +189,29 @@
 }
  /*************************/
 #footer{
-	position: absolute;
+  position: absolute;
     bottom: 0;
     width: 100%;
-	background: url(/static/images/black_thread.png) repeat;
-	margin: 50px 0 0 0 ;
-	padding: 30px 0 ;
-	color: #fff;
-	height: 100px;
+  background: url(/static/images/black_thread.png) repeat;
+  margin: 50px 0 0 0 ;
+  padding: 30px 0 ;
+  color: #fff;
+  height: 100px;
 }
 
 
 /* Table that contains key-value pairs */
 
 .of-table-key {
-	padding: 2px 2px 2px 0;
+  padding: 2px 2px 2px 0;
 }
 
 .of-table-value {
-	padding: 2px 0 2px 2px;
+  padding: 2px 0 2px 2px;
 }
 
 .clickover-content {
-	font-weight: normal;
+  font-weight: normal;
 }
 
 .of-label-help {

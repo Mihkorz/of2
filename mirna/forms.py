@@ -7,9 +7,9 @@ from django.core.files.temp import NamedTemporaryFile
 from django.contrib.auth.models import User
 
 from core.models import PATHWAY_DATABASE, PATHWAY_ORGANISM
+from mirna.models import MirnaDb
 from profiles.models import Project, Document
-from profiles.utils import validate_file
-
+from profiles.utils import validate_input_document
 
 logger = logging.getLogger('oncoFinder')
 
@@ -24,19 +24,8 @@ class UploadDocumentForm(forms.ModelForm):
     def clean_document(self):
         try:
             uploaded_file = self.cleaned_data['document']
-        
-            temp_doc = NamedTemporaryFile(mode='w+', delete=True)
-            temp_doc.write(uploaded_file.read())
-            temp_doc.flush()
-            temp_doc.seek(0)
-            
-            temp_doc._size = uploaded_file._size
-            temp_doc._content_type = uploaded_file.content_type
-            
-            validate_file(temp_doc)
-            
-            temp_doc.close()            
-  
+            validate_input_document(uploaded_file)
+
         except forms.ValidationError:
             logger.error(u'User was trying to upload file with wrong format.')
             raise 
@@ -46,11 +35,11 @@ class UploadDocumentForm(forms.ModelForm):
     class Meta(object):
         model = Document
         fields = ['document', 'description', 'created_by', 'project', ]
-        
+
+
 class CalculationParametersForm(forms.Form):
     
-    DB_CHOICES = (('Diana TarBase', 'Diana TarBase',),
-                  ('miRTarBase', 'miRTarBase'))
+    DB_CHOICES = MirnaDb.CHOISES
 
     ORGANISM_CHOICES = PATHWAY_ORGANISM
 
@@ -60,7 +49,7 @@ class CalculationParametersForm(forms.Form):
                                      widget=forms.RadioSelect, choices=ORGANISM_CHOICES, initial='human')
     
     db_choice = forms.ChoiceField(label="Target DataBase",
-                                     widget=forms.RadioSelect, choices=DB_CHOICES, initial='Diana TarBase')
+                                     widget=forms.RadioSelect, choices=DB_CHOICES, initial=MirnaDb.MIRTARBASE_STRONG)
     path_db_choice = forms.MultipleChoiceField(label="Pathway DataBase",
                                      widget=forms.SelectMultiple, choices=PATH_DB_CHOICES, initial=['primary_old'])
     sigma_num = forms.FloatField( label="Sigma amount", initial=2, required=False)

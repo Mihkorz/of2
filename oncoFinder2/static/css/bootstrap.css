@@ -9,11 +9,9 @@ html {
   font-family: sans-serif;
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
-  position: relative;
-  min-height: 100%; 
 }
 body {
-  margin: 0 0 120px 0;
+  margin: 0;
 }
 article,
 aside,
@@ -4023,10 +4021,6 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   color: #333;
 }
 .navbar-inverse {
-  background-image:-webkit-linear-gradient(top,#3c3c3c 0,#222 100%);
-  background-image:linear-gradient(to bottom,#3c3c3c 0,#222 100%);
-  background-repeat:repeat-x;
-  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff3c3c3c', endColorstr='#ff222222', GradientType=0);filter:progid:DXImageTransform.Microsoft.gradient(enabled=false);
   background-color: #222;
   border-color: #080808;
 }
