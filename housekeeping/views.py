@@ -1,5 +1,7 @@
 import json
+import os
 
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse_lazy
@@ -63,3 +65,21 @@ class HousekeepingPathwayView(FormView):
             messages.error(self.request, 'Error: {}'.format(ex))
 
         return super(HousekeepingPathwayView, self).form_valid(form)
+
+
+class ChangelogView(TemplateView):
+
+    template_name = 'housekeeping/changelog.html'
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(ChangelogView, self).dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(ChangelogView, self).get_context_data(**kwargs)
+
+        fname = os.path.join(settings.PROJECT_DIR, '..', 'changelog.txt')
+        with open(fname) as f:
+            context['changelog'] = f.read()
+
+        return context

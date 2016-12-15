@@ -1,0 +1,16 @@
+OncoFinder Changelog
+====================
+
+Unreleased
+----------
+
+New:
+- UAT environment is available at uat.oncofinder.com
+- Help popups in calculation parameter form
+- "Import pathways" view for power users
+- Started this changelog (2016-12-11)
+
+Changed/fixed:
+- miRNA: ceased -3p special processing
+- New miRNA mappings: "miRTarBase strong" and miRTarBase all". Removed "Diana TarBase".
+- Tidied up uploaded document validation
