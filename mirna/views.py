@@ -203,14 +203,7 @@ class MirnaSetCalculationParameters(FormView):
                 mirna_gene.set_index('miRNA.ID', inplace=True)
                 mirna_gene = mirna_gene.groupby(gene_df.index, level=0).mean()
                 mirna_gene.index.name = 'SYMBOL'
-                
-                
-                
-                mirna_gene_copy = mirna_gene.copy()
-                mirna_gene_copy = mirna_gene_copy[['-3p' in s for s in mirna_gene_copy.index]]
-                mirna_gene_copy.index = mirna_gene_copy.index.map(lambda x: x.replace('-3p', ''))
-                
-                mirna_gene = mirna_gene.append(mirna_gene_copy)
+
                 gene_df = mirna_gene
 
             else:
