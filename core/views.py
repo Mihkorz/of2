@@ -1077,47 +1077,49 @@ class Test(TemplateView):
         
         from sklearn import preprocessing
         
+        for subdir, dirs, files in os.walk('/home/mikhail/Downloads/Henkel/ratio/'):
+            for file in files: 
+                df = read_csv('/home/mikhail/Downloads/Henkel/ratio/'+file, sep=None, index_col='SYMBOL') 
+                
+                df_tumour = df[[x for x in df.columns if 'Tumour' in x]]
+                s_tumour = df_tumour.mean(axis=1).round(decimals=2)
+        
+                df_norm = df[[x for x in df.columns if 'Norm' in x]]
+                s_norm = df_norm.mean(axis=1).round(decimals=2)
+                
+                nnn = len(s_norm.index)
+                
+                df['logFC'] = np.log2(s_tumour.divide(s_norm))
+                
+                #df = df[['logFC', 'adj.P.Val']]
+                
+                if file == 'pool3_exp.csv':
+                    raise Exception('fuck')
+                
+                df.to_csv('/home/mikhail/Downloads/Henkel/ratio/logfc/'+file)
+        raise Exception('ksyu')
+        df = read_csv('/home/mikhail/Downloads/Henkel_qnorm_noratio.txt', sep=None, index_col='SYMBOL')  
+        
+        tumour_columns = [col for col in df.columns if 'Tumour' in col] #get sample columns 
+        normal_columns = [col for col in df.columns if 'Norm' in col] #get normal columns 
         
         
-        lgroup = ['10_C_100_celltype_A549.tab',
-                   '10_C_100_celltype_MCF7.tab',
-                    '10_C_1000_celltype_A549.tab',
-                     '10_C_1000_celltype_MCF7.tab',
-                     '12_C_100_celltype_A549.tab',
-                     '12_C_100_celltype_MCF7.tab',
-                     '12_C_1000_celltype_A549.tab',
-                     '12_C_1000_celltype_MCF7.tab',
-                     '15_C_100_celltype_A549.tab',
-                     '15_C_100_celltype_MCF7.tab',
-                     '15_C_1000_celltype_A549.tab',
-                     '15_C_1000_celltype_MCF7.tab',
-                     '29_C_80_celltype_A549.tab',
-                     '29_C_80_celltype_MCF7.tab',
-                     '29_C_360_celltype_A549.tab',
-                     '29_C_360_celltype_MCF7.tab']
+        def calculate_ttest(row):
+                tumours = row[tumour_columns]
+                norms = row[normal_columns]
+                 
+                _, p_val = ttest_ind(tumours, norms)
+                
+                return p_val
         
-        for group in lgroup:
+        series_p_values = df.apply(calculate_ttest, axis=1).fillna(1)
         
-            #panda_kegg_10_C_100_celltype_A549.tab
-            df1 = read_csv('/home/mikhail/Downloads/AZ/panda/kegg/panda_kegg_'+group, sep=' ')
-            df2 = read_csv('/home/mikhail/Downloads/AZ/panda/nci/panda_nci_'+group, sep=' ')
-            df3 = read_csv('/home/mikhail/Downloads/AZ/panda/primary_new/panda_primary_new_'+group, sep=' ')
-            df4 = read_csv('/home/mikhail/Downloads/AZ/panda/reactome/panda_reactome_'+group, sep=' ')
+        for sample_name in tumour_columns:
+            sample_name = sample_name.replace('Tumour', '')
+            df["ttest_pv"+sample_name] = series_p_values
+            df["ttest_qv"+sample_name] = series_p_values
             
-            df1['Database'] = 'kegg'
-            df2['Database'] = 'nci'
-            df3['Database'] = 'primary_new'
-            df4['Database'] = 'reactome'
-            
-        
-            result = df1.append([df2, df3, df4])
-        
-            result.index.name = 'Pathway'
-        
-            result.to_csv('/home/mikhail/Downloads/AZ/panda/combined/'+group, encoding='utf-8')    
-        
-        
-        
+        df.to_csv("/home/mikhail/Downloads/Henkel_qnorm_noratio_PVAL.csv")        
         raise Exception('panda')
         ############ NORMS ADD
         folname = 'Zavgorodniy, Norm3_1,2,3_13.09.16'

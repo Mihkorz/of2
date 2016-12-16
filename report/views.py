@@ -257,10 +257,10 @@ class ReportGeneScatterJson(TemplateView):
         df_output = df_output[np.absolute(df_output['FC'])>logFC_tres]
         
         
-        
+        #raise Exception('scatter')
         df_output = df_output[df_output['x']>0 ]
         df_output = df_output[df_output['y']>0 ]
-        #raise Exception('scatter')
+        
         df_output.index.name='name'
         df_output.reset_index(inplace=True)
         
@@ -280,12 +280,10 @@ class ReportGeneTableScatterJson(TemplateView):
     def get(self, request, *args, **kwargs):
         
         file_name = request.GET.get('file_name')
+        report = Report.objects.get(pk=request.GET.get('reportID'))
+        logFC_tres = report.logcf_theshold_plot
         
-        
-        if file_name!='all':
-            
-            
-            
+        if file_name!='all':          
             
             df_gene = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name)
             try:
@@ -296,7 +294,7 @@ class ReportGeneTableScatterJson(TemplateView):
             df_gene['logFC'] = df_gene['logFC'].round(decimals=2)
                      
             df_gene.replace([np.inf, -np.inf], np.nan, inplace=True)
-            df_gene = df_gene[(np.absolute(df_gene['logFC'])>2)] 
+            df_gene = df_gene[(np.absolute(df_gene['logFC'])>logFC_tres)] 
             #raise Exception('scatter table')
             
         
@@ -395,8 +393,11 @@ class ReportGeneBoxplotJson(TemplateView):
                        
         
             for group in groups:
-            
-                df_group = pd.read_csv(group.document.path,
+                try:
+                    df_group = pd.read_csv(group.document.path,
+                                   index_col='SYMBOL', sep=None)
+                except:
+                    df_group = pd.read_csv(group.document.path,
                                    index_col='SYMBOL', sep='\t')
                 df_list.append(df_group.loc[gene])
             

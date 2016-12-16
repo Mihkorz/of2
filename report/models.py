@@ -129,10 +129,10 @@ class Report(models.Model):
         
         if not self.compare_groups:
             if group_num>3:
-                combinations= list(itertools.combinations(group_list, 3)) # get all triplets of items
+                combinations= list(itertools.combinations(group_list, 4)) # get all triplets of items
         
             else:            
-                combinations= list(itertools.combinations(group_list, 2)) # get all pairs of items
+                combinations= list(itertools.combinations(group_list, 3)) # get all pairs of items
         
             l_combination_names = []
             for tlong in combinations:
