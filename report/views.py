@@ -240,6 +240,7 @@ class ReportGeneScatterJson(TemplateView):
         file_name = settings.MEDIA_ROOT+'/'+request.GET.get('file_name')
         report = Report.objects.get(pk=request.GET.get('reportID'))
         logFC_tres = report.logcf_theshold_plot
+        pval_tres = report.pval_theshold_plot
         
         with open(file_name, 'rb') as csvfile:
             sniffer = csv.Sniffer()
@@ -264,10 +265,14 @@ class ReportGeneScatterJson(TemplateView):
         df_output['FC'] = s_tumour.divide(s_norm)
         
         df_output = np.log2(df_output)
+        try:
+            df_output['adj.P.Val'] = df_gene['adj.P.Val']
+            df_output = df_output[df_output['adj.P.Val']<pval_tres]
+        except:
+            pass
         
         df_output = df_output[np.absolute(df_output['FC'])>logFC_tres]
-        
-        
+
         #raise Exception('scatter')
         df_output = df_output[df_output['x']>0 ]
         df_output = df_output[df_output['y']>0 ]
@@ -293,6 +298,7 @@ class ReportGeneTableScatterJson(TemplateView):
         file_name = request.GET.get('file_name')
         report = Report.objects.get(pk=request.GET.get('reportID'))
         logFC_tres = report.logcf_theshold_plot
+        pval_tres = report.pval_theshold_plot
         
         if file_name!='all':          
             
@@ -306,7 +312,10 @@ class ReportGeneTableScatterJson(TemplateView):
                      
             df_gene.replace([np.inf, -np.inf], np.nan, inplace=True)
             df_gene = df_gene[(np.absolute(df_gene['logFC'])>logFC_tres)] 
-            #raise Exception('scatter table')
+            try:
+                df_gene = df_gene[df_gene['adj.P.Val']<pval_tres]
+            except:
+                pass      
             
         
         else:
@@ -321,7 +330,7 @@ class ReportGeneTableScatterJson(TemplateView):
                 df_gene[idx] = val['logFC'].round(decimals=2)
 
             df_gene.reset_index(inplace=True)
-            #raise Exception('gene table')
+            raise Exception('gene table')
 
         output_json = df_gene.to_json(orient='values')
         response_data = {'data': json.loads(output_json)}
