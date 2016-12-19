@@ -187,6 +187,9 @@ class GeneGroup(models.Model):
     
     def get_slug(self):
         return self.name.replace(' ', '_')
+    
+    def henkel_norm_name(self):
+        return self.name.replace('w', '')
 
 class PathwayGroup(models.Model):
     name = models.CharField(verbose_name='Pathway group name', max_length=250, blank=False)

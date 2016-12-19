@@ -52,7 +52,9 @@ class ReportDetail(DetailView):
         if self.get_object().id==6 or self.get_object().id==9:
             self.template_name = 'report/report_detail_jjms.html'
         if self.get_object().id==7 or self.get_object().id==13:
-            self.template_name = 'report/report_detail_abovebeyond.html'    
+            self.template_name = 'report/report_detail_abovebeyond.html'
+        if 'Hnkl' in self.get_object().slug:
+            self.template_name = 'report/report_detail_henkel.html'
         
         return super(ReportDetail, self).dispatch(request, *args, **kwargs)
     
@@ -79,8 +81,9 @@ class ReportGeneVolcanoJson(TemplateView):
          
         report = Report.objects.get(id=json_data['reportID'])
         pval_tres = report.pval_theshold_plot
-        logFC_tres = report.logcf_theshold_plot      
+        logFC_tres = report.logcf_theshold_plot
         
+
         try:
             df_gene = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name)
             df_gene = df_gene[['gene', 'logFC', 'adj.P.Val', 'P.Value']]
@@ -94,9 +97,13 @@ class ReportGeneVolcanoJson(TemplateView):
                     df_gene = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name, sep=None)
                     df_gene = df_gene[['SYMBOL', 'logFC', 'adj.P.Val']]
                 except:
-                    df_gene = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name, sep=None)
-                    df_gene = df_gene[['SYMBOL', 'log2FoldChange', 'padj']]
-                    df_gene.rename(columns={'log2FoldChange': 'logFC', 'padj': 'adj.P.Val'}, inplace=True)
+                    try:
+                        df_gene = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name, sep=None)
+                        df_gene = df_gene[['SYMBOL', 'log2FoldChange', 'padj']]
+                        df_gene.rename(columns={'log2FoldChange': 'logFC', 'padj': 'adj.P.Val'}, inplace=True)
+                    except: #For Henkel Report ONLY!
+                        df_gene = pd.read_csv(settings.MEDIA_ROOT+"/report-portal/"+report.slug+"/Henkel_mean.csv", sep=None)
+                        df_gene = df_gene[['SYMBOL', 'logFC', 'adj.P.Val']]
                 
         df_gene.fillna(0, inplace=True)
                         
@@ -155,9 +162,13 @@ class ReportGeneTableJson(TemplateView):
                         df_gene = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name, sep=None)
                         df_gene = df_gene[['SYMBOL', 'logFC', 'adj.P.Val']]
                     except:
-                        df_gene = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name, sep=None)
-                        df_gene = df_gene[['SYMBOL', 'log2FoldChange', 'padj']]
-                        df_gene.rename(columns={'log2FoldChange': 'logFC', 'padj': 'adj.P.Val'}, inplace=True)
+                        try:
+                            df_gene = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name, sep=None)
+                            df_gene = df_gene[['SYMBOL', 'log2FoldChange', 'padj']]
+                            df_gene.rename(columns={'log2FoldChange': 'logFC', 'padj': 'adj.P.Val'}, inplace=True)
+                        except: #For Henkel Report ONLY!
+                            df_gene = pd.read_csv(settings.MEDIA_ROOT+"/report-portal/"+report.slug+"/Henkel_mean.csv", sep=None)
+                            df_gene = df_gene[['SYMBOL', 'logFC', 'adj.P.Val']]
                             
                 
                 #raise Exception('stop')
