@@ -12,20 +12,22 @@ def get_document_upload_path(instance, file_name):
 
 
 PATHWAY_DATABASE = (
-    ('primary_old', 'Primary Pathway Database (old)'),
-    ('primary_new', 'Primary Pathway Database (new)'),
-    ('metabolism', 'Metabolism Pathway Database'),
-    ('cytoskeleton', 'Cytoskeleton Pathway Database'),
-    ('kegg', 'KEGG Pathway Database'),
-    ('nci', 'NCI Pathway Database'),
+    ('primary_old', 'Primary (old)'),
+    ('primary_new', 'Primary (new)'),
+    ('metabolism', 'Metabolism'),
+    ('cytoskeleton', 'Cytoskeleton'),
+    ('kegg', 'KEGG'),
+    ('nci', 'NCI'),
     ('biocarta', 'Biocarta'),
     ('reactome', 'Reactome'),
-    ('kegg_adjusted', 'KEGG Adjusted Pathway Database'),
+    ('kegg_adjusted', 'KEGG Adjusted'),
     ('kegg_10', 'KEGG 10+ genes'),
     ('kegg_adjusted_10', 'KEGG Adjusted 10+ genes'),
     ('aging', 'Aging related'),
     ('sandbox', 'Sandbox'),
 )
+
+PATHWAY_DATABASE_DEFAULT = 'primary_new'
 
 PATHWAY_ORGANISM = (
     ('human', 'Human'),
@@ -38,7 +40,7 @@ class Pathway(models.Model):
     organism = models.CharField(verbose_name=u'Organism', max_length=5, blank=False,
                                 choices = PATHWAY_ORGANISM, default='human')
     database = models.CharField(verbose_name=u'Database', max_length=20, blank=False,
-                                choices = PATHWAY_DATABASE, default='primary_old')
+                                choices = PATHWAY_DATABASE, default=PATHWAY_DATABASE_DEFAULT)
     amcf = models.DecimalField(verbose_name='AMCF', max_digits=2, decimal_places=1, default=0)
     info = models.TextField(verbose_name='Pathway information', blank=True)
     comment = models.TextField(verbose_name='Comment', blank=True)

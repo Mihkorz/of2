@@ -11,6 +11,8 @@ New:
 - Started this changelog (2016-12-11)
 
 Changed/fixed:
+- Simplified pathway database names
+- Calculation parameters form: 1) removed single sample t-test, 2) changed default values
 - miRNA: ceased -3p special processing
 - New miRNA mappings: "miRTarBase strong" and miRTarBase all". Removed "Diana TarBase".
 - Tidied up uploaded document validation

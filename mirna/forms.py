@@ -6,7 +6,7 @@ from django.forms.models import inlineformset_factory
 from django.core.files.temp import NamedTemporaryFile
 from django.contrib.auth.models import User
 
-from core.models import PATHWAY_DATABASE, PATHWAY_ORGANISM
+from core.models import PATHWAY_DATABASE, PATHWAY_DATABASE_DEFAULT, PATHWAY_ORGANISM
 from mirna.models import MirnaDb
 from profiles.models import Project, Document
 from profiles.utils import validate_input_document
@@ -51,7 +51,7 @@ class CalculationParametersForm(forms.Form):
     db_choice = forms.ChoiceField(label="Target DataBase",
                                      widget=forms.RadioSelect, choices=DB_CHOICES, initial=MirnaDb.MIRTARBASE_STRONG)
     path_db_choice = forms.MultipleChoiceField(label="Pathway DataBase",
-                                     widget=forms.SelectMultiple, choices=PATH_DB_CHOICES, initial=['primary_old'])
+                                     widget=forms.SelectMultiple, choices=PATH_DB_CHOICES, initial=[PATHWAY_DATABASE_DEFAULT])
     sigma_num = forms.FloatField( label="Sigma amount", initial=2, required=False)
     use_sigma = forms.BooleanField(label="Use sigma filter", initial=True, required=False)
     cnr_low = forms.FloatField(label="CNR lower limit", initial=0.67, required=False)

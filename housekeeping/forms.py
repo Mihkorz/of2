@@ -1,14 +1,15 @@
 from django import forms
 
-from core.models import PATHWAY_DATABASE, PATHWAY_ORGANISM
+from core.models import PATHWAY_DATABASE, PATHWAY_DATABASE_DEFAULT, PATHWAY_ORGANISM
 
 
 class UpdatePathwayForm(forms.Form):
 
     filename = forms.FileField(label='File')
     database = forms.ChoiceField(
-        label='Database',
+        label='Pathway Database',
         choices=PATHWAY_DATABASE,
+        initial=PATHWAY_DATABASE_DEFAULT,
     )
     organism = forms.ChoiceField(
         label='Organism',
