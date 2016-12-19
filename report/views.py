@@ -502,10 +502,7 @@ class ReportGeneBoxplotJson(TemplateView):
                 else:
                     if len(lcategories)<2:
                         series_tumour.append(lNorm)
-                    
-                
-                
-                
+  
             
             #raise Exception('boxplot') 
         s1 = {
@@ -520,6 +517,81 @@ class ReportGeneBoxplotJson(TemplateView):
         response_data = s1
         #raise Exception('boxplot') 
         return HttpResponse(json.dumps(response_data), content_type="application/json")  
+
+class ReportGeneBarplotJson(TemplateView):
+    template_name="website/report.html"
+    
+    def dispatch(self, request, *args, **kwargs):
+        
+        return super(ReportGeneBarplotJson, self).dispatch(request, *args, **kwargs)
+    
+    def get(self, request, *args, **kwargs):
+        
+        gene  = request.GET.get('gene')        
+        report = Report.objects.get(pk=request.GET.get('reportID'))
+        lcategories = [x.strip() for x in request.GET.get('categories').split(',')]
+        
+        
+        
+        df_list = []
+        cat_names = []
+        
+        if len(lcategories)<2: # if there is only one category. 4 volcano table only
+            groups = GeneGroup.objects.filter(name=lcategories[0], report=report)
+                 
+        else:
+            groups = report.genegroup_set.all()
+        
+        
+        if lcategories == ['henkel_all']:
+            groups = ['henkel_all']
+            
+        for group in groups:
+            try:
+                df_group = pd.read_csv(group.document.path,
+                                index_col='SYMBOL', sep=None)
+            except:
+                try:
+                    df_group = pd.read_csv(group.document.path,
+                                   index_col='SYMBOL', sep='\t')
+                except: #For Henkel Report ONLY!\
+                    df_group = pd.read_csv(settings.MEDIA_ROOT+"/report-portal/"+report.slug+"/Henkel_mean_exp.csv", 
+                                           index_col='SYMBOL', sep=None)
+                    
+    
+            df_list.append(df_group.loc[gene])
+            
+            if group == 'henkel_all':
+                cat_names.append('Poolw')
+            else:
+                cat_names.append(group.name)
+            
+            
+            series_tumour = []
+            series_norm = []
+            
+            i=0
+            for df in df_list:
+                
+                r_tumour = df.filter(like='Tumour')
+                r_norm = df.filter(like='Norm')
+                
+                series_tumour.append(r_tumour[0])
+                series_norm.append(r_norm[0])
+        
+        
+        response_data = {
+                         'name': 'barplot',
+                         'categories_name': cat_names,
+                         'tumour': [ round(elem, 2) for elem in series_tumour ],
+                         'norm': [ round(elem, 2) for elem in series_norm ]
+                         }  
+        
+        #raise Exception('barplot!!!')
+        return HttpResponse(json.dumps(response_data), content_type="application/json")    
+        
+        
+        
     
 class ReportPathwayTableJson(TemplateView):
     template_name="website/report.html"

@@ -457,12 +457,16 @@ $(function() {
 		  {%if forloop.counter = 1%}
 		
 		     drawVolcanoPlot('Poolw_vs_Pool_volcano', {{report.id}}, 'henkel_all');
-	         drawGeneTable({{report.id}}, 'tbl-Poolw_vs_Pool', 'henkel_all', categories='henkel_all'); 
+	         drawGeneTable({{report.id}}, 'tbl-Poolw_vs_Pool', 'henkel_all', 
+	        		 categories='henkel_all',
+	        		 is_barplot=true); 
 	     
 	       {%endif%}
 	     {%endfor%}
 	     
-	     drawGeneTable({{report.id}}, 'tbl-gene_all', 'all', categories='{{report.get_all_gene_groups_norm_as_list}}');
+	     drawGeneTable({{report.id}}, 'tbl-gene_all', 'all', 
+	    		 categories='{{report.get_all_gene_groups_norm_as_list}}',
+	    		 is_barplot=true);
 	 	 
 	     
 	   //GENES
@@ -515,7 +519,10 @@ $(function() {
 			          yname='log2({{report.norm_name}} Expression level)',
 			          file_name='{{group.document}}',
 			          reportID={{report.id}});
-	  drawGeneTableScatter({{report.id}}, 'tbl-{{group.get_slug}}', '{{group.doc_logfc}}', categories='{{report.get_all_gene_groups_norm_as_list}}'); 
+	  drawGeneTableScatter({{report.id}}, 'tbl-{{group.get_slug}}', 
+			               '{{group.doc_logfc}}', 
+			               categories='{{group.name}}',
+			               is_barplot=true); 
 	});
 	  {%endfor%}
 	{%endif%}

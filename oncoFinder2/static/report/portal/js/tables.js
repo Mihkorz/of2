@@ -129,7 +129,7 @@ function showPathDetails(reportID, path_name, group_name, organism){
 
 
 
-function drawGeneTable(reportID, id, file_name, categories){
+function drawGeneTable(reportID, id, file_name, categories, is_barplot){
 	
 	// FIRST DOC
 	var table = $('#'+id).DataTable( {
@@ -167,14 +167,86 @@ function drawGeneTable(reportID, id, file_name, categories){
     $('#'+id+' tbody').on( 'click', 'tr td:first-child', function () {
     	
     	var gene_name = $(this).text();
-    	
-    	drawGeneChart(reportID, gene_name, categories);    	
+    	if (is_barplot) 	drawGeneBarPlot(reportID, gene_name, categories);    
+    	else drawGeneChart(reportID, gene_name, categories); 
+    	    	
     	
     });
 }
 
 
-function drawGeneTableScatter(reportID, id, file_name, categories){
+//CHART FOR GENES
+var bar_options = {
+	        chart: {
+	        	renderTo: 'gene_plot',
+	            type: 'column'
+	        },
+	        title: {
+	            text: 'MTOR gene'
+	        },
+	        xAxis: {
+	        	type: 'category',
+	        	labels: {
+	        		rotation: -45,
+	        	}
+	            
+	        },
+	        yAxis: {
+			      title: {
+			        text: 'log2(Expression level)'
+			      }
+			    },
+	        credits: {
+	            enabled: false
+	        },
+	        series: [{},
+	                 {}]
+	    }
+
+	
+function drawGeneBarPlot(reportID, gene_name, categories){
+		$("#modalBody").html('<h4 id="loading">Loading ...</h4><div id="gene_plot" style="width: 500px; height: 400px; margin: 0 auto"></div>');
+		
+		$("#myModalLabel").text(gene_name);
+		
+		$('#pathmodal').modal('show');
+		
+		categories = categories.replace(/u&#39;/g, "");
+		categories = categories.replace(/&#39;/g, "");
+		categories = categories.replace('[', "");
+		categories = categories.replace(']', "");
+		
+		var arr_categories = categories.split(',');
+		
+		var cat_case_name = arr_categories[0];
+		var cat_norm_name = cat_case_name.replace('w', ''); 
+				
+		$.getJSON('/report-portal/report-genesbarplotjson/',
+				{
+			     'reportID': reportID,
+			     'gene': gene_name,
+			     'categories': categories
+			     },
+			     function(data){
+						
+						$("#loading").empty();
+						
+						bar_options.title.text = gene_name+' gene'
+						bar_options.xAxis.categories = data['categories_name'];						
+						
+						
+						bar_options.series[0].data = data["tumour"];
+						bar_options.series[0].name = 'Poolw';
+						
+						bar_options.series[1].data = data["norm"];
+						bar_options.series[1].name = 'Pool';
+						
+				        var chart = new Highcharts.Chart(bar_options);
+					})
+
+	}
+
+function drawGeneTableScatter(reportID, id, file_name, categories, is_barplot){
 	
 	// FIRST DOC
 	var table = $('#'+id).DataTable( {
@@ -213,7 +285,10 @@ function drawGeneTableScatter(reportID, id, file_name, categories){
     	
     	var gene_name = $(this).text();
     	
-    	drawGeneChart(reportID, gene_name, categories);    	
+    	if (is_barplot) 	drawGeneBarPlot(reportID, gene_name, categories);    
+    	else drawGeneChart(reportID, gene_name, categories);    
+    	
+    		
     	
     });
 }

@@ -59,7 +59,7 @@ from core.celery_views import Celery, TaskStatus
 
 from report.views import ReportList, ReportDetail, \
                          ReportGeneVolcanoJson, ReportGeneScatterJson, ReportGeneTableJson, ReportGeneTableScatterJson,\
-                         ReportGeneBoxplotJson, \
+                         ReportGeneBoxplotJson, ReportGeneBarplotJson, \
                          ReportAjaxPathwayVenn, ReportAjaxPathwayVennTable, ReportPathwayTableJson, ReportAjaxPathDetail, \
                          ReportTfTableJson, ReportAjaxTfDetail, ReportDlFarmJson, ReportCorrelationTableJson, ReportSimilarityJson, \
                          ReportPotentialTargetsJson, ReportTfTrrustTableJson
@@ -231,6 +231,7 @@ urlpatterns = patterns('',
     url(r'^report-portal/report-genetablejson/$', ReportGeneTableJson.as_view(), name="gene_table_json"),
     url(r'^report-portal/report-genetablescatterjson/$', ReportGeneTableScatterJson.as_view(), name="gene_table_scatter_json"),
     url(r'^report-portal/report-genesboxplotjson/$', ReportGeneBoxplotJson.as_view(), name="gene_boxplot_json"),
+    url(r'^report-portal/report-genesbarplotjson/$', ReportGeneBarplotJson.as_view(), name="gene_barplot_json"),
     
     url(r'^report-portal/report-ajaxpathvenn/$', ReportAjaxPathwayVenn.as_view(), name="report_ajax_path_venn"),
     url(r'^report-portal/report-ajaxpathvenntbl/$', ReportAjaxPathwayVennTable.as_view(), name="report_ajax_path_venn_tbl"),

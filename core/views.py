@@ -1077,7 +1077,7 @@ class Test(TemplateView):
         
         from sklearn import preprocessing
         
-        df = read_csv('/home/mikhail/Downloads/Henkel/Henkel_qnorm_ratio.txt', sep=None, index_col='SYMBOL')  
+        df = read_csv('/home/mikhail/Downloads/Henkel/Henkel_qnorm_noratio.txt', sep=None, index_col='SYMBOL')  
         
         tumour_columns = [col for col in df.columns if 'Tumour' in col] #get sample columns 
         normal_columns = [col for col in df.columns if 'Norm' in col] #get normal columns 
@@ -1089,14 +1089,14 @@ class Test(TemplateView):
         s_norm = df_nor.mean(axis=1)
         
         
-        df['Tum'] = s_tumour
-        df['Nor'] = s_norm
+        df['Tumour'] = s_tumour
+        df['Norm'] = s_norm
         
-        df = df[['Tum', 'Nor']]
+        df = df[['Tumour', 'Norm']]
         
-        df['logFC'] = np.log2(s_tumour.divide(s_norm))
+        #df['logFC'] = np.log2(s_tumour.divide(s_norm))
         
-        df.to_csv("/home/mikhail/Downloads/Henkel/Henkel_qnorm_ratio_mean.csv")
+        df.to_csv("/home/mikhail/Downloads/Henkel/Henkel_qnorm_noratio_mean_exp.csv")
         
         raise Exception('stop')
         for subdir, dirs, files in os.walk('/home/mikhail/Downloads/Henkel/ratio/'):
