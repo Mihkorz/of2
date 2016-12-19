@@ -1,4 +1,4 @@
-function drawDynamicTable(reportID, idx, tblRenderTo, path_gene, categories, organism){
+function drawDynamicTable(reportID, idx, tblRenderTo, path_gene, categories, organism, is_barplot){
 	
 	var arParams = idx.split("+");
 	var inter_num = arParams[0];
@@ -131,8 +131,9 @@ function drawDynamicTable(reportID, idx, tblRenderTo, path_gene, categories, org
 				
 				$('#'+tblId+' tbody').on( 'click', 'tr td:first-child', function () {				    	
 				    	var gene_name = $(this).text();	
-				    	
-				    	drawGeneChart(reportID, gene_name, categories);				    	
+				    	if (is_barplot) 	drawGeneBarPlot(reportID, gene_name, categories);    
+				    	else drawGeneChart(reportID, gene_name, categories);
+				    					    	
 				    });
 				
 			}
@@ -148,7 +149,7 @@ function drawDynamicTable(reportID, idx, tblRenderTo, path_gene, categories, org
 
 function drawVenn(reportID, renderTo, 
 		                      group_names,		                      
-		                      is_metabolic, reg, tblRenderTo, path_gene, categories, organism){
+		                      is_metabolic, reg, tblRenderTo, path_gene, categories, organism, is_barplot){
 	
 	
 	$.get("/report-portal/report-ajaxpathvenn/",
@@ -210,7 +211,7 @@ function drawVenn(reportID, renderTo,
                 	 venn.sortAreas(div, d);
                      var idx = d.id;
                      
-                     drawDynamicTable(reportID, idx, tblRenderTo, path_gene, categories);
+                     drawDynamicTable(reportID, idx, tblRenderTo, path_gene, categories, organism, is_barplot);
                 	 
                  });
 			}

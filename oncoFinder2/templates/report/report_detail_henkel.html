@@ -471,16 +471,25 @@ $(function() {
 	     
 	   //GENES
 	 	{%for perm in report.get_gene_permutations%}
-	 	
+	 	  
 	 	$("#venn_boot_gene_{{perm.strip}}").click(function(){
 	 		drawVenn({{report.id}},
 	 				'venn_gene-{{perm.strip}}-up',
 	 				'{{perm.strip}}',	 
-	 				false, 'up', 'venn_gene_dinamic_{{perm.strip}}', 'genes', categories='{{report.get_all_gene_groups_norm_as_list}}');
+	 				false, 'up', 'venn_gene_dinamic_{{perm.strip}}', 
+	 				'genes', 
+	 				categories='{{report.get_all_gene_groups_norm_as_list}}',
+	 				organism=false,
+	 				is_barplot=true);
 	 		drawVenn({{report.id}},
 	 				'venn_gene-{{perm.strip}}-down',
 	 				'{{perm.strip}}',			
-	 				false, 'down', 'venn_gene_dinamic_{{perm.strip}}', 'genes', categories='{{report.get_all_gene_groups_norm_as_list}}');
+	 				false, 'down', 
+	 				'venn_gene_dinamic_{{perm.strip}}', 
+	 				'genes', 
+	 				categories='{{report.get_all_gene_groups_norm_as_list}}',
+	 				organism=false,
+	 				is_barplot=true);
 	 		
 	 	});
 	 	
