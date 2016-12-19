@@ -12,15 +12,15 @@ def get_document_upload_path(instance, file_name):
 
 
 PATHWAY_DATABASE = (
-    ('primary_old', 'Primary Pathway Database (old)'),
-    ('primary_new', 'Primary Pathway Database (new)'),
-    ('metabolism', 'Metabolism Pathway Database'),
-    ('cytoskeleton', 'Cytoskeleton Pathway Database'),
-    ('kegg', 'KEGG Pathway Database'),
-    ('nci', 'NCI Pathway Database'),
+    ('primary_old', 'Primary (old)'),
+    ('primary_new', 'Primary (new)'),
+    ('metabolism', 'Metabolism'),
+    ('cytoskeleton', 'Cytoskeleton'),
+    ('kegg', 'KEGG'),
+    ('nci', 'NCI'),
     ('biocarta', 'Biocarta'),
     ('reactome', 'Reactome'),
-    ('kegg_adjusted', 'KEGG Adjusted Pathway Database'),
+    ('kegg_adjusted', 'KEGG Adjusted'),
     ('kegg_10', 'KEGG 10+ genes'),
     ('kegg_adjusted_10', 'KEGG Adjusted 10+ genes'),
     ('aging', 'Aging related'),
