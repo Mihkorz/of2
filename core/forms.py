@@ -2,7 +2,7 @@
 
 from django import forms
 
-from core.models import PATHWAY_DATABASE, PATHWAY_ORGANISM
+from core.models import PATHWAY_DATABASE, PATHWAY_DATABASE_DEFAULT, PATHWAY_ORGANISM
 from profiles.models import ShambalaDocument
 
 
@@ -19,15 +19,15 @@ class CalculationParametersForm(forms.Form):
                        ('geroscope', 'GeroScope'),
                       )
     #FILTERS
-    use_sigma = forms.BooleanField(label="Use sigma filter", initial=False, required=False)
+    use_sigma = forms.BooleanField(label="Use sigma filter", initial=True, required=False)
     sigma_num = forms.FloatField( label="Sigma amount \n (deprecated)", initial=2, required=False)
-    use_cnr = forms.BooleanField(label="Use CNR filter", initial=True, required=False)
+    use_cnr = forms.BooleanField(label="Use CNR filter", initial=False, required=False)
     cnr_low = forms.FloatField(label="CNR lower limit", initial=0.67, required=False)
     cnr_up = forms.FloatField(label="CNR upper limit", initial=1.5, required=False)
     use_ttest = forms.BooleanField(label="Use T-test for gene distribution ",
-                                   initial=True, required=False)
+                                   initial=False, required=False)
     use_fdr = forms.BooleanField(label="Use Benjamini FDR for T-test ",
-                                   initial=True, required=False)
+                                   initial=False, required=False)
     use_new_fdr = forms.BooleanField(label="New  Storey FDR for T-test ",
                                    initial=False, required=False)
     use_ttest_1sam = forms.BooleanField(label="Use 1sample T-test ",
@@ -49,7 +49,7 @@ class CalculationParametersForm(forms.Form):
     organism_choice = forms.ChoiceField(label="Organism",
                                      widget=forms.RadioSelect, choices=ORGANISM_CHOICES, initial='human')
     db_choice = forms.MultipleChoiceField(label="Pathway DataBase",
-                                     widget=forms.SelectMultiple, choices=DB_CHOICES, initial=['primary_old'])
+                                     widget=forms.SelectMultiple, choices=DB_CHOICES, initial=[PATHWAY_DATABASE_DEFAULT])
     db_choice_drug = forms.MultipleChoiceField(label="Drug DataBase",
                                      widget=forms.SelectMultiple, choices=DB_CHOICES_DRUG, initial=['oncofinder'])
     norm_choice = forms.ChoiceField(label="Calculation algorithm for normal values",
@@ -62,8 +62,8 @@ class CalculationParametersForm(forms.Form):
     calculate_ds1b = forms.BooleanField(label="DS1B", initial=False, required=False)
     calculate_ds2 = forms.BooleanField(label="DS2", initial=False, required=False)    
     calculate_norms_pas = forms.BooleanField(label="PAS1 for Norms(requires at least 3 norms)", initial=True, required=False)
-    calculate_pvalue_each = forms.BooleanField(label="P-value for each sample(parametric test)", initial=True, required=False)
-    calculate_pvalue_all = forms.BooleanField(label="P-value for each pathway(non-parametric test)", initial=True, required=False)
+    calculate_pvalue_each = forms.BooleanField(label="P-value for each sample(parametric test)", initial=False, required=False)
+    calculate_pvalue_all = forms.BooleanField(label="P-value for each pathway(non-parametric test)", initial=False, required=False)
     calculate_FDR_each = forms.BooleanField(label="q-value for each sample(parametric test)", initial=False, required=False)
     calculate_FDR_all = forms.BooleanField(label="q-value for each pathway(non-parametric test)", initial=False, required=False)
     
