@@ -28,7 +28,8 @@ Optionally install Python virtual environment:
 sudo apt-get install -y python-virtualenv
 ```
 
-Make sure `pip` is up-to-date (in a virtual environment / globally):
+Make sure `pip` is up-to-date (in a virtual environment / globally;
+due to a bug in old `pip`, Pillow package would not be installed):
 
 ```
 pip install -upgrade pip

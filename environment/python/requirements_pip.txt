@@ -1,0 +1,5 @@
+# Install these packages to deal with pip SNIMissingWarning and InsecurePlatformWarning
+
+pyopenssl
+ndg-httpsclient
+pyasn1

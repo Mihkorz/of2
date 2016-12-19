@@ -1,9 +1,0 @@
--r requirements_victk.txt
-coverage==4.2
-fake-factory==0.5.0
-Faker==0.7.3
-ipaddress==1.0.17
-mixer==4.10.2
-pytest-cov==2.4.0
-pytest-django==2.9.1
-pytest-pycharm==0.4.0
