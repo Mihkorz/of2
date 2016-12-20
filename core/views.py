@@ -1076,8 +1076,8 @@ class Test(TemplateView):
     def get_context_data(self, **kwargs):
         
         from sklearn import preprocessing
-        
-        df = read_csv('/home/mikhail/Downloads/Henkel/Henkel_qnorm_noratio.txt', sep=None, index_col='SYMBOL')  
+        """
+        df = read_csv('/home/mikhail/Downloads/Henkel/Henkel_qnorm_noratio_ver2.txt', sep=None, index_col='SYMBOL')  
         
         tumour_columns = [col for col in df.columns if 'Tumour' in col] #get sample columns 
         normal_columns = [col for col in df.columns if 'Norm' in col] #get normal columns 
@@ -1094,14 +1094,15 @@ class Test(TemplateView):
         
         df = df[['Tumour', 'Norm']]
         
-        #df['logFC'] = np.log2(s_tumour.divide(s_norm))
+        df['logFC'] = np.log2(s_tumour.divide(s_norm))
         
-        df.to_csv("/home/mikhail/Downloads/Henkel/Henkel_qnorm_noratio_mean_exp.csv")
+        df.to_csv("/home/mikhail/Downloads/Henkel/Henkel_qnorm_noratio_mean.csv")
         
         raise Exception('stop')
-        for subdir, dirs, files in os.walk('/home/mikhail/Downloads/Henkel/ratio/'):
+        """
+        for subdir, dirs, files in os.walk('/home/mikhail/Downloads/Henkel/noratio/'):
             for file in files: 
-                df = read_csv('/home/mikhail/Downloads/Henkel/ratio/'+file, sep=None, index_col='SYMBOL') 
+                df = read_csv('/home/mikhail/Downloads/Henkel/noratio/'+file, sep=None, index_col='SYMBOL') 
                 
                 df_tumour = df[[x for x in df.columns if 'Tumour' in x]]
                 s_tumour = df_tumour.mean(axis=1).round(decimals=2)
@@ -1113,14 +1114,15 @@ class Test(TemplateView):
                 
                 df['logFC'] = np.log2(s_tumour.divide(s_norm))
                 
-                #df = df[['logFC', 'adj.P.Val']]
+                df = df[['logFC', 'adj.P.Val']]
                 
                 if file == 'pool3_exp.csv':
                     raise Exception('fuck')
                 
-                df.to_csv('/home/mikhail/Downloads/Henkel/ratio/logfc/'+file)
+                df.to_csv('/home/mikhail/Downloads/Henkel/noratio/logfc/'+file)
         raise Exception('ksyu')
-        df = read_csv('/home/mikhail/Downloads/Henkel_qnorm_noratio.txt', sep=None, index_col='SYMBOL')  
+        
+        df = read_csv('/home/mikhail/Downloads/Henkel/Henkel_qnorm_ratio_ver2.txt', sep=None, index_col='SYMBOL')  
         
         tumour_columns = [col for col in df.columns if 'Tumour' in col] #get sample columns 
         normal_columns = [col for col in df.columns if 'Norm' in col] #get normal columns 
@@ -1141,7 +1143,7 @@ class Test(TemplateView):
             df["ttest_pv"+sample_name] = series_p_values
             df["ttest_qv"+sample_name] = series_p_values
             
-        df.to_csv("/home/mikhail/Downloads/Henkel_qnorm_noratio_PVAL.csv")        
+        df.to_csv("/home/mikhail/Downloads/Henkel/Henkel_qnorm_ratio_PVAL.csv")        
         raise Exception('panda')
         ############ NORMS ADD
         folname = 'Zavgorodniy, Norm3_1,2,3_13.09.16'

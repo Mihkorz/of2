@@ -1461,8 +1461,11 @@ class ReportAjaxPathDetail(TemplateView):
         
         if (df_file_cnr['adj.P.Val']>pval_tres).all():
                     df_file_cnr = df_file_cnr[(np.absolute(df_file_cnr['logFC'])>logFC_tres)]
+                    
+                    
         else:        
-            df_file_cnr = df_file_cnr[(df_file_cnr['adj.P.Val']<1)] #take all the genes 
+            df_file_cnr = df_file_cnr[(df_file_cnr['adj.P.Val']<pval_tres) & (np.absolute(df_file_cnr['logFC'])>logFC_tres)] #take all the genes
+             
         
         df_file_cnr = df_file_cnr['logFC'].round(decimals=2)
         
