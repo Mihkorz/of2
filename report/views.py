@@ -624,6 +624,16 @@ class ReportPathwayTableJson(TemplateView):
                     #df_path = df_path[df_path['Database']!='kegg']
                 lgroups.append(df_path)
             
+            if 'Hnkl' in report.slug: # for Henkel reports only!!!
+                df_mean = pd.DataFrame(index=df_path.index)
+                for df_group in lgroups:
+                    df_mean = df_mean.join(df_group['0'], how='inner', lsuffix='_1')                    
+                
+                df_mean = pd.DataFrame(df_mean.mean(axis=1))
+                df_mean.columns = ['0']
+                lgroups.insert(0, df_mean)
+                #raise Exception('haha')
+            
             df_output = pd.DataFrame()
             
             for idx, val in enumerate(lgroups):
@@ -1419,8 +1429,10 @@ class ReportAjaxPathDetail(TemplateView):
         pval_tres = report.pval_theshold_compare
         logFC_tres = report.logcf_theshold_compare
         pas_tres = report.pas_theshold        
-        
-        group = GeneGroup.objects.get(report=report, name=self.request.GET['group_name'])
+        try:
+            group = GeneGroup.objects.get(report=report, name=self.request.GET['group_name'])
+        except:
+            pass
         organism = self.request.GET['organism']
 
         if report.id==2:
@@ -1456,8 +1468,13 @@ class ReportAjaxPathDetail(TemplateView):
         try:
             df_file_cnr = pd.read_csv(group.doc_logfc.path, index_col='SYMBOL')
         except:
-            df_file_cnr = pd.read_csv(group.doc_logfc.path, index_col='SYMBOL', sep='\t')
-            df_file_cnr.rename(columns={'log2FoldChange': 'logFC', 'padj': 'adj.P.Val'}, inplace=True)
+            try:
+                df_file_cnr = pd.read_csv(group.doc_logfc.path, index_col='SYMBOL', sep='\t')
+                df_file_cnr.rename(columns={'log2FoldChange': 'logFC', 'padj': 'adj.P.Val'}, inplace=True)
+            except: # for Henkel reports only!!!
+                df_file_cnr = pd.read_csv(settings.MEDIA_ROOT+"/report-portal/"+report.slug+"/Henkel_mean.csv", 
+                                      sep=None, index_col='SYMBOL')
+                df_file_cnr = df_file_cnr[['logFC', 'adj.P.Val']]
         
         if (df_file_cnr['adj.P.Val']>pval_tres).all():
                     df_file_cnr = df_file_cnr[(np.absolute(df_file_cnr['logFC'])>logFC_tres)]
