@@ -813,8 +813,7 @@ class MedicAjaxGenerateFullReport(TemplateView):
     template_name = 'medic/patient_treatment_pdf.html'
     
     def post(self, request, *args, **kwargs):
-        
-        
+
         document = pyDocx()
         document.add_heading('Patient treatment report')
         
@@ -829,86 +828,77 @@ class MedicAjaxGenerateFullReport(TemplateView):
         heading_cells[3].text = 'Responce status'
         heading_cells[4].text = 'Accuracy'
         
-        
-        
         i=1
         for treat in TreatmentMethod.objects.filter(nosology = 1):
-            try:
-                treat_id = str(treat.id)
-                cells = table.add_row().cells
-                cells[0].text = str(i)
-                cells[1].text = request.POST.get('t_treatment'+treat_id)
-                
-                er = request.POST.get('t_hormone'+treat_id)
-                if er=='ER negative':
-                    er='ER-'
-                if er=='ER positive':
-                    er='ER+'
-                    
-                her = request.POST.get('t_her2'+treat_id)
-                if her=='negative':
-                    her='HER-'
-                if her=='positive':
-                    her='HER+'                    
-                rec = er+' '+her
-                
-                cells[2].text = rec
-                if request.POST.get('t_responder'+treat_id) == 'responder':
-                    resp = 'Yes'
-                if request.POST.get('t_responder'+treat_id) == 'non-responder':
-                    resp = 'No'
-                cells[3].text = resp
-                
-                acc = request.POST.get('t_acc'+treat_id)
-                if float(acc) == 1:
-                    acc = '0.95'
-                elif float(acc) <0.5:
-                    acc = 'Low'   
-                
-                cells[4].text = acc
-                
-                i=i+1
-            except:
-                raise
+            treat_id = str(treat.id)
+            cells = table.add_row().cells
+            cells[0].text = str(i)
+            cells[1].text = request.POST.get('t_treatment'+treat_id)
+
+            er = request.POST.get('t_hormone'+treat_id)
+            if er=='ER negative':
+                er='ER-'
+            if er=='ER positive':
+                er='ER+'
+
+            her = request.POST.get('t_her2'+treat_id)
+            if her=='negative':
+                her='HER-'
+            if her=='positive':
+                her='HER+'
+            rec = er+' '+her
+
+            cells[2].text = rec
+            if request.POST.get('t_responder'+treat_id) == 'responder':
+                resp = 'Yes'
+            if request.POST.get('t_responder'+treat_id) == 'non-responder':
+                resp = 'No'
+            cells[3].text = resp
+
+            acc = request.POST.get('t_acc'+treat_id)
+            if float(acc) == 1:
+                acc = '0.95'
+            elif float(acc) <0.5:
+                acc = 'Low'
+
+            cells[4].text = acc
+
+            i=i+1
+
         document.add_page_break()
         
         for treat in TreatmentMethod.objects.filter(nosology = 1):
-            try:
-                treat_id = str(treat.id)
-            
-                t_n_patients = request.POST.get('t_n_patients'+treat_id)
-                t_hist = request.POST.get('t_hist'+treat_id)
-                t_grade = request.POST.get('t_grade'+treat_id)
-                t_hormone = request.POST.get('t_hormone'+treat_id)
-                t_her2 = request.POST.get('t_her2'+treat_id)
-                t_stage = request.POST.get('t_stage'+treat_id)
-                t_treatment = request.POST.get('t_treatment'+treat_id)
-                t_cit = request.POST.get('t_cit'+treat_id)
-                t_org = request.POST.get('t_org'+treat_id)
-                svg = request.POST.get('svg'+treat_id)
-            
-                fout = open(settings.MEDIA_ROOT+'/medic/output.png','w')
-        
-                cairosvg.svg2png(bytestring=svg,write_to=fout)
+            treat_id = str(treat.id)
 
-                fout.close()
-            
-                document.add_heading('Treatment description:', level=2)
-        
-                document.add_paragraph('Treatment: '+t_treatment)
-                document.add_paragraph('Number of patients: '+t_n_patients)
-                document.add_paragraph('Histological type: '+t_hist)
-                document.add_paragraph('Grade: ' + t_grade)
-                document.add_paragraph('Hormone receptor status: '+t_hormone)
-                document.add_paragraph('HER2 status: '+t_her2)
-                document.add_paragraph('Stage: '+t_stage)
-                document.add_paragraph('Citation(s): '+t_cit)
-                document.add_paragraph('Organization name: '+t_org)       
-                document.add_picture(settings.MEDIA_ROOT+'/medic/output.png', width=Inches(7.0))
-        
-                document.add_page_break()
-            except:
-                raise
+            t_n_patients = request.POST.get('t_n_patients'+treat_id)
+            t_hist = request.POST.get('t_hist'+treat_id)
+            t_grade = request.POST.get('t_grade'+treat_id)
+            t_hormone = request.POST.get('t_hormone'+treat_id)
+            t_her2 = request.POST.get('t_her2'+treat_id)
+            t_stage = request.POST.get('t_stage'+treat_id)
+            t_treatment = request.POST.get('t_treatment'+treat_id)
+            t_cit = request.POST.get('t_cit'+treat_id)
+            t_org = request.POST.get('t_org'+treat_id)
+            svg = request.POST.get('svg'+treat_id)
+
+            fname = os.path.join(settings.MEDIA_ROOT, 'medic', 'output.png')
+            with open(fname, 'w') as f:
+                cairosvg.svg2png(bytestring=svg, write_to=f)
+
+            document.add_heading('Treatment description:', level=2)
+
+            document.add_paragraph('Treatment: '+t_treatment)
+            document.add_paragraph('Number of patients: '+t_n_patients)
+            document.add_paragraph('Histological type: '+t_hist)
+            document.add_paragraph('Grade: ' + t_grade)
+            document.add_paragraph('Hormone receptor status: '+t_hormone)
+            document.add_paragraph('HER2 status: '+t_her2)
+            document.add_paragraph('Stage: '+t_stage)
+            document.add_paragraph('Citation(s): '+t_cit)
+            document.add_paragraph('Organization name: '+t_org)
+            document.add_picture(settings.MEDIA_ROOT+'/medic/output.png', width=Inches(7.0))
+
+            document.add_page_break()
 
         f = StringIO()
         document.save(f)
@@ -916,27 +906,15 @@ class MedicAjaxGenerateFullReport(TemplateView):
         response = HttpResponse(f.getvalue(), mimetype='application/vnd.ms-word')
         response['Content-Disposition'] = 'attachment; filename=PatientReport.docx'
         return response 
-            
-            
-    
+
     def render_to_json_response(self, context, **response_kwargs):
         data = json.dumps(context)
         response_kwargs['content_type'] = 'application/json'
         return HttpResponse(data, **response_kwargs)
     
     def dispatch(self, request, *args, **kwargs):
-        
         return super(MedicAjaxGenerateFullReport, self).dispatch(request, *args, **kwargs)
-    
-    def get_context_data(self, **kwargs):
-              
-        context = super(MedicAjaxGenerateFullReport, self).get_context_data(**kwargs)
-        
-        
-        context['test'] = "TEst"
-        
-        return context    
-    
+
     
 class MedicTest(TemplateView):
     """
