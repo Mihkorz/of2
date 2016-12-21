@@ -1,8 +1,14 @@
 OncoFinder Changelog
 ====================
 
-Unreleased
-----------
+Ongoing
+-------
+
+Nothing
+
+
+Version 2016.1.0, released 2016-12-21
+-------------------------------------
 
 New:
 - UAT environment is available at uat.oncofinder.com
