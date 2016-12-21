@@ -11,7 +11,7 @@ from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from django.conf import settings
 
-from .models import Report, GeneGroup, PathwayGroup, TfGroup, DeepLearning, CorrelationGroup
+from .models import Report, GeneGroup, PathwayGroup, TfGroup, DeepLearning, CorrelationGroup, DrugScoreGroup
 from core.stats import fdr_corr
 
 class GeneGroupInline(admin.TabularInline):
@@ -30,6 +30,10 @@ class DeepLearningInline(admin.TabularInline):
        
 class CorrelationGroupInline(admin.TabularInline):
     model = CorrelationGroup
+
+class DrugScoreGroupInline(admin.TabularInline):
+    model = DrugScoreGroup    
+    
      
 class ReportAdmin(admin.ModelAdmin):
     def targets_list(self):
@@ -45,6 +49,7 @@ class ReportAdmin(admin.ModelAdmin):
         TfGroupInline,
         DeepLearningInline,
         CorrelationGroupInline,
+        DrugScoreGroupInline,
     ]
     
     def save_formset(self, request, form, formset, change):
@@ -232,6 +237,9 @@ class ReportAdmin(admin.ModelAdmin):
                 
                 g_group.save()
             elif g_group.__class__.__name__=='CorrelationGroup':
+                
+                g_group.save()
+            elif g_group.__class__.__name__=='DrugScoreGroup':
                 
                 g_group.save()
         formset.save_m2m()

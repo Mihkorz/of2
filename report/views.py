@@ -2066,10 +2066,110 @@ class ReportPotentialTargetsJson(TemplateView):
         return HttpResponse(json.dumps(response_data), content_type="application/json")    
     
     
+class ReportDSTableJson(TemplateView): 
+    template_name="report/report_detail.html"
     
+    def dispatch(self, request, *args, **kwargs):
+        
+        return super(ReportDSTableJson, self).dispatch(request, *args, **kwargs)
     
+    def get(self, request, *args, **kwargs):
+        
+        report = Report.objects.get(pk=request.GET.get('reportID'))
+        file_name = request.GET.get('file_name')
+        group_name = request.GET.get('ds_group_name')        
+        
+        try:    
+            df_ds = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name,
+                                  sep=None)
+        except:
+            df_ds = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name,
+                                  sep='\t')
+        #raise Exception('Drug Score')        
+        df_ds.drop('Condition', axis=1, inplace=True)
+        df_ds.fillna(1, inplace=True)                 
+         
+        df_ds = df_ds[(df_ds['effect']>3)]         
+        
+        df_ds['padj'] = df_ds['padj'].map('{:,.2e}'.format)
+        df_ds['pval'] = df_ds['pval'].map('{:,.2e}'.format)
+        
+        df_ds['padj'] = df_ds['padj'].apply(str)
+        df_ds['pval'] = df_ds['pval'].apply(str)
+        
+        output_json = df_ds.to_json(orient='values')
+        #raise Exception('ds') 
+        response_data = {'data': json.loads(output_json)}
+        
+        return HttpResponse(json.dumps(response_data), content_type="application/json")    
     
+class ReportDSBoxplotJson(TemplateView):
     
+    template_name="report/report_detail.html"
+    
+    def dispatch(self, request, *args, **kwargs):
+        
+        return super(ReportDSBoxplotJson, self).dispatch(request, *args, **kwargs)
+    
+    def get(self, request, *args, **kwargs):
+        
+        file_name  = request.GET.get('file_name')        
+        report = Report.objects.get(pk=request.GET.get('reportID'))
+        ds_group_name = request.GET.get('ds_group_name')
+        pert_type = request.GET.get('pert_type')
+        
+        try:    
+            df_ds = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name,
+                                  sep=None, index_col='pert_id')
+        except:
+            df_ds = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name,
+                                  sep='\t', index_col='pert_id')
+        
+        df_top10 = df_ds[['effect']]      
+        
+        df_top10 = df_top10.groupby(df_ds.index, level=0).mean() # take mean by effect column
+        
+        df_top10.sort(columns=['effect'], ascending=False, inplace=True)
+        
+        if pert_type == 'gene':
+            df_top10 = df_top10.filter(like='TRCN', axis=0)
+        if pert_type == 'molecule':
+            df_top10 = df_top10.filter(like='BRD', axis=0)
+        
+        df_top10 = df_top10[:10] #take best 10 hits
+        
+        
+        df_ds.reset_index(inplace=True)
+        
+        lbar_name = []
+        lbar_val = [] 
+        
+        for index, val in df_top10.iterrows(): #populate df_list with corresponding datadarmes
+            df_pert = df_ds[df_ds['pert_id'] == index]
+            df_pert = df_pert[['Perturbation', 'effect']]
+            
+            df_pert.set_index('Perturbation', inplace=True)
+            
+            df_pert = df_pert.groupby(df_ds.index, level=0).mean()
+            
+            for index, val in df_pert.iterrows():
+                lbar_name.append(index)
+                lbar_val.append(val['effect'])
+            
+            
+            
+        response_data = {
+                         'name': 'barplot',
+                         'categories_name': lbar_name,
+                         'series': [ round(elem, 2) for elem in lbar_val ],
+                         
+                         }        
+        
+        
+        #raise Exception(' dsboxplot')
+        
+        
+        return HttpResponse(json.dumps(response_data), content_type="application/json")   
     
     
     

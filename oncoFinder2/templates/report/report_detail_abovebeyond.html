@@ -57,6 +57,7 @@
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#gene_analysis">Gene level analysis</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tf_analysis">Transcription Factor Analysis</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#path_analysis">Pathway Analysis</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#ds_analysis">Drug Scoring</a></li>
             <!--  
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#sim_analysis">Similarity to known drug- and knockdown-induced expression signatures</a></li>
             
@@ -392,7 +393,128 @@
 <!------------- End of Pathway Analysis -->
 
 
+<!-- ---------------------------------Drug Scoring--------------------------------------------- -->
+ <hr/> 
+<h2 id='ds_analysis'>Drug Scoring</h2>
+<hr/>
 
+
+
+<center>
+<button type="button"  class="btn btn-success btn-lg center" id='btn_show_ds'>Show Data</button>
+</center>
+
+<div id='hide_ds' style='display:none;'> <!-- Div to hide and load on button click -->
+
+   <!-- DS Nav tabs -->      
+   <ul class="nav nav-tabs" role="tablist">
+     {%for group in report.genegroup_set.all%}
+       <li role="presentation" {%if forloop.counter == 1 %}class="active"{%endif%}>
+         <a href="#{{group.get_slug}}_ds_tab" aria-controls="home1" role="tab" data-toggle="tab" id='ds_boot_{{group.get_slug}}'>
+           {{group.name}}
+         </a>
+       </li>
+     {%endfor%}
+   </ul>
+         
+   <div class="tab-content">
+    {%for group in report.genegroup_set.all%}
+     {%if forloop.counter == 1 %}
+     <div role="tabpanel" class="tab-pane fade in active" id="{{group.get_slug}}_ds_tab">
+     {%else%}
+     <div role="tabpanel" class="tab-pane fade " id="{{group.get_slug}}_ds_tab">
+     {%endif%}
+             
+       <h4>Table <span class='tbl_num'></span>Individual perturbation scoring for {{group.name}} </h4>
+       <table id="tbl-ds-{{group.get_slug}}" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>Perturbation</th>
+           <th>Perturbation_id</th>
+           <th>Time</th>
+           <th>Concentration</th>
+           <th>Cell line</th>
+           <!--  <th>Condition</th>-->
+           <th>p-val</th>
+           <th>adj. p-val</th>
+           <th>Effect</th>
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+     
+     
+     </div> <!-- end of tabpanel div -->
+    {%endfor%}
+   
+   </div> <!--  end of tab-content div -->
+   
+   <h3>Top-10 small molecule hits</h3>
+   <!-- DS Boxplot Nav tabs -->      
+   <ul class="nav nav-tabs" role="tablist">
+     {%for group in report.drugscoregroup_set.all%}
+       <li role="presentation" {%if forloop.counter == 1 %}class="active"{%endif%}>
+         <a href="#{{group.get_slug}}_dsbarmolecule_tab" aria-controls="home1" role="tab" data-toggle="tab" id='dsbarmolecule_boot_{{group.get_slug}}'>
+           {{group.name}}
+         </a>
+       </li>
+     {%endfor%}
+   </ul>
+         
+   <div class="tab-content">
+   
+     {%for group in report.drugscoregroup_set.all%} 
+     
+     {%if forloop.counter == 1 %}
+     <div role="tabpanel" class="tab-pane fade in active" id="{{group.get_slug}}_dsbarmolecule_tab">
+     {%else%}
+     <div role="tabpanel" class="tab-pane fade " id="{{group.get_slug}}_dsbarmolecule_tab">
+     {%endif%}
+     <h4>Top-10 hits for {{group.name}} </h4>
+     <div id="{{group.get_slug}}_dsbarmolecule_plot" style="min-width: 800px; height: 400px; max-width: 800px; margin: 0 auto">
+     <span>Loading Bar Plot...</span>
+     </div>
+   
+     </div>
+    {%endfor%}
+   
+   </div> <!--  end of tab panel -->
+   
+<!--  DS GENE -->
+<h3>Top-10 gene knockdowns</h3>
+   <!-- DS Boxplot Nav tabs -->      
+   <ul class="nav nav-tabs" role="tablist">
+     {%for group in report.drugscoregroup_set.all%}
+       <li role="presentation" {%if forloop.counter == 1 %}class="active"{%endif%}>
+         <a href="#{{group.get_slug}}_dsbargene_tab" aria-controls="home1" role="tab" data-toggle="tab" id='dsbargene_boot_{{group.get_slug}}'>
+           {{group.name}}
+         </a>
+       </li>
+     {%endfor%}
+   </ul>
+         
+   <div class="tab-content">
+   
+     {%for group in report.drugscoregroup_set.all%} 
+     
+     {%if forloop.counter == 1 %}
+     <div role="tabpanel" class="tab-pane fade in active" id="{{group.get_slug}}_dsbargene_tab">
+     {%else%}
+     <div role="tabpanel" class="tab-pane fade " id="{{group.get_slug}}_dsbargene_tab">
+     {%endif%}
+     <h4>Top-10 hits for {{group.name}} </h4>
+     <div id="{{group.get_slug}}_dsbargene_plot" style="min-width: 800px; height: 400px; max-width: 800px; margin: 0 auto">
+     <span>Loading Bar Plot...</span>
+     </div>
+   
+     </div>
+    {%endfor%}
+   
+   </div> <!--  end of tab panel -->
+   
+
+</div> <!--  end of hide div -->
+<!-- End of DS -->
 
 
 
@@ -467,7 +589,9 @@
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#gene_analysis">Gene level analysis</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tf_analysis">Transcription Factor Analysis</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#path_analysis">Pathway Analysis</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#ds_analysis">Drug Scoring</a></li>
           </ul>
+          <br/><br/>
         </div>
         <div class="bottom">
           <div class="inner"> Insilico Medicine Inc., Johns Hopkins <br/>University Eastern, ETC B301, 1101 East <br/>33rd Street, Baltimore, MD 21218 </div>
@@ -500,6 +624,7 @@
     <script src="/static/report/portal/js/tf.js" type="text/javascript"></script>
     <script src="/static/report/portal/js/deeplearning.js" type="text/javascript"></script>
     <script src="/static/report/portal/js/correlation.js" type="text/javascript"></script>
+    <script src="/static/report/portal/js/ds.js" type="text/javascript"></script>
     
     
     
@@ -678,207 +803,80 @@ $("#btn_show_tf").click(function(){
     
     {%endfor%}
 
-/////////////////// Deep Learning
-
-// Pharm Classes
-//Overal tabs
-
-$("#btn_show_dl").click(function(){
-  
-	$(this).hide();
-	$("#hide_dl").slideDown('slow');
-	
-	drawDLColumn({{report.id}}, 'dlfc_overall10',
-              'overall_10', 'fc');
-	drawAntineoplasticColumn({{report.id}}, 'dl_ap_plot'); 
-    drawNumSideEffColumn({{report.id}}, 'dl_nse_plot');
-    
-    $('#dlfc_boot_overall12').click(function(){
+/////////////////// Drug Scoring
+    $("#btn_show_ds").click(function(){
+    	$(this).hide();
+    	$("#hide_ds").slideDown('slow');
     	
-    	if($("#dlfc_overall12 span").html() == 'Loading bar plot...'){
-    		drawDLColumn({{report.id}}, 'dlfc_overall12',
-  		                 'overall_12', 'fc');
-		}     	
-     });
-$('#dlfc_boot_overall15').click(function(){
-	
-	if($("#dlfc_overall15 span").html() == 'Loading bar plot...'){
-		drawDLColumn({{report.id}}, 'dlfc_overall15',
-	                 'overall_15', 'fc');
-	}     	
-});
-$('#dlfc_boot_overall29').click(function(){
-	
-	if($("#dlfc_overall29 span").html() == 'Loading bar plot...'){
-		drawDLColumn({{report.id}}, 'dlfc_overall29',
-	                 'overall_29', 'fc');
-	}     	
-});
-
-//Group tabs
-{%for group in report.tfgroup_set.all%}              
-    
-    $('#dlfc_boot_{{group.get_slug}}').click(function(){
-        	
-    	if($("#dlfc_{{group.get_slug}} span").html() == 'Loading bar plot...'){
-    		drawDLColumn({{report.id}}, 'dlfc_{{group.get_slug}}',
-  		                 '{{group.get_slug}}', 'fc');
-		}     	
-     });        
-      
-{%endfor%}
-
-
-
-///////////// Side Effects
-//Overal tabs
-
-drawDLColumn({{report.id}}, 'dlse_overall10',
-    		                 'overall_10', 'se');
-
-$('#dlse_boot_overall12').click(function(){
-          	
-      	if($("#dlse_overall12 span").html() == 'Loading bar plot...'){
-      		drawDLColumn({{report.id}}, 'dlse_overall12',
-    		                 'overall_12', 'se');
-			}     	
-       });
-$('#dlse_boot_overall15').click(function(){
-	
-	if($("#dlse_overall15 span").html() == 'Loading bar plot...'){
-		drawDLColumn({{report.id}}, 'dlse_overall15',
-		                 'overall_15', 'se');
-		}     	
- });
-$('#dlse_boot_overall29').click(function(){
-	
-	if($("#dlse_overall29 span").html() == 'Loading bar plot...'){
-		drawDLColumn({{report.id}}, 'dlse_overall29',
-		                 'overall_29', 'se');
-		}     	
- });
-
-//Group tabs
-  {%for group in report.tfgroup_set.all%}              
-      
-      $('#dlse_boot_{{group.get_slug}}').click(function(){
-          	
-      	if($("#dlse_{{group.get_slug}} span").html() == 'Loading bar plot...'){
-      		drawDLColumn({{report.id}}, 'dlse_{{group.get_slug}}',
-    		                 '{{group.get_slug}}', 'se');
-			}     	
-       });        
+    	{%for group in report.drugscoregroup_set.all%}
         
-  {%endfor%} 
+          {%if forloop.counter = 1%}   
+            drawDSTable({{report.id}}, 'tbl-ds-{{group.get_slug}}', '{{group.document}}', categories='{{group.name}}'); 
+            drawDSBarplot({{report.id}}, '{{group.get_slug}}_dsbarmolecule_plot', 
+            		'{{group.document}}', 
+            		categories='{{group.name}}',
+            		pert_type='molecule');
+            drawDSBarplot({{report.id}}, '{{group.get_slug}}_dsbargene_plot', 
+            		'{{group.document}}', 
+            		categories='{{group.name}}',
+            		pert_type='gene');
+          {%endif%}
+        {%endfor%}
+    	
+    });
 
-}); 
-    
-/////////////////// Correlation
-
-$("#btn_show_corr").click(function(){
-	$(this).hide();
-	$("#hide_corr").slideDown('slow');
-	
-	{%for group in report.correlationgroup_set.all%}
-    
-      {%if forloop.counter = 1%}        
-      
-        drawCorrelationTable({{report.id}}, 'tbl-cor-{{group.get_slug}}', '{{group.document}}', categories='{{group.name}}'); 
-      {%endif%}
-    {%endfor%}
-	
-});
-    {%for group in report.correlationgroup_set.all%}
-    
-        {%if forloop.counter = 1%}        
-          
-	      //drawCorrelationTable({{report.id}}, 'tbl-cor-{{group.get_slug}}', '{{group.document}}', categories='{{group.name}}'); 
-	      
-        {%else%}
+        {%for group in report.drugscoregroup_set.all%}
         
-        $('#cor_boot_{{group.get_slug}}').click(function(){
-        	
-        	if ( !$.fn.dataTable.isDataTable( '#tbl-cor-{{group.get_slug}}' ) ) {
-        		drawCorrelationTable({{report.id}}, 'tbl-cor-{{group.get_slug}}', '{{group.document}}', categories='{{group.name}}'); 
-				}
-        	
-        });
-        
-        {%endif%}
-    
-    
-    {%endfor%}
-    
-////// Similarity
+            {%if forloop.counter = 1%}        
+              
 
- $("#btn_show_sim").click(function(){
-	 
-	 $(this).hide();
-	 $("#hide_sim").slideDown('slow');
-	 
-	 {%for group in report.genegroup_set.all%}
-	   {%if forloop.counter = 1%}        
-       
-          drawSimilarityTable({{report.id}}, 'tbl-sim-{{group.get_slug}}', '{{group.document}}', categories='{{group.name}}'); 
-	   {%endif%}
-	 {%endfor%}
- });
-
-    {%for group in report.genegroup_set.all%}
-    
-        {%if forloop.counter = 1%}        
-          
-        //drawSimilarityTable({{report.id}}, 'tbl-sim-{{group.get_slug}}', '{{group.document}}', categories='{{group.name}}'); 
-	      
-        {%else%}
+            {%else%}
+            
+            $('#ds_boot_{{group.get_slug}}').click(function(){
+            	
+            	if ( !$.fn.dataTable.isDataTable( '#tbl-ds-{{group.get_slug}}' ) ) {
+            		drawDSTable({{report.id}}, 'tbl-ds-{{group.get_slug}}', '{{group.document}}', categories='{{group.name}}'); 
+    				}
+            	
+            	
+            });
+            
+            $('#dsbarmolecule_boot_{{group.get_slug}}').click(function(){
+    			
+    			if($("#{{group.get_slug}}_dsbarmolecule_plot span").html() == 'Loading Bar Plot...'){
+    				drawDSBarplot({{report.id}}, '{{group.get_slug}}_dsbarmolecule_plot', 
+    	            		'{{group.document}}', 
+    	            		categories='{{group.name}}',
+    	            		pert_type='molecule');
+    			}
+    			});
+            
+           $('#dsbargene_boot_{{group.get_slug}}').click(function(){
+    			
+    			if($("#{{group.get_slug}}_dsbargene_plot span").html() == 'Loading Bar Plot...'){
+    				drawDSBarplot({{report.id}}, '{{group.get_slug}}_dsbargene_plot', 
+    	            		'{{group.document}}', 
+    	            		categories='{{group.name}}',
+    	            		pert_type='gene');
+    			}
+    			});
+            
+            //$('#tftrrust_boot_{{group.get_slug}}').click(function(){
+            //	if ( !$.fn.dataTable.isDataTable( '#tbl-tftrrust-{{group.get_slug}}' ) ) {
+            //		drawTFTrrustTable({{report.id}}, 'tbl-tftrrust-{{group.get_slug}}', '{{group.trrust}}', categories='{{group.name}}'); 
+    		//		}
+            //	
+            //});
+            
+            
+            {%endif%}
         
-        $('#sim_boot_{{group.get_slug}}').click(function(){
-        	
-        	if ( !$.fn.dataTable.isDataTable( '#tbl-sim-{{group.get_slug}}' ) ) {
-        		drawSimilarityTable({{report.id}}, 'tbl-sim-{{group.get_slug}}', '{{group.document}}', categories='{{group.name}}'); 
-				}
-        	
-        });
         
-        {%endif%}   
-    
-    {%endfor%}
-    
-//////Potential Targets
+        {%endfor%}
 
 
-$("#btn_show_pt").click(function(){
-	 
-	 $(this).hide();
-	 $("#hide_pt").slideDown('slow');
-	 
-	 {%for group in report.genegroup_set.all%}
-	   {%if forloop.counter = 1%}        
-      
-	     drawPotentialTargetsTable({{report.id}}, 'tbl-pt-{{group.get_slug}}', '{{group.document}}', categories='{{group.name}}'); 
-	   {%endif%}
-	 {%endfor%}
-});
 
-    {%for group in report.genegroup_set.all%}
-    
-        {%if forloop.counter = 1%}        
-          
-        //drawPotentialTargetsTable({{report.id}}, 'tbl-pt-{{group.get_slug}}', '{{group.document}}', categories='{{group.name}}'); 
-	      
-        {%else%}
-        
-        $('#pt_boot_{{group.get_slug}}').click(function(){
-        	
-        	if ( !$.fn.dataTable.isDataTable( '#tbl-pt-{{group.get_slug}}' ) ) {
-        		drawPotentialTargetsTable({{report.id}}, 'tbl-pt-{{group.get_slug}}', '{{group.document}}', categories='{{group.name}}'); 
-				}
-        	
-        });
-        
-        {%endif%}   
-    
-    {%endfor%}
+
 
     
 

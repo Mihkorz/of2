@@ -230,4 +230,13 @@ class CorrelationGroup(models.Model):
     report = models.ForeignKey(Report)
     
     def get_slug(self):
+        return self.name.replace(' ', '_')
+    
+class DrugScoreGroup(models.Model):
+    name = models.CharField(verbose_name='Drug Scoring name', max_length=250, blank=False)
+    document = models.FileField(upload_to=get_document_upload_path, max_length=300,
+                                help_text='Drug Scoring file')
+    report = models.ForeignKey(Report)
+    
+    def get_slug(self):
         return self.name.replace(' ', '_')   
