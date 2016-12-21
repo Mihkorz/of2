@@ -908,7 +908,8 @@ class MedicAjaxGenerateFullReport(TemplateView):
         
                 document.add_page_break()
             except:
-                pass
+                raise
+
         f = StringIO()
         document.save(f)
         
@@ -1014,4 +1015,3 @@ class MedicTest(TemplateView):
         
         
         return context 
-    
