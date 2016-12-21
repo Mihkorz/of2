@@ -213,13 +213,13 @@ Highcharts.exportCharts = function(charts, options) {
 
     // add the values
     Highcharts.each(charts, function(chart, i) {
-    	
-    	
-    	
+
     	var svg = chart.getSVG();
-    	
-    	svg = svg.replace(/["]/g, "&quot;").replace(/[']/g, "&#39;");
-    	
+
+    	svg = svg.replace(/&quot;/g, "'");
+    	svg = svg.replace(/["]/g, "&quot;");
+      svg = svg.replace(/[']/g, "&#39;");
+
     	inputs+= '<input type="hidden" name="t_acc'+chart.t_id+'" value="'+ chart.treat_details.accuracy +'" />';
     	inputs+= '<input type="hidden" name="t_n_patients'+chart.t_id+'" value="'+ chart.treat_details.num_of_patients +'" />';
     	inputs+= '<input type="hidden" name="t_hist'+chart.t_id+'" value="'+ chart.treat_details.histological_type +'" />'; 
