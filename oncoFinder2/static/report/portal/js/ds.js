@@ -67,13 +67,13 @@ function drawDSBarplot(reportID, renderTo, file_name, ds_group_name, pert_type){
 	        xAxis: {
 	            categories: categories.split(','),
 	            title: {
-	                text: 'Group'
+	                text: ''
 	            }
 	        },
 
 	        yAxis: {
 	            title: {
-	                text: 'Effect'
+	                text: 'log2(Effect)'
 	            },
 	            
 	        },

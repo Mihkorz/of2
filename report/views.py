@@ -2263,7 +2263,7 @@ class ReportDSBoxplotJson(TemplateView):
                     upper_whisker = upper_quartile
               
                 lSerie = [lower_whisker, lower_quartile, median, upper_quartile, upper_whisker]
-                
+                raise Exception('fuck')
                 #lSerie[lSerie == -np.inf] = 0
                 
                 
