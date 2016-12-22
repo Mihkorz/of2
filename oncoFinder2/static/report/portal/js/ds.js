@@ -73,7 +73,7 @@ function drawDSBarplot(reportID, renderTo, file_name, ds_group_name, pert_type){
 
 	        yAxis: {
 	            title: {
-	                text: 'Log2(Expression level)'
+	                text: 'Effect'
 	            },
 	            
 	        },
