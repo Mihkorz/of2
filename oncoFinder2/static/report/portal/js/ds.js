@@ -47,8 +47,54 @@ function drawDSTable(reportID, id, file_name, ds_group_name){
 }
 
 function drawDSBarplot(reportID, renderTo, file_name, ds_group_name, pert_type){
-	// BOX PLOT Drug Scoring
+	// BOXPLOT
+	var box_options = {
+
+	        chart: {
+	            type: 'boxplot',
+	            renderTo: renderTo,
+	            
+	        },
+
+	        title: {
+	            text: name
+	        },
+
+	        legend: {
+	            enabled: false
+	        },
+
+	        xAxis: {
+	            categories: categories.split(','),
+	            title: {
+	                text: 'Group'
+	            }
+	        },
+
+	        yAxis: {
+	            title: {
+	                text: 'Log2(Expression level)'
+	            },
+	            
+	        },
+
+	        series: [{
+	            name: 'Observations',
+	            data: [
+	                [760, 801, 848, 895, 965],
+	                [733, 853, 939, 980, 1080],
+	                [714, 762, 817, 870, 918],
+	                [724, 802, 806, 871, 950],
+	                [834, 836, 864, 882, 910]
+	            ],
+	            tooltip: {
+	                headerFormat: '<em>Experiment No {point.key}</em><br/>'
+	            }
+	        }]
+
+	    }
 	
+	// BOX PLOT Drug Scoring
 	var bar_options = {
 	        chart: {
 	        	renderTo: renderTo,
@@ -84,16 +130,29 @@ function drawDSBarplot(reportID, renderTo, file_name, ds_group_name, pert_type){
     		},
     		function(data){
 				
-				
-				bar_options.title.text = ds_group_name
-				bar_options.xAxis.categories = data['categories_name'];						
-				
-				
-				bar_options.series[0].data = data["series"];
-				bar_options.series[0].name = ds_group_name+' effect';
+				if(pert_type=='gene'){
+					bar_options.title.text = ds_group_name
+					bar_options.xAxis.categories = data['categories_name'];						
 				
 				
-		        var chart = new Highcharts.Chart(bar_options);
+					bar_options.series[0].data = data["series"];
+					bar_options.series[0].name = ds_group_name+' effect';				
+				
+					var chart = new Highcharts.Chart(bar_options);
+				}
+				
+				if(pert_type=='molecule'){
+					box_options.title.text = ds_group_name
+					box_options.xAxis.categories = data['categories'];						
+					
+					
+					box_options.series[0].data = data['data'];
+								
+					
+			        var chart = new Highcharts.Chart(box_options);
+					}
+				
+				
 			});
 }
 

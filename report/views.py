@@ -2127,49 +2127,43 @@ class ReportDSBoxplotJson(TemplateView):
                 df_ds = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name+"_cut_gene.csv",
                                   sep='\t', index_col='pert_id')
         
-        if pert_type == 'molecule':
-            try:    
-                df_ds = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name+"_cut_molecule.csv",
-                                  sep=None, index_col='pert_id')
-            except:
-                df_ds = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name+"_cut_molecule.csv",
-                                  sep='\t', index_col='pert_id')
+             
         
-        df_top10 = df_ds[['effect']]      
+            #df_ds = df_ds[(df_ds['effect']>3)]
+            #df_ds.reset_index(inplace=True)
+
+            df_top10 = df_ds[['effect']]      
         
-        df_top10 = df_top10.groupby(df_ds.index, level=0).mean() # take mean by effect column
+            df_top10 = df_top10.groupby(df_ds.index, level=0).mean() # take mean by effect column
         
-        df_top10.sort(columns=['effect'], ascending=False, inplace=True)
+            df_top10.sort(columns=['effect'], ascending=False, inplace=True)
         
-        if pert_type == 'gene':
+        
             df_top10 = df_top10.filter(like='TRCN', axis=0)
-        if pert_type == 'molecule':
-            df_top10 = df_top10.filter(like='BRD', axis=0)
+                
         
-        df_top10 = df_top10[:10] #take best 10 hits
+            df_top10 = df_top10[:10] #take best 10 hits
         
+            df_ds.reset_index(inplace=True)
         
-        df_ds.reset_index(inplace=True)
+            lbar_name = []
+            lbar_val = [] 
         
-        lbar_name = []
-        lbar_val = [] 
+            df_list = []
         
-        #df_list = []
-        
-        for index, val in df_top10.iterrows(): 
-            df_pert = df_ds[df_ds['pert_id'] == index]
-            df_pert = df_pert[['Perturbation', 'pert_id', 'effect']]
+            for index, val in df_top10.iterrows(): 
+                df_pert = df_ds[df_ds['pert_id'] == index]
+                df_pert = df_pert[['Perturbation', 'pert_id', 'effect']]
+                df_list.append(df_pert)
+                df_pert.set_index('Perturbation', inplace=True)
             
-            df_pert.set_index('Perturbation', inplace=True)
+                df_pert = df_pert.groupby(df_ds.index, level=0).mean()
             
-            df_pert = df_pert.groupby(df_ds.index, level=0).mean()
-            
-            for index, val in df_pert.iterrows():
-                lbar_name.append(index)
-                lbar_val.append(val['effect'])
-            
-            
-        response_data = {
+                for index, val in df_pert.iterrows():
+                    lbar_name.append(index)
+                    lbar_val.append(val['effect'])
+              
+            response_data = {
                          'name': 'barplot',
                          'categories_name': lbar_name,
                          'series': [ round(elem, 2) for elem in lbar_val ],
@@ -2177,10 +2171,123 @@ class ReportDSBoxplotJson(TemplateView):
                          }        
         
         
-        #raise Exception(' dsboxplot')
+            #raise Exception(' dsboxplot')
         
         
-        return HttpResponse(json.dumps(response_data), content_type="application/json")   
+            return HttpResponse(json.dumps(response_data), content_type="application/json")
+        
+        
+        if pert_type == 'molecule':
+            try:    
+                df_ds = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name+"_cut_molecule1.csv",
+                                  sep=None, index_col='pert_id')
+            except:
+                df_ds = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name+"_cut_molecule1.csv",
+                                  sep='\t', index_col='pert_id')        
+        
+            df_ds = df_ds[(df_ds['effect']>3)]
+            df_ds.reset_index(inplace=True)
+            df_count = df_ds['pert_id'].value_counts()
+        
+            df_ds.set_index('pert_id', inplace=True )
+            
+            df_ds_contrib = df_ds[df_count>=3]
+            df_ds_addit = df_ds[df_count<3]            
+        
+            #raise Exception('count')
+            df_top10 = df_ds_contrib[['effect']]      
+        
+            df_top10 = df_top10.groupby(df_ds_contrib.index, level=0).mean() # take mean by effect column
+        
+            df_top10.sort(columns=['effect'], ascending=False, inplace=True)
+        
+            df_top10 = df_top10.filter(like='BRD-', axis=0)
+            
+            df_ds_addit = df_ds_addit[['effect']]      
+            df_ds_addit = df_ds_addit.groupby(df_ds_addit.index, level=0).mean() # take mean by effect column
+            df_ds_addit.sort(columns=['effect'], ascending=False, inplace=True)            
+            df_ds_addit = df_ds_addit.filter(like='BRD-', axis=0)
+        
+        
+            df_top10 = df_top10[:10] #take best 10 hits
+            
+            #if there is less than 10 hits fill the top10 with data from df_ds_addit
+            n = len(df_top10.index)
+            num_to_add = 10-n
+            
+            df_addit_to_add = df_ds_addit[:num_to_add]
+            
+            df_top10 = df_top10.append(df_addit_to_add)
+            
+            df_top10.sort(columns=['effect'], ascending=False, inplace=True)
+        
+            df_ds.reset_index(inplace=True)
+        
+            lbar_name = []
+            lbar_val = [] 
+        
+            df_list = []
+        
+            for index, val in df_top10.iterrows(): 
+                df_pert = df_ds[df_ds['pert_id'] == index]
+                df_pert = df_pert[['Perturbation', 'pert_id', 'effect']]
+                df_list.append(df_pert)            
+        
+            df_overal = pd.DataFrame()
+            for df in df_list:
+                df_overal = df_overal.append(df)
+            
+            #df_overal.reset_index(inplace=True)
+            #df_overal.to_csv(settings.MEDIA_ROOT+"/"+file_name+"_cut_molecule1.csv")   
+            
+            series_data = []
+            series_category = []
+            
+            for df in df_list:          
+                
+                series_category.append(df['Perturbation'].iloc[0])
+                r_tumour = df.filter(like='effect')
+                
+                #
+                
+                median = np.log2(np.median(r_tumour)) 
+                upper_quartile = np.log2(np.percentile(r_tumour, 75))
+                lower_quartile = np.log2(np.percentile(r_tumour, 25))
+                iqr = upper_quartile - lower_quartile
+                upper_whisker = np.log2(r_tumour[r_tumour<=upper_quartile+1.5*iqr].max()[0])
+                lower_whisker = np.log2(r_tumour[r_tumour>=lower_quartile-1.5*iqr].min()[0])
+        
+                if np.isnan(lower_whisker) or np.isinf(lower_whisker):
+                    lower_whisker = lower_quartile
+                if np.isnan(upper_whisker) or np.isinf(upper_whisker):
+                    upper_whisker = upper_quartile
+              
+                lSerie = [lower_whisker, lower_quartile, median, upper_quartile, upper_whisker]
+                
+                #lSerie[lSerie == -np.inf] = 0
+                
+                
+                #lSerie.replace([np.inf, -np.inf], 0)
+                 
+                series_data.append(lSerie)
+            
+            response_data = {
+                            'name': 'boxplot',
+                            'categories': series_category,              
+                            'data': series_data,
+                            'tooltip': {
+                            'headerFormat': '<em>Group: {point.key}</em><br/>'
+                                       }
+                             }
+                     
+        
+        
+            #raise Exception(' dsboxplot')
+        
+        
+            return HttpResponse(json.dumps(response_data), content_type="application/json")
+        
+           
     
     
     
