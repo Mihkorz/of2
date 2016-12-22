@@ -4,7 +4,10 @@ OncoFinder Changelog
 Ongoing
 -------
 
-Nothing
+New:
+
+- Changelog is accessible to users (top-right menu of navigation bar)
+- ...
 
 
 Version 2016.1.1, released 2016-12-21

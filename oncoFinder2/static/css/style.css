@@ -89,7 +89,6 @@
   background-color: #428bca;
 }
 .pr_navbar{
-  background-color: #f3f3f3;
   background-image: -moz-linear-gradient(#f9f9f9, #f3f3f3);
   background-image: -webkit-linear-gradient(#f9f9f9, #f3f3f3);
   background-image: linear-gradient(#f9f9f9, #f3f3f3);
@@ -97,31 +96,19 @@
   border-bottom: 1px solid #e5e5e5;
 }
 .pr_upp_menu {
-  border-left: 1px solid #e5e5e5;
-  border-right: 1px solid #e5e5e5;
-  height: 60px;
   margin: 0 0 0 50px;
 } 
 .pr_upp_menu li a {
   padding: 10px ;
 }
+.pr_upp_menu li a img {
+  width: 40px;
+}
 .pr_header_menu{
-  
+  margin-top: 9px;
 }
-.pr_header_menu span{
-  color: #428bca;
-  margin: 20px 0 0 15px;
-  height: 20px;
-}
-.pr_header_menu span:hover{
-  color: #396294;
-  cursor: pointer;
-}
-#current_user_link {
-  color: #000;
-}
-#current_user_link:hover {
-  text-decoration: none;
+.pr_header_menu .of-menu-li-small {
+  padding: 10px;
 }
 
 #profile_form label, #create_project_form label{

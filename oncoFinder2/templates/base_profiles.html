@@ -5,8 +5,9 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>{% block title %}OF v2.0{% endblock %}</title>
+  <title>{% block title %}OncoFinder{% endblock %}</title>
 
+  <link rel="stylesheet" href="/static/components/bootstrap/dist/css/bootstrap.css" type='text/css' />
   <link rel="stylesheet" href="/static/css/bootstrap.css" type='text/css' />
   <link rel="stylesheet" href="/static/css/style.css" type='text/css' />
   <link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>
@@ -39,35 +40,49 @@
       </div>
       
       <div class="navbar-right pr_header_menu">
-        <a href="/user/{{ user.username }}/" id="current_user_link">
-          <span class="glyphicon glyphicon-user"></span> {{ user.username }}
-        </a>
-        <span class="glyphicon glyphicon-plus" data-toggle="tooltip" data-placement="bottom"
-              title="Create new project" onClick="location.href='/project/new/'"></span>
-        <span class="glyphicon glyphicon-cog" data-toggle="tooltip" data-placement="bottom"
-              title="Profile Settings" onClick="location.href='/settings/profile'"></span>
-        <span class="glyphicon glyphicon-off" data-toggle="tooltip" data-placement="bottom"
-              title="Logout" onClick="location.href='/logout'"></span>
+        <ul class="nav navbar-nav">
+          <li>
+            <a href="/user/{{ user.username }}/" class="of-menu-li-small">
+              <span class="glyphicon glyphicon-user"></span> {{ user.username }}
+            </a>
+          </li>
+          <li>
+            <a href="/project/new/" class="of-menu-li-small">
+              <span class="glyphicon glyphicon-plus" title="Create new project" data-placement="bottom"></span>
+            </a>
+          </li>
+          <li class="dropdown">
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle of-menu-li-small">
+              <span class="glyphicon glyphicon-option-vertical"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="/housekeeping/changelog">Changelog</a></li>
+              <li class="divider"></li>
+              <li><a href="/settings/profile">Profile settings</a></li>
+              <li><a href="/logout">Logout</a></li>
+            </ul>
+          </li>
+        </ul>
       </div>
 
       <ul class="nav navbar-nav navbar-left pr_upp_menu">
         <li>
-          <a href="/db/pathways/human/primary_old/"><img src='/static/images/laboratory_info.png' style="width: 40px; margin-right: 3px;"/>
+          <a href="/db/pathways/human/primary_old/"><img src="/static/images/laboratory_info.png" />
             Biochem database
           </a>
         </li>
         <li>
-          <a href="/db/drugs/"><img src='/static/images/pharmacy.png' style="width: 40px; margin-right: 3px;"/>
+          <a href="/db/drugs/"><img src="/static/images/pharmacy.png" />
             Drugs database
           </a>
         </li>
         <li>
-          <a href="/db/medic/"><img src='/static/images/diagnostic.png' style="width: 40px; margin-right: 3px;"/>
+          <a href="/db/medic/"><img src='/static/images/diagnostic.png' />
             Medical DB
           </a>
         </li>
         <li>
-          <a href="/shambhala/"><img src='/static/images/tablet.png' style="width: 40px; margin-right: 3px;"/>
+          <a href="/shambhala/"><img src='/static/images/tablet.png' />
             Shambhala
           </a>
         </li>
@@ -87,5 +102,5 @@
 
   {% include "footer.html" %}
 
- </body>
- </html>
+</body>
+</html>
