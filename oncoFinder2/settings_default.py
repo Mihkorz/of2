@@ -167,6 +167,7 @@ INSTALLED_APPS = (
     'mirna',
     'report',
 
+    'sandbox',
 )
 
 if DEBUG:
