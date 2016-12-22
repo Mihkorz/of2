@@ -2080,16 +2080,17 @@ class ReportDSTableJson(TemplateView):
         group_name = request.GET.get('ds_group_name')        
         
         try:    
-            df_ds = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name,
+            df_ds = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name+'_tblcut.csv',
                                   sep=None)
         except:
-            df_ds = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name,
+            df_ds = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name+'_tblcut.csv',
                                   sep='\t')
         #raise Exception('Drug Score')        
         df_ds.drop('Condition', axis=1, inplace=True)
         df_ds.fillna(1, inplace=True)                 
          
         df_ds = df_ds[(df_ds['effect']>3)]         
+        
         
         df_ds['padj'] = df_ds['padj'].map('{:,.2e}'.format)
         df_ds['pval'] = df_ds['pval'].map('{:,.2e}'.format)
@@ -2118,11 +2119,20 @@ class ReportDSBoxplotJson(TemplateView):
         ds_group_name = request.GET.get('ds_group_name')
         pert_type = request.GET.get('pert_type')
         
-        try:    
-            df_ds = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name,
+        if pert_type == 'gene':
+            try:    
+                df_ds = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name+"_cut_gene.csv",
                                   sep=None, index_col='pert_id')
-        except:
-            df_ds = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name,
+            except:
+                df_ds = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name+"_cut_gene.csv",
+                                  sep='\t', index_col='pert_id')
+        
+        if pert_type == 'molecule':
+            try:    
+                df_ds = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name+"_cut_molecule.csv",
+                                  sep=None, index_col='pert_id')
+            except:
+                df_ds = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name+"_cut_molecule.csv",
                                   sep='\t', index_col='pert_id')
         
         df_top10 = df_ds[['effect']]      
@@ -2144,9 +2154,11 @@ class ReportDSBoxplotJson(TemplateView):
         lbar_name = []
         lbar_val = [] 
         
-        for index, val in df_top10.iterrows(): #populate df_list with corresponding datadarmes
+        #df_list = []
+        
+        for index, val in df_top10.iterrows(): 
             df_pert = df_ds[df_ds['pert_id'] == index]
-            df_pert = df_pert[['Perturbation', 'effect']]
+            df_pert = df_pert[['Perturbation', 'pert_id', 'effect']]
             
             df_pert.set_index('Perturbation', inplace=True)
             
@@ -2155,7 +2167,6 @@ class ReportDSBoxplotJson(TemplateView):
             for index, val in df_pert.iterrows():
                 lbar_name.append(index)
                 lbar_val.append(val['effect'])
-            
             
             
         response_data = {
