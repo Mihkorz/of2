@@ -9,7 +9,10 @@ from medic.models import TreatmentMethod
 
 def _num_tumour(fname):
     with open(fname) as f:
-        reader = csv.reader(f)
+        dialect = csv.Sniffer().sniff(f.read(1024), delimiters=",\t")
+        f.seek(0)
+
+        reader = csv.reader(f, dialect)
         row = reader.next()
 
     return len([s for s in row if 'tumour' in s.lower()])
@@ -19,8 +22,11 @@ def _num_tumour_safe(fname):
     try:
         return _num_tumour(fname)
     except IOError:
-        print 'Failed to open "%s"' % fname
-        return 0
+        print 'IOError "%s"' % fname
+    except csv.Error:
+        print 'csv.Error "%s"' % fname
+
+    return -1
 
 
 class Command(BaseCommand):
@@ -31,7 +37,7 @@ class Command(BaseCommand):
         out_fname = 'treatment_report.csv'
 
         with open(out_fname, 'w') as fout:
-            writer = csv.writer(fout, )
+            writer = csv.writer(fout)
 
             writer.writerow([
                 'Name',
@@ -53,7 +59,8 @@ class Command(BaseCommand):
                 fname = os.path.join(settings.MEDIA_ROOT, str(obj.file_nres))
                 row.append(_num_tumour_safe(fname))
 
-                row.append(unicode(obj.treatment).encode('utf-8'))
+                # row.append(unicode(obj.treatment).encode('utf-8'))
+                # row.append('--')
 
                 writer.writerow(row)
 
