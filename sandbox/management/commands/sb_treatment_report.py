@@ -7,20 +7,17 @@ from django.core.management import BaseCommand
 from medic.models import TreatmentMethod
 
 
-def _num_tumour(fname):
+def _num_tumour(fname, marker):
     with open(fname) as f:
-        dialect = csv.Sniffer().sniff(f.read(1024), delimiters=",\t")
-        f.seek(0)
-
-        reader = csv.reader(f, dialect)
+        reader = csv.reader(f)
         row = reader.next()
 
-    return len([s for s in row if 'tumour' in s.lower()])
+    return len([s for s in row if marker.lower() in s.lower()])
 
 
-def _num_tumour_safe(fname):
+def _num_tumour_safe(fname, marker):
     try:
-        return _num_tumour(fname)
+        return _num_tumour(fname, marker)
     except IOError:
         print 'IOError "%s"' % fname
     except csv.Error:
@@ -53,15 +50,23 @@ class Command(BaseCommand):
                     obj.num_of_patients
                 ]
 
-                fname = os.path.join(settings.MEDIA_ROOT, str(obj.file_res))
-                row.append(_num_tumour_safe(fname))
+                # TODO: invalid data?
+                # GSE22093_GSE9574_ERN: total 45, resp: 18, non-resp: 37. ?!
+
+                # fname = os.path.join(settings.MEDIA_ROOT, str(obj.file_res))
+                # row.append(_num_tumour_safe(fname))
+
+                # fname = os.path.join(settings.MEDIA_ROOT, str(obj.file_nres))
+                # row.append(_num_tumour_safe(fname))
 
                 fname = os.path.join(settings.MEDIA_ROOT, str(obj.file_nres))
-                row.append(_num_tumour_safe(fname))
+                num_non_resp = _num_tumour_safe(fname, 'NRES')
 
-                # row.append(unicode(obj.treatment).encode('utf-8'))
-                # row.append('--')
+                num_resp = int(obj.num_of_patients) - num_non_resp
+
+                row.append(num_resp)
+                row.append(num_non_resp)
+
+                row.append(unicode(obj.treatment).encode('utf-8'))
 
                 writer.writerow(row)
-
-
