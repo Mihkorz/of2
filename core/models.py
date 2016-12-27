@@ -73,10 +73,13 @@ class Gene(models.Model):
     arr = models.DecimalField(verbose_name='ARR', max_digits=2, decimal_places=1, default=0)
     comment = models.TextField(verbose_name='Comment', blank=True)
     pathway = models.ForeignKey(Pathway, blank=False)
-    
+
     class Meta(object):
         ordering = ['name',]
-        
+        unique_together = (
+            ('name', 'pathway'),
+        )
+
     def __unicode__(self):
         return self.name
     

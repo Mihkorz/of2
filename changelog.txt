@@ -5,16 +5,23 @@ Ongoing
 -------
 
 New:
-
 - Changelog is accessible to users (top-right menu of navigation bar)
 - ...
+
+Changed/fixed:
+- A gene could have several ARR for the same pathway. For example,
+    (metabolism, L-kynurenine_degradation, AADAT). Fixed.
+- ...
+
+Deploy notes:
+- Bower
+- migrate core DB
 
 
 Version 2016.1.1, released 2016-12-21
 -------------------------------------
 
 Changed/fixed:
-
 - Medical report: fixed docx file generation; it did not include pictures
   if SVG contained nested quotes, e.g. style="font-family:"lucida grande";"
 
@@ -23,14 +30,12 @@ Version 2016.1.0, released 2016-12-21
 -------------------------------------
 
 New:
-
 - UAT environment is available at uat.oncofinder.com
 - Help popups in calculation parameter form
 - "Import pathways" view for power users
 - Started this changelog (2016-12-11)
 
 Changed/fixed:
-
 - Simplified pathway database names
 - Calculation parameters form: 1) removed single sample t-test, 2) changed default values
 - miRNA: ceased -3p special processing
