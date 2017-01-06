@@ -18,6 +18,7 @@
     "tests"
   ],
   "dependencies": {
-    "bootstrapx-clickover-bs3": "^1.0.0"
+    "bootstrapx-clickover-bs3": "^1.0.0",
+    "bootstrap": "^3.2.0"
   }
 }
