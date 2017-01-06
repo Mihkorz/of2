@@ -1076,6 +1076,13 @@ class Test(TemplateView):
     def get_context_data(self, **kwargs):
         
         from sklearn import preprocessing
+        
+        
+        df = read_csv("/media/DE6CE1C56CE19893/Misha's/Aliper/GSK/VASCTOX/table_export_csv/AFFY_EXPERIMENT_PROBE_SET.txt",
+                       sep=' ', nrows=100000)
+        
+        raise Exception('GSK')
+        
         """
         df = read_csv('/home/mikhail/Downloads/Henkel/Henkel_qnorm_noratio_ver2.txt', sep=None, index_col='SYMBOL')  
         

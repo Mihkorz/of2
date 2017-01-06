@@ -1467,6 +1467,7 @@ class ReportAjaxPathDetail(TemplateView):
             
         try:
             df_file_cnr = pd.read_csv(group.doc_logfc.path, index_col='SYMBOL')
+            df_file_cnr.rename(columns={'log2FoldChange': 'logFC', 'padj': 'adj.P.Val'}, inplace=True)
         except:
             try:
                 df_file_cnr = pd.read_csv(group.doc_logfc.path, index_col='SYMBOL', sep='\t')
@@ -2087,7 +2088,9 @@ class ReportDSTableJson(TemplateView):
                                   sep='\t')
         #raise Exception('Drug Score')        
         df_ds.drop('Condition', axis=1, inplace=True)
-        df_ds.fillna(1, inplace=True)                 
+        df_ds.fillna(1, inplace=True)
+        #df_ds.Concentration.replace(to_replace=dict(''='NA'), inplace=True)                 
+        df_ds.Concentration[df_ds.Concentration == '-666na'] = 'NA' 
          
         df_ds = df_ds[(df_ds['effect']>3)]         
         
