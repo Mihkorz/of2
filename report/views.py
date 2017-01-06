@@ -1415,7 +1415,7 @@ def shiftedColorMap(cmap, start=0, midpoint=0, stop=1.0, name='shiftedcmap'):
     return newcmap
     
 class ReportAjaxPathDetail(TemplateView):
-    template_name = 'website/report_ajax_pathway_detail.html'
+    template_name = 'report/report_ajax_pathway_detail.html'
     
    
     
@@ -1481,12 +1481,15 @@ class ReportAjaxPathDetail(TemplateView):
                     df_file_cnr = df_file_cnr[(np.absolute(df_file_cnr['logFC'])>logFC_tres)]
                     
                     
-        else:        
-            df_file_cnr = df_file_cnr[(df_file_cnr['adj.P.Val']<pval_tres) & (np.absolute(df_file_cnr['logFC'])>logFC_tres)] #take all the genes
-             
+        else:
+            if report.id == 7:   # for Above & Beyond only     
+                df_file_cnr = df_file_cnr[(df_file_cnr['pvalue']<pval_tres) & (np.absolute(df_file_cnr['logFC'])>logFC_tres)] #take all the genes
+            else:
+                df_file_cnr = df_file_cnr[(df_file_cnr['adj.P.Val']<pval_tres) & (np.absolute(df_file_cnr['logFC'])>logFC_tres)]
+        
         
         df_file_cnr = df_file_cnr['logFC'].round(decimals=2)
-        
+       
         
         df_file_cnr.name = 'log2(Fold-change)' #log2(Fold-change)
         
@@ -1594,6 +1597,7 @@ class ReportAjaxPathDetail(TemplateView):
         
         context['rand'] = random.random() 
         
+        context['report'] = report
         
         
         return context    

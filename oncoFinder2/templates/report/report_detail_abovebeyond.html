@@ -55,7 +55,7 @@
               <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#dl_analysis">Deep Learning</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#kinetic_analysis">Kinetic pathway modeling</a></li>-->
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#gene_analysis">Gene level analysis</a></li>
-            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tf_analysis">Transcription Factor Analysis</a></li>
+            <!--  <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tf_analysis">Transcription Factor Analysis</a></li>-->
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#path_analysis">Pathway Analysis</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#ds_analysis">Drug Scoring</a></li>
             <!--  
@@ -218,7 +218,9 @@
 </div> <!--  end of hide div -->
 
 
-<!-- ---------------------------------Transcription Factor--------------------------------------------- -->
+<!-- ---------------------------------Transcription Factor--------------------------------------------- 
+
+ 
  <hr/> 
 <h2 id='tf_analysis'>Transcription Factor Analysis</h2>
 <hr/>
@@ -232,9 +234,9 @@
 <button type="button"  class="btn btn-success btn-lg center" id='btn_show_tf'>Show Data</button>
 </center>
 
-<div id='hide_tf' style='display:none;'> <!-- Div to hide and load on button click -->
+<div id='hide_tf' style='display:none;'> <!-- Div to hide and load on button click 
 
-   <!-- TF Nav tabs -->      
+   <!-- TF Nav tabs       
    <ul class="nav nav-tabs" role="tablist">
      {%for group in report.genegroup_set.all%}
        <li role="presentation" {%if forloop.counter == 1 %}class="active"{%endif%}>
@@ -271,13 +273,13 @@
       <br/><br/>
      
      
-     </div> <!-- end of tabpanel div -->
+     </div> <!-- end of tabpanel div 
     {%endfor%}
    
-   </div> <!--  end of tab-content div -->
+   </div> <!--  end of tab-content div 
    
    
-   <!-- TF Nav tabs -->      
+   <!-- TF Nav tabs       
    <ul class="nav nav-tabs" role="tablist">
      {%for group in report.genegroup_set.all%}
        <li role="presentation" {%if forloop.counter == 1 %}class="active"{%endif%}>
@@ -314,12 +316,12 @@
       <br/><br/>
      
      
-     </div> <!-- end of tabpanel div -->
+     </div> <!-- end of tabpanel div 
     {%endfor%}
    
-   </div> <!--  end of tab-content div -->
+   </div> <!--  end of tab-content div 
 
-</div> <!--  end of hide div -->
+</div> <!--  end of hide div 
 <!-- End of TF -->
 
 <!-- ---------------------------------PATHWAY--------------------------------------------- -->
@@ -587,7 +589,8 @@
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#conclusions">Discussion</a></li>
              -->
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#gene_analysis">Gene level analysis</a></li>
-            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tf_analysis">Transcription Factor Analysis</a></li>
+            <!-- <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tf_analysis">Transcription Factor Analysis</a></li>
+            -->
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#path_analysis">Pathway Analysis</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#ds_analysis">Drug Scoring</a></li>
           </ul>
