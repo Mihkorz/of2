@@ -200,14 +200,11 @@ class ReportGeneTableJson(TemplateView):
                 df_gene['adj.P.Val'] = df_gene['P.Value']
             
             #raise Exception('stop')            
-            if 'GSK-NCGOM-2016N298312' in report.get_object().slug:
-                raise Exception('stop')#P.Value
-            
+                        
             df_gene['adj.P.Val'] = df_gene['adj.P.Val'].map('{:,.2e}'.format)
             df_gene['adj.P.Val'] = df_gene['adj.P.Val'].apply(str) 
         
-            
-        
+    
         else: #file_name=='all'
             
             lgroups = []
