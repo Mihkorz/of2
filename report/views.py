@@ -180,7 +180,7 @@ class ReportGeneTableJson(TemplateView):
                             df_gene = df_gene[['SYMBOL', 'logFC', 'adj.P.Val']]
                             
                 
-                raise Exception('stop')
+                
                 df_gene.fillna(1, inplace=True)
                 
                 
@@ -201,7 +201,7 @@ class ReportGeneTableJson(TemplateView):
             
             #raise Exception('stop')            
             if 'GSK-NCGOM-2016N298312' in report.get_object().slug:
-                pass#P.Value
+                raise Exception('stop')#P.Value
             
             df_gene['adj.P.Val'] = df_gene['adj.P.Val'].map('{:,.2e}'.format)
             df_gene['adj.P.Val'] = df_gene['adj.P.Val'].apply(str) 
