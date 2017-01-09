@@ -56,7 +56,7 @@ class ReportDetail(DetailView):
         if 'Hnkl' in self.get_object().slug:
             self.template_name = 'report/report_detail_henkel.html'
         if 'GSK-NCGOM-2016N298312' in self.get_object().slug:
-            self.template_name = 'report/report_detail_abovebeyond.html'
+            self.template_name = 'report/report_detail_GSK-NCGOM.html'
         
         return super(ReportDetail, self).dispatch(request, *args, **kwargs)
     
@@ -64,6 +64,13 @@ class ReportDetail(DetailView):
               
         context = super(ReportDetail, self).get_context_data(**kwargs)
         
+        """
+        df_logfc = pd.read_csv('/home/mikhail/Downloads/Aliper/DEG-OUTPUT-PROPER/expression-data-Doxorubicin-IPANDA.tsv_DEG.txt', sep='\t',
+                                 index_col='SYMBOL')
+        
+        df_logfc.to_csv('/home/mikhail/Downloads/Aliper/Doxorubicin-IPANDA.tsv_DEG.txt', sep=',')
+        raise Exception('stop')
+        """
         context['test'] = "Test"
         
         return context
@@ -173,7 +180,7 @@ class ReportGeneTableJson(TemplateView):
                             df_gene = df_gene[['SYMBOL', 'logFC', 'adj.P.Val']]
                             
                 
-                #raise Exception('stop')
+                raise Exception('stop')
                 df_gene.fillna(1, inplace=True)
                 
                 
@@ -191,7 +198,10 @@ class ReportGeneTableJson(TemplateView):
                 else:    
                     df_gene = df_gene_copy[(df_gene_copy['P.Value']<pval_tres) & (np.absolute(df_gene_copy['logFC'])>logFC_tres)]    
                 df_gene['adj.P.Val'] = df_gene['P.Value']
-            #raise Exception('stop') 
+            
+            #raise Exception('stop')            
+            if 'GSK-NCGOM-2016N298312' in report.get_object().slug:
+                pass#P.Value
             
             df_gene['adj.P.Val'] = df_gene['adj.P.Val'].map('{:,.2e}'.format)
             df_gene['adj.P.Val'] = df_gene['adj.P.Val'].apply(str) 
