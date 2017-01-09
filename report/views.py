@@ -1433,33 +1433,35 @@ class ReportAjaxPathDetail(TemplateView):
         context = super(ReportAjaxPathDetail, self).get_context_data(**kwargs)
         
         report = Report.objects.get(pk=self.request.GET['reportID'])
-        pval_tres = report.pval_theshold_compare
-        logFC_tres = report.logcf_theshold_compare
-        pas_tres = report.pas_theshold        
+        path_name = self.request.GET['pathway']
+        group_name = self.request.GET['group_name']
         try:
-            group = GeneGroup.objects.get(report=report, name=self.request.GET['group_name'])
+            group = GeneGroup.objects.get(report=report, name=group_name)
         except:
             pass
         organism = self.request.GET['organism']
+        
+        pval_tres = report.pval_theshold_compare
+        logFC_tres = report.logcf_theshold_compare
+        pas_tres = report.pas_theshold       
 
+        
+        db_to_exclude = ['primary_old', 'kegg', 'kegg_10', 'kegg_adjusted_10']
+        
         if report.id==2:
-            pathway = Pathway.objects.filter(organism=organism, name=self.request.GET['pathway']).exclude(database__in=['primary_old'])[0]
+            pathway = Pathway.objects.filter(organism=organism, name=path_name).exclude(database__in=['primary_old'])[0]
         else: 
             try:
-                pathway = Pathway.objects.filter(organism=organism, name=self.request.GET['pathway']).exclude(database__in=['primary_old',
-                                                                                                                             'kegg',                                                                                                                 'kegg_adjusted_10'])[0]
+                pathway = Pathway.objects.filter(organism=organism, name=path_name).exclude(database__in=db_to_exclude)[0]
             except:
                 try:
                     name=str(self.request.GET['pathway'].replace('.', '-'))
                     
-                    pathway = Pathway.objects.filter(organism=organism, name=name).exclude(database__in=['primary_old', 'kegg',                      
-                                                                                                        'kegg_adjusted_10'])[0]
+                    pathway = Pathway.objects.filter(organism=organism, name=name).exclude(database__in=db_to_exclude)[0]
                 except:
                     name=str(self.request.GET['pathway'].replace('.', '('))
                     name = name[:-1] + ')'
-                    pathway = Pathway.objects.filter(organism=organism, name=name).exclude(database__in=['primary_old', 'kegg',                      
-                                                                                                                        'kegg_10',
-                                                                                                                        'kegg_adjusted_10'])[0]
+                    pathway = Pathway.objects.filter(organism=organism, name=name).exclude(database__in=db_to_exclude)[0]
                       
                     
                 
@@ -1507,7 +1509,10 @@ class ReportAjaxPathDetail(TemplateView):
         
         joined_df.fillna(0, inplace=True)
         
-        context['joined'] = joined_df[['SYMBOL', 'Node(s)', 'log2(Fold-change)']].to_html(classes=['table', 'table-bordered', 'table-striped'])
+        context['joined'] = joined_df[['SYMBOL', 'Node(s)', 'log2(Fold-change)']].to_html(classes=['table', 
+                                                                                                   'table-bordered', 
+                                                                                                   'table-striped', 
+                                                                                                   'genes_for_path'])
         context['diff_genes_count'] = len(joined_df.index)
          
         nComp = []
@@ -1605,7 +1610,9 @@ class ReportAjaxPathDetail(TemplateView):
         context['rand'] = random.random() 
         
         context['report'] = report
+        context['categories'] = group_name
         
+        #raise Exception('path details')
         
         return context    
 

@@ -110,6 +110,73 @@ function drawGeneChart(reportID, gene_name, categories){
 			    	});
 
 	}
+
+/////////////////////////// TEST FUNCTION FOR 2 SEPARATE WINDOWS
+function drawGeneChartTest(reportID, gene_name, categories){
+		
+		$("#modalBodyGene").html('<h4 id="loading">Loading ...</h4><div id="gene_plot" style="width: 80%; height: 400px; margin: 0 auto"></div>');
+		
+		$("#myModalLabelGene").text(gene_name);
+		
+		$('#genemodal').modal('show');
+		
+		categories = categories.replace(/u&#39;/g, "");
+		categories = categories.replace(/&#39;/g, "");
+		categories = categories.replace('[', "");
+		categories = categories.replace(']', "");
+		
+		$.getJSON('/report-portal/report-genesboxplotjson/',
+				{
+			     'reportID': reportID,
+			     'gene': gene_name,
+			     'categories': categories
+			     },
+			     function(data) {
+			    	 
+			    	$("#loading").empty();
+			     	options.series[0] = data;
+			     	options.title.text = gene_name;
+			     	
+			     	if (reportID == 4){
+			     	  //if only one category for vulcano
+			     	  lcategories = categories.split(',')
+			     	  if (lcategories.length<2){
+			     		  if(lcategories[0].indexOf('A549') !== -1) categories+=',DMSO_A549';
+			     		  if(lcategories[0].indexOf('MCF7') !== -1) categories+=',DMSO_MCF7';
+			     	  }
+			     	  else{
+			     		categories+=',DMSO_A549,DMSO_MCF7';
+			     	  }
+			     	
+			       }
+			     	
+			     	options.xAxis.categories = categories.split(',');
+			     	
+			     	//if (reportID == 6){
+			     		
+			     		if (categories.split(',').length<=2) options.xAxis.categories = ['Case', 'Reference'];
+			     		else {
+			     			
+			     			categories+=', Reference';
+			     			options.xAxis.categories = categories.split(',');	
+			     		}
+			     		
+			     	//}
+			     	
+			        var chart = new Highcharts.Chart(options);
+			        
+			     }).fail(function( jqxhr, textStatus, error ) {
+			    	    var err = textStatus + ", " + error;
+			    	    console.log( "Request Failed: " + err );
+			    	    
+			    	    $("#loading").empty().text(err);
+			    	    
+			    	    
+			    	});
+
+	}	
+	
+	
 	
 function showPathDetails(reportID, path_name, group_name, organism){
 	$("#modalBody").html('<h4 id="loading">Loading ...</h4><div id="f" style="width: 800px; height: 400px; margin: 0 auto"></div>');

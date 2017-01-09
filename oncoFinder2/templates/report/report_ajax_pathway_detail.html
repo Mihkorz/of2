@@ -1,5 +1,6 @@
 <div class="ajax_path">
-
+<h4>Group: {{categories}}</h4>
+<hr/>
     <ul class="nav nav-tabs">
     {%if report.id == 7%}
         <li class="active"><a href="#fragment-1" data-toggle="tab"><span>Genes </span></a></li>
@@ -10,7 +11,7 @@
     </ul>
     <div id="tabContent" class="tab-content">
 		<div id="fragment-1" class="tab-pane fade in active well">
-		Total = {{diff_genes_count}}
+		<!--  Total = {{diff_genes_count}} -->
 		<small>
 		{{joined|safe}}
 		</small>
@@ -26,3 +27,30 @@
     
 </div>
 </div>
+
+<script>
+$(document).ready(function() {
+	
+	var table = $("table.genes_for_path").DataTable( {
+		"paging":   true,
+    	"iDisplayLength": 20,
+	});
+	
+	
+	$("table.genes_for_path tr td:nth-child(2)").wrapInner('<a href="#/"></a>');
+	
+    $('table.genes_for_path tbody').on( 'click', 'tr td:nth-child(2)', function () {
+    	
+    	var gene_name = $(this).text();
+    	
+    	drawGeneChartTest({{report.id}}, gene_name, '{{categories}}');    
+    	
+    		
+    	
+    });
+	
+	
+});
+
+
+</script>

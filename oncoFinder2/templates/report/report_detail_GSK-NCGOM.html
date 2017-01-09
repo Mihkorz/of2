@@ -649,8 +649,36 @@
     </div>
   </div>
 </div>
+
+
+    <!-- MODAL FOR GENES  -->
+    <div id="genemodal" class="modal fade large" tabindex="-1" role="dialog" aria-labelledby="myModalLabelGene" aria-hidden="true" >
+ <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;  </button>
+        <h4 class="modal-title" id="myModalLabelGene">Modal title</h4>
+      </div>
+      <div class="modal-body" id='modalBodyGene'>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
     
 <script>
+
+$(document).on('show.bs.modal', '.modal', function () {
+    var zIndex = 1040 + (10 * $('.modal:visible').length);
+    $(this).css('z-index', zIndex);
+    setTimeout(function() {
+        $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack');
+    }, 0);
+});
 
 $(function() {
 	
