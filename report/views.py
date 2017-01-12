@@ -232,6 +232,13 @@ class ReportGeneTableJson(TemplateView):
             df_gene.reset_index(inplace=True)
             #raise Exception('gene table')
 
+        if 'Hnkl' in report.slug: #for Henkel report only!!!
+            #pass
+            df_gene = df_gene.astype(str)
+            df_gene = df_gene.apply(lambda x: x.str.replace(".",","))
+            
+             
+        
         output_json = df_gene.to_json(orient='values')
         response_data = {'data': json.loads(output_json)}
         
@@ -690,6 +697,10 @@ class ReportPathwayTableJson(TemplateView):
             df_output.reset_index(inplace=True)
         
         df_output.fillna(0, inplace=True)
+        
+        if 'Hnkl' in report.slug: #for Henkel report only!!!
+            df_output = df_output.astype(str)
+            df_output = df_output.apply(lambda x: x.str.replace(".",","))
         
         df_json = df_output.to_json(orient='values')
         
