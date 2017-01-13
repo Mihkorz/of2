@@ -378,7 +378,7 @@ function drawPathwayTable(reportID, id, file_name1, file_name2, is_metabolic, or
         "autoWidth": false,
         "scrollX": false,
         "dom": 'Bfrtip',
-        "buttons": [{extend: 'csv', title: id}, {extend: 'pdf', title: id} , {extend: 'print', title: id}],
+        "buttons": [{extend: 'csv', title: id} , {extend: 'print', title: id}],
         
         "ajax": {'url':'/report-portal/report-pathwaytablejson/',
         	     'type': 'GET',
