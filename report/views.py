@@ -49,7 +49,7 @@ class ReportDetail(DetailView):
         
         if self.get_object().id==4 or self.get_object().id==8:
             self.template_name = 'report/report_detail_az.html' 
-        if self.get_object().id==6 or self.get_object().id==9:
+        if 'jjms' in self.get_object().slug:
             self.template_name = 'report/report_detail_jjms.html'
         if self.get_object().id==7 or self.get_object().id==13:
             self.template_name = 'report/report_detail_abovebeyond.html'
