@@ -1,0 +1,1 @@
+from .medic_check import check_all_treatment_methods
