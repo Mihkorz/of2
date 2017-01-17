@@ -20,55 +20,51 @@
     <span>Samples: </span><span>{{document.sample_num}}</span> | 
     <span>Norms: </span><span>{{document.norm_num}}</span> | 
     <span>Rows: </span><span>{{document.row_num}}</span>
-    {%endif%}  
-   </span>
+    {% endif %}
+  </span>
+
   {% if document.doc_type == 1 %}
     <a class="btn btn-default btn-sm pull-right" href="{% url 'core_set_calculation_parameters' document.id %}">
       <span class="glyphicon glyphicon-play"></span> &nbsp;<b>Start calculation</b>
-     </a>
-   {% else %}
-   
-   <a class="btn btn-default btn-sm pull-right" style="margin-left: 20px;" href="{{MEDIA_URL}}{{document.document}}">
+    </a>
+  {% else %}
+    <a class="btn btn-default btn-sm pull-right" style="margin-left: 20px;" href="{{MEDIA_URL}}{{document.document}}">
       <span class="glyphicon glyphicon-download"></span> &nbsp;<b>Download PAS-DS file</b>
-     </a>
-     <a class="btn btn-default btn-sm pull-right" href="{{MEDIA_URL}}users/{{document.project.owner}}/{{document.project}}/process/cnr_row_{{document.get_filename}}">
+    </a>
+    <a class="btn btn-default btn-sm pull-right" href="{{MEDIA_URL}}users/{{document.project.owner}}/{{document.project}}/process/cnr_row_{{document.get_filename}}">
       <span class="glyphicon glyphicon-download-alt"></span> &nbsp;<b>Download raw CNR file</b>
-     </a>
-     
-     <a class="btn btn-default btn-sm pull-right" href="{{MEDIA_URL}}users/{{document.project.owner}}/{{document.project}}/process/cnr_{{document.get_filename}}">
+    </a>
+    <a class="btn btn-default btn-sm pull-right" href="{{MEDIA_URL}}users/{{document.project.owner}}/{{document.project}}/process/cnr_{{document.get_filename}}">
       <span class="glyphicon glyphicon-download-alt"></span> &nbsp;<b>Download CNR p-val file</b>
-     </a>
-     
-   {% endif %}
+    </a>
+  {% endif %}
   <br/>         
   <hr/>
-  <div>  
 
-  </div>
-{% if document.doc_type == 1%}
-<a class="btn btn-default btn-sm " href="{{MEDIA_URL}}{{document.document}}">
+  {% if document.doc_type == 1 %}
+    <a class="btn btn-default btn-sm " href="{{MEDIA_URL}}{{document.document}}">
       <span class="glyphicon glyphicon-download-alt"></span> &nbsp;<b>Download file</b>
-     </a>
+    </a>
+{#    <a class="btn btn-warning btn-sm " href="{% url 'of3_calculation_parameters' document.id %}">#}
+{#      <b>Test OF3 Calculation</b>#}
+{#    </a>#}
      
-<a class="btn btn-warning btn-sm " href="{% url 'of3_calculation_parameters' document.id %}">
-      </span> &nbsp;<b>Test OF3 Calculation</b>
-     </a>
-     
-<div class="wrapper1">
-        <div class="upper_scroll"></div>
-       </div>
-       <div class="wrapper2">
-          <small>
-          {{input|safe}}
-          </small>
-       </div>
-{% else %}
+    <div class="wrapper1">
+      <div class="upper_scroll"></div>
+    </div>
+    <div class="wrapper2">
+      <small>
+        {{input|safe}}
+      </small>
+    </div>
+  {% else %}
 
-<div class="btn-group ">
-       <button type="button" class="btn btn-default" id="btn_all_path" ><span class="glyphicon glyphicon-th-list"></span></button>
-       <button type="button" class="btn btn-default"  id="btn_all_tumour" ><span class="glyphicon glyphicon-th"></span> </button>
-   </div>
-<div id="all_paths" class="out_doc_container"> 
+  <div class="btn-group ">
+    <button type="button" class="btn btn-default" id="btn_all_path"><span class="glyphicon glyphicon-th-list"></span></button>
+    <button type="button" class="btn btn-default" id="btn_all_tumour"><span class="glyphicon glyphicon-th"></span></button>
+  </div>
+  <div id="all_paths" class="out_doc_container">
+
 	<!-- Nav tabs -->
 	<ul class="nav nav-tabs">
 	  {% if PAS %}
@@ -228,20 +224,24 @@ $(function(){
 });
 
 
-$(function(){
-	$(".upper_scroll").width($("#pas1 > div.wrapper2 > table").width());
-	  
-	$(".wrapper1").scroll(function(){ 
+$(function() {
+
+  {% if document.doc_type == 1 %}
+    var w = $("table").width();
+  {% else %}
+	  var w = $("#pas1 > div.wrapper2 > table").width();
+  {% endif %}
+
+  $('.upper_scroll').width(w);
+
+	$(".wrapper1").scroll(function(){
 	    $(".wrapper2").scrollLeft($(this).scrollLeft());
-	  });
-	  
+  });
+
 	$(".wrapper2").scroll(function(){
 	    $(".wrapper1").scrollLeft($(this).scrollLeft());
-	  });
-	});
+  });
 
-$(document).ready( function () {
-	
 	$('.input_table').DataTable({ "lengthMenu": [[ 50, 100, -1], [50, 100, "All"]]});
 	
 	$('.pas_table').DataTable({ "lengthMenu": [[ 50, 100, -1], [50, 100, "All"]]});

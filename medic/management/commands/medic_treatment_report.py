@@ -7,6 +7,9 @@ from django.core.management import BaseCommand
 from medic.models import TreatmentMethod
 
 
+INVALID = '--'
+
+
 def _num_tumour(fname, marker):
     with open(fname) as f:
         reader = csv.reader(f)
@@ -23,7 +26,7 @@ def _num_tumour_safe(fname, marker):
     except csv.Error:
         print 'csv.Error "%s"' % fname
 
-    return -1
+    return INVALID
 
 
 class Command(BaseCommand):
@@ -62,7 +65,10 @@ class Command(BaseCommand):
                 fname = os.path.join(settings.MEDIA_ROOT, str(obj.file_nres))
                 num_non_resp = _num_tumour_safe(fname, 'NRES')
 
-                num_resp = int(obj.num_of_patients) - num_non_resp
+                if num_non_resp != INVALID:
+                    num_resp = int(obj.num_of_patients) - num_non_resp
+                else:
+                    num_resp = INVALID
 
                 row.append(num_resp)
                 row.append(num_non_resp)
