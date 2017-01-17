@@ -9,8 +9,9 @@ New:
 - ...
 
 Changed/fixed:
-- A gene could have several ARR for the same pathway. For example,
+- Some genes had several ARR for the same pathway. For example,
     (metabolism, L-kynurenine_degradation, AADAT). Fixed.
+- Now sigma filter is applied in log space
 - ...
 
 Deploy notes:

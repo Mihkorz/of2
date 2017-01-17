@@ -258,7 +258,10 @@ class CoreSetCalculationParameters(FormView):
                     s_max_expression = process_doc_df.max()
                     max_expression = s_max_expression.max()                    
                     global_max = max_expression*(percent_threshold/100)
-            
+
+            mean_log_norms = log_norms_df.mean(axis=1)
+            std_log_norms = log_norms_df.std(axis=1)
+
             def filter_diff_genes(col):
                 if ('Tumour' in col.name) or ('Norm' in col.name):
                     if input_document.doc_format!='OF_cnr' and input_document.doc_format!='OF_cnr_stat':
@@ -286,14 +289,13 @@ class CoreSetCalculationParameters(FormView):
                         col_CNR[((col_CNR<=cnr_up) & (col_CNR>=cnr_low))] = 1
                         #col_CNR[(col_CNR==0)] = 1 
                         
-                    if use_sigma: # Sigma FILTER  !!! deprecated !!!
-                        
-                        cnr_std = cnr_doc_df['std']
-                        std = cnr_std[cnr_std!=1]
-                                                 
-                        col_CNR[((col<(process_doc_df['mean']+sigma_num*std)) &
-                                       (col>=(process_doc_df['mean']-sigma_num*std)))] = 1 
-                    
+                    if use_sigma: # Sigma FILTER
+                        log_col = np.log(col)
+                        col_CNR[(
+                            (log_col >= (mean_log_norms - sigma_num * std_log_norms)) &
+                            (log_col < (mean_log_norms + sigma_num * std_log_norms))
+                        )] = 1
+
                     if use_percent_all:
                             col_CNR[col<global_max] = 1
                     if use_percent_single:
