@@ -57,7 +57,7 @@ from mirna.views import MirnaSetCalculationParameters
 
 from core.celery_views import Celery, TaskStatus
 
-from report.views import ReportList, ReportDetail, \
+from report.views import ReportList, ReportDetail, ReportTest, \
                          ReportGeneVolcanoJson, ReportGeneScatterJson, ReportGeneTableJson, ReportGeneTableScatterJson,\
                          ReportGeneBoxplotJson, ReportGeneBarplotJson, \
                          ReportAjaxPathwayVenn, ReportAjaxPathwayVennTable, ReportPathwayTableJson, ReportAjaxPathDetail, \
@@ -224,6 +224,7 @@ urlpatterns = patterns('',
 
     ################### REPORT APP ################################################
     url(r'^report-portal/$', ReportList.as_view(), name="report-index"),
+    url(r'^report-portal/test/$', ReportTest.as_view(), name="report-index"),
     url(r'^report-portal/report/(?P<slug>[-\w]+)/$', ReportDetail.as_view(), name="report-detail"),
     
     url(r'^report-portal/report-genevolcanojson/$', ReportGeneVolcanoJson.as_view(), name="gene-volcano-json"),

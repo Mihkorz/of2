@@ -2153,14 +2153,14 @@ class ReportDSBoxplotJson(TemplateView):
         
         if pert_type == 'gene':
             try:    
-                df_ds = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name+"_cut_gene.csv",
+                df_ds = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name+"_tblcut.csv",
                                   sep=None, index_col='pert_id')
             except:
-                df_ds = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name+"_cut_gene.csv",
+                df_ds = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name+"_tblcut.csv",
                                   sep='\t', index_col='pert_id')
         
              
-        
+            
             #df_ds = df_ds[(df_ds['effect']>3)]
             #df_ds.reset_index(inplace=True)
 
@@ -2211,10 +2211,10 @@ class ReportDSBoxplotJson(TemplateView):
         
         if pert_type == 'molecule':
             try:    
-                df_ds = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name+"_cut_molecule1.csv",
+                df_ds = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name+"_tblcut.csv",
                                   sep=None, index_col='pert_id')
             except:
-                df_ds = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name+"_cut_molecule1.csv",
+                df_ds = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name+"_tblcut.csv",
                                   sep='\t', index_col='pert_id')        
         
             df_ds = df_ds[(df_ds['effect']>3)]
@@ -2321,7 +2321,35 @@ class ReportDSBoxplotJson(TemplateView):
         
            
     
+class ReportTest(TemplateView):
     
+    """ Just testing playground to store useful scripts"""
+    
+    template_name="report/report_detail.html"
+    
+    def dispatch(self, request, *args, **kwargs):
+        
+        return super(ReportTest, self).dispatch(request, *args, **kwargs)
+    
+    def get(self, request, *args, **kwargs):
+        
+        df = pd.read_csv("/home/mikhail/Downloads/AboveAndBeyond/res_DS_Disease4s7_final.txt", sep='\t')
+        
+        """
+        # Cut table Effect >3
+        df = df[df.effect>3]
+        
+        df.to_csv("/home/mikhail/Downloads/AboveAndBeyond/res_DS_Disease4s7_final.txt_tblcut.csv", index=False)
+        """
+        
+        df = df[['Perturbation', 'pert_id', 'effect']]
+        
+        
+        raise Exception('stop')
+        response_data  = {
+                          'result': True
+                          }
+        return HttpResponse(json.dumps(response_data), content_type="application/json")    
     
     
     
