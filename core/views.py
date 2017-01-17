@@ -1078,9 +1078,9 @@ class Test(TemplateView):
         from sklearn import preprocessing
         
         
-        df = read_csv("/media/DE6CE1C56CE19893/Misha's/Aliper/GSK/VASCTOX/table_export_csv/AFFY_EXPERIMENT_PROBE_SET.txt",
-                       sep=' ', nrows=100000)
-        
+        df = read_csv("/home/mikhail/Downloads/median_values_32_biomarkers_russia_age_sex_gr.csv", sep=None)
+        df.index.name = 'Age'
+        df.to_csv("/home/mikhail/Downloads/median_values_32_biomarkers_russia_age_sex_nnnnn.csv")
         raise Exception('GSK')
         
         """

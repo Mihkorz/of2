@@ -410,7 +410,7 @@
 
    <!-- DS Nav tabs -->      
    <ul class="nav nav-tabs" role="tablist">
-     {%for group in report.genegroup_set.all%}
+     {%for group in report.drugscoregroup_set.all%}
        <li role="presentation" {%if forloop.counter == 1 %}class="active"{%endif%}>
          <a href="#{{group.get_slug}}_ds_tab" aria-controls="home1" role="tab" data-toggle="tab" id='ds_boot_{{group.get_slug}}'>
            {{group.name}}
@@ -420,7 +420,7 @@
    </ul>
          
    <div class="tab-content">
-    {%for group in report.genegroup_set.all%}
+    {%for group in report.drugscoregroup_set.all%}
      {%if forloop.counter == 1 %}
      <div role="tabpanel" class="tab-pane fade in active" id="{{group.get_slug}}_ds_tab">
      {%else%}
