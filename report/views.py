@@ -57,7 +57,7 @@ class ReportDetail(DetailView):
             self.template_name = 'report/report_detail_henkel.html'
         if 'GSK-NCGOM-2016N298312' in self.get_object().slug:
             self.template_name = 'report/report_detail_GSK-NCGOM.html'
-        if 'gsk-' in self.get_object().slug:
+        if 'gsk_' in self.get_object().slug:
             self.template_name = 'report/report_detail_jjms.html'
         
         return super(ReportDetail, self).dispatch(request, *args, **kwargs)
