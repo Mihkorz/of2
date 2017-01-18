@@ -2336,6 +2336,25 @@ class ReportTest(TemplateView):
     
     def get(self, request, *args, **kwargs):
         
+        lpert = ['Doxorubicin-high',
+                 'GSK882380-high',
+                 'GSK894281A-high',
+                 'GSK1776357A-high',
+                 'GW679769-high',
+                 'GW693085-high']
+        
+        combinations= list(itertools.combinations(lpert, 4))
+        
+        
+        ll = []
+        for gg in combinations:
+            sss = 'vs'.join(map(str,gg))
+            ll.append(sss)
+        
+        group = ', '.join(ll)
+        
+        hhhh = len(group)
+        raise Exception('perturb')
         import os
         ff = []
         for subdir, dirs, files in os.walk('/home/mikhail/Downloads/GSK/DMSO/DMSO_DEG'):

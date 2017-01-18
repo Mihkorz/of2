@@ -69,7 +69,7 @@ class Report(models.Model):
     norm_name = models.CharField(verbose_name='Normal title', max_length=250, blank=False)
     
     
-    compare_groups = models.CharField(verbose_name='Comparison groups', max_length=1000, blank=True, null=True,
+    compare_groups = models.TextField(verbose_name='Comparison groups', blank=True, null=True,
                                       help_text="""List of group names separated by "vs". 
                                       If several groups are required separate them by comma (G1vsG2vsG3, G4vsG5vsG6).  
                                       Leave empty for permutations of all groups""") 
