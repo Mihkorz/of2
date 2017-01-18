@@ -58,9 +58,9 @@ class ReportDetail(DetailView):
         if 'GSK-NCGOM-2016N298312' in self.get_object().slug:
             self.template_name = 'report/report_detail_GSK-NCGOM.html'
         if 'gsk' in self.get_object().slug:
-            raise Exception('gsk')
+            
             self.template_name = 'report/report_detail_jjms.html'
-        raise Exception(self.get_object().slug)
+        
         return super(ReportDetail, self).dispatch(request, *args, **kwargs)
     
     def get_context_data(self, **kwargs):
