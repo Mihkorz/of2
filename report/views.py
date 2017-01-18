@@ -57,6 +57,8 @@ class ReportDetail(DetailView):
             self.template_name = 'report/report_detail_henkel.html'
         if 'GSK-NCGOM-2016N298312' in self.get_object().slug:
             self.template_name = 'report/report_detail_GSK-NCGOM.html'
+        if 'gsk-' in self.get_object().slug:
+            self.template_name = 'report/report_detail_jjms.html'
         
         return super(ReportDetail, self).dispatch(request, *args, **kwargs)
     
@@ -2333,8 +2335,26 @@ class ReportTest(TemplateView):
     
     def get(self, request, *args, **kwargs):
         
-        df = pd.read_csv("/home/mikhail/Downloads/AboveAndBeyond/res_DS_Disease4s7_final.txt", sep='\t')
+        import os
+        ff = []
+        for subdir, dirs, files in os.walk('/home/mikhail/Downloads/GSK/DMSO/DMSO_DEG'):
+            for f in files:
+                ff.append(f)
         
+        ff.sort()
+        
+        for ffile in ff:
+            df = pd.read_csv('/home/mikhail/Downloads/GSK/DMSO/DMSO_DEG/'+ffile, sep='\t', index_col=0)
+            df.index.name = 'SYMBOL'
+            df.to_csv('/home/mikhail/Downloads/GSK/DMSO/DMSO_DEG/csv/'+ffile, sep=',')
+            #raise Exception('cycle')
+        
+        raise Exception("GSK")
+        
+        df = pd.read_csv("/home/mikhail/Downloads/AboveAndBeyond/s6s7/DE_Disease4_S6.tab", sep='\t')
+        
+        df.to_csv("/home/mikhail/Downloads/AboveAndBeyond/s6s7/DE_Disease4_S6.csv", sep=',', index=False)
+        raise Exception('stop')
         """
         # Cut table Effect >3
         df = df[df.effect>3]
