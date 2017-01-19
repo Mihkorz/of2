@@ -1197,7 +1197,102 @@ $('#tbl-mhc').on( 'draw.dt', function () {
 	$("table#tbl-mhc.path tr td:nth-child(2)").wrapInner('<a href="#/"></a>');
     $("table#tbl-mhc.path tr td:nth-child(3)").wrapInner('<a href="#/"></a>')
 } );
-    
+
+
+
+/*************************** DEEEP **************/
+ 
+        var table_in = $("#tbl-top5_in").DataTable( {
+        	"paging":   true,
+            "iDisplayLength": 20,
+            "ordering": true,
+            "order": [[ 1, "desc" ]],
+            "info":     false,
+            "dom": 'Bfrtip',
+            "scrollX": true,
+            "buttons": [
+                       {extend: 'csv', title: 'tbl-mms'},
+                       {extend: 'print', title: 'tbl-mms'}
+                       
+                  ],
+            
+            "ajax": {'url':'/report-portal/report-deepgsktablejson/',
+            	     'type': 'GET',
+            	     'data':{
+            	    	     reportID: {{report.id}},
+            	    	     file_name: 'top5_DL_expr.csv'
+            	            },        	      
+            
+        },"deferRender": true });
+
+        var table_fc = $("#tbl-top5_fc").DataTable( {
+        	"paging":   true,
+            "iDisplayLength": 20,
+            "ordering": true,
+            "order": [[ 1, "desc" ]],
+            "info":     false,
+            "dom": 'Bfrtip',
+            "scrollX": true,
+            "buttons": [
+                       {extend: 'csv', title: 'tbl-mms'},
+                       {extend: 'print', title: 'tbl-mms'}
+                       
+                  ],
+            
+            "ajax": {'url':'/report-portal/report-deepgsktablejson/',
+            	     'type': 'GET',
+            	     'data':{
+            	    	     reportID: {{report.id}},
+            	    	     file_name: 'top5_DL_FC.csv'
+            	            },        	      
+            
+        },"deferRender": true }); 
+        
+        var table_gr = $("#tbl-generel").DataTable( {
+        	"paging":   true,
+            "iDisplayLength": 20,
+            "ordering": true,
+            "order": [[ 1, "desc" ]],
+            "info":     false,
+            "dom": 'Bfrtip',
+            "scrollX": true,
+            "buttons": [
+                       {extend: 'csv', title: 'tbl-mms'},
+                       {extend: 'print', title: 'tbl-mms'}
+                       
+                  ],
+            
+            "ajax": {'url':'/report-portal/report-deepgsktablejson/',
+            	     'type': 'GET',
+            	     'data':{
+            	    	     reportID: {{report.id}},
+            	    	     file_name: 'Top_model_expr.csv'
+            	            },        	      
+            
+        },"deferRender": true });
+        
+        var table_gr1 = $("#tbl-generel1").DataTable( {
+        	"paging":   true,
+            "iDisplayLength": 20,
+            "ordering": true,
+            "order": [[ 1, "desc" ]],
+            "info":     false,
+            "dom": 'Bfrtip',
+            "scrollX": true,
+            "buttons": [
+                       {extend: 'csv', title: 'tbl-mms'},
+                       {extend: 'print', title: 'tbl-mms'}
+                       
+                  ],
+            
+            "ajax": {'url':'/report-portal/report-deepgsktablejson/',
+            	     'type': 'GET',
+            	     'data':{
+            	    	     reportID: {{report.id}},
+            	    	     file_name: 'Top_model_FC.csv'
+            	            },        	      
+            
+        },"deferRender": true });
  /* METABOLIC PATHs
   drawPathwayTable({{report.id}},
 		  'tbl-meta_all', 
