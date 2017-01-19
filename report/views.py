@@ -2374,7 +2374,7 @@ class ReportDeepGSKJson(TemplateView):
         report = Report.objects.get(pk=request.GET.get('reportID'))
         file_name = request.GET.get('file_name')
         
-        df_gene = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/'+file_name, sep=None)
+        df_gene = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/'+file_name)
         
         output_json = df_gene.to_json(orient='values')
         response_data = {'data': json.loads(output_json)}
