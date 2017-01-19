@@ -2352,7 +2352,7 @@ class ReportMesenteryJson(TemplateView):
     def get(self, request, *args, **kwargs):
         
         report = Report.objects.get(pk=request.GET.get('reportID'))
-        file_name = Report.objects.get(pk=request.GET.get('file_name'))
+        file_name = request.GET.get('file_name')
         
         df_gene = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/'+file_name)
         
