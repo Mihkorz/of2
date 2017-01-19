@@ -57,9 +57,10 @@ class ReportDetail(DetailView):
             self.template_name = 'report/report_detail_henkel.html'
         if 'GSK-NCGOM-2016N298312' in self.get_object().slug:
             self.template_name = 'report/report_detail_GSK-NCGOM.html'
-        if 'gsk' in self.get_object().slug:
-            
+        if 'gsk' in self.get_object().slug:            
             self.template_name = 'report/report_detail_abovebeyond.html'
+        if 'gsk_prj2_1d' in self.get_object().slug:            
+            self.template_name = 'report/gsk_prj2_1d.html'
         
         return super(ReportDetail, self).dispatch(request, *args, **kwargs)
     
@@ -2376,16 +2377,16 @@ class ReportTest(TemplateView):
         """
         import os
         ff = []
-        for subdir, dirs, files in os.walk('/home/mikhail/Downloads/GSK/ksyu/OF'):
+        for subdir, dirs, files in os.walk('/home/mikhail/Downloads/GSK/1D/PAS'):
             for f in files:
                 ff.append(f)
         
         ff.sort()
         
         for ffile in ff:
-            df = pd.read_csv('/home/mikhail/Downloads/GSK/ksyu/OF/'+ffile, sep=None, index_col=0)
+            df = pd.read_csv('/home/mikhail/Downloads/GSK/1D/PAS/'+ffile, sep=None, index_col=0)
             df.index.name = 'Pathway'
-            df.to_csv('/home/mikhail/Downloads/GSK/ksyu/OF/csv/'+ffile, sep=',')
+            df.to_csv('/home/mikhail/Downloads/GSK/1D/PAS/csv/'+ffile, sep=',')
             #raise Exception('cycle')
         
         raise Exception("GSK")
