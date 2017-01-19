@@ -866,7 +866,7 @@ $("#btn_show_tf").click(function(){
 
 
 
-        $("#tbl-mms").DataTable( {
+        var table_mms =     $("#tbl-mms").DataTable( {
         	"paging":   true,
             "iDisplayLength": 20,
             "ordering": true,
@@ -889,7 +889,7 @@ $("#btn_show_tf").click(function(){
             
         },"deferRender": true });
         
-        $("#tbl-mhs").DataTable( {
+        var table_mhs =$("#tbl-mhs").DataTable( {
         	"paging":   true,
             "iDisplayLength": 20,
             "ordering": true,
@@ -912,7 +912,7 @@ $("#btn_show_tf").click(function(){
             
         },"deferRender": true });
         
-        $("#tbl-mme").DataTable( {
+        var table_mme =$("#tbl-mme").DataTable( {
         	"paging":   true,
             "iDisplayLength": 20,
             "ordering": true,
@@ -935,7 +935,7 @@ $("#btn_show_tf").click(function(){
             
         },"deferRender": true });
         
-        $("#tbl-mhe").DataTable( {
+        var table_mhe = $("#tbl-mhe").DataTable( {
         	"paging":   true,
             "iDisplayLength": 20,
             "ordering": true,
@@ -958,7 +958,7 @@ $("#btn_show_tf").click(function(){
             
         },"deferRender": true });
         
-        $("#tbl-mhc").DataTable( {
+        var table_mhc = $("#tbl-mhc").DataTable( {
         	"paging":   true,
             "iDisplayLength": 20,
             "ordering": true,
@@ -982,6 +982,84 @@ $("#btn_show_tf").click(function(){
         },"deferRender": true });
     
 
+$('#tbl-mms').on( 'draw.dt', function () {
+	    	
+	    	var path_name_td = $(table_mms).find(" tr td:first-child()");
+	    	path_name_td.each(function(){
+	    		var path_long_name = $(this).text();
+	    		if(path_long_name.length > 50){
+		    		var short_name = $.trim(path_long_name).substring(0, 50)
+	                .trim(this) + "...";
+		    		$(this).html("<span title='"+path_long_name+"'>"+short_name+"</span>");
+		    	}
+	    	});	    	
+	    	
+	    	$("table#tbl-mms.path tr td:nth-child(2)").wrapInner('<a href="#/"></a>');
+    	    $("table#tbl-mms.path tr td:nth-child(3)").wrapInner('<a href="#/"></a>')
+        } );
+$('#tbl-mhs').on( 'draw.dt', function () {
+	
+	var path_name_td = $(table_mhs).find(" tr td:first-child()");
+	path_name_td.each(function(){
+		var path_long_name = $(this).text();
+		if(path_long_name.length > 50){
+    		var short_name = $.trim(path_long_name).substring(0, 50)
+            .trim(this) + "...";
+    		$(this).html("<span title='"+path_long_name+"'>"+short_name+"</span>");
+    	}
+	});	    	
+	
+	$("table#tbl-mhs.path tr td:nth-child(2)").wrapInner('<a href="#/"></a>');
+    $("table#tbl-mhs.path tr td:nth-child(3)").wrapInner('<a href="#/"></a>')
+} );
+
+$('#tbl-mme').on( 'draw.dt', function () {
+	
+	var path_name_td = $(table_mme).find(" tr td:first-child()");
+	path_name_td.each(function(){
+		var path_long_name = $(this).text();
+		if(path_long_name.length > 50){
+    		var short_name = $.trim(path_long_name).substring(0, 50)
+            .trim(this) + "...";
+    		$(this).html("<span title='"+path_long_name+"'>"+short_name+"</span>");
+    	}
+	});	    	
+	
+	$("table#tbl-mme.path tr td:nth-child(2)").wrapInner('<a href="#/"></a>');
+    $("table#tbl-mme.path tr td:nth-child(3)").wrapInner('<a href="#/"></a>')
+} );
+
+$('#tbl-mhe').on( 'draw.dt', function () {
+	
+	var path_name_td = $(table_mhe).find(" tr td:first-child()");
+	path_name_td.each(function(){
+		var path_long_name = $(this).text();
+		if(path_long_name.length > 50){
+    		var short_name = $.trim(path_long_name).substring(0, 50)
+            .trim(this) + "...";
+    		$(this).html("<span title='"+path_long_name+"'>"+short_name+"</span>");
+    	}
+	});	    	
+	
+	$("table#tbl-mhe.path tr td:nth-child(2)").wrapInner('<a href="#/"></a>');
+    $("table#tbl-mhe.path tr td:nth-child(3)").wrapInner('<a href="#/"></a>')
+} );
+
+$('#tbl-mhc').on( 'draw.dt', function () {
+	
+	var path_name_td = $(table_mhc).find(" tr td:first-child()");
+	path_name_td.each(function(){
+		var path_long_name = $(this).text();
+		if(path_long_name.length > 50){
+    		var short_name = $.trim(path_long_name).substring(0, 50)
+            .trim(this) + "...";
+    		$(this).html("<span title='"+path_long_name+"'>"+short_name+"</span>");
+    	}
+	});	    	
+	
+	$("table#tbl-mhc.path tr td:nth-child(2)").wrapInner('<a href="#/"></a>');
+    $("table#tbl-mhc.path tr td:nth-child(3)").wrapInner('<a href="#/"></a>')
+} );
     
  /* METABOLIC PATHs
   drawPathwayTable({{report.id}},
