@@ -2374,6 +2374,8 @@ class ReportTest(TemplateView):
     
     def get(self, request, *args, **kwargs):
         
+        
+        raise Exception('stop')
         """
         lpert = ['Doxorubicin-high',
                  'GSK882380-high',

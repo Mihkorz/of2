@@ -502,6 +502,143 @@
 <!------------- End of Pathway Analysis -->
 
 
+<!-- ---------------------------------Deep---------------------------------------------> 
+
+ 
+ <hr/> 
+<h2 id='tf_analysis'>Deep Learning</h2>
+<hr/>
+
+{%if report.path_text%}
+          {{report.tf_text|safe}}
+          <br/><br/>
+{%endif%}
+
+<center>
+<button type="button"  class="btn btn-success btn-lg center" id='btn_show_tf'>Show Data</button>
+</center>
+
+<div id='hide_tf' style='display:none;'> <!-- Div to hide and load on button click 
+
+   <!-- TF Nav tabs  -->     
+   <ul class="nav nav-tabs" role="tablist">
+     
+       <li role="presentation" class="active">
+         <a href="#top5_in_tab" aria-controls="home1" role="tab" data-toggle="tab" >
+           Top 5 intensity-based models
+         </a>
+       </li>
+       <li role="presentation" >
+         <a href="#generel_tab" aria-controls="home1" role="tab" data-toggle="tab" >
+           Gene relevance estimates for the top1 model
+         </a>
+       </li>
+       <li role="presentation" >
+         <a href="#top5_fc_tab" aria-controls="home1" role="tab" data-toggle="tab" >
+           Top 5 FC-based models
+         </a>
+       </li>
+       <li role="presentation" >
+         <a href="#generel1_tab" aria-controls="home1" role="tab" data-toggle="tab" >
+           Gene relevance estimates for the top1 model
+         </a>
+       </li>
+     
+   </ul>
+         
+   <div class="tab-content">
+    
+     
+     <div role="tabpanel" class="tab-pane fade in active" id="top5_in_tab">
+     
+             
+       <h4>Table <span class='tbl_num'></span>Top 5 intensity-based models </h4>
+       <table id="tbl-top5_in" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>#</th>
+           <th>num_features</th>
+           <th>accuracy</th>
+           <th>f1</th>
+           <th>matthews_corrcoef</th>
+           <th>precision</th>
+           <th>recall</th>
+           <th>roc_auc</th>
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+     
+     
+     </div> <!-- end of tabpanel div -->
+     
+     <div role="tabpanel" class="tab-pane fade " id="generel_tab">
+     
+             
+       <h4>Table <span class='tbl_num'></span>Gene relevance estimates for the top1 model </h4>
+       <table id="tbl-generel" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>probes</th>
+           <th>mean</th>
+           <th>genes</th>
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+     
+     
+     </div> <!-- end of tabpanel div -->
+     
+     <div role="tabpanel" class="tab-pane fade " id="top5_fc_tab">
+     
+             
+       <h4>Table <span class='tbl_num'></span>op 5 FC-based models </h4>
+       <table id="tbl-top5_fc" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>#</th>
+           <th>num_features</th>
+           <th>accuracy</th>
+           <th>f1</th>
+           <th>matthews_corrcoef</th>
+           <th>precision</th>
+           <th>recall</th>
+           <th>roc_auc</th>
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+     
+     
+     </div> <!-- end of tabpanel div -->
+     
+     <div role="tabpanel" class="tab-pane fade " id="generel1_tab">
+     
+             
+       <h4>Table <span class='tbl_num'></span>Gene relevance estimates for the top1 model </h4>
+       <table id="tbl-generel1" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>probes</th>
+           <th>mean</th>
+           <th>genes</th>
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+     
+     
+     </div> <!-- end of tabpanel div -->
+    
+   
+   </div> <!--  end of tab-content div -->
+   
+   
+   
+
+</div> <!--  end of hide div -->
+<!-- End of TF -->
 
 
 
