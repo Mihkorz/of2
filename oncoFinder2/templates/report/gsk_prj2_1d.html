@@ -397,20 +397,20 @@
 <!-- Signaling Pathways level comparison Nav tabs -->
 <ul class="nav nav-tabs" role="tablist">
          <li role="presentation" class="active">
-         <a href="#mms_tab" aria-controls="settings" role="tab" data-toggle="tab">MESENTERY MEDIUM SM </a>
+         <a href="#mms_tab" aria-controls="settings" role="tab" data-toggle="tab">MAN MEDIUM SM </a>
          </li>
          
          <li role="presentation" >
-         <a href="#mhs_tab" aria-controls="settings" role="tab" data-toggle="tab" id="path_">MESENTERY HIGHT SM</a>
+         <a href="#mhs_tab" aria-controls="settings" role="tab" data-toggle="tab" id="path_">MAN HIGHT SM</a>
          </li>
          <li role="presentation" >
-         <a href="#mme_tab" aria-controls="settings" role="tab" data-toggle="tab" id="path_">MESENTERY MEDIUM EC</a>
+         <a href="#mme_tab" aria-controls="settings" role="tab" data-toggle="tab" id="path_">MAN MEDIUM EC</a>
          </li>
          <li role="presentation" >
-         <a href="#mhe_tab" aria-controls="settings" role="tab" data-toggle="tab" id="path_">MESENTERY HIGHT EC</a>
+         <a href="#mhe_tab" aria-controls="settings" role="tab" data-toggle="tab" id="path_">MAN HIGHT EC</a>
          </li>
          <li role="presentation" >
-         <a href="#mhc_tab" aria-controls="settings" role="tab" data-toggle="tab" id="path_">MESENTERY HIGHT CEC</a>
+         <a href="#mhc_tab" aria-controls="settings" role="tab" data-toggle="tab" id="path_">MAN HIGHT CEC</a>
          </li>
          
 </ul>
@@ -419,7 +419,7 @@
   <div class="tab-content">
   
   <div role="tabpanel" class="tab-pane fade in active " id="mms_tab" style='overflow-x: auto;'>     <br/> 
-    <h4>Table . MESENTERY MEDIUM SM</h4>
+    <h4>Table . MAN MEDIUM SM</h4>
     <table id="tbl-mms" class="path table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
           <tr>
@@ -432,8 +432,8 @@
   
   </div>
   
-  <div role="tabpanel" class="tab-pane fade in active " id="mhs_tab" style='overflow-x: auto;'>     <br/> 
-    <h4>Table . MESENTERY HIGHT SM</h4>
+  <div role="tabpanel" class="tab-pane fade  " id="mhs_tab" style='overflow-x: auto;'>     <br/> 
+    <h4>Table . MAN HIGHT SM</h4>
     <table id="tbl-mhs" class="path table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
           <tr>
@@ -448,8 +448,8 @@
   
   </div>
   
-  <div role="tabpanel" class="tab-pane fade in active " id="mme_tab" style='overflow-x: auto;'>     <br/> 
-    <h4>Table . MESENTERY MEDIUM EC</h4>
+  <div role="tabpanel" class="tab-pane fade  " id="mme_tab" style='overflow-x: auto;'>     <br/> 
+    <h4>Table . MAN MEDIUM EC</h4>
     <table id="tbl-mme" class="path table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
           <tr>
@@ -462,8 +462,8 @@
   
   </div>
   
-  <div role="tabpanel" class="tab-pane fade in active " id="mhe_tab" style='overflow-x: auto;'>     <br/> 
-    <h4>Table . MESENTERY HIGH EC</h4>
+  <div role="tabpanel" class="tab-pane fade  " id="mhe_tab" style='overflow-x: auto;'>     <br/> 
+    <h4>Table . MAN HIGH EC</h4>
     <table id="tbl-mhe" class="path table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
           <tr>
@@ -478,8 +478,8 @@
   
   </div>
   
-  <div role="tabpanel" class="tab-pane fade in active " id="mhc_tab" style='overflow-x: auto;'>     <br/> 
-    <h4>Table . MESENTERY HIGH CEC</h4>
+  <div role="tabpanel" class="tab-pane fade  " id="mhc_tab" style='overflow-x: auto;'>     <br/> 
+    <h4>Table . MAN HIGH CEC</h4>
     <table id="tbl-mhc" class="path table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
           <tr>
@@ -864,7 +864,120 @@ $("#btn_show_tf").click(function(){
 
 
 
-
+        $("#tbl-mms").DataTable( {
+        	"paging":   true,
+            "iDisplayLength": 20,
+            "ordering": true,
+            "order": [[ 1, "desc" ]],
+            "info":     false,
+            "dom": 'Bfrtip',
+            "scrollX": true,
+            "buttons": [
+                       {extend: 'csv', title: 'tbl-mms'},
+                       {extend: 'print', title: 'tbl-mms'}
+                       
+                  ],
+            
+            "ajax": {'url':'/report-portal/report-mesenterytablejson/',
+            	     'type': 'GET',
+            	     'data':{
+            	    	     reportID: {{report.id}},
+            	    	     file_name: 'SM_MEDIUM.csv'
+            	            },        	      
+            
+        },"deferRender": true });
+        
+        $("#tbl-mhs").DataTable( {
+        	"paging":   true,
+            "iDisplayLength": 20,
+            "ordering": true,
+            "order": [[ 1, "desc" ]],
+            "info":     false,
+            "dom": 'Bfrtip',
+            "scrollX": true,
+            "buttons": [
+                       {extend: 'csv', title: 'tbl-mms'},
+                       {extend: 'print', title: 'tbl-mms'}
+                       
+                  ],
+            
+            "ajax": {'url':'/report-portal/report-mesenterytablejson/',
+            	     'type': 'GET',
+            	     'data':{
+            	    	     reportID: {{report.id}},
+            	    	     file_name: 'SM_HIGH.csv'
+            	            },        	      
+            
+        },"deferRender": true });
+        
+        $("#tbl-mme").DataTable( {
+        	"paging":   true,
+            "iDisplayLength": 20,
+            "ordering": true,
+            "order": [[ 1, "desc" ]],
+            "info":     false,
+            "dom": 'Bfrtip',
+            "scrollX": true,
+            "buttons": [
+                       {extend: 'csv', title: 'tbl-mms'},
+                       {extend: 'print', title: 'tbl-mms'}
+                       
+                  ],
+            
+            "ajax": {'url':'/report-portal/report-mesenterytablejson/',
+            	     'type': 'GET',
+            	     'data':{
+            	    	     reportID: {{report.id}},
+            	    	     file_name: 'EC_MEDIUM.csv'
+            	            },        	      
+            
+        },"deferRender": true });
+        
+        $("#tbl-mhe").DataTable( {
+        	"paging":   true,
+            "iDisplayLength": 20,
+            "ordering": true,
+            "order": [[ 1, "desc" ]],
+            "info":     false,
+            "dom": 'Bfrtip',
+            "scrollX": true,
+            "buttons": [
+                       {extend: 'csv', title: 'tbl-mms'},
+                       {extend: 'print', title: 'tbl-mms'}
+                       
+                  ],
+            
+            "ajax": {'url':'/report-portal/report-mesenterytablejson/',
+            	     'type': 'GET',
+            	     'data':{
+            	    	     reportID: {{report.id}},
+            	    	     file_name: 'EC_HIGH.csv'
+            	            },        	      
+            
+        },"deferRender": true });
+        
+        $("#tbl-mhc").DataTable( {
+        	"paging":   true,
+            "iDisplayLength": 20,
+            "ordering": true,
+            "order": [[ 1, "desc" ]],
+            "info":     false,
+            "dom": 'Bfrtip',
+            "scrollX": true,
+            "buttons": [
+                       {extend: 'csv', title: 'tbl-mms'},
+                       {extend: 'print', title: 'tbl-mms'}
+                       
+                  ],
+            
+            "ajax": {'url':'/report-portal/report-mesenterytablejson/',
+            	     'type': 'GET',
+            	     'data':{
+            	    	     reportID: {{report.id}},
+            	    	     file_name: 'CEC_HIGH.csv'
+            	            },        	      
+            
+        },"deferRender": true });
     
 
     

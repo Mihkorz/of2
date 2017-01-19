@@ -2341,7 +2341,27 @@ class ReportTargetInferenceJson(TemplateView):
         
         return HttpResponse(json.dumps(response_data), content_type="application/json")
                 
+
+class ReportMesenteryJson(TemplateView):
+    template_name="report/report_detail.html"
     
+    def dispatch(self, request, *args, **kwargs):
+        
+        return super(ReportMesenteryJson, self).dispatch(request, *args, **kwargs)
+    
+    def get(self, request, *args, **kwargs):
+        
+        report = Report.objects.get(pk=request.GET.get('reportID'))
+        file_name = Report.objects.get(pk=request.GET.get('file_name'))
+        
+        df_gene = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/'+file_name)
+        
+        output_json = df_gene.to_json(orient='values')
+        response_data = {'data': json.loads(output_json)}
+        
+        return HttpResponse(json.dumps(response_data), content_type="application/json") 
+    
+       
 class ReportTest(TemplateView):
     
     """ Just testing playground to store useful scripts"""
