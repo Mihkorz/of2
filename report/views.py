@@ -2394,7 +2394,7 @@ class ReportTest(TemplateView):
     def get(self, request, *args, **kwargs):
         
         
-        raise Exception('stop')
+        #raise Exception('stop')
         """
         lpert = ['Doxorubicin-high',
                  'GSK882380-high',
@@ -2418,16 +2418,16 @@ class ReportTest(TemplateView):
         """
         import os
         ff = []
-        for subdir, dirs, files in os.walk('/home/mikhail/Downloads/GSK/1D/PAS'):
+        for subdir, dirs, files in os.walk('/home/mikhail/Downloads/GSK/1D/PAS/multicomp/'):
             for f in files:
                 ff.append(f)
         
         ff.sort()
         
         for ffile in ff:
-            df = pd.read_csv('/home/mikhail/Downloads/GSK/1D/PAS/'+ffile, sep=None, index_col=0)
+            df = pd.read_csv('/home/mikhail/Downloads/GSK/1D/PAS/multicomp/'+ffile, sep=None, index_col=0)
             df.index.name = 'Pathway'
-            df.to_csv('/home/mikhail/Downloads/GSK/1D/PAS/csv/'+ffile, sep=',')
+            df.to_csv('/home/mikhail/Downloads/GSK/1D/PAS/multicomp/csv/'+ffile, sep=',')
             #raise Exception('cycle')
         
         raise Exception("GSK")
