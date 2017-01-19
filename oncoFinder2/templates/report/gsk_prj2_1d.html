@@ -143,7 +143,8 @@
 <ul class="nav nav-tabs" role="tablist">
          <li role="presentation" class="active"><a href="#gene_all_tab" aria-controls="settings" role="tab" data-toggle="tab">ALL</a></li>
          {%for perm in report.get_gene_permutations%}
-         <li role="presentation" ><a href="#gene_{{perm.strip}}_tab" aria-controls="settings" role="tab" data-toggle="tab" id='venn_boot_gene_{{perm.strip}}'>{{perm}}</a></li>
+         <!--  <li role="presentation" ><a href="#gene_{{perm.strip}}_tab" aria-controls="settings" role="tab" data-toggle="tab" id='venn_boot_gene_{{perm.strip}}'>{{perm}}</a></li>
+         -->
          {%endfor%}
 </ul>
 
@@ -346,7 +347,8 @@
 <ul class="nav nav-tabs" role="tablist">
          <li role="presentation" class="active"><a href="#path_all_tab" aria-controls="settings" role="tab" data-toggle="tab">ALL</a></li>
          {%for perm in report.get_path_permutations%}
-         <li role="presentation" ><a href="#path_{{perm.strip}}_tab" aria-controls="settings" role="tab" data-toggle="tab" id="venn_boot_path_{{perm.strip}}">{{perm}}</a></li>
+         <!-- <li role="presentation" ><a href="#path_{{perm.strip}}_tab" aria-controls="settings" role="tab" data-toggle="tab" id="venn_boot_path_{{perm.strip}}">{{perm}}</a></li>
+         -->
          {%endfor%}
 </ul>
 
