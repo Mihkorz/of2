@@ -51,8 +51,8 @@
             <li class="title">Table of contents: </li>
 
             
-            <!--<li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#input_data">Input data</a></li>
-              <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#dl_analysis">Deep Learning</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#input_data">Target Inference</a></li>
+             <!-- <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#dl_analysis">Deep Learning</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#kinetic_analysis">Kinetic pathway modeling</a></li>-->
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#gene_analysis">Gene level analysis</a></li>
             <!--  <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tf_analysis">Transcription Factor Analysis</a></li>-->
@@ -69,7 +69,7 @@
           </ul>
           
           {%if report.input_data_text%}
-          <h2 id="input_data">Experimental design and RNA-seq data analysis</h2>
+          <h2 id="input_data">Target Inference</h2>
           <hr/>
           {{report.input_data_text|safe}}
 
@@ -911,7 +911,27 @@ $("#btn_show_tf").click(function(){
 
 
 
-
+$("#tbl_tarinfer").DataTable( {
+	"paging":   true,
+    "iDisplayLength": 20,
+    "ordering": true,
+    "order": [[ 1, "desc" ]],
+    "info":     false,
+    "dom": 'Bfrtip',
+    "scrollX": true,
+    "buttons": [
+               {extend: 'csv', title: file_name},
+               {extend: 'print', title: file_name}
+               
+          ],
+    
+    "ajax": {'url':'/report-portal/report-tarinfertablejson/',
+    	     'type': 'GET',
+    	     'data':{
+    	    	     reportID: {{report.id}}
+    	            },        	      
+    
+},"deferRender": true });
     
 
     

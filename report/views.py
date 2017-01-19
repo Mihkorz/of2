@@ -59,7 +59,7 @@ class ReportDetail(DetailView):
             self.template_name = 'report/report_detail_GSK-NCGOM.html'
         if 'gsk' in self.get_object().slug:
             
-            self.template_name = 'report/report_detail_jjms.html'
+            self.template_name = 'report/report_detail_abovebeyond.html'
         
         return super(ReportDetail, self).dispatch(request, *args, **kwargs)
     
@@ -2322,7 +2322,24 @@ class ReportDSBoxplotJson(TemplateView):
         
             return HttpResponse(json.dumps(response_data), content_type="application/json")
         
-           
+class ReportTargetInferenceJson(TemplateView):
+    template_name="report/report_detail.html"
+    
+    def dispatch(self, request, *args, **kwargs):
+        
+        return super(ReportTargetInferenceJson, self).dispatch(request, *args, **kwargs)
+    
+    def get(self, request, *args, **kwargs):
+        
+        report = Report.objects.get(pk=request.GET.get('reportID'))
+        
+        df_gene = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/TargetInferenceTable.csv')
+        
+        output_json = df_gene.to_json(orient='values')
+        response_data = {'data': json.loads(output_json)}
+        
+        return HttpResponse(json.dumps(response_data), content_type="application/json")
+                
     
 class ReportTest(TemplateView):
     
@@ -2336,6 +2353,7 @@ class ReportTest(TemplateView):
     
     def get(self, request, *args, **kwargs):
         
+        """
         lpert = ['Doxorubicin-high',
                  'GSK882380-high',
                  'GSK894281A-high',
@@ -2355,18 +2373,19 @@ class ReportTest(TemplateView):
         
         hhhh = len(group)
         raise Exception('perturb')
+        """
         import os
         ff = []
-        for subdir, dirs, files in os.walk('/home/mikhail/Downloads/GSK/DMSO/DMSO_DEG'):
+        for subdir, dirs, files in os.walk('/home/mikhail/Downloads/GSK/ksyu/OF'):
             for f in files:
                 ff.append(f)
         
         ff.sort()
         
         for ffile in ff:
-            df = pd.read_csv('/home/mikhail/Downloads/GSK/DMSO/DMSO_DEG/'+ffile, sep='\t', index_col=0)
-            df.index.name = 'SYMBOL'
-            df.to_csv('/home/mikhail/Downloads/GSK/DMSO/DMSO_DEG/csv/'+ffile, sep=',')
+            df = pd.read_csv('/home/mikhail/Downloads/GSK/ksyu/OF/'+ffile, sep=None, index_col=0)
+            df.index.name = 'Pathway'
+            df.to_csv('/home/mikhail/Downloads/GSK/ksyu/OF/csv/'+ffile, sep=',')
             #raise Exception('cycle')
         
         raise Exception("GSK")
