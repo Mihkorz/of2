@@ -441,7 +441,7 @@
 
 <div id='hide_ds' style='display:none;'> <!-- Div to hide and load on button click -->
 
-   <table class="table table-bordered table-hover table-condensed" id='tbl-ds'>
+   <table class="table table-bordered table-striped table-hover" id='tbl-ds' width='90%'>
 <thead><tr><th title="Field #1">#Perturbation</th>
 <th title="Field #2">Time</th>
 <th title="Field #3">Found hit</th>
@@ -1063,7 +1063,7 @@ $("#tbl_tarinfer").DataTable( {
 
 $("#tbl-ds").DataTable( {
 	"paging":   true,
-    "iDisplayLength": 20,
+    "iDisplayLength": 15,
     "ordering": true,
     "order": [[ 1, "desc" ]],
     "info":     false,
