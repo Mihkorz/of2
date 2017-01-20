@@ -1076,6 +1076,42 @@ $("#tbl-ds").DataTable( {
           ],
     
     "deferRender": true });
+
+$("#tbl-dis-stim").DataTable( {
+	"paging":   true,
+    "iDisplayLength": 15,
+    "ordering": true,
+    "order": [[ 1, "desc" ]],
+    "info":     false,
+    "dom": 'Bfrtip',
+    "scrollX": true,
+    "buttons": [
+               {extend: 'csv', title: 'tarinfer'},
+               {extend: 'print', title: 'tarinfer'}
+               
+          ],
+    
+    "deferRender": true });
+    
+$("#tbl-dis-comp").DataTable( {
+	"paging":   true,
+    "iDisplayLength": 15,
+    "ordering": true,
+    "order": [[ 1, "desc" ]],
+    "info":     false,
+    "dom": 'Bfrtip',
+    "scrollX": true,
+    "buttons": [
+               {extend: 'csv', title: 'tarinfer'},
+               {extend: 'print', title: 'tarinfer'}
+               
+          ],
+    
+    "deferRender": true });
+        
+    
+
+
     
  /* METABOLIC PATHs
   drawPathwayTable({{report.id}},
