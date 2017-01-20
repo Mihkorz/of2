@@ -441,111 +441,189 @@
 
 <div id='hide_ds' style='display:none;'> <!-- Div to hide and load on button click -->
 
-   <!-- DS Nav tabs -->      
-   <ul class="nav nav-tabs" role="tablist">
-     {%for group in report.genegroup_set.all%}
-       <li role="presentation" {%if forloop.counter == 1 %}class="active"{%endif%}>
-         <a href="#{{group.get_slug}}_ds_tab" aria-controls="home1" role="tab" data-toggle="tab" id='ds_boot_{{group.get_slug}}'>
-           {{group.name}}
-         </a>
-       </li>
-     {%endfor%}
-   </ul>
-         
-   <div class="tab-content">
-    {%for group in report.genegroup_set.all%}
-     {%if forloop.counter == 1 %}
-     <div role="tabpanel" class="tab-pane fade in active" id="{{group.get_slug}}_ds_tab">
-     {%else%}
-     <div role="tabpanel" class="tab-pane fade " id="{{group.get_slug}}_ds_tab">
-     {%endif%}
-             
-       <h4>Table <span class='tbl_num'></span>Individual perturbation scoring for {{group.name}} </h4>
-       <table id="tbl-ds-{{group.get_slug}}" class="path table table-striped table-bordered" cellspacing="0" width="100%">
-        <thead>
-          <tr>
-           <th>Perturbation</th>
-           <th>Perturbation_id</th>
-           <th>Time</th>
-           <th>Concentration</th>
-           <th>Cell line</th>
-           <!--  <th>Condition</th>-->
-           <th>p-val</th>
-           <th>adj. p-val</th>
-           <th>Effect</th>
-          </tr>
-        </thead>  
-      </table>
-      <br/><br/>
-     
-     
-     </div> <!-- end of tabpanel div -->
-    {%endfor%}
-   
-   </div> <!--  end of tab-content div -->
-   
-   <h3>Top-10 small molecule hits</h3>
-   <!-- DS Boxplot Nav tabs -->      
-   <ul class="nav nav-tabs" role="tablist">
-     {%for group in report.drugscoregroup_set.all%}
-       <li role="presentation" {%if forloop.counter == 1 %}class="active"{%endif%}>
-         <a href="#{{group.get_slug}}_dsbarmolecule_tab" aria-controls="home1" role="tab" data-toggle="tab" id='dsbarmolecule_boot_{{group.get_slug}}'>
-           {{group.name}}
-         </a>
-       </li>
-     {%endfor%}
-   </ul>
-         
-   <div class="tab-content">
-   
-     {%for group in report.drugscoregroup_set.all%} 
-     
-     {%if forloop.counter == 1 %}
-     <div role="tabpanel" class="tab-pane fade in active" id="{{group.get_slug}}_dsbarmolecule_tab">
-     {%else%}
-     <div role="tabpanel" class="tab-pane fade " id="{{group.get_slug}}_dsbarmolecule_tab">
-     {%endif%}
-     <h4>Top-10 hits for {{group.name}} </h4>
-     <div id="{{group.get_slug}}_dsbarmolecule_plot" style="min-width: 800px; height: 400px; max-width: 800px; margin: 0 auto">
-     <span>Loading Bar Plot...</span>
-     </div>
-   
-     </div>
-    {%endfor%}
-   
-   </div> <!--  end of tab panel -->
-   
-<!--  DS GENE -->
-<h3>Top-10 gene knockdowns</h3>
-   <!-- DS Boxplot Nav tabs -->      
-   <ul class="nav nav-tabs" role="tablist">
-     {%for group in report.drugscoregroup_set.all%}
-       <li role="presentation" {%if forloop.counter == 1 %}class="active"{%endif%}>
-         <a href="#{{group.get_slug}}_dsbargene_tab" aria-controls="home1" role="tab" data-toggle="tab" id='dsbargene_boot_{{group.get_slug}}'>
-           {{group.name}}
-         </a>
-       </li>
-     {%endfor%}
-   </ul>
-         
-   <div class="tab-content">
-   
-     {%for group in report.drugscoregroup_set.all%} 
-     
-     {%if forloop.counter == 1 %}
-     <div role="tabpanel" class="tab-pane fade in active" id="{{group.get_slug}}_dsbargene_tab">
-     {%else%}
-     <div role="tabpanel" class="tab-pane fade " id="{{group.get_slug}}_dsbargene_tab">
-     {%endif%}
-     <h4>Top-10 hits for {{group.name}} </h4>
-     <div id="{{group.get_slug}}_dsbargene_plot" style="min-width: 800px; height: 400px; max-width: 800px; margin: 0 auto">
-     <span>Loading Bar Plot...</span>
-     </div>
-   
-     </div>
-    {%endfor%}
-   
-   </div> <!--  end of tab panel -->
+   <table class="table table-bordered table-hover table-condensed" id='tbl-ds'>
+<thead><tr><th title="Field #1">#Perturbation</th>
+<th title="Field #2">Time</th>
+<th title="Field #3">Found hit</th>
+<th title="Field #4">P.adj</th>
+<th title="Field #5">Effect</th>
+</tr></thead>
+<tbody><tr>
+<td>Stimule2</td>
+<td>2h</td>
+<td>CMAP-CYT-SRP4969</td>
+<td align="right">0.005065616</td>
+<td>EPGN</td>
+</tr>
+<tr>
+<td>Stimule2</td>
+<td>2h</td>
+<td>CMAP-CYT-I2778</td>
+<td align="right">0.011381778</td>
+<td>IL1A</td>
+</tr>
+<tr>
+<td>Stimule2</td>
+<td>2h</td>
+<td>CMAP-CYT-T6674</td>
+<td align="right">0.097179414</td>
+<td>TNF</td>
+</tr>
+<tr>
+<td>Stimule3</td>
+<td>2h</td>
+<td>CMAP-CYT-SRP3067</td>
+<td align="right">0.04976921</td>
+<td>IGFBP3</td>
+</tr>
+<tr>
+<td>Stimule3</td>
+<td>2h</td>
+<td>CMAP-CYT-T7039</td>
+<td align="right">0.04985118</td>
+<td>TGFB1</td>
+</tr>
+<tr>
+<td>compound1</td>
+<td>1h</td>
+<td>tosedostat</td>
+<td align="right">0.008353235</td>
+<td> </td>
+</tr>
+<tr>
+<td>compound1</td>
+<td>8h</td>
+<td>narciclasine</td>
+<td align="right">0.001979974</td>
+<td> </td>
+</tr>
+<tr>
+<td>compound1</td>
+<td>8h</td>
+<td>U-0126</td>
+<td align="right">0.023355696</td>
+<td>MEK1/MEK2 inhibitor</td>
+</tr>
+<tr>
+<td>compound1</td>
+<td>8h</td>
+<td>BMS-536924</td>
+<td align="right">0.008693188</td>
+<td>IGF-IR kinase inhibitor</td>
+</tr>
+<tr>
+<td>compound2</td>
+<td>8h</td>
+<td>fluspirilene</td>
+<td align="right">0.02892152</td>
+<td>DRD2 antagonist</td>
+</tr>
+<tr>
+<td>compound3</td>
+<td>1h</td>
+<td>CHEMBL-399379</td>
+<td align="right">1.38E-08</td>
+<td> </td>
+</tr>
+<tr>
+<td>compound3</td>
+<td>1h</td>
+<td>menadione</td>
+<td align="right">4.82E-08</td>
+<td> </td>
+</tr>
+<tr>
+<td>compound3</td>
+<td>1h</td>
+<td>curcumin</td>
+<td align="right">1.30E-07</td>
+<td>NFKB, AP1 Complex inhibitor</td>
+</tr>
+<tr>
+<td>compound3</td>
+<td>1h</td>
+<td>CD-437</td>
+<td align="right">3.18E-07</td>
+<td>POLA1 inhibitor, RARA agonist</td>
+</tr>
+<tr>
+<td>compound3</td>
+<td>1h</td>
+<td>teniposide</td>
+<td align="right">3.18E-07</td>
+<td> </td>
+</tr>
+<tr>
+<td>compound3</td>
+<td>1h</td>
+<td>ingenol</td>
+<td align="right">6.92E-07</td>
+<td>PKC activator</td>
+</tr>
+<tr>
+<td>compound3</td>
+<td>1h</td>
+<td>CHEMBL-374350</td>
+<td align="right">7.27E-07</td>
+<td> </td>
+</tr>
+<tr>
+<td>compound3</td>
+<td>1h</td>
+<td>parthenolide</td>
+<td align="right">8.23E-07</td>
+<td>NFKB pathway inhibitor</td>
+</tr>
+<tr>
+<td>compound3</td>
+<td>1h</td>
+<td>GSK-1059615</td>
+<td align="right">9.35E-07</td>
+<td>PI3K and mTOR inhibitor</td>
+</tr>
+<tr>
+<td>compound3</td>
+<td>8h</td>
+<td>CAY-10594</td>
+<td align="right">0.002102947</td>
+<td>PLD2 inhibitor,</td>
+</tr>
+<tr>
+<td>compound3</td>
+<td>8h</td>
+<td>parthenolide</td>
+<td align="right">0.007419897</td>
+<td>NFKB pathway inhibitor</td>
+</tr>
+<tr>
+<td>compound3</td>
+<td>8h</td>
+<td>NVP-AUY922</td>
+<td align="right">0.007419897</td>
+<td>HSP90 inhibitor</td>
+</tr>
+<tr>
+<td>compound3</td>
+<td>8h</td>
+<td>auranofin</td>
+<td align="right">0.011702316</td>
+<td>redox enzymes inhibitor</td>
+</tr>
+<tr>
+<td>compound3</td>
+<td>8h</td>
+<td>piperlongumine</td>
+<td align="right">0.014713808</td>
+<td>nuclear export inhibitor </td>
+</tr>
+<tr>
+<td>compound3</td>
+<td>8h</td>
+<td>CAY-10618</td>
+<td align="right">0.014713808</td>
+<td>NMPRTase Inhibitor.</td>
+</tr>
+</tbody></table>
    
 
 </div> <!--  end of hide div -->
@@ -692,7 +770,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        
+        <h4 class="modal-title" id="myModalLabel"> </h4>
       </div>
       <div class="modal-body">
       <center>
@@ -983,6 +1061,22 @@ $("#tbl_tarinfer").DataTable( {
 },"deferRender": true });
     
 
+$("#tbl-ds").DataTable( {
+	"paging":   true,
+    "iDisplayLength": 20,
+    "ordering": true,
+    "order": [[ 1, "desc" ]],
+    "info":     false,
+    "dom": 'Bfrtip',
+    "scrollX": true,
+    "buttons": [
+               {extend: 'csv', title: 'tarinfer'},
+               {extend: 'print', title: 'tarinfer'}
+               
+          ],
+            	      
+    
+},"deferRender": true });
     
  /* METABOLIC PATHs
   drawPathwayTable({{report.id}},
