@@ -167,6 +167,9 @@ class Report(models.Model):
         
         return l_combination_names
     
+    def count_ds_groups(self):
+        return self.drugscoregroup_set.all().count()
+    
     
 
 def get_document_upload_path(instance, file_name):
