@@ -2420,16 +2420,16 @@ class ReportTest(TemplateView):
         """
         import os
         ff = []
-        for subdir, dirs, files in os.walk('/home/mikhail/Downloads/GSK/NOCMP/NO_CMP_PAS/'):
+        for subdir, dirs, files in os.walk('/home/mikhail/Downloads/GSK/DMSO/DMSO_PAS_v2/'):
             for f in files:
                 ff.append(f)
         
         ff.sort()
         
         for ffile in ff:
-            df = pd.read_csv('/home/mikhail/Downloads/GSK/NOCMP/NO_CMP_PAS/'+ffile, sep=None, index_col=0)
+            df = pd.read_csv('/home/mikhail/Downloads/GSK/DMSO/DMSO_PAS_v2/'+ffile, sep=None, index_col=0)
             df.index.name = 'Pathway'
-            df.to_csv('/home/mikhail/Downloads/GSK/NOCMP/NO_CMP_PAS/csv/'+ffile, sep=',')
+            df.to_csv('/home/mikhail/Downloads/GSK/DMSO/DMSO_PAS_v2/csv/'+ffile, sep=',')
             #raise Exception('cycle')
         
         raise Exception("GSK")
