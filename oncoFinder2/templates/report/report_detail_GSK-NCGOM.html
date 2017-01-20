@@ -399,6 +399,11 @@
 <hr/>
 
 <h2>Target Inference</h2>
+<center>
+<button type="button"  class="btn btn-success btn-lg center" id='btn_show_ti'>Show Data</button>
+</center>
+
+<div id='hide_ti' style='display:none;'> <!-- Div to hide and load on button click -->
 <hr/>
 <table class="table table-bordered table-striped table-hover" id="tbl_tarinfer">
 <thead><tr><th title="Field #1">Gene</th>
@@ -421,6 +426,7 @@
 </tr></thead>
 </table>
 
+</div> <!-- end of hide div -->
 <!-- ---------------------------------Drug Scoring--------------------------------------------- -->
  <hr/> 
 <h2 id='ds_analysis'>Drug Scoring</h2>
@@ -936,6 +942,11 @@ $("#btn_show_tf").click(function(){
 
 
 
+$("#btn_show_ti").click(function(){
+        	$(this).hide();
+        	$("#hide_ti").slideDown('slow');
+});
+        
 $("#tbl_tarinfer").DataTable( {
 	"paging":   true,
     "iDisplayLength": 20,
