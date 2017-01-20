@@ -1111,6 +1111,7 @@ class ReportAjaxPathwayVennTable(TemplateView):
                 else:                
                     df_1 = df_1[df_1['Database']!='metabolism']
                     df_2 = df_2[df_2['Database']!='metabolism']
+                
             elif path_gene =='genes':
                 
                 group1 = GeneGroup.objects.get(name=lMembers[0], report=report)
@@ -1161,6 +1162,7 @@ class ReportAjaxPathwayVennTable(TemplateView):
                 s_tumour1 = s_tumour1[s_tumour1>0]
                 s_tumour2 = s_tumour2[s_tumour2>0]
                 joined_df = pd.DataFrame(s_tumour1).join(pd.DataFrame(s_tumour2), how='inner')
+                
             elif regulation == 'down':  
                 s_tumour1 = s_tumour1[s_tumour1<0]
                 s_tumour2 = s_tumour2[s_tumour2<0]
@@ -2418,16 +2420,16 @@ class ReportTest(TemplateView):
         """
         import os
         ff = []
-        for subdir, dirs, files in os.walk('/home/mikhail/Downloads/GSK/1D/PAS/multicomp/'):
+        for subdir, dirs, files in os.walk('/home/mikhail/Downloads/GSK/NOCMP/NO_CMP_PAS/'):
             for f in files:
                 ff.append(f)
         
         ff.sort()
         
         for ffile in ff:
-            df = pd.read_csv('/home/mikhail/Downloads/GSK/1D/PAS/multicomp/'+ffile, sep=None, index_col=0)
+            df = pd.read_csv('/home/mikhail/Downloads/GSK/NOCMP/NO_CMP_PAS/'+ffile, sep=None, index_col=0)
             df.index.name = 'Pathway'
-            df.to_csv('/home/mikhail/Downloads/GSK/1D/PAS/multicomp/csv/'+ffile, sep=',')
+            df.to_csv('/home/mikhail/Downloads/GSK/NOCMP/NO_CMP_PAS/csv/'+ffile, sep=',')
             #raise Exception('cycle')
         
         raise Exception("GSK")
