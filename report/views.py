@@ -42,26 +42,34 @@ class ReportList(ListView):
 
 class ReportDetail(DetailView):
     model = Report
-    template_name = 'report/report_detail.html'
+    template_name = 'report/report_permition_denied.html'#'report/report_detail.html'
+    
+    def is_member(self, user, group_name):
+        return user.groups.filter(name=group_name).exists()
     
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         
-        if self.get_object().id==4 or self.get_object().id==8:
+        user = request.user
+        
+        if (self.get_object().id==4 or self.get_object().id==8) and (self.is_member(user, 'Astrazeneca') or user.is_staff):
             self.template_name = 'report/report_detail_az.html' 
-        if 'jjms' in self.get_object().slug:
+        if 'jjms' in self.get_object().slug and (self.is_member(user, 'J&J') or user.is_staff):
             self.template_name = 'report/report_detail_jjms.html'
-        if self.get_object().id==7 or self.get_object().id==13:
+        if ('above-and-beyond' in self.get_object().slug ) and (self.is_member(user, 'Above and Beyond') or user.is_staff):
             self.template_name = 'report/report_detail_abovebeyond.html'
-        if 'Hnkl' in self.get_object().slug:
+        if 'Hnkl' in self.get_object().slug and (self.is_member(user, 'Henkel') or user.is_staff):
             self.template_name = 'report/report_detail_henkel.html'
-        if 'GSK-NCGOM-2016N298312' in self.get_object().slug:
+        if 'GSK-NCGOM-2016N298312' in self.get_object().slug and (self.is_member(user, 'GSK') or user.is_staff):
             self.template_name = 'report/report_detail_GSK-NCGOM.html'
-        if 'gsk' in self.get_object().slug:            
+        if 'gsk' in self.get_object().slug and (self.is_member(user, 'GSK') or user.is_staff):            
             self.template_name = 'report/report_detail_abovebeyond.html'
-        if 'gsk_prj2_1d' in self.get_object().slug:            
+        if 'gsk_prj2_1d' in self.get_object().slug and (self.is_member(user, 'GSK') or user.is_staff):          
             self.template_name = 'report/gsk_prj2_1d.html'
         
+        
+        #user.is_staff
+        #raise Exception('stop')
         return super(ReportDetail, self).dispatch(request, *args, **kwargs)
     
     def get_context_data(self, **kwargs):
