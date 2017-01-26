@@ -544,23 +544,63 @@
    <ul class="nav nav-tabs" role="tablist">
      
        <li role="presentation" class="active">
-         <a href="#top5_in_tab" aria-controls="home1" role="tab" data-toggle="tab" >
-           Top 5 intensity-based models
+         <a href="#top5_fc_wh_tab" aria-controls="home1" role="tab" data-toggle="tab" >
+           Top 5 FC-based models(whole dataset)
          </a>
        </li>
        <li role="presentation" >
-         <a href="#generel_tab" aria-controls="home1" role="tab" data-toggle="tab" >
-           Gene relevance estimates for the top1 model
+         <a href="#probe_fc_wh_tab" aria-controls="home1" role="tab" data-toggle="tab" >
+           Probe importance for top FC(whole dataset)
          </a>
        </li>
        <li role="presentation" >
-         <a href="#top5_fc_tab" aria-controls="home1" role="tab" data-toggle="tab" >
-           Top 5 FC-based models
+         <a href="#top5_ec_wh_tab" aria-controls="home1" role="tab" data-toggle="tab" >
+           Top 5 FC-based EC model(whole dataset)
          </a>
        </li>
        <li role="presentation" >
-         <a href="#generel1_tab" aria-controls="home1" role="tab" data-toggle="tab" >
-           Gene relevance estimates for the top1 model
+         <a href="#probe_ec_wh_tab" aria-controls="home1" role="tab" data-toggle="tab" >
+           Probe importance for top EC(whole dataset)
+         </a>
+       </li>
+       <li role="presentation" >
+         <a href="#top5_sm_wh_tab" aria-controls="home1" role="tab" data-toggle="tab" >
+           Top 5 FC-based SM models(whole dataset)
+         </a>
+       </li>
+       <li role="presentation" >
+         <a href="#probe_sm_wh_tab" aria-controls="home1" role="tab" data-toggle="tab" >
+           Probe importance for top SM(whole dataset)
+         </a>
+       </li>
+       <li role="presentation" >
+         <a href="#top5_fc_ex_tab" aria-controls="home1" role="tab" data-toggle="tab" >
+           Top 5 FC-based models(extended dataset)
+         </a>
+       </li>
+       <li role="presentation" >
+         <a href="#probe_fc_ex_tab" aria-controls="home1" role="tab" data-toggle="tab" >
+           Probe importance for top FC(extended dataset)
+         </a>
+       </li>
+       <li role="presentation" >
+         <a href="#top5_ec_ex_tab" aria-controls="home1" role="tab" data-toggle="tab" >
+           Top 5 FC-based EC model(extended dataset)
+         </a>
+       </li>
+       <li role="presentation" >
+         <a href="#probe_ec_ex_tab" aria-controls="home1" role="tab" data-toggle="tab" >
+           Probe importance for top EC(extended dataset)
+         </a>
+       </li>
+       <li role="presentation" >
+         <a href="#top5_sm_ex_tab" aria-controls="home1" role="tab" data-toggle="tab" >
+           Top 5 FC-based SM model(extended dataset)
+         </a>
+       </li>
+       <li role="presentation" >
+         <a href="#probe_sm_ex_tab" aria-controls="home1" role="tab" data-toggle="tab" >
+           Probe importance for top SM(extended dataset)
          </a>
        </li>
      
@@ -569,11 +609,11 @@
    <div class="tab-content">
     
      
-     <div role="tabpanel" class="tab-pane fade in active" id="top5_in_tab">
+     <div role="tabpanel" class="tab-pane fade in active" id="top5_fc_wh_tab">
      
              
-       <h4>Table <span class='tbl_num'></span>Top 5 intensity-based models </h4>
-       <table id="tbl-top5_in" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+       <h4>Table <span class='tbl_num'></span>Top 5 FC-based models(whole dataset) </h4>
+       <table id="tbl-top5_fc_wh" class="path table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
           <tr>
            <th>#</th>
@@ -592,11 +632,11 @@
      
      </div> <!-- end of tabpanel div -->
      
-     <div role="tabpanel" class="tab-pane fade " id="generel_tab">
+     <div role="tabpanel" class="tab-pane fade " id="probe_fc_wh_tab">
      
              
-       <h4>Table <span class='tbl_num'></span>Gene relevance estimates for the top1 model </h4>
-       <table id="tbl-generel" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+       <h4>Table <span class='tbl_num'></span>Probe importance for top FC(whole dataset) </h4>
+       <table id="tbl-probe_fc_wh" class="path table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
           <tr>
            <th>probes</th>
@@ -610,11 +650,11 @@
      
      </div> <!-- end of tabpanel div -->
      
-     <div role="tabpanel" class="tab-pane fade " id="top5_fc_tab">
+     <div role="tabpanel" class="tab-pane fade " id="top5_ec_wh_tab">
      
              
-       <h4>Table <span class='tbl_num'></span>op 5 FC-based models </h4>
-       <table id="tbl-top5_fc" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+       <h4>Table <span class='tbl_num'></span>Top 5 FC-based EC model(whole dataset) </h4>
+       <table id="tbl-top5_ec_wh" class="path table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
           <tr>
            <th>#</th>
@@ -633,11 +673,11 @@
      
      </div> <!-- end of tabpanel div -->
      
-     <div role="tabpanel" class="tab-pane fade " id="generel1_tab">
+     <div role="tabpanel" class="tab-pane fade " id="probe_ec_wh_tab">
      
              
-       <h4>Table <span class='tbl_num'></span>Gene relevance estimates for the top1 model </h4>
-       <table id="tbl-generel1" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+       <h4>Table <span class='tbl_num'></span>Probe importance for top EC(whole dataset) </h4>
+       <table id="tbl-probe_ec_wh" class="path table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
           <tr>
            <th>probes</th>
@@ -650,8 +690,170 @@
      
      
      </div> <!-- end of tabpanel div -->
-    
-   
+
+<div role="tabpanel" class="tab-pane fade " id="top5_sm_wh_tab">
+     
+             
+       <h4>Table <span class='tbl_num'></span>Top 5 FC-based SM model(whole dataset) </h4>
+       <table id="tbl-top5_sm_wh" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>#</th>
+           <th>num_features</th>
+           <th>accuracy</th>
+           <th>f1</th>
+           <th>matthews_corrcoef</th>
+           <th>precision</th>
+           <th>recall</th>
+           <th>roc_auc</th>
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+     
+     
+     </div> <!-- end of tabpanel div -->
+     
+     <div role="tabpanel" class="tab-pane fade " id="probe_sm_wh_tab">
+     
+             
+       <h4>Table <span class='tbl_num'></span>Probe importance for top SM(whole dataset) </h4>
+       <table id="tbl-probe_sm_wh" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>probes</th>
+           <th>mean</th>
+           <th>genes</th>
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+     
+     
+     </div> <!-- end of tabpanel div -->    
+<!-- EXTENDED!!!! -->
+<div role="tabpanel" class="tab-pane fade " id="top5_fc_ex_tab">
+     
+             
+       <h4>Table <span class='tbl_num'></span>Top 5 FC-based models(extended dataset) </h4>
+       <table id="tbl-top5_fc_ex" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>#</th>
+           <th>num_features</th>
+           <th>accuracy</th>
+           <th>f1</th>
+           <th>matthews_corrcoef</th>
+           <th>precision</th>
+           <th>recall</th>
+           <th>roc_auc</th>
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+     
+     
+     </div> <!-- end of tabpanel div -->
+     
+     <div role="tabpanel" class="tab-pane fade " id="probe_fc_ex_tab">
+     
+             
+       <h4>Table <span class='tbl_num'></span>Probe importance for top FC(extended dataset) </h4>
+       <table id="tbl-probe_fc_ex" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>probes</th>
+           <th>mean</th>
+           <th>genes</th>
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+     
+     
+     </div> <!-- end of tabpanel div -->
+
+<div role="tabpanel" class="tab-pane fade " id="top5_ec_ex_tab">
+     
+             
+       <h4>Table <span class='tbl_num'></span>Top 5 FC-based EC model(extended dataset) </h4>
+       <table id="tbl-top5_ec_ex" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>#</th>
+           <th>num_features</th>
+           <th>accuracy</th>
+           <th>f1</th>
+           <th>matthews_corrcoef</th>
+           <th>precision</th>
+           <th>recall</th>
+           <th>roc_auc</th>
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+     
+     
+     </div> <!-- end of tabpanel div -->
+     
+     <div role="tabpanel" class="tab-pane fade " id="probe_ec_ex_tab">
+     
+             
+       <h4>Table <span class='tbl_num'></span>Probe importance for top EC(extended dataset) </h4>
+       <table id="tbl-probe_ec_ex" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>probes</th>
+           <th>mean</th>
+           <th>genes</th>
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+     
+     
+     </div> <!-- end of tabpanel div -->
+     
+<div role="tabpanel" class="tab-pane fade " id="top5_sm_ex_tab">
+     
+             
+       <h4>Table <span class='tbl_num'></span>Top 5 FC-based SM model(extended dataset) </h4>
+       <table id="tbl-top5_sm_ex" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>#</th>
+           <th>num_features</th>
+           <th>accuracy</th>
+           <th>f1</th>
+           <th>matthews_corrcoef</th>
+           <th>precision</th>
+           <th>recall</th>
+           <th>roc_auc</th>
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+     
+     
+     </div> <!-- end of tabpanel div -->
+     
+     <div role="tabpanel" class="tab-pane fade " id="probe_sm_ex_tab">
+     
+             
+       <h4>Table <span class='tbl_num'></span>Probe importance for top SM(extended dataset) </h4>
+       <table id="tbl-probe_sm_ex" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>probes</th>
+           <th>mean</th>
+           <th>genes</th>
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+     
+     
+     </div> <!-- end of tabpanel div -->   
    </div> <!--  end of tab-content div -->
    
    
@@ -1222,7 +1424,7 @@ $('#tbl-mhc').on( 'draw.dt', function () {
 
 /*************************** DEEEP **************/
  
-        var table_in = $("#tbl-top5_in").DataTable( {
+        var top5_fc_wh = $("#tbl-top5_fc_wh").DataTable( {
         	"paging":   true,
             "iDisplayLength": 20,
             "ordering": true,
@@ -1240,12 +1442,12 @@ $('#tbl-mhc').on( 'draw.dt', function () {
             	     'type': 'GET',
             	     'data':{
             	    	     reportID: {{report.id}},
-            	    	     file_name: 'top5_DL_expr.csv'
+            	    	     file_name: 'Extended/top5_FC_full_score_result.csv'
             	            },        	      
             
         },"deferRender": true });
 
-        var table_fc = $("#tbl-top5_fc").DataTable( {
+        var probe_fc_wh = $("#tbl-probe_fc_wh").DataTable( {
         	"paging":   true,
             "iDisplayLength": 20,
             "ordering": true,
@@ -1263,12 +1465,12 @@ $('#tbl-mhc').on( 'draw.dt', function () {
             	     'type': 'GET',
             	     'data':{
             	    	     reportID: {{report.id}},
-            	    	     file_name: 'top5_DL_FC.csv'
+            	    	     file_name: 'Extended/Top_model_FC_final.csv'
             	            },        	      
             
         },"deferRender": true }); 
         
-        var table_gr = $("#tbl-generel").DataTable( {
+        var top5_ec_wh = $("#tbl-top5_ec_wh").DataTable( {
         	"paging":   true,
             "iDisplayLength": 20,
             "ordering": true,
@@ -1286,12 +1488,12 @@ $('#tbl-mhc').on( 'draw.dt', function () {
             	     'type': 'GET',
             	     'data':{
             	    	     reportID: {{report.id}},
-            	    	     file_name: 'Top_model_expr.csv'
+            	    	     file_name: 'Extended/top5_FC_EC_full_score_result.csv'
             	            },        	      
             
         },"deferRender": true });
         
-        var table_gr1 = $("#tbl-generel1").DataTable( {
+        var probe_ec_wh = $("#tbl-probe_ec_wh").DataTable( {
         	"paging":   true,
             "iDisplayLength": 20,
             "ordering": true,
@@ -1309,10 +1511,197 @@ $('#tbl-mhc').on( 'draw.dt', function () {
             	     'type': 'GET',
             	     'data':{
             	    	     reportID: {{report.id}},
-            	    	     file_name: 'Top_model_FC.csv'
+            	    	     file_name: 'Extended/Top_model_FC_EC.csv'
             	            },        	      
             
         },"deferRender": true });
+        
+        var top5_sm_wh = $("#tbl-top5_sm_wh").DataTable( {
+        	"paging":   true,
+            "iDisplayLength": 20,
+            "ordering": true,
+            "order": [[ 1, "desc" ]],
+            "info":     false,
+            "dom": 'Bfrtip',
+            "scrollX": true,
+            "buttons": [
+                       {extend: 'csv', title: 'tbl-mms'},
+                       {extend: 'print', title: 'tbl-mms'}
+                       
+                  ],
+            
+            "ajax": {'url':'/report-portal/report-deepgsktablejson/',
+            	     'type': 'GET',
+            	     'data':{
+            	    	     reportID: {{report.id}},
+            	    	     file_name: 'Extended/top5_FC_SM_full_score_result.csv'
+            	            },        	      
+            
+        },"deferRender": true });
+        
+        var probe_sm_wh = $("#tbl-probe_sm_wh").DataTable( {
+        	"paging":   true,
+            "iDisplayLength": 20,
+            "ordering": true,
+            "order": [[ 1, "desc" ]],
+            "info":     false,
+            "dom": 'Bfrtip',
+            "scrollX": true,
+            "buttons": [
+                       {extend: 'csv', title: 'tbl-mms'},
+                       {extend: 'print', title: 'tbl-mms'}
+                       
+                  ],
+            
+            "ajax": {'url':'/report-portal/report-deepgsktablejson/',
+            	     'type': 'GET',
+            	     'data':{
+            	    	     reportID: {{report.id}},
+            	    	     file_name: 'Extended/Top_model_FC_SM.csv'
+            	            },        	      
+            
+        },"deferRender": true });
+        
+        /************************ EXTENDED ***************/
+        
+var top5_fc_ex = $("#tbl-top5_fc_ex").DataTable( {
+        	"paging":   true,
+            "iDisplayLength": 20,
+            "ordering": true,
+            "order": [[ 1, "desc" ]],
+            "info":     false,
+            "dom": 'Bfrtip',
+            "scrollX": true,
+            "buttons": [
+                       {extend: 'csv', title: 'tbl-mms'},
+                       {extend: 'print', title: 'tbl-mms'}
+                       
+                  ],
+            
+            "ajax": {'url':'/report-portal/report-deepgsktablejson/',
+            	     'type': 'GET',
+            	     'data':{
+            	    	     reportID: {{report.id}},
+            	    	     file_name: 'Extended/top5_FC_ext_full_score_result.csv'
+            	            },        	      
+            
+        },"deferRender": true });
+
+        var probe_fc_ex = $("#tbl-probe_fc_ex").DataTable( {
+        	"paging":   true,
+            "iDisplayLength": 20,
+            "ordering": true,
+            "order": [[ 1, "desc" ]],
+            "info":     false,
+            "dom": 'Bfrtip',
+            "scrollX": true,
+            "buttons": [
+                       {extend: 'csv', title: 'tbl-mms'},
+                       {extend: 'print', title: 'tbl-mms'}
+                       
+                  ],
+            
+            "ajax": {'url':'/report-portal/report-deepgsktablejson/',
+            	     'type': 'GET',
+            	     'data':{
+            	    	     reportID: {{report.id}},
+            	    	     file_name: 'Extended/Top_model_FC_ext.csv'
+            	            },        	      
+            
+        },"deferRender": true }); 
+        
+        var top5_ec_ex = $("#tbl-top5_ec_ex").DataTable( {
+        	"paging":   true,
+            "iDisplayLength": 20,
+            "ordering": true,
+            "order": [[ 1, "desc" ]],
+            "info":     false,
+            "dom": 'Bfrtip',
+            "scrollX": true,
+            "buttons": [
+                       {extend: 'csv', title: 'tbl-mms'},
+                       {extend: 'print', title: 'tbl-mms'}
+                       
+                  ],
+            
+            "ajax": {'url':'/report-portal/report-deepgsktablejson/',
+            	     'type': 'GET',
+            	     'data':{
+            	    	     reportID: {{report.id}},
+            	    	     file_name: 'Extended/top5_FC_ext_EC_full_score_result.csv'
+            	            },        	      
+            
+        },"deferRender": true });
+        
+        var probe_ec_ex = $("#tbl-probe_ec_ex").DataTable( {
+        	"paging":   true,
+            "iDisplayLength": 20,
+            "ordering": true,
+            "order": [[ 1, "desc" ]],
+            "info":     false,
+            "dom": 'Bfrtip',
+            "scrollX": true,
+            "buttons": [
+                       {extend: 'csv', title: 'tbl-mms'},
+                       {extend: 'print', title: 'tbl-mms'}
+                       
+                  ],
+            
+            "ajax": {'url':'/report-portal/report-deepgsktablejson/',
+            	     'type': 'GET',
+            	     'data':{
+            	    	     reportID: {{report.id}},
+            	    	     file_name: 'Extended/Top_model_FC_ext_EC.csv'
+            	            },        	      
+            
+        },"deferRender": true });
+        
+        var top5_sm_ex = $("#tbl-top5_sm_ex").DataTable( {
+        	"paging":   true,
+            "iDisplayLength": 20,
+            "ordering": true,
+            "order": [[ 1, "desc" ]],
+            "info":     false,
+            "dom": 'Bfrtip',
+            "scrollX": true,
+            "buttons": [
+                       {extend: 'csv', title: 'tbl-mms'},
+                       {extend: 'print', title: 'tbl-mms'}
+                       
+                  ],
+            
+            "ajax": {'url':'/report-portal/report-deepgsktablejson/',
+            	     'type': 'GET',
+            	     'data':{
+            	    	     reportID: {{report.id}},
+            	    	     file_name: 'Extended/top5_FC_ext_SM_full_score_result.csv'
+            	            },        	      
+            
+        },"deferRender": true });
+        
+        var probe_sm_ex = $("#tbl-probe_sm_ex").DataTable( {
+        	"paging":   true,
+            "iDisplayLength": 20,
+            "ordering": true,
+            "order": [[ 1, "desc" ]],
+            "info":     false,
+            "dom": 'Bfrtip',
+            "scrollX": true,
+            "buttons": [
+                       {extend: 'csv', title: 'tbl-mms'},
+                       {extend: 'print', title: 'tbl-mms'}
+                       
+                  ],
+            
+            "ajax": {'url':'/report-portal/report-deepgsktablejson/',
+            	     'type': 'GET',
+            	     'data':{
+            	    	     reportID: {{report.id}},
+            	    	     file_name: 'Extended/Top_model_FC_ext_SM.csv'
+            	            },        	      
+            
+        },"deferRender": true });
+        
  /* METABOLIC PATHs
   drawPathwayTable({{report.id}},
 		  'tbl-meta_all', 
