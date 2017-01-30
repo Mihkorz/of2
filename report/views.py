@@ -2403,8 +2403,75 @@ class ReportTest(TemplateView):
     
     def get(self, request, *args, **kwargs):
         
+        lfiles = ['Comparison97',
+        'Comparison91',
+        'Comparison75',
+        'Comparison74',
+        'Comparison66',
+        'Comparison6',
+        'Comparison51',
+        'Comparison42',
+        'Comparison240',
+        'Comparison234',
+        'Comparison233',
+        'Comparison228',
+        'Comparison225',
+        'Comparison224',
+        'Comparison219',
+        'Comparison21',
+        'Comparison206',
+        'Comparison203',
+        'Comparison20',
+        'Comparison191',
+        'Comparison188',
+        'Comparison179',
+        'Comparison173',
+        'Comparison160',
+        'Comparison159',
+        'Comparison151',
+        'Comparison136',
+        'Comparison127',
+        'Comparison12',
+        'Comparison106',
+        'Comparison105'
+]
         
-        #raise Exception('stop')
+        
+        df_c = pd.read_csv("/home/mikhail/Downloads/GSK/4D/gsk_divi_comparisons_nocecdopa_sterilesodium_final.txt",
+                           sep='\t', index_col=0)
+        
+        lout = []
+        for comp in lfiles:
+                       
+            
+            
+            df_f = df_c[df_c['comparison'].str.contains(comp)]
+            
+            df_f = df_f[df_f['MESENTERY_3']>0]
+            
+            df_f = df_f[df_f['DURATION']>1]
+            
+            df_f = df_f[df_f['TISSUE_SHORT']!='CEC']
+            
+            for index, row in df_f.iterrows():
+                
+                dout = {
+                        'comparison': row['comparison'],
+                        'TISSUE_SHORT': row['TISSUE_SHORT'],
+                        'PROTOCOL_DR_GROUP_TYPE': row['PROTOCOL_DR_GROUP_TYPE'],
+                        'EXPERIMENT_ID': row['EXPERIMENT_ID'],
+                        'DURATION': row['DURATION'],
+                        'COMPOUND_NAME': row['COMPOUND_NAME'] 
+                        }
+                lout.append(dout)
+                
+            
+            #raise Exception('cycle')
+        
+        out = pd.DataFrame(lout)
+        out.sort(['COMPOUND_NAME', 'TISSUE_SHORT'], inplace=True)
+        out.to_csv('/home/mikhail/Downloads/GSK/4D/prosecced.csv')
+        raise Exception('stop')
         """
         lpert = ['Doxorubicin-high',
                  'GSK882380-high',
@@ -2428,16 +2495,16 @@ class ReportTest(TemplateView):
         """
         import os
         ff = []
-        for subdir, dirs, files in os.walk('/home/mikhail/Downloads/GSK/DMSO/DMSO_PAS_v2/'):
+        for subdir, dirs, files in os.walk('/home/mikhail/Downloads/GSK/4D/DE/'):
             for f in files:
                 ff.append(f)
         
         ff.sort()
         
         for ffile in ff:
-            df = pd.read_csv('/home/mikhail/Downloads/GSK/DMSO/DMSO_PAS_v2/'+ffile, sep=None, index_col=0)
-            df.index.name = 'Pathway'
-            df.to_csv('/home/mikhail/Downloads/GSK/DMSO/DMSO_PAS_v2/csv/'+ffile, sep=',')
+            df = pd.read_csv('/home/mikhail/Downloads/GSK/4D/DE/'+ffile, sep=None, index_col=0)
+            #df.index.name = 'Pathway'
+            df.to_csv('/home/mikhail/Downloads/GSK/4D/DE/csv/'+ffile, sep=',')
             #raise Exception('cycle')
         
         raise Exception("GSK")

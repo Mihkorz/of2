@@ -393,6 +393,7 @@ function drawPathwayTable(reportID, id, file_name1, file_name2, is_metabolic, or
 	if(!is_metabolic){
 	
 		if(file_name1!='all'){
+			
 	
 	    $('#'+id).on( 'draw.dt', function () {
 	    	
@@ -401,7 +402,7 @@ function drawPathwayTable(reportID, id, file_name1, file_name2, is_metabolic, or
 	    		var path_long_name = $(this).text();
 	    		if(path_long_name.length > 50){
 		    		var short_name = $.trim(path_long_name).substring(0, 50)
-	                .trim(this) + "...";
+	                .trim(this) + "111";
 		    		$(this).html("<span title='"+path_long_name+"'>"+short_name+"</span>");
 		    	}
 	    	});	    	
@@ -436,7 +437,12 @@ function drawPathwayTable(reportID, id, file_name1, file_name2, is_metabolic, or
 		    		
 		    		
 		    		
-		    		if ($(this).text().indexOf("...") >= 0) $(this).text($(this).attr('long_name'));
+		    		if ($(this).text().indexOf("...") >= 0) {
+		    			//alert($(this).find('span').attr('long_name'));
+		    			path_long_name = $(this).find('span').attr('long_name');
+		    			$(this).text(path_long_name);
+		    			
+		    		}
 		    		
 		    		if($(this).text().length > 50){
 			    		var short_name = $.trim(path_long_name).substring(0, 50)
