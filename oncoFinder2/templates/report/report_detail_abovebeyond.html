@@ -427,11 +427,12 @@
      {%else%}
      <div role="tabpanel" class="tab-pane fade " id="{{group.get_slug}}_ds_tab">
      {%endif%}
-             
+      
+        
        <h4>Table <span class='tbl_num'></span>Individual perturbation scoring for {{group.name}} </h4>
        <table id="tbl-ds-{{group.get_slug}}" class="path table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
-          <tr>
+          <tr style="min-width: 900px; width: 100%;">
            <th>Perturbation</th>
            <th>Perturbation_id</th>
            <th>Time</th>

@@ -1078,8 +1078,22 @@ class Test(TemplateView):
     def get_context_data(self, **kwargs):
         
         from sklearn import preprocessing
+        from pandas import concat
+        ppp = Pathway.objects.filter(organism='human', database='aging')
+        lp = []
+        df = DataFrame()
+        for p in ppp:
+            lg = []
+            for g in p.gene_set.all():
+                lg.append(g.name)
+                
+            df1 = DataFrame()
+            df1[p.name] = lg
+            
+            df = concat([df,df1],  axis=1)
         
-        
+        df.to_csv('/home/mikhail/Downloads/aging_path_genes.csv', encoding='utf-8')
+        raise Exception('Aging')
         df = read_csv("/home/mikhail/Downloads/median_values_32_biomarkers_russia_age_sex_gr.csv", sep=None)
         df.index.name = 'Age'
         df.to_csv("/home/mikhail/Downloads/median_values_32_biomarkers_russia_age_sex_nnnnn.csv")

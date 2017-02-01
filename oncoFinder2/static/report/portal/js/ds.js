@@ -32,6 +32,8 @@ function drawDSTable(reportID, id, file_name, ds_group_name){
 	table.buttons().container()
     .appendTo( $('.col-sm-6:eq(0)', table.table().container() ) );
 	
+	
+	
 	/*
 	$('#'+id).on( 'draw.dt', function () {
     	$("table#"+id+".path tr td:first-child").wrapInner('<a href="#/"></a>')
@@ -44,7 +46,11 @@ function drawDSTable(reportID, id, file_name, ds_group_name){
     	drawTFGraph(reportID, tf_name, tf_group_name);    	
     	
     });*/
+	
+	//table.columns.adjust().draw();
 }
+
+
 
 function drawDSBarplot(reportID, renderTo, file_name, ds_group_name, pert_type){
 	// BOXPLOT

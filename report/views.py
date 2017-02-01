@@ -64,7 +64,7 @@ class ReportDetail(DetailView):
             self.template_name = 'report/report_detail_GSK-NCGOM.html'
         if 'gsk' in self.get_object().slug and (self.is_member(user, 'GSK') or user.is_staff):            
             self.template_name = 'report/report_detail_abovebeyond.html'
-        if 'gsk_prj2_1d' in self.get_object().slug and (self.is_member(user, 'GSK') or user.is_staff):          
+        if 'gsk_prj2_' in self.get_object().slug and (self.is_member(user, 'GSK') or user.is_staff):          
             self.template_name = 'report/gsk_prj2_1d.html'
         
         
@@ -2403,6 +2403,24 @@ class ReportTest(TemplateView):
     
     def get(self, request, *args, **kwargs):
         
+        
+        import os
+        ff = []
+        for subdir, dirs, files in os.walk('/home/mikhail/Downloads/GSK/4D/MedLow/DE/'):
+            for f in files:
+                ff.append(f)
+        
+        ff.sort()
+        
+        for ffile in ff:
+            df = pd.read_csv('/home/mikhail/Downloads/GSK/4D/MedLow/DE/'+ffile, sep=None, index_col=0)
+            #df.index.name = 'Pathway'
+            df.to_csv('/home/mikhail/Downloads/GSK/4D/MedLow/DE/csv/'+ffile, sep=',')
+            #raise Exception('cycle')
+        
+        raise Exception("GSK")
+        
+        
         lfiles = ['Comparison97',
         'Comparison91',
         'Comparison75',
@@ -2444,8 +2462,9 @@ class ReportTest(TemplateView):
         for comp in lfiles:
                        
             
+            df_f = df_c[df_c['PROTOCOL_DR_GROUP_TYPE'].str.contains('High')]
             
-            df_f = df_c[df_c['comparison'].str.contains(comp)]
+            #df_f = df_c[df_c['comparison'].str.contains(comp)]
             
             df_f = df_f[df_f['MESENTERY_3']>0]
             
@@ -2465,12 +2484,17 @@ class ReportTest(TemplateView):
                         }
                 lout.append(dout)
                 
-            
+            df_f.sort(['COMPOUND_NAME', 'TISSUE_SHORT'], inplace=True)
+            df_f.to_csv('/home/mikhail/Downloads/GSK/4D/prosecced_high_1.csv')
             #raise Exception('cycle')
+        
+
+
+
         
         out = pd.DataFrame(lout)
         out.sort(['COMPOUND_NAME', 'TISSUE_SHORT'], inplace=True)
-        out.to_csv('/home/mikhail/Downloads/GSK/4D/prosecced.csv')
+        #out.to_csv('/home/mikhail/Downloads/GSK/4D/prosecced_low.csv')
         raise Exception('stop')
         """
         lpert = ['Doxorubicin-high',
@@ -2493,21 +2517,7 @@ class ReportTest(TemplateView):
         hhhh = len(group)
         raise Exception('perturb')
         """
-        import os
-        ff = []
-        for subdir, dirs, files in os.walk('/home/mikhail/Downloads/GSK/4D/DE/'):
-            for f in files:
-                ff.append(f)
         
-        ff.sort()
-        
-        for ffile in ff:
-            df = pd.read_csv('/home/mikhail/Downloads/GSK/4D/DE/'+ffile, sep=None, index_col=0)
-            #df.index.name = 'Pathway'
-            df.to_csv('/home/mikhail/Downloads/GSK/4D/DE/csv/'+ffile, sep=',')
-            #raise Exception('cycle')
-        
-        raise Exception("GSK")
         
         df = pd.read_csv("/home/mikhail/Downloads/AboveAndBeyond/s6s7/DE_Disease4_S6.tab", sep='\t')
         
