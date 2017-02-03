@@ -66,6 +66,12 @@ class ReportDetail(DetailView):
             self.template_name = 'report/report_detail_abovebeyond.html'
         if 'gsk_prj2_' in self.get_object().slug and (self.is_member(user, 'GSK') or user.is_staff):          
             self.template_name = 'report/gsk_prj2_1d.html'
+            if '4d_high' in self.get_object().slug:
+                self.template_name = 'report/gsk_prj2_4d_high.html'
+            if '4d_medium_low' in self.get_object().slug:
+                self.template_name = 'report/gsk_prj2_4d_medium_low.html'
+                
+                
         
         
         #user.is_staff
@@ -2425,6 +2431,27 @@ class ReportTest(TemplateView):
         
         
         import os
+        ff = []
+        for subdir, dirs, files in os.walk('/home/mikhail/Downloads/GSK/4D/High/PAS/not_null/'):
+            for f in files:
+                ff.append(f)
+        
+        ff.sort()
+        out = pd.DataFrame()
+        for ffile in ff:
+            df = pd.read_csv('/home/mikhail/Downloads/GSK/4D/High/PAS/not_null/'+ffile, sep=None, index_col=0)
+            
+            if 'SM' in ffile:
+                mean = df.mean(axis=1)
+                col = ffile.replace('.csv', '')
+                out[ffile] = mean
+            
+            #raise Exception('cycle')
+        
+        
+            
+        out.to_csv('/home/mikhail/Downloads/GSK/4D/High/PAS/not_null/SM_HIGH.csv')
+        raise Exception('sss')
         ff = []
         for subdir, dirs, files in os.walk('/home/mikhail/Downloads/GSK/4D/MedLow/DE/'):
             for f in files:

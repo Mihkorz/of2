@@ -399,21 +399,13 @@
 <!-- Signaling Pathways level comparison Nav tabs -->
 <ul class="nav nav-tabs" role="tablist">
          <li role="presentation" class="active">
-         <a href="#mms_tab" aria-controls="settings" role="tab" data-toggle="tab">MAN MEDIUM SM </a>
+         <a href="#mms_tab" aria-controls="settings" role="tab" data-toggle="tab">MAN HIGH EC </a>
          </li>
          
          <li role="presentation" >
          <a href="#mhs_tab" aria-controls="settings" role="tab" data-toggle="tab" id="path_">MAN HIGH SM</a>
          </li>
-         <li role="presentation" >
-         <a href="#mme_tab" aria-controls="settings" role="tab" data-toggle="tab" id="path_">MAN MEDIUM EC</a>
-         </li>
-         <li role="presentation" >
-         <a href="#mhe_tab" aria-controls="settings" role="tab" data-toggle="tab" id="path_">MAN HIGH EC</a>
-         </li>
-         <li role="presentation" >
-         <a href="#mhc_tab" aria-controls="settings" role="tab" data-toggle="tab" id="path_">MAN HIGH CEC</a>
-         </li>
+
          
 </ul>
 
@@ -421,12 +413,20 @@
   <div class="tab-content">
   
   <div role="tabpanel" class="tab-pane fade in active " id="mms_tab" style='overflow-x: auto;'>     <br/> 
-    <h4>Table . MAN MEDIUM SM</h4>
-    <table id="tbl-mms" class="path table table-striped table-bordered" cellspacing="0" width="100%" style='min-width:800px;'>
+    <h4>Table . MAN HIGH EC</h4>
+    <table id="tbl-mhe" class="path table table-striped table-bordered" cellspacing="0" width="100%" style='min-width:800px;'>
         <thead>
           <tr>
            <th id='pathname_th'>Pathway</th>
-           <th>Dopamine_1_SM_Medium</th>
+           <th>Diazoxide_4_EC_High</th>
+           <th>Dopamine_4_EC_High_Sterile</th>
+           <th>Dopamine_4_EC_High</th>
+           <th>Epinephrine_4_EC_High</th>
+           <th>Methoxamine_4_EC_High</th>
+           <th>Midodrine_4_EC_High</th>
+           <th>SKF-82526_4_EC_High</th>
+           <th>SKF-82526_4_EC_High_Sterile</th>
+           <th>Vasopressin_4_EC_High</th>
           </tr>
         </thead>  
       </table>       
@@ -440,9 +440,15 @@
         <thead>
           <tr>
            <th id='pathname_th'>Pathway</th>
-           <th>Dopamine_1_SM_High</th>
-           <th>SKF-82526_1_SM_High</th>
-           <th>SKF-82526_1_SM_High</th>
+           <th>Diazoxide_4_SM_High</th>
+           <th>Dopamine_4_SM_High_Sterile</th>
+           <th>Dopamine_4_SM_High</th>
+           <th>Epinephrine_4_SM_High</th>
+           <th>Methoxamine_4_SM_High</th>
+           <th>Midodrine_4_SM_High</th>
+           <th>SKF-82526_4_SM_High</th>
+           <th>SKF-82526_4_SM_High_Sterile</th>
+           <th>Vasopressin_4_SM_High</th>
           </tr>
         </thead>  
       </table>       
@@ -450,49 +456,7 @@
   
   </div>
   
-  <div role="tabpanel" class="tab-pane fade  " id="mme_tab" style='overflow-x: auto;'>     <br/> 
-    <h4>Table . MAN MEDIUM EC</h4>
-    <table id="tbl-mme" class="path table table-striped table-bordered" cellspacing="0" width="100%" style='min-width:800px;'>
-        <thead>
-          <tr>
-           <th id='pathname_th'>Pathway</th>
-           <th>Dopamine_1_EC_Medium</th>
-          </tr>
-        </thead>  
-      </table>       
-   <br/>
   
-  </div>
-  
-  <div role="tabpanel" class="tab-pane fade  " id="mhe_tab" style='overflow-x: auto;'>     <br/> 
-    <h4>Table . MAN HIGH EC</h4>
-    <table id="tbl-mhe" class="path table table-striped table-bordered" cellspacing="0" width="100%" style='min-width:800px;'>
-        <thead>
-          <tr>
-           <th id='pathname_th'>Pathway</th>
-           <th>Dopamine_1_EC_High</th>
-           <th>SKF-82526_1_EC_High</th>
-           <th>SKF-82526_1_EC_High_Sterile</th>
-          </tr>
-        </thead>  
-      </table>       
-   <br/>
-  
-  </div>
-  
-  <div role="tabpanel" class="tab-pane fade  " id="mhc_tab" style='overflow-x: auto;'>     <br/> 
-    <h4>Table . MAN HIGH CEC</h4>
-    <table id="tbl-mhc" class="path table table-striped table-bordered" cellspacing="0" width="100%" style='min-width:800px;'>
-        <thead>
-          <tr>
-           <th id='pathname_th'>Pathway</th>
-           <th>SKF-82526_1_CEC_High</th>
-          </tr>
-        </thead>  
-      </table>       
-   <br/>
-  
-  </div>
   
  
   
@@ -1225,28 +1189,7 @@ $("#btn_show_tf").click(function(){
 
 
 
-        var table_mms =     $("#tbl-mms").DataTable( {
-        	"paging":   true,
-            "iDisplayLength": 20,
-            "ordering": true,
-            "order": [[ 1, "desc" ]],
-            "info":     false,
-            "dom": 'Bfrtip',
-            "scrollX": true,
-            "buttons": [
-                       {extend: 'csv', title: 'tbl-mms'},
-                       {extend: 'print', title: 'tbl-mms'}
-                       
-                  ],
-            
-            "ajax": {'url':'/report-portal/report-mesenterytablejson/',
-            	     'type': 'GET',
-            	     'data':{
-            	    	     reportID: {{report.id}},
-            	    	     file_name: 'SM_MEDIUM.csv'
-            	            },        	      
-            
-        },"deferRender": true });
+        
         
         var table_mhs =$("#tbl-mhs").DataTable( {
         	"paging":   true,
@@ -1271,28 +1214,7 @@ $("#btn_show_tf").click(function(){
             
         },"deferRender": true });
         
-        var table_mme =$("#tbl-mme").DataTable( {
-        	"paging":   true,
-            "iDisplayLength": 20,
-            "ordering": true,
-            "order": [[ 1, "desc" ]],
-            "info":     false,
-            "dom": 'Bfrtip',
-            "scrollX": true,
-            "buttons": [
-                       {extend: 'csv', title: 'tbl-mms'},
-                       {extend: 'print', title: 'tbl-mms'}
-                       
-                  ],
-            
-            "ajax": {'url':'/report-portal/report-mesenterytablejson/',
-            	     'type': 'GET',
-            	     'data':{
-            	    	     reportID: {{report.id}},
-            	    	     file_name: 'EC_MEDIUM.csv'
-            	            },        	      
-            
-        },"deferRender": true });
+        
         
         var table_mhe = $("#tbl-mhe").DataTable( {
         	"paging":   true,
@@ -1317,45 +1239,10 @@ $("#btn_show_tf").click(function(){
             
         },"deferRender": true });
         
-        var table_mhc = $("#tbl-mhc").DataTable( {
-        	"paging":   true,
-            "iDisplayLength": 20,
-            "ordering": true,
-            "order": [[ 1, "desc" ]],
-            "info":     false,
-            "dom": 'Bfrtip',
-            "scrollX": true,
-            "buttons": [
-                       {extend: 'csv', title: 'tbl-mms'},
-                       {extend: 'print', title: 'tbl-mms'}
-                       
-                  ],
-            
-            "ajax": {'url':'/report-portal/report-mesenterytablejson/',
-            	     'type': 'GET',
-            	     'data':{
-            	    	     reportID: {{report.id}},
-            	    	     file_name: 'CEC_HIGH.csv'
-            	            },        	      
-            
-        },"deferRender": true });
+        
     
 
-$('#tbl-mms').on( 'draw.dt', function () {
-	    	
-	    	var path_name_td = $(table_mms).find(" tr td:first-child()");
-	    	path_name_td.each(function(){
-	    		var path_long_name = $(this).text();
-	    		if(path_long_name.length > 50){
-		    		var short_name = $.trim(path_long_name).substring(0, 50)
-	                .trim(this) + "...";
-		    		$(this).html("<span title='"+path_long_name+"'>"+short_name+"</span>");
-		    	}
-	    	});	    	
-	    	
-	    	$("table#tbl-mms.path tr td:nth-child(2)").wrapInner('<a href="#/"></a>');
-    	    $("table#tbl-mms.path tr td:nth-child(3)").wrapInner('<a href="#/"></a>')
-        } );
+
 $('#tbl-mhs').on( 'draw.dt', function () {
 	
 	var path_name_td = $(table_mhs).find(" tr td:first-child()");
@@ -1372,21 +1259,7 @@ $('#tbl-mhs').on( 'draw.dt', function () {
     $("table#tbl-mhs.path tr td:nth-child(3)").wrapInner('<a href="#/"></a>')
 } );
 
-$('#tbl-mme').on( 'draw.dt', function () {
-	
-	var path_name_td = $(table_mme).find(" tr td:first-child()");
-	path_name_td.each(function(){
-		var path_long_name = $(this).text();
-		if(path_long_name.length > 50){
-    		var short_name = $.trim(path_long_name).substring(0, 50)
-            .trim(this) + "...";
-    		$(this).html("<span title='"+path_long_name+"'>"+short_name+"</span>");
-    	}
-	});	    	
-	
-	$("table#tbl-mme.path tr td:nth-child(2)").wrapInner('<a href="#/"></a>');
-    $("table#tbl-mme.path tr td:nth-child(3)").wrapInner('<a href="#/"></a>')
-} );
+
 
 $('#tbl-mhe').on( 'draw.dt', function () {
 	
@@ -1404,21 +1277,7 @@ $('#tbl-mhe').on( 'draw.dt', function () {
     $("table#tbl-mhe.path tr td:nth-child(3)").wrapInner('<a href="#/"></a>')
 } );
 
-$('#tbl-mhc').on( 'draw.dt', function () {
-	
-	var path_name_td = $(table_mhc).find(" tr td:first-child()");
-	path_name_td.each(function(){
-		var path_long_name = $(this).text();
-		if(path_long_name.length > 50){
-    		var short_name = $.trim(path_long_name).substring(0, 50)
-            .trim(this) + "...";
-    		$(this).html("<span title='"+path_long_name+"'>"+short_name+"</span>");
-    	}
-	});	    	
-	
-	$("table#tbl-mhc.path tr td:nth-child(2)").wrapInner('<a href="#/"></a>');
-    $("table#tbl-mhc.path tr td:nth-child(3)").wrapInner('<a href="#/"></a>')
-} );
+
 
 
 
