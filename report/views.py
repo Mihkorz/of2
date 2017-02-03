@@ -439,7 +439,7 @@ class ReportGeneBoxplotJson(TemplateView):
                 groups = report.genegroup_set.all()
                 
                        
-        
+            
             for group in groups:
                 try:
                     df_group = pd.read_csv(group.document.path,
@@ -454,17 +454,28 @@ class ReportGeneBoxplotJson(TemplateView):
             i=0
             for df in df_list:
                 
-                r_tumour = df.filter(like='Tumour')
+                r_tumour = df.filter(like='Tumour')                
                 
-                
-                median = np.log2(np.median(r_tumour)) 
-                upper_quartile = np.log2(np.percentile(r_tumour, 75))
-                lower_quartile = np.log2(np.percentile(r_tumour, 25))
+                median = np.median(r_tumour)               
+                upper_quartile = np.percentile(r_tumour, 75)
+                lower_quartile = np.percentile(r_tumour, 25)
                 iqr = upper_quartile - lower_quartile
-                upper_whisker = np.log2(r_tumour[r_tumour<=upper_quartile+1.5*iqr].max())
-                lower_whisker = np.log2(r_tumour[r_tumour>=lower_quartile-1.5*iqr].min())
-        
+                upper_whisker = r_tumour[r_tumour<=upper_quartile+1.5*iqr].max()
+                lower_whisker = r_tumour[r_tumour>=lower_quartile-1.5*iqr].min()
                 
+                # Now we take log2 if needed
+                apply_log = True
+                if 'gsk_prj2_' in report.slug: # expression data already with log2 applied
+                    apply_log = False
+                    
+                if apply_log:
+                    median = np.log2(median)
+                    upper_quartile = np.log2(upper_quartile)
+                    lower_quartile = np.log2(lower_quartile)
+                    upper_whisker = np.log2(upper_whisker)
+                    lower_whisker = np.log2(lower_whisker)
+        
+                 
                 if np.isnan(lower_whisker) or np.isinf(lower_whisker):
                     lower_whisker = lower_quartile
                 if np.isnan(upper_whisker) or np.isinf(upper_whisker):
@@ -472,6 +483,7 @@ class ReportGeneBoxplotJson(TemplateView):
               
                 lSerie = [lower_whisker, lower_quartile, median, upper_quartile, upper_whisker]
                 
+            
                 #lSerie[lSerie == -np.inf] = 0
                 
                 
@@ -479,6 +491,7 @@ class ReportGeneBoxplotJson(TemplateView):
                  
                 series_tumour.append(lSerie)
                     
+             
             #Get Norms boxplot
             ldf_norm = []
             if report.id==8 and report.id==6:
@@ -507,13 +520,20 @@ class ReportGeneBoxplotJson(TemplateView):
                 
                 
                 r_norm = df_norm.filter(like='Norm')
-                
-                median = np.log2(np.median(r_norm)) 
-                upper_quartile = np.log2(np.percentile(r_norm, 75))
-                lower_quartile = np.log2(np.percentile(r_norm, 25))
+                                
+                median = np.median(r_norm)
+                upper_quartile = np.percentile(r_norm, 75)
+                lower_quartile = np.percentile(r_norm, 25)
                 iqr = upper_quartile - lower_quartile
-                upper_whisker = np.log2(r_norm[r_norm<=upper_quartile+1.5*iqr].max())
-                lower_whisker = np.log2(r_norm[r_norm>=lower_quartile-1.5*iqr].min())
+                upper_whisker = r_norm[r_norm<=upper_quartile+1.5*iqr].max()
+                lower_whisker = r_norm[r_norm>=lower_quartile-1.5*iqr].min()
+                
+                if apply_log:
+                    median = np.log2(median)
+                    upper_quartile = np.log2(upper_quartile)
+                    lower_quartile = np.log2(lower_quartile)
+                    upper_whisker = np.log2(upper_whisker)
+                    lower_whisker = np.log2(lower_whisker)
                 
                 if np.isnan(lower_whisker) or np.isinf(lower_whisker):
                     lower_whisker = lower_quartile
@@ -522,7 +542,7 @@ class ReportGeneBoxplotJson(TemplateView):
                 
                 lNorm = [lower_whisker, lower_quartile, median, upper_quartile, upper_whisker]
                 
-                
+                #raise Exception('stop')
                 if report.id!=6:
                     series_tumour.append(lNorm)
                 else:
