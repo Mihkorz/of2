@@ -1,0 +1,1628 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title> {{report.title_short}} | Insilico Medicine</title>
+    <link href="/static/bower_components/bootstrap-stylus/dist/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <script src="//code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script>
+    <script src="/static/js/oncofinder2.js" type="text/javascript"></script>
+    <script src="/static/bower_components/bootstrap-stylus/dist/bootstrap.min.js" type="text/javascript"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore.js" type="text/javascript"></script>
+    <script src="/static/js/d3.v3.min.js" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="http://code.highcharts.com/highcharts.js" type="text/javascript"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"  type="text/javascript"></script>
+    <script src="https://code.highcharts.com/highcharts-3d.js"  type="text/javascript"></script>
+    <script src="http://code.highcharts.com/modules/exporting.js"  type="text/javascript"></script>
+    <link href="/static/css/report_style.css" rel="stylesheet" type="text/css">
+    <link href="https://cdn.datatables.net/1.10.10/css/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="https://cdn.datatables.net/buttons/1.0.3/css/buttons.dataTables.min.css" rel="stylesheet">
+    
+    <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+    
+    <link href="/static/report/bt/js/opentip.css" rel="stylesheet" type="text/css">
+    <link href="/static/report/bt/js/volcano.css" rel="stylesheet" type="text/css">
+    
+  </head>
+  <body style='font-size: 14px;'>
+    <div class="content h100">
+      <div class="main">
+        <div class="inner">
+         <div>
+         <span class='pull-left' style='font-size:11pt; margin:15px;'>
+         <img src='/static/images/insilico.png' style="width:40px;"/>
+         Insilico Medicine - {{report.title_short}}</span>
+         <span class='pull-right' style='font-size:11pt; margin:15px;'>Access Level: Z-II, <br/>Confidential </span>
+         </div><br style="clear:both;"/>
+          <div class='text-center'>
+            <h1>{{report.title}}</h1>
+          </div>
+          
+          
+          <div style="margin: 50px 0 0 50px; padding: 0 50px 0 0;">
+            <h4 style='font-weight:bold; font-size:12pt;'>Organization: </h4>
+            <span style="font-size:13pt">{{report.organization}}</span>
+            <br/><br/>
+            <!-- <h4 style='font-weight:bold; font-size:12pt;'>Data Quality Assessment: </h4>-->
+ 
+            
+            
+            <ul class="list-unstyled" style='font-size: 11pt; margin: 50px 0 0 0;' >
+            <li class="title">Table of contents: </li>
+
+            
+            <!--<li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#input_data">Input data</a></li>
+              <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#dl_analysis">Deep Learning</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#kinetic_analysis">Kinetic pathway modeling</a></li>-->
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#gene_analysis">Gene level analysis</a></li>
+            <!--  <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tf_analysis">Transcription Factor Analysis</a></li>-->
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#path_analysis">Pathway Analysis</a></li>
+            <!-- <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#ds_analysis">Drug Scoring</a></li>
+             
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#sim_analysis">Similarity to known drug- and knockdown-induced expression signatures</a></li>
+            
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#cor_analysis">Public domain screening</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#pt_analysis">Scoring of potential targets</a></li>
+            
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#conclusions">Discussion</a></li>
+            -->
+          </ul>
+          
+          {%if report.input_data_text%}
+          <h2 id="input_data">Experimental design and RNA-seq data analysis</h2>
+          <hr/>
+          {{report.input_data_text|safe}}
+
+          {%endif%}
+          
+
+<!-------------------------------------  GENE level  -->          
+          <hr/>
+          <h2 id='gene_analysis'>Gene level analysis</h2>
+          <hr/>
+          {%if report.gene_text%}
+          {{report.gene_text|safe}}
+          <br/><br/>
+          {%endif%}
+
+
+<center>
+<button type="button"  class="btn btn-success btn-lg center" id='btn_show_genes'>Show Data</button>
+</center>
+
+<div id='hide_genes' style='display:none;'> <!-- Div to hide and load on button click -->
+          
+   <!-- GENE Nav tabs -->      
+   <ul class="nav nav-tabs" role="tablist">
+     {%for group in report.genegroup_set.all%}
+       <li role="presentation" {%if forloop.counter == 1 %}class="active"{%endif%}>
+         <a href="#{{group.get_slug}}_tab" aria-controls="home1" role="tab" data-toggle="tab" id='vol_boot_{{group.get_slug}}'>
+           {{group.name}} vs {{report.norm_name}}
+         </a>
+       </li>
+     {%endfor%}
+   </ul>
+         
+   <div class="tab-content">
+    {%for group in report.genegroup_set.all%}
+     {%if forloop.counter == 1 %}
+     <div role="tabpanel" class="tab-pane fade in active" id="{{group.get_slug}}_tab">
+     {%else%}
+     <div role="tabpanel" class="tab-pane fade " id="{{group.get_slug}}_tab">
+     {%endif%}
+       <div id="{{group.get_slug}}_volcano" 
+            style="min-width: 800px; height: 400px; max-width: 800px; margin: 5px auto">
+            <span>Loading plot...</span>
+       </div> <!-- Volcano plot div -->
+       
+       
+       <h4>Table <span class='tbl_num'></span>. {{group.name}} vs {{report.norm_name}}</h4>
+       <table id="tbl-{{group.get_slug}}" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>Gene</th>
+           <th>log2FoldChange</th>
+           <th>adj. p-value</th>
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+     
+     
+     </div> <!-- end of tabpanel div -->
+    {%endfor%}
+   
+   </div> <!--  end of tab-content div -->
+   
+<!-- -------------------- GENE VENN  -->
+<br/>
+<h3>Gene level comparison</h3>
+<br/>
+
+<!-- Gene level comparison Nav tabs -->
+<ul class="nav nav-tabs" role="tablist">
+         <li role="presentation" class="active"><a href="#gene_all_tab" aria-controls="settings" role="tab" data-toggle="tab">ALL</a></li>
+         {%for perm in report.get_gene_permutations%}
+         <!--  <li role="presentation" ><a href="#gene_{{perm.strip}}_tab" aria-controls="settings" role="tab" data-toggle="tab" id='venn_boot_gene_{{perm.strip}}'>{{perm}}</a></li>
+         -->
+         {%endfor%}
+</ul>
+
+<!-- GEne VEnn Tab panes -->
+  <div class="tab-content">
+  
+  <div role="tabpanel" class="tab-pane fade in active " id="gene_all_tab">     <br/> 
+    <h4>Table . All genes</h4>
+    <table id="tbl-gene_all" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>Gene</th>
+           {%for group in report.get_all_gene_groups_as_list%}
+            <!--  {% if forloop.counter > 1 %}<th>{{group}}</th> {%endif%}-->
+            <th>{{group}}</th>
+           {%endfor%}
+          </tr>
+        </thead>  
+      </table>       
+   <br/>
+  
+  </div>
+  
+  {%for perm in report.get_gene_permutations%}
+  <div role="tabpanel" class="tab-pane fade " id="gene_{{perm.strip}}_tab">     <br/> 
+    <table style='text-align:center;'>
+      <tr>
+       <td>
+       <div id="venn_gene-{{perm.strip}}-up" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Significantly upregulated genes
+       </td>
+       <td>
+       <div id="venn_gene-{{perm.strip}}-down" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Significantly downregulated genes
+       </td>
+      </tr>
+    </table>        
+   <br/>
+  <div id="venn_gene_dinamic_{{perm.strip}}" class="" style="max-width:1000px;"></div> <!--  div to place dinamic tables from Venn clicks -->
+  </div>
+  {%endfor%}
+  
+  </div>
+<hr/> 
+{%if report.notable_genes%}
+   <h3>Notable genes</h3>
+<hr/>
+
+
+ <!-- Notable GENE Nav tabs -->
+         <ul class="nav nav-tabs" role="tablist">
+           {%for gene in report.get_notable_genes_list%}
+           <li role="presentation" {%if forloop.counter == 1 %}class="active"{%endif%}><a href="#{{gene}}_tab" aria-controls="home1" role="tab" data-toggle="tab">{{gene}}</a></li>
+           {%endfor%}
+         </ul>
+
+   <div class="tab-content">
+    {%for gene in report.get_notable_genes_list%}
+     {%if forloop.counter == 1 %}
+     <div role="tabpanel" class="tab-pane fade in active" id="{{gene}}_tab">
+     {%else%}
+     <div role="tabpanel" class="tab-pane fade " id="{{gene}}_tab">
+     {%endif%}
+     <div id="{{gene}}" style="min-width: 800px; height: 400px; max-width: 800px; margin: 0 auto">Loading box plot...</div>
+   
+     </div>
+    {%endfor%}
+   
+   </div> <!--  end of tab panel -->
+{%endif%}
+
+</div> <!--  end of hide div -->
+
+
+<!-- ---------------------------------Transcription Factor--------------------------------------------- 
+
+ 
+ <hr/> 
+<h2 id='tf_analysis'>Transcription Factor Analysis</h2>
+<hr/>
+
+{%if report.path_text%}
+          {{report.tf_text|safe}}
+          <br/><br/>
+{%endif%}
+
+<center>
+<button type="button"  class="btn btn-success btn-lg center" id='btn_show_tf'>Show Data</button>
+</center>
+
+<div id='hide_tf' style='display:none;'> <!-- Div to hide and load on button click 
+
+   <!-- TF Nav tabs       
+   <ul class="nav nav-tabs" role="tablist">
+     {%for group in report.genegroup_set.all%}
+       <li role="presentation" {%if forloop.counter == 1 %}class="active"{%endif%}>
+         <a href="#{{group.get_slug}}_tf_tab" aria-controls="home1" role="tab" data-toggle="tab" id='tf_boot_{{group.get_slug}}'>
+           {{group.name}}
+         </a>
+       </li>
+     {%endfor%}
+   </ul>
+         
+   <div class="tab-content">
+    {%for group in report.genegroup_set.all%}
+     {%if forloop.counter == 1 %}
+     <div role="tabpanel" class="tab-pane fade in active" id="{{group.get_slug}}_tf_tab">
+     {%else%}
+     <div role="tabpanel" class="tab-pane fade " id="{{group.get_slug}}_tf_tab">
+     {%endif%}
+             
+       <h4>Table <span class='tbl_num'></span>Transcription Factor (FANTOM5 database) for {{group.name}} </h4>
+       <table id="tbl-tf-{{group.get_slug}}" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>Factor</th>
+           <th>underTF_DEG</th>
+           <th>underTF_nonDEG</th>
+           <th>notunderTF_DEG</th>
+           <th>notunderTF_nonDEG</th>
+           <th>p-value</th>
+           <th>OR</th>
+           <th>adj. p-value</th>
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+     
+     
+     </div> <!-- end of tabpanel div 
+    {%endfor%}
+   
+   </div> <!--  end of tab-content div 
+   
+   
+   <!-- TF Nav tabs       
+   <ul class="nav nav-tabs" role="tablist">
+     {%for group in report.genegroup_set.all%}
+       <li role="presentation" {%if forloop.counter == 1 %}class="active"{%endif%}>
+         <a href="#{{group.get_slug}}_tftrrust_tab" aria-controls="home1" role="tab" data-toggle="tab" id='tftrrust_boot_{{group.get_slug}}'>
+           {{group.name}}
+         </a>
+       </li>
+     {%endfor%}
+   </ul>
+         
+   <div class="tab-content">
+    {%for group in report.genegroup_set.all%}
+     {%if forloop.counter == 1 %}
+     <div role="tabpanel" class="tab-pane fade in active" id="{{group.get_slug}}_tftrrust_tab">
+     {%else%}
+     <div role="tabpanel" class="tab-pane fade " id="{{group.get_slug}}_tftrrust_tab">
+     {%endif%}
+             
+       <h4>Table <span class='tbl_num'></span>Transcription Factor Analysis (TRRUST database) for {{group.name}} </h4>
+       <table id="tbl-tftrrust-{{group.get_slug}}" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>Factor</th>
+           <th>underTF_DEG</th>
+           <th>underTF_nonDEG</th>
+           <th>notunderTF_DEG</th>
+           <th>notunderTF_nonDEG</th>
+           <th>p-value</th>
+           <th>OR</th>
+           <th>adj. p-value</th>
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+     
+     
+     </div> <!-- end of tabpanel div 
+    {%endfor%}
+   
+   </div> <!--  end of tab-content div 
+
+</div> <!--  end of hide div 
+<!-- End of TF -->
+
+<!-- ---------------------------------PATHWAY--------------------------------------------- -->
+ <hr/> 
+<h2 id='path_analysis'>Pathway Analysis</h2>
+<hr/>
+{%if report.path_text%}
+          {{report.path_text|safe}}
+          <br/><br/>
+          {%endif%}
+
+<center>
+<button type="button"  class="btn btn-success btn-lg center" id='btn_show_path'>Show Data</button>
+</center>
+
+<div id='hide_path' style='display:none;'> <!-- Div to hide and load on button click -->
+         
+<h3>Signaling Pathways</h3>
+<hr/> 
+
+<!-- Signaling Pathways level comparison Nav tabs -->
+<ul class="nav nav-tabs" role="tablist">
+         <li role="presentation" class="active"><a href="#path_all_tab" aria-controls="settings" role="tab" data-toggle="tab">ALL</a></li>
+         {%for perm in report.get_path_permutations%}
+         <!-- <li role="presentation" ><a href="#path_{{perm.strip}}_tab" aria-controls="settings" role="tab" data-toggle="tab" id="venn_boot_path_{{perm.strip}}">{{perm}}</a></li>
+         -->
+         {%endfor%}
+</ul>
+
+<!-- PAth VEnn Tab panes -->
+  <div class="tab-content">
+  
+  <div role="tabpanel" class="tab-pane fade in active " id="path_all_tab" style='overflow-x: auto;'>     <br/> 
+    <h4>Table . All signaling pathways</h4>
+    <table id="tbl-path_all" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th id='pathname_th'>Pathway</th>
+           {%for group in report.get_all_gene_groups_as_list%}
+            <!--  {% if forloop.counter > 1 %}<th>{{group}}</th> {%endif%}-->
+            <th>{{group}}</th>
+           {%endfor%}
+          </tr>
+        </thead>  
+      </table>       
+   <br/>
+  
+  </div>
+  
+  {%for perm in report.get_path_permutations%}
+  <div role="tabpanel" class="tab-pane fade " id="path_{{perm.strip}}_tab">     <br/> 
+    <table style='text-align:center;'>
+      <tr>
+       <td>
+       <div id="venn_path-{{perm.strip}}-up" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Upregulated pathways
+       </td>
+       <td>
+       <div id="venn_path-{{perm.strip}}-down" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Downregulated pathways
+       </td>
+      </tr>
+    </table>        
+   <br/>
+  <div id="venn_path_dinamic_{{perm.strip}}" class="" style="max-width:1000px;"></div> <!--  div to place dinamic tables from Venn clicks -->
+  </div>
+  {%endfor%}
+  
+  </div>
+  
+<h3>Samples with MESENTERY_3</h3>
+<hr/> 
+
+<!-- Signaling Pathways level comparison Nav tabs -->
+<ul class="nav nav-tabs" role="tablist">
+         <li role="presentation" class="active">
+         <a href="#mle_tab" aria-controls="settings" role="tab" data-toggle="tab">MAN LOW EC </a>
+         </li>
+         <li role="presentation" >
+         <a href="#mme_tab" aria-controls="settings" role="tab" data-toggle="tab">MAN MEDIUM EC </a>
+         </li>
+         <li role="presentation" >
+         <a href="#mms_tab" aria-controls="settings" role="tab" data-toggle="tab" id="path_">MAN MEDIUM SM</a>
+         </li>
+
+         
+</ul>
+
+<!-- PAth VEnn Tab panes -->
+  <div class="tab-content">
+  
+  <div role="tabpanel" class="tab-pane fade in active " id="mle_tab" style='overflow-x: auto;'>     <br/> 
+    <h4>Table . MAN LOW EC</h4>
+    <table id="tbl-mle" class="path table table-striped table-bordered" cellspacing="0" width="100%" style='min-width:800px;'>
+        <thead>
+          <tr>
+           <th id='pathname_th'>Pathway</th>
+           <th>Dopamine_4_EC_Low</th>           
+          </tr>
+        </thead>  
+      </table>       
+   <br/>
+  
+  </div>
+  
+    <div role="tabpanel" class="tab-pane fade in active " id="mme_tab" style='overflow-x: auto;'>     <br/> 
+    <h4>Table . MAN MEDIUM EC</h4>
+    <table id="tbl-mme" class="path table table-striped table-bordered" cellspacing="0" width="100%" style='min-width:800px;'>
+        <thead>
+          <tr>
+           <th id='pathname_th'>Pathway</th>
+           <th>Dopamine_4_EC_Medium</th>           
+           <th>Midodrine_4_EC_Medium</th>
+          </tr>
+        </thead>  
+      </table>       
+   <br/>
+  
+  </div>
+  
+  <div role="tabpanel" class="tab-pane fade  " id="mms_tab" style='overflow-x: auto;'>     <br/> 
+    <h4>Table . MAN HIGHT SM</h4>
+    <table id="tbl-mhs" class="path table table-striped table-bordered" cellspacing="0" width="100%" style='min-width:100%;'>
+        <thead>
+          <tr>
+           <th id='pathname_th'>Pathway</th>
+           <th>Dopamine_4_SM_Medium</th>
+           <th>Midodrine_4_SM_Medium</th>
+
+          </tr>
+        </thead>  
+      </table>       
+   <br/>
+  
+  </div>
+  
+  
+  
+ 
+  
+  </div>
+  <!--  
+  <center>
+  <img src='/media/report-portal/gsk_prj2_1d/Comb.png' width='800px'/>
+  <h4>Combined set features</h4>
+  <br/><br/>
+  
+  <img src='/media/report-portal/gsk_prj2_1d/SM.png' width='800px'/>
+  <h4>SM set features Day 1</h4>
+  <br/><br/>
+  
+  <img src='/media/report-portal/gsk_prj2_1d/EC.png' width='800px'/>
+  <h4>EC set features Day 1</h4>
+  <br/><br/>
+  
+  <img src='/media/report-portal/gsk_prj2_1d/CEC.png' width='800px'/>
+  <h4>CEC set features Day 1</h4>
+  <br/><br/>
+  
+  
+  </center>
+   -->       
+</div>  <!-- end of hide div -->
+<!------------- End of Pathway Analysis -->
+
+
+<!-- ---------------------------------Deep---------------------------------------------> 
+
+ 
+ <hr/> 
+<h2 id='tf_analysis'>Deep Learning</h2>
+<hr/>
+
+{%if report.path_text%}
+          {{report.tf_text|safe}}
+          <br/><br/>
+{%endif%}
+
+<center>
+<button type="button"  class="btn btn-success btn-lg center" id='btn_show_tf'>Show Data</button>
+</center>
+
+<div id='hide_tf' style='display:none;'> <!-- Div to hide and load on button click 
+
+   <!-- TF Nav tabs  -->     
+   <ul class="nav nav-tabs" role="tablist">
+     
+       <li role="presentation" class="active">
+         <a href="#top5_fc_wh_tab" aria-controls="home1" role="tab" data-toggle="tab" >
+           Top 5 FC-based models(whole dataset)
+         </a>
+       </li>
+       <li role="presentation" >
+         <a href="#probe_fc_wh_tab" aria-controls="home1" role="tab" data-toggle="tab" >
+           Probe importance for top FC(whole dataset)
+         </a>
+       </li>
+       <li role="presentation" >
+         <a href="#top5_ec_wh_tab" aria-controls="home1" role="tab" data-toggle="tab" >
+           Top 5 FC-based EC model(whole dataset)
+         </a>
+       </li>
+       <li role="presentation" >
+         <a href="#probe_ec_wh_tab" aria-controls="home1" role="tab" data-toggle="tab" >
+           Probe importance for top EC(whole dataset)
+         </a>
+       </li>
+       <li role="presentation" >
+         <a href="#top5_sm_wh_tab" aria-controls="home1" role="tab" data-toggle="tab" >
+           Top 5 FC-based SM models(whole dataset)
+         </a>
+       </li>
+       <li role="presentation" >
+         <a href="#probe_sm_wh_tab" aria-controls="home1" role="tab" data-toggle="tab" >
+           Probe importance for top SM(whole dataset)
+         </a>
+       </li>
+       <li role="presentation" >
+         <a href="#top5_fc_ex_tab" aria-controls="home1" role="tab" data-toggle="tab" >
+           Top 5 FC-based models(extended dataset)
+         </a>
+       </li>
+       <li role="presentation" >
+         <a href="#probe_fc_ex_tab" aria-controls="home1" role="tab" data-toggle="tab" >
+           Probe importance for top FC(extended dataset)
+         </a>
+       </li>
+       <li role="presentation" >
+         <a href="#top5_ec_ex_tab" aria-controls="home1" role="tab" data-toggle="tab" >
+           Top 5 FC-based EC model(extended dataset)
+         </a>
+       </li>
+       <li role="presentation" >
+         <a href="#probe_ec_ex_tab" aria-controls="home1" role="tab" data-toggle="tab" >
+           Probe importance for top EC(extended dataset)
+         </a>
+       </li>
+       <li role="presentation" >
+         <a href="#top5_sm_ex_tab" aria-controls="home1" role="tab" data-toggle="tab" >
+           Top 5 FC-based SM model(extended dataset)
+         </a>
+       </li>
+       <li role="presentation" >
+         <a href="#probe_sm_ex_tab" aria-controls="home1" role="tab" data-toggle="tab" >
+           Probe importance for top SM(extended dataset)
+         </a>
+       </li>
+     
+   </ul>
+         
+   <div class="tab-content">
+    
+     
+     <div role="tabpanel" class="tab-pane fade in active" id="top5_fc_wh_tab">
+     
+             
+       <h4>Table <span class='tbl_num'></span>Top 5 FC-based models(whole dataset) </h4>
+       <table id="tbl-top5_fc_wh" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>#</th>
+           <th>num_features</th>
+           <th>accuracy</th>
+           <th>f1</th>
+           <th>matthews_corrcoef</th>
+           <th>precision</th>
+           <th>recall</th>
+           <th>roc_auc</th>
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+     
+     
+     </div> <!-- end of tabpanel div -->
+     
+     <div role="tabpanel" class="tab-pane fade " id="probe_fc_wh_tab">
+     
+             
+       <h4>Table <span class='tbl_num'></span>Probe importance for top FC(whole dataset) </h4>
+       <table id="tbl-probe_fc_wh" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>probes</th>
+           <th>mean</th>
+           <th>genes</th>
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+     
+     
+     </div> <!-- end of tabpanel div -->
+     
+     <div role="tabpanel" class="tab-pane fade " id="top5_ec_wh_tab">
+     
+             
+       <h4>Table <span class='tbl_num'></span>Top 5 FC-based EC model(whole dataset) </h4>
+       <table id="tbl-top5_ec_wh" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>#</th>
+           <th>num_features</th>
+           <th>accuracy</th>
+           <th>f1</th>
+           <th>matthews_corrcoef</th>
+           <th>precision</th>
+           <th>recall</th>
+           <th>roc_auc</th>
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+     
+     
+     </div> <!-- end of tabpanel div -->
+     
+     <div role="tabpanel" class="tab-pane fade " id="probe_ec_wh_tab">
+     
+             
+       <h4>Table <span class='tbl_num'></span>Probe importance for top EC(whole dataset) </h4>
+       <table id="tbl-probe_ec_wh" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>probes</th>
+           <th>mean</th>
+           <th>genes</th>
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+     
+     
+     </div> <!-- end of tabpanel div -->
+
+<div role="tabpanel" class="tab-pane fade " id="top5_sm_wh_tab">
+     
+             
+       <h4>Table <span class='tbl_num'></span>Top 5 FC-based SM model(whole dataset) </h4>
+       <table id="tbl-top5_sm_wh" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>#</th>
+           <th>num_features</th>
+           <th>accuracy</th>
+           <th>f1</th>
+           <th>matthews_corrcoef</th>
+           <th>precision</th>
+           <th>recall</th>
+           <th>roc_auc</th>
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+     
+     
+     </div> <!-- end of tabpanel div -->
+     
+     <div role="tabpanel" class="tab-pane fade " id="probe_sm_wh_tab">
+     
+             
+       <h4>Table <span class='tbl_num'></span>Probe importance for top SM(whole dataset) </h4>
+       <table id="tbl-probe_sm_wh" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>probes</th>
+           <th>mean</th>
+           <th>genes</th>
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+     
+     
+     </div> <!-- end of tabpanel div -->    
+<!-- EXTENDED!!!! -->
+<div role="tabpanel" class="tab-pane fade " id="top5_fc_ex_tab">
+     
+             
+       <h4>Table <span class='tbl_num'></span>Top 5 FC-based models(extended dataset) </h4>
+       <table id="tbl-top5_fc_ex" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>#</th>
+           <th>num_features</th>
+           <th>accuracy</th>
+           <th>f1</th>
+           <th>matthews_corrcoef</th>
+           <th>precision</th>
+           <th>recall</th>
+           <th>roc_auc</th>
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+     
+     
+     </div> <!-- end of tabpanel div -->
+     
+     <div role="tabpanel" class="tab-pane fade " id="probe_fc_ex_tab">
+     
+             
+       <h4>Table <span class='tbl_num'></span>Probe importance for top FC(extended dataset) </h4>
+       <table id="tbl-probe_fc_ex" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>probes</th>
+           <th>mean</th>
+           <th>genes</th>
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+     
+     
+     </div> <!-- end of tabpanel div -->
+
+<div role="tabpanel" class="tab-pane fade " id="top5_ec_ex_tab">
+     
+             
+       <h4>Table <span class='tbl_num'></span>Top 5 FC-based EC model(extended dataset) </h4>
+       <table id="tbl-top5_ec_ex" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>#</th>
+           <th>num_features</th>
+           <th>accuracy</th>
+           <th>f1</th>
+           <th>matthews_corrcoef</th>
+           <th>precision</th>
+           <th>recall</th>
+           <th>roc_auc</th>
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+     
+     
+     </div> <!-- end of tabpanel div -->
+     
+     <div role="tabpanel" class="tab-pane fade " id="probe_ec_ex_tab">
+     
+             
+       <h4>Table <span class='tbl_num'></span>Probe importance for top EC(extended dataset) </h4>
+       <table id="tbl-probe_ec_ex" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>probes</th>
+           <th>mean</th>
+           <th>genes</th>
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+     
+     
+     </div> <!-- end of tabpanel div -->
+     
+<div role="tabpanel" class="tab-pane fade " id="top5_sm_ex_tab">
+     
+             
+       <h4>Table <span class='tbl_num'></span>Top 5 FC-based SM model(extended dataset) </h4>
+       <table id="tbl-top5_sm_ex" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>#</th>
+           <th>num_features</th>
+           <th>accuracy</th>
+           <th>f1</th>
+           <th>matthews_corrcoef</th>
+           <th>precision</th>
+           <th>recall</th>
+           <th>roc_auc</th>
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+     
+     
+     </div> <!-- end of tabpanel div -->
+     
+     <div role="tabpanel" class="tab-pane fade " id="probe_sm_ex_tab">
+     
+             
+       <h4>Table <span class='tbl_num'></span>Probe importance for top SM(extended dataset) </h4>
+       <table id="tbl-probe_sm_ex" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>probes</th>
+           <th>mean</th>
+           <th>genes</th>
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+     
+     
+     </div> <!-- end of tabpanel div -->   
+   </div> <!--  end of tab-content div -->
+   
+   
+   
+
+</div> <!--  end of hide div -->
+<!-- End of TF -->
+
+
+
+
+
+
+<hr/>
+  
+  {%if report.conclusion_text%}
+          <h2 id="conclusions" >Discussion</h2>
+          <hr/>
+          
+          {{report.conclusion_text|safe}}
+          
+          <hr/>
+  {%endif%}
+          
+  {%if report.references_text%}
+          <h2 id="references" >References</h2>
+          <hr/>
+          
+          {{report.references_text|safe}}
+          
+          <hr/>
+ {%endif%}
+
+</div>  
+
+
+<div style='min-height:500px'></div>
+            
+          </div>
+          
+          
+          
+        </div>
+      </div>
+      
+    </div>
+    <div class="bar" style="heigh:100%">
+      <div class="inner h100" style="heigh:100%">
+        <div class="top"><img src="/static/images/logo.svg"></div>
+        <div class="menu">
+          <ul class="list-unstyled" style='margin-top: 0;'>
+            <li class="title">Table of contents: </li>
+            <!-- 
+            {%if report.input_data_text%}
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#input_data">Input data</a></li>
+            {%endif%}
+            {%if report.methods_text%}
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#methods">Methods</a></li>
+            {%endif%}
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#gene_analysis">Gene level analysis</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#path_analysis">Pathway analysis</a></li>
+            {%if report.conclusion_text%}
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#conclusions">Conclusions</a></li>
+            {%endif%}
+            {%if report.references_text%}
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#references">References</a></li>
+            {%endif%}
+            
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#input_data">Input data</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#dl_analysis">Deep Learning</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#kinetic_analysis">Kinetic pathway modeling</a></li>
+            
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#sim_analysis">Similarity</a></li>
+            
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#cor_analysis">Public domain screening</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#pt_analysis">Scoring of potential targets</a></li>
+            
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#conclusions">Discussion</a></li>
+             -->
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#gene_analysis">Gene level analysis</a></li>
+            <!-- <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tf_analysis">Transcription Factor Analysis</a></li>
+            -->
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#path_analysis">Pathway Analysis</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#ds_analysis">Drug Scoring</a></li>
+          </ul>
+          <br/><br/>
+        </div>
+        <div class="bottom">
+          <div class="inner"> Insilico Medicine Inc., Johns Hopkins <br/>University Eastern, ETC B301, 1101 East <br/>33rd Street, Baltimore, MD 21218 </div>
+        </div>
+      </div>
+    </div>
+    
+      
+    <script src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/1.10.10/js/dataTables.bootstrap.min.js" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/buttons/1.1.0/js/dataTables.buttons.min.js" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/buttons/1.1.0/js/buttons.bootstrap.min.js" type="text/javascript"></script>
+    <script src="//cdn.datatables.net/buttons/1.1.0/js/buttons.flash.min.js" type="text/javascript"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js" type="text/javascript"></script>
+    <script src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js" type="text/javascript"></script>
+    <script src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js" type="text/javascript"></script>
+    <script src="//cdn.datatables.net/buttons/1.1.0/js/buttons.html5.min.js" type="text/javascript"></script>
+    <script src="//cdn.datatables.net/buttons/1.1.0/js/buttons.print.min.js" type="text/javascript"></script>
+    <script src="/static/report/portal/js/venn.js/venn.js" type="text/javascript"></script>
+    
+    
+    
+    <script src="/static/report/portal/js/opentip.js" charset="utf-8"></script>
+    <script src="/static/report/bt/js/adapter-native.js" charset="utf-8"></script>
+    <script src="/static/report/portal/js/volcano.js" type="text/javascript"></script>
+    <script src="/static/report/portal/js/scatter.js" type="text/javascript"></script>
+    <script src="/static/report/portal/js/tables.js" type="text/javascript"></script>
+    <script src="/static/report/portal/js/boxplot.js" type="text/javascript"></script>    
+    <script src="/static/report/portal/js/venn-diagram.js" type="text/javascript"></script>
+    <script src="/static/report/portal/js/tf.js" type="text/javascript"></script>
+    <script src="/static/report/portal/js/deeplearning.js" type="text/javascript"></script>
+    <script src="/static/report/portal/js/correlation.js" type="text/javascript"></script>
+    <script src="/static/report/portal/js/ds.js" type="text/javascript"></script>
+    
+    
+    
+    <!-- MODAL FOR PATHS  -->
+    <div id="pathmodal" class="modal fade large" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+ <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;  </button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body" id='modalBody'>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+    
+<script>
+
+$(function() {
+	
+	
+	$("#btn_show_genes").click(function(){
+		
+		$(this).hide();
+		$("#hide_genes").slideDown('slow');
+		 
+		{%for group in report.genegroup_set.all%}
+		  {%if forloop.counter = 1%}
+		
+		     drawVolcanoPlot('{{group.get_slug}}_volcano', {{report.id}}, '{{group.doc_logfc}}');
+	         drawGeneTable({{report.id}}, 'tbl-{{group.get_slug}}', '{{group.doc_logfc}}', categories='{{group.get_slug}}'); 
+	     
+	       {%endif%}
+	     {%endfor%}
+	     
+	     drawGeneTable({{report.id}}, 'tbl-gene_all', 'all', categories='{{report.get_all_gene_groups_norm_as_list}}');
+	 	 
+	     
+	   //GENES
+	 	{%for perm in report.get_gene_permutations%}
+	 	
+	 	$("#venn_boot_gene_{{perm.strip}}").click(function(){
+	 		drawVenn({{report.id}},
+	 				'venn_gene-{{perm.strip}}-up',
+	 				'{{perm.strip}}',	 
+	 				false, 'up', 'venn_gene_dinamic_{{perm.strip}}', 'genes', categories='{{report.get_all_gene_groups_norm_as_list}}');
+	 		drawVenn({{report.id}},
+	 				'venn_gene-{{perm.strip}}-down',
+	 				'{{perm.strip}}',			
+	 				false, 'down', 'venn_gene_dinamic_{{perm.strip}}', 'genes', categories='{{report.get_all_gene_groups_norm_as_list}}');
+	 		
+	 	});
+	 	
+	 	{%endfor%}
+		
+	});
+	
+	{%if report.gene_plot == 'vulcano'%}
+	  {%for group in report.genegroup_set.all%}
+	  
+	  {%if forloop.counter = 1%}
+	     
+	      
+	  {%else%}
+	  $('#vol_boot_{{group.get_slug}}').click(function(){
+			
+			if($("#{{group.get_slug}}_volcano span").html() == 'Loading plot...'){
+				drawVolcanoPlot('{{group.get_slug}}_volcano', {{report.id}}, '{{group.doc_logfc}}');
+			}
+			if ( !$.fn.dataTable.isDataTable( '#tbl-{{group.get_slug}}' ) ) {
+				 drawGeneTable({{report.id}}, 'tbl-{{group.get_slug}}', '{{group.doc_logfc}}', categories='{{group.get_slug}}'); 
+				}
+		   });
+	  
+	  {%endif%}
+	  
+	  
+	  {%endfor%}
+	{%endif%}
+	{%if  report.gene_plot == 'scatter'%}
+	{%for group in report.genegroup_set.all%}
+	  drawGeneScatter(name='{{group.name}} VS {{report.norm_name}}',
+			          renderTo='{{group.get_slug}}_volcano',
+			          xname='log2({{group.name}} Expression level)',
+			          yname='log2({{report.norm_name}} Expression level)',
+			          file_name='{{group.document}}',
+			          reportID={{report.id}});
+	  drawGeneTableScatter({{report.id}}, 'tbl-{{group.get_slug}}', '{{group.doc_logfc}}', categories='{{report.get_all_gene_groups_norm_as_list}}'); 
+	{%endfor%}
+	{%endif%}
+	
+	{%for gene in report.get_notable_genes_list%}
+	  //drawGeneBoxplot(reportID={{report.id}}, name='{{gene}}', renderTo='{{gene}}', gene='{{gene}}', categories='{{report.get_all_gene_groups_norm_as_list}}');
+	{%endfor%}
+	
+	
+	
+	
+	
+///////////// SIGNALING PATHs
+
+$("#btn_show_path").click(function(){
+	$(this).hide();
+	$("#hide_path").slideDown('slow');
+	
+	drawPathwayTable({{report.id}},
+			'tbl-path_all', 
+	         'all', 
+	         'all', false, '{{report.organism}}');
+	
+});
+	
+
+	
+	{%for perm in report.get_path_permutations%}
+	
+	$("#venn_boot_path_{{perm.strip}}").click(function(){
+	
+	drawVenn({{report.id}},
+		'venn_path-{{perm.strip}}-up',
+		'{{perm.strip}}',
+		false, 'up', 'venn_path_dinamic_{{perm.strip}}', 'pathways', '{{report.organism}}');
+	drawVenn({{report.id}},
+			'venn_path-{{perm.strip}}-down',
+			'{{perm.strip}}',
+			false, 'down', 'venn_path_dinamic_{{perm.strip}}', 'pathways', '{{report.organism}}');
+	});
+    {%endfor%}
+    
+/////////////////// Transcription Factor
+$("#btn_show_tf").click(function(){
+	$(this).hide();
+	$("#hide_tf").slideDown('slow');
+	
+	{%for group in report.tfgroup_set.all%}
+    
+      {%if forloop.counter = 1%}   
+        drawTFTable({{report.id}}, 'tbl-tf-{{group.get_slug}}', '{{group.document}}', categories='{{group.name}}'); 
+        drawTFTrrustTable({{report.id}}, 'tbl-tftrrust-{{group.get_slug}}', '{{group.trrust}}', categories='{{group.name}}'); 
+      {%endif%}
+    {%endfor%}
+	
+});
+
+    {%for group in report.tfgroup_set.all%}
+    
+        {%if forloop.counter = 1%}        
+          
+
+        {%else%}
+        
+        $('#tf_boot_{{group.get_slug}}').click(function(){
+        	
+        	if ( !$.fn.dataTable.isDataTable( '#tbl-tf-{{group.get_slug}}' ) ) {
+        		drawTFTable({{report.id}}, 'tbl-tf-{{group.get_slug}}', '{{group.document}}', categories='{{group.name}}'); 
+				}
+        	
+        	
+        });
+        
+        $('#tftrrust_boot_{{group.get_slug}}').click(function(){
+        	if ( !$.fn.dataTable.isDataTable( '#tbl-tftrrust-{{group.get_slug}}' ) ) {
+        		drawTFTrrustTable({{report.id}}, 'tbl-tftrrust-{{group.get_slug}}', '{{group.trrust}}', categories='{{group.name}}'); 
+				}
+        	
+        });
+        
+        
+        {%endif%}
+    
+    
+    {%endfor%}
+
+/////////////////// Drug Scoring
+    $("#btn_show_ds").click(function(){
+    	$(this).hide();
+    	$("#hide_ds").slideDown('slow');
+    	
+    	{%for group in report.drugscoregroup_set.all%}
+        
+          {%if forloop.counter = 1%}   
+            drawDSTable({{report.id}}, 'tbl-ds-{{group.get_slug}}', '{{group.document}}', categories='{{group.name}}'); 
+            drawDSBarplot({{report.id}}, '{{group.get_slug}}_dsbarmolecule_plot', 
+            		'{{group.document}}', 
+            		categories='{{group.name}}',
+            		pert_type='molecule');
+            drawDSBarplot({{report.id}}, '{{group.get_slug}}_dsbargene_plot', 
+            		'{{group.document}}', 
+            		categories='{{group.name}}',
+            		pert_type='gene');
+          {%endif%}
+        {%endfor%}
+    	
+    });
+
+        {%for group in report.drugscoregroup_set.all%}
+        
+            {%if forloop.counter = 1%}        
+              
+
+            {%else%}
+            
+            $('#ds_boot_{{group.get_slug}}').click(function(){
+            	
+            	if ( !$.fn.dataTable.isDataTable( '#tbl-ds-{{group.get_slug}}' ) ) {
+            		drawDSTable({{report.id}}, 'tbl-ds-{{group.get_slug}}', '{{group.document}}', categories='{{group.name}}'); 
+    				}
+            	
+            	
+            });
+            
+            $('#dsbarmolecule_boot_{{group.get_slug}}').click(function(){
+    			
+    			if($("#{{group.get_slug}}_dsbarmolecule_plot span").html() == 'Loading Bar Plot...'){
+    				drawDSBarplot({{report.id}}, '{{group.get_slug}}_dsbarmolecule_plot', 
+    	            		'{{group.document}}', 
+    	            		categories='{{group.name}}',
+    	            		pert_type='molecule');
+    			}
+    			});
+            
+           $('#dsbargene_boot_{{group.get_slug}}').click(function(){
+    			
+    			if($("#{{group.get_slug}}_dsbargene_plot span").html() == 'Loading Bar Plot...'){
+    				drawDSBarplot({{report.id}}, '{{group.get_slug}}_dsbargene_plot', 
+    	            		'{{group.document}}', 
+    	            		categories='{{group.name}}',
+    	            		pert_type='gene');
+    			}
+    			});
+            
+            //$('#tftrrust_boot_{{group.get_slug}}').click(function(){
+            //	if ( !$.fn.dataTable.isDataTable( '#tbl-tftrrust-{{group.get_slug}}' ) ) {
+            //		drawTFTrrustTable({{report.id}}, 'tbl-tftrrust-{{group.get_slug}}', '{{group.trrust}}', categories='{{group.name}}'); 
+    		//		}
+            //	
+            //});
+            
+            
+            {%endif%}
+        
+        
+        {%endfor%}
+
+
+
+
+        
+        
+        var table_mhs =$("#tbl-mle").DataTable( {
+        	"paging":   true,
+            "iDisplayLength": 20,
+            "ordering": true,
+            "order": [[ 1, "desc" ]],
+            "info":     false,
+            "dom": 'Bfrtip',
+            "scrollX": true,
+            "buttons": [
+                       {extend: 'csv', title: 'tbl-mms'},
+                       {extend: 'print', title: 'tbl-mms'}
+                       
+                  ],
+            
+            "ajax": {'url':'/report-portal/report-mesenterytablejson/',
+            	     'type': 'GET',
+            	     'data':{
+            	    	     reportID: {{report.id}},
+            	    	     file_name: 'EC_LOW.csv'
+            	            },        	      
+            
+        },"deferRender": true });
+        
+        
+        
+        var table_mhe = $("#tbl-mme").DataTable( {
+        	"paging":   true,
+            "iDisplayLength": 20,
+            "ordering": true,
+            "order": [[ 1, "desc" ]],
+            "info":     false,
+            "dom": 'Bfrtip',
+            "scrollX": true,
+            "buttons": [
+                       {extend: 'csv', title: 'tbl-mms'},
+                       {extend: 'print', title: 'tbl-mms'}
+                       
+                  ],
+            
+            "ajax": {'url':'/report-portal/report-mesenterytablejson/',
+            	     'type': 'GET',
+            	     'data':{
+            	    	     reportID: {{report.id}},
+            	    	     file_name: 'EC_MEDIUM.csv'
+            	            },        	      
+            
+        },"deferRender": true });
+        
+        var table_mms = $("#tbl-mms").DataTable( {
+        	"paging":   true,
+            "iDisplayLength": 20,
+            "ordering": true,
+            "order": [[ 1, "desc" ]],
+            "info":     false,
+            "dom": 'Bfrtip',
+            "scrollX": true,
+            "buttons": [
+                       {extend: 'csv', title: 'tbl-mms'},
+                       {extend: 'print', title: 'tbl-mms'}
+                       
+                  ],
+            
+            "ajax": {'url':'/report-portal/report-mesenterytablejson/',
+            	     'type': 'GET',
+            	     'data':{
+            	    	     reportID: {{report.id}},
+            	    	     file_name: 'SM_MEDIUM.csv'
+            	            },        	      
+            
+        },"deferRender": true });
+        
+        
+    
+
+
+$('#tbl-mhs').on( 'draw.dt', function () {
+	
+	var path_name_td = $(table_mhs).find(" tr td:first-child()");
+	path_name_td.each(function(){
+		var path_long_name = $(this).text();
+		if(path_long_name.length > 50){
+    		var short_name = $.trim(path_long_name).substring(0, 50)
+            .trim(this) + "...";
+    		$(this).html("<span title='"+path_long_name+"'>"+short_name+"</span>");
+    	}
+	});	    	
+	
+	$("table#tbl-mhs.path tr td:nth-child(2)").wrapInner('<a href="#/"></a>');
+    $("table#tbl-mhs.path tr td:nth-child(3)").wrapInner('<a href="#/"></a>')
+} );
+
+$('#tbl-mms').on( 'draw.dt', function () {
+	
+	var path_name_td = $(table_mhs).find(" tr td:first-child()");
+	path_name_td.each(function(){
+		var path_long_name = $(this).text();
+		if(path_long_name.length > 50){
+    		var short_name = $.trim(path_long_name).substring(0, 50)
+            .trim(this) + "...";
+    		$(this).html("<span title='"+path_long_name+"'>"+short_name+"</span>");
+    	}
+	});	    	
+	
+	$("table#tbl-mhs.path tr td:nth-child(2)").wrapInner('<a href="#/"></a>');
+    $("table#tbl-mhs.path tr td:nth-child(3)").wrapInner('<a href="#/"></a>')
+} );
+
+
+
+$('#tbl-mhe').on( 'draw.dt', function () {
+	
+	var path_name_td = $(table_mhe).find(" tr td:first-child()");
+	path_name_td.each(function(){
+		var path_long_name = $(this).text();
+		if(path_long_name.length > 50){
+    		var short_name = $.trim(path_long_name).substring(0, 50)
+            .trim(this) + "...";
+    		$(this).html("<span title='"+path_long_name+"'>"+short_name+"</span>");
+    	}
+	});	    	
+	
+	$("table#tbl-mhe.path tr td:nth-child(2)").wrapInner('<a href="#/"></a>');
+    $("table#tbl-mhe.path tr td:nth-child(3)").wrapInner('<a href="#/"></a>')
+} );
+
+
+
+
+
+/*************************** DEEEP **************/
+ 
+        var top5_fc_wh = $("#tbl-top5_fc_wh").DataTable( {
+        	"paging":   true,
+            "iDisplayLength": 20,
+            "ordering": true,
+            "order": [[ 1, "desc" ]],
+            "info":     false,
+            "dom": 'Bfrtip',
+            "scrollX": true,
+            "buttons": [
+                       {extend: 'csv', title: 'tbl-mms'},
+                       {extend: 'print', title: 'tbl-mms'}
+                       
+                  ],
+            
+            "ajax": {'url':'/report-portal/report-deepgsktablejson/',
+            	     'type': 'GET',
+            	     'data':{
+            	    	     reportID: {{report.id}},
+            	    	     file_name: 'Extended/top5_FC_full_score_result.csv'
+            	            },        	      
+            
+        },"deferRender": true });
+
+        var probe_fc_wh = $("#tbl-probe_fc_wh").DataTable( {
+        	"paging":   true,
+            "iDisplayLength": 20,
+            "ordering": true,
+            "order": [[ 1, "desc" ]],
+            "info":     false,
+            "dom": 'Bfrtip',
+            "scrollX": true,
+            "bAutoWidth": false,
+            "buttons": [
+                       {extend: 'csv', title: 'tbl-mms'},
+                       {extend: 'print', title: 'tbl-mms'}
+                       
+                  ],
+            
+            "ajax": {'url':'/report-portal/report-deepgsktablejson/',
+            	     'type': 'GET',
+            	     'data':{
+            	    	     reportID: {{report.id}},
+            	    	     file_name: 'Extended/Top_model_FC_final.csv'
+            	            },        	      
+            
+        },"deferRender": true }); 
+        
+        var top5_ec_wh = $("#tbl-top5_ec_wh").DataTable( {
+        	"paging":   true,
+            "iDisplayLength": 20,
+            "ordering": true,
+            "order": [[ 1, "desc" ]],
+            "info":     false,
+            "dom": 'Bfrtip',
+            "scrollX": true,
+            "buttons": [
+                       {extend: 'csv', title: 'tbl-mms'},
+                       {extend: 'print', title: 'tbl-mms'}
+                       
+                  ],
+            
+            "ajax": {'url':'/report-portal/report-deepgsktablejson/',
+            	     'type': 'GET',
+            	     'data':{
+            	    	     reportID: {{report.id}},
+            	    	     file_name: 'Extended/top5_FC_EC_full_score_result.csv'
+            	            },        	      
+            
+        },"deferRender": true });
+        
+        var probe_ec_wh = $("#tbl-probe_ec_wh").DataTable( {
+        	"paging":   true,
+            "iDisplayLength": 20,
+            "ordering": true,
+            "order": [[ 1, "desc" ]],
+            "info":     false,
+            "dom": 'Bfrtip',
+            "scrollX": true,
+            "buttons": [
+                       {extend: 'csv', title: 'tbl-mms'},
+                       {extend: 'print', title: 'tbl-mms'}
+                       
+                  ],
+            
+            "ajax": {'url':'/report-portal/report-deepgsktablejson/',
+            	     'type': 'GET',
+            	     'data':{
+            	    	     reportID: {{report.id}},
+            	    	     file_name: 'Extended/Top_model_FC_EC.csv'
+            	            },        	      
+            
+        },"deferRender": true });
+        
+        var top5_sm_wh = $("#tbl-top5_sm_wh").DataTable( {
+        	"paging":   true,
+            "iDisplayLength": 20,
+            "ordering": true,
+            "order": [[ 1, "desc" ]],
+            "info":     false,
+            "dom": 'Bfrtip',
+            "scrollX": true,
+            "buttons": [
+                       {extend: 'csv', title: 'tbl-mms'},
+                       {extend: 'print', title: 'tbl-mms'}
+                       
+                  ],
+            
+            "ajax": {'url':'/report-portal/report-deepgsktablejson/',
+            	     'type': 'GET',
+            	     'data':{
+            	    	     reportID: {{report.id}},
+            	    	     file_name: 'Extended/top5_FC_SM_full_score_result.csv'
+            	            },        	      
+            
+        },"deferRender": true });
+        
+        var probe_sm_wh = $("#tbl-probe_sm_wh").DataTable( {
+        	"paging":   true,
+            "iDisplayLength": 20,
+            "ordering": true,
+            "order": [[ 1, "desc" ]],
+            "info":     false,
+            "dom": 'Bfrtip',
+            "scrollX": true,
+            "buttons": [
+                       {extend: 'csv', title: 'tbl-mms'},
+                       {extend: 'print', title: 'tbl-mms'}
+                       
+                  ],
+            
+            "ajax": {'url':'/report-portal/report-deepgsktablejson/',
+            	     'type': 'GET',
+            	     'data':{
+            	    	     reportID: {{report.id}},
+            	    	     file_name: 'Extended/Top_model_FC_SM.csv'
+            	            },        	      
+            
+        },"deferRender": true });
+        
+        /************************ EXTENDED ***************/
+        
+var top5_fc_ex = $("#tbl-top5_fc_ex").DataTable( {
+        	"paging":   true,
+            "iDisplayLength": 20,
+            "ordering": true,
+            "order": [[ 1, "desc" ]],
+            "info":     false,
+            "dom": 'Bfrtip',
+            "scrollX": true,
+            "buttons": [
+                       {extend: 'csv', title: 'tbl-mms'},
+                       {extend: 'print', title: 'tbl-mms'}
+                       
+                  ],
+            
+            "ajax": {'url':'/report-portal/report-deepgsktablejson/',
+            	     'type': 'GET',
+            	     'data':{
+            	    	     reportID: {{report.id}},
+            	    	     file_name: 'Extended/top5_FC_ext_full_score_result.csv'
+            	            },        	      
+            
+        },"deferRender": true });
+
+        var probe_fc_ex = $("#tbl-probe_fc_ex").DataTable( {
+        	"paging":   true,
+            "iDisplayLength": 20,
+            "ordering": true,
+            "order": [[ 1, "desc" ]],
+            "info":     false,
+            "dom": 'Bfrtip',
+            "scrollX": true,
+            "buttons": [
+                       {extend: 'csv', title: 'tbl-mms'},
+                       {extend: 'print', title: 'tbl-mms'}
+                       
+                  ],
+            
+            "ajax": {'url':'/report-portal/report-deepgsktablejson/',
+            	     'type': 'GET',
+            	     'data':{
+            	    	     reportID: {{report.id}},
+            	    	     file_name: 'Extended/Top_model_FC_ext.csv'
+            	            },        	      
+            
+        },"deferRender": true }); 
+        
+        var top5_ec_ex = $("#tbl-top5_ec_ex").DataTable( {
+        	"paging":   true,
+            "iDisplayLength": 20,
+            "ordering": true,
+            "order": [[ 1, "desc" ]],
+            "info":     false,
+            "dom": 'Bfrtip',
+            "scrollX": true,
+            "buttons": [
+                       {extend: 'csv', title: 'tbl-mms'},
+                       {extend: 'print', title: 'tbl-mms'}
+                       
+                  ],
+            
+            "ajax": {'url':'/report-portal/report-deepgsktablejson/',
+            	     'type': 'GET',
+            	     'data':{
+            	    	     reportID: {{report.id}},
+            	    	     file_name: 'Extended/top5_FC_ext_EC_full_score_result.csv'
+            	            },        	      
+            
+        },"deferRender": true });
+        
+        var probe_ec_ex = $("#tbl-probe_ec_ex").DataTable( {
+        	"paging":   true,
+            "iDisplayLength": 20,
+            "ordering": true,
+            "order": [[ 1, "desc" ]],
+            "info":     false,
+            "dom": 'Bfrtip',
+            "scrollX": true,
+            "buttons": [
+                       {extend: 'csv', title: 'tbl-mms'},
+                       {extend: 'print', title: 'tbl-mms'}
+                       
+                  ],
+            
+            "ajax": {'url':'/report-portal/report-deepgsktablejson/',
+            	     'type': 'GET',
+            	     'data':{
+            	    	     reportID: {{report.id}},
+            	    	     file_name: 'Extended/Top_model_FC_ext_EC.csv'
+            	            },        	      
+            
+        },"deferRender": true });
+        
+        var top5_sm_ex = $("#tbl-top5_sm_ex").DataTable( {
+        	"paging":   true,
+            "iDisplayLength": 20,
+            "ordering": true,
+            "order": [[ 1, "desc" ]],
+            "info":     false,
+            "dom": 'Bfrtip',
+            "scrollX": true,
+            "buttons": [
+                       {extend: 'csv', title: 'tbl-mms'},
+                       {extend: 'print', title: 'tbl-mms'}
+                       
+                  ],
+            
+            "ajax": {'url':'/report-portal/report-deepgsktablejson/',
+            	     'type': 'GET',
+            	     'data':{
+            	    	     reportID: {{report.id}},
+            	    	     file_name: 'Extended/top5_FC_ext_SM_full_score_result.csv'
+            	            },        	      
+            
+        },"deferRender": true });
+        
+        var probe_sm_ex = $("#tbl-probe_sm_ex").DataTable( {
+        	"paging":   true,
+            "iDisplayLength": 20,
+            "ordering": true,
+            "order": [[ 1, "desc" ]],
+            "info":     false,
+            "dom": 'Bfrtip',
+            "scrollX": true,
+            "buttons": [
+                       {extend: 'csv', title: 'tbl-mms'},
+                       {extend: 'print', title: 'tbl-mms'}
+                       
+                  ],
+            
+            "ajax": {'url':'/report-portal/report-deepgsktablejson/',
+            	     'type': 'GET',
+            	     'data':{
+            	    	     reportID: {{report.id}},
+            	    	     file_name: 'Extended/Top_model_FC_ext_SM.csv'
+            	            },        	      
+            
+        },"deferRender": true });
+        
+ /* METABOLIC PATHs
+  drawPathwayTable({{report.id}},
+		  'tbl-meta_all', 
+	         'all', 
+	         'all', true, '{{report.organism}}');
+ 
+	{%for perm in report.get_path_permutations%}
+	drawVenn({{report.id}},
+		'venn_meta-{{perm.strip}}-up',
+		'{{perm.strip}}',
+		true, 'up', 'venn_meta_dinamic_{{perm.strip}}', 'pathways', '{{report.organism}}');
+	drawVenn({{report.id}},
+			'venn_meta-{{perm.strip}}-down',
+			'{{perm.strip}}',
+			true, 'down', 'venn_meta_dinamic_{{perm.strip}}', 'pathways', '{{report.organism}}');
+    {%endfor%}
+*/
+});
+
+</script>
+  </body>
+</html>

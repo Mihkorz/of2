@@ -2432,16 +2432,16 @@ class ReportTest(TemplateView):
         
         import os
         ff = []
-        for subdir, dirs, files in os.walk('/home/mikhail/Downloads/GSK/4D/High/PAS/not_null/'):
+        for subdir, dirs, files in os.walk('/home/mikhail/Downloads/GSK/4D/MedLow/PAS/not_null/'):
             for f in files:
                 ff.append(f)
         
         ff.sort()
         out = pd.DataFrame()
         for ffile in ff:
-            df = pd.read_csv('/home/mikhail/Downloads/GSK/4D/High/PAS/not_null/'+ffile, sep=None, index_col=0)
+            df = pd.read_csv('/home/mikhail/Downloads/GSK/4D/MedLow/PAS/not_null/'+ffile, sep=None, index_col=0)
             
-            if 'SM' in ffile:
+            if 'EC_L' in ffile:
                 mean = df.mean(axis=1)
                 col = ffile.replace('.csv', '')
                 out[ffile] = mean
@@ -2450,7 +2450,7 @@ class ReportTest(TemplateView):
         
         
             
-        out.to_csv('/home/mikhail/Downloads/GSK/4D/High/PAS/not_null/SM_HIGH.csv')
+        out.to_csv('/home/mikhail/Downloads/GSK/4D/MedLow/PAS/not_null/EC_LOW.csv')
         raise Exception('sss')
         ff = []
         for subdir, dirs, files in os.walk('/home/mikhail/Downloads/GSK/4D/MedLow/DE/'):
