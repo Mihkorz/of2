@@ -2430,39 +2430,24 @@ class ReportTest(TemplateView):
     def get(self, request, *args, **kwargs):
         
         
+        df_c = pd.read_csv("/home/mikhail/Downloads/GSK/4D/High/DE/Comparison74.tab",
+                           sep='\t', index_col=0)
+        
+        df_c.to_csv('/home/mikhail/Downloads/GSK/4D/High/DE/Comparison74.tab', sep=',')
+        raise Exception('fuck')
         import os
+        
         ff = []
-        for subdir, dirs, files in os.walk('/home/mikhail/Downloads/GSK/4D/MedLow/PAS/not_null/'):
-            for f in files:
-                ff.append(f)
-        
-        ff.sort()
-        out = pd.DataFrame()
-        for ffile in ff:
-            df = pd.read_csv('/home/mikhail/Downloads/GSK/4D/MedLow/PAS/not_null/'+ffile, sep=None, index_col=0)
-            
-            if 'EC_L' in ffile:
-                mean = df.mean(axis=1)
-                col = ffile.replace('.csv', '')
-                out[ffile] = mean
-            
-            #raise Exception('cycle')
-        
-        
-            
-        out.to_csv('/home/mikhail/Downloads/GSK/4D/MedLow/PAS/not_null/EC_LOW.csv')
-        raise Exception('sss')
-        ff = []
-        for subdir, dirs, files in os.walk('/home/mikhail/Downloads/GSK/4D/MedLow/DE/'):
+        for subdir, dirs, files in os.walk('/home/mikhail/Downloads/GSK/4D/High/PAS/'):
             for f in files:
                 ff.append(f)
         
         ff.sort()
         
         for ffile in ff:
-            df = pd.read_csv('/home/mikhail/Downloads/GSK/4D/MedLow/DE/'+ffile, sep=None, index_col=0)
-            #df.index.name = 'Pathway'
-            df.to_csv('/home/mikhail/Downloads/GSK/4D/MedLow/DE/csv/'+ffile, sep=',')
+            df = pd.read_csv('/home/mikhail/Downloads/GSK/4D/High/PAS/'+ffile, sep=None, index_col=0)
+            df.index.name = 'Pathway'
+            df.to_csv('/home/mikhail/Downloads/GSK/4D/High/PAS/csv/'+ffile, sep=',')
             #raise Exception('cycle')
         
         raise Exception("GSK")
