@@ -607,13 +607,12 @@
    <div class="tab-content">
     
      
-     <div role="tabpanel" class="tab-pane fade in active" id="top5_fc_wh_tab">
-     
-             
-       <h4>Table <span class='tbl_num'></span>Top 5 FC-based models(whole dataset) </h4>
+     <div role="tabpanel" class="tab-pane fade in active" id="top5_fc_wh_tab" style='overflow-x: auto;'>
+        
+       <h4>Table 111<span class='tbl_num'></span>Top 5 FC-based models(whole dataset) </h4>
        <table id="tbl-top5_fc_wh" class="path table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
-          <tr>
+          <tr >
            <th>#</th>
            <th>num_features</th>
            <th>accuracy</th>
@@ -1015,21 +1014,21 @@ $(function() {
 	 	 
 	     
 	   //GENES
-	 	{%for perm in report.get_gene_permutations%}
+	 	//{for perm in report.get_gene_permutations}
 	 	
-	 	$("#venn_boot_gene_{{perm.strip}}").click(function(){
-	 		drawVenn({{report.id}},
-	 				'venn_gene-{{perm.strip}}-up',
-	 				'{{perm.strip}}',	 
-	 				false, 'up', 'venn_gene_dinamic_{{perm.strip}}', 'genes', categories='{{report.get_all_gene_groups_norm_as_list}}');
-	 		drawVenn({{report.id}},
-	 				'venn_gene-{{perm.strip}}-down',
-	 				'{{perm.strip}}',			
-	 				false, 'down', 'venn_gene_dinamic_{{perm.strip}}', 'genes', categories='{{report.get_all_gene_groups_norm_as_list}}');
+	 	//$("#venn_boot_gene_{{perm.strip}}").click(function(){
+	 	//	drawVenn({{report.id}},
+	 	//			'venn_gene-{{perm.strip}}-up',
+	 	//			'{{perm.strip}}',	 
+	 	//			false, 'up', 'venn_gene_dinamic_{{perm.strip}}', 'genes', categories='{{report.get_all_gene_groups_norm_as_list}}');
+	 	//	drawVenn({{report.id}},
+	 	//			'venn_gene-{{perm.strip}}-down',
+	 	//			'{{perm.strip}}',			
+	 	//			false, 'down', 'venn_gene_dinamic_{{perm.strip}}', 'genes', categories='{{report.get_all_gene_groups_norm_as_list}}');
 	 		
-	 	});
+	 	//});
 	 	
-	 	{%endfor%}
+	 	//{endfor}
 		
 	});
 	
@@ -1090,20 +1089,20 @@ $("#btn_show_path").click(function(){
 	
 
 	
-	{%for perm in report.get_path_permutations%}
+	// { for perm in report.get_path_permutations }
 	
-	$("#venn_boot_path_{{perm.strip}}").click(function(){
+	//$("#venn_boot_path_{{perm.strip}}").click(function(){
 	
-	drawVenn({{report.id}},
-		'venn_path-{{perm.strip}}-up',
-		'{{perm.strip}}',
-		false, 'up', 'venn_path_dinamic_{{perm.strip}}', 'pathways', '{{report.organism}}');
-	drawVenn({{report.id}},
-			'venn_path-{{perm.strip}}-down',
-			'{{perm.strip}}',
-			false, 'down', 'venn_path_dinamic_{{perm.strip}}', 'pathways', '{{report.organism}}');
-	});
-    {%endfor%}
+	//drawVenn({{report.id}},
+	//	'venn_path-{{perm.strip}}-up',
+	//	'{{perm.strip}}',
+	//	false, 'up', 'venn_path_dinamic_{{perm.strip}}', 'pathways', '{{report.organism}}');
+	//drawVenn({{report.id}},
+	//		'venn_path-{{perm.strip}}-down',
+	//		'{{perm.strip}}',
+	//		false, 'down', 'venn_path_dinamic_{{perm.strip}}', 'pathways', '{{report.organism}}');
+	//});
+    //{endfor}
     
 /////////////////// Transcription Factor
 $("#btn_show_tf").click(function(){
@@ -1424,12 +1423,13 @@ $('#tbl-mhc').on( 'draw.dt', function () {
  
         var top5_fc_wh = $("#tbl-top5_fc_wh").DataTable( {
         	"paging":   true,
-            "iDisplayLength": 20,
+            "iDisplayLength": 2,
             "ordering": true,
             "order": [[ 1, "desc" ]],
             "info":     false,
             "dom": 'Bfrtip',
-            "scrollX": true,
+            "scrollX": false,
+            "autoWidth": false,
             "buttons": [
                        {extend: 'csv', title: 'tbl-mms'},
                        {extend: 'print', title: 'tbl-mms'}
@@ -1441,9 +1441,13 @@ $('#tbl-mhc').on( 'draw.dt', function () {
             	     'data':{
             	    	     reportID: {{report.id}},
             	    	     file_name: 'Extended/top5_FC_full_score_result.csv'
-            	            },        	      
+            	            },
+           
             
         },"deferRender": true });
+        
+        
+        
 
         var probe_fc_wh = $("#tbl-probe_fc_wh").DataTable( {
         	"paging":   true,
@@ -1452,7 +1456,7 @@ $('#tbl-mhc').on( 'draw.dt', function () {
             "order": [[ 1, "desc" ]],
             "info":     false,
             "dom": 'Bfrtip',
-            "scrollX": true,
+            "scrollX": false,
             "bAutoWidth": false,
             "buttons": [
                        {extend: 'csv', title: 'tbl-mms'},
@@ -1476,7 +1480,7 @@ $('#tbl-mhc').on( 'draw.dt', function () {
             "order": [[ 1, "desc" ]],
             "info":     false,
             "dom": 'Bfrtip',
-            "scrollX": true,
+            "scrollX": false,
             "buttons": [
                        {extend: 'csv', title: 'tbl-mms'},
                        {extend: 'print', title: 'tbl-mms'}
@@ -1499,7 +1503,7 @@ $('#tbl-mhc').on( 'draw.dt', function () {
             "order": [[ 1, "desc" ]],
             "info":     false,
             "dom": 'Bfrtip',
-            "scrollX": true,
+            "scrollX": false,
             "buttons": [
                        {extend: 'csv', title: 'tbl-mms'},
                        {extend: 'print', title: 'tbl-mms'}
@@ -1522,7 +1526,7 @@ $('#tbl-mhc').on( 'draw.dt', function () {
             "order": [[ 1, "desc" ]],
             "info":     false,
             "dom": 'Bfrtip',
-            "scrollX": true,
+            "scrollX": false,
             "buttons": [
                        {extend: 'csv', title: 'tbl-mms'},
                        {extend: 'print', title: 'tbl-mms'}
@@ -1545,7 +1549,7 @@ $('#tbl-mhc').on( 'draw.dt', function () {
             "order": [[ 1, "desc" ]],
             "info":     false,
             "dom": 'Bfrtip',
-            "scrollX": true,
+            "scrollX": false,
             "buttons": [
                        {extend: 'csv', title: 'tbl-mms'},
                        {extend: 'print', title: 'tbl-mms'}
@@ -1570,7 +1574,7 @@ var top5_fc_ex = $("#tbl-top5_fc_ex").DataTable( {
             "order": [[ 1, "desc" ]],
             "info":     false,
             "dom": 'Bfrtip',
-            "scrollX": true,
+            "scrollX": false,
             "buttons": [
                        {extend: 'csv', title: 'tbl-mms'},
                        {extend: 'print', title: 'tbl-mms'}
@@ -1593,7 +1597,7 @@ var top5_fc_ex = $("#tbl-top5_fc_ex").DataTable( {
             "order": [[ 1, "desc" ]],
             "info":     false,
             "dom": 'Bfrtip',
-            "scrollX": true,
+            "scrollX": false,
             "buttons": [
                        {extend: 'csv', title: 'tbl-mms'},
                        {extend: 'print', title: 'tbl-mms'}
@@ -1616,7 +1620,7 @@ var top5_fc_ex = $("#tbl-top5_fc_ex").DataTable( {
             "order": [[ 1, "desc" ]],
             "info":     false,
             "dom": 'Bfrtip',
-            "scrollX": true,
+            "scrollX": false,
             "buttons": [
                        {extend: 'csv', title: 'tbl-mms'},
                        {extend: 'print', title: 'tbl-mms'}
@@ -1639,7 +1643,7 @@ var top5_fc_ex = $("#tbl-top5_fc_ex").DataTable( {
             "order": [[ 1, "desc" ]],
             "info":     false,
             "dom": 'Bfrtip',
-            "scrollX": true,
+            "scrollX": false,
             "buttons": [
                        {extend: 'csv', title: 'tbl-mms'},
                        {extend: 'print', title: 'tbl-mms'}
@@ -1662,7 +1666,7 @@ var top5_fc_ex = $("#tbl-top5_fc_ex").DataTable( {
             "order": [[ 1, "desc" ]],
             "info":     false,
             "dom": 'Bfrtip',
-            "scrollX": true,
+            "scrollX": false,
             "buttons": [
                        {extend: 'csv', title: 'tbl-mms'},
                        {extend: 'print', title: 'tbl-mms'}
@@ -1685,7 +1689,7 @@ var top5_fc_ex = $("#tbl-top5_fc_ex").DataTable( {
             "order": [[ 1, "desc" ]],
             "info":     false,
             "dom": 'Bfrtip',
-            "scrollX": true,
+            "scrollX": false,
             "buttons": [
                        {extend: 'csv', title: 'tbl-mms'},
                        {extend: 'print', title: 'tbl-mms'}

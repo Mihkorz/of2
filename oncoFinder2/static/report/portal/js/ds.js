@@ -11,7 +11,7 @@ function drawDSTable(reportID, id, file_name, ds_group_name){
         "order": [[ 7, "desc" ]],
         "info":     false,
         "dom": 'Bfrtip',
-        "scrollX": true,
+        "scrollX": false,
         "buttons": [
                    {extend: 'csv', title: file_name},
                    {extend: 'print', title: file_name}

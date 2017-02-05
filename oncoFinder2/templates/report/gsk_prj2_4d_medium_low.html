@@ -984,21 +984,21 @@ $(function() {
 	 	 
 	     
 	   //GENES
-	 	{%for perm in report.get_gene_permutations%}
+	 	//{%for perm in report.get_gene_permutations%}
 	 	
-	 	$("#venn_boot_gene_{{perm.strip}}").click(function(){
-	 		drawVenn({{report.id}},
-	 				'venn_gene-{{perm.strip}}-up',
-	 				'{{perm.strip}}',	 
-	 				false, 'up', 'venn_gene_dinamic_{{perm.strip}}', 'genes', categories='{{report.get_all_gene_groups_norm_as_list}}');
-	 		drawVenn({{report.id}},
-	 				'venn_gene-{{perm.strip}}-down',
-	 				'{{perm.strip}}',			
-	 				false, 'down', 'venn_gene_dinamic_{{perm.strip}}', 'genes', categories='{{report.get_all_gene_groups_norm_as_list}}');
+	 	//$("#venn_boot_gene_{{perm.strip}}").click(function(){
+	 	//	drawVenn({{report.id}},
+	 	//			'venn_gene-{{perm.strip}}-up',
+	 	//			'{{perm.strip}}',	 
+	 	//			false, 'up', 'venn_gene_dinamic_{{perm.strip}}', 'genes', categories='{{report.get_all_gene_groups_norm_as_list}}');
+	 	//	drawVenn({{report.id}},
+	 	//			'venn_gene-{{perm.strip}}-down',
+	 	//			'{{perm.strip}}',			
+	 	//			false, 'down', 'venn_gene_dinamic_{{perm.strip}}', 'genes', categories='{{report.get_all_gene_groups_norm_as_list}}');
 	 		
-	 	});
+	 	//});
 	 	
-	 	{%endfor%}
+	 	//{%endfor%}
 		
 	});
 	
@@ -1059,20 +1059,20 @@ $("#btn_show_path").click(function(){
 	
 
 	
-	{%for perm in report.get_path_permutations%}
+	//{%for perm in report.get_path_permutations%}
 	
-	$("#venn_boot_path_{{perm.strip}}").click(function(){
+	//$("#venn_boot_path_{{perm.strip}}").click(function(){
 	
-	drawVenn({{report.id}},
-		'venn_path-{{perm.strip}}-up',
-		'{{perm.strip}}',
-		false, 'up', 'venn_path_dinamic_{{perm.strip}}', 'pathways', '{{report.organism}}');
-	drawVenn({{report.id}},
-			'venn_path-{{perm.strip}}-down',
-			'{{perm.strip}}',
-			false, 'down', 'venn_path_dinamic_{{perm.strip}}', 'pathways', '{{report.organism}}');
-	});
-    {%endfor%}
+	//drawVenn({{report.id}},
+	//	'venn_path-{{perm.strip}}-up',
+	//	'{{perm.strip}}',
+	//	false, 'up', 'venn_path_dinamic_{{perm.strip}}', 'pathways', '{{report.organism}}');
+	//drawVenn({{report.id}},
+	//		'venn_path-{{perm.strip}}-down',
+	//		'{{perm.strip}}',
+	//		false, 'down', 'venn_path_dinamic_{{perm.strip}}', 'pathways', '{{report.organism}}');
+	//});
+    //{%endfor%}
     
 /////////////////// Transcription Factor
 $("#btn_show_tf").click(function(){
@@ -1201,7 +1201,7 @@ $("#btn_show_tf").click(function(){
             "order": [[ 1, "desc" ]],
             "info":     false,
             "dom": 'Bfrtip',
-            "scrollX": true,
+            "scrollX": false,
             "buttons": [
                        {extend: 'csv', title: 'tbl-mms'},
                        {extend: 'print', title: 'tbl-mms'}
@@ -1226,7 +1226,7 @@ $("#btn_show_tf").click(function(){
             "order": [[ 1, "desc" ]],
             "info":     false,
             "dom": 'Bfrtip',
-            "scrollX": true,
+            "scrollX": false,
             "buttons": [
                        {extend: 'csv', title: 'tbl-mms'},
                        {extend: 'print', title: 'tbl-mms'}
@@ -1249,7 +1249,7 @@ $("#btn_show_tf").click(function(){
             "order": [[ 1, "desc" ]],
             "info":     false,
             "dom": 'Bfrtip',
-            "scrollX": true,
+            "scrollX": false,
             "buttons": [
                        {extend: 'csv', title: 'tbl-mms'},
                        {extend: 'print', title: 'tbl-mms'}
@@ -1332,7 +1332,7 @@ $('#tbl-mhe').on( 'draw.dt', function () {
             "order": [[ 1, "desc" ]],
             "info":     false,
             "dom": 'Bfrtip',
-            "scrollX": true,
+            "scrollX": false,
             "buttons": [
                        {extend: 'csv', title: 'tbl-mms'},
                        {extend: 'print', title: 'tbl-mms'}
@@ -1355,7 +1355,7 @@ $('#tbl-mhe').on( 'draw.dt', function () {
             "order": [[ 1, "desc" ]],
             "info":     false,
             "dom": 'Bfrtip',
-            "scrollX": true,
+            "scrollX": false,
             "bAutoWidth": false,
             "buttons": [
                        {extend: 'csv', title: 'tbl-mms'},
@@ -1379,7 +1379,7 @@ $('#tbl-mhe').on( 'draw.dt', function () {
             "order": [[ 1, "desc" ]],
             "info":     false,
             "dom": 'Bfrtip',
-            "scrollX": true,
+            "scrollX": false,
             "buttons": [
                        {extend: 'csv', title: 'tbl-mms'},
                        {extend: 'print', title: 'tbl-mms'}
@@ -1402,7 +1402,7 @@ $('#tbl-mhe').on( 'draw.dt', function () {
             "order": [[ 1, "desc" ]],
             "info":     false,
             "dom": 'Bfrtip',
-            "scrollX": true,
+            "scrollX": false,
             "buttons": [
                        {extend: 'csv', title: 'tbl-mms'},
                        {extend: 'print', title: 'tbl-mms'}
@@ -1425,7 +1425,7 @@ $('#tbl-mhe').on( 'draw.dt', function () {
             "order": [[ 1, "desc" ]],
             "info":     false,
             "dom": 'Bfrtip',
-            "scrollX": true,
+            "scrollX": false,
             "buttons": [
                        {extend: 'csv', title: 'tbl-mms'},
                        {extend: 'print', title: 'tbl-mms'}
@@ -1448,7 +1448,7 @@ $('#tbl-mhe').on( 'draw.dt', function () {
             "order": [[ 1, "desc" ]],
             "info":     false,
             "dom": 'Bfrtip',
-            "scrollX": true,
+            "scrollX": false,
             "buttons": [
                        {extend: 'csv', title: 'tbl-mms'},
                        {extend: 'print', title: 'tbl-mms'}
@@ -1473,7 +1473,7 @@ var top5_fc_ex = $("#tbl-top5_fc_ex").DataTable( {
             "order": [[ 1, "desc" ]],
             "info":     false,
             "dom": 'Bfrtip',
-            "scrollX": true,
+            "scrollX": false,
             "buttons": [
                        {extend: 'csv', title: 'tbl-mms'},
                        {extend: 'print', title: 'tbl-mms'}
@@ -1496,7 +1496,7 @@ var top5_fc_ex = $("#tbl-top5_fc_ex").DataTable( {
             "order": [[ 1, "desc" ]],
             "info":     false,
             "dom": 'Bfrtip',
-            "scrollX": true,
+            "scrollX": false,
             "buttons": [
                        {extend: 'csv', title: 'tbl-mms'},
                        {extend: 'print', title: 'tbl-mms'}
@@ -1519,7 +1519,7 @@ var top5_fc_ex = $("#tbl-top5_fc_ex").DataTable( {
             "order": [[ 1, "desc" ]],
             "info":     false,
             "dom": 'Bfrtip',
-            "scrollX": true,
+            "scrollX": false,
             "buttons": [
                        {extend: 'csv', title: 'tbl-mms'},
                        {extend: 'print', title: 'tbl-mms'}
@@ -1542,7 +1542,7 @@ var top5_fc_ex = $("#tbl-top5_fc_ex").DataTable( {
             "order": [[ 1, "desc" ]],
             "info":     false,
             "dom": 'Bfrtip',
-            "scrollX": true,
+            "scrollX": false,
             "buttons": [
                        {extend: 'csv', title: 'tbl-mms'},
                        {extend: 'print', title: 'tbl-mms'}
@@ -1565,7 +1565,7 @@ var top5_fc_ex = $("#tbl-top5_fc_ex").DataTable( {
             "order": [[ 1, "desc" ]],
             "info":     false,
             "dom": 'Bfrtip',
-            "scrollX": true,
+            "scrollX": false,
             "buttons": [
                        {extend: 'csv', title: 'tbl-mms'},
                        {extend: 'print', title: 'tbl-mms'}
@@ -1588,7 +1588,7 @@ var top5_fc_ex = $("#tbl-top5_fc_ex").DataTable( {
             "order": [[ 1, "desc" ]],
             "info":     false,
             "dom": 'Bfrtip',
-            "scrollX": true,
+            "scrollX": false,
             "buttons": [
                        {extend: 'csv', title: 'tbl-mms'},
                        {extend: 'print', title: 'tbl-mms'}
