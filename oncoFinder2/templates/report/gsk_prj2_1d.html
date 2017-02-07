@@ -57,8 +57,8 @@
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#gene_analysis">Gene level analysis</a></li>
             <!--  <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tf_analysis">Transcription Factor Analysis</a></li>-->
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#path_analysis">Pathway Analysis</a></li>
-            <!-- <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#ds_analysis">Drug Scoring</a></li>
-             
+             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tf_analysis">Deep Learning</a></li>
+            <!--  
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#sim_analysis">Similarity to known drug- and knockdown-induced expression signatures</a></li>
             
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#cor_analysis">Public domain screening</a></li>
@@ -553,22 +553,22 @@
        </li>
        <li role="presentation" >
          <a href="#top5_ec_wh_tab" aria-controls="home1" role="tab" data-toggle="tab" >
-           Top 5 FC-based EC model(whole dataset)
+           Top 5 FC-based models(EC dataset)
          </a>
        </li>
        <li role="presentation" >
          <a href="#probe_ec_wh_tab" aria-controls="home1" role="tab" data-toggle="tab" >
-           Probe importance for top EC(whole dataset)
+           Probe importance for top FC model (EC dataset)
          </a>
        </li>
        <li role="presentation" >
          <a href="#top5_sm_wh_tab" aria-controls="home1" role="tab" data-toggle="tab" >
-           Top 5 FC-based SM models(whole dataset)
+           Top 5 FC-based models(SM dataset)
          </a>
        </li>
        <li role="presentation" >
          <a href="#probe_sm_wh_tab" aria-controls="home1" role="tab" data-toggle="tab" >
-           Probe importance for top SM(whole dataset)
+           Probe importance for top FC model (SM dataset)
          </a>
        </li>
        <li role="presentation" >
@@ -578,27 +578,27 @@
        </li>
        <li role="presentation" >
          <a href="#probe_fc_ex_tab" aria-controls="home1" role="tab" data-toggle="tab" >
-           Probe importance for top FC(extended dataset)
+           Probe importance for top FC model (extended whole dataset)
          </a>
        </li>
        <li role="presentation" >
          <a href="#top5_ec_ex_tab" aria-controls="home1" role="tab" data-toggle="tab" >
-           Top 5 FC-based EC model(extended dataset)
+           Top 5 FC-based models(extended EC dataset)
          </a>
        </li>
        <li role="presentation" >
          <a href="#probe_ec_ex_tab" aria-controls="home1" role="tab" data-toggle="tab" >
-           Probe importance for top EC(extended dataset)
+           Probe importance for top FC model (extended EC dataset)
          </a>
        </li>
        <li role="presentation" >
          <a href="#top5_sm_ex_tab" aria-controls="home1" role="tab" data-toggle="tab" >
-           Top 5 FC-based SM model(extended dataset)
+           Top 5 FC-based models(extended SM dataset)
          </a>
        </li>
        <li role="presentation" >
          <a href="#probe_sm_ex_tab" aria-controls="home1" role="tab" data-toggle="tab" >
-           Probe importance for top SM(extended dataset)
+           Probe importance for top FC model (extended SM dataset)
          </a>
        </li>
      
@@ -609,7 +609,7 @@
      
      <div role="tabpanel" class="tab-pane fade in active" id="top5_fc_wh_tab" style='overflow-x: auto;'>
         
-       <h4>Table 111<span class='tbl_num'></span>Top 5 FC-based models(whole dataset) </h4>
+       <h4>Table <span class='tbl_num'></span>Top 5 FC-based models(whole dataset) </h4>
        <table id="tbl-top5_fc_wh" class="path table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
           <tr >
@@ -632,7 +632,7 @@
      <div role="tabpanel" class="tab-pane fade " id="probe_fc_wh_tab">
      
              
-       <h4>Table <span class='tbl_num'></span>Probe importance for top FC(whole dataset) </h4>
+       <h4>Table <span class='tbl_num'></span>Probe importance for top FC model(whole dataset) </h4>
        <table id="tbl-probe_fc_wh" class="path table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
           <tr>
@@ -650,7 +650,7 @@
      <div role="tabpanel" class="tab-pane fade " id="top5_ec_wh_tab">
      
              
-       <h4>Table <span class='tbl_num'></span>Top 5 FC-based EC model(whole dataset) </h4>
+       <h4>Table <span class='tbl_num'></span>Top 5 FC-based model(EC dataset) </h4>
        <table id="tbl-top5_ec_wh" class="path table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
           <tr>
@@ -673,7 +673,7 @@
      <div role="tabpanel" class="tab-pane fade " id="probe_ec_wh_tab">
      
              
-       <h4>Table <span class='tbl_num'></span>Probe importance for top EC(whole dataset) </h4>
+       <h4>Table <span class='tbl_num'></span>Probe importance for top FC model (EC dataset) </h4>
        <table id="tbl-probe_ec_wh" class="path table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
           <tr>
@@ -691,7 +691,7 @@
 <div role="tabpanel" class="tab-pane fade " id="top5_sm_wh_tab">
      
              
-       <h4>Table <span class='tbl_num'></span>Top 5 FC-based SM model(whole dataset) </h4>
+       <h4>Table <span class='tbl_num'></span>Top 5 FC-based model(SM dataset) </h4>
        <table id="tbl-top5_sm_wh" class="path table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
           <tr>
@@ -714,7 +714,7 @@
      <div role="tabpanel" class="tab-pane fade " id="probe_sm_wh_tab">
      
              
-       <h4>Table <span class='tbl_num'></span>Probe importance for top SM(whole dataset) </h4>
+       <h4>Table <span class='tbl_num'></span>Probe importance for top FC model (SM dataset) </h4>
        <table id="tbl-probe_sm_wh" class="path table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
           <tr>
@@ -732,7 +732,7 @@
 <div role="tabpanel" class="tab-pane fade " id="top5_fc_ex_tab">
      
              
-       <h4>Table <span class='tbl_num'></span>Top 5 FC-based models(extended dataset) </h4>
+       <h4>Table <span class='tbl_num'></span>Top 5 FC-based models(extended whole dataset) </h4>
        <table id="tbl-top5_fc_ex" class="path table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
           <tr>
@@ -755,7 +755,7 @@
      <div role="tabpanel" class="tab-pane fade " id="probe_fc_ex_tab">
      
              
-       <h4>Table <span class='tbl_num'></span>Probe importance for top FC(extended dataset) </h4>
+       <h4>Table <span class='tbl_num'></span>Probe importance for top FC model (extended whole dataset) </h4>
        <table id="tbl-probe_fc_ex" class="path table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
           <tr>
@@ -773,7 +773,7 @@
 <div role="tabpanel" class="tab-pane fade " id="top5_ec_ex_tab">
      
              
-       <h4>Table <span class='tbl_num'></span>Top 5 FC-based EC model(extended dataset) </h4>
+       <h4>Table <span class='tbl_num'></span>Top 5 FC-based model(extended EC dataset) </h4>
        <table id="tbl-top5_ec_ex" class="path table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
           <tr>
@@ -796,7 +796,7 @@
      <div role="tabpanel" class="tab-pane fade " id="probe_ec_ex_tab">
      
              
-       <h4>Table <span class='tbl_num'></span>Probe importance for top EC(extended dataset) </h4>
+       <h4>Table <span class='tbl_num'></span>Probe importance for top FC model (extended EC dataset) </h4>
        <table id="tbl-probe_ec_ex" class="path table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
           <tr>
@@ -814,7 +814,7 @@
 <div role="tabpanel" class="tab-pane fade " id="top5_sm_ex_tab">
      
              
-       <h4>Table <span class='tbl_num'></span>Top 5 FC-based SM model(extended dataset) </h4>
+       <h4>Table <span class='tbl_num'></span>Top 5 FC-based model(extended SM dataset) </h4>
        <table id="tbl-top5_sm_ex" class="path table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
           <tr>
@@ -837,7 +837,7 @@
      <div role="tabpanel" class="tab-pane fade " id="probe_sm_ex_tab">
      
              
-       <h4>Table <span class='tbl_num'></span>Probe importance for top SM(extended dataset) </h4>
+       <h4>Table <span class='tbl_num'></span>Probe importance for top FC model (extended SM dataset) </h4>
        <table id="tbl-probe_sm_ex" class="path table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
           <tr>
@@ -853,8 +853,23 @@
      </div> <!-- end of tabpanel div -->   
    </div> <!--  end of tab-content div -->
    
-   
-   
+<!-- VENN FOR DEEP LEARNING -->   
+<hr/>   
+   <table style='text-align:center;'>
+      <tr>
+       <td>
+       <div id="venn_gene-whole" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Whole Dataset
+       </td>
+       <td>
+       <div id="venn_gene-extended" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Extended Dataset
+       </td>
+      </tr>
+    </table>        
+   <br/>
+  <div id="venn_gene_dinamic_deep" class="" style="max-width:1000px;"></div> <!--  div to place dinamic tables from Venn clicks -->
+  
 
 </div> <!--  end of hide div -->
 <!-- End of TF -->
@@ -934,7 +949,7 @@
             <!-- <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tf_analysis">Transcription Factor Analysis</a></li>
             -->
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#path_analysis">Pathway Analysis</a></li>
-            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#ds_analysis">Drug Scoring</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tf_analysis">Deep Learning</a></li>
           </ul>
           <br/><br/>
         </div>
@@ -1423,7 +1438,7 @@ $('#tbl-mhc').on( 'draw.dt', function () {
  
         var top5_fc_wh = $("#tbl-top5_fc_wh").DataTable( {
         	"paging":   true,
-            "iDisplayLength": 2,
+            "iDisplayLength": 20,
             "ordering": true,
             "order": [[ 1, "desc" ]],
             "info":     false,
@@ -1704,6 +1719,16 @@ var top5_fc_ex = $("#tbl-top5_fc_ex").DataTable( {
             	            },        	      
             
         },"deferRender": true });
+        
+        
+        drawVenn({{report.id}},
+          	'venn_gene-whole',
+        	'WholevsECvsSM',
+        	true, 'up', 'venn_gene_dinamic_deep', 'deeplearning', '{{report.organism}}');
+        drawVenn({{report.id}},
+        		'venn_gene-extended',
+        		'WholevsECvsSM',
+        		false, 'up', 'venn_gene_dinamic_deep', 'deeplearning', '{{report.organism}}');
         
  /* METABOLIC PATHs
   drawPathwayTable({{report.id}},

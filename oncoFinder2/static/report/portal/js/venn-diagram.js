@@ -1,4 +1,4 @@
-function drawDynamicTable(reportID, idx, tblRenderTo, path_gene, categories, organism, is_barplot){
+function drawDynamicTable(reportID, idx, tblRenderTo, path_gene, categories, organism, is_barplot, is_metabolic){
 	
 	var arParams = idx.split("+");
 	var inter_num = arParams[0];
@@ -10,6 +10,7 @@ function drawDynamicTable(reportID, idx, tblRenderTo, path_gene, categories, org
     tblId = tblId.replace(/\(/g, '').replace(/\)/g, '')
     tblId+=regulation
     tblId+=tblRenderTo
+    tblId+=is_metabolic
     
     arMembers = members.split('vs');
     
@@ -28,6 +29,7 @@ function drawDynamicTable(reportID, idx, tblRenderTo, path_gene, categories, org
 			htmlTable+='<thead><tr>';
 			if(path_gene=='pathways') htmlTable+='<th>Pathway Name</th>';
 			if(path_gene=='genes') htmlTable+='<th>Gene</th>';
+			if(path_gene=='deeplearning') htmlTable+='<th>Gene</th><th>Probe</th>';
 			
 			
 			arMembers.forEach(function(item, i, arr) {
@@ -220,7 +222,7 @@ function drawVenn(reportID, renderTo,
                 	 venn.sortAreas(div, d);
                      var idx = d.id;
                      
-                     drawDynamicTable(reportID, idx, tblRenderTo, path_gene, categories, organism, is_barplot);
+                     drawDynamicTable(reportID, idx, tblRenderTo, path_gene, categories, organism, is_barplot, is_metabolic);
                 	 
                  });
 			}

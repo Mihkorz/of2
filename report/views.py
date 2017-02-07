@@ -907,6 +907,34 @@ class ReportAjaxPathwayVenn(TemplateView):
                 df4.columns = ['0']        
             
         
+        elif path_gene == 'deeplearning': # For GSK prj2 only! not dynamic!
+            #raise Exception('extended')
+            if is_metabolic=='true':
+                df1 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/Top_model_FC_final.csv',
+                                  index_col='probes')
+                df2 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/Top_model_FC_EC.csv',
+                                  index_col='probes')
+                df3 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/Top_model_FC_SM.csv',
+                                  index_col='probes')
+            else:
+                df1 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/Top_model_FC_ext.csv',
+                                  index_col='probes')
+                df2 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/Top_model_FC_ext_EC.csv',
+                                  index_col='probes')
+                df3 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/Top_model_FC_ext_SM.csv',
+                                  index_col='probes')
+                #raise Exception('extended')
+            
+            
+            df1 = df1.sort(columns='mean', ascending=False).head(1000)
+            df2 = df2.sort(columns='mean', ascending=False).head(1000)
+            df3 = df3.sort(columns='mean', ascending=False).head(1000)
+            
+            df1.rename(columns={'mean': '0'}, inplace=True)
+            df2.rename(columns={'mean': '0'}, inplace=True)
+            df3.rename(columns={'mean': '0'}, inplace=True)
+            #raise Exception('deeplearning')
+        
         dict_s = {}
         list_s = [name1, name2]
         if compare3:
@@ -1003,6 +1031,7 @@ class ReportAjaxPathwayVenn(TemplateView):
             venn_cyrcles.append({'sets': [combination[0], combination[1]],
                                      'size': intersection,
                                      'id': id_x })
+            #raise Exception('comb')
         if compare3:    
             combinations_3= list(itertools.combinations(list_s, 3)) # get all triplets of items
             for idx, combination in enumerate(combinations_3):
@@ -1113,8 +1142,33 @@ class ReportAjaxPathwayVennTable(TemplateView):
                     df_1 = df_1[(df_1['adj.P.Val']<pval_tres) & (np.absolute(df_1['logFC'])>logFC_tres)]
                 df_1 = pd.DataFrame(df_1['logFC'])
                 df_1.columns = ['0']
+            
+            elif path_gene =='deeplearning':
                 
-            s_tumour = df_1['0'].round(decimals=2)
+                if is_metabolic=='true':
+                    try:
+                        df_1 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/Top_model_FC_'+lMembers[0]+'.csv',
+                                  index_col='probes')
+                        
+                    except:
+                        df_1 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/Top_model_FC_final.csv',
+                                  index_col='probes')
+    
+                else:
+                    try:
+                        df_1 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/Top_model_FC_ext_'+lMembers[0]+'.csv',
+                                  index_col='probes')
+                    except:
+                        df_1 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/Top_model_FC_ext.csv',
+                                  index_col='probes')
+                        
+                df_1 = df_1.sort(columns='mean', ascending=False).head(1000)
+                df_1.rename(columns={'mean': '0'}, inplace=True)
+                    
+                
+                
+                
+            s_tumour = df_1['0']#.round(decimals=2)
             s_tumour.name = lMembers[0]
             if regulation == 'updown':
                 s_tumour = s_tumour[s_tumour!=0]
@@ -1124,6 +1178,11 @@ class ReportAjaxPathwayVennTable(TemplateView):
                 s_tumour = s_tumour[s_tumour<0]
             
             df_1_tumour = pd.DataFrame(s_tumour)
+            if path_gene =='deeplearning':
+                df_1_tumour['genes'] = df_1['genes']
+                df_1_tumour.reset_index(inplace=True)
+                df_1_tumour.set_index('genes', inplace=True)
+                #raise Exception('iter1')  
             df_1_tumour.reset_index(inplace=True)
             df_json = df_1_tumour.to_json(orient='values')
             
@@ -1178,10 +1237,47 @@ class ReportAjaxPathwayVennTable(TemplateView):
                 df_1.columns = ['0']
                 df_2.columns = ['0']
             
-            s_tumour1 = df_1['0'].round(decimals=2)
+            elif path_gene =='deeplearning':
+                
+                if is_metabolic=='true':
+                    try:
+                        df_1 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/Top_model_FC_'+lMembers[0]+'.csv',
+                                  index_col='probes')                        
+                    except:
+                        df_1 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/Top_model_FC_final.csv',
+                                  index_col='probes')
+                    try:
+                        df_2 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/Top_model_FC_'+lMembers[1]+'.csv',
+                                  index_col='probes')                        
+                    except:
+                        df_2 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/Top_model_FC_final.csv',
+                                  index_col='probes')
+    
+                else:
+                    try:
+                        df_1 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/Top_model_FC_ext_'+lMembers[0]+'.csv',
+                                  index_col='probes')
+                    except:
+                        df_1 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/Top_model_FC_ext.csv',
+                                  index_col='probes')
+                    try:
+                        df_2 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/Top_model_FC_ext_'+lMembers[1]+'.csv',
+                                  index_col='probes')
+                    except:
+                        df_2 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/Top_model_FC_ext.csv',
+                                  index_col='probes')
+                        
+                df_1 = df_1.sort(columns='mean', ascending=False).head(1000)
+                df_1.rename(columns={'mean': '0'}, inplace=True)
+                df_2 = df_2.sort(columns='mean', ascending=False).head(1000)
+                df_2.rename(columns={'mean': '0'}, inplace=True)
+                
+                #raise Exception('iter2')
+            
+            s_tumour1 = df_1['0']#.round(decimals=2)
             s_tumour1.name = lMembers[0]
             
-            s_tumour2 = df_2['0'].round(decimals=2)
+            s_tumour2 = df_2['0']#.round(decimals=2)
             s_tumour2.name = lMembers[1]
             if regulation == 'updown':
                 s_tumour1_up = s_tumour1[s_tumour1>0]
@@ -1197,12 +1293,21 @@ class ReportAjaxPathwayVennTable(TemplateView):
                 s_tumour2 = s_tumour2[s_tumour2>0]
                 joined_df = pd.DataFrame(s_tumour1).join(pd.DataFrame(s_tumour2), how='inner')
                 
+                if path_gene =='deeplearning': 
+                    joined_df = joined_df.join(df_1['genes'], how='inner')
+                    joined_df.reset_index(inplace=True)
+                    joined_df.set_index('genes', inplace=True)
+                    
+                    #raise Exception('iter2s')
+                    
+                
             elif regulation == 'down':  
                 s_tumour1 = s_tumour1[s_tumour1<0]
                 s_tumour2 = s_tumour2[s_tumour2<0]
                 joined_df = pd.DataFrame(s_tumour1).join(pd.DataFrame(s_tumour2), how='inner')
             
-            joined_df = joined_df.groupby(joined_df.index, level=0).mean()
+            if path_gene !='deeplearning':
+                joined_df = joined_df.groupby(joined_df.index, level=0).mean()
             joined_df.reset_index(inplace=True)
             df_json = joined_df.to_json(orient='values')
             
@@ -1263,14 +1368,40 @@ class ReportAjaxPathwayVennTable(TemplateView):
                 df_2.columns = ['0']
                 df_3.columns = ['0']
             
+            elif path_gene =='deeplearning':
+                if is_metabolic=='true':
+                    df_1 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/Top_model_FC_final.csv',
+                                  index_col='probes')
+                    df_2 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/Top_model_FC_EC.csv',
+                                  index_col='probes')
+                    df_3 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/Top_model_FC_SM.csv',
+                                  index_col='probes')
+                else:
+                    df_1 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/Top_model_FC_ext.csv',
+                                  index_col='probes')
+                    df_2 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/Top_model_FC_ext_EC.csv',
+                                  index_col='probes')
+                    df_3 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/Top_model_FC_ext_SM.csv',
+                                  index_col='probes')
+                    
+                    
+                df_1 = df_1.sort(columns='mean', ascending=False).head(1000)
+                df_2 = df_2.sort(columns='mean', ascending=False).head(1000)
+                df_3 = df_3.sort(columns='mean', ascending=False).head(1000)
             
-            s_tumour1 = df_1['0'].round(decimals=2)
+                df_1.rename(columns={'mean': '0'}, inplace=True)
+                df_2.rename(columns={'mean': '0'}, inplace=True)
+                df_3.rename(columns={'mean': '0'}, inplace=True)
+                
+                #raise Exception('deeplearning')
+            
+            s_tumour1 = df_1['0']#.round(decimals=2)
             s_tumour1.name = lMembers[0]
            
-            s_tumour2 = df_2['0'].round(decimals=2)
+            s_tumour2 = df_2['0']#.round(decimals=2)
             s_tumour2.name = lMembers[1]
             
-            s_tumour3 = df_3['0'].round(decimals=2)
+            s_tumour3 = df_3['0']#.round(decimals=2)
             s_tumour3.name = lMembers[2]
             
             if regulation == 'updown':
@@ -1292,6 +1423,12 @@ class ReportAjaxPathwayVennTable(TemplateView):
                 s_tumour3 = s_tumour3[s_tumour3>0]
                 joined_df = pd.DataFrame(s_tumour1).join(pd.DataFrame(s_tumour2), how='inner')
                 joined_df = joined_df.join(pd.DataFrame(s_tumour3), how='inner')
+                
+                if path_gene =='deeplearning':
+                    joined_df = joined_df.join(df_1['genes'], how='inner')
+                    joined_df.reset_index(inplace=True)
+                    joined_df.set_index('genes', inplace=True)
+                    #raise Exception('deeplearning')
             elif regulation == 'down':  
                 s_tumour1 = s_tumour1[s_tumour1<0]
                 s_tumour2 = s_tumour2[s_tumour2<0]
@@ -1299,7 +1436,9 @@ class ReportAjaxPathwayVennTable(TemplateView):
                 joined_df = pd.DataFrame(s_tumour1).join(pd.DataFrame(s_tumour2), how='inner')
                 joined_df = joined_df.join(pd.DataFrame(s_tumour3), how='inner')
             
-            joined_df = joined_df.groupby(joined_df.index, level=0).mean()
+            if path_gene !='deeplearning':
+                joined_df = joined_df.groupby(joined_df.index, level=0).mean()
+            
             joined_df.reset_index(inplace=True)
             df_json = joined_df.to_json(orient='values')
         
@@ -2429,7 +2568,16 @@ class ReportTest(TemplateView):
     
     def get(self, request, *args, **kwargs):
         
+        df = pd.read_csv("/home/mikhail/Downloads/GSK/Database/AFFY_PROBE_SET.txt",
+                           sep='\t', index_col=0)
+        df_r = pd.read_csv("/home/mikhail/Downloads/GSK/Database/AFFY_PROBE_SET_randomized.txt",
+                           sep='\t', index_col=0)
         
+        df_r.columns = ['NAME_rand', 'GENE_HOMOLOGY_ID_rand']
+        
+        df = df.join(df_r, how='inner')
+        
+        raise Exception('ramdom')
         df_c = pd.read_csv("/home/mikhail/Downloads/GSK/4D/High/DE/Comparison74.tab",
                            sep='\t', index_col=0)
         
