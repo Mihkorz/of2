@@ -527,6 +527,134 @@
 {%endif%}
 <!-- End of DS -->
 
+<!-- ---------------------------------Deep---------------------------------------------> 
+
+{%if report.slug == 'gsk_prj3_l1k'%} 
+ <hr/> 
+<h2 id='tf_analysis'>Deep Learning</h2>
+<hr/>
+
+{%if report.path_text%}
+          {{report.tf_text|safe}}
+          <br/><br/>
+{%endif%}
+
+<center>
+<button type="button"  class="btn btn-success btn-lg center" id='btn_show_tf'>Show Data</button>
+</center>
+
+<div id='hide_tf' style='display:none;'> <!-- Div to hide and load on button click -->
+
+<!-- DL Nav tabs  -->     
+   <ul class="nav nav-tabs" role="tablist">
+     
+       <li role="presentation" class="active">
+         <a href="#all_models_tab" aria-controls="home1" role="tab" data-toggle="tab" >
+           All Models
+         </a>
+       </li>
+       <li role="presentation" >
+         <a href="#top_featur_tab" aria-controls="home1" role="tab" data-toggle="tab" >
+           Top Model Features
+         </a>
+        </li>
+    </ul>
+    
+    <div class="tab-content">
+    
+     
+     <div role="tabpanel" class="tab-pane fade in active" id="all_models_tab" style='overflow-x: auto;'>
+     <h4>Table <span class='tbl_num'></span>All Models </h4>
+       <table id="tbl-all_models" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr >
+           <th>base_model</th>
+           <th>f1</th>
+           <th>matthews_corrcoef</th>
+           <th>num_features</th>
+           <th>precision</th>
+           <th>recall</th>
+           <th>roc_auc</th>
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+     </div> <!-- end of tabpanel div -->
+     
+     <div role="tabpanel" class="tab-pane fade " id="top_featur_tab">
+     <h4>Table <span class='tbl_num'></span>Top Model Features </h4>
+       <table id="tbl-top_featur" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr >
+           <th>#</th>
+           <th>name</th>
+           <th>test</th>
+          </tr>
+        </thead>  
+      </table>
+     </div> <!-- end of tabpanel div -->
+     
+   </div><!-- end of tab-content div -->
+
+</div>
+
+<script>
+
+$(function() {
+
+var all_models = $("#tbl-all_models").DataTable( {
+	"paging":   true,
+    "iDisplayLength": 20,
+    "ordering": true,
+    "order": [[ 1, "desc" ]],
+    "info":     false,
+    "dom": 'Bfrtip',
+    "scrollX": false,
+    "bAutoWidth": false,
+    "buttons": [
+               {extend: 'csv', title: 'tbl-all_models'},
+               {extend: 'print', title: 'tbl-all_models'}
+               
+          ],
+    
+    "ajax": {'url':'/report-portal/report-deepgsktablejson/',
+    	     'type': 'GET',
+    	     'data':{
+    	    	     reportID: {{report.id}},
+    	    	     file_name: 'l1k_all_models.csv'
+    	            },        	      
+    
+},"deferRender": true });
+
+var top_featur = $("#tbl-top_featur").DataTable( {
+	"paging":   true,
+    "iDisplayLength": 20,
+    "ordering": true,
+    "order": [[ 1, "desc" ]],
+    "info":     false,
+    "dom": 'Bfrtip',
+    "scrollX": false,
+    "bAutoWidth": false,
+    "buttons": [
+               {extend: 'csv', title: 'tbl-top_featur'},
+               {extend: 'print', title: 'tbl-top_featur'}
+               
+          ],
+    
+    "ajax": {'url':'/report-portal/report-deepgsktablejson/',
+    	     'type': 'GET',
+    	     'data':{
+    	    	     reportID: {{report.id}},
+    	    	     file_name: 'l1k_Top_model_features.csv'
+    	            },        	      
+    
+},"deferRender": true });
+
+
+});
+</script>
+
+{%endif%}
 
 
 
