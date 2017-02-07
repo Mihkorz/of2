@@ -78,8 +78,17 @@ function drawDynamicTable(reportID, idx, tblRenderTo, path_gene, categories, org
 				var path_name_td = $("table#"+tblId+".path tr td:first-child()");
 		    	path_name_td.each(function(){
 		    		var path_long_name = $(this).text();
-		    		if(path_long_name.length > 70){
-			    		var short_name = $.trim(path_long_name).substring(0, 70)
+		    		
+		    		if ($(this).text().indexOf("...") >= 0) {
+		    			//alert($(this).find('span').attr('long_name'));
+		    			path_long_name = $(this).find('span').attr('long_name');
+		    			$(this).text(path_long_name);
+		    			
+		    		}
+		    		
+		    		
+		    		if(path_long_name.length > 50){
+			    		var short_name = $.trim(path_long_name).substring(0, 50)
 		                .trim(this) + "...";
 			    		$(this).html("<span title='"+path_long_name+"'>"+short_name+"</span>");
 			    	}
