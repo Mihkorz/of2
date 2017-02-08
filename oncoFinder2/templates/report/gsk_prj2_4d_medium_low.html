@@ -486,6 +486,65 @@
   
   
   </center>
+  
+  <!-- VENN FOR PAS -->   
+<hr/>
+<h4>Whole Dataset</h4>   
+   <table style='text-align:center;'>
+      <tr>
+       <td>
+       <div id="venn_gene_ec-whole" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       EC
+       </td>
+       <td>
+       <div id="venn_gene_sm-whole" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       SM
+       </td>
+      </tr>
+    </table>   
+    
+<!-- VENN FOR DEEP LEARNING -->   
+<hr/>
+<h4>Extended Dataset</h4>   
+   <table style='text-align:center;'>
+      <tr>
+       <td>
+       <div id="venn_gene_ec-extended" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       EC
+       </td>
+       <td>
+       <div id="venn_gene_sm-extended" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+        SM
+       </td>
+      </tr>
+    </table>   
+
+<script>
+$(document).ready(function(){
+drawVennWithData({{report.id}}, 'venn_gene_ec-whole', '', 
+		[{'id': 'toppath_ec_w', 'sets': ['Top pathways'], 'size':406},
+		 {'id': 'topprobe_ec_w', 'sets': ['Top probes in deap-learned'], 'size':83},
+		 {'id': 'toppath_topprobe_ec_w', 'sets': ['Top pathways', 'Top probes in deap-learned'], 'size': 32},]);
+
+drawVennWithData({{report.id}}, 'venn_gene_sm-whole', '', 
+		[{'id': 'toppath_sm_w', 'sets': ['Top pathways'], 'size':415},
+		 {'id': 'topprobe_sm_w', 'sets': ['Top probes in deap-learned'], 'size':83},
+		 {'id': 'toppath_topprobe_sm_w', 'sets': ['Top pathways', 'Top probes in deap-learned'], 'size': 23},]);
+
+
+
+drawVennWithData({{report.id}}, 'venn_gene_ec-extended', '', 
+		[{'id': 'toppath_ec_e', 'sets': ['Top pathways'], 'size':294},
+		 {'id': 'topprobe_ec_e', 'sets': ['Top probes in deap-learned'], 'size':83},
+		 {'id': 'toppath_topprobe_ec_e', 'sets': ['Top pathways', 'Top probes in deap-learned'], 'size': 22},]);
+
+drawVennWithData({{report.id}}, 'venn_gene_sm-extended', '', 
+		[{'id': 'toppath_sm_e', 'sets': ['Top pathways'], 'size':294},
+		 {'id': 'topprobe_sm_e', 'sets': ['Top probes in deap-learned'], 'size':86},
+		 {'id': 'toppath_topprobe_sm_e', 'sets': ['Top pathways', 'Top probes in deap-learned'], 'size': 22},]);
+
+});
+</script>
          
        
 </div>  <!-- end of hide div -->
