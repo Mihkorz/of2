@@ -196,9 +196,8 @@ function drawVenn(reportID, renderTo,
                    // Display a tooltip with the current size
                    tooltip.transition().duration(400).style("opacity", .9);
                    
-                   if(path_gene == 'deeplearning') path_gene = 'genes;'
-                   
-                   tooltip.text(d.size + " "+path_gene);
+                   if(path_gene == 'deeplearning') tooltip.text(d.size + " genes");
+                   else tooltip.text(d.size + " "+path_gene);
                    
 
                    // highlight the current path
