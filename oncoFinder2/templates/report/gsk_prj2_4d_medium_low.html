@@ -501,7 +501,8 @@
        SM
        </td>
       </tr>
-    </table>   
+    </table>
+    <div id="venn_gene_dinamic_whole" class="" style="max-width:1000px;"></div>   
     
 <!-- VENN FOR DEEP LEARNING -->   
 <hr/>
@@ -517,31 +518,36 @@
         SM
        </td>
       </tr>
-    </table>   
+    </table> 
+    <div id="venn_gene_dinamic_extended" class="" style="max-width:1000px;"></div>  
 
 <script>
 $(document).ready(function(){
 drawVennWithData({{report.id}}, 'venn_gene_ec-whole', '', 
 		[{'id': 'toppath_ec_w', 'sets': ['Top pathways'], 'size':406},
 		 {'id': 'topprobe_ec_w', 'sets': ['Top probes in deap-learned'], 'size':83},
-		 {'id': 'toppath_topprobe_ec_w', 'sets': ['Top pathways', 'Top probes in deap-learned'], 'size': 32},]);
+		 {'id': 'toppath_topprobe_ec_w', 'sets': ['Top pathways', 'Top probes in deap-learned'], 'size': 32},],
+		 'venn_gene_dinamic_whole');
 
 drawVennWithData({{report.id}}, 'venn_gene_sm-whole', '', 
 		[{'id': 'toppath_sm_w', 'sets': ['Top pathways'], 'size':415},
 		 {'id': 'topprobe_sm_w', 'sets': ['Top probes in deap-learned'], 'size':83},
-		 {'id': 'toppath_topprobe_sm_w', 'sets': ['Top pathways', 'Top probes in deap-learned'], 'size': 23},]);
+		 {'id': 'toppath_topprobe_sm_w', 'sets': ['Top pathways', 'Top probes in deap-learned'], 'size': 23},],
+		 'venn_gene_dinamic_whole');
 
 
 
 drawVennWithData({{report.id}}, 'venn_gene_ec-extended', '', 
 		[{'id': 'toppath_ec_e', 'sets': ['Top pathways'], 'size':294},
 		 {'id': 'topprobe_ec_e', 'sets': ['Top probes in deap-learned'], 'size':83},
-		 {'id': 'toppath_topprobe_ec_e', 'sets': ['Top pathways', 'Top probes in deap-learned'], 'size': 22},]);
+		 {'id': 'toppath_topprobe_ec_e', 'sets': ['Top pathways', 'Top probes in deap-learned'], 'size': 22},],
+		 'venn_gene_dinamic_extended');
 
 drawVennWithData({{report.id}}, 'venn_gene_sm-extended', '', 
 		[{'id': 'toppath_sm_e', 'sets': ['Top pathways'], 'size':294},
 		 {'id': 'topprobe_sm_e', 'sets': ['Top probes in deap-learned'], 'size':86},
-		 {'id': 'toppath_topprobe_sm_e', 'sets': ['Top pathways', 'Top probes in deap-learned'], 'size': 22},]);
+		 {'id': 'toppath_topprobe_sm_e', 'sets': ['Top pathways', 'Top probes in deap-learned'], 'size': 22},],
+		 'venn_gene_dinamic_extended');
 
 });
 </script>
