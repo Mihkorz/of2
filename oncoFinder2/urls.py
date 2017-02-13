@@ -63,7 +63,8 @@ from report.views import ReportList, ReportDetail, ReportTest, \
                          ReportAjaxPathwayVenn, ReportAjaxPathwayVennTable, ReportPathwayTableJson, ReportAjaxPathDetail, \
                          ReportTfTableJson, ReportAjaxTfDetail, ReportDlFarmJson, ReportCorrelationTableJson, ReportSimilarityJson, \
                          ReportPotentialTargetsJson, ReportTfTrrustTableJson, ReportDSTableJson, ReportDSBoxplotJson, \
-                         ReportTargetInferenceJson, ReportMesenteryJson, ReportDeepGSKJson
+                         ReportTargetInferenceJson, ReportMesenteryJson, ReportDeepGSKJson, \
+                         ReportAjaxPathwayVennTableGSK
 from food.views import FoodIndex, FoodSearch
 
 urlpatterns = patterns('',
@@ -237,6 +238,7 @@ urlpatterns = patterns('',
     
     url(r'^report-portal/report-ajaxpathvenn/$', ReportAjaxPathwayVenn.as_view(), name="report_ajax_path_venn"),
     url(r'^report-portal/report-ajaxpathvenntbl/$', ReportAjaxPathwayVennTable.as_view(), name="report_ajax_path_venn_tbl"),
+    url(r'^report-portal/report-ajaxpathvenntbl-gsk/$', ReportAjaxPathwayVennTableGSK.as_view(), name="report_ajax_path_venn_tbl_gsk"),
     url(r'^report-portal/report-pathwaytablejson/$', ReportPathwayTableJson.as_view(), name="report-pathway_table_json"),
     url(r'^report-portal/report-ajaxpathdetail/$', ReportAjaxPathDetail.as_view(), name="report_ajax_path_detail"),
     

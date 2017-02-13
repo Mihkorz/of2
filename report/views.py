@@ -1574,6 +1574,72 @@ class ReportAjaxPathwayVennTable(TemplateView):
         response_data = {'aaData': json.loads(df_json)}
         return HttpResponse(json.dumps(response_data), content_type="application/json")
 
+
+class ReportAjaxPathwayVennTableGSK(TemplateView):
+    """
+    Used for venn table in GSK project 2 only
+    """
+    template_name="website/report_ajax_venn.html"
+    
+    
+    def dispatch(self, request, *args, **kwargs):
+        return super(ReportAjaxPathwayVennTableGSK, self).dispatch(request, *args, **kwargs)
+    
+    def get(self, request, *args, **kwargs):        
+        
+        report = Report.objects.get(pk=self.request.GET.get('reportID'))
+        group = self.request.GET.get('group')
+        
+        df = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/predictors_PAS_NN.csv')
+        
+        if group == 'toppath_ec_w':
+            df = df[df['comparison'] == 'Endothelial Cells' ]
+            df = df[df['group'] == 'pathways_only' ]
+        if group == 'topprobe_ec_w':
+            df = df[df['comparison'] == 'Endothelial Cells' ]
+            df = df[df['group'] == 'NN_only' ]
+        if group == 'toppath_topprobe_ec_w':
+            df = df[df['comparison'] == 'Endothelial Cells' ]
+            df = df[df['group'] == 'both' ]
+            
+        if group == 'toppath_sm_w':
+            df = df[df['comparison'] == 'Smooth Muscle' ]
+            df = df[df['group'] == 'pathways_only' ]
+        if group == 'topprobe_sm_w':
+            df = df[df['comparison'] == 'Smooth Muscle' ]
+            df = df[df['group'] == 'NN_only' ]
+        if group == 'toppath_topprobe_sm_w':
+            df = df[df['comparison'] == 'Smooth Muscle' ]
+            df = df[df['group'] == 'both' ]
+            
+        # EXTENDED
+        if group == 'toppath_ec_e':
+            df = df[df['comparison'] == 'Endothelial Cells (ext)' ]
+            df = df[df['group'] == 'pathways_only' ]
+        if group == 'topprobe_ec_e':
+            df = df[df['comparison'] == 'Endothelial Cells (ext)' ]
+            df = df[df['group'] == 'NN_only' ]
+        if group == 'toppath_topprobe_ec_e':
+            df = df[df['comparison'] == 'Endothelial Cells (ext)' ]
+            df = df[df['group'] == 'both' ]
+            
+        
+        if group == 'toppath_sm_e':
+            df = df[df['comparison'] == 'Smooth Muscle (ext)' ]
+            df = df[df['group'] == 'pathways_only' ]
+        if group == 'topprobe_sm_e':
+            df = df[df['comparison'] == 'Smooth Muscle (ext)' ]
+            df = df[df['group'] == 'NN_only' ]
+        if group == 'toppath_topprobe_sm_e':
+            df = df[df['comparison'] == 'Smooth Muscle (ext)' ]
+            df = df[df['group'] == 'both' ]
+        
+        
+        df_json = df[['comparison', 'gene']].to_json(orient='values')
+        #raise Exception('venn table')       
+        response_data = {'data': json.loads(df_json)}
+        return HttpResponse(json.dumps(response_data), content_type="application/json")
+
 import matplotlib.pyplot as plt
 import matplotlib.colors as colors
 import matplotlib.cm as cmx
