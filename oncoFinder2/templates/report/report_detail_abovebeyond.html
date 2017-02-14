@@ -76,6 +76,27 @@
           {%endif%}
           
 
+{%if 'dmso' in report.slug %}
+<center>
+<img src='/media/report-portal/gsk_prj3_dmso/prj3_dmso.png' />
+</center>
+{%endif%}
+{%if 'prj3_l1k' in report.slug %}
+<center>
+<img src='/media/report-portal/gsk_prj3_l1k/prj3_l1k.png' />
+</center>
+{%endif%}
+{%if 'prj3_mm' in report.slug %}
+<center>
+<img src='/media/report-portal/gsk_prj3_mm/prj3_mm.png' />
+</center>
+{%endif%}
+{%if 'nocmp' in report.slug %}
+<center>
+<img src='/media/report-portal/gsk_prj3_nocmp/prj3_nocmp.png' />
+</center>
+{%endif%}
+
 <!-------------------------------------  GENE level  -->          
           <hr/>
           <h2 id='gene_analysis'>Gene level analysis</h2>
@@ -99,7 +120,9 @@
 <img src='/media/report-portal/above-and-beyond/gene2.png' />
 <h4>PCA plot without outlier</h4>
 </center>
-{%endif%}          
+{%endif%}
+
+           
    <!-- GENE Nav tabs -->      
    <ul class="nav nav-tabs" role="tablist">
      {%for group in report.genegroup_set.all%}

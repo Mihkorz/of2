@@ -2634,16 +2634,15 @@ class ReportTest(TemplateView):
     
     def get(self, request, *args, **kwargs):
         
+        df = pd.read_csv("/home/mikhail/Downloads/AboveAndBeyond/Disease3S7/export_DE/Disease3S7.tab",
+                            sep='\t', index_col=0)
+        df.to_csv("/home/mikhail/Downloads/AboveAndBeyond/Disease3S7/export_DE/Disease3S7.csv",
+                            sep=',')
+        raise Exception('ramdom')
+        
         df = pd.read_csv("/home/mikhail/Downloads/GSK/Database/AFFY_PROBE_SET.txt",
                            sep='\t', index_col=0)
-        df_r = pd.read_csv("/home/mikhail/Downloads/GSK/Database/AFFY_PROBE_SET_randomized.txt",
-                           sep='\t', index_col=0)
         
-        df_r.columns = ['NAME_rand', 'GENE_HOMOLOGY_ID_rand']
-        
-        df = df.join(df_r, how='inner')
-        
-        raise Exception('ramdom')
         df_c = pd.read_csv("/home/mikhail/Downloads/GSK/4D/High/DE/Comparison74.tab",
                            sep='\t', index_col=0)
         
