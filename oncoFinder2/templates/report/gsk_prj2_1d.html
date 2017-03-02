@@ -497,27 +497,132 @@
  
   
   </div>
-  <!--  
-  <center>
-  <img src='/media/report-portal/gsk_prj2_1d/Comb.png' width='800px'/>
-  <h4>Combined set features</h4>
-  <br/><br/>
-  
-  <img src='/media/report-portal/gsk_prj2_1d/SM.png' width='800px'/>
-  <h4>SM set features Day 1</h4>
-  <br/><br/>
-  
-  <img src='/media/report-portal/gsk_prj2_1d/EC.png' width='800px'/>
-  <h4>EC set features Day 1</h4>
-  <br/><br/>
-  
-  <img src='/media/report-portal/gsk_prj2_1d/CEC.png' width='800px'/>
-  <h4>CEC set features Day 1</h4>
-  <br/><br/>
-  
-  
-  </center>
-   -->       
+
+
+ <!-- VENN FOR PAS -->   
+<hr/>
+<h4>Whole Dataset</h4>
+<h5>Endothelial Cells</h5>   
+   <table style='text-align:center;'>
+      <tr>
+       <td>
+       <div id="venn_gene_ec-whole_up" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Up-regulated
+       </td>
+       <td>
+       <div id="venn_gene_ec-whole_down" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Down-regulated
+       </td>
+      </tr>
+    </table>
+    <div id="venn_gene_dinamic_whole_ec" class="" style="max-width:1000px;"></div>
+<br/><br/>    
+<h5>Smooth Muscle</h5>   
+   <table style='text-align:center;'>
+      <tr>
+       <td>
+       <div id="venn_gene_sm-whole_up" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Up-regulated
+       </td>
+       <td>
+       <div id="venn_gene_sm-whole_down" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Down-regulated
+       </td>
+      </tr>
+    </table>
+    <div id="venn_gene_dinamic_whole_sm" class="" style="max-width:1000px;"></div>       
+    
+<!-- VENN FOR DEEP LEARNING -->   
+<hr/>
+<h4>Extended Dataset</h4>   
+<h5>Endothelial Cells</h5>   
+   <table style='text-align:center;'>
+      <tr>
+       <td>
+       <div id="venn_gene_ec-extended_up" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Up-regulated
+       </td>
+       <td>
+       <div id="venn_gene_ec-extended_down" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Down-regulated
+       </td>
+      </tr>
+    </table>
+    <div id="venn_gene_dinamic_extended_ec" class="" style="max-width:1000px;"></div>
+<br/><br/>    
+<h5>Smooth Muscle</h5>   
+   <table style='text-align:center;'>
+      <tr>
+       <td>
+       <div id="venn_gene_sm-extended_up" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Up-regulated
+       </td>
+       <td>
+       <div id="venn_gene_sm-extended_down" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
+       Down-regulated
+       </td>
+      </tr>
+    </table>
+    <div id="venn_gene_dinamic_extended_sm" class="" style="max-width:1000px;"></div>
+
+<script>
+$(document).ready(function(){
+/////////////////////// WHOLE
+//ec up
+drawVennWithData({{report.id}}, 'venn_gene_ec-whole_up', '', 
+		[{'id': 'toppath_ec_w_up', 'sets': ['Top pathways'], 'size':213},
+		 {'id': 'topprobe_ec_w_up', 'sets': ['Top probes in deap-learned'], 'size':42},
+		 {'id': 'toppath_topprobe_ec_w_up', 'sets': ['Top pathways', 'Top probes in deap-learned'], 'size': 16},],
+		 'venn_gene_dinamic_whole_ec');
+//ec down
+drawVennWithData({{report.id}}, 'venn_gene_ec-whole_down', '', 
+		[{'id': 'toppath_ec_w_down', 'sets': ['Top pathways'], 'size':193},
+		 {'id': 'topprobe_ec_w_down', 'sets': ['Top probes in deap-learned'], 'size':41},
+		 {'id': 'toppath_topprobe_ec_w_down', 'sets': ['Top pathways', 'Top probes in deap-learned'], 'size': 16},],
+		 'venn_gene_dinamic_whole_ec');
+//sm up
+drawVennWithData({{report.id}}, 'venn_gene_sm-whole_up', '', 
+		[{'id': 'toppath_sm_w_up', 'sets': ['Top pathways'], 'size':207},
+		 {'id': 'topprobe_sm_w_up', 'sets': ['Top probes in deap-learned'], 'size':51},
+		 {'id': 'toppath_topprobe_sm_w_up', 'sets': ['Top pathways', 'Top probes in deap-learned'], 'size': 13},],
+		 'venn_gene_dinamic_whole_sm');
+//sm down
+drawVennWithData({{report.id}}, 'venn_gene_sm-whole_down', '', 
+		[{'id': 'toppath_sm_w_down', 'sets': ['Top pathways'], 'size':208},
+		 {'id': 'topprobe_sm_w_down', 'sets': ['Top probes in deap-learned'], 'size':32},
+		 {'id': 'toppath_topprobe_sm_w_down', 'sets': ['Top pathways', 'Top probes in deap-learned'], 'size': 10},],
+		 'venn_gene_dinamic_whole_sm');
+
+
+////////////////// EXTENDED
+//ec up
+drawVennWithData({{report.id}}, 'venn_gene_ec-extended_up', '', 
+		[{'id': 'toppath_ec_e_up', 'sets': ['Top pathways'], 'size':147},
+		 {'id': 'topprobe_ec_e_up', 'sets': ['Top probes in deap-learned'], 'size':47},
+		 {'id': 'toppath_topprobe_ec_e_up', 'sets': ['Top pathways', 'Top probes in deap-learned'], 'size': 12},],
+		 'venn_gene_dinamic_extended_ec');
+//ec down
+drawVennWithData({{report.id}}, 'venn_gene_ec-extended_down', '', 
+		[{'id': 'toppath_ec_e_down', 'sets': ['Top pathways'], 'size':147},
+		 {'id': 'topprobe_ec_e_down', 'sets': ['Top probes in deap-learned'], 'size':36},
+		 {'id': 'toppath_topprobe_ec_e_down', 'sets': ['Top pathways', 'Top probes in deap-learned'], 'size': 10},],
+		 'venn_gene_dinamic_extended_ec');
+//sm up
+drawVennWithData({{report.id}}, 'venn_gene_sm-extended_up', '', 
+		[{'id': 'toppath_sm_e_up', 'sets': ['Top pathways'], 'size':154},
+		 {'id': 'topprobe_sm_e_up', 'sets': ['Top probes in deap-learned'], 'size':40},
+		 {'id': 'toppath_topprobe_sm_e_up', 'sets': ['Top pathways', 'Top probes in deap-learned'], 'size': 13},],
+		 'venn_gene_dinamic_extended_sm');
+//sm down
+drawVennWithData({{report.id}}, 'venn_gene_sm-extended_down', '', 
+		[{'id': 'toppath_sm_e_down', 'sets': ['Top pathways'], 'size':140},
+		 {'id': 'topprobe_sm_e_down', 'sets': ['Top probes in deap-learned'], 'size':46},
+		 {'id': 'toppath_topprobe_sm_e_down', 'sets': ['Top pathways', 'Top probes in deap-learned'], 'size': 9},],
+		 'venn_gene_dinamic_extended_sm');
+
+});
+</script>
+     
 </div>  <!-- end of hide div -->
 <!------------- End of Pathway Analysis -->
 

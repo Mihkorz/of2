@@ -1591,48 +1591,118 @@ class ReportAjaxPathwayVennTableGSK(TemplateView):
         group = self.request.GET.get('group')
         
         df = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/predictors_PAS_NN.csv')
+        #raise Exception('stop')
+        #ec up
+        if group == 'toppath_ec_w_up':
+            df = df[df['comparison'] == 'Endothelial Cells' ]
+            df = df[df['group'] == 'pathways_only' ]
+            df = df[df['direction'] == 1 ]
+        if group == 'topprobe_ec_w_up':
+            df = df[df['comparison'] == 'Endothelial Cells' ]
+            df = df[df['group'] == 'NN_only' ]
+            df = df[df['direction'] == 1 ]
+        if group == 'toppath_topprobe_ec_w_up':
+            df = df[df['comparison'] == 'Endothelial Cells' ]
+            df = df[df['group'] == 'both' ]
+            df = df[df['direction'] == 1 ]
+        #ec down
+        if group == 'toppath_ec_w_down':
+            df = df[df['comparison'] == 'Endothelial Cells' ]
+            df = df[df['group'] == 'pathways_only' ]
+            df = df[df['direction'] == -1 ]
+        if group == 'topprobe_ec_w_down':
+            df = df[df['comparison'] == 'Endothelial Cells' ]
+            df = df[df['group'] == 'NN_only' ]
+            df = df[df['direction'] == -1 ]
+        if group == 'toppath_topprobe_ec_w_down':
+            df = df[df['comparison'] == 'Endothelial Cells' ]
+            df = df[df['group'] == 'both' ]
+            df = df[df['direction'] == -1 ]    
         
-        if group == 'toppath_ec_w':
-            df = df[df['comparison'] == 'Endothelial Cells' ]
-            df = df[df['group'] == 'pathways_only' ]
-        if group == 'topprobe_ec_w':
-            df = df[df['comparison'] == 'Endothelial Cells' ]
-            df = df[df['group'] == 'NN_only' ]
-        if group == 'toppath_topprobe_ec_w':
-            df = df[df['comparison'] == 'Endothelial Cells' ]
-            df = df[df['group'] == 'both' ]
-            
-        if group == 'toppath_sm_w':
+        #sm up    
+        if group == 'toppath_sm_w_up':
             df = df[df['comparison'] == 'Smooth Muscle' ]
             df = df[df['group'] == 'pathways_only' ]
-        if group == 'topprobe_sm_w':
+            df = df[df['direction'] == 1 ]
+        if group == 'topprobe_sm_w_up':
             df = df[df['comparison'] == 'Smooth Muscle' ]
             df = df[df['group'] == 'NN_only' ]
-        if group == 'toppath_topprobe_sm_w':
+            df = df[df['direction'] == 1 ]
+        if group == 'toppath_topprobe_sm_w_up':
             df = df[df['comparison'] == 'Smooth Muscle' ]
             df = df[df['group'] == 'both' ]
+            df = df[df['direction'] == 1 ]
+        
+        #sm down    
+        if group == 'toppath_sm_w_down':
+            df = df[df['comparison'] == 'Smooth Muscle' ]
+            df = df[df['group'] == 'pathways_only' ]
+            df = df[df['direction'] == -1 ]
+        if group == 'topprobe_sm_w_down':
+            df = df[df['comparison'] == 'Smooth Muscle' ]
+            df = df[df['group'] == 'NN_only' ]
+            df = df[df['direction'] == -1 ]
+        if group == 'toppath_topprobe_sm_w_down':
+            df = df[df['comparison'] == 'Smooth Muscle' ]
+            df = df[df['group'] == 'both' ]
+            df = df[df['direction'] == -1 ]
             
         # EXTENDED
-        if group == 'toppath_ec_e':
+        #ec up
+        if group == 'toppath_ec_e_up':
             df = df[df['comparison'] == 'Endothelial Cells (ext)' ]
             df = df[df['group'] == 'pathways_only' ]
-        if group == 'topprobe_ec_e':
+            df = df[df['direction'] == 1 ]
+        if group == 'topprobe_ec_e_up':
             df = df[df['comparison'] == 'Endothelial Cells (ext)' ]
             df = df[df['group'] == 'NN_only' ]
-        if group == 'toppath_topprobe_ec_e':
+            df = df[df['direction'] == 1 ]
+        if group == 'toppath_topprobe_ec_e_up':
             df = df[df['comparison'] == 'Endothelial Cells (ext)' ]
             df = df[df['group'] == 'both' ]
+            df = df[df['direction'] == 1 ]
+        #ec down
+        if group == 'toppath_ec_e_down':
+            df = df[df['comparison'] == 'Endothelial Cells (ext)' ]
+            df = df[df['group'] == 'pathways_only' ]
+            df = df[df['direction'] == -1 ]
+        if group == 'topprobe_ec_e_down':
+            df = df[df['comparison'] == 'Endothelial Cells (ext)' ]
+            df = df[df['group'] == 'NN_only' ]
+            df = df[df['direction'] == -1 ]
+        if group == 'toppath_topprobe_ec_e_down':
+            df = df[df['comparison'] == 'Endothelial Cells (ext)' ]
+            df = df[df['group'] == 'both' ]
+            df = df[df['direction'] == -1 ]
             
-        
-        if group == 'toppath_sm_e':
+        #sm up
+        if group == 'toppath_sm_e_up':
             df = df[df['comparison'] == 'Smooth Muscle (ext)' ]
             df = df[df['group'] == 'pathways_only' ]
-        if group == 'topprobe_sm_e':
+            df = df[df['direction'] == 1 ]
+        if group == 'topprobe_sm_e_up':
             df = df[df['comparison'] == 'Smooth Muscle (ext)' ]
             df = df[df['group'] == 'NN_only' ]
-        if group == 'toppath_topprobe_sm_e':
+            df = df[df['direction'] == 1 ]
+        if group == 'toppath_topprobe_sm_e_up':
             df = df[df['comparison'] == 'Smooth Muscle (ext)' ]
             df = df[df['group'] == 'both' ]
+            df = df[df['direction'] == 1 ]
+        #ec down
+        if group == 'toppath_sm_e_down':
+            df = df[df['comparison'] == 'Smooth Muscle (ext)' ]
+            df = df[df['group'] == 'pathways_only' ]
+            df = df[df['direction'] == -1 ]
+        if group == 'topprobe_sm_e_down':
+            df = df[df['comparison'] == 'Smooth Muscle (ext)' ]
+            df = df[df['group'] == 'NN_only' ]
+            df = df[df['direction'] == -1 ]
+        if group == 'toppath_topprobe_sm_e_down':
+            df = df[df['comparison'] == 'Smooth Muscle (ext)' ]
+            df = df[df['group'] == 'both' ]
+            df = df[df['direction'] == -1 ]     
+        
+        
         
         
         df_json = df[['comparison', 'gene']].to_json(orient='values')
@@ -2633,6 +2703,15 @@ class ReportTest(TemplateView):
         return super(ReportTest, self).dispatch(request, *args, **kwargs)
     
     def get(self, request, *args, **kwargs):
+        
+        df = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/gsk_prj2_1d/predictors_PAS_NN.csv')
+        
+        df = df[df['comparison'] == 'Smooth Muscle (ext)' ]
+        df = df[df['group'] == 'NN_only' ]
+        df = df[df['direction'] == 1 ]
+        
+        aaa = len(df.index)
+        raise Exception('fuck')
         
         import docx
         
