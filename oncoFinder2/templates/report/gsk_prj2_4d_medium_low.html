@@ -490,6 +490,16 @@
   
  <!-- VENN FOR PAS -->   
 <hr/>
+<p>
+We detected "usual suspect" pathways which appeared to be changed in the same direction in most of the treatments. Specifically, we chose the pathways with PAS values lower than -1 or higher than +1 in more than 50% of treatments. Only three pathways were filtered out by this procedure, which could be associated with stress response:
+ERK_Signaling_Pathway, JNK_Pathway, STAT3_Pathway.
+</p>
+<br/>
+<p>
+To find the genes which contributed the most to prediction of drug-induced vascular injury, we overlapped the top predictors from from neural network-based classifier and the genes involved in the pathways which were important for classification in a pathway-based random forest model. To construct Venn-diagrams, we selected top 200 probes and top 200 pathways. The genes were categorized based on their direction of gene expression change between treatments not causing and causing medial arterial necrosis (upregulated genes are defined as upregulated in medial arterial necrosis group). Thus, for each studied tissue, we provide a Venn diagram showing the overlap between upregulated and downregulated genes important for prediction by each of the two models.
+</p>
+<br/>
+
 <h4>Whole Dataset</h4>
 <h5>Endothelial Cells</h5>   
    <table style='text-align:center;'>
