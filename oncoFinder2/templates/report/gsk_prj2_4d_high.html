@@ -561,16 +561,18 @@ drawVennWithData({{report.id}}, 'venn_gene_sm-extended', '',
 <h2 id='dl_analysis'>Deep Learning</h2>
 <hr/>
 
-{%if report.path_text%}
-          {{report.tf_text|safe}}
-          <br/><br/>
-{%endif%}
+
 
 <center>
 <button type="button"  class="btn btn-success btn-lg center" id='btn_show_tf'>Show Data</button>
 </center>
 
-<div id='hide_tf' style='display:none;'> <!-- Div to hide and load on button click 
+<div id='hide_tf' style='display:none;'> <!-- Div to hide and load on button click -->
+
+{%if report.tf_text%}
+          {{report.tf_text|safe}}
+          <br/><br/>
+{%endif%}
 
    <!-- TF Nav tabs  -->     
    <ul class="nav nav-tabs" role="tablist">

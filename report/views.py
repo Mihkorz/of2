@@ -2634,6 +2634,99 @@ class ReportTest(TemplateView):
     
     def get(self, request, *args, **kwargs):
         
+        import docx
+        
+        #########3 TARGET INFERENCE
+        
+        doc = docx.Document('/home/mikhail/Downloads/GSK/WORD/Respiratory/tarinfer/tarinfer.docx')
+        
+        df = pd.read_csv("/home/mikhail/Downloads/GSK/WORD/Respiratory/tarinfer/tarinfer.csv",
+                            index_col=0, encoding='utf-8')
+        cols = df.columns
+        
+        for col in cols:
+            df1 = df[col]
+            df_up = df1.copy()
+            df_up.sort(ascending=False, inplace=True)
+            df_up =  pd.DataFrame(df_up[:20])
+            df_up.reset_index(inplace=True)
+            
+            paragraph = doc.add_heading(col, level=3)
+            paragraph1 = doc.add_heading('Top 20 targets', level=4)
+            
+            t = doc.add_table(df_up.shape[0]+1, df_up.shape[1])            
+            t.style = 'TableGrid'
+            
+            # add the header rows.
+            for j in range(df_up.shape[-1]):
+                t.cell(0,j).text = df_up.columns[j]
+
+            # add the rest of the data frame
+            for i in range(df_up.shape[0]):
+                for j in range(df_up.shape[-1]):
+                    t.cell(i+1,j).text = str(df_up.values[i,j])
+            
+            #raise Exception('cycle')
+            
+        doc.save('/home/mikhail/Downloads/GSK/WORD/Respiratory/tarinfer/tarinfer.docx')
+        raise Exception('tarinfer')
+        ##########3 PATHWAYS
+        doc = docx.Document('/home/mikhail/Downloads/GSK/WORD/Respiratory/path/test.docx')
+        
+        df = pd.read_csv("/home/mikhail/Downloads/GSK/WORD/Respiratory/path/tbl-path_all.csv",
+                            index_col=0, encoding='utf-8')
+        cols = df.columns
+        for col in cols:
+            df1 = df[col]
+            df_up = df1.copy()
+            df_down = df1.copy()
+            df_down.sort(ascending=True, inplace=True)
+            df_up.sort(ascending=False, inplace=True)
+            df_up =  pd.DataFrame(df_up[:20])
+            df_down = pd.DataFrame(df_down[:20])
+            
+            df_up.reset_index(inplace=True)
+            df_up.columns = ['Pathway', 'PAS']
+            
+            
+            paragraph = doc.add_heading(col, level=3)
+            paragraph1 = doc.add_heading('Top 20 up-regulated pathways', level=4)
+            
+            t = doc.add_table(df_up.shape[0]+1, df_up.shape[1])            
+            t.style = 'TableGrid'
+            # add the header rows.
+            for j in range(df_up.shape[-1]):
+                t.cell(0,j).text = df_up.columns[j]
+
+            # add the rest of the data frame
+            for i in range(df_up.shape[0]):
+                for j in range(df_up.shape[-1]):
+                    t.cell(i+1,j).text = str(df_up.values[i,j])
+            
+            ##############################
+            df_down.reset_index(inplace=True)
+            df_down.columns = ['Pathway', 'PAS']
+            
+            
+            #paragraph = doc.add_paragraph(col)
+            paragraph1 = doc.add_heading('Top 20 down-regulated pathways', level=4)
+            
+            t = doc.add_table(df_down.shape[0]+1, df_down.shape[1])            
+            t.style = 'TableGrid'
+            # add the header rows.
+            for j in range(df_down.shape[-1]):
+                t.cell(0,j).text = df_down.columns[j]
+
+            # add the rest of the data frame
+            for i in range(df_down.shape[0]):
+                for j in range(df_down.shape[-1]):
+                    t.cell(i+1,j).text = str(df_down.values[i,j])
+            
+            
+            #raise Exception('stop')
+        doc.save('/home/mikhail/Downloads/GSK/WORD/Respiratory/path/test.docx')
+        raise Exception('Word')
+        
         df = pd.read_csv("/home/mikhail/Downloads/AboveAndBeyond/Disease3S7/export_DE/Disease3S7.tab",
                             sep='\t', index_col=0)
         df.to_csv("/home/mikhail/Downloads/AboveAndBeyond/Disease3S7/export_DE/Disease3S7.csv",
