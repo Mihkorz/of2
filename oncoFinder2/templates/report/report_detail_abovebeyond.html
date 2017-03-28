@@ -905,7 +905,7 @@ $(function() {
 	{%endif%}
 	
 	{%for gene in report.get_notable_genes_list%}
-	  //drawGeneBoxplot(reportID={{report.id}}, name='{{gene}}', renderTo='{{gene}}', gene='{{gene}}', categories='{{report.get_all_gene_groups_norm_as_list}}');
+	  drawGeneBoxplot(reportID={{report.id}}, name='{{gene}}', renderTo='{{gene}}', gene='{{gene}}', categories='{{report.get_all_gene_groups_norm_as_list}}');
 	{%endfor%}
 	
 	

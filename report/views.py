@@ -437,6 +437,8 @@ class ReportGeneBoxplotJson(TemplateView):
         except: # AZ report style
             
             lcategories = categories.split(',')
+            
+            
                 
             if len(lcategories)<2: # if there is only one category. 4 volcano table only
                 groups = GeneGroup.objects.filter(name=lcategories[0], report=report)

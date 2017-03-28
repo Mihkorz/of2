@@ -1,9 +1,12 @@
 function drawGeneBoxplot(reportID, name, renderTo, gene, categories){
+
 // BOX PLOT FOR GENES
 	categories = categories.replace(/u&#39;/g, "");
 	categories = categories.replace(/&#39;/g, "");
 	categories = categories.replace('[', "");
 	categories = categories.replace(']', "");
+	
+	//console.log(categories.split(','));
 	var options = {
 
         chart: {
@@ -53,7 +56,8 @@ function drawGeneBoxplot(reportID, name, renderTo, gene, categories){
 	$.getJSON('/report-portal/report-genesboxplotjson/',
     		{
 		     reportID: reportID,
-    	     gene: gene
+    	     gene: gene,
+    	     categories: categories
     		},
     		function(data) { 
     	
