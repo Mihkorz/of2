@@ -52,6 +52,11 @@ class ReportDetail(DetailView):
         
         user = request.user
         
+        #standard
+        if  (user.is_staff):
+            self.template_name = 'report/report_detail_abovebeyond.html'
+        
+        
         if (self.get_object().id==4 or self.get_object().id==8) and (self.is_member(user, 'Astrazeneca') or user.is_staff):
             self.template_name = 'report/report_detail_az.html' 
         if 'jjms' in self.get_object().slug and (self.is_member(user, 'J&J') or user.is_staff):
