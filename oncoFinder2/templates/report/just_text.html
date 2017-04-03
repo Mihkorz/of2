@@ -55,17 +55,17 @@
               <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#dl_analysis">Deep Learning</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#kinetic_analysis">Kinetic pathway modeling</a></li>-->
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#gene_analysis">Gene level analysis</a></li>
-            <!--  <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tf_analysis">Transcription Factor Analysis</a></li>-->
+            <!--  <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tf_analysis">Transcription Factor Analysis</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#path_analysis">Pathway Analysis</a></li>
             {%if 'above-and-beyond' in report.slug %}
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#ds_analysis">Drug Scoring</a></li>
             {%endif%}
             {%if 'l1k' in report.slug %}
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#dl_analysis">Deep Learning</a></li>
-            {%endif%}
-            {%if 'gsk' in report.slug %}
-            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#conclusions">Discussion</a></li>
-            {%endif%}
+            {%endif%}-->
+            
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#conclusions">Results</a></li>
+           
             <!--  
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#sim_analysis">Similarity to known drug- and knockdown-induced expression signatures</a></li>
             
@@ -105,333 +105,7 @@
 </center>
 {%endif%}
 
-<!-------------------------------------  GENE level  -->          
-          <hr/>
-          <h2 id='gene_analysis'>Gene level analysis</h2>
-          <hr/>
-          {%if report.gene_text%}
-          {{report.gene_text|safe}}
-          <br/><br/>
-          {%endif%}
 
-
-<center>
-<button type="button"  class="btn btn-success btn-lg center" id='btn_show_genes'>Show Data</button>
-</center>
-
-<div id='hide_genes' style='display:none;'> <!-- Div to hide and load on button click -->
-{%if 'above-and-beyond' in report.slug %}
-<center>
-<img src='/media/report-portal/above-and-beyond/gene1.png' />
-<h4>PCA plot with outlier</h4>
-<br/>
-<img src='/media/report-portal/above-and-beyond/gene2.png' />
-<h4>PCA plot without outlier</h4>
-</center>
-{%endif%}
-
-           
-   <!-- GENE Nav tabs -->      
-   <ul class="nav nav-tabs" role="tablist">
-     {%for group in report.genegroup_set.all%}
-       <li role="presentation" {%if forloop.counter == 1 %}class="active"{%endif%}>
-         <a href="#{{group.get_slug}}_tab" aria-controls="home1" role="tab" data-toggle="tab" id='vol_boot_{{group.get_slug}}'>
-           {{group.name}} vs {{report.norm_name}}
-         </a>
-       </li>
-     {%endfor%}
-   </ul>
-         
-   <div class="tab-content">
-    {%for group in report.genegroup_set.all%}
-     {%if forloop.counter == 1 %}
-     <div role="tabpanel" class="tab-pane fade in active" id="{{group.get_slug}}_tab">
-     {%else%}
-     <div role="tabpanel" class="tab-pane fade " id="{{group.get_slug}}_tab">
-     {%endif%}
-       <div id="{{group.get_slug}}_volcano" 
-            style="min-width: 800px; height: 400px; max-width: 800px; margin: 5px auto">
-            <span>Loading plot...</span>
-       </div> <!-- Volcano plot div -->
-       
-       
-       <h4>Table <span class='tbl_num'></span>. {{group.name}} vs {{report.norm_name}}</h4>
-       <table id="tbl-{{group.get_slug}}" class="path table table-striped table-bordered" cellspacing="0" width="100%">
-        <thead>
-          <tr>
-           <th>Gene</th>
-           <th>log2FoldChange</th>
-           <th>adj. p-value</th>
-          </tr>
-        </thead>  
-      </table>
-      <br/><br/>
-     
-     
-     </div> <!-- end of tabpanel div -->
-    {%endfor%}
-   
-   </div> <!--  end of tab-content div -->
-   
-<!-- -------------------- GENE VENN  -->
-<br/>
-<h3>Gene level comparison</h3>
-<br/>
-
-<!-- Gene level comparison Nav tabs -->
-<ul class="nav nav-tabs" role="tablist">
-         <li role="presentation" class="active"><a href="#gene_all_tab" aria-controls="settings" role="tab" data-toggle="tab">ALL</a></li>
-         {%for perm in report.get_gene_permutations%}
-         <li role="presentation" ><a href="#gene_{{perm.strip}}_tab" aria-controls="settings" role="tab" data-toggle="tab" id='venn_boot_gene_{{perm.strip}}'>{{perm}}</a></li>
-         {%endfor%}
-</ul>
-
-<!-- GEne VEnn Tab panes -->
-  <div class="tab-content">
-  
-  <div role="tabpanel" class="tab-pane fade in active " id="gene_all_tab">     <br/> 
-    <h4>Table . All genes</h4>
-    <table id="tbl-gene_all" class="path table table-striped table-bordered" cellspacing="0" width="100%">
-        <thead>
-          <tr>
-           <th>Gene</th>
-           {%for group in report.get_all_gene_groups_as_list%}
-            <!--  {% if forloop.counter > 1 %}<th>{{group}}</th> {%endif%}-->
-            <th>{{group}}</th>
-           {%endfor%}
-          </tr>
-        </thead>  
-      </table>       
-   <br/>
-  
-  </div>
-  
-  {%for perm in report.get_gene_permutations%}
-  <div role="tabpanel" class="tab-pane fade " id="gene_{{perm.strip}}_tab">     <br/> 
-    <table style='text-align:center;'>
-      <tr>
-       <td>
-       <div id="venn_gene-{{perm.strip}}-up" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
-       Significantly upregulated genes
-       </td>
-       <td>
-       <div id="venn_gene-{{perm.strip}}-down" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
-       Significantly downregulated genes
-       </td>
-      </tr>
-    </table>        
-   <br/>
-  <div id="venn_gene_dinamic_{{perm.strip}}" class="" style="max-width:1000px;"></div> <!--  div to place dinamic tables from Venn clicks -->
-  </div>
-  {%endfor%}
-  
-  </div>
-<hr/> 
-{%if report.notable_genes%}
-   <h3>Notable genes</h3>
-<hr/>
-
-
- <!-- Notable GENE Nav tabs -->
-         <ul class="nav nav-tabs" role="tablist">
-           {%for gene in report.get_notable_genes_list%}
-           <li role="presentation" {%if forloop.counter == 1 %}class="active"{%endif%}><a href="#{{gene}}_tab" aria-controls="home1" role="tab" data-toggle="tab">{{gene}}</a></li>
-           {%endfor%}
-         </ul>
-
-   <div class="tab-content">
-    {%for gene in report.get_notable_genes_list%}
-     {%if forloop.counter == 1 %}
-     <div role="tabpanel" class="tab-pane fade in active" id="{{gene}}_tab">
-     {%else%}
-     <div role="tabpanel" class="tab-pane fade " id="{{gene}}_tab">
-     {%endif%}
-     <div id="{{gene}}" style="min-width: 800px; height: 400px; width: 1100px; margin: 0 auto">Loading box plot...</div>
-   
-     </div>
-    {%endfor%}
-   
-   </div> <!--  end of tab panel -->
-{%endif%}
-
-</div> <!--  end of hide div -->
-
-
-<!-- ---------------------------------Transcription Factor--------------------------------------------- 
-
- 
- <hr/> 
-<h2 id='tf_analysis'>Transcription Factor Analysis</h2>
-<hr/>
-
-{%if report.path_text%}
-          {{report.tf_text|safe}}
-          <br/><br/>
-{%endif%}
-
-<center>
-<button type="button"  class="btn btn-success btn-lg center" id='btn_show_tf'>Show Data</button>
-</center>
-
-<div id='hide_tf' style='display:none;'> <!-- Div to hide and load on button click 
-
-   <!-- TF Nav tabs       
-   <ul class="nav nav-tabs" role="tablist">
-     {%for group in report.genegroup_set.all%}
-       <li role="presentation" {%if forloop.counter == 1 %}class="active"{%endif%}>
-         <a href="#{{group.get_slug}}_tf_tab" aria-controls="home1" role="tab" data-toggle="tab" id='tf_boot_{{group.get_slug}}'>
-           {{group.name}}
-         </a>
-       </li>
-     {%endfor%}
-   </ul>
-         
-   <div class="tab-content">
-    {%for group in report.genegroup_set.all%}
-     {%if forloop.counter == 1 %}
-     <div role="tabpanel" class="tab-pane fade in active" id="{{group.get_slug}}_tf_tab">
-     {%else%}
-     <div role="tabpanel" class="tab-pane fade " id="{{group.get_slug}}_tf_tab">
-     {%endif%}
-             
-       <h4>Table <span class='tbl_num'></span>Transcription Factor (FANTOM5 database) for {{group.name}} </h4>
-       <table id="tbl-tf-{{group.get_slug}}" class="path table table-striped table-bordered" cellspacing="0" width="100%">
-        <thead>
-          <tr>
-           <th>Factor</th>
-           <th>underTF_DEG</th>
-           <th>underTF_nonDEG</th>
-           <th>notunderTF_DEG</th>
-           <th>notunderTF_nonDEG</th>
-           <th>p-value</th>
-           <th>OR</th>
-           <th>adj. p-value</th>
-          </tr>
-        </thead>  
-      </table>
-      <br/><br/>
-     
-     
-     </div> <!-- end of tabpanel div 
-    {%endfor%}
-   
-   </div> <!--  end of tab-content div 
-   
-   
-   <!-- TF Nav tabs       
-   <ul class="nav nav-tabs" role="tablist">
-     {%for group in report.genegroup_set.all%}
-       <li role="presentation" {%if forloop.counter == 1 %}class="active"{%endif%}>
-         <a href="#{{group.get_slug}}_tftrrust_tab" aria-controls="home1" role="tab" data-toggle="tab" id='tftrrust_boot_{{group.get_slug}}'>
-           {{group.name}}
-         </a>
-       </li>
-     {%endfor%}
-   </ul>
-         
-   <div class="tab-content">
-    {%for group in report.genegroup_set.all%}
-     {%if forloop.counter == 1 %}
-     <div role="tabpanel" class="tab-pane fade in active" id="{{group.get_slug}}_tftrrust_tab">
-     {%else%}
-     <div role="tabpanel" class="tab-pane fade " id="{{group.get_slug}}_tftrrust_tab">
-     {%endif%}
-             
-       <h4>Table <span class='tbl_num'></span>Transcription Factor Analysis (TRRUST database) for {{group.name}} </h4>
-       <table id="tbl-tftrrust-{{group.get_slug}}" class="path table table-striped table-bordered" cellspacing="0" width="100%">
-        <thead>
-          <tr>
-           <th>Factor</th>
-           <th>underTF_DEG</th>
-           <th>underTF_nonDEG</th>
-           <th>notunderTF_DEG</th>
-           <th>notunderTF_nonDEG</th>
-           <th>p-value</th>
-           <th>OR</th>
-           <th>adj. p-value</th>
-          </tr>
-        </thead>  
-      </table>
-      <br/><br/>
-     
-     
-     </div> <!-- end of tabpanel div 
-    {%endfor%}
-   
-   </div> <!--  end of tab-content div 
-
-</div> <!--  end of hide div 
-<!-- End of TF -->
-
-<!-- ---------------------------------PATHWAY--------------------------------------------- -->
- <hr/> 
-<h2 id='path_analysis'>Pathway Analysis</h2>
-<hr/>
-{%if report.path_text%}
-          {{report.path_text|safe}}
-          <br/><br/>
-          {%endif%}
-
-<center>
-<button type="button"  class="btn btn-success btn-lg center" id='btn_show_path'>Show Data</button>
-</center>
-
-<div id='hide_path' style='display:none;'> <!-- Div to hide and load on button click -->
-         
-<h3>Signaling Pathways</h3>
-<hr/> 
-
-<!-- Signaling Pathways level comparison Nav tabs -->
-<ul class="nav nav-tabs" role="tablist">
-         <li role="presentation" class="active"><a href="#path_all_tab" aria-controls="settings" role="tab" data-toggle="tab">ALL</a></li>
-         {%for perm in report.get_path_permutations%}
-         <li role="presentation" ><a href="#path_{{perm.strip}}_tab" aria-controls="settings" role="tab" data-toggle="tab" id="venn_boot_path_{{perm.strip}}">{{perm}}</a></li>
-         {%endfor%}
-</ul>
-
-<!-- PAth VEnn Tab panes -->
-  <div class="tab-content">
-  
-  <div role="tabpanel" class="tab-pane fade in active " id="path_all_tab" style='overflow-x: auto;'>     <br/> 
-    <h4>Table . All signaling pathways</h4>
-    <table id="tbl-path_all" class="path table table-striped table-bordered" cellspacing="0" width="100%">
-        <thead>
-          <tr>
-           <th id='pathname_th'>Pathway</th>
-           {%for group in report.get_all_gene_groups_as_list%}
-            <!--  {% if forloop.counter > 1 %}<th>{{group}}</th> {%endif%}-->
-            <th>{{group}}</th>
-           {%endfor%}
-          </tr>
-        </thead>  
-      </table>       
-   <br/>
-  
-  </div>
-  
-  {%for perm in report.get_path_permutations%}
-  <div role="tabpanel" class="tab-pane fade " id="path_{{perm.strip}}_tab">     <br/> 
-    <table style='text-align:center;'>
-      <tr>
-       <td>
-       <div id="venn_path-{{perm.strip}}-up" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
-       Upregulated pathways
-       </td>
-       <td>
-       <div id="venn_path-{{perm.strip}}-down" style="min-width: 450px; height: 400px; max-width: 450px; margin: 0 auto">Loading diagram...</div> 
-       Downregulated pathways
-       </td>
-      </tr>
-    </table>        
-   <br/>
-  <div id="venn_path_dinamic_{{perm.strip}}" class="" style="max-width:1000px;"></div> <!--  div to place dinamic tables from Venn clicks -->
-  </div>
-  {%endfor%}
-  
-  </div>
-          
-</div>  <!-- end of hide div -->
-<!------------- End of Pathway Analysis -->
 
 
 <!-- ---------------------------------Drug Scoring--------------------------------------------- -->
@@ -697,7 +371,7 @@ var top_featur = $("#tbl-top_featur").DataTable( {
 <hr/>
   
   {%if report.conclusion_text%}
-          <h2 id="conclusions" >Discussion</h2>
+          <h2 id="conclusions" >Results</h2>
           <hr/>
           
           {{report.conclusion_text|safe}}
@@ -759,20 +433,20 @@ var top_featur = $("#tbl-top_featur").DataTable( {
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#pt_analysis">Scoring of potential targets</a></li>
             
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#conclusions">Discussion</a></li>
-             -->
+             
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#gene_analysis">Gene level analysis</a></li>
-            <!-- <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tf_analysis">Transcription Factor Analysis</a></li>
-            -->
+             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tf_analysis">Transcription Factor Analysis</a></li>
+            
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#path_analysis">Pathway Analysis</a></li>
             {%if 'above-and-beyond' in report.slug %}
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#ds_analysis">Drug Scoring</a></li>
             {%endif%}
             {%if 'l1k' in report.slug %}
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#dl_analysis">Deep Learning</a></li>
-            {%endif%}
-            {%if 'gsk' in report.slug %}
-            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#conclusions">Discussion</a></li>
-            {%endif%}
+            {%endif%}-->
+           
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#conclusions">Results</a></li>
+            
           </ul>
           <br/><br/>
         </div>
