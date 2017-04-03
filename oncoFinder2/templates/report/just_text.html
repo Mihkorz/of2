@@ -508,6 +508,16 @@ var top_featur = $("#tbl-top_featur").DataTable( {
 $(function() {
 	
 	
+	$("#tbl_nova_prj1_biochem").DataTable( {
+		"paging":   true,
+        "iDisplayLength": 20,
+        "buttons": [
+            {extend: 'csv', title: file_name},
+            {extend: 'print', title: file_name}
+            
+       ],
+	});
+	
 	$("#btn_show_genes").click(function(){
 		
 		$(this).hide();
