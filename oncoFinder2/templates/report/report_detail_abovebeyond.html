@@ -479,7 +479,10 @@
            <th>Cell line</th>
            <!--  <th>Condition</th>-->
            <th>p-val</th>
+           {%if 'nova' in report.slug %}<th>p-value</th>
+           {%else%}
            <th>adj. p-val</th>
+           {%endif%}
            <th>Effect</th>
           </tr>
         </thead>  
