@@ -161,7 +161,11 @@
           <tr>
            <th>Gene</th>
            <th>log2FoldChange</th>
+           {%if 'nova' in report.slug %}
+           <th>p-value</th>
+           {%else%}
            <th>adj. p-value</th>
+           {%endif%}
           </tr>
         </thead>  
       </table>
@@ -479,10 +483,7 @@
            <th>Cell line</th>
            <!--  <th>Condition</th>-->
            <th>p-val</th>
-           {%if 'nova' in report.slug %}<th>p-value</th>
-           {%else%}
            <th>adj. p-val</th>
-           {%endif%}
            <th>Effect</th>
           </tr>
         </thead>  
