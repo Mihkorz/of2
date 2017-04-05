@@ -541,6 +541,11 @@ class ReportGeneBoxplotJson(TemplateView):
                 
                 ldf_norm = [df_norm.loc[gene]]
                 
+            if report.id == 31: # Novartis Nasal
+                df_norm = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/nova_prj1_pbmc/pbmc_norm.csv', index_col='SYMBOL')
+                
+                ldf_norm = [df_norm.loc[gene]]
+                
             for df_norm in ldf_norm:       
                 
                 
@@ -568,7 +573,7 @@ class ReportGeneBoxplotJson(TemplateView):
                 lNorm = [lower_whisker, lower_quartile, median, upper_quartile, upper_whisker]
                 
                 #raise Exception('stop')
-                if report.id not in [6, 35, 32, 31]:
+                if report.id not in [6, 35, 32]:
                     series_tumour.append(lNorm)
                 else:
                     if len(lcategories)<2:
@@ -2723,11 +2728,11 @@ class ReportTest(TemplateView):
     
     def get(self, request, *args, **kwargs):
         
-        df = pd.read_csv('/home/mikhail/Downloads/Novartis/Nasal/nasv4n.txt', sep='\t', index_col='SYMBOL')
+        df = pd.read_csv('/home/mikhail/Downloads/Novartis/PBMC/pbv3n_cut.txt', sep='\t', index_col='SYMBOL')
         
         df = df[[x for x in df.columns if 'Norm' in x]]
         
-        df.to_csv('/home/mikhail/Downloads/Novartis/Nasal/nasal_norm.csv')
+        df.to_csv('/home/mikhail/Downloads/Novartis/PBMC/pbmc_norm.csv')
         
         
         raise Exception('fuck')

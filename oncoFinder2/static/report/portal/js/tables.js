@@ -112,12 +112,12 @@ function drawGeneChart(reportID, gene_name, categories){
 				     			cat.push(c_name);
 				     		}
 				     		
-				     		if (reportID == 29) {
+				     		if (reportID == 29 || reportID == 31) {
 				     			               cat.pop();
-                                               cat.push('Norm'); //For Nasal Report
+                                               cat.push('Norm'); //For Nasal and PBMC Reports
 				     		}
 				     		
-				     		console.log(cat);
+				     		
 				     		
 				     		options.xAxis.categories = cat; //For Novartis reports only!
 				     		
