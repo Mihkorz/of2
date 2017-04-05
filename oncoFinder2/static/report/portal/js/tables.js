@@ -95,13 +95,15 @@ function drawGeneChart(reportID, gene_name, categories){
 			     		if (categories.split(',').length<=2) options.xAxis.categories = ['Case', 'Reference'];
 			     		else {
 			     			
-			     			categories+=', Reference';
+			     			if (reportID == 29) categories+=', Norm'; //For Novartis Nasal
+			     			else
+			     			    {categories+=', Reference'; }
 			     			options.xAxis.categories = categories.split(',');	
 			     		}
 			     		
 			     	//}
 			     		
-			     		if ($.inArray(reportID, [35, 32, 31, 29])!== -1 ){ //For Novartis reports only!
+			     		if ($.inArray(reportID, [35, 32, 31])!== -1 ){ //For Novartis reports only!
 				     		
 				     		var cat = [];
 				     		

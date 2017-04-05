@@ -534,7 +534,13 @@ class ReportGeneBoxplotJson(TemplateView):
                 
                            
               
-            #raise Exception('haha')
+            #raise Exception('haha') 29
+            
+            if report.id == 29: # Novartis Nasal
+                df_norm = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/nova_prj1/nasal_norm.csv')
+                
+                ldf_norm = [df_norm]
+                
             for df_norm in ldf_norm:       
                 
                 
@@ -562,7 +568,7 @@ class ReportGeneBoxplotJson(TemplateView):
                 lNorm = [lower_whisker, lower_quartile, median, upper_quartile, upper_whisker]
                 
                 #raise Exception('stop')
-                if report.id not in [6, 35, 32, 31, 29 ]:
+                if report.id not in [6, 35, 32, 31]:
                     series_tumour.append(lNorm)
                 else:
                     if len(lcategories)<2:
@@ -2717,13 +2723,13 @@ class ReportTest(TemplateView):
     
     def get(self, request, *args, **kwargs):
         
-        df = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/gsk_prj2_1d/predictors_PAS_NN.csv')
+        df = pd.read_csv('/home/mikhail/Downloads/Novartis/Nasal/nasv4n.txt', sep='\t', index_col='SYMBOL')
         
-        df = df[df['comparison'] == 'Smooth Muscle (ext)' ]
-        df = df[df['group'] == 'NN_only' ]
-        df = df[df['direction'] == 1 ]
+        df = df[[x for x in df.columns if 'Norm' in x]]
         
-        aaa = len(df.index)
+        df.to_csv('/home/mikhail/Downloads/Novartis/Nasal/nasal_norm.csv')
+        
+        
         raise Exception('fuck')
         
         import docx
