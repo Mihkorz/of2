@@ -537,9 +537,9 @@ class ReportGeneBoxplotJson(TemplateView):
             #raise Exception('haha') 29
             
             if report.id == 29: # Novartis Nasal
-                df_norm = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/nova_prj1/nasal_norm.csv')
+                df_norm = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/nova_prj1/nasal_norm.csv', index_col='SYMBOL')
                 
-                ldf_norm = [df_norm]
+                ldf_norm = [df_norm.loc[gene]]
                 
             for df_norm in ldf_norm:       
                 
