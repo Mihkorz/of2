@@ -95,15 +95,13 @@ function drawGeneChart(reportID, gene_name, categories){
 			     		if (categories.split(',').length<=2) options.xAxis.categories = ['Case', 'Reference'];
 			     		else {
 			     			
-			     			if (reportID == 29) categories+=', Norm'; //For Novartis Nasal
-			     			else
-			     			    {categories+=', Reference'; }
+			     			categories+=', Reference'; 
 			     			options.xAxis.categories = categories.split(',');	
 			     		}
 			     		
 			     	//}
 			     		
-			     		if ($.inArray(reportID, [35, 32, 31])!== -1 ){ //For Novartis reports only!
+			     		if ($.inArray(reportID, [35, 32, 31, 29])!== -1 ){ //For Novartis reports only!
 				     		
 				     		var cat = [];
 				     		
@@ -113,6 +111,8 @@ function drawGeneChart(reportID, gene_name, categories){
 				     			c_name = c_arr.join('_');
 				     			cat.push(c_name);
 				     		}
+				     		
+				     		if (reportID == 29) cat.push('Norm'); //For Nasal Report
 				     		
 				     		options.xAxis.categories = cat; //For Novartis reports only!
 				     		
