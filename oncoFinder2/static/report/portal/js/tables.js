@@ -87,6 +87,9 @@ function drawGeneChart(reportID, gene_name, categories){
 			     	
 			     	options.xAxis.categories = categories.split(',');
 			     	
+			     	
+			     	
+			     	
 			     	//if (reportID == 6){
 			     		
 			     		if (categories.split(',').length<=2) options.xAxis.categories = ['Case', 'Reference'];
@@ -97,6 +100,22 @@ function drawGeneChart(reportID, gene_name, categories){
 			     		}
 			     		
 			     	//}
+			     		
+			     		if ($.inArray(reportID, [35, 32, 31, 29])!== -1 ){ //For Novartis reports only!
+				     		
+				     		var cat = [];
+				     		
+				     		for(let c_name of categories.split(',')){
+				     			c_arr = c_name.split('_');
+				     			c_arr.splice(-1,1);
+				     			c_name = c_arr.join('_');
+				     			cat.push(c_name);
+				     		}
+				     		
+				     		options.xAxis.categories = cat; //For Novartis reports only!
+				     		
+				     		
+				     	}
 			     	
 			        var chart = new Highcharts.Chart(options);
 			        

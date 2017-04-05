@@ -562,7 +562,7 @@ class ReportGeneBoxplotJson(TemplateView):
                 lNorm = [lower_whisker, lower_quartile, median, upper_quartile, upper_whisker]
                 
                 #raise Exception('stop')
-                if report.id!=6:
+                if report.id not in [6, 35, 32, 31, 29 ]:
                     series_tumour.append(lNorm)
                 else:
                     if len(lcategories)<2:
