@@ -136,7 +136,7 @@
      {%for group in report.genegroup_set.all%}
        <li role="presentation" {%if forloop.counter == 1 %}class="active"{%endif%}>
          <a href="#{{group.get_slug}}_tab" aria-controls="home1" role="tab" data-toggle="tab" id='vol_boot_{{group.get_slug}}'>
-           {{group.name}} vs {{report.norm_name}}
+           {{group.name}} 
          </a>
        </li>
      {%endfor%}
