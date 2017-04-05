@@ -76,7 +76,7 @@ class ReportDetail(DetailView):
             if '4d_medium_low' in self.get_object().slug:
                 self.template_name = 'report/gsk_prj2_4d_medium_low.html'
         if 'nova' in self.get_object().slug and (self.is_member(user, 'Novartis') or user.is_staff):
-            self.template_name = 'report/report_detail_abovebeyond.html'
+            self.template_name = 'report/report_detail_novartis_prj1.html'
             
         if 'nova_prj1_biochem' in self.get_object().slug and (self.is_member(user, 'Novartis') or user.is_staff):
             self.template_name = 'report/just_text.html'
