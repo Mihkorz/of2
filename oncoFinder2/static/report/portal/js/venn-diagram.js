@@ -114,25 +114,25 @@ function drawDynamicTable(reportID, idx, tblRenderTo, path_gene, categories, org
 			
 			if(path_gene == 'pathways'){
 			$('#'+tblId+' tbody').on( 'click', 'tr td:nth-child(2)', function () {    	
-	    	    var path_name = $(this).prev().find('span').attr('title');    	
+	    	    var path_name = $(this).prev().find('span').attr('path_long_name');    	
 	    	    var $th = $(this).closest('table').find('th').eq($(this).index());
 	    	    var group = $th.text();
 	    	    showPathDetails(reportID, path_name, group, categories);    	    	
 	                                                                              });
 			$('#'+tblId+' tbody').on( 'click', 'tr td:nth-child(3)', function () {    	
-	    	    var path_name = $(this).prev().prev().find('span').attr('title');    	
+	    	    var path_name = $(this).prev().prev().find('span').attr('path_long_name');    	
 	    	    var $th = $(this).closest('table').find('th').eq($(this).index());
 	    	    var group = $th.text();
 	    	    showPathDetails(reportID, path_name, group, categories);    	    	
 	                                                                              });
 			$('#'+tblId+' tbody').on( 'click', 'tr td:nth-child(4)', function () {    	
-	    	    var path_name = $(this).prev().prev().prev().find('span').attr('title');    	
+	    	    var path_name = $(this).prev().prev().prev().find('span').attr('path_long_name');    	
 	    	    var $th = $(this).closest('table').find('th').eq($(this).index());
 	    	    var group = $th.text();
 	    	    showPathDetails(reportID, path_name, group, categories);    	    	
 	                                                                              });
 			$('#'+tblId+' tbody').on( 'click', 'tr td:nth-child(5)', function () {    	
-	    	    var path_name = $(this).prev().prev().prev().prev().find('span').attr('title');    	
+	    	    var path_name = $(this).prev().prev().prev().prev().find('span').attr('path_long_name');    	
 	    	    var $th = $(this).closest('table').find('th').eq($(this).index());
 	    	    var group = $th.text();
 	    	    showPathDetails(reportID, path_name, group, categories);    	    	
