@@ -210,7 +210,7 @@ function showPathDetails(reportID, path_name, group_name, organism){
 	$("#myModalLabel").text(path_name);
 	
 	$('#pathmodal').modal('show');
-	
+	alert(path_name)
 	$.get("/report-portal/report-ajaxpathdetail/",
 			{
 		     reportID: reportID,
@@ -429,7 +429,7 @@ function drawPathwayTable(reportID, id, file_name1, file_name2, is_metabolic, or
 	    		if(path_long_name.length > 50){
 		    		var short_name = $.trim(path_long_name).substring(0, 50)
 	                .trim(this) + "111";
-		    		$(this).html("<span title='"+path_long_name+"'>"+short_name+"</span>");
+		    		$(this).html("<span title='"+path_long_name+"' long_name='"+path_long_name+"'>"+short_name+"</span>");
 		    	}
 	    	});	    	
 	    	
@@ -477,7 +477,7 @@ function drawPathwayTable(reportID, id, file_name1, file_name2, is_metabolic, or
 			    	}
 		    		else {
 		    			//alert(path_long_name)
-		    			$(this).html("<span title='"+path_long_name+"'>"+path_long_name+"</span>");
+		    			$(this).html("<span title='"+path_long_name+"' long_name='"+path_long_name+"'>"+path_long_name+"</span>");
 		    		}
 		    		
 		    		
@@ -517,7 +517,7 @@ function drawPathwayTable(reportID, id, file_name1, file_name2, is_metabolic, or
 	    		if(path_long_name.length > 50){
 		    		var short_name = $.trim(path_long_name).substring(0, 50)
 	                .trim(this) + "...";
-		    		$(this).html("<span title='"+path_long_name+"'>"+short_name+"</span>");
+		    		$(this).html("<span title='"+path_long_name+"' long_name='"+path_long_name+"'>"+short_name+"</span>");
 		    	}
 	    	});	    	
     	    
