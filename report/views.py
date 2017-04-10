@@ -81,7 +81,7 @@ class ReportDetail(DetailView):
         if 'nova_prj1_biochem' in self.get_object().slug and (self.is_member(user, 'Novartis') or user.is_staff):
             self.template_name = 'report/just_text.html'
             
-        if 'INSWX219' in self.get_object().slug and (self.is_member(user, 'INSWX') or user.is_staff):
+        if 'inswx-report' in self.get_object().slug and (self.is_member(user, 'INSWX') or user.is_staff):
             self.template_name = 'report/inswx.html'
         
                 
@@ -720,7 +720,7 @@ class ReportPathwayTableJson(TemplateView):
             
             for idx, val in enumerate(lgroups):
                 df_output[idx] = val['0'].round(decimals=2)
-                if 'INSWX219' in report.slug:
+                if 'inswx-report' in report.slug:
                     df_output[str(idx)+'_pval'] = val['p_ora']
                     #raise Exception('output')
             
@@ -821,7 +821,7 @@ class ReportAjaxPathwayVenn(TemplateView):
             file_name1 = group1.doc_proc
             df1 = pd.read_csv(file_name1, index_col='Pathway')
             df1 = df1[np.absolute(df1['0'])>pas_tres]
-            if 'INSWX219' in report.slug:
+            if 'inswx-report' in report.slug:
                 df1 = df1[np.absolute(df1['p_ora'])<0.05]
                 
             
@@ -829,7 +829,7 @@ class ReportAjaxPathwayVenn(TemplateView):
             file_name2 = group2.doc_proc
             df2 = pd.read_csv(file_name2, index_col='Pathway')
             df2 = df2[np.absolute(df2['0'])>pas_tres]
-            if 'INSWX219' in report.slug:
+            if 'inswx-report' in report.slug:
                 df2 = df2[np.absolute(df2['p_ora'])<0.05]
             
             if compare3:
@@ -837,7 +837,7 @@ class ReportAjaxPathwayVenn(TemplateView):
                 file_name3 = group3.doc_proc
                 df3 = pd.read_csv(file_name3, index_col='Pathway')
                 df3 = df3[np.absolute(df3['0'])>pas_tres]
-                if 'INSWX219' in report.slug:
+                if 'inswx-report' in report.slug:
                     df3 = df3[np.absolute(df3['p_ora'])<0.05]          
             
             if compare4:
@@ -845,7 +845,7 @@ class ReportAjaxPathwayVenn(TemplateView):
                 file_name4 = group4.doc_proc
                 df4 = pd.read_csv(file_name4, index_col='Pathway')
                 df4 = df4[np.absolute(df4['0'])>pas_tres]
-                if 'INSWX219' in report.slug:
+                if 'inswx-report' in report.slug:
                     df4 = df4[np.absolute(df4['p_ora'])<0.05] 
                 
                                     
@@ -1159,7 +1159,7 @@ class ReportAjaxPathwayVennTable(TemplateView):
                 group1 = PathwayGroup.objects.get(name=lMembers[0], report=report)
                 df_1 = pd.read_csv(group1.doc_proc.path, index_col='Pathway')
                 df_1 = df_1[np.absolute(df_1['0'])>pas_tres]
-                if 'INSWX219' in report.slug and path_gene == 'pathways':
+                if 'inswx-report' in report.slug and path_gene == 'pathways':
                     df_1 = df_1[np.absolute(df_1['p_ora'])<0.05]
                     
                     
@@ -1214,7 +1214,7 @@ class ReportAjaxPathwayVennTable(TemplateView):
                 
                 
             s_tumour = df_1['0']#.round(decimals=2)
-            if 'INSWX219' in report.slug and path_gene == 'pathways':
+            if 'inswx-report' in report.slug and path_gene == 'pathways':
                 s_tumour = df_1[['0', 'p_ora']]
                 #raise Exception('fuck')
                     
@@ -1222,12 +1222,12 @@ class ReportAjaxPathwayVennTable(TemplateView):
             if regulation == 'updown':
                 s_tumour = s_tumour[s_tumour!=0]
             elif regulation == 'up':
-                if 'INSWX219' in report.slug and path_gene == 'pathways':
+                if 'inswx-report' in report.slug and path_gene == 'pathways':
                     s_tumour = s_tumour[s_tumour['0']>0]
                 else:                
                     s_tumour = s_tumour[s_tumour>0]
             elif regulation == 'down':  
-                if 'INSWX219' in report.slug and path_gene == 'pathways':
+                if 'inswx-report' in report.slug and path_gene == 'pathways':
                     s_tumour = s_tumour[s_tumour['0']<0]
                 else:                
                     s_tumour = s_tumour[s_tumour<0]
@@ -1248,13 +1248,13 @@ class ReportAjaxPathwayVennTable(TemplateView):
                 group1 = PathwayGroup.objects.get(name=lMembers[0], report=report)
                 df_1 = pd.read_csv(group1.doc_proc.path, index_col='Pathway')
                 df_1 = df_1[np.absolute(df_1['0'])>pas_tres]
-                if 'INSWX219' in report.slug and path_gene == 'pathways' :
+                if 'inswx-report' in report.slug and path_gene == 'pathways' :
                     df_1 = df_1[np.absolute(df_1['p_ora'])<0.05]
                                 
                 group2 = PathwayGroup.objects.get(name=lMembers[1], report=report)
                 df_2 = pd.read_csv(group2.doc_proc.path, index_col='Pathway')
                 df_2 = df_2[np.absolute(df_2['0'])>pas_tres]
-                if 'INSWX219' in report.slug and path_gene == 'pathways':
+                if 'inswx-report' in report.slug and path_gene == 'pathways':
                     df_2 = df_2[np.absolute(df_2['p_ora'])<0.05]
             
                 if is_metabolic=='true':
@@ -1334,12 +1334,12 @@ class ReportAjaxPathwayVennTable(TemplateView):
                 #raise Exception('iter2')
             
             s_tumour1 = df_1['0']#.round(decimals=2)
-            if 'INSWX219' in report.slug  and path_gene == 'pathways':
+            if 'inswx-report' in report.slug  and path_gene == 'pathways':
                 s_tumour1 = df_1[['0', 'p_ora']]
             s_tumour1.name = lMembers[0]
             
             s_tumour2 = df_2['0']#.round(decimals=2)
-            if 'INSWX219' in report.slug  and path_gene == 'pathways':
+            if 'inswx-report' in report.slug  and path_gene == 'pathways':
                 s_tumour2 = df_2[['0', 'p_ora']]
             s_tumour2.name = lMembers[1]
             if regulation == 'updown':
@@ -1352,7 +1352,7 @@ class ReportAjaxPathwayVennTable(TemplateView):
                 df_down = pd.DataFrame(s_tumour1_down).join(pd.DataFrame(s_tumour2_down), how='inner', sort=True)
                 joined_df = df_up.append(df_down)
             elif regulation == 'up':
-                if 'INSWX219' in report.slug  and path_gene == 'pathways':
+                if 'inswx-report' in report.slug  and path_gene == 'pathways':
                     s_tumour1 = s_tumour1[s_tumour1['0']>0]
                     s_tumour2 = s_tumour2[s_tumour2['0']>0]
                 else:            
@@ -1369,7 +1369,7 @@ class ReportAjaxPathwayVennTable(TemplateView):
                     
                 
             elif regulation == 'down':  
-                if 'INSWX219' in report.slug  and path_gene == 'pathways':
+                if 'inswx-report' in report.slug  and path_gene == 'pathways':
                     s_tumour1 = s_tumour1[s_tumour1['0']<0]
                     s_tumour2 = s_tumour2[s_tumour2['0']<0]
                 else:            
