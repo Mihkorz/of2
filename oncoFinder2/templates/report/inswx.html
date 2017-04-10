@@ -439,6 +439,36 @@
 <!------------- End of Pathway Analysis -->
 
 
+<!-- ----------- Structure based approach -->
+ <hr/> 
+<h2 id='bio_analysis'>Structure Based Approach</h2>
+<hr/>
+<center>
+<button type="button"  class="btn btn-success btn-lg center" id='btn_show_bio'>Show Data</button>
+</center>
+
+<div id='hide_bio' style='display:none;'>
+<center>
+<img src='/media/report-portal/inswx-report/ap1-dna.png' style='width:70%; margin: 0 auto' />
+<h4>INSWX219_A549</h4>
+<hr/>
+<img src='/media/report-portal/inswx-report/ap1-inter.png' style='width:70%; margin: 0 auto'/>
+<h4>INSWX219</h4>
+<hr/>
+<img src='/media/report-portal/inswx-report/ap1-surf.png' style='width:70%; margin: 0 auto'/>
+<h4>Metformin_A549</h4>
+<hr/>
+<img src='/media/report-portal/inswx-report/nfkb.png' style='width:70%; margin: 0 auto'/>
+<h4>NAFLD</h4>
+<hr/>
+<img src='/media/report-portal/inswx-report/pde4b.png' style='width:70%; margin: 0 auto'/>
+<h4>Senescence_adipocytes</h4>
+<hr/>
+<img src='/media/report-portal/inswx-report/pkc_alpha.png'style='width:70%; margin: 0 auto' />
+<h4>Senescence_liver</h4>
+</center>
+</div>
+
 <!-- ---------------------------------Drug Scoring--------------------------------------------- -->
 {% if report.count_ds_groups > 0 %} 
  <hr/> 
@@ -991,6 +1021,16 @@ $("#btn_show_tf").click(function(){
     
     {%endfor%}
 
+    
+    
+///// BIO STRUCTURE BASED
+
+$("#btn_show_bio").click(function(){
+    	$(this).hide();
+    	$("#hide_bio").slideDown('slow');
+    	
+});
+    
 /////////////////// Drug Scoring
     $("#btn_show_ds").click(function(){
     	$(this).hide();
