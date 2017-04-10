@@ -210,7 +210,7 @@ function showPathDetails(reportID, path_name, group_name, organism){
 	$("#myModalLabel").text(path_name);
 	
 	$('#pathmodal').modal('show');
-	alert(path_name)
+	//alert(path_name)
 	$.get("/report-portal/report-ajaxpathdetail/",
 			{
 		     reportID: reportID,
