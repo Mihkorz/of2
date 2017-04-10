@@ -416,6 +416,38 @@ function drawPathwayTable(reportID, id, file_name1, file_name2, is_metabolic, or
         	    	 }
     } );
 	
+	
+	var paths_to_highlight = [
+		'Akt_Signaling_Pathway_Elevation_of_Glucose_Import',
+		'Akt_Signaling_Pathway_Glucose_Uptake',
+		'Growth_Hormone_Signaling_Pathway_Glucose_Uptake',
+		'IGF1R_Signaling_Pathway_Glucose_Uptake',
+		'cAMP_Pathway_Fatty_Acid_Metabolism',
+		'PPAR_Pathway_Fatty_Acid_Metabolism_Lipid_Homeostasis_and_Skin_Proliferation',
+		'PPAR_Pathway_Peroxisome_Proliferation_Hepatocarcinogenesis_Fatty_Acid_Metbolism_and_Lipid_Homeostasis',
+		'mTOR_Pathway_Lipid_Synthesis',
+		'NGF_Pathway_Gene_Expression_via_MYC_ELK1_CREB3_NFKB2',
+		'p38_Signaling_Pathway_Gene_Expression_Cell_Motility_Inflammation_Apoptosis_Osmoregulation_via_MEF2D_TP53_CREB1_ATF2_JUND_ETV1_NFKB2_AP2A1_MAX_FOSL1_CEBPG_ELK1_CDC25C_JUNB_STAT1_SP1_DDIT3_ELK4_CEBPA',
+		'RANK_Signaling_in_Osteoclasts_Pathway_Expression_of_Osteoclastic_Genes_via_JUN_NFAT5_NFKB2_MITF_FOS',
+		'TNF_Signaling_Pathway_Gene_Expression_and_Cell_Survival_via_FOS_NFKB2_JUN_ELK1_ATF6',
+		'cAMP_Pathway_Gene_Expression_via_NFKB2_CREBBP_ELK1',
+		'CD40_Pathway_Gene_Expression_Pro-Inflamatory_Cytokines_via_NFKB2',
+		'CD40_Pathway_Gene_Expression_Procoagulant_Activity_via_NFKB2',
+		'EGF_Pathway_Gene_Expression_via_FOS_NFKB2_MYC_STAT1_ELK1_STAT3_JUN',
+		'ERK_Signaling_Pathway_Gene_Expression_via_CAPN6_TP53_FOS_ATF1_MYC_ELK3_MYLK_ETS1_SRF_HIST1H3B_CREB3_STAT3_NFKB2_HMGN1_ESR2_ELK1_PAX6_JUN',
+		'Estrogen_Pathway_Gene_Expression_via_FOS_JUN_ELK1_SP1_POLR2B_CREB3_NFKB2',
+		'GPCR_Pathway_Gene_Expression_via_JUN_NFKB2_ELK1_SRF_FOS_CREB3',
+		'MAPK_Family_Pathway_Gene_Expression_via_ATF2_JUN_ELK1_NFKB2_CREB3',
+		'Akt_Signaling_Pathway_NF-kB_dependent_transciption',
+		'Akt_Signaling_Pathway_NF-kB_pathway',
+		'Glucocorticoid_Receptor_Signaling_Pathway_Inflammatory_Cytokines',
+		'IL-10_Pathway_Inflammatory_Cytokine_Genes_Expression_via_STAT3',
+		'JNK_Pathway_Gene_Expression_Apoptosis_Inflammation_Tumorigenesis_Cell_Migration_via_SMAD4_STAT4_HSF1_TP53_MAP2_DCX_ATF2_NFATC3_SPIRE1_MAP1B_TCF15_ELK1_BCL2_JUN_PXN_NFATC2',
+		'MAPK_Signaling_Pathway_Cell_Motility_Inflammation_Apoptosis_Osmoregulation',
+		'MAPK_Signaling_Pathway_Gene_Expression_Apoptosis_Inflammation_Tumorigenesis_via_MYC_HSF1_STAT2',
+		'mTOR_Pathway_Inflammation_Stress_Resistance'
+	]
+	
 	if(!is_metabolic){
 	
 		if(file_name1!='all'){
@@ -426,6 +458,9 @@ function drawPathwayTable(reportID, id, file_name1, file_name2, is_metabolic, or
 	    	var path_name_td = $(table).find(" tr td:first-child()");
 	    	path_name_td.each(function(){
 	    		var path_long_name = $(this).text();
+	    		
+	    		
+	    		
 	    		if(path_long_name.length > 50){
 		    		var short_name = $.trim(path_long_name).substring(0, 50)
 	                .trim(this) + "111";
@@ -461,7 +496,11 @@ function drawPathwayTable(reportID, id, file_name1, file_name2, is_metabolic, or
 		    	path_name_td.each(function(){
 		    		var path_long_name = $(this).text();	    		
 		    		
-		    		
+		    		if ($.inArray(path_long_name, paths_to_highlight)!== -1 && reportID==26){ /// inswx-report
+		    			//path_name_td.addClass("success");
+		    			//alert(path_long_name)
+		    			
+		    		}
 		    		
 		    		if ($(this).text().indexOf("...") >= 0) {
 		    			//alert($(this).find('span').attr('long_name'));

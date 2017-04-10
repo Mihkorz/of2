@@ -57,6 +57,8 @@
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#gene_analysis">Gene level analysis</a></li>
             <!--  <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tf_analysis">Transcription Factor Analysis</a></li>-->
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#path_analysis">Pathway Analysis</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#bio_analysis">Structural Biology Analysis</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#admne">ADME properties</a></li>
             {%if 'above-and-beyond' in report.slug %}
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#ds_analysis">Drug Scoring</a></li>
             {%endif%}
@@ -441,7 +443,7 @@
 
 <!-- ----------- Structure based approach -->
  <hr/> 
-<h2 id='bio_analysis'>Structure Based Approach</h2>
+<h2 id='bio_analysis'>Structural Biology  Analysis</h2>
 <hr/>
 <center>
 <button type="button"  class="btn btn-success btn-lg center" id='btn_show_bio'>Show Data</button>
@@ -464,6 +466,15 @@
 <hr/>
 <img src='/media/report-portal/inswx-report/pkc_alpha.png'style='width:70%; margin: 0 auto' />
 <h4>PKC alpha in complex with INSWX219</h4>
+<hr/>
+
+<img src='/media/report-portal/inswx-report/pic7.png'style='width:70%; margin: 0 auto' />
+<h4>ACC2 in complex with INSWX235</h4>
+<hr/>
+
+<img src='/media/report-portal/inswx-report/pkc_alpha.png'style='width:70%; margin: 0 auto' />
+<h4>INSWX235 inside the binding pocket: main interactions are shown</h4>
+
 </center>
 </div>
 
@@ -1967,6 +1978,8 @@ var top_featur = $("#tbl-top_featur").DataTable( {
             <!-- <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tf_analysis">Transcription Factor Analysis</a></li>
             -->
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#path_analysis">Pathway Analysis</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#bio_analysis">Structural Biology Analysis</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#admne">ADME properties</a></li>
             {%if 'above-and-beyond' in report.slug %}
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#ds_analysis">Drug Scoring</a></li>
             {%endif%}
