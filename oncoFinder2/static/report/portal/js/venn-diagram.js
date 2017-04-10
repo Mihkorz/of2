@@ -34,6 +34,7 @@ function drawDynamicTable(reportID, idx, tblRenderTo, path_gene, categories, org
 			
 			arMembers.forEach(function(item, i, arr) {
 				htmlTable+='<th>'+item+'</th>';
+				if (reportID == 36 && path_gene=='pathways') htmlTable+='<th>'+item+' p-value</th>'; // for INSWX219 report
 			});
 			
 			htmlTable+='</tr></thead>';
@@ -92,10 +93,10 @@ function drawDynamicTable(reportID, idx, tblRenderTo, path_gene, categories, org
 		    		if(path_long_name.length > 50){
 			    		var short_name = $.trim(path_long_name).substring(0, 50)
 		                .trim(this) + "...";
-			    		$(this).html("<span title='"+path_long_name+"'>"+short_name+"</span>");
+			    		$(this).html("<span long_name='"+path_long_name+"'>"+short_name+"</span>");
 			    	}
 		    		else {
-		    			$(this).html("<span title='"+path_long_name+"'>"+path_long_name+"</span>");
+		    			$(this).html("<span long_name='"+path_long_name+"'>"+path_long_name+"</span>");
 		    		}
 		    	});
 		   

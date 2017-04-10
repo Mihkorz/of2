@@ -80,6 +80,9 @@ class ReportDetail(DetailView):
             
         if 'nova_prj1_biochem' in self.get_object().slug and (self.is_member(user, 'Novartis') or user.is_staff):
             self.template_name = 'report/just_text.html'
+            
+        if 'INSWX219' in self.get_object().slug and (self.is_member(user, 'INSWX') or user.is_staff):
+            self.template_name = 'report/inswx.html'
         
                 
                 
@@ -693,11 +696,14 @@ class ReportPathwayTableJson(TemplateView):
             lgroups = []
             for group in report.pathwaygroup_set.all():
                 df_path = pd.read_csv(group.doc_proc.path, index_col='Pathway')
+                
                 if is_metabolic:
                     df_path = df_path[df_path['Database']=='metabolism']
                 else:
                     df_path = df_path[df_path['Database']!='metabolism']
                     #df_path = df_path[df_path['Database']!='kegg']
+                    
+                     
                 lgroups.append(df_path)
             
             if 'Hnkl' in report.slug: # for Henkel reports only!!!
@@ -708,12 +714,15 @@ class ReportPathwayTableJson(TemplateView):
                 df_mean = pd.DataFrame(df_mean.mean(axis=1))
                 df_mean.columns = ['0']
                 lgroups.insert(0, df_mean)
-                #raise Exception('haha')
+                
             
             df_output = pd.DataFrame()
             
             for idx, val in enumerate(lgroups):
                 df_output[idx] = val['0'].round(decimals=2)
+                if 'INSWX219' in report.slug:
+                    df_output[str(idx)+'_pval'] = val['p_ora']
+                    #raise Exception('output')
             
             try:
                 df_output.drop(['Target_drugs_pathway'], inplace=True)
@@ -721,11 +730,9 @@ class ReportPathwayTableJson(TemplateView):
                 pass
             df_output.reset_index(inplace=True)
             
-            
-            
+            #raise Exception('haha')            
             
         else:
-            
             
             df_1 = pd.read_excel(settings.MEDIA_ROOT+"/../static/report/loreal/"+file_name1,
                                 sheetname='PAS1', index_col='Pathway')
@@ -767,6 +774,7 @@ class ReportPathwayTableJson(TemplateView):
         df_json = df_output.to_json(orient='values')
         
         
+        #raise Exception('path table')
         
         response_data = {'aaData': json.loads(df_json)}
         return HttpResponse(json.dumps(response_data), content_type="application/json")
@@ -813,23 +821,32 @@ class ReportAjaxPathwayVenn(TemplateView):
             file_name1 = group1.doc_proc
             df1 = pd.read_csv(file_name1, index_col='Pathway')
             df1 = df1[np.absolute(df1['0'])>pas_tres]
+            if 'INSWX219' in report.slug:
+                df1 = df1[np.absolute(df1['p_ora'])<0.05]
+                
             
             group2 = PathwayGroup.objects.get(name=lgroup[1], report=report)
             file_name2 = group2.doc_proc
             df2 = pd.read_csv(file_name2, index_col='Pathway')
             df2 = df2[np.absolute(df2['0'])>pas_tres]
+            if 'INSWX219' in report.slug:
+                df2 = df2[np.absolute(df2['p_ora'])<0.05]
             
             if compare3:
                 group3 = PathwayGroup.objects.get(name=lgroup[2], report=report)
                 file_name3 = group3.doc_proc
                 df3 = pd.read_csv(file_name3, index_col='Pathway')
-                df3 = df3[np.absolute(df3['0'])>pas_tres]          
+                df3 = df3[np.absolute(df3['0'])>pas_tres]
+                if 'INSWX219' in report.slug:
+                    df3 = df3[np.absolute(df3['p_ora'])<0.05]          
             
             if compare4:
                 group4 = PathwayGroup.objects.get(name=lgroup[3], report=report)
                 file_name4 = group4.doc_proc
                 df4 = pd.read_csv(file_name4, index_col='Pathway')
-                df4 = df4[np.absolute(df4['0'])>pas_tres] 
+                df4 = df4[np.absolute(df4['0'])>pas_tres]
+                if 'INSWX219' in report.slug:
+                    df4 = df4[np.absolute(df4['p_ora'])<0.05] 
                 
                                     
             
@@ -1142,6 +1159,10 @@ class ReportAjaxPathwayVennTable(TemplateView):
                 group1 = PathwayGroup.objects.get(name=lMembers[0], report=report)
                 df_1 = pd.read_csv(group1.doc_proc.path, index_col='Pathway')
                 df_1 = df_1[np.absolute(df_1['0'])>pas_tres]
+                if 'INSWX219' in report.slug and path_gene == 'pathways':
+                    df_1 = df_1[np.absolute(df_1['p_ora'])<0.05]
+                    
+                    
                                         
                 if is_metabolic=='true':
                     df_1 = df_1[df_1['Database']=='metabolism']
@@ -1193,13 +1214,23 @@ class ReportAjaxPathwayVennTable(TemplateView):
                 
                 
             s_tumour = df_1['0']#.round(decimals=2)
+            if 'INSWX219' in report.slug and path_gene == 'pathways':
+                s_tumour = df_1[['0', 'p_ora']]
+                #raise Exception('fuck')
+                    
             s_tumour.name = lMembers[0]
             if regulation == 'updown':
                 s_tumour = s_tumour[s_tumour!=0]
-            elif regulation == 'up':            
-                s_tumour = s_tumour[s_tumour>0]
+            elif regulation == 'up':
+                if 'INSWX219' in report.slug and path_gene == 'pathways':
+                    s_tumour = s_tumour[s_tumour['0']>0]
+                else:                
+                    s_tumour = s_tumour[s_tumour>0]
             elif regulation == 'down':  
-                s_tumour = s_tumour[s_tumour<0]
+                if 'INSWX219' in report.slug and path_gene == 'pathways':
+                    s_tumour = s_tumour[s_tumour['0']<0]
+                else:                
+                    s_tumour = s_tumour[s_tumour<0]
             
             df_1_tumour = pd.DataFrame(s_tumour)
             if path_gene =='deeplearning':
@@ -1209,7 +1240,7 @@ class ReportAjaxPathwayVennTable(TemplateView):
                 #raise Exception('iter1')  
             df_1_tumour.reset_index(inplace=True)
             df_json = df_1_tumour.to_json(orient='values')
-            
+            #raise Exception('p-val') 
         
         elif inter_num == 2:
             if path_gene == 'pathways':
@@ -1217,10 +1248,14 @@ class ReportAjaxPathwayVennTable(TemplateView):
                 group1 = PathwayGroup.objects.get(name=lMembers[0], report=report)
                 df_1 = pd.read_csv(group1.doc_proc.path, index_col='Pathway')
                 df_1 = df_1[np.absolute(df_1['0'])>pas_tres]
+                if 'INSWX219' in report.slug and path_gene == 'pathways' :
+                    df_1 = df_1[np.absolute(df_1['p_ora'])<0.05]
                                 
                 group2 = PathwayGroup.objects.get(name=lMembers[1], report=report)
                 df_2 = pd.read_csv(group2.doc_proc.path, index_col='Pathway')
                 df_2 = df_2[np.absolute(df_2['0'])>pas_tres]
+                if 'INSWX219' in report.slug and path_gene == 'pathways':
+                    df_2 = df_2[np.absolute(df_2['p_ora'])<0.05]
             
                 if is_metabolic=='true':
                     df_1 = df_1[df_1['Database']=='metabolism']
@@ -1299,9 +1334,13 @@ class ReportAjaxPathwayVennTable(TemplateView):
                 #raise Exception('iter2')
             
             s_tumour1 = df_1['0']#.round(decimals=2)
+            if 'INSWX219' in report.slug  and path_gene == 'pathways':
+                s_tumour1 = df_1[['0', 'p_ora']]
             s_tumour1.name = lMembers[0]
             
             s_tumour2 = df_2['0']#.round(decimals=2)
+            if 'INSWX219' in report.slug  and path_gene == 'pathways':
+                s_tumour2 = df_2[['0', 'p_ora']]
             s_tumour2.name = lMembers[1]
             if regulation == 'updown':
                 s_tumour1_up = s_tumour1[s_tumour1>0]
@@ -1312,10 +1351,14 @@ class ReportAjaxPathwayVennTable(TemplateView):
                 df_up = pd.DataFrame(s_tumour1_up).join(pd.DataFrame(s_tumour2_up), how='inner', sort=True)         
                 df_down = pd.DataFrame(s_tumour1_down).join(pd.DataFrame(s_tumour2_down), how='inner', sort=True)
                 joined_df = df_up.append(df_down)
-            elif regulation == 'up':            
-                s_tumour1 = s_tumour1[s_tumour1>0]
-                s_tumour2 = s_tumour2[s_tumour2>0]
-                joined_df = pd.DataFrame(s_tumour1).join(pd.DataFrame(s_tumour2), how='inner')
+            elif regulation == 'up':
+                if 'INSWX219' in report.slug  and path_gene == 'pathways':
+                    s_tumour1 = s_tumour1[s_tumour1['0']>0]
+                    s_tumour2 = s_tumour2[s_tumour2['0']>0]
+                else:            
+                    s_tumour1 = s_tumour1[s_tumour1>0]
+                    s_tumour2 = s_tumour2[s_tumour2>0]
+                joined_df = pd.DataFrame(s_tumour1).join(pd.DataFrame(s_tumour2), how='inner', lsuffix='_1')
                 
                 if path_gene =='deeplearning': 
                     joined_df = joined_df.join(df_1['genes'], how='inner')
@@ -1326,9 +1369,13 @@ class ReportAjaxPathwayVennTable(TemplateView):
                     
                 
             elif regulation == 'down':  
-                s_tumour1 = s_tumour1[s_tumour1<0]
-                s_tumour2 = s_tumour2[s_tumour2<0]
-                joined_df = pd.DataFrame(s_tumour1).join(pd.DataFrame(s_tumour2), how='inner')
+                if 'INSWX219' in report.slug  and path_gene == 'pathways':
+                    s_tumour1 = s_tumour1[s_tumour1['0']<0]
+                    s_tumour2 = s_tumour2[s_tumour2['0']<0]
+                else:            
+                    s_tumour1 = s_tumour1[s_tumour1<0]
+                    s_tumour2 = s_tumour2[s_tumour2<0]
+                joined_df = pd.DataFrame(s_tumour1).join(pd.DataFrame(s_tumour2), how='inner', lsuffix='_1')
             
             if path_gene !='deeplearning':
                 joined_df = joined_df.groupby(joined_df.index, level=0).mean()
@@ -1785,6 +1832,9 @@ class ReportAjaxPathDetail(TemplateView):
         report = Report.objects.get(pk=self.request.GET['reportID'])
         path_name = self.request.GET['pathway']
         group_name = self.request.GET['group_name']
+        
+        group_name = group_name.replace(' p-value', '')
+        
         try:
             group = GeneGroup.objects.get(report=report, name=group_name)
         except:
