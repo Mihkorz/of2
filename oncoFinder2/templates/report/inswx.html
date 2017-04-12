@@ -409,6 +409,23 @@
   
   <div role="tabpanel" class="tab-pane fade in active " id="path_all_tab" style='overflow-x: auto;'>     <br/> 
     <h4>Table . All signaling pathways</h4>
+    
+    <div class='tbl-legend' style='margin: 15px 0;'>
+    
+    <table class="path table table-striped table-bordered" style="width:500px">
+    <tr>
+    <td class="success" >Fatty Acid Metabolism</td>
+    <td class="warning" >Glucose Uptake</td>
+    <td class="danger" >Inflammation</td>
+    <td class="info" >NFkB Related</td>
+    </tr>
+    </table>
+    
+    
+   
+    </div>
+    
+    
     <table id="tbl-path_all" class="path table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
           <tr>
@@ -427,6 +444,9 @@
   
   {%for perm in report.get_path_permutations%}
   <div role="tabpanel" class="tab-pane fade " id="path_{{perm.strip}}_tab">     <br/> 
+    
+    
+    
     <table style='text-align:center;'>
       <tr>
        <td>
