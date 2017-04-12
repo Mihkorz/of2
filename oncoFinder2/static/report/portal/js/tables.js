@@ -614,7 +614,7 @@ function _render(jsonRes, templateRes, container) {
     compiled = _.template(templateString),
     compiledHtmlString = compiled(data);
   $(container).append( compiledHtmlString );
-}
+}false
 
 var names = {
   '.container5': ['metabolism_high_down', 'metabolism_high_up', 'metabolism_low_down', 'metabolism_low_up']

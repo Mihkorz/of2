@@ -1171,7 +1171,7 @@ class ReportAjaxPathwayVennTable(TemplateView):
                 
             elif path_gene =='genes':
                 
-                group1 = GeneGroup.objects.get(name=lMembers[0], report=report)
+                group1 = GeneGroup.objects.get(name=lMembers[alex_picket0], report=report)
                 
                 try:
                     df_1 = pd.read_csv(group1.doc_logfc.path,  index_col='SYMBOL', sep=None)
