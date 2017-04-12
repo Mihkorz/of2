@@ -101,15 +101,24 @@ function drawDynamicTable(reportID, idx, tblRenderTo, path_gene, categories, org
 			else {
 				
 				if (reportID==36){
+					
+					if( $("#tbl-legend-venn").length){
+						htmlTable = '</table><table id="'+tblId+'" class="path table table-striped table-bordered path-dynamic" width="100%" >'
+						
+					}
+					else{
+						
+						htmlTable = ' <table class="path table table-striped table-bordered" id="tbl-legend-venn" style="width:500px">\
+						    <tr> \
+					    <td class="success" >Fatty Acid Metabolism</td> \
+					    <td class="warning" >Glucose Uptake</td> \
+					    <td class="danger" >Inflammation</td>\
+					    <td class="info" >NFkB Related</td>\
+					    </tr>\
+					    </table><table id="'+tblId+'" class="path table table-striped table-bordered path-dynamic" width="100%" >'
+					}
 
-				htmlTable = ' <table class="path table table-striped table-bordered" style="width:500px">\
-			    <tr> \
-		    <td class="success" >Fatty Acid Metabolism</td> \
-		    <td class="warning" >Glucose Uptake</td> \
-		    <td class="danger" >Inflammation</td>\
-		    <td class="info" >NFkB Related</td>\
-		    </tr>\
-		    </table><table id="'+tblId+'" class="path table table-striped table-bordered path-dynamic" width="100%" >'
+				
 				}
 				else
 					htmlTable = '<table id="'+tblId+'" class="path table table-striped table-bordered path-dynamic" width="100%" >'
