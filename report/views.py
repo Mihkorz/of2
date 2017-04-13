@@ -154,7 +154,11 @@ class ReportGeneVolcanoJson(TemplateView):
         
         df_gene_copy = df_gene.copy()  
          
-        df_gene = df_gene[(df_gene['adj.P.Val']<pval_tres) & (np.absolute(df_gene['logFC'])>logFC_tres)]
+        if 'nova_' in report.slug(): # for Novartis reports filter only on p-value column
+            df_gene = df_gene[(df_gene['P.Value']<pval_tres) & (np.absolute(df_gene['logFC'])>logFC_tres)]
+            df_gene['adj.P.Val'] = df_gene['P.Value']
+        else:
+            df_gene = df_gene[(df_gene['adj.P.Val']<pval_tres) & (np.absolute(df_gene['logFC'])>logFC_tres)]
         
         if df_gene.empty:
                 df_gene = df_gene_copy[(df_gene_copy['P.Value']<pval_tres) & (np.absolute(df_gene_copy['logFC'])>logFC_tres)]    
@@ -222,7 +226,15 @@ class ReportGeneTableJson(TemplateView):
             
             df_gene_copy = df_gene.copy()        
         
-            df_gene = df_gene[(df_gene['adj.P.Val']<pval_tres) & (np.absolute(df_gene['logFC'])>logFC_tres)]
+            
+            
+            if 'nova_' in report.slug(): # for Novartis reports filter only on p-value column
+                df_gene = df_gene[(df_gene['P.Value']<pval_tres) & (np.absolute(df_gene['logFC'])>logFC_tres)]
+                df_gene['adj.P.Val'] = df_gene['P.Value']
+            else:
+                df_gene = df_gene[(df_gene['adj.P.Val']<pval_tres) & (np.absolute(df_gene['logFC'])>logFC_tres)]
+                
+                
             
             if df_gene.empty:
                 if "NBA" in file_name:

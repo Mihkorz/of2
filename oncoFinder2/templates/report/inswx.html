@@ -410,7 +410,7 @@
   <div role="tabpanel" class="tab-pane fade in active " id="path_all_tab" style='overflow-x: auto;'>     <br/> 
     <h4>Table . All signaling pathways</h4>
     
-    <div class='tbl-legend' style='margin: 15px 0;'>
+    <div class='tbl-legend' style='margin: 15px ;'>
     
     <table class="path table table-striped table-bordered" style="width:500px">
     <tr>
@@ -1085,6 +1085,12 @@ var top_featur = $("#tbl-top_featur").DataTable( {
 <script>
 
 $(function() {
+	
+	
+	var x = some => ({foo:1});
+	
+	x('rendering');
+	
 	
 	
 	$("#btn_show_genes").click(function(){
