@@ -154,7 +154,7 @@ class ReportGeneVolcanoJson(TemplateView):
         
         df_gene_copy = df_gene.copy()  
          
-        if 'nova_' in report.slug(): # for Novartis reports filter only on p-value column
+        if 'nova_' in report.slug: # for Novartis reports filter only on p-value column
             df_gene = df_gene[(df_gene['P.Value']<pval_tres) & (np.absolute(df_gene['logFC'])>logFC_tres)]
             df_gene['adj.P.Val'] = df_gene['P.Value']
         else:
@@ -228,7 +228,7 @@ class ReportGeneTableJson(TemplateView):
         
             
             
-            if 'nova_' in report.slug(): # for Novartis reports filter only on p-value column
+            if 'nova_' in report.slug: # for Novartis reports filter only on p-value column
                 df_gene = df_gene[(df_gene['P.Value']<pval_tres) & (np.absolute(df_gene['logFC'])>logFC_tres)]
                 df_gene['adj.P.Val'] = df_gene['P.Value']
             else:
