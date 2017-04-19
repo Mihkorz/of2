@@ -93,6 +93,21 @@
 <center>
 <img src='/media/report-portal/gsk_prj3_l1k/prj3_l1k.png' style="width:800px"/>
 </center>
+<h4>PCA gene weights</h4>
+<table id="tbl-top_l1k" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr >
+           <th>Probeset</th>
+           <th>Symbol</th>
+           <th>Comp1</th>
+           <th>Comp2</th>
+           <th>Comp3</th>
+          </tr>
+        </thead>  
+      </table>
+
+
+
 {%endif%}
 {%if 'prj3_mm' in report.slug %}
 <center>
@@ -687,6 +702,31 @@
 <script>
 
 $(function() {
+	
+	
+var tbl_top_l1k	= $("#tbl-top_l1k").DataTable( {
+	"paging":   true,
+    "iDisplayLength": 20,
+    "ordering": true,
+    "order": [[ 4, "desc" ]],
+    "info":     false,
+    "dom": 'Bfrtip',
+    "scrollX": false,
+    "bAutoWidth": false,
+    "buttons": [
+               {extend: 'csv', title: 'PCA gene weights'},
+               {extend: 'print', title: 'PCA gene weights'}
+               
+          ],
+    
+    "ajax": {'url':'/report-portal/report-deepgsktablejson/',
+    	     'type': 'GET',
+    	     'data':{
+    	    	     reportID: {{report.id}},
+    	    	     file_name: 'colweights_l1k.txt'
+    	            },        	      
+    
+},"deferRender": true });
 
 var all_models = $("#tbl-all_models").DataTable( {
 	"paging":   true,
