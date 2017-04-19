@@ -612,7 +612,12 @@
            Top Model Features
          </a>
         </li>
-         {%if 'l1k' in report.slug %}
+         {%if 'l1k' in report.slug %} 
+         <li role="presentation">
+              <a href="#top_featurfilter_tab" aria-controls="home1" role="tab" data-toggle="tab" >
+               Top Model Features Filtered
+             </a>
+            </li>
             <li role="presentation">
               <a href="#all_inotrope_tab" aria-controls="home1" role="tab" data-toggle="tab" >
                All Models Inotrope
@@ -661,6 +666,20 @@
      </div> <!-- end of tabpanel div -->
      
      {%if 'l1k' in report.slug %}
+     
+     <div role="tabpanel" class="tab-pane fade " id="top_featurfilter_tab">
+     <h4>Table <span class='tbl_num'></span>Top Model Features Filtered </h4>
+       <table id="tbl_featurfilter_tab" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr >
+           <th>Probe names</th>
+           <th>Importance-score-DNN</th>
+           <th>Gene symbol</th>
+           
+          </tr>
+        </thead>  
+      </table>
+     </div> <!-- end of tabpanel div --> 
      
      <div role="tabpanel" class="tab-pane fade " id="all_inotrope_tab">
      <h4>Table <span class='tbl_num'></span>All Models Inotrope </h4>
@@ -776,7 +795,29 @@ var top_featur = $("#tbl-top_featur").DataTable( {
     
 },"deferRender": true });
 
-
+var tbl_featurfilter_tab = $("#tbl_featurfilter_tab").DataTable( {
+	"paging":   true,
+    "iDisplayLength": 20,
+    //"ordering": true,
+    //"order": [[ 1, "desc" ]],
+    "info":     false,
+    "dom": 'Bfrtip',
+    "scrollX": false,
+    "bAutoWidth": false,
+    "buttons": [
+               {extend: 'csv', title: 'tbl-all_inotrope'},
+               {extend: 'print', title: 'tbl-all_inotrope'}
+               
+          ],
+    
+    "ajax": {'url':'/report-portal/report-deepgsktablejson/',
+    	     'type': 'GET',
+    	     'data':{
+    	    	     reportID: {{report.id}},
+    	    	     file_name: 'DL-200-genes-DEG-reduced-2.csv'
+    	            },        	      
+    
+},"deferRender": true });
 
 var all_featur_ino = $("#tbl-all_inotrope").DataTable( {
 	"paging":   true,
