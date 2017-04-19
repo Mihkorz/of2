@@ -597,6 +597,18 @@
            Top Model Features
          </a>
         </li>
+         {%if 'l1k' in report.slug %}
+            <li role="presentation">
+              <a href="#all_inotrope_tab" aria-controls="home1" role="tab" data-toggle="tab" >
+               All Models Inotrope
+             </a>
+            </li>
+            <li role="presentation">
+              <a href="#top_inotrope_tab" aria-controls="home1" role="tab" data-toggle="tab" >
+               Top Model Features Inotrope
+             </a>
+            </li>
+         {%endif%}
     </ul>
     
     <div class="tab-content">
@@ -625,13 +637,48 @@
        <table id="tbl-top_featur" class="path table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
           <tr >
-           <th>#</th>
+           
            <th>name</th>
            <th>test</th>
           </tr>
         </thead>  
       </table>
      </div> <!-- end of tabpanel div -->
+     
+     {%if 'l1k' in report.slug %}
+     
+     <div role="tabpanel" class="tab-pane fade " id="all_inotrope_tab">
+     <h4>Table <span class='tbl_num'></span>All Models Inotrope </h4>
+       <table id="tbl-all_inotrope" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr >
+           <th>base_model</th>
+           <th>f1</th>
+           <th>matthews_corrcoef</th>
+           <th>num_features</th>
+           <th>precision</th>
+           <th>recall</th>
+           <th>roc_auc</th>
+           
+          </tr>
+        </thead>  
+      </table>
+     </div> <!-- end of tabpanel div -->
+     
+     <div role="tabpanel" class="tab-pane fade " id="top_inotrope_tab">
+     <h4>Table <span class='tbl_num'></span>Top Model Features Inotrope </h4>
+       <table id="tbl-top_inotrope" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr >
+           
+           <th>name</th>
+           <th>test</th>
+          </tr>
+        </thead>  
+      </table>
+     </div> <!-- end of tabpanel div -->
+     
+     {%endif%}
      
    </div><!-- end of tab-content div -->
 
@@ -669,7 +716,7 @@ var top_featur = $("#tbl-top_featur").DataTable( {
 	"paging":   true,
     "iDisplayLength": 20,
     "ordering": true,
-    //"order": [[ 0, "desc" ]],
+    "order": [[ 1, "desc" ]],
     "info":     false,
     "dom": 'Bfrtip',
     "scrollX": false,
@@ -685,6 +732,56 @@ var top_featur = $("#tbl-top_featur").DataTable( {
     	     'data':{
     	    	     reportID: {{report.id}},
     	    	     file_name: 'l1k_Top_model_features.csv'
+    	            },        	      
+    
+},"deferRender": true });
+
+
+
+var all_featur_ino = $("#tbl-all_inotrope").DataTable( {
+	"paging":   true,
+    "iDisplayLength": 20,
+    //"ordering": true,
+    "order": [[ 1, "desc" ]],
+    "info":     false,
+    "dom": 'Bfrtip',
+    "scrollX": false,
+    "bAutoWidth": false,
+    "buttons": [
+               {extend: 'csv', title: 'tbl-all_inotrope'},
+               {extend: 'print', title: 'tbl-all_inotrope'}
+               
+          ],
+    
+    "ajax": {'url':'/report-portal/report-deepgsktablejson/',
+    	     'type': 'GET',
+    	     'data':{
+    	    	     reportID: {{report.id}},
+    	    	     file_name: 'scores_inotropes_cut.csv'
+    	            },        	      
+    
+},"deferRender": true });
+
+var top_featur_ino = $("#tbl-top_inotrope").DataTable( {
+	"paging":   true,
+    "iDisplayLength": 20,
+    "ordering": true,
+    "order": [[ 1, "asc" ]],
+    "info":     false,
+    "dom": 'Bfrtip',
+    "scrollX": false,
+    "bAutoWidth": false,
+    "buttons": [
+               {extend: 'csv', title: 'tbl-top_inotrope'},
+               {extend: 'print', title: 'tbl-top_inotrope'}
+               
+          ],
+    
+    "ajax": {'url':'/report-portal/report-deepgsktablejson/',
+    	     'type': 'GET',
+    	     'data':{
+    	    	     reportID: {{report.id}},
+    	    	     file_name: 'S_523_bestmodel_inotrope.csv'
     	            },        	      
     
 },"deferRender": true });
@@ -871,6 +968,11 @@ $(function() {
 	 	});
 	 	
 	 	{%endfor%}
+	 	
+	 	
+	 	{%for gene in report.get_notable_genes_list%}
+		  drawGeneBoxplot(reportID={{report.id}}, name='{{gene}}', renderTo='{{gene}}', gene='{{gene}}', categories='{{report.get_all_gene_groups_norm_as_list}}');
+		{%endfor%}
 		
 	});
 	
@@ -908,9 +1010,7 @@ $(function() {
 	{%endfor%}
 	{%endif%}
 	
-	{%for gene in report.get_notable_genes_list%}
-	  drawGeneBoxplot(reportID={{report.id}}, name='{{gene}}', renderTo='{{gene}}', gene='{{gene}}', categories='{{report.get_all_gene_groups_norm_as_list}}');
-	{%endfor%}
+	
 	
 	
 	
