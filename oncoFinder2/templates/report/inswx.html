@@ -60,6 +60,8 @@
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#path_analysis">Pathway Analysis</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#bio_analysis">Structural Biology Analysis</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#admne">ADME properties</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#patients">Patents and Clinical trials</a></li>
+            
             
             {%if 'above-and-beyond' in report.slug %}
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#ds_analysis">Drug Scoring</a></li>
@@ -1118,8 +1120,8 @@ $(function() {
         "dom": 'Bfrtip',
         "scrollX": false,
         "buttons": [
-                   {extend: 'csv', title: 'adme'},
-                   {extend: 'print', title: 'adme'}
+                   {extend: 'csv', title: 'similarity'},
+                   {extend: 'print', title: 'similarity'}
                    
               ]
 	});
@@ -1261,7 +1263,1705 @@ $(function() {
 
 </div> <!-- end adme.hide -->
 
+<h2 id='patients'>Patents and Clinical trials</h2>
+<hr/>
+<center>
+<button type="button"  class="btn btn-success btn-lg center" id='btn_show_patients'>Show Data</button>
+</center>
 
+<div id='hide_patients' style='display:none;' class="tab-pane fade in active ">
+
+<h3>InsWX-related patents</h3>
+<div style='overflow-x: auto;'>
+
+<table id='tbl_patients' class="table table-striped table-bordered" cellspacing="0" >
+<!--  
+<colgroup width="29"></colgroup>
+<colgroup width="540"></colgroup>
+<colgroup width="459"></colgroup>
+<colgroup width="106"></colgroup>
+<colgroup width="509"></colgroup>
+<colgroup width="3169"></colgroup>
+<colgroup width="2814"></colgroup>
+<colgroup width="1800"></colgroup>
+<colgroup width="335"></colgroup>
+<colgroup width="82"></colgroup>
+<colgroup width="4432"></colgroup>
+<colgroup width="1047"></colgroup>
+-->
+<thead>
+<tr>
+	<td >#</td>
+	<td align="left">Patent number
+	</td>
+	<td align="left">Patent name
+	</td>
+	<td align="left">Priority date
+	</td>
+	<td align="left">Bio Assay
+	</td>
+	<td align="left">Bio effect
+	</td>
+	<td align="left">Indication
+	</td>
+	<td align="left">Target
+	</td>
+	<td align="left">Potency: IC50/EC50/Ki (accurate value or range)
+	</td>
+	<td align="left">Analogues
+	</td>
+	<td align="left">Comments
+	</td>
+	<td align="left">Link
+	</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<td height="53" align="right" sdval="1" sdnum="1033;">1
+	</td>
+	<td align="left">US 20110305719<br>US 8637494 B2<br>WO 2011159717 A1
+	</td>
+	<td align="left">Method of achieving normoglycemia in diabetics by administration of Withaferin A
+	</td>
+	<td align="left" sdnum="1033;0;@">06/14/2010
+	</td>
+	<td align="left">Islet cell isograft survival, glucose levels after treatment and without treatment
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">Type 1 Diabetes
+	</td>
+	<td align="left">NFkB, expression one or more inflammatory genes selected from RANTES/CCL5, IP10/CXCL10, MIG/CXCL9, ITAC/CXCL11, TNFα, IL-1β, IL-1α, MCP-2, and CXCL
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">Patent describes a method for blocking inflammation in transplanted pancreas islet cells
+	</td>
+	<td align="left">https://www.google.com/patents/US8637494
+	</td>
+</tr>
+<tr>
+	<td height="19" align="right" sdval="2" sdnum="1033;">2
+	</td>
+	<td align="left">US 20080032958 A1
+	</td>
+	<td align="left">Withanolide compounds as inhibitors of fibrosis and identification of molecular targets for anti-fibrotic drug development
+	</td>
+	<td align="left" sdnum="1033;0;@">03/13/2006
+	</td>
+	<td align="left">corneas of C57BL6 mice injured by application of 0.1 N sodium hydroxide, expression of TKT, NFkB, HO-1, WA treatment in 0.5, 2.0, 5.0 and 12.0 mg/kg/d
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">fibrotic disease: diabetic nephropathy, glomerulosclerosis, IgA nephropathy, diabetic retinopathy, advanced macular degeneration, liver cirrhosis and biliary atresia, congestive heart failure, endomyocardial fibrosis, idiopathic myocardiopathy, lung fibrosis, diffuse parenchymal lung disease, mediastinal fibrosis, progressive massive fibrosis, fibrosis of the lungs associated with tuberculosis, scleroderma, fibrosis associated with cancerous growth, endometriosis, fibrosis associated with surgery, alcohol-related liver damage, cardiovascular disease, and retinal detachment
+	</td>
+	<td align="left">NFkB, ubiquitin proteasome pathway
+	</td>
+	<td align="left">https://www.google.com/patents/US20080032958
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+</tr>
+<tr>
+	<td height="53" align="right" sdval="3" sdnum="1033;">3
+	</td>
+	<td align="left">US 20110230551 A1<br>WO2010030395 A2<br>WO2010030395 A3
+	</td>
+	<td align="left">WITHAFERIN A ANALOGS AND USES THEREOF
+	</td>
+	<td align="left" sdnum="1033;0;@">05/25/2011
+	</td>
+	<td align="left">MCF-7 breast cancer cells; WI-38 fibroblasts; PC-3M (prostate) and CHP-100 (Ewing's sarcoma) tumor<br>cells; Human umbilical vein endothelial cells (HUVEC); SCID mice bearing CHP-100 tumor xenografts;
+	</td>
+	<td align="left">Cytotoxicity in multiple cell lines, Heat shock response Induction, Actin Aggregation
+	</td>
+	<td align="left">proliferative diseases, neurodegenerative diseases, autoimmune,<br>and inflammatory diseases
+	</td>
+	<td align="left">PAR-4
+	</td>
+	<td align="left">no
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">the wide arrange of withaferin analouges was synthesized from withaferin a. All of them were tested against diseases
+	</td>
+	<td align="left">https://www.google.ru/patents/US20110230551
+	</td>
+</tr>
+<tr>
+	<td height="274" align="right" sdval="4" sdnum="1033;">4
+	</td>
+	<td align="left">WO 2015081093 A1
+	</td>
+	<td align="left">COMPOUNDS FOR THE TREATMENT OF OBESITY AND METHODS OF USE THEREOF
+	</td>
+	<td align="left" sdnum="1033;0;@">11/26/2013
+	</td>
+	<td align="left">C57BL/6 mice fed HFD for I6 weeks; C57BL/6 mice fed a chow diet;8-week-<br>5 old db/db mice fed a chow diet.
+	</td>
+	<td align="left">Withaferin A decreases blood glucose of obese mice. Withaferin A failed to induce bodyweight loss or suppress food intake in lean mice, suggesting that the anorectic effect of Withaferin A is<br>limited to obese animals.anorectic effect of<br>Withaferin A is mediated through leptin signaling. Withaferin A alone, as expected, decreased the food intake of HFD-fed obese mice in the absence of exogenous leptin administration, probably due<br>to already elevated leptin levels of HFD-fed obese mice.
+	</td>
+	<td align="left">obesity
+	</td>
+	<td align="left"> leptin signaling system
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">There are several circuits within the hypothalamus that contribute to its role<br>in integrating appetite, the melanocortin pathway being the best understood.<br>The circuit begins with the arcuate nucleus, an area of the hypothalamus that<br>has outputs to the lateral hypothalamus (LH) and ventromedial hypothalamus<br>(VMH), the brain's feeding and satiety centers, respectively.<br>The arcuate nucleus contains two distinct groups of neurons. The first<br>group co-expresses neuropeptide Y (NPY) and agouti-related peptide<br>(AgRP) and has stimulatory inputs to the LH and inhibitory inputs to the<br>VMH. The second group co-expresses pro-opiomelanocortin (POMC) and<br>cocaine- and amphetamine-regulated transcript (CART) and has stimulatory<br>inputs to the VMH and inhibitory inputs to the LH. Consequently,<br>NPY I AgRP neurons stimulate feeding and inhibit satiety, while POMC/CART neurons stimulate satiety and inhibit feeding. Both groups of<br>arcuate nucleus neurons are regulated in part by leptin. Leptin inhibits the<br>NPY/AgRP group while stimulating the POMC/CART group. Thus a<br>deficiency in leptin signaling, either via leptin deficiency or leptin resistance, leads to overfeeding. This may account for some genetic and acquired forms<br>of obesity
+	</td>
+	<td align="left">https://www.google.ru/patents/WO2015081093A1?cl=en&dq=WO+2015081093+A1&hl=ru&sa=X&ved=0ahUKEwj02ZvHgtfTAhUH2CwKHflgAwQQ6AEIJTAA
+	</td>
+</tr>
+<tr>
+	<td height="36" align="right" sdval="5" sdnum="1033;">5
+	</td>
+	<td align="left">WO 2016160880 A1
+	</td>
+	<td align="left">METHODS AND COMPOSITIONS FOR TREATING PANCREATITIS
+	</td>
+	<td align="left" sdnum="1033;0;@">03/31/2015
+	</td>
+	<td align="left">mice pancreas;mouse pancreatic tissue
+	</td>
+	<td align="left">WA treatment significantly reduced acinar cell atrophy and infiltration of mononuclear cells. Serum amylase levels were elevated in the cerulein treated mice compared to the control mice, and this was significantly<br>decreased by WA (952.8 ± 228.8 versus 696.3 ± 98.6 nmol/min/mL; p = 0.045)
+	</td>
+	<td align="left">Chronic pancreatitis; inflammation,
+	</td>
+	<td align="left">inhibition of<br>NF-KB signaling
+	</td>
+	<td align="left">no
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">https://www.google.ru/patents/WO2016172042A1?cl=en&dq=WO+2016172042+A1&hl=ru&sa=X&ved=0ahUKEwj1qJeFgdfTAhWBBSwKHbQsDPsQ6AEIIzAA
+	</td>
+</tr>
+<tr>
+	<td height="19" align="right" sdval="6" sdnum="1033;">6
+	</td>
+	<td align="left">WO 2017046778 A1
+	</td>
+	<td align="left">A novel synergistic composition for the treatment of visceral leishmaniasis
+	</td>
+	<td align="left" sdnum="1033;0;@">09/17/2015
+	</td>
+	<td align="left">parasite motility, PTR1 activity
+	</td>
+	<td align="left">the treatments with Withaferin-A (*p=0.01) alone or together with Miltefosine (**p=0.006) significantly reduced the parasite burden Withaferin-A shown a potent antileishmanial activity alone or have synergistic effects together with Miltefosine treatment in VL mice
+	</td>
+	<td align="left">Visceral Leishmaniasis (VL)
+	</td>
+	<td align="left">protein Pteridine Reductase-1 enzyme from L. donovani parasites
+	</td>
+	<td align="left">no
+	</td>
+	<td align="left">no
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">https://patentscope.wipo.int/search/en/detail.jsf?docId=WO2017046778
+	</td>
+</tr>
+<tr>
+	<td height="155" align="right" sdval="7" sdnum="1033;">7
+	</td>
+	<td align="left">WO 2017041054 A1
+	</td>
+	<td align="left">Pharmaceutical compositions for improved Nrf2 activation
+	</td>
+	<td align="left" sdnum="1033;0;@">09/03/2015
+	</td>
+	<td align="left">buccal cell samples from a human subject; transfected breast cancer cell line; transfected liver cancer cell line; human breast cancer cell line; human liver cancer cell line; human kidney cancer cell line; human lung cancer cell line; human brain cancer cell line
+	</td>
+	<td align="left">acting<br>on Nrf2 activation by engagement of different, specific control points so that the<br>combination of agents that synergistically activate the Nrf2 pathway (plant exacts combinations containing Withaferin a) . Thus the new<br>combinations of agents that act on different control points of the Nrf2 signaling pathway to increase expression of Nrf2-dependent genes are novel.
+	</td>
+	<td align="left">inflammation and/or oxidative stress
+	</td>
+	<td align="left">Nrf2
+	</td>
+	<td align="left">no
+	</td>
+	<td align="left">no
+	</td>
+	<td align="left">Nuclear factor-erythroid 2 related factor 2 (Nrf2) is a transcription<br>factor that is regulated by Kelch-like ECH-Associated Protein 1 (Keapl). Nrf2<br>regulates gene expression of a wide variety of cytoprotective phase II detoxification<br>enzymes and antioxidant enzymes through an enhancer sequence known as the<br>antioxidant-responsive element (ARE). Relevant to oxidative stress, the ARE is a promoter element<br>found in many antioxidant enzymes, including superoxide dismutase (SOD),<br>peroxiredoxins, thioredoxins, catalase, glutathione peroxidase, and heme oxygenase-1<br>(H0-1). Nrf2 plays a pivotal role in the ARE-driven cellular defense system against<br>oxidative stress.
+	</td>
+	<td align="left">https://www.google.com/patents/WO2017041054A1?cl=en
+	</td>
+</tr>
+<tr>
+	<td height="104" align="right" sdval="8" sdnum="1033;">8
+	</td>
+	<td align="left">WO 2016011049 A2
+	</td>
+	<td align="left">COMPOSITIONS AND METHODS FOR DISEASE TREATMENT USING NANOPARTICLE DELIVERED COMPOUNDS
+	</td>
+	<td align="left" sdnum="1033;0;@">07/14/2014
+	</td>
+	<td align="left">adrenocortical carcinoma cell lines (AQCC)<br>SW13 and H295R and two neuroblastoma cells lines (NB)
+	</td>
+	<td align="left">In all the cell lines tested, HDL nanoparticle WA had superior cytotoxic effect compared to<br>either free WA or HDL.
+	</td>
+	<td align="left">cancer; adrenocortical carcinoma (ACC)
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">nanoparticle is a homogenous particle having an average size (diameter) from 5-15 nm.<br>The withanolide-containing composition (WA) may be provided alone, or may be further<br>provided with a second therapeutic agent (e.g., anti-cancer agent) (e.g., co-administration of<br>the withanolide and the second anti-cancer agent). In some embodiments, the second<br>therapeutic agent is also provided in the nanoparticle. In other embodiments, the second therapeutic agent is provided in a separate composition that is to be administered to a subject<br>separately (e.g., sequentially or in parallel) with the withanolide-containing nanoparticle
+	</td>
+	<td align="left">https://www.google.ru/patents/WO2016011049A2?cl=en&hl=ru&dq=WO+2016011049+A2
+	</td>
+</tr>
+<tr>
+	<td height="53" align="right" sdval="9" sdnum="1033;">9
+	</td>
+	<td align="left">WO 2015173788 A1
+	</td>
+	<td align="left">NOVEL ANTI-INFECTIVE STRATEGY AGAINST INFLUENZA VIRUS AND S. AUREUS COINFECTIONS
+	</td>
+	<td align="left" sdnum="1033;0;@">05/16/2014
+	</td>
+	<td align="left">cultured cell infected with an influenza virus and a<br>bacterium
+	</td>
+	<td align="left">The present inventors surprisingly observed, that drugs against intracellular signaling factors, such as<br>NFKB, MEK or p38 MAP kinase, that were previously shown to possess anti influenza activity, also<br>exhibit anti S. aureus activity and reduces both viral- and bacterial titers in a coinfection scenario
+	</td>
+	<td align="left">co-infection comprising a bacterial infection and<br>an influenza virus infection or a bacterial infection alone
+	</td>
+	<td align="left">S. aureus bacteria; NFKB, MEK or p38 MAP kinase
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">S. aureus also uses cellular signaling for its own benefits during infection
+	</td>
+	<td align="left">https://www.google.ru/patents/WO2015173788A1?cl=en&dq=WO+2015173788+A1&hl=ru&sa=X&ved=0ahUKEwio2YPHgdfTAhUL2SwKHb16DfkQ6AEIJTAA
+	</td>
+</tr>
+<tr>
+	<td height="19" align="right" sdval="10" sdnum="1033;">10
+	</td>
+	<td align="left">US 20170007659 A1
+	</td>
+	<td align="left">Method for preparing water extract of ashwagandha leaves with enhanced anticancer activity utilizing cyclodextrin, and pharmaceutical composition containing ashwagandha leaves
+	</td>
+	<td align="left" sdnum="1033;0;@">12/27/2007
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">Cancer
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">Patent addresses anti-cancer activity of the water extract of Ashwagandha leaves with cyclodextrin
+	</td>
+	<td align="left">https://www.google.ru/patents/US20170007659?dq=US+20170007659+A1&hl=ru&sa=X&ved=0ahUKEwjGvcKtgtfTAhUFjiwKHefhAjAQ6AEIJTAA
+	</td>
+</tr>
+<tr>
+	<td height="274" align="right" sdval="11" sdnum="1033;">11
+	</td>
+	<td align="left">WO 2015081093 A1
+	</td>
+	<td align="left">COMPOUNDS FOR THE TREATMENT OF OBESITY AND METHODS OF USE THEREOF
+	</td>
+	<td align="left" sdnum="1033;0;@">11/26/2013
+	</td>
+	<td align="left">C57BL/6 mice fed HFD for I6 weeks; C57BL/6 mice fed a chow diet;8-week-<br>5 old db/db mice fed a chow diet.
+	</td>
+	<td align="left">Withaferin A decreases blood glucose of obese mice. Withaferin A failed to induce bodyweight loss or suppress food intake in lean mice, suggesting that the anorectic effect of Withaferin A is<br>limited to obese animals.anorectic effect of<br>Withaferin A is mediated through leptin signaling. Withaferin A alone, as expected, decreased the food intake of HFD-fed obese mice in the absence of exogenous leptin administration, probably due<br>to already elevated leptin levels of HFD-fed obese mice.
+	</td>
+	<td align="left">obesity
+	</td>
+	<td align="left"> leptin signaling system
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">There are several circuits within the hypothalamus that contribute to its role<br>in integrating appetite, the melanocortin pathway being the best understood.<br>The circuit begins with the arcuate nucleus, an area of the hypothalamus that<br>has outputs to the lateral hypothalamus (LH) and ventromedial hypothalamus<br>(VMH), the brain's feeding and satiety centers, respectively.<br>The arcuate nucleus contains two distinct groups of neurons. The first<br>group co-expresses neuropeptide Y (NPY) and agouti-related peptide<br>(AgRP) and has stimulatory inputs to the LH and inhibitory inputs to the<br>VMH. The second group co-expresses pro-opiomelanocortin (POMC) and<br>cocaine- and amphetamine-regulated transcript (CART) and has stimulatory<br>inputs to the VMH and inhibitory inputs to the LH. Consequently,<br>NPY I AgRP neurons stimulate feeding and inhibit satiety, while POMC/CART neurons stimulate satiety and inhibit feeding. Both groups of<br>arcuate nucleus neurons are regulated in part by leptin. Leptin inhibits the<br>NPY/AgRP group while stimulating the POMC/CART group. Thus a<br>deficiency in leptin signaling, either via leptin deficiency or leptin resistance, leads to overfeeding. This may account for some genetic and acquired forms<br>of obesity
+	</td>
+	<td align="left">https://www.google.ru/patents/WO2015081093A1?cl=en&dq=WO+2015081093+A1&hl=ru&sa=X&ved=0ahUKEwj02ZvHgtfTAhUH2CwKHflgAwQQ6AEIJTAA
+	</td>
+</tr>
+<tr>
+	<td height="87" align="right" sdval="12" sdnum="1033;">12
+	</td>
+	<td align="left">WO 2015077780 A1
+	</td>
+	<td align="left">WITHANOLIDES USEFUL FOR THE TREATMENT OF NEURODEGENERATIVE DISEASES
+	</td>
+	<td align="left" sdnum="1033;0;@">11/25/2013
+	</td>
+	<td align="left">1.Transgenic GF AP-luciferase mice;<br>2. BV2 microglial cells stimulated with LPS.3. hygromycin B-resistant HEK-293 cells
+	</td>
+	<td align="left">1. The results showed a significant decrease in the bioluminescent signal in<br>mice treated with either 4-O-methyl WA or 27-O-methyl WA compared to mice treated<br>with saline-DMSO alone.<br>2. withanolides<br>tested had the ability to inhibit NF-KB expression 3. WA derivatives inhibited NF-KB expression
+	</td>
+	<td align="left">Amyotrophic Lateral Sclerosis (ALS), commonly known as "Lou Gehrig's disease", is a progressive neurodegenerative disease of unknown etiology. The disease progressively impairs an<br>individual's ability to control voluntary muscle movement. The disease tends to<br>progress rapidly, leading to paralysis and death within 2-5 years of diagnosis in most<br>cases.
+	</td>
+	<td align="left">Activation of the NFkB signalling pathway
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">Synthesis of derivatives is described
+	</td>
+	<td align="left">https://www.google.ru/patents/WO2015077780A1?cl=en&dq=WO+2015077780+A1&hl=ru&sa=X&ved=0ahUKEwjjqf7ZgtfTAhXLjiwKHRtyDrsQ6AEIJTAA
+	</td>
+</tr>
+<tr>
+	<td height="257" align="right" sdval="13" sdnum="1033;">13
+	</td>
+	<td align="left">WO 2015008301A1
+	</td>
+	<td align="left">PHARMACEUTICAL COMPOSITION FOR THE TREATMENT OF DIMINUTION OF BONE TISSUE
+	</td>
+	<td align="left" sdnum="1033;0;@">07/16/2014
+	</td>
+	<td align="left">MCOs; Primary osteoblasts
+	</td>
+	<td align="left">WF A and Withanolide A show significantly<br>increased ALP production compared with control. treatment of MCO's with WFA in osteoblast<br>differentiation medium significantly increased mineralized nodules compared with ·<br>control. WFA (IOnM) treatment of MCO's increased expression of osteogenic genes.
+	</td>
+	<td align="left">DIMINUTION OF BONE TISSUE;
+	</td>
+	<td align="left">proteasome
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">Proteasomes degrade damaged cellular proteins and various short lived regulatory<br>proteins and govern a wide range of cellular functions. The expression of cell cycle<br>stimulatory and inhibitory proteins has a major role in the development and progression<br>of cancer. Proteasome inhibitors can stabilize many cell cycle inhibitory proteins and<br>cause cell cycle arrest and apoptosis, thus limiting tumor development. It has been<br>demonstrated that lactacystin (PI) significantly reduced angiogenesis suggesting that<br>these compounds could be beneficial in disease states that rely on the formation of new blood vessels.PS-341 has been shown to limit the production of<br>metastases and limit angiogenesis in several experimental cancer systems. Thus, proteasome inhibitors show significant potential as anti-angiogenesis agents, influencing both inflammatory conditions and the<br>development of cancer metastasis.The role of proteasome in bone formation appears to occur mainly through regulation<br> factor Runx2/cbfal and additional components associated with bone morphogenetic<br>proteins BMPs and Wnt signaling. These proteasomal effects on osteo-blastogenesis<br>and on the production of osteo-clastogenic factors in osteogenic cells indirectly impact<br>osteoclastogenesis but the proteasome is also directly involved in osteoclastogenesis<br>because it controls important signaling pathways such as NFkB pathway, in osteoclast<br>precursor cells
+	</td>
+	<td align="left">https://www.google.ru/patents/WO2015008301A1?cl=en&dq=WO+2015008301A1&hl=ru&sa=X&ved=0ahUKEwi7uuHYg9fTAhWKWSwKHWj_CEwQ6AEIIzAA
+	</td>
+</tr>
+<tr>
+	<td height="104" align="right" sdval="14" sdnum="1033;">14
+	</td>
+	<td align="left">US 20140271944A1
+	</td>
+	<td align="left">COMPOSITIONS FOR ALLEVIATING<br>INFLAMMATION AND OXIDATIVE STRESS<br>IN A MAMMAL
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">AREc32 cell line
+	</td>
+	<td align="left">Pure WithaferinA produced peak Nrf2 activation at<br>a concentration of 1.0 μglml (or 2.1 μM), which is defined<br>herein as Cmax· The observed Cm= of root powder was 200<br>μg/ml indicating that the withaferinA content was 1/200, or<br>0.5% of the root powder. This method can be used to select<br>extract fractions with maximal Nrf2 activating potential.
+	</td>
+	<td align="left">inflammation and oxidative stress
+	</td>
+	<td align="left">activating Nrf2-ARE signaling
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">there are many compounds activating Nf2 -ARE signaling shown in the patent paper, anlouges!
+	</td>
+	<td align="left">https://www.google.ru/patents/US20140271944?dq=US+20140271944A1&hl=ru&sa=X&ved=0ahUKEwiQ08_qg9fTAhVFCSwKHawWC4QQ6AEIJTAA
+	</td>
+</tr>
+<tr>
+	<td height="172" align="right" sdval="15" sdnum="1033;">15
+	</td>
+	<td align="left">WO 2012174666A1
+	</td>
+	<td align="left">METHODS FOR THE PROGNOSTIC AND/OR DIAGNOSTIC OF NEURODEGENERATIVE DISEASE, METHODS<br>TO IDENTIFY CANDIDATE COMPOUNDS AND COMPOUNDS FOR TREATING NEURODEGENERATIVE DISEASE
+	</td>
+	<td align="left" sdnum="1033;0;@">06/22/2012
+	</td>
+	<td align="left">GFAP-luc/TDP-43w1 mice
+	</td>
+	<td align="left">WA reduces neuronal vulnerability to<br>toxic injury and ameliorates disease phenotypes in TDP-43 transgenic mice; Withaferin A ameliorates disease phenotypes in TDP-43 transgenic<br>mice; NF-KB inhibition by Withaferin A treatment reduces inflammation<br>and ameliorates motor impairment of TDP-43 transgenic mice
+	</td>
+	<td align="left">Amyotrophic lateral sclerosis (ALS)
+	</td>
+	<td align="left">NF-KB inhibition
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">The present invention also relates to a method for the diagnostic of a subject<br>predisposed or suspected of developing a neurodegenerative disease or suffering<br>from a neurodegenerative disease, the method comprising the steps of:<br>isolating TDP-43 mRNA from a biological sample of a subject; and<br>detecting the level of TDP-43 mRNA in the biological sample of the subject,<br>wherein detecting an elevated level of TDP-43 mRNA in the biological sample<br>relative to the reference level of TDP-43 mRNA indicates that the subject is<br>predisposed or suspected of developing a neurodegenerative disease or is suffering<br>from a neurodegenerative disease.<br>The
+	</td>
+	<td align="left">https://www.google.ru/patents/WO2012174666A1?cl=en&dq=WO+2012174666A1&hl=ru&sa=X&ved=0ahUKEwiaxdbBhNfTAhWHWCwKHaGZAeIQ6AEIJTAA
+	</td>
+</tr>
+<tr>
+	<td height="87" align="right" sdval="16" sdnum="1033;">16
+	</td>
+	<td align="left">US 20120196815A1
+	</td>
+	<td align="left">WITHANOLIDE ISOLATED FROM<br>PHYSALIS LONGIFOLIA AND ANALOGS<br>AND METHODS OF USE THEREOF
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">Human carcinoid<br>cells, NCI-H727 (ATCC, Manassas, Va.), , Squamous cell carcinoma of head<br>and neck cells, MD Al 986 and JMAR (Swan, et al. (2003) Oral Oneal.<br>39:648-55); and melanoma cells lines Bl6Fl0 (ATCC,<br>Manassas, Va.) and SKMEL28 (CLS, Eppelheim, Germany)
+	</td>
+	<td align="left">the anti-cancer<br>effect of the withanolides on human melanoma SKMEL28<br>cells.
+	</td>
+	<td align="left"> cancer;  hypertension or ischemia; Parkinson's disease, Huntington's disease, or<br>Alzheimer's disease;arthritis or asthma.
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">synthesis of withaferin derivatives and their effects on assays
+	</td>
+	<td align="left">https://www.google.ru/patents/US20120196815?dq=US+20120196815A1&hl=ru&sa=X&ved=0ahUKEwjVpKKrhdfTAhWGjiwKHZ4NDg8Q6AEIJTAA
+	</td>
+</tr>
+<tr>
+	<td height="70" align="right" sdval="17" sdnum="1033;">17
+	</td>
+	<td align="left">WO 2012042519A1
+	</td>
+	<td align="left">METHODS OF OBTAINING CELL POPULATIONS ENRICHED WITH DESIRED CELLS
+	</td>
+	<td align="left" sdnum="1033;0;@">09/27/2010
+	</td>
+	<td align="left">hES 1, human embryonic stem cell line, Primary human foreskin fibroblasts (passage 17-21) (Mitomycin Ctreated)<br>used as feeders for hES 1 cells.
+	</td>
+	<td align="left">apoptosis inducing agent is withaferin A.
+	</td>
+	<td align="left">Parkinson's disease
+	</td>
+	<td align="left">cell therapy
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">The present invention provides a method for obtaining a population of cells<br>enriched with, or predominantly consisting of differentiated cells that exhibit a preidentified<br>cytoskeletal profile. The profile defines resistance of the differentiated cells to<br>a cytotoxic agent.
+	</td>
+	<td align="left">https://www.google.com/patents/WO2012042519A1?cl=enIt
+	</td>
+</tr>
+<tr>
+	<td height="36" align="right" sdval="18" sdnum="1033;">18
+	</td>
+	<td align="left">WO 2008101109 A1<br>US 20080207574 A1
+	</td>
+	<td align="left">Withanolides for drug screening and treatment of type III intermediate filament-associated disorders
+	</td>
+	<td align="left" sdnum="1033;0;@">08/21/2008
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">vimentin-assocd. disorders, such as cancers, angiofibrotic diseases, and chronic inflammation, GFAP-assocd. disorders such as gliopathies, motor neuron degeneration, scar formation, traumatic brain injury, stroke, epilepsy and mood disorders and desmin-assocd. disorders relating to cardiomyopathies and musculoskeletal disorders.
+	</td>
+	<td align="left">Vimentin, type-III intermediate filament proteins
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+</tr>
+<tr>
+	<td height="19" align="right" sdval="19" sdnum="1033;">19
+	</td>
+	<td align="left">WO 2007147883 A1
+	</td>
+	<td align="left">Combination of a cholinesterase inhibitor and a compound with 5-HT6 receptor affinity, and therapeutic use
+	</td>
+	<td align="left" sdnum="1033;0;@">12/27/2007
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">obesity-related disorders such as elevated plasma insulin concentrations and insulin resistance, dyslipidemias, hyperlipidemia, endometrial, breast, prostate and colon cancer, osteoarthritis, obstructive sleep apnea, cholelithiasis, gallstones, heart disease, abnormal heart rhythms and arrythmias, myocardial infarction, congestive heart failure, coronary heart disease, sudden death, stroke, polycystic ovary disease, craniopharyngioma, the Prader-Willi Syndrome and Frohlich's syndrome. Further examples of obesity-related disorders are reproductive hormone abnormalities, sexual and reproductive dysfunction, such as impaired fertility, infertility, hypogonadism in males and hirsutism in females, fetal defects associated with maternal obesity, gastrointestinal motility disorders, such as obesity-related gastro-esophageal reflux, respiratory disorders, such as obesity-related hypoventilation syndrome (Pickwickian syndrome), breathlessness, cardiovascular disorders, inflammation, such as systemic inflammation of the vasculature, arteriosclerosis, hypercholesterolemia, hyperuricaemia, lower back pain, gallbladder disease, gout, kidney cancer, and increased anesthetic risk
+	</td>
+	<td align="left">cholinesterase, acetylcholinesterase
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">Combination of acetylcholinesterase inhibitors and compounds with 5-HT6 receptor affinity
+	</td>
+	<td align="left">http://www.google.com/patents/WO2007147883A1
+	</td>
+</tr>
+<tr>
+	<td height="19" align="right" sdval="20" sdnum="1033;">20
+	</td>
+	<td align="left">WO 2007065016 A2
+	</td>
+	<td align="left">Methods and compositions to improve activity and reduce toxicity of stents
+	</td>
+	<td align="left" sdnum="1033;0;@">06/07/2007
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">Radiosensitizer (cancer)
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">http://www.google.com/patents/WO2007065016A2
+	</td>
+</tr>
+<tr>
+	<td height="19" align="right" sdval="21" sdnum="1033;">21
+	</td>
+	<td align="left">US 20040096524 A1
+	</td>
+	<td align="left">Cyclooxygenase-2 inhibitory withanolide compositions and method
+	</td>
+	<td align="left" sdnum="1033;0;@">05/20/2004
+	</td>
+	<td align="left">Cyclooxygenase enzyme inhibitory assay
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">COX-2 (selective over COX1)
+	</td>
+	<td align="left">~100-250 ug/ml
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">https://www.google.ch/patents/US20040096524
+	</td>
+</tr>
+<tr>
+	<td height="19" align="right" sdval="22" sdnum="1033;">22
+	</td>
+	<td align="left">US 6713092 B1
+	</td>
+	<td align="left">Pharmaceutical and nutrition and personal care formulations containing Withania somnifera extracts
+	</td>
+	<td align="left" sdnum="1033;0;@">12/03/2002
+	</td>
+	<td align="left">stress-induced gastric ulcer model
+	</td>
+	<td align="left">immuno-enchancer, immunomodulator,  Anti-craving Agent of Drugs of Abuse, Cognition Enhancer, Antioxidant
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">WS extract with low concentration of Withaferin A and analogues is considered
+	</td>
+	<td align="left">https://www.google.com/patents/US6713092
+	</td>
+</tr>
+<tr>
+	<td height="19" align="right" sdval="23" sdnum="1033;">23
+	</td>
+	<td align="left">WO 2010053655 A2
+	</td>
+	<td align="left">Therapeutic methods with withaferin a and analogs
+	</td>
+	<td align="left" sdnum="1033;0;@">11/07/2008
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">Modulating expression or activity of Hsp70, Hsp90, and/or HSFl
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">https://www.google.com/patents/WO2010053655A3
+	</td>
+</tr>
+<tr>
+	<td height="70" align="right" sdval="24" sdnum="1033;">24
+	</td>
+	<td align="left">WO 2013078371A2
+	</td>
+	<td align="left">METHODS AND COMPOSITIONS FOR REDUCING ALCOHOL TOXICITY
+	</td>
+	<td align="left" sdnum="1033;0;@">11/22/2011
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">alcohol toxocity
+	</td>
+	<td align="left">upregulates at least one step in the<br>Keapl/Nrf2/ARE transcription pathway, thereby increasing the amount of at least one<br>member of the acetaldehyde dehydrogenase superfamily or the enzymatic activity of at least<br>one member of the acetaldehyde dehydrogenase superfamily
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">no biological experiments with withaferine, methioned above other active compoiunds in a list
+	</td>
+	<td align="left">https://www.google.ru/patents/WO2013078371A2?cl=en&dq=WO+2013078371A2&hl=ru&sa=X&ved=0ahUKEwjskuuShNfTAhUE_iwKHQqxDb8Q6AEIJTAA
+	</td>
+</tr>
+<tr>
+	<td height="19" align="right" sdval="25" sdnum="1033;">25
+	</td>
+	<td align="left">WO 2011151359 A1
+	</td>
+	<td align="left">Combined treatment with a cholinesterase inhibitor and a thiadiazolidinedione derivative
+	</td>
+	<td align="left" sdnum="1033;0;@">06/02/2010
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">cholinesterase inhibitor
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">cholinesterase
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">WA is listed as one of the possible cholinesterase inhibitors
+	</td>
+	<td align="left">https://www.google.com/patents/WO2011151359A1
+	</td>
+</tr>
+<tr>
+	<td height="19" align="right" sdval="26" sdnum="1033;">26
+	</td>
+	<td align="left">US 20110287953 A1
+	</td>
+	<td align="left">Method for discovering potential drugs
+	</td>
+	<td align="left" sdnum="1033;0;@">05/21/2010
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">nasopharyngeal carcinoma
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">WA mentioned as one of the potential drugs
+	</td>
+	<td align="left">http://www.google.ch/patents/US20110287953
+	</td>
+</tr>
+<tr>
+	<td height="19" align="right" sdval="27" sdnum="1033;">27
+	</td>
+	<td align="left">US20110064712 A1
+	</td>
+	<td align="left">Dietary Supplement Compositions and Methods of Making and Using the Same
+	</td>
+	<td align="left" sdnum="1033;0;@">09/16/2009
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">Muscle growth, muscle regeneration
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">Ashwaganda extract as part of dietary composition
+	</td>
+	<td align="left">https://www.google.ch/patents/US20110064712
+	</td>
+</tr>
+<tr>
+	<td height="19" align="right" sdval="28" sdnum="1033;">28
+	</td>
+	<td align="left">US 20110020272 A1
+	</td>
+	<td align="left">Combination therapy for treating hepatitis viral infection
+	</td>
+	<td align="left" sdnum="1033;0;@">07/24/2009
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">Hepatitis viral infection
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">WA is one of the possible proteasome inhibitor compounds
+	</td>
+	<td align="left">https://www.google.com/patents/US20110020272
+	</td>
+</tr>
+<tr>
+	<td height="19" align="right" sdval="29" sdnum="1033;">29
+	</td>
+	<td align="left">US 20100285064 A1
+	</td>
+	<td align="left">Adjuvant composition for vaccine
+	</td>
+	<td align="left" sdnum="1033;0;@">05/05/2009
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">https://www.google.ch/patents/US20100285064
+	</td>
+</tr>
+<tr>
+	<td height="19" align="right" sdval="30" sdnum="1033;">30
+	</td>
+	<td align="left">US 6153198 A
+	</td>
+	<td align="left">Withania somnifera composition
+	</td>
+	<td align="left" sdnum="1033;0;@">07/13/1999
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">cognition effect and learning facility
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">WA is considered unwanted compound and its concentration should be lowered according to the authors
+	</td>
+	<td align="left">https://www.google.ch/patents/US6153198
+	</td>
+</tr>
+<tr>
+	<td height="19" align="right" sdval="31" sdnum="1033;">31
+	</td>
+	<td align="left">WO 2009114525 A1
+	</td>
+	<td align="left">Methods and compositions for controlled delivery of phytochemical agents
+	</td>
+	<td align="left" sdnum="1033;0;@">03/10/2008
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">Cancer
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">WA is mentioned as one of the possible anti-cancer therapy drugs
+	</td>
+	<td align="left">https://google.com/patents/US8142806
+	</td>
+</tr>
+<tr>
+	<td height="19" align="right" sdval="32" sdnum="1033;">32
+	</td>
+	<td align="left">US 20090191152 A1
+	</td>
+	<td align="left">Intralymphatic chemotherapy drug carriers
+	</td>
+	<td align="left" sdnum="1033;0;@">01/30/2008
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">Various cancers
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">WA is mentioned as one of the possible anti-cancer therapy drugs
+	</td>
+	<td align="left">http://www.google.com.na/patents/US20090191152
+	</td>
+</tr>
+<tr>
+	<td height="53" align="right" sdval="33" sdnum="1033;">33
+	</td>
+	<td align="left">WO 2013070619A1 US 20130115316A1
+	</td>
+	<td align="left">INDOLEALKYLAMINO-WITHASTEROID CONJUGATES AND METHOD OF USE
+	</td>
+	<td align="left" sdnum="1033;0;@">11/07/2011
+	</td>
+	<td align="left">The acetylcholinesterase (AChE) assay<br>was performed by the method of Ellman et al., with minor modification, using<br>acetylthiocholine Iodide as a substrate
+	</td>
+	<td align="left">Withaferin-A exhibited only feeble<br>inhibitory activity
+	</td>
+	<td align="left">dementia and dementia-related disorders, such as Alzheimer's disease, and anxiety and depressive disorders in mammals
+	</td>
+	<td align="left">inhibition of acetylcholinesterase
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">synthesis of analouges of WA from WA is described
+	</td>
+	<td align="left">https://www.google.ru/patents/WO2013070619A1?cl=en&dq=WO+2013070619A1&hl=ru&sa=X&ved=0ahUKEwi9xcGghNfTAhXG2CwKHbMkBxoQ6AEIJTAA
+	</td>
+</tr>
+<tr>
+	<td height="36" align="right" sdval="34" sdnum="1033;">34
+	</td>
+	<td align="left">WO 2012167099A1
+	</td>
+	<td align="left">BIOMARKERS AND THERAPY FOR CANCER
+	</td>
+	<td align="left" sdnum="1033;0;@">06/01/2011
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">serous ovarian<br>cancer
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">no biological measurments on WA, mentioned among other active anticancer compounds
+	</td>
+	<td align="left">https://www.google.ru/patents/WO2012167099A1?cl=en&dq=WO+2012167099A1&hl=ru&sa=X&ved=0ahUKEwjxh77fhNfTAhUKWywKHa3oAbIQ6AEIJTAA
+	</td>
+</tr>
+<tr>
+	<td height="19" align="right" sdval="35" sdnum="1033;">35
+	</td>
+	<td align="left">WO 2012100248A1
+	</td>
+	<td align="left">METHODS AND COMPOSITIONS RELATED TO SYNERGISTIC RESPONSES TO ONCOGENIC MUTATIONS
+	</td>
+	<td align="left" sdnum="1033;0;@">11/23/2011
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">cancer
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">withaferin is mentioned among other biological active compounds
+	</td>
+	<td align="left">https://www.google.ru/patents/WO2012100248A1?cl=en&dq=WO+2012100248A1&hl=ru&sa=X&ved=0ahUKEwjKgqvEhdfTAhUDhSwKHcIOBh0Q6AEIJTAA
+	</td>
+</tr>
+<tr>
+	<td height="19" align="right" sdval="36" sdnum="1033;">36
+	</td>
+	<td align="left">WO 2006109196 A2
+	</td>
+	<td align="left">Transgenic mouse models of hepatitis C virus infection and identification of HCV therapeutics
+	</td>
+	<td align="left" sdnum="1033;0;@">10/19/2006
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">Not applicable
+	</td>
+	<td align="left">https://google.com/patents/WO2006109196A2
+	</td>
+</tr>
+<tr>
+	<td height="19" align="right" sdval="37" sdnum="1033;">37
+	</td>
+	<td align="left">US 20060018937 A1
+	</td>
+	<td align="left">Steroid kit and foamable composition
+	</td>
+	<td align="left" sdnum="1033;0;@">01/26/2006
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">Foam containing Withaferin A as one of steroid components. Not applicable
+	</td>
+	<td align="left">https://www.google.ch/patents/US20060018937
+	</td>
+</tr>
+<tr>
+	<td height="19" align="right" sdval="38" sdnum="1033;">38
+	</td>
+	<td align="left">US 20050266100 A1
+	</td>
+	<td align="left">Process isolation of withaferin-A from plant materials and products therefrom
+	</td>
+	<td align="left" sdnum="1033;0;@">12/01/2005
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">https://www.google.ch/patents/US20050266100
+	</td>
+</tr>
+<tr>
+	<td height="19" align="right" sdval="39" sdnum="1033;">39
+	</td>
+	<td align="left">US 20050226950 A1
+	</td>
+	<td align="left">Process for isolation of withaferin-A from plant materials, and products therefrom
+	</td>
+	<td align="left" sdnum="1033;0;@">10/13/2005
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">Method for isolation of Withaferin A from plants
+	</td>
+	<td align="left">https://www.google.ch/patents/US20050226950
+	</td>
+</tr>
+<tr>
+	<td height="19" align="right" sdval="40" sdnum="1033;">40
+	</td>
+	<td align="left">WO 2005082392 A1
+	</td>
+	<td align="left">Tumor cell-specific growth inhibitor comprising ashwagandha leaf extract containing withanolide derivatives, and production thereof
+	</td>
+	<td align="left" sdnum="1033;0;@">09/09/2005
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">Patent about withanone, not applicable to withaferin A
+	</td>
+	<td align="left">https://www.google.com/patents/WO2005082392A1
+	</td>
+</tr>
+<tr>
+	<td height="19" align="right" sdval="41" sdnum="1033;">41
+	</td>
+	<td align="left">WO 2005077392 A1
+	</td>
+	<td align="left">Herbal formulation comprising extracts of withania, tinospora and picrorhiza as a pediatric tonic
+	</td>
+	<td align="left" sdnum="1033;0;@">08/25/2005
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">Isolation and quantification of Withaferin A, Cordifolioside A and Picroside I
+	</td>
+	<td align="left">http://www.google.com/patents/WO2005077392A1
+	</td>
+</tr>
+<tr>
+	<td height="19" align="right" sdval="42" sdnum="1033;">42
+	</td>
+	<td align="left">JP 2004269364
+	</td>
+	<td align="left">Compounds which inhibit homologous recombination repair of DNA, antitumor agents and radiosensitizers containing them or withaferin A and wortmannin, and screening of the compounds
+	</td>
+	<td align="left" sdnum="1033;0;@">09/30/2004
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">http://www.google.com/patents/WO2005077392A1
+	</td>
+</tr>
+<tr>
+	<td height="19" align="right" sdval="43" sdnum="1033;">43
+	</td>
+	<td align="left">JP 2002187846
+	</td>
+	<td align="left">Compositions containing Withania somnifera Dunal and glucosamine and food, feed, and drugs containing the compositions
+	</td>
+	<td align="left" sdnum="1033;0;@">07/05/2002
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+</tr>
+<tr>
+	<td height="19" align="right" sdval="44" sdnum="1033;">44
+	</td>
+	<td align="left">JP 2002167330
+	</td>
+	<td align="left">Skin-lightening preparations and melanin formation inhibitors containing withanolides
+	</td>
+	<td align="left" sdnum="1033;0;@">06/11/2002
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+</tr>
+<tr>
+	<td height="19" align="right" sdval="45" sdnum="1033;">45
+	</td>
+	<td align="left">CS 269005 B1
+	</td>
+	<td align="left">Preparation of antileukemic 2,3-dihydro-12β-hydroxy-3-methoxywithaferin A by fermentative transformation of 2,3-dihydro-3-methoxywithaferin A
+	</td>
+	<td align="left" sdnum="1033;0;@">04/11/1990
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+</tr>
+<tr>
+	<td height="19" align="right" sdval="46" sdnum="1033;">46
+	</td>
+	<td align="left">CS 269008 B1
+	</td>
+	<td align="left">83. Preparation of antileukemic 4-dehydrowithaferin by fermentative transformation of withaferin A
+	</td>
+	<td align="left" sdnum="1033;0;@">04/11/1990
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+</tr>
+<tr>
+	<td height="19" align="right" sdval="47" sdnum="1033;">47
+	</td>
+	<td align="left">CS 235575 B1
+	</td>
+	<td align="left">Metabolite of withaferin A, produced by biotransformation of withaferin A or withaferin A acetate by Rothrobacter simplex ATCC 6946
+	</td>
+	<td align="left" sdnum="1033;0;@">05/15/1985
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+</tr>
+<tr>
+	<td height="19" align="right" sdval="48" sdnum="1033;">48
+	</td>
+	<td align="left">CS 232604 B1
+	</td>
+	<td align="left">Preparation of antitumor metabolite by biotransformation of withaferin A
+	</td>
+	<td align="left" sdnum="1033;0;@">02/14/1985
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+</tr>
+<tr>
+	<td height="36" align="right" sdval="49" sdnum="1033;">49
+	</td>
+	<td align="left">WO 2016172042 A1
+	</td>
+	<td align="left">POLYMER SYSTEMS AND THEIR APPLICATIONS IN DIAGNOSTICS AND DRUG DELIVERY
+	</td>
+	<td align="left" sdnum="1033;0;@">04/18/2015
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">the conjugation of Withaferin A to pP2-2000H (A variation of polymer with 2000 g/mol PEG chains and high<br>lactide concentration per chain of final polymer) is described (synthesis). No biological activity is mentioned.
+	</td>
+	<td align="left"><br>
+	</td>
+</tr>
+<tr>
+	<td height="36" align="right" sdval="50" sdnum="1033;">50
+	</td>
+	<td align="left">WO 2015148415A2
+	</td>
+	<td align="left">USE OF THE FLIIS CORE CHEMICAL STRUCTURE PLATFORM TO GENERATE FLIIS DERIVATIVES FOR<br>TREATMENT OF HUMAN DISEASE
+	</td>
+	<td align="left" sdnum="1033;0;@">03/26/2014
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">patent is not  about withaferin, it is mentioned several times among other compounds
+	</td>
+	<td align="left"><br>
+	</td>
+</tr>
+<tr>
+	<td height="19" align="right" sdval="51" sdnum="1033;">51
+	</td>
+	<td align="left">WO 2015127537A1
+	</td>
+	<td align="left">BIOACTIVE AGENTS INCLUDED IN FUNCTIONALIZED STARCH Having A SINGLE HELIX V-STRUCTURE
+	</td>
+	<td align="left" sdnum="1033;0;@">02/25/2015
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">Withaferin is mentioned several times, it is modifiying starch
+	</td>
+	<td align="left"><br>
+	</td>
+</tr>
+<tr>
+	<td height="36" align="right" sdval="52" sdnum="1033;">52
+	</td>
+	<td align="left">WO 2015127118 A1
+	</td>
+	<td align="left">METHOD FOR ISOLATION OF BULK ANTHOCYANIDINS AND OTHER BIOACTIVES
+	</td>
+	<td align="left" sdnum="1033;0;@">02/22/2014
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">The purpose of this development is to report a simple, rapid and cost-effective<br>and scalable method for isolation of pure anthos and other plant bioactives. Isolation of withaferin A from Withania sominifera is described
+	</td>
+	<td align="left">https://www.google.ru/patents/WO2015127118A1?cl=en&dq=WO+2015127118+A1&hl=ru&sa=X&ved=0ahUKEwjH0a3ZgdfTAhWKhSwKHSuXBb4Q6AEIJTAA
+	</td>
+</tr>
+<tr>
+	<td height="19" align="right" sdval="53" sdnum="1033;">53
+	</td>
+	<td align="left">WO 2015073804 A2
+	</td>
+	<td align="left">METHOD OF BLOCKING TRANSMISSION OF MALARIAL PARASITE
+	</td>
+	<td align="left" sdnum="1033;0;@">11/15/2013
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">withaferin is mentioned in passing between others, it is not in the scope of the invention
+	</td>
+	<td align="left">https://www.google.ru/patents/WO2015073804A2?cl=en&hl=ru&dq=WO+2015073804+A2
+	</td>
+</tr>
+<tr>
+	<td height="104" align="right" sdval="54" sdnum="1033;">54
+	</td>
+	<td align="left">WO 2015044957 A1
+	</td>
+	<td align="left">A PROCESS FOR TRANFORMATION IN WITHANIA SOMNIFERA PLANTS TO UNCREASE SENCONDARY METHABOLITE CONTENT
+	</td>
+	<td align="left" sdnum="1033;0;@">09/25/2013
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">The present disclosure provides a process for genetic transformation in<br>Withania somn[fera to produce hardened plants with increased secondary metabolite<br>content. More specifically; the present disclosure relates to genetic transformation in<br>W. somnifera plants by Agrobacterium tumefaciens to overexpress squalene synthase<br>gene (W.s·SQS) encoding WsSQS enzyme that catalyzes synthesis of squalene from farnesyl pyrophosphate (FPP). Increased content of secondary metabolites, particularly<br>withanolides are obtained.
+	</td>
+	<td align="left">https://www.google.ru/patents/WO2015044957A1?cl=en&dq=WO+2015044957+A1&hl=ru&sa=X&ved=0ahUKEwj2roang9fTAhXJkSwKHbnaDEcQ6AEIJTAA
+	</td>
+</tr>
+<tr>
+	<td height="36" align="right" sdval="55" sdnum="1033;">55
+	</td>
+	<td align="left">US 8987481B1 WO 2015127118A1
+	</td>
+	<td align="left">METHOD FOR ISOLATION OF BULK ANTHOCYANIDINS AND OTHER BIOACTIVES
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">The purpose of this development is to report a simple, rapid and cost-effective<br>and scalable method for isolation of pure anthos and other plant bioactives. Isolation of withaferin A from Withania sominifera is described
+	</td>
+	<td align="left">https://www.google.ru/patents/US8987481?dq=US+8987481B1&hl=ru&sa=X&ved=0ahUKEwjFio23g9fTAhWJhiwKHfeyBSgQ6AEIJTAA
+	</td>
+</tr>
+<tr>
+	<td height="36" align="right" sdval="56" sdnum="1033;">56
+	</td>
+	<td align="left">WO 2013143855 A2
+	</td>
+	<td align="left">COSMETIC AND DERMATOLOGICAL PREPARATIONS CONTAINING ONE OR MORE SUBSTANCES WHICH<br>MODULATE THE GEN FOR THE "KRUPPEL-LIKE FACTOR 9" (KLF9)
+	</td>
+	<td align="left" sdnum="1033;0;@">02/29/2012
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">https://www.google.com/patents/WO2013143855A2?cl=en&hl=ru
+	</td>
+</tr>
+<tr>
+	<td height="36" align="right" sdval="57" sdnum="1033;">57
+	</td>
+	<td align="left">US 20120100218 A1
+	</td>
+	<td align="left">INTRALYMPHATIC CHEMOTHERAPY<br>DRUG CARRIERS
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">withaferin is mentioned among other biological active compounds
+	</td>
+	<td align="left">https://www.google.ru/patents/US20120100218?dq=US+20120100218+A1&hl=ru&sa=X&ved=0ahUKEwjD_IjvhdfTAhWJFywKHVPtAroQ6AEIIzAA
+	</td>
+</tr>
+<tr>
+	<td height="36" align="right" sdval="58" sdnum="1033;">58
+	</td>
+	<td align="left">CN 102260318 A<br>
+	</td>
+	<td align="left">Method for purifying withaferin a from indian ginseng
+	</td>
+	<td align="left" sdnum="1033;0;@">08/08/2011
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">Purification method from the plant other than Withania Somnifera
+	</td>
+	<td align="left">https://www.google.com/patents/CN102260318A
+	</td>
+</tr>
+<tr>
+	<td height="104" align="right" sdval="59" sdnum="1033;">59
+	</td>
+	<td align="left">US 20100285001 A1<br>CA 2700257 A1<br>EP 2188630 A2<br>EP 2188630 A4<br>WO 2009045443 A2<br>WO 2009045443 A3
+	</td>
+	<td align="left">Method and Compositions Related to Synergistic Responses to Oncogenic Mutations
+	</td>
+	<td align="left" sdnum="1033;0;@">10/02/2007
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">Cancer
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">WA as one of the components controlling expression of cancer -related genes. Very broad patent, lots of compounds and genes mentioned
+	</td>
+	<td align="left">https://www.google.us/patents/US20100285001
+	</td>
+</tr>
+<tr>
+	<td height="19" align="right" sdval="60" sdnum="1033;">60
+	</td>
+	<td align="left">US 20080206161 A1
+	</td>
+	<td align="left">Quiescent foamable compositions containing steroids
+	</td>
+	<td align="left" sdnum="1033;0;@">08/28/2008
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">not applicable
+	</td>
+	<td align="left"><br>
+	</td>
+</tr>
+<tr>
+	<td height="19" align="right" sdval="61" sdnum="1033;">61
+	</td>
+	<td align="left">JP 2008195620 A
+	</td>
+	<td align="left">Termite-preventing agent
+	</td>
+	<td align="left" sdnum="1033;0;@">02/08/2007
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left"><br>
+	</td>
+	<td align="left">WA as termite-preventing agent, not applicable
+	</td>
+	<td align="left"><br>
+	</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+
+</div> <!--  end of Patents and Clinical trials -->
+
+
+<script type="text/javascript">
+
+$(function() {
+	
+	
+	
+	
+	$("#btn_show_patients").click(function(){
+		
+		$(this).hide();
+		$("#hide_patients").slideDown('slow');
+		
+		$("#tbl_patients").DataTable({
+	    	"paging":   true,
+	    	"iDisplayLength": 5,
+	    	"autoWidth": false,
+	        "ordering": true,
+	        
+	        "info":     false,
+	        "dom": 'Bfrtip',
+	        
+	        "buttons": [
+	                   {extend: 'csv', title: 'Patents and Clinical trials'},
+	                   {extend: 'print', title: 'Patents and Clinical trials'}
+	                   
+	              ],
+	       "columns": [
+	            	    { "width": "20%" },
+	            	    null,
+	            	    null,
+	            	    null,
+	            	    null,
+	            	    null,
+	            	    null,
+	            	    null,
+	            	    null,
+	            	    null,
+	            	    null,
+	            	    null,
+	            	  ],
+		});
+		
+		
+		
+		
+	});
+	
+});
+
+
+</script>
 
 
 <!-- ---------------------------------Drug Scoring--------------------------------------------- -->
@@ -1598,6 +3298,7 @@ var top_featur = $("#tbl-top_featur").DataTable( {
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#path_analysis">Pathway Analysis</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#bio_analysis">Structural Biology Analysis</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#admne">ADME properties</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#patients">Patents and Clinical trials</a></li>
             
             {%if 'above-and-beyond' in report.slug %}
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#ds_analysis">Drug Scoring</a></li>
