@@ -2790,11 +2790,15 @@ class ReportTest(TemplateView):
     
     def get(self, request, *args, **kwargs):
         
-        df = pd.read_csv('/home/mikhail/Downloads/Novartis/PBMC/pbv3n_cut.txt', sep='\t', index_col='SYMBOL')
+        df1 = pd.read_csv('/home/mikhail/Downloads/logfc_Nas_V4_V3.csv',  index_col='SYMBOL')
+        df2 = pd.read_csv('/home/mikhail/Downloads/logfc_Nas_V7_V3.csv',  index_col='SYMBOL')
+        df3 = pd.read_csv('/home/mikhail/Downloads/logfc_Nas_V10_V3.csv',  index_col='SYMBOL')
         
-        df = df[[x for x in df.columns if 'Norm' in x]]
         
-        df.to_csv('/home/mikhail/Downloads/Novartis/PBMC/pbmc_norm.csv')
+        df3 = df3[df3['logFC']<0]
+        df3 = df3[df3['P.Value']<0.05]
+        
+        
         
         
         raise Exception('fuck')
