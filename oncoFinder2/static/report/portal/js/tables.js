@@ -192,7 +192,10 @@ function drawGeneChart(reportID, gene_name, categories){
 				     		
 				     		
 				     		
+				     		
 				     		options.xAxis.categories = cat; //For Novartis reports only!
+				     		
+				     		if (categories.split(',').length<=2) options.xAxis.categories = ['Case', 'Reference']; // Duplicate for Novartis reports
 				     		
 				     		
 				     	}
