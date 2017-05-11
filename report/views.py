@@ -2792,11 +2792,11 @@ class ReportTest(TemplateView):
         
         df = pd.read_csv("/home/mikhail/Downloads/GSK/GSK_divi_comparisons_update.csv" )
         
-        df = df[df['PROTOCOL_DR_GROUP_TYPE']=='High']
+        df = df[df['PROTOCOL_DR_GROUP_TYPE']=='Medium']
         df = df[df['DURATION']==4] 
         df = df[df['MESENTERY_3']>0] 
         
-        df = df[df['TISSUE']=='Smooth Muscle (LCM Mesentery) RNA']
+        #df = df[df['TISSUE']!='Smooth Muscle (LCM Mesentery) RNA']
         
         df.to_csv("/home/mikhail/Downloads/GSK/GSK_4d_high.csv")
         raise Exception('fuck')
