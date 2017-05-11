@@ -2790,27 +2790,25 @@ class ReportTest(TemplateView):
     
     def get(self, request, *args, **kwargs):
         
-        df1 = pd.read_csv('/home/mikhail/Downloads/logfc_Nas_V4_V3.csv',  index_col='SYMBOL')
-        df2 = pd.read_csv('/home/mikhail/Downloads/logfc_Nas_V7_V3.csv',  index_col='SYMBOL')
-        df3 = pd.read_csv('/home/mikhail/Downloads/logfc_Nas_V10_V3.csv',  index_col='SYMBOL')
+        df = pd.read_csv("/home/mikhail/Downloads/GSK/GSK_divi_comparisons_update.csv" )
         
+        df = df[df['PROTOCOL_DR_GROUP_TYPE']=='High']
+        df = df[df['DURATION']==4] 
+        df = df[df['MESENTERY_3']>0] 
         
-        df3 = df3[df3['logFC']<0]
-        df3 = df3[df3['P.Value']<0.05]
+        df = df[df['TISSUE']=='Smooth Muscle (LCM Mesentery) RNA']
         
-        
-        
-        
+        df.to_csv("/home/mikhail/Downloads/GSK/GSK_4d_high.csv")
         raise Exception('fuck')
         
         import docx
         
         #########3 TARGET INFERENCE
         
-        doc = docx.Document('/home/mikhail/Downloads/GSK/WORD/Respiratory/tarinfer/tarinfer.docx')
         
-        df = pd.read_csv("/home/mikhail/Downloads/GSK/WORD/Respiratory/tarinfer/tarinfer.csv",
-                            index_col=0, encoding='utf-8')
+        
+        df = pd.read_csv("/home/mikhail/Downloads/GSK/GSK_divi_comparisons_update.csv", 
+                           )
         cols = df.columns
         
         for col in cols:
