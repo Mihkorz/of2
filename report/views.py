@@ -963,18 +963,18 @@ class ReportAjaxPathwayVenn(TemplateView):
         elif path_gene == 'deeplearning': # For GSK prj2 only! not dynamic!
             #raise Exception('extended')
             if is_metabolic=='true':
-                df1 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/Top_model_FC_final.csv',
+                df1 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/New_top_model_FC_whole.csv',
                                   index_col='probes')
-                df2 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/Top_model_FC_EC.csv',
+                df2 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/New_top_model_FC_EC.csv',
                                   index_col='probes')
-                df3 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/Top_model_FC_SM.csv',
+                df3 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/New_top_model_FC_SM.csv',
                                   index_col='probes')
             else:
-                df1 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/Top_model_FC_ext.csv',
+                df1 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/New_top_model_FC_ext_whole.csv',
                                   index_col='probes')
-                df2 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/Top_model_FC_ext_EC.csv',
+                df2 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/New_top_model_FC_ext_EC.csv',
                                   index_col='probes')
-                df3 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/Top_model_FC_ext_SM.csv',
+                df3 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/New_top_model_FC_ext_SM.csv',
                                   index_col='probes')
                 #raise Exception('extended')
             
