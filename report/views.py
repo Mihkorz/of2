@@ -964,18 +964,18 @@ class ReportAjaxPathwayVenn(TemplateView):
             #raise Exception('extended')
             if is_metabolic=='true':
                 df1 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/New_top_model_FC_whole.csv',
-                                  index_col='probes')
+                                  index_col='probeset')
                 df2 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/New_top_model_FC_EC.csv',
-                                  index_col='probes')
+                                  index_col='probeset')
                 df3 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/New_top_model_FC_SM.csv',
-                                  index_col='probes')
+                                  index_col='probeset')
             else:
                 df1 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/New_top_model_FC_ext_whole.csv',
-                                  index_col='probes')
+                                  index_col='probeset')
                 df2 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/New_top_model_FC_ext_EC.csv',
-                                  index_col='probes')
+                                  index_col='probeset')
                 df3 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/New_top_model_FC_ext_SM.csv',
-                                  index_col='probes')
+                                  index_col='probeset')
                 #raise Exception('extended')
             
             
