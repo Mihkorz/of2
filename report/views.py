@@ -1451,21 +1451,22 @@ class ReportAjaxPathwayVennTable(TemplateView):
                 df_2.columns = ['0']
                 df_3.columns = ['0']
             
-            elif path_gene =='deeplearning':
+            elif path_gene == 'deeplearning': # For GSK prj2 only! not dynamic!
+            #raise Exception('extended')
                 if is_metabolic=='true':
-                    df_1 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/Top_model_FC_final.csv',
-                                  index_col='probes')
-                    df_2 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/Top_model_FC_EC.csv',
-                                  index_col='probes')
-                    df_3 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/Top_model_FC_SM.csv',
-                                  index_col='probes')
+                    df_1 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/New_top_model_FC_whole.csv',
+                                  index_col='probeset')
+                    df_2 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/New_top_model_FC_EC.csv',
+                                  index_col='probeset')
+                    df_3 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/New_top_model_FC_SM.csv',
+                                  index_col='probeset')
                 else:
-                    df_1 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/Top_model_FC_ext.csv',
-                                  index_col='probes')
-                    df_2 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/Top_model_FC_ext_EC.csv',
-                                  index_col='probes')
-                    df_3 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/Top_model_FC_ext_SM.csv',
-                                  index_col='probes')
+                    df_1 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/New_top_model_FC_ext_whole.csv',
+                                  index_col='probeset')
+                    df_2 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/New_top_model_FC_ext_EC.csv',
+                                  index_col='probeset')
+                    df_3 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/New_top_model_FC_ext_SM.csv',
+                                  index_col='probeset')
                     
                     
                 df_1 = df_1.sort(columns='mean', ascending=False).head(1000)
