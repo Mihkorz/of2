@@ -1477,295 +1477,300 @@ $('#tbl-mhe').on( 'draw.dt', function () {
 
 
 /*************************** DEEEP **************/
- 
-        var top5_fc_wh = $("#tbl-top5_fc_wh").DataTable( {
-        	"paging":   true,
-            "iDisplayLength": 20,
-            "ordering": true,
-            "order": [[ 1, "desc" ]],
-            "info":     false,
-            "dom": 'Bfrtip',
-            "scrollX": false,
-            "buttons": [
-                       {extend: 'csv', title: 'tbl-mms'},
-                       {extend: 'print', title: 'tbl-mms'}
-                       
-                  ],
-            
-            "ajax": {'url':'/report-portal/report-deepgsktablejson/',
-            	     'type': 'GET',
-            	     'data':{
-            	    	     reportID: {{report.id}},
-            	    	     file_name: 'Extended/top5_FC_full_score_result.csv'
-            	            },        	      
-            
-        },"deferRender": true });
 
-        var probe_fc_wh = $("#tbl-probe_fc_wh").DataTable( {
-        	"paging":   true,
-            "iDisplayLength": 20,
-            "ordering": true,
-            "order": [[ 1, "desc" ]],
-            "info":     false,
-            "dom": 'Bfrtip',
-            "scrollX": false,
-            "bAutoWidth": false,
-            "buttons": [
-                       {extend: 'csv', title: 'tbl-mms'},
-                       {extend: 'print', title: 'tbl-mms'}
-                       
-                  ],
-            
-            "ajax": {'url':'/report-portal/report-deepgsktablejson/',
-            	     'type': 'GET',
-            	     'data':{
-            	    	     reportID: {{report.id}},
-            	    	     file_name: 'Extended/Top_model_FC_final.csv'
-            	            },        	      
-            
-        },"deferRender": true }); 
-        
-        var top5_ec_wh = $("#tbl-top5_ec_wh").DataTable( {
-        	"paging":   true,
-            "iDisplayLength": 20,
-            "ordering": true,
-            "order": [[ 1, "desc" ]],
-            "info":     false,
-            "dom": 'Bfrtip',
-            "scrollX": false,
-            "buttons": [
-                       {extend: 'csv', title: 'tbl-mms'},
-                       {extend: 'print', title: 'tbl-mms'}
-                       
-                  ],
-            
-            "ajax": {'url':'/report-portal/report-deepgsktablejson/',
-            	     'type': 'GET',
-            	     'data':{
-            	    	     reportID: {{report.id}},
-            	    	     file_name: 'Extended/top5_FC_EC_full_score_result.csv'
-            	            },        	      
-            
-        },"deferRender": true });
-        
-        var probe_ec_wh = $("#tbl-probe_ec_wh").DataTable( {
-        	"paging":   true,
-            "iDisplayLength": 20,
-            "ordering": true,
-            "order": [[ 1, "desc" ]],
-            "info":     false,
-            "dom": 'Bfrtip',
-            "scrollX": false,
-            "buttons": [
-                       {extend: 'csv', title: 'tbl-mms'},
-                       {extend: 'print', title: 'tbl-mms'}
-                       
-                  ],
-            
-            "ajax": {'url':'/report-portal/report-deepgsktablejson/',
-            	     'type': 'GET',
-            	     'data':{
-            	    	     reportID: {{report.id}},
-            	    	     file_name: 'Extended/Top_model_FC_EC.csv'
-            	            },        	      
-            
-        },"deferRender": true });
-        
-        var top5_sm_wh = $("#tbl-top5_sm_wh").DataTable( {
-        	"paging":   true,
-            "iDisplayLength": 20,
-            "ordering": true,
-            "order": [[ 1, "desc" ]],
-            "info":     false,
-            "dom": 'Bfrtip',
-            "scrollX": false,
-            "buttons": [
-                       {extend: 'csv', title: 'tbl-mms'},
-                       {extend: 'print', title: 'tbl-mms'}
-                       
-                  ],
-            
-            "ajax": {'url':'/report-portal/report-deepgsktablejson/',
-            	     'type': 'GET',
-            	     'data':{
-            	    	     reportID: {{report.id}},
-            	    	     file_name: 'Extended/top5_FC_SM_full_score_result.csv'
-            	            },        	      
-            
-        },"deferRender": true });
-        
-        var probe_sm_wh = $("#tbl-probe_sm_wh").DataTable( {
-        	"paging":   true,
-            "iDisplayLength": 20,
-            "ordering": true,
-            "order": [[ 1, "desc" ]],
-            "info":     false,
-            "dom": 'Bfrtip',
-            "scrollX": false,
-            "buttons": [
-                       {extend: 'csv', title: 'tbl-mms'},
-                       {extend: 'print', title: 'tbl-mms'}
-                       
-                  ],
-            
-            "ajax": {'url':'/report-portal/report-deepgsktablejson/',
-            	     'type': 'GET',
-            	     'data':{
-            	    	     reportID: {{report.id}},
-            	    	     file_name: 'Extended/Top_model_FC_SM.csv'
-            	            },        	      
-            
-        },"deferRender": true });
-        
-        /************************ EXTENDED ***************/
-        
+var top5_fc_wh = $("#tbl-top5_fc_wh").DataTable( {
+	"paging":   true,
+    "iDisplayLength": 20,
+    "ordering": true,
+    "order": [[ 1, "desc" ]],
+    "info":     false,
+    "dom": 'Bfrtip',
+    "scrollX": false,
+    "autoWidth": false,
+    "buttons": [
+               {extend: 'csv', title: 'tbl-mms'},
+               {extend: 'print', title: 'tbl-mms'}
+               
+          ],
+    
+    "ajax": {'url':'/report-portal/report-deepgsktablejson/',
+    	     'type': 'GET',
+    	     'data':{
+    	    	     reportID: {{report.id}},
+    	    	     file_name: 'Extended/New_top5_FC_whole.csv'
+    	            },
+   
+    
+},"deferRender": true });
+
+
+
+
+var probe_fc_wh = $("#tbl-probe_fc_wh").DataTable( {
+	"paging":   true,
+    "iDisplayLength": 20,
+    "ordering": true,
+    "order": [[ 1, "desc" ]],
+    "info":     false,
+    "dom": 'Bfrtip',
+    "scrollX": false,
+    "bAutoWidth": false,
+    "buttons": [
+               {extend: 'csv', title: 'tbl-mms'},
+               {extend: 'print', title: 'tbl-mms'}
+               
+          ],
+    
+    "ajax": {'url':'/report-portal/report-deepgsktablejson/',
+    	     'type': 'GET',
+    	     'data':{
+    	    	     reportID: {{report.id}},
+    	    	     file_name: 'Extended/New_top_model_FC_whole.csv'
+    	            },        	      
+    
+},"deferRender": true }); 
+
+var top5_ec_wh = $("#tbl-top5_ec_wh").DataTable( {
+	"paging":   true,
+    "iDisplayLength": 20,
+    "ordering": true,
+    "order": [[ 1, "desc" ]],
+    "info":     false,
+    "dom": 'Bfrtip',
+    "scrollX": false,
+    "buttons": [
+               {extend: 'csv', title: 'tbl-mms'},
+               {extend: 'print', title: 'tbl-mms'}
+               
+          ],
+    
+    "ajax": {'url':'/report-portal/report-deepgsktablejson/',
+    	     'type': 'GET',
+    	     'data':{
+    	    	     reportID: {{report.id}},
+    	    	     file_name: 'Extended/New_top5_FC_EC.csv'
+    	            },        	      
+    
+},"deferRender": true });
+
+var probe_ec_wh = $("#tbl-probe_ec_wh").DataTable( {
+	"paging":   true,
+    "iDisplayLength": 20,
+    "ordering": true,
+    "order": [[ 1, "desc" ]],
+    "info":     false,
+    "dom": 'Bfrtip',
+    "scrollX": false,
+    "buttons": [
+               {extend: 'csv', title: 'tbl-mms'},
+               {extend: 'print', title: 'tbl-mms'}
+               
+          ],
+    
+    "ajax": {'url':'/report-portal/report-deepgsktablejson/',
+    	     'type': 'GET',
+    	     'data':{
+    	    	     reportID: {{report.id}},
+    	    	     file_name: 'Extended/New_top_model_FC_EC.csv'
+    	            },        	      
+    
+},"deferRender": true });
+
+var top5_sm_wh = $("#tbl-top5_sm_wh").DataTable( {
+	"paging":   true,
+    "iDisplayLength": 20,
+    "ordering": true,
+    "order": [[ 1, "desc" ]],
+    "info":     false,
+    "dom": 'Bfrtip',
+    "scrollX": false,
+    "buttons": [
+               {extend: 'csv', title: 'tbl-mms'},
+               {extend: 'print', title: 'tbl-mms'}
+               
+          ],
+    
+    "ajax": {'url':'/report-portal/report-deepgsktablejson/',
+    	     'type': 'GET',
+    	     'data':{
+    	    	     reportID: {{report.id}},
+    	    	     file_name: 'Extended/New_top5_FC_SM.csv'
+    	            },        	      
+    
+},"deferRender": true });
+
+var probe_sm_wh = $("#tbl-probe_sm_wh").DataTable( {
+	"paging":   true,
+    "iDisplayLength": 20,
+    "ordering": true,
+    "order": [[ 1, "desc" ]],
+    "info":     false,
+    "dom": 'Bfrtip',
+    "scrollX": false,
+    "buttons": [
+               {extend: 'csv', title: 'tbl-mms'},
+               {extend: 'print', title: 'tbl-mms'}
+               
+          ],
+    
+    "ajax": {'url':'/report-portal/report-deepgsktablejson/',
+    	     'type': 'GET',
+    	     'data':{
+    	    	     reportID: {{report.id}},
+    	    	     file_name: 'Extended/New_top_model_FC_SM.csv'
+    	            },        	      
+    
+},"deferRender": true });
+
+/************************ EXTENDED ***************/
+
 var top5_fc_ex = $("#tbl-top5_fc_ex").DataTable( {
-        	"paging":   true,
-            "iDisplayLength": 20,
-            "ordering": true,
-            "order": [[ 1, "desc" ]],
-            "info":     false,
-            "dom": 'Bfrtip',
-            "scrollX": false,
-            "buttons": [
-                       {extend: 'csv', title: 'tbl-mms'},
-                       {extend: 'print', title: 'tbl-mms'}
-                       
-                  ],
-            
-            "ajax": {'url':'/report-portal/report-deepgsktablejson/',
-            	     'type': 'GET',
-            	     'data':{
-            	    	     reportID: {{report.id}},
-            	    	     file_name: 'Extended/top5_FC_ext_full_score_result.csv'
-            	            },        	      
-            
-        },"deferRender": true });
+	"paging":   true,
+    "iDisplayLength": 20,
+    "ordering": true,
+    "order": [[ 1, "desc" ]],
+    "info":     false,
+    "dom": 'Bfrtip',
+    "scrollX": false,
+    "buttons": [
+               {extend: 'csv', title: 'tbl-mms'},
+               {extend: 'print', title: 'tbl-mms'}
+               
+          ],
+    
+    "ajax": {'url':'/report-portal/report-deepgsktablejson/',
+    	     'type': 'GET',
+    	     'data':{
+    	    	     reportID: {{report.id}},
+    	    	     file_name: 'Extended/New_top5_FC_ext_whole.csv'
+    	            },        	      
+    
+},"deferRender": true });
 
-        var probe_fc_ex = $("#tbl-probe_fc_ex").DataTable( {
-        	"paging":   true,
-            "iDisplayLength": 20,
-            "ordering": true,
-            "order": [[ 1, "desc" ]],
-            "info":     false,
-            "dom": 'Bfrtip',
-            "scrollX": false,
-            "buttons": [
-                       {extend: 'csv', title: 'tbl-mms'},
-                       {extend: 'print', title: 'tbl-mms'}
-                       
-                  ],
-            
-            "ajax": {'url':'/report-portal/report-deepgsktablejson/',
-            	     'type': 'GET',
-            	     'data':{
-            	    	     reportID: {{report.id}},
-            	    	     file_name: 'Extended/Top_model_FC_ext.csv'
-            	            },        	      
-            
-        },"deferRender": true }); 
-        
-        var top5_ec_ex = $("#tbl-top5_ec_ex").DataTable( {
-        	"paging":   true,
-            "iDisplayLength": 20,
-            "ordering": true,
-            "order": [[ 1, "desc" ]],
-            "info":     false,
-            "dom": 'Bfrtip',
-            "scrollX": false,
-            "buttons": [
-                       {extend: 'csv', title: 'tbl-mms'},
-                       {extend: 'print', title: 'tbl-mms'}
-                       
-                  ],
-            
-            "ajax": {'url':'/report-portal/report-deepgsktablejson/',
-            	     'type': 'GET',
-            	     'data':{
-            	    	     reportID: {{report.id}},
-            	    	     file_name: 'Extended/top5_FC_ext_EC_full_score_result.csv'
-            	            },        	      
-            
-        },"deferRender": true });
-        
-        var probe_ec_ex = $("#tbl-probe_ec_ex").DataTable( {
-        	"paging":   true,
-            "iDisplayLength": 20,
-            "ordering": true,
-            "order": [[ 1, "desc" ]],
-            "info":     false,
-            "dom": 'Bfrtip',
-            "scrollX": false,
-            "buttons": [
-                       {extend: 'csv', title: 'tbl-mms'},
-                       {extend: 'print', title: 'tbl-mms'}
-                       
-                  ],
-            
-            "ajax": {'url':'/report-portal/report-deepgsktablejson/',
-            	     'type': 'GET',
-            	     'data':{
-            	    	     reportID: {{report.id}},
-            	    	     file_name: 'Extended/Top_model_FC_ext_EC.csv'
-            	            },        	      
-            
-        },"deferRender": true });
-        
-        var top5_sm_ex = $("#tbl-top5_sm_ex").DataTable( {
-        	"paging":   true,
-            "iDisplayLength": 20,
-            "ordering": true,
-            "order": [[ 1, "desc" ]],
-            "info":     false,
-            "dom": 'Bfrtip',
-            "scrollX": false,
-            "buttons": [
-                       {extend: 'csv', title: 'tbl-mms'},
-                       {extend: 'print', title: 'tbl-mms'}
-                       
-                  ],
-            
-            "ajax": {'url':'/report-portal/report-deepgsktablejson/',
-            	     'type': 'GET',
-            	     'data':{
-            	    	     reportID: {{report.id}},
-            	    	     file_name: 'Extended/top5_FC_ext_SM_full_score_result.csv'
-            	            },        	      
-            
-        },"deferRender": true });
-        
-        var probe_sm_ex = $("#tbl-probe_sm_ex").DataTable( {
-        	"paging":   true,
-            "iDisplayLength": 20,
-            "ordering": true,
-            "order": [[ 1, "desc" ]],
-            "info":     false,
-            "dom": 'Bfrtip',
-            "scrollX": false,
-            "buttons": [
-                       {extend: 'csv', title: 'tbl-mms'},
-                       {extend: 'print', title: 'tbl-mms'}
-                       
-                  ],
-            
-            "ajax": {'url':'/report-portal/report-deepgsktablejson/',
-            	     'type': 'GET',
-            	     'data':{
-            	    	     reportID: {{report.id}},
-            	    	     file_name: 'Extended/Top_model_FC_ext_SM.csv'
-            	            },        	      
-            
-        },"deferRender": true });
-        
-        
-        drawVenn({{report.id}},
-              	'venn_gene-whole',
-            	'WholevsECvsSM',
-            	true, 'up', 'venn_gene_dinamic_deep', 'deeplearning', '{{report.organism}}');
-        drawVenn({{report.id}},
-            		'venn_gene-extended',
-            		'WholevsECvsSM',
-            		false, 'up', 'venn_gene_dinamic_deep', 'deeplearning', '{{report.organism}}');
+var probe_fc_ex = $("#tbl-probe_fc_ex").DataTable( {
+	"paging":   true,
+    "iDisplayLength": 20,
+    "ordering": true,
+    "order": [[ 1, "desc" ]],
+    "info":     false,
+    "dom": 'Bfrtip',
+    "scrollX": false,
+    "buttons": [
+               {extend: 'csv', title: 'tbl-mms'},
+               {extend: 'print', title: 'tbl-mms'}
+               
+          ],
+    
+    "ajax": {'url':'/report-portal/report-deepgsktablejson/',
+    	     'type': 'GET',
+    	     'data':{
+    	    	     reportID: {{report.id}},
+    	    	     file_name: 'Extended/New_top_model_FC_ext_whole.csv'
+    	            },        	      
+    
+},"deferRender": true }); 
+
+var top5_ec_ex = $("#tbl-top5_ec_ex").DataTable( {
+	"paging":   true,
+    "iDisplayLength": 20,
+    "ordering": true,
+    "order": [[ 1, "desc" ]],
+    "info":     false,
+    "dom": 'Bfrtip',
+    "scrollX": false,
+    "buttons": [
+               {extend: 'csv', title: 'tbl-mms'},
+               {extend: 'print', title: 'tbl-mms'}
+               
+          ],
+    
+    "ajax": {'url':'/report-portal/report-deepgsktablejson/',
+    	     'type': 'GET',
+    	     'data':{
+    	    	     reportID: {{report.id}},
+    	    	     file_name: 'Extended/New_top5_FC_ext_EC.csv'
+    	            },        	      
+    
+},"deferRender": true });
+
+var probe_ec_ex = $("#tbl-probe_ec_ex").DataTable( {
+	"paging":   true,
+    "iDisplayLength": 20,
+    "ordering": true,
+    "order": [[ 1, "desc" ]],
+    "info":     false,
+    "dom": 'Bfrtip',
+    "scrollX": false,
+    "buttons": [
+               {extend: 'csv', title: 'tbl-mms'},
+               {extend: 'print', title: 'tbl-mms'}
+               
+          ],
+    
+    "ajax": {'url':'/report-portal/report-deepgsktablejson/',
+    	     'type': 'GET',
+    	     'data':{
+    	    	     reportID: {{report.id}},
+    	    	     file_name: 'Extended/New_top_model_FC_ext_EC.csv'
+    	            },        	      
+    
+},"deferRender": true });
+
+var top5_sm_ex = $("#tbl-top5_sm_ex").DataTable( {
+	"paging":   true,
+    "iDisplayLength": 20,
+    "ordering": true,
+    "order": [[ 1, "desc" ]],
+    "info":     false,
+    "dom": 'Bfrtip',
+    "scrollX": false,
+    "buttons": [
+               {extend: 'csv', title: 'tbl-mms'},
+               {extend: 'print', title: 'tbl-mms'}
+               
+          ],
+    
+    "ajax": {'url':'/report-portal/report-deepgsktablejson/',
+    	     'type': 'GET',
+    	     'data':{
+    	    	     reportID: {{report.id}},
+    	    	     file_name: 'Extended/New_top5_FC_ext_SM.csv'
+    	            },        	      
+    
+},"deferRender": true });
+
+var probe_sm_ex = $("#tbl-probe_sm_ex").DataTable( {
+	"paging":   true,
+    "iDisplayLength": 20,
+    "ordering": true,
+    "order": [[ 1, "desc" ]],
+    "info":     false,
+    "dom": 'Bfrtip',
+    "scrollX": false,
+    "buttons": [
+               {extend: 'csv', title: 'tbl-mms'},
+               {extend: 'print', title: 'tbl-mms'}
+               
+          ],
+    
+    "ajax": {'url':'/report-portal/report-deepgsktablejson/',
+    	     'type': 'GET',
+    	     'data':{
+    	    	     reportID: {{report.id}},
+    	    	     file_name: 'Extended/New_top_model_FC_ext_SM.csv'
+    	            },        	      
+    
+},"deferRender": true });
+
+
+drawVenn({{report.id}},
+  	'venn_gene-whole',
+	'WholevsECvsSM',
+	true, 'up', 'venn_gene_dinamic_deep', 'deeplearning', '{{report.organism}}');
+drawVenn({{report.id}},
+		'venn_gene-extended',
+		'WholevsECvsSM',
+		false, 'up', 'venn_gene_dinamic_deep', 'deeplearning', '{{report.organism}}');
         
  /* METABOLIC PATHs
   drawPathwayTable({{report.id}},
