@@ -1204,20 +1204,20 @@ class ReportAjaxPathwayVennTable(TemplateView):
                 
                 if is_metabolic=='true':
                     try:
-                        df_1 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/Top_model_FC_'+lMembers[0]+'.csv',
-                                  index_col='probes')
+                        df_1 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/New_top_model_FC_'+lMembers[0]+'.csv',
+                                  index_col='probeset')
                         
                     except:
-                        df_1 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/Top_model_FC_final.csv',
-                                  index_col='probes')
+                        df_1 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/New_top_model_FC_whole.csv',
+                                  index_col='probeset')
     
                 else:
                     try:
-                        df_1 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/Top_model_FC_ext_'+lMembers[0]+'.csv',
-                                  index_col='probes')
+                        df_1 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/New_top_model_FC_ext_'+lMembers[0]+'.csv',
+                                  index_col='probeset')
                     except:
-                        df_1 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/Top_model_FC_ext.csv',
-                                  index_col='probes')
+                        df_1 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/New_top_model_FC_ext_whole.csv',
+                                  index_col='probeset')
                         
                 df_1 = df_1.sort(columns='mean', ascending=False).head(1000)
                 df_1.rename(columns={'mean': '0'}, inplace=True)
