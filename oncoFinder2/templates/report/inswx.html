@@ -61,7 +61,8 @@
             <!--  <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tf_analysis">Transcription Factor Analysis</a></li>-->
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#path_analysis">Pathway Analysis</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#bio_analysis">Structural Biology Analysis</a></li>
-            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#admne">ADME properties</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#admne">ADME properties</a></li> 
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#synthesis">Synthesis plan</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#patients">Patents and Clinical trials</a></li>
             
             
@@ -165,7 +166,7 @@
  <img src='/media/report-portal/inswx-report/inswx292.png' />
      <br/> <a href='/media/report-portal/inswx-report/Structure3D_CID_50904531.sdf' target='_blank'>Download .sdf file </a>
  </td><td><a href='https://pubchem.ncbi.nlm.nih.gov/compound/50904531' target='_blank'>50904531</a></td>
- <td><a href='/media/report-portal/inswx-report/synthesis_route_INSWX292.pptx'>Download presentation</a></td>
+ <td>Not available for purchase, refer to <a href="#synthesis">synthesis plan</a></td>
  <td>-8</td><td>1464.3647887</td><td>-10.7</td><td>15.72374198</td><td>-10.8</td><td>13.29310774</td>
  <td>-10.3</td><td>30.78034227</td><td>-10.2</td><td>36.40850353</td><td>410.48</td><td>4.2</td><td>71.25</td><td>no</td>
  </tr>
@@ -182,7 +183,7 @@
  <img src='/media/report-portal/inswx-report/inswx294.png' />
      <br/> <a href='/media/report-portal/inswx-report/Structure3D_CID_56928031.sdf' target='_blank'>Download .sdf file </a>
  </td><td><a href='https://pubchem.ncbi.nlm.nih.gov/compound/56928031' target='_blank'>56928031</a></td>
- <td>&nbsp;</td><td>-6.1</td><td>35588.3271421</td><td>-10.2</td><td>36.40850353</td><td>-11.6</td><td>3.468897381</td><td>-11.3</td>
+ <td>Not available for purchase, refer to <a href="#synthesis">synthesis plan</a></td><td>-6.1</td><td>35588.3271421</td><td>-10.2</td><td>36.40850353</td><td>-11.6</td><td>3.468897381</td><td>-11.3</td>
  <td>5.74089501</td><td>-8.6</td><td>534.6541884</td><td>437.5</td><td>3.79</td><td>69.72</td><td>1640259-27-3 </td>
  </tr>
 
@@ -1342,6 +1343,26 @@ $(function() {
 </div>
 
 </div> <!-- end adme.hide -->
+
+
+
+<!-- ----------- synthesis plan -->
+ <hr/> 
+<h2 id='synthesis'>Synthesis plan</h2>
+<hr/>
+<center>
+<button type="button"  class="btn btn-success btn-lg center" id='btn_show_synthesis'>Show Data</button>
+</center>
+
+<div id='hide_synthesis' style='display:none;' class="tab-pane fade in active ">
+
+{{report.kinetic_text|safe}}
+
+</div>
+<hr/>
+
+<!-- ----------- end synthesis plan -->
+
 
 <h2 id='patients'>Patents and Clinical trials</h2>
 <hr/>
@@ -3286,6 +3307,9 @@ $(function() {
 </script>
 
 
+
+
+
 <!-- ---------------------------------Drug Scoring--------------------------------------------- -->
 {% if report.count_ds_groups > 0 %} 
  <hr/> 
@@ -3623,6 +3647,7 @@ var top_featur = $("#tbl-top_featur").DataTable( {
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#path_analysis">Pathway Analysis</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#bio_analysis">Structural Biology Analysis</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#admne">ADME properties</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#synthesis">Synthesis plan</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#patients">Patents and Clinical trials</a></li>
             
             {%if 'above-and-beyond' in report.slug %}
@@ -3900,6 +3925,15 @@ $("#btn_show_adme").click(function(){
                    
               ]
 	});
+	
+});
+
+
+$("#btn_show_synthesis").click(function(){
+	$(this).hide();
+	$("#hide_synthesis").slideDown('slow');
+	
+	
 	
 });
 

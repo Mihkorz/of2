@@ -212,6 +212,8 @@ class MirnaSetCalculationParameters(FormView):
              
             
             joined_df = gene_df.join(process_doc_df, how='inner')
+            
+            raise Exception('test')
             #raise Exception('gene')
             miPAS_dict = {}
             miPI_dict = {}
