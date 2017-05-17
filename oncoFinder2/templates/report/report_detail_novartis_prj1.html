@@ -371,16 +371,20 @@
  <hr/> 
 <h2 id='path_analysis'>Pathway Analysis</h2>
 <hr/>
-{%if report.path_text%}
-          {{report.path_text|safe}}
-          <br/><br/>
-          {%endif%}
+
 
 <center>
 <button type="button"  class="btn btn-success btn-lg center" id='btn_show_path'>Show Data</button>
 </center>
 
 <div id='hide_path' style='display:none;'> <!-- Div to hide and load on button click -->
+
+
+{%if report.path_text%}
+          {{report.path_text|safe}}
+          <br/><br/>
+{%endif%}
+
          
 <h3>Signaling Pathways</h3>
 <hr/> 
