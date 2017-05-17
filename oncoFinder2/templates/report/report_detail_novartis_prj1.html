@@ -437,6 +437,39 @@
   {%endfor%}
   
   </div>
+  
+  
+  {%if 'nas' in report.slug %}
+  <br/>
+  <div>
+  <img src='/media/report-portal/nova_prj1_nas/nasal_heatmap.png' />  
+  <h4>Pathway activation heatmap for Baseline (V3) vs Reference</h4>
+  <br/>
+  
+  <img src='/media/report-portal/nova_prj1_nas/nasal_heatmap_all.png' />  
+  <h4>Pathway activation heatmap for All Visits vs Reference</h4>
+  
+  
+  </div>
+  
+  {%endif%}
+  
+  {%if 'pbmc' in report.slug %}
+  
+  <br/>
+  <div>
+  <img src='/media/report-portal/nova_prj1_pbmc/pbmc_heatmap.png' />  
+  <h4>Pathway activation heatmap for Baseline (V3) vs Reference</h4>
+  <br/>
+  
+  <img src='/media/report-portal/nova_prj1_pbmc/pbmc_heatmap_all.png' />  
+  <h4>Pathway activation heatmap for All Visits vs Reference</h4>
+  
+  
+  </div>
+  
+  {%endif%}
+  
           
 </div>  <!-- end of hide div -->
 <!------------- End of Pathway Analysis -->
