@@ -60,11 +60,12 @@
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#gene_analysis">Gene level analysis</a></li>
             <!--  <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tf_analysis">Transcription Factor Analysis</a></li>-->
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#path_analysis">Pathway Analysis</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#compound_W">Compound W</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#bio_analysis">Structural Biology Analysis</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#admne">ADME properties</a></li> 
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#synthesis">Synthesis plan</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#patients">Patents and Clinical trials</a></li>
-            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#dl_analysis">Deep Learning</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#dl_analysis">Side Effects and Toxicity</a></li>
             
             
             {%if 'above-and-beyond' in report.slug %}
@@ -142,51 +143,107 @@
 <table class="path table table-striped table-bordered" cellspacing="0" width="100%" id='PKCb'>
   <thead>
     <tr>
-      <th>Compound</th>
-      <th>Structure</th>
-      <th>SMILES</th>
-      <th>Molecule ID</th>
-      <th>dG, kcal/mol</th>
+      <td>Compound</td>
+      <td>Structure</td>
+      <td>Molecule ID</td>
+      <td>MW</td>
+      <td>#Rotatable bonds</td>
+      <td>#H-bond acceptors</td>
+      <td>#H-bond donors</td>
+      <td>TPSA</td>
+      <td>Consensus Log P</td>
+      <td>dG, kcal/mol</td>
+      <td>CAS</td>
+      <td>Vendors</td>
+      <td>Patents</td>
+      <td>Papers</td>
     </tr>
   </thead>
   <tbody>
   <tr>
 <td>INSWX294</td>
 <td><img src='/media/report-portal/inswx-report/PKCb/INSWX294.png'/> <br/>
-<a href="/media/report-portal/inswx-report/PKCb/INSWX294Structure3D_CID_56928031.sdf" target="_blank">download .sdf file</a></td>
-<td>C1CN(CCN1C2=CC=CC=C2)C3=C(C(=O)C4=CC=CC=C4C3=O)NC(=O)C5=CC=CC=C5</td>
+<a href="/media/report-portal/inswx-report/PKCb/INSWX294Structure3D_CID_56928031.sdf" target="_blank">download .sdf file</a> </td>
 <td>PubChem-56928031</td>
+<td>437,49</td>
+<td>5</td>
+<td>3</td>
+<td>1</td>
+<td>69,72</td>
+<td>3,13</td>
 <td>-11.6</td>
+<td>1640259-27-3</td>
+<td>Not available. See section "Synthesis plan"</td>
+<td> WO 2014201016 A2</td>
+<td>NO</td>
 </tr>
 <tr>
 <td>INSWX292</td>
 <td><img src='/media/report-portal/inswx-report/PKCb/INSWX292.png'/> <br/>
 <a href="/media/report-portal/inswx-report/PKCb/INSWX292Structure2D_CID_50904531.sdf" target="_blank">download .sdf file</a> </td>
-<td>C1CN(CC2=CC=CC=C21)C(=O)N3C=C(N=N3)C(C4=CC=CC=C4)(C5=CC=CC=C5)O</td>
 <td>PubChem-50904531</td>
+<td>410,47</td>
+<td>5</td>
+<td>4</td>
+<td>1</td>
+<td>71,25</td>
+<td>3,35</td>
 <td>-10.8</td>
+<td>NO</td>
+<td>Not available. See section "Synthesis plan"</td>
+<td>NO</td>
+<td>NO</td>
 </tr>
 <tr>
 <td>INSWX233</td>
 <td><img src='/media/report-portal/inswx-report/PKCb/INSWX233.png'/> <br/>
 <a href="/media/report-portal/inswx-report/PKCb/INSWX233Structure3D_CID_16293465.sdf" target="_blank">download .sdf file</a> </td>
-<td>O=C(c1cccc(c1)NC(=O)c1cc(=O)[nH]c2c1cccc2)NCCc1ccc(cc1)S(=O)(=O)N</td>
 <td>Pubchem ID 16293465</td>
+<td>490,53</td>
+<td>9</td>
+<td>6</td>
+<td>4</td>
+<td>159,6</td>
+<td>2,29</td>
 <td>-10.7</td>
+<td>939760-13-1  </td>
+<td>"Aurora Building Blocks, 
+
+Aurora Screening Library, UORSY Stock Screening Compounds"</td>
+<td>NO</td>
+<td>NO</td>
 </tr>
 <tr>
 <td>INSWX270</td>
 <td><img src='/media/report-portal/inswx-report/PKCb/INSWX270.png'/> </td>
-<td>Cc1ccccc1Cn1nnc2c1nc(nc2O)[C@@H]1CCCN(C1)C(=O)c1ccccc1Cl</td>
 <td>MolPort-007-688-179 ChemDiv-D122-0027</td>
+<td>462,93</td>
+<td>5</td>
+<td>6</td>
+<td>1</td>
+<td>97,03</td>
+<td>3,57</td>
 <td>-10.7</td>
+<td>891031-03-1</td>
+<td>Aurora Screening Library, ChemDiv Screening Collection</td>
+<td>NO</td>
+<td>NO</td>
 </tr>
 <tr>
 <td>INSWX1036</td>
 <td><img src='/media/report-portal/inswx-report/PKCb/INSWX1036.png'/> </td>
-<td>OC(CC1CCCC1)Cn1cnc2cnccc2c1=O</td>
 <td>MolPort-039-001-270</td>
+<td>273,33</td>
+<td>4</td>
+<td>4</td>
+<td>1</td>
+<td>68,01</td>
+<td>1,84</td>
 <td>-9.4</td>
+<td>1808816-69-4</td>
+<td>Enamine HTS Collection</td>
+<td>NO</td>
+<td>NO</td>
 </tr>
   </tbody>
 
@@ -202,93 +259,188 @@
 <table class="path table table-striped table-bordered" cellspacing="0" width="100%" id='PDE4B'>
   <thead>
     <tr>
-      <th>Compound</th>
-      <th>Structure</th>
-      <th>SMILES</th>
-      <th>Molecule ID</th>
-      <th>dG, kcal/mol</th>
+      <td>Compound</td>
+      <td>Structure</td>
+      <td>Molecule ID</td>
+      <td>MW</td>
+      <td>#Rotatable bonds</td>
+      <td>#H-bond acceptors</td>
+      <td>#H-bond donors</td>
+      <td>TPSA</td>
+      <td>Consensus Log P</td>
+      <td>dG, kcal/mol</td>
+      <td>CAS</td>
+      <td>Vendors</td>
+      <td>Patents</td>
+      <td>Papers</td>
     </tr>
   </thead>
   <tbody>
   <tr>
 <td>INSWX1089</td>
-<td><img src='/media/report-portal/inswx-report/PDE4B/INSWX1089.png'/> <br/>
-</td>
-<td>FC(C#Cc1n[nH]c(=O)c2ccc(cc12)F)c1cn(nc1C(=O)O)C</td>
+<td> <img src='/media/report-portal/inswx-report/PDE4B/INSWX1089.png'/> </td>
 <td> </td>
+<td>344,27</td>
+<td>2</td>
+<td>7</td>
+<td>2</td>
+<td>100,87</td>
+<td>2,11</td>
 <td>-10.7</td>
+<td>NO</td>
+<td>NO</td>
+<td>NO</td>
+<td>NO</td>
 </tr>
 <tr>
 <td>INSWX796</td>
 <td><img src='/media/report-portal/inswx-report/PDE4B/INSWX796.png'/> <br/>
 <a href="/media/report-portal/inswx-report/PDE4B/INSWX796.sdf" target="_blank">download .sdf file</a> </td>
-<td>Cc1ccc2c(c(c(c3ccccc3)n2CC(CN2C(=O)CNC2=O)O)c2ccccc2)c1</td>
 <td>MolPort-002-254-265 PubChem-2941977</td>
+<td>439,51</td>
+<td>6</td>
+<td>3</td>
+<td>2</td>
+<td>74,57</td>
+<td>3,47</td>
 <td>-10.6</td>
+<td>539806-16-1</td>
+<td>"Aurora Building Blocks, >Aurora Screening Library, LabNetwork Compounds, Life Chemicals HTS Compounds"</td>
+<td>NO</td>
+<td>NO</td>
 </tr>
 <tr>
 <td>INSWX797</td>
-<td> <img src='/media/report-portal/inswx-report/PDE4B/INSWX797.png'/> <br/>
-</td>
-<td>c1(c(c(c2c(ccc(c2)F)n1)Cl)c1ccccn1)C(C)Nc1c(c(ncn1)N)C#N</td>
+<td><img src='/media/report-portal/inswx-report/PDE4B/INSWX797.png'/> </td>
 <td>CHEMBL3403673</td>
+<td>419,84</td>
+<td>4</td>
+<td>6</td>
+<td>2</td>
+<td>113,4</td>
+<td>3,35</td>
 <td>-10.5</td>
+<td>NO</td>
+<td>No</td>
+<td>NO</td>
+<td>NO</td>
 </tr>
 <tr>
 <td>INSWX799</td>
-<td><img src='/media/report-portal/inswx-report/PDE4B/INSWX799.png'/> <br/>
+<td> <img src='/media/report-portal/inswx-report/PDE4B/INSWX799.png'/> <br/>
 <a href="/media/report-portal/inswx-report/PDE4B/INSWX799.sdf" target="_blank">download .sdf file</a> </td>
-<td>OC(CN1C(=O)CNC1=O)Cn1c2c(cc(cc2)Cl)c2c1ccc(c2)Cl</td>
 <td>MolPort-002-354-652 PubChem-2941388</td>
+<td>392,24</td>
+<td>4</td>
+<td>3</td>
+<td>2</td>
+<td>74,57</td>
+<td>2,54</td>
 <td>-10.3</td>
+<td>539806-05-8</td>
+<td>"Aurora Building Blocks, 
+Aurora Screening Library, LabNetwork Compounds, ZereneX Molecular Building Blocks"</td>
+<td>NO</td>
+<td>NO</td>
 </tr>
 <tr>
 <td>INSWX703</td>
-<td> <img src='/media/report-portal/inswx-report/PDE4B/INSWX703.png'/> <br/>
-</td>
-<td>n1[nH]c(=O)c2ccc(F)cc2c1C#CCc1cn(nc1C(=O)O)C</td>
+<td><img src='/media/report-portal/inswx-report/PDE4B/INSWX703.png'/> </td>
 <td> </td>
+<td>326,28</td>
+<td>2</td>
+<td>6</td>
+<td>2</td>
+<td>100,87</td>
+<td>1,95</td>
 <td>-10.3</td>
+<td>NO</td>
+<td>Not available. See section "Synthesis plan"</td>
+<td>NO</td>
+<td>NO</td>
 </tr>
 <tr>
 <td>INSWX717</td>
-<td> <img src='/media/report-portal/inswx-report/PDE4B/INSWX717.png'/> <br/>
-</td>
-<td>c1(cn(C)nc1C(=O)O)C(CO)C#Cc1n[nH]c(=O)c2c1cc(cc2)F</td>
+<td> <img src='/media/report-portal/inswx-report/PDE4B/INSWX717.png'/></td>
 <td> </td>
+<td>356,31</td>
+<td>3</td>
+<td>7</td>
+<td>3</td>
+<td>121,1</td>
+<td>1,52</td>
 <td>-10.2</td>
+<td>NO</td>
+<td>Not available. See section "Synthesis plan"</td>
+<td>NO</td>
+<td>NO</td>
 </tr>
 <tr>
 <td>INSWX801</td>
-<td> <img src='/media/report-portal/inswx-report/PDE4B/INSWX801.png'/> <br/>
-</td>
-<td>Cc1ccc2c(ccc(c2)C2(CCN(Cc3c[nH]nc3C(=O)O)CC2)O)n1</td>
+<td><img src='/media/report-portal/inswx-report/PDE4B/INSWX801.png'/> </td>
 <td>MolPort-019-898-097</td>
+<td>366,41</td>
+<td>4</td>
+<td>6</td>
+<td>3</td>
+<td>102,34</td>
+<td>1,34</td>
 <td>-10.1</td>
+<td> 1332066-37-1</td>
+<td>Aurora Screening Library</td>
+<td>NO</td>
+<td>NO</td>
 </tr>
 <tr>
 <td>INSWX808</td>
 <td><img src='/media/report-portal/inswx-report/PDE4B/INSWX808.png'/> <br/>
 <a href="/media/report-portal/inswx-report/PDE4B/INSWX808.sdf" target="_blank">download .sdf file</a> </td>
-<td>Cc1ccc(cc1)S(=O)(=O)N(CC(CN1C(=O)NC(C)(C)C1=O)O)c1ccccc1</td>
 <td>ChemDiv-2995-0491 CHEMBL1446132 MolPort-000-735-592 PubChem-3133124</td>
+<td>431,51</td>
+<td>7</td>
+<td>5</td>
+<td>2</td>
+<td>115,4</td>
+<td>1,78</td>
 <td>-10</td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td></td>
 </tr>
 <tr>
 <td>INSWX809</td>
-<td> <img src='/media/report-portal/inswx-report/PDE4B/INSWX809.png'/> <br/>
-<a href="/media/report-portal/inswx-report/PDE4B/INSWX809.sdf" target="_blank">download .sdf file</a></td>
-<td>O=C(O)c1cc(CCn2cnc3c2NC=NCC3O)c2cccc(C(F)(F)F)c2c1</td>
+<td><img src='/media/report-portal/inswx-report/PDE4B/INSWX809.png'/> <br/>
+<a href="/media/report-portal/inswx-report/PDE4B/INSWX809.sdf" target="_blank">download .sdf file</a> </td>
 <td>CHEMBL157426 PubChem-10811936</td>
+<td>418,37</td>
+<td>5</td>
+<td>8</td>
+<td>3</td>
+<td>99,74</td>
+<td>2,48</td>
 <td>-10</td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td></td>
 </tr>
 <tr>
 <td>INSWX812</td>
 <td><img src='/media/report-portal/inswx-report/PDE4B/INSWX812.png'/> <br/>
 <a href="/media/report-portal/inswx-report/PDE4B/INSWX812.sdf" target="_blank">download .sdf file</a> </td>
-<td>Cc1cccc(c1)Nc1c(c(N)nc(C)n1)S(=O)(=O)c1ccccc1</td>
 <td>ChemDiv-8335-0330 CHEMBL1436876 MolPort-020-177-843 PubChem-15987563 ZINC08591087</td>
+<td>354,43</td>
+<td>4</td>
+<td>4</td>
+<td>2</td>
+<td>106,35</td>
+<td>3,24</td>
 <td>-10</td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td></td>
 </tr>
   </tbody>
   </table>
@@ -302,77 +454,155 @@
 <table class="path table table-striped table-bordered" cellspacing="0" width="100%" id='IKKb'>
   <thead>
     <tr>
-      <th>Compound</th>
-      <th>Structure</th>
-      <th>SMILES</th>
-      <th>Molecule ID</th>
-      <th>dG, kcal/mol</th>
+      <td>Compound</td>
+      <td>Structure</td>
+      <td>Molecule ID</td>
+      <td>MW</td>
+      <td>#Rotatable bonds</td>
+      <td>#H-bond acceptors</td>
+      <td>#H-bond donors</td>
+      <td>TPSA</td>
+      <td>Consensus Log P</td>
+      <td>dG, kcal/mol</td>
+      <td>CAS</td>
+      <td>Vendors</td>
+      <td>Patents</td>
+      <td>Papers</td>
     </tr>
   </thead>
   <tbody>
   <tr>
 <td>INSWX843</td>
-<td> <img src='/media/report-portal/inswx-report/IKKb/INSWX843.png'/> <br/>
-</td>
-<td>C1N(CCN(C(=O)c2cc(ccc2)Cc2n[nH]c(=O)c3ccccc23)C1)c1nc2c([nH]c(=O)[nH]2)cc1</td>
+<td> <img src='/media/report-portal/inswx-report/IKKb/INSWX843.png'/></td>
 <td>PubChem-122632830</td>
+<td>481,51</td>
+<td>5</td>
+<td>5</td>
+<td>3</td>
+<td>130,84</td>
+<td>2,5</td>
 <td>-9.6</td>
+<td>2024616-59-7</td>
+<td>NO</td>
+<td>CN 106146492 A 20161123,  WO 2016165655 A1 20161020.</td>
+<td>NO</td>
 </tr>
 <tr>
 <td>INSWX849</td>
-<td><img src='/media/report-portal/inswx-report/IKKb/INSWX849.png'/> <br/>
-</td>
-<td>c1(nc2c(coc2)c(n1)Nc1ccc(cc1)c1c[nH]nc1)c1cccc(c1)OCC(=O)NC1CC(F)(F)C1</td>
+<td> <img src='/media/report-portal/inswx-report/IKKb/INSWX849.png'/></td>
 <td>PubChem-124159248</td>
+<td>516,5</td>
+<td>9</td>
+<td>8</td>
+<td>3</td>
+<td>117,96</td>
+<td>4,11</td>
 <td>-9.4</td>
+<td>1278469-90-1</td>
+<td>NO</td>
+<td>NO</td>
+<td>NO</td>
 </tr>
 <tr>
 <td>INSWX858</td>
-<td><img src='/media/report-portal/inswx-report/IKKb/INSWX858.png'/> <br/>
- </td>
-<td>c1(nc2c(c(n1)Nc1ccc(cc1)c1c[nH]nc1)ccnc2)c1cccc(c1)OCC(=O)NC1CCC1</td>
+<td> <img src='/media/report-portal/inswx-report/IKKb/INSWX858.png'/></td>
 <td>PubChem-124159163</td>
+<td>491,54</td>
+<td>9</td>
+<td>6</td>
+<td>3</td>
+<td>117,71</td>
+<td>3,66</td>
 <td>-9.1</td>
+<td>2056919-46-9</td>
+<td>NO</td>
+<td>WO 2016210331 A1,  WO 2016210330 A1 </td>
+<td></td>
 </tr>
 <tr>
 <td>INSWX865</td>
 <td> <img src='/media/report-portal/inswx-report/IKKb/INSWX865.png'/> <br/>
 <a href="/media/report-portal/inswx-report/IKKb/INSWX865.sdf" target="_blank">download .sdf file</a></td>
-<td>c1(cnc2c(cc(cc2)c2cc3c(oc(n3)N)cc2)n1)N1C(=O)C[NH2]CC1</td>
 <td>PubChem-70798546</td>
+<td>361,38</td>
+<td>2</td>
+<td>5</td>
+<td>2</td>
+<td>124,16</td>
+<td>0,3</td>
 <td>-8.8</td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td></td>
 </tr>
 <tr>
 <td>INSWX869</td>
-<td><img src='/media/report-portal/inswx-report/IKKb/INSWX869.png'/> <br/>
-<a href="/media/report-portal/inswx-report/IKKb/INSWX869.sdf" target="_blank">download .sdf file</a> </td>
-<td>c1(cc(cnc1)OC1CC[NH](CC1)CC(=O)N)c1cc(cc(n1)Nc1nccc(c1)C#N)C1CC1</td>
+<td> <img src='/media/report-portal/inswx-report/IKKb/INSWX869.png'/> <br/>
+<a href="/media/report-portal/inswx-report/IKKb/INSWX869.sdf" target="_blank">download .sdf file</a></td>
 <td>PubChem-89764001</td>
+<td>470,55</td>
+<td>8</td>
+<td>6</td>
+<td>3</td>
+<td>138,84</td>
+<td>1,36</td>
 <td>-8.6</td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td></td>
 </tr>
 <tr>
 <td>INSWX870</td>
 <td><img src='/media/report-portal/inswx-report/IKKb/INSWX870.png'/> <br/>
 <a href="/media/report-portal/inswx-report/IKKb/INSWX870.sdf" target="_blank">download .sdf file</a> </td>
-<td>n1(nc(ccc1=O)c1ccc(cc1)C(=O)NC1CC[NH2]CC1)Cc1cccc(c1)NC(=O)OCC</td>
 <td>PubChem-25120602</td>
+<td>476,55</td>
+<td>10</td>
+<td>5</td>
+<td>3</td>
+<td>128,34</td>
+<td>1,5</td>
 <td>-8.6</td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td></td>
 </tr>
 <tr>
 <td>INSWX871</td>
-<td> <img src='/media/report-portal/inswx-report/IKKb/INSWX871.png'/> <br/>
-<a href="/media/report-portal/inswx-report/IKKb/INSWX871.sdf" target="_blank">download .sdf file</a></td>
-<td>c1(nc2nc(c(Cl)cc2[nH]1)c1ccc(cc1)C1=CCN(C(=O)CO)CC1)O[C@@H]1CC[C@@H](CC1)C1(CCC1)C(=O)OCC</td>
+<td><img src='/media/report-portal/inswx-report/IKKb/INSWX871.png'/> <br/>
+<a href="/media/report-portal/inswx-report/IKKb/INSWX871.sdf" target="_blank">download .sdf file</a> </td>
 <td>PubChem-90160604</td>
+<td>593,11</td>
+<td>10</td>
+<td>7</td>
+<td>2</td>
+<td>117,64</td>
+<td>4,68</td>
 <td>-8.5</td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td></td>
 </tr>
 <tr>
 <td>INSWX872</td>
-<td> <img src='/media/report-portal/inswx-report/IKKb/INSWX872.png'/> <br/>
-<a href="/media/report-portal/inswx-report/IKKb/INSWX872.sdf" target="_blank">download .sdf file</a></td>
-<td>[NH]1(CCN(C(=O)Nc2ccc(cc2)c2n[nH]c(n2)C2CC2)CC1)[C@@H](C)C(=O)Nc1cc(ccc1)F</td>
+<td><img src='/media/report-portal/inswx-report/IKKb/INSWX872.png'/> <br/>
+<a href="/media/report-portal/inswx-report/IKKb/INSWX872.sdf" target="_blank">download .sdf file</a> </td>
 <td>PubChem-99115528\PubChem-56520350</td>
+<td>478,54</td>
+<td>9</td>
+<td>5</td>
+<td>4</td>
+<td>115,04</td>
+<td>1,9</td>
 <td>-8.5</td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td></td>
 </tr>
   
   </tbody>
@@ -387,93 +617,188 @@
 <table class="path table table-striped table-bordered" cellspacing="0" width="100%" id='ACC2_CT'>
   <thead>
     <tr>
-      <th>Compound</th>
-      <th>Structure</th>
-      <th>SMILES</th>
-      <th>Molecule ID</th>
-      <th>dG, kcal/mol</th>
+      <td>Compound</td>
+      <td>Structure</td>
+      <td>Molecule ID</td>
+      <td>MW</td>
+      <td>#Rotatable bonds</td>
+      <td>#H-bond acceptors</td>
+      <td>#H-bond donors</td>
+      <td>TPSA</td>
+      <td>Consensus Log P</td>
+      <td>dG, kcal/mol</td>
+      <td>CAS</td>
+      <td>Vendors</td>
+      <td>Patents</td>
+      <td>Papers</td>
     </tr>
   </thead>
   <tbody>
-  <tr class="danger">
+  <tr>
 <td>INSWX598</td>
-<td> <img src='/media/report-portal/inswx-report/ACC2_CT/INSWX598.png'/> <br/>
-</td>
-<td>C(=O)(c1cc(ccc1)CN1C(=O)CNC1=O)O[C@H](C)c1nc(=O)c2ccccc2[nH]1</td>
-<td>PubChem-33072330\PubChem-24530980</td>
+<td> <img src='/media/report-portal/inswx-report/ACC2_CT/INSWX598.png'/> </td>
+<td>PubChem-33072330</td>
+<td>406,39</td>
+<td>6</td>
+<td>6</td>
+<td>2</td>
+<td>121,46</td>
+<td>1,66</td>
 <td>-9.6</td>
+<td>1278469-90-1</td>
+<td>NO</td>
+<td>NO</td>
+<td>NO</td>
 </tr>
 <tr>
 <td>INSWX600</td>
-<td> <img src='/media/report-portal/inswx-report/ACC2_CT/INSWX600.png'/> <br/>
-</td>
-<td>[NH]1(CCN(C(=O)On2c(ccc2O)O)CC1)Cc1c(cc(cc1)c1cccc(C)n1)F</td>
+<td><img src='/media/report-portal/inswx-report/ACC2_CT/INSWX600.png'/>  </td>
 <td>PubChem-123179421</td>
+<td>427,45</td>
+<td>6</td>
+<td>6</td>
+<td>3</td>
+<td>99,85</td>
+<td>1,7</td>
 <td>-9.5</td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td></td>
 </tr>
 <tr>
 <td>INSWX601</td>
 <td><img src='/media/report-portal/inswx-report/ACC2_CT/INSWX601.png'/> <br/>
 <a href="/media/report-portal/inswx-report/ACC2_CT/INSWX601.sdf" target="_blank">download .sdf file</a> </td>
-<td>C1N(C[C@H](OC1)COc1ccccc1c1cnccc1)S(=O)(=O)c1c([nH]c2ccc(cc12)Cl)C(=O)N</td>
 <td>PubChem-71748271</td>
+<td>526,99</td>
+<td>7</td>
+<td>7</td>
+<td>2</td>
+<td>135,99</td>
+<td>2,69</td>
 <td>-9.4</td>
+<td> 1462980-23-9</td>
+<td>NO</td>
+<td> WO 2013148227 A1 20131003</td>
+<td>NO</td>
 </tr>
 <tr>
 <td>INSWX603</td>
-<td><img src='/media/report-portal/inswx-report/ACC2_CT/INSWX603.png'/> <br/>
- </td>
-<td>c1(c(F)ccc(c1)Cc1n[nH]c(=O)c2ccccc12)C(=O)N1C[C@@H](CC1)[NH](C)CCO</td>
+<td> <img src='/media/report-portal/inswx-report/ACC2_CT/INSWX603.png'/></td>
 <td>PubChem-123198033</td>
+<td>425,48</td>
+<td>7</td>
+<td>5</td>
+<td>3</td>
+<td>98,32</td>
+<td>1,22</td>
 <td>-9.3</td>
+<td>NO</td>
+<td>NO</td>
+<td>NO</td>
+<td>No</td>
 </tr>
 <tr>
 <td>INSWX604</td>
-<td> <img src='/media/report-portal/inswx-report/ACC2_CT/INSWX604.png'/> <br/>
-<a href="/media/report-portal/inswx-report/ACC2_CT/INSWX604.sdf" target="_blank">download .sdf file</a></td>
-<td>N(C(=O)[C@@H]1C[NH](CCC1)CC(=O)N)c1scc(n1)c1c(C)cc(c(C)c1)OC</td>
+<td><img src='/media/report-portal/inswx-report/ACC2_CT/INSWX604.png'/> <br/>
+<a href="/media/report-portal/inswx-report/ACC2_CT/INSWX604.sdf" target="_blank">download .sdf file</a> </td>
 <td>PubChem-46979601</td>
+<td>403,52</td>
+<td>7</td>
+<td>4</td>
+<td>3</td>
+<td>134,58</td>
+<td>1,16</td>
 <td>-9.3</td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td></td>
 </tr>
 <tr>
 <td>INSWX605</td>
-<td><img src='/media/report-portal/inswx-report/ACC2_CT/INSWX605.png'/> <br/>
-<a href="/media/report-portal/inswx-report/ACC2_CT/INSWX605.sdf" target="_blank">download .sdf file</a> </td>
-<td>C1C[NH](C[C@H](C1)NC(=O)c1cc2c([nH]nc2c2ccncc2)cc1)[C@@H](c1ccccc1F)C(=O)N</td>
+<td> <img src='/media/report-portal/inswx-report/ACC2_CT/INSWX605.png'/> <br/>
+<a href="/media/report-portal/inswx-report/ACC2_CT/INSWX605.sdf" target="_blank">download .sdf file</a></td>
 <td>PubChem-70652336</td>
+<td>473,52</td>
+<td>7</td>
+<td>5</td>
+<td>4</td>
+<td>125,79</td>
+<td>1,78</td>
 <td>-9.3</td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td></td>
 </tr>
 <tr>
 <td>INSWX606</td>
-<td> <img src='/media/report-portal/inswx-report/ACC2_CT/INSWX606.png'/> <br/>
-<a href="/media/report-portal/inswx-report/ACC2_CT/INSWX606.sdf" target="_blank">download .sdf file</a></td>
-<td>C(=O)(Nc1cnccc1[C@@H]1C[C@@H]([C@@H]([C@@H](C)C1)O)[NH3])c1ccc(c(n1)c1c(cc(cc1F)C(=O)CC)F)F</td>
+<td><img src='/media/report-portal/inswx-report/ACC2_CT/INSWX606.png'/> <br/>
+<a href="/media/report-portal/inswx-report/ACC2_CT/INSWX606.sdf" target="_blank">download .sdf file</a> </td>
 <td>PubChem-60172075</td>
+<td>513,53</td>
+<td>7</td>
+<td>8</td>
+<td>3</td>
+<td>95,42</td>
+<td>2,85</td>
 <td>-9.2</td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td></td>
 </tr>
 <tr>
 <td>INSWX607</td>
-<td> <img src='/media/report-portal/inswx-report/ACC2_CT/INSWX607.png'/> <br/>
-<a href="/media/report-portal/inswx-report/ACC2_CT/INSWX607.sdf" target="_blank">download .sdf file</a></td>
-<td>S(=O)(=O)(c1cc2O[C@@H](C(=O)Nc2cc1C)CC)N1C[C@H](CCC1)C(=O)Nc1cc(ccn1)C</td>
+<td><img src='/media/report-portal/inswx-report/ACC2_CT/INSWX607.png'/> <br/>
+<a href="/media/report-portal/inswx-report/ACC2_CT/INSWX607.sdf" target="_blank">download .sdf file</a> </td>
 <td>PubChem-93055418</td>
+<td>472,56</td>
+<td>6</td>
+<td>7</td>
+<td>2</td>
+<td>126,08</td>
+<td>2,14</td>
 <td>-9.2</td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td></td>
 </tr>
 <tr>
 <td>INSWX608</td>
-<td><img src='/media/report-portal/inswx-report/ACC2_CT/INSWX608.png'/> <br/>
-<a href="/media/report-portal/inswx-report/ACC2_CT/INSWX608.sdf" target="_blank">download .sdf file</a> </td>
-<td>C(C(=O)Nc1ccc(cc1)SCc1cnccc1)Cc1nc(=O)c2c[nH]n(c2n1)c1ccccc1</td>
+<td> <img src='/media/report-portal/inswx-report/ACC2_CT/INSWX608.png'/> <br/>
+<a href="/media/report-portal/inswx-report/ACC2_CT/INSWX608.sdf" target="_blank">download .sdf file</a></td>
 <td>PubChem-24566921</td>
+<td>482,56</td>
+<td>9</td>
+<td>5</td>
+<td>2</td>
+<td>130,86</td>
+<td>3,35</td>
 <td>-9.2</td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td></td>
 </tr>
-<tr class="danger">
+<tr>
 <td>INSWX609</td>
-<td><img src='/media/report-portal/inswx-report/ACC2_CT/INSWX609.png'/> <br/>
-</td>
-<td>[C@@H]1(CN(CCC1)S(=O)(=O)c1c(Cl)cc2NC(=O)COc2c1)C(=O)Nc1nc(C)ccc1</td>
+<td> <img src='/media/report-portal/inswx-report/ACC2_CT/INSWX609.png'/></td>
 <td>PubChem-98842572</td>
+<td>464,92</td>
+<td>5</td>
+<td>7</td>
+<td>2</td>
+<td>126,08</td>
+<td>1,73</td>
 <td>-9.2</td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td></td>
 </tr>
   </tbody>
   </table>
@@ -487,97 +812,273 @@
 <table class="path table table-striped table-bordered" cellspacing="0" width="100%" id='ACC2_BC'>
   <thead>
     <tr>
-      <th>Compound</th>
-      <th>Structure</th>
-      <th>SMILES</th>
-      <th>Molecule ID</th>
-      <th>dG, kcal/mol</th>
+      <td>Compound</td>
+      <td>Structure</td>
+      <td>Molecule ID</td>
+      <td>MW</td>
+      <td>#Rotatable bonds</td>
+      <td>#H-bond acceptors</td>
+      <td>#H-bond donors</td>
+      <td>TPSA</td>
+      <td>Consensus Log P</td>
+      <td>dG, kcal/mol</td>
+      <td>CAS</td>
+      <td>Vendors</td>
+      <td>Patents</td>
+      <td>Papers</td>
     </tr>
   </thead>
   <tbody>
   <tr>
 <td>INSWX400</td>
-<td> <img src='/media/report-portal/inswx-report/ACC2_BC/INSWX400.png'/> <br/>
-<a href="/media/report-portal/inswx-report/ACC2_BC/INSWX400.sdf" target="_blank">download .sdf file</a></td>
-<td>c1(ncc2ccc(nn12)c1c(F)ccc(c1F)C(=O)NC(C)C)Nc1c(ccnc1)N1C[C@H]([C@@H]([C@@H](C)C1)O)[NH3]</td>
+<td><img src='/media/report-portal/inswx-report/ACC2_BC/INSWX400.png'/> <br/>
+<a href="/media/report-portal/inswx-report/ACC2_BC/INSWX400.sdf" target="_blank">download .sdf file</a> </td>
 <td>PubChem-90252533</td>
+<td>537,58</td>
+<td>7</td>
+<td>7</td>
+<td>4</td>
+<td>110,92</td>
+<td>1,31</td>
 <td>-10.9</td>
+<td>1616579-79-3</td>
+<td>NO</td>
+<td>WO 2014099880 A1 20140626</td>
+<td>NO</td>
 </tr>
 <tr>
-<td>INSWX402</td>
-<td> <img src='/media/report-portal/inswx-report/ACC2_BC/INSWX402.png'/> <br/>
-<a href="/media/report-portal/inswx-report/ACC2_BC/INSWX402.sdf" target="_blank">download .sdf file</a></td>
-<td>Cn1c2c(c3c(n(c(n3)N3C[C@@H](CCC3)NC(=O)O)Cc3c(Cl)ccc(F)c3)c1=O)ccc(c2)C(=O)N</td>
-<td>PubChem-69441009</td>
-<td>-10.4</td>
-</tr>
-<tr class="danger">
 <td>INSWX408</td>
-<td><img src='/media/report-portal/inswx-report/ACC2_BC/INSWX408.png'/> <br/>
+<td> <img src='/media/report-portal/inswx-report/ACC2_BC/INSWX408.png'/> <br/>
 </td>
-<td>N(C(=O)C[C@H](c1ccccc1)NC(=O)c1ccccc1)c1ccc(cc1)N1CC[C@@H](CC1)C(=O)N</td>
 <td>PubChem-99050321</td>
+<td>470,56</td>
+<td>10</td>
+<td>3</td>
+<td>3</td>
+<td>104,53</td>
+<td>2,94</td>
 <td>-10</td>
+<td>1287611-87-3</td>
+<td>NO</td>
+<td>NO</td>
+<td>NO</td>
 </tr>
 <tr>
 <td>INSWX412</td>
 <td> <img src='/media/report-portal/inswx-report/ACC2_BC/INSWX412.png'/> <br/>
 </td>
-<td>c1(cn(c(n1)C1CCN(CC1)c1c(Cl)c(ncn1)N)[C@H](C)C1C[NH2]C1)c1ccc(c(C)c1)F</td>
 <td>PubChem-118290322</td>
+<td>470,99</td>
+<td>5</td>
+<td>4</td>
+<td>2</td>
+<td>98,88</td>
+<td>2,09</td>
 <td>-10</td>
+<td>NO</td>
+<td>NO</td>
+<td>NO</td>
+<td>NO</td>
 </tr>
 <tr>
 <td>INSWX413</td>
 <td> <img src='/media/report-portal/inswx-report/ACC2_BC/INSWX413.png'/> <br/>
 <a href="/media/report-portal/inswx-report/ACC2_BC/INSWX413.sdf" target="_blank">download .sdf file</a></td>
-<td>C1(=NN2C(=NN[C@H]2N=C1)C(F)(F)c1cc2c(nccc2)cc1)c1cnn(c1)C1CC[NH2]CC1</td>
 <td>PubChem-89847932</td>
+<td>450,47</td>
+<td>4</td>
+<td>7</td>
+<td>2</td>
+<td>109,08</td>
+<td>0,83</td>
 <td>-9.9</td>
+<td>NO</td>
+<td>NO</td>
+<td>NO</td>
+<td>NO</td>
 </tr>
 <tr>
 <td>INSWX415</td>
 <td> <img src='/media/report-portal/inswx-report/ACC2_BC/INSWX415.png'/> <br/>
 </td>
-<td>C[C@@H]1c2c(nc(nc2NCc2ccccc2)c2c(C)nc3c(cccn23)C(=O)N)C[NH2]C1</td>
 <td>PubChem-118239786</td>
+<td>428,51</td>
+<td>5</td>
+<td>4</td>
+<td>3</td>
+<td>124,22</td>
+<td>1,36</td>
 <td>-9.9</td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td></td>
 </tr>
 <tr>
 <td>INSWX416</td>
 <td> <img src='/media/report-portal/inswx-report/ACC2_BC/INSWX416.png'/> <br/>
 <a href="/media/report-portal/inswx-report/ACC2_BC/INSWX416.sdf" target="_blank">download .sdf file</a></td>
-<td>[C@H](c1ccccc1)(C(=O)Nc1cccc(c1)C(=[NH2])N)Nc1ccc(cc1)c1ncc[nH]c1=O</td>
 <td>PubChem-10225131</td>
+<td>439,49</td>
+<td>8</td>
+<td>3</td>
+<td>5</td>
+<td>138,92</td>
+<td>1,24</td>
 <td>-9.9</td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td></td>
 </tr>
 <tr>
 <td>INSWX421</td>
 <td> <img src='/media/report-portal/inswx-report/ACC2_BC/INSWX421.png'/> <br/>
 <a href="/media/report-portal/inswx-report/ACC2_BC/INSWX421.sdf" target="_blank">download .sdf file</a></td>
-<td>c1(cnc(c(n1)N1CC[NH2]CC1)N(Cc1ccccc1)Cc1ccccc1)c1ccc2c(c(C)[nH]n2)c1</td>
 <td>PubChem-24872254</td>
+<td>490,62</td>
+<td>7</td>
+<td>3</td>
+<td>2</td>
+<td>86,96</td>
+<td>2,75</td>
 <td>-9.7</td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td></td>
 </tr>
 <tr>
 <td>INSWX429</td>
 <td> <img src='/media/report-portal/inswx-report/ACC2_BC/INSWX429.png'/> <br/>
 <a href="/media/report-portal/inswx-report/ACC2_BC/INSWX429.sdf" target="_blank">download .sdf file</a></td>
-<td>c1(cc(cc(c1)c1ccc[nH]c1=O)C1(CC1)CO)/C=C/c1ccc(cc1)NS(=O)(=O)C</td>
 <td>PubChem-67070056</td>
+<td>436,52</td>
+<td>7</td>
+<td>4</td>
+<td>3</td>
+<td>107,64</td>
+<td>3,44</td>
 <td>-9.5</td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td></td>
 </tr>
 <tr>
 <td>INSWX433</td>
-<td><img src='/media/report-portal/inswx-report/ACC2_BC/INSWX433.png'/> <br/>
-<a href="/media/report-portal/inswx-report/ACC2_BC/INSWX433.sdf" target="_blank">download .sdf file</a> </td>
-<td>[C@@H]1([C@@H](CCCC1)[NH2][C@@H]1CN(CCC1)c1cn2ncnc2cc1)Nc1ncc(o1)c1cccc(c1)NC(=O)OC</td>
+<td> <img src='/media/report-portal/inswx-report/ACC2_BC/INSWX433.png'/> <br/>
+<a href="/media/report-portal/inswx-report/ACC2_BC/INSWX433.sdf" target="_blank">download .sdf file</a></td>
 <td>PubChem-89695090</td>
+<td>531,63</td>
+<td>9</td>
+<td>6</td>
+<td>3</td>
+<td>135,84</td>
+<td>2,05</td>
 <td>-9.4</td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td></td>
 </tr>
   </tbody>
   </table>
 </div>
+
+
+<script>
+$(function() {
+
+var all_models = $("#PKCb").DataTable( {
+	"paging":   false,
+    "iDisplayLength": 20,
+    "ordering": true,
+    
+    "info":     false,
+    "dom": 'Bfrtip',
+    "scrollX": false,
+    "bAutoWidth": false,
+    "buttons": [
+               {extend: 'csv', title: 'PKCb_struct'},
+               {extend: 'print', title: 'PKCb_struct'}
+               
+          ],
+    
+    "deferRender": true });
+    
+var all_models = $("#IKKb").DataTable( {
+	"paging":   false,
+    "iDisplayLength": 20,
+    "ordering": true,
+    
+    "info":     false,
+    "dom": 'Bfrtip',
+    "scrollX": false,
+    "bAutoWidth": false,
+    "buttons": [
+               {extend: 'csv', title: 'IKKb_struct'},
+               {extend: 'print', title: 'IKKb_struct'}
+               
+          ],
+    
+    "deferRender": true });
+    
+var all_models = $("#PDE4B").DataTable( {
+	"paging":   false,
+    "iDisplayLength": 20,
+    "ordering": true,
+    
+    "info":     false,
+    "dom": 'Bfrtip',
+    "scrollX": false,
+    "bAutoWidth": false,
+    "buttons": [
+               {extend: 'csv', title: 'PDE4B_struct'},
+               {extend: 'print', title: 'PDE4B_struct'}
+               
+          ],
+    
+    "deferRender": true });
+    
+var all_models = $("#ACC2_CT").DataTable( {
+	"paging":   false,
+    "iDisplayLength": 20,
+    "ordering": true,
+    
+    "info":     false,
+    "dom": 'Bfrtip',
+    "scrollX": false,
+    "bAutoWidth": false,
+    "buttons": [
+               {extend: 'csv', title: 'ACC2_CT_struct'},
+               {extend: 'print', title: 'ACC2_CT_struct'}
+               
+          ],
+    
+    "deferRender": true });
+    
+var all_models = $("#ACC2_BC").DataTable( {
+	"paging":   false,
+    "iDisplayLength": 20,
+    "ordering": true,
+    
+    "info":     false,
+    "dom": 'Bfrtip',
+    "scrollX": false,
+    "bAutoWidth": false,
+    "buttons": [
+               {extend: 'csv', title: 'ACC2_BC_struct'},
+               {extend: 'print', title: 'ACC2_BC_struct'}
+               
+          ],
+    
+    "deferRender": true });
+
+});
+
+</script>
+
 
 </div> <!-- end Top molecules.hide -->
 
@@ -850,16 +1351,18 @@
  <hr/> 
 <h2 id='path_analysis'>Pathway Analysis</h2>
 <hr/>
-{%if report.path_text%}
-          {{report.path_text|safe}}
-          <br/><br/>
-          {%endif%}
+
 
 <center>
 <button type="button"  class="btn btn-success btn-lg center" id='btn_show_path'>Show Data</button>
 </center>
 
 <div id='hide_path' style='display:none;'> <!-- Div to hide and load on button click -->
+
+{%if report.path_text%}
+          {{report.path_text|safe}}
+          <br/><br/>
+          {%endif%}
          
 <h3>Signaling Pathways</h3>
 <hr/> 
@@ -937,6 +1440,85 @@
 </div>  <!-- end of hide div -->
 <!------------- End of Pathway Analysis -->
 
+
+<!-- ----------- Compound W -->
+ <hr/> 
+<h2 id='compound_W'>Compound W</h2>
+<hr/>
+<center>
+<button type="button"  class="btn btn-success btn-lg center" id='btn_show_compw'>Show Data</button>
+</center>
+
+<div id='hide_compw' style='display:none;'>
+
+<table class="path table table-striped table-bordered" cellspacing="0" width="100%" id='cWpic'>
+
+<thead>
+<tr>
+  <th> </th>
+  <th>INSWX219</th>
+  <th>Structure</th>
+</tr>
+</thead>
+<tbody>
+  <tr>
+    <td>ACC2_BC</td>
+    <td>-8.8</td>
+    <td>
+    <a href='/media/report-portal/inswx-report/ACC2_BC.png' target='_blank' >
+    <img src='/media/report-portal/inswx-report/ACC2_BC.png' style="width: 500px"/>
+    </a>
+    </td>
+  </tr>
+  <tr>
+    <td>ACC2_CT</td>
+    <td>-8.2</td>
+    <td>
+    <a href='/media/report-portal/inswx-report/ACC2_CT.png' target='_blank' >
+    <img src='/media/report-portal/inswx-report/ACC2_CT.png' style="width: 500px"/>
+    </a>
+    </td>
+  </tr>
+  <tr>
+    <td>IKKb</td>
+    <td>-8.1</td>
+    <td><a href='/media/report-portal/inswx-report/IKKB.png' target='_blank' >
+    <img src='/media/report-portal/inswx-report/IKKB.png' style="width: 500px"/>
+    </a></td>
+  </tr>
+  <tr>
+    <td>PDE4B</td>
+    <td>-9.2</td>
+    <td><a href='/media/report-portal/inswx-report/PDE4B.png' target='_blank' >
+    <img src='/media/report-portal/inswx-report/PDE4B.png' style="width: 500px"/>
+    </a></td>
+  </tr>
+  <tr>
+    <td>PKCb</td>
+    <td>-8.5</td>
+    <td><a href='/media/report-portal/inswx-report/PKCB.png' target='_blank' >
+    <img src='/media/report-portal/inswx-report/PKCB.png' style="width: 500px"/>
+    </a></td>
+  </tr>
+
+</tbody>
+</table>
+
+</div>
+
+<script>
+
+$(function(){
+	$("#btn_show_compw").click(function(){
+		$(this).hide();
+		$("#hide_compw").slideDown();
+	});
+	
+});
+
+</script>
+
+<!-- ----------- end of Compound W -->
 
 <!-- ----------- Structural Biology  Analysis -->
  <hr/> 
@@ -16765,6 +17347,176 @@ $(function() {
 </table>
 </div>
 
+
+<hr/>
+<br/><br/>
+<h3>NASH-related clinical trials</h3>
+<div style='overflow-x: auto;'>
+
+<table id='tbl_trials1' class="table table-striped table-bordered" cellspacing="0">
+<thead>
+<tr>
+<td>ID</td>
+<td>Record name</td>
+<td>Starting Date</td>
+<td>Results recieved date</td>
+<td>Sponsor</td>
+<td>Product in trials</td>
+<td>Indication</td>
+<td>Status</td>
+<td>Results availability</td>
+<td>Link</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NCT01672879</td>
+<td>Simtuzumab (GS-6624) in the Treatment of Cirrhosis Due to NASH (NASH)</td>
+<td>29/10/2012</td>
+<td>28/07/2016</td>
+<td>Gilead Sciences</td>
+<td>Simtuzumab (GS-6624)</td>
+<td>NASH</td>
+<td>Terminated</td>
+<td>Not available</td>
+<td><a href="https://clinicaltrials.gov/ct2/show/NCT01672879" >https://clinicaltrials.gov/ct2/show/NCT01672879</a></td>
+</tr>
+<tr>
+<td>NCT02784444</td>
+<td>A Study to Evaluate the Safety, Tolerability & Efficacy of MSDC 0602K in Patients With NASH (EMMINENCE)</td>
+<td>01/07/2016</td>
+<td>01/10/2018</td>
+<td>Cirius Therapeutics, Inc.</td>
+<td>MSDC-0602K </td>
+<td>NASH</td>
+<td>Recruting particapants</td>
+<td>Not available</td>
+<td><a href="https://clinicaltrials.gov/ct2/show/results/NCT02784444">https://clinicaltrials.gov/ct2/show/results/NCT02784444</a></td>
+</tr>
+<tr>
+<td>NCT02923154</td>
+<td>Efficacy and Safety of MT-3995 in Patients With Non-Alcoholic Steatohepatitis(NASH)</td>
+<td>01/09/2016</td>
+<td>01/10/2017</td>
+<td>Mitsubishi Tanabe Pharma Corporation</td>
+<td>MT-3995</td>
+<td>NASH</td>
+<td>Recruting particapants</td>
+<td>Not available</td>
+<td><a href="https://clinicaltrials.gov/ct2/show/record/NCT02923154">https://clinicaltrials.gov/ct2/show/record/NCT02923154</a></td>
+</tr>
+<tr>
+<td>NCT02704403</td>
+<td>Phase 3 Study to Evaluate the Efficacy and Safety of Elafibranor Versus Placebo in Patients With Nonalcoholic Steatohepatitis (NASH) (RESOLVE-IT)</td>
+<td>16/02/2016</td>
+<td>01/12/2021</td>
+<td>Genfit</td>
+<td>Elafibranor</td>
+<td>NASH</td>
+<td>Recruting particapants</td>
+<td>Not available</td>
+<td><a href="https://clinicaltrials.gov/ct2/show/NCT02704403">https://clinicaltrials.gov/ct2/show/NCT02704403</a></td>
+</tr>
+<tr>
+<td>NCT01694849</td>
+<td>Phase IIb Study to Evaluate the Efficacy and Safety of GFT505 Versus Placebo in Patients With Non-Alcoholic Steatohepatitis (NASH)</td>
+<td>24/09/2012</td>
+<td>01/02/2015</td>
+<td>Genfit</td>
+<td>GFT505</td>
+<td>NASH</td>
+<td>Completed</td>
+<td>Not available</td>
+<td><a href="https://clinicaltrials.gov/ct2/show/NCT01694849">https://clinicaltrials.gov/ct2/show/NCT01694849</a></td>
+</tr>
+<tr>
+<td>NCT00267670</td>
+<td>Pentoxifylline/Nonalcoholic Steatohepatitis (NASH) Study: The Effect of Pentoxifylline on NASH</td>
+<td>12/12/2005</td>
+<td>27/08/2014</td>
+<td>Northwestern University</td>
+<td>Pentoxifylline</td>
+<td>NASH</td>
+<td>Completed</td>
+<td>Avaliable</td>
+<td><a href="https://clinicaltrials.gov/ct2/show/NCT00267670">https://clinicaltrials.gov/ct2/show/NCT00267670</a></td>
+</tr>
+<tr>
+<td>NCT00994682</td>
+<td>University of Texas H.S.C. San Antonio Pioglitazone in Non-Alcoholic Steatohepatitis Trial (UTHSCSA NASH Trial)</td>
+<td>12/10/2009</td>
+<td>20/02/2017</td>
+<td>University of Florida</td>
+<td>Pioglitazone</td>
+<td>NASH</td>
+<td>Completed</td>
+<td>Avaliable</td>
+<td><a href="https://clinicaltrials.gov/ct2/show/NCT00994682">https://clinicaltrials.gov/ct2/show/NCT00994682</a></td>
+</tr>
+<tr>
+<td>NCT00596934</td>
+<td>Recombinant Leptin Therapy for Treatment of Nonalcoholic Steatohepatitis (NASH)</td>
+<td>01/02/2006</td>
+<td>17/10/2016</td>
+<td>Elif Oral</td>
+<td>Metreleptin</td>
+<td>NASH</td>
+<td>Completed</td>
+<td>Avaliable</td>
+<td><a href="https://clinicaltrials.gov/ct2/show/NCT00596934">https://clinicaltrials.gov/ct2/show/NCT00596934</a></td>
+</tr>
+<tr>
+<td>NCT02854605</td>
+<td>Evaluating the Safety, Tolerability, and Efficacy of GS-9674 in Participants With Nonalcoholic Steatohepatitis (NASH)</td>
+<td>26/10/2016</td>
+<td>09/05/2017</td>
+<td>Gilead Sciences</td>
+<td>GS-9674</td>
+<td>NASH</td>
+<td>Recruting particapants</td>
+<td>Not available</td>
+<td><a href="https://clinicaltrials.gov/ct2/show/record/NCT02854605">https://clinicaltrials.gov/ct2/show/record/NCT02854605</a></td>
+</tr>
+<tr>
+<td>NCT02217475</td>
+<td>Efficacy and Safety Study of Cenicriviroc for the Treatment of NASH in Adult Subjects With Liver Fibrosis (CENTAUR)</td>
+<td>01/09/2014</td>
+<td>19/07/2016</td>
+<td>Tobira Therapeutics, Inc.</td>
+<td>Cenicriviroc</td>
+<td>NASH</td>
+<td>Active</td>
+<td>Not available</td>
+<td><a href="https://clinicaltrials.gov/ct2/show/NCT02217475">https://clinicaltrials.gov/ct2/show/NCT02217475</a></td>
+</tr>
+<tr>
+<td>NCT02279524</td>
+<td>A Clinical Trial to Evaluate the Efficacy and Safety of Two Aramchol Doses Versus Placebo in Patients With NASH (Aramchol_005)</td>
+<td>01/01/2015</td>
+<td>08/02/2017</td>
+<td>Galmed Pharmaceuticals Ltd</td>
+<td>Aramchol</td>
+<td>NASH</td>
+<td>Active</td>
+<td>Not available</td>
+<td><a href="https://clinicaltrials.gov/ct2/show/NCT02279524">https://clinicaltrials.gov/ct2/show/NCT02279524</a></td>
+</tr>
+<tr>
+<td>NCT02855164</td>
+<td>Safety, Tolerability and Efficacy Study of 12 Weeks LJN452 Treatment in NASH Patients (FLIGHT-FXR)</td>
+<td>01/08/2016</td>
+<td>09/05/2017</td>
+<td>Novartis Pharmaceuticals</td>
+<td>LJN452</td>
+<td>NASH</td>
+<td>Recruting particapants</td>
+<td>Not available</td>
+<td><a href="https://clinicaltrials.gov/ct2/show/NCT02855164" >https://clinicaltrials.gov/ct2/show/NCT02855164</a></td>
+</tr>
+</tbody>
+</table>
+</div> <!-- end of overflow: auto -->
+
 </div> <!--  end of Patents and Clinical trials -->
 
 
@@ -16781,6 +17533,7 @@ $(function() {
 		$("#hide_patients").slideDown('slow');
 		
 		$("#tbl_trials").DataTable();
+		$("#tbl_trials1").DataTable();
 		
 		$("#tbl_patients").DataTable({
 	    	"paging":   true,
@@ -16956,7 +17709,7 @@ $(function() {
 
 
  <hr/> 
-<h2 id='dl_analysis'>Deep Learning</h2>
+<h2 id='dl_analysis'>Side Effects and Toxicity</h2>
 <hr/>
 
 
@@ -25015,11 +25768,12 @@ var top_featur = $("#tbl-top_featur").DataTable( {
             <!-- <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tf_analysis">Transcription Factor Analysis</a></li>
             -->
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#path_analysis">Pathway Analysis</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#compound_W">Compound W</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#bio_analysis">Structural Biology Analysis</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#admne">ADME properties</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#synthesis">Synthesis plan</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#patients">Patents and Clinical trials</a></li>
-            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#dl_analysis">Deep Learning</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#dl_analysis">Side Effects and Toxicity</a></li>
             
             {%if 'above-and-beyond' in report.slug %}
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#ds_analysis">Drug Scoring</a></li>
