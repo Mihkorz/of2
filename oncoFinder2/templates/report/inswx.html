@@ -25637,8 +25637,8 @@ $(function() {
 var all_models = $("#tbl-all_models").DataTable( {
 	"paging":   true,
     "iDisplayLength": 20,
-    "ordering": false,
-    "order": [[ 1, "desc" ]],
+    "ordering": true,
+    //"order": [[ 1, "desc" ]],
     "info":     false,
     "dom": 'Bfrtip',
     "scrollX": false,
@@ -25654,7 +25654,7 @@ var all_models = $("#tbl-all_models").DataTable( {
 var top_featur = $("#tbl-top_featur").DataTable( {
 	"paging":   true,
     "iDisplayLength": 20,
-    "ordering": false,
+    "ordering": true,
     //"order": [[ 0, "desc" ]],
     "info":     false,
     "dom": 'Bfrtip',
