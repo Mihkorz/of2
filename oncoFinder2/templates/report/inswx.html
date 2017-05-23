@@ -60,7 +60,7 @@
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#gene_analysis">Gene level analysis</a></li>
             <!--  <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tf_analysis">Transcription Factor Analysis</a></li>-->
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#path_analysis">Pathway Analysis</a></li>
-            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#compound_W">Compound W</a></li>
+            
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#bio_analysis">Structural Biology Analysis</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#admne">ADME properties</a></li> 
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#synthesis">Synthesis plan</a></li>
@@ -1441,15 +1441,19 @@ var all_models = $("#ACC2_BC").DataTable( {
 <!------------- End of Pathway Analysis -->
 
 
-<!-- ----------- Compound W -->
+
+
+<!-- ----------- Structural Biology  Analysis -->
  <hr/> 
-<h2 id='compound_W'>Compound W</h2>
+<h2 id='bio_analysis'>Structural Biology  Analysis</h2>
 <hr/>
 <center>
-<button type="button"  class="btn btn-success btn-lg center" id='btn_show_compw'>Show Data</button>
+<button type="button"  class="btn btn-success btn-lg center" id='btn_show_bio'>Show Data</button>
 </center>
 
-<div id='hide_compw' style='display:none;'>
+<div id='hide_bio' style='display:none;'>
+
+<h3>Complexes of compound W and the targets (computational models)</h3>
 
 <table class="path table table-striped table-bordered" cellspacing="0" width="100%" id='cWpic'>
 
@@ -1503,32 +1507,8 @@ var all_models = $("#ACC2_BC").DataTable( {
 
 </tbody>
 </table>
-
-</div>
-
-<script>
-
-$(function(){
-	$("#btn_show_compw").click(function(){
-		$(this).hide();
-		$("#hide_compw").slideDown();
-	});
-	
-});
-
-</script>
-
-<!-- ----------- end of Compound W -->
-
-<!-- ----------- Structural Biology  Analysis -->
- <hr/> 
-<h2 id='bio_analysis'>Structural Biology  Analysis</h2>
 <hr/>
-<center>
-<button type="button"  class="btn btn-success btn-lg center" id='btn_show_bio'>Show Data</button>
-</center>
-
-<div id='hide_bio' style='display:none;'>
+<br/>
 
 <h3>PKCb</h3>
 <div style='overflow-x: auto;'>
@@ -25768,7 +25748,7 @@ var top_featur = $("#tbl-top_featur").DataTable( {
             <!-- <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tf_analysis">Transcription Factor Analysis</a></li>
             -->
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#path_analysis">Pathway Analysis</a></li>
-            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#compound_W">Compound W</a></li>
+            
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#bio_analysis">Structural Biology Analysis</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#admne">ADME properties</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#synthesis">Synthesis plan</a></li>
