@@ -2791,18 +2791,72 @@ class ReportTest(TemplateView):
     
     def get(self, request, *args, **kwargs):
         
-        df = pd.read_csv("/home/mikhail/Downloads/GSK/GSK_divi_comparisons_update.csv" )
+        import docx
         
-        df = df[df['PROTOCOL_DR_GROUP_TYPE']=='Medium']
-        df = df[df['DURATION']==4] 
-        df = df[df['MESENTERY_3']>0] 
+        df = pd.read_csv('/home/mikhail/Downloads/MAN HIGHT SM.csv', index_col=0)
+        df = df.round(decimals=2)
+        df.to_csv('/home/mikhail/Downloads/MAN HIGHT SM.csv')
+        raise Exception('round')
         
-        #df = df[df['TISSUE']!='Smooth Muscle (LCM Mesentery) RNA']
         
-        df.to_csv("/home/mikhail/Downloads/GSK/GSK_4d_high.csv")
+        doc = docx.Document()
+        
+        df = pd.read_csv("/home/mikhail/Downloads/GSK/GSK_reports/4d_high/tbl-path_all.csv",
+                            index_col=0, encoding='utf-8')
+        cols = df.columns
+        for col in cols:
+            df1 = df[col]
+            df_up = df1.copy()
+            df_down = df1.copy()
+            df_down.sort_values(ascending=True, inplace=True)
+            df_up.sort_values(ascending=False, inplace=True)
+            df_up =  pd.DataFrame(df_up[:20])
+            df_down = pd.DataFrame(df_down[:20])
+            
+            df_up.reset_index(inplace=True)
+            df_up.columns = ['Pathway', 'PAS']
+            
+            
+            paragraph = doc.add_heading(col, level=3)
+            paragraph1 = doc.add_heading('Top 20 up-regulated pathways', level=4)
+            
+            t = doc.add_table(df_up.shape[0]+1, df_up.shape[1])            
+            t.style = 'TableGrid'
+            # add the header rows.
+            for j in range(df_up.shape[-1]):
+                t.cell(0,j).text = df_up.columns[j]
+
+            # add the rest of the data frame
+            for i in range(df_up.shape[0]):
+                for j in range(df_up.shape[-1]):
+                    t.cell(i+1,j).text = str(df_up.values[i,j])
+            
+            ##############################
+            df_down.reset_index(inplace=True)
+            df_down.columns = ['Pathway', 'PAS']
+            
+            
+            #paragraph = doc.add_paragraph(col)
+            paragraph1 = doc.add_heading('Top 20 down-regulated pathways', level=4)
+            
+            t = doc.add_table(df_down.shape[0]+1, df_down.shape[1])            
+            t.style = 'TableGrid'
+            # add the header rows.
+            for j in range(df_down.shape[-1]):
+                t.cell(0,j).text = df_down.columns[j]
+
+            # add the rest of the data frame
+            for i in range(df_down.shape[0]):
+                for j in range(df_down.shape[-1]):
+                    t.cell(i+1,j).text = str(df_down.values[i,j])
+            
+            
+            #raise Exception('stop')
+        doc.save('/home/mikhail/Downloads/GSK/GSK_reports/4d_high/test.docx')
+        raise Exception('Word')
         raise Exception('fuck')
         
-        import docx
+        
         
         #########3 TARGET INFERENCE
         

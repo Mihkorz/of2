@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import pandas as pd
-import pandas.rpy.common as com
+#import pandas.rpy.common as com
 from rpy2.robjects.packages import importr
 from collections import defaultdict
 import numpy as np

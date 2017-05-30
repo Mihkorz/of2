@@ -2,7 +2,7 @@
 
 import os
 import time
-import pandas.rpy.common as com
+#import pandas.rpy.common as com
 import csv
 import numpy as np
 from pandas import DataFrame, Series, read_csv

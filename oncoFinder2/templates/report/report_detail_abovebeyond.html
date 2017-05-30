@@ -628,6 +628,26 @@
                Top Model Features Inotrope
              </a>
             </li>
+            <li role="presentation">
+              <a href="#all_pos_inotrope_tab" aria-controls="home1" role="tab" data-toggle="tab" >
+               All Models Pos Inotrope
+             </a>
+            </li>
+            <li role="presentation">
+              <a href="#top_pos_inotrope_tab" aria-controls="home1" role="tab" data-toggle="tab" >
+               Top Model Features Pos Inotrope
+             </a>
+            </li>
+            <li role="presentation">
+              <a href="#all_neg_inotrope_tab" aria-controls="home1" role="tab" data-toggle="tab" >
+               All Models Neg Inotrope
+             </a>
+            </li>
+            <li role="presentation">
+              <a href="#top_neg_inotrope_tab" aria-controls="home1" role="tab" data-toggle="tab" >
+               Top Model Features Neg Inotrope
+             </a>
+            </li>
          {%endif%}
     </ul>
     
@@ -702,6 +722,68 @@
      <div role="tabpanel" class="tab-pane fade " id="top_inotrope_tab">
      <h4>Table <span class='tbl_num'></span>Top Model Features Inotrope </h4>
        <table id="tbl-top_inotrope" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr >
+           
+           <th>name</th>
+           <th>test</th>
+          </tr>
+        </thead>  
+      </table>
+     </div> <!-- end of tabpanel div -->
+     
+     <div role="tabpanel" class="tab-pane fade " id="all_pos_inotrope_tab">
+     <h4>Table <span class='tbl_num'></span>All Models Pos Inotrope </h4>
+       <table id="tbl-all_pos_inotrope" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr >
+           <th>base_model</th>
+           <th>f1</th>
+           <th>matthews_corrcoef</th>
+           <th>num_features</th>
+           <th>precision</th>
+           <th>recall</th>
+           <th>roc_auc</th>           
+          </tr>
+        </thead>  
+      </table>  
+      </table>
+     </div> <!-- end of tabpanel div -->
+     
+     <div role="tabpanel" class="tab-pane fade " id="top_pos_inotrope_tab">
+     <h4>Table <span class='tbl_num'></span>Top Model Features Pos Inotrope </h4>
+       <table id="tbl-top_pos_inotrope" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr >
+           
+           <th>name</th>
+           <th>test</th>
+          </tr>
+        </thead>  
+      </table>
+     </div> <!-- end of tabpanel div -->
+     
+     <div role="tabpanel" class="tab-pane fade " id="all_neg_inotrope_tab">
+     <h4>Table <span class='tbl_num'></span>All Models Pos Inotrope </h4>
+       <table id="tbl-all_neg_inotrope" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr >
+           <th>base_model</th>
+           <th>f1</th>
+           <th>matthews_corrcoef</th>
+           <th>num_features</th>
+           <th>precision</th>
+           <th>recall</th>
+           <th>roc_auc</th>           
+          </tr>
+        </thead>  
+      </table>  
+      </table>
+     </div> <!-- end of tabpanel div -->
+     
+     <div role="tabpanel" class="tab-pane fade " id="top_neg_inotrope_tab">
+     <h4>Table <span class='tbl_num'></span>Top Model Features Pos Inotrope </h4>
+       <table id="tbl-top_neg_inotrope" class="path table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
           <tr >
            
@@ -863,6 +945,102 @@ var top_featur_ino = $("#tbl-top_inotrope").DataTable( {
     	     'data':{
     	    	     reportID: {{report.id}},
     	    	     file_name: 'S_523_bestmodel_inotrope.csv'
+    	            },        	      
+    
+},"deferRender": true });
+
+var all_pos_ino = $("#tbl-all_pos_inotrope").DataTable( {
+	"paging":   true,
+    "iDisplayLength": 20,
+    "ordering": true,
+    "order": [[ 1, "desc" ]],
+    "info":     false,
+    "dom": 'Bfrtip',
+    "scrollX": false,
+    "bAutoWidth": false,
+    "buttons": [
+               {extend: 'csv', title: 'tbl-all_pos_inotrope'},
+               {extend: 'print', title: 'tbl-all_pos_inotrope'}
+               
+          ],
+    
+    "ajax": {'url':'/report-portal/report-deepgsktablejson/',
+    	     'type': 'GET',
+    	     'data':{
+    	    	     reportID: {{report.id}},
+    	    	     file_name: 'full_scores_pos_cut.csv'
+    	            },        	      
+    
+},"deferRender": true });
+
+var top_pos_ino = $("#tbl-top_pos_inotrope").DataTable( {
+	"paging":   true,
+    "iDisplayLength": 20,
+    "ordering": true,
+    "order": [[ 1, "desc" ]],
+    "info":     false,
+    "dom": 'Bfrtip',
+    "scrollX": false,
+    "bAutoWidth": false,
+    "buttons": [
+               {extend: 'csv', title: 'tbl-top_pos_inotrope'},
+               {extend: 'print', title: 'tbl-top_pos_inotrope'}
+               
+          ],
+    
+    "ajax": {'url':'/report-portal/report-deepgsktablejson/',
+    	     'type': 'GET',
+    	     'data':{
+    	    	     reportID: {{report.id}},
+    	    	     file_name: 'inopos_topmodel.csv'
+    	            },        	      
+    
+},"deferRender": true });
+
+var all_neg_ino = $("#tbl-all_neg_inotrope").DataTable( {
+	"paging":   true,
+    "iDisplayLength": 20,
+    "ordering": true,
+    "order": [[ 1, "desc" ]],
+    "info":     false,
+    "dom": 'Bfrtip',
+    "scrollX": false,
+    "bAutoWidth": false,
+    "buttons": [
+               {extend: 'csv', title: 'tbl-all_neg_inotrope'},
+               {extend: 'print', title: 'tbl-all_neg_inotrope'}
+               
+          ],
+    
+    "ajax": {'url':'/report-portal/report-deepgsktablejson/',
+    	     'type': 'GET',
+    	     'data':{
+    	    	     reportID: {{report.id}},
+    	    	     file_name: 'full_scores_neg_cut.csv'
+    	            },        	      
+    
+},"deferRender": true });
+
+var top_neg_ino = $("#tbl-top_neg_inotrope").DataTable( {
+	"paging":   true,
+    "iDisplayLength": 20,
+    "ordering": true,
+    "order": [[ 1, "desc" ]],
+    "info":     false,
+    "dom": 'Bfrtip',
+    "scrollX": false,
+    "bAutoWidth": false,
+    "buttons": [
+               {extend: 'csv', title: 'tbl-top_neg_inotrope'},
+               {extend: 'print', title: 'tbl-top_neg_inotrope'}
+               
+          ],
+    
+    "ajax": {'url':'/report-portal/report-deepgsktablejson/',
+    	     'type': 'GET',
+    	     'data':{
+    	    	     reportID: {{report.id}},
+    	    	     file_name: 'inoneg_topmodel.csv'
     	            },        	      
     
 },"deferRender": true });
