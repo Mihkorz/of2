@@ -1856,8 +1856,8 @@ class ReportAjaxPathDetail(TemplateView):
             pass
         organism = self.request.GET['organism']
         
-        pval_tres = report.pval_theshold_compare
-        logFC_tres = report.logcf_theshold_compare
+        pval_tres = report.pval_theshold_path
+        logFC_tres = report.logcf_theshold_path
         pas_tres = report.pas_theshold       
 
         

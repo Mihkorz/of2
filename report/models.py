@@ -64,6 +64,11 @@ class Report(models.Model):
     pas_theshold = models.FloatField(verbose_name='|PAS| comparison', help_text='Treshold in Pathway level Comparison', 
                                             blank=False, default=0)
     
+    pval_theshold_path = models.FloatField(verbose_name='p-val genes in path details', help_text='Treshold for genes in pathway details',
+                                           blank=False, default=0.05)
+    logcf_theshold_path = models.FloatField(verbose_name='|logFC| genes in path details', help_text='Treshold for genes in pathway details', 
+                                            blank=False, default=0.2)
+    
     notable_genes = models.CharField(help_text='List of notable genes, separated by comma', max_length=250, blank=True)
     
     norm_name = models.CharField(verbose_name='Normal title', max_length=250, blank=False)
