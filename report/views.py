@@ -2836,13 +2836,13 @@ class ReportTest(TemplateView):
                         
                         print file
                  
-                groups = new_report.genegroup_set.all()[:4]
+                groups = new_report[0].genegroup_set.all()[:4]
                 vers=''
                 for gg in groups:
                     vers+=gg.name+'vs'
                 vers = vers[:-2]
-                new_report.compare_groups = vers
-                new_report.save()
+                new_report[0].compare_groups = vers
+                new_report[0].save()
         raise Exception('auto create report')
         
         import docx
