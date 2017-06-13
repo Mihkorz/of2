@@ -2794,6 +2794,44 @@ class ReportTest(TemplateView):
     def get(self, request, *args, **kwargs):
         
         #######################  auto create report #############
+        
+        import os
+        from django.core.files.storage import default_storage
+        from django.core.files.base import ContentFile
+        
+        rr = Report.objects.filter(title__icontains='gsk_prj4_t')
+        
+        for rep in rr:
+            if rep.title not in ['gsk_prj4_t1', 'gsk_prj4_t2', 'gsk_prj4_t3', 'gsk_prj4_t4', 'gsk_prj4_t8']:
+                
+                for g_group in rep.pathwaygroup_set.all():
+                
+                
+                    try:
+                        g_group.document.seek(0)                        
+                        df_doc = pd.read_csv(g_group.document.path, index_col='Pathway', encoding='utf-8')
+                    except:
+                        g_group.document.seek(0)
+                        df_doc = pd.read_csv(g_group.document.path, index_col='Pathway', encoding='utf-8', sep='\t')
+                    
+                    if not 'DataBase' in df_doc.columns:
+                        df_doc['Database'] = 'database'
+                    
+                    tumour_columns = [col for col in df_doc.columns if 'Tumour' in col] #get sample columns
+                
+                    mean = df_doc[tumour_columns].mean(1)
+                    df_doc['0'] = mean
+                    df_doc.drop([x for x in df_doc.columns if 'Tumour' in x ], axis=1, inplace=True)
+                    df_doc.drop([x for x in df_doc.columns if 'Norm' in x ], axis=1, inplace=True)
+                
+                    path = os.path.join('report-portal', g_group.report.slug)
+                    file_proc = default_storage.save(path+"/proc_"+g_group.name+".csv", ContentFile('') )
+                    df_doc.to_csv(settings.MEDIA_ROOT+"/"+file_proc, encoding='utf-8')
+                    g_group.doc_proc = file_proc
+                
+                    g_group.save() # in case it's PathwayGroup object
+        
+        raise Exception('stop exception')
         import os
         
         rootdir = settings.MEDIA_ROOT+"/report-portal/"
