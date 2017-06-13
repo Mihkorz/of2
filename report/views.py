@@ -2793,6 +2793,58 @@ class ReportTest(TemplateView):
     
     def get(self, request, *args, **kwargs):
         
+        #######################  auto create report #############
+        import os
+        
+        rootdir = settings.MEDIA_ROOT+"/report-portal/"
+        
+    
+        
+        for i in range(1,49):
+            
+            if i not in [1,2,3,4,8]:
+                
+                new_report = Report.objects.get_or_create(title='gsk_prj4_t'+str(i),
+                                    title_short='gsk_prj4_t'+str(i),
+                                     slug='gsk_prj4_t'+str(i),
+                                      organization='GSK', norm_name='Normal' )
+                
+                #new_report.save()
+            
+                proj_dir = rootdir+'gsk_prj4_t'+str(i)
+                
+                aaaa = proj_dir+'/expr/'
+                
+                #raise Exception('stop')
+        
+                for subdir, dirs, files in os.walk(proj_dir+'/expr/'):
+                
+                    for file in files:
+                        
+                        group_name = file.replace('.expr.tab', '')
+                        
+                        new_gg = GeneGroup(name=group_name)
+                        new_gg.document.name = 'report-portal/'+'gsk_prj4_t'+str(i)+'/expr/'+group_name+'.expr.tab'
+                        new_gg.doc_logfc.name = 'report-portal/'+'gsk_prj4_t'+str(i)+'/DE/'+group_name+'.DE.csv'
+                        new_gg.report = new_report[0]
+                        new_gg.save()
+                        
+                        new_pg = PathwayGroup(name=group_name)
+                        new_pg.document.name = 'report-portal/'+'gsk_prj4_t'+str(i)+'/PAS/'+group_name+'.PAS.tab'
+                        new_pg.report = new_report[0]
+                        new_pg.save()
+                        
+                        print file
+                 
+                groups = new_report.genegroup_set.all()[:4]
+                vers=''
+                for gg in groups:
+                    vers+=gg.name+'vs'
+                vers = vers[:-2]
+                new_report.compare_groups = vers
+                new_report.save()
+        raise Exception('auto create report')
+        
         import docx
         
         df = pd.read_csv('/home/mikhail/Downloads/MAN HIGHT SM.csv', index_col=0)
