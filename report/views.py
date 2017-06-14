@@ -2795,6 +2795,14 @@ class ReportTest(TemplateView):
         
         #######################  auto create report #############
         
+        rr = Report.objects.filter(title__icontains='gsk_prj4_t')
+        
+        for r in rr:
+            r.pval_theshold_path = 1
+            r.save()
+        
+        
+        raise Exception('stop exception')
         import os
         from django.core.files.storage import default_storage
         from django.core.files.base import ContentFile
