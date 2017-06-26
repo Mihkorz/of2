@@ -70,7 +70,7 @@ class ReportDetail(DetailView):
         if 'gsk' in self.get_object().slug and (self.is_member(user, 'GSK') or user.is_staff):            
             self.template_name = 'report/report_detail_abovebeyond.html'
         if 'gsk_prj4' in self.get_object().slug and (self.is_member(user, 'GSK4') or user.is_staff):            
-            self.template_name = 'report/report_detail_abovebeyond.html'
+            self.template_name = 'report/gsk_prj4.html'
         if 'gsk_prj2_' in self.get_object().slug and (self.is_member(user, 'GSK') or user.is_staff):          
             self.template_name = 'report/gsk_prj2_1d.html'
             if '4d_high' in self.get_object().slug:
@@ -2779,7 +2779,27 @@ class ReportDeepGSKJson(TemplateView):
         output_json = df_gene.to_json(orient='values')
         response_data = {'data': json.loads(output_json)}
         
-        return HttpResponse(json.dumps(response_data), content_type="application/json")    
+        return HttpResponse(json.dumps(response_data), content_type="application/json")
+    
+
+class ReportShowAjaxTableJson(TemplateView):
+    template_name="report/report_detail.html"
+    
+    def dispatch(self, request, *args, **kwargs):
+        
+        return super(ReportShowAjaxTableJson, self).dispatch(request, *args, **kwargs)
+    
+    def get(self, request, *args, **kwargs):
+        
+        report = Report.objects.get(pk=request.GET.get('reportID'))
+        file_name = request.GET.get('file_name')
+        
+        df_gene = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+file_name)
+        
+        output_json = df_gene.to_json(orient='values')
+        response_data = {'data': json.loads(output_json)}
+        # raise Exception('fuck')
+        return HttpResponse(json.dumps(response_data), content_type="application/json")     
        
 class ReportTest(TemplateView):
     
