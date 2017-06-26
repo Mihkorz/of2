@@ -1078,8 +1078,28 @@ var top_neg_ino = $("#tbl-top_neg_inotrope").DataTable( {
          </a>
        </li>
        <li role="presentation" >
+         <a href="#tmc1_tab" aria-controls="home1" role="tab" data-toggle="tab" id='tf_boot_tmc1'>
+           Top model cytotox Landmarks_by_time
+         </a>
+       </li>
+       <li role="presentation" >
+         <a href="#tmd1_tab" aria-controls="home1" role="tab" data-toggle="tab" id='tf_boot_tmd1'>
+           Top model diversity Landmarks_by_time
+         </a>
+       </li>
+       <li role="presentation" >
          <a href="#lambt_tab" aria-controls="home1" role="tab" data-toggle="tab" id='tf_boot_lambt'>
            Landmarks_and_molprop_by_time
+         </a>
+       </li>
+       <li role="presentation" >
+         <a href="#tmc2_tab" aria-controls="home1" role="tab" data-toggle="tab" id='tf_boot_tmc2'>
+           Top model cytotox Landmarks_and_molprop_by_time
+         </a>
+       </li>
+       <li role="presentation" >
+         <a href="#tmd2_tab" aria-controls="home1" role="tab" data-toggle="tab" id='tf_boot_tmd2'>
+           Top model diversity Landmarks_and_molprop_by_time
          </a>
        </li>
        <li role="presentation" >
@@ -1088,8 +1108,28 @@ var top_neg_ino = $("#tbl-top_neg_inotrope").DataTable( {
          </a>
        </li>
        <li role="presentation" >
+         <a href="#tmc3_tab" aria-controls="home1" role="tab" data-toggle="tab" id='tf_boot_tmc3'>
+           Top model cytotox Landmarks
+         </a>
+       </li>
+       <li role="presentation" >
+         <a href="#tmd3_tab" aria-controls="home1" role="tab" data-toggle="tab" id='tf_boot_tmd3'>
+           Top model diversity Landmarks
+         </a>
+       </li>
+       <li role="presentation" >
          <a href="#lam_tab" aria-controls="home1" role="tab" data-toggle="tab" id='tf_boot_lam'>
            Landmarks_and_molprop
+         </a>
+       </li>
+       <li role="presentation" >
+         <a href="#tmc4_tab" aria-controls="home1" role="tab" data-toggle="tab" id='tf_boot_tmc4'>
+           Top model cytotox Landmarks_and_molprop
+         </a>
+       </li>
+       <li role="presentation" >
+         <a href="#tmd4_tab" aria-controls="home1" role="tab" data-toggle="tab" id='tf_boot_tmd4'>
+           Top model diversity Landmarks_and_molprop
          </a>
        </li>
     
@@ -1108,6 +1148,37 @@ var top_neg_ino = $("#tbl-top_neg_inotrope").DataTable( {
            <th>mean_r2</th>
            <th>method</th>
            <th>model</th>
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+     
+     
+     </div> <!-- end of tabpanel div -->
+     <div role="tabpanel" class="tab-pane fade " id="tmc1_tab">  
+             
+       <h4>Table <span class='tbl_num'></span>Top model cytotox Landmarks_by_time</h4>
+       <table id="tbl-bio-tmc1" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>Biomarker_System</th>
+           <th>ExtraTreesRegressor</th>
+       
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+     
+     
+     </div> <!-- end of tabpanel div -->
+     <div role="tabpanel" class="tab-pane fade " id="tmd1_tab">  
+             
+       <h4>Table <span class='tbl_num'></span>Top model diversity Landmarks_by_time</h4>
+       <table id="tbl-bio-tmd1" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>Biomarker_System</th>
+           <th>ExtraTreesRegressor</th>
           </tr>
         </thead>  
       </table>
@@ -1135,6 +1206,38 @@ var top_neg_ino = $("#tbl-top_neg_inotrope").DataTable( {
      
      </div> <!-- end of tabpanel div -->
      
+     <div role="tabpanel" class="tab-pane fade " id="tmc2_tab">  
+             
+       <h4>Table <span class='tbl_num'></span>Top model cytotox Landmarks_and_molprop_by_time</h4>
+       <table id="tbl-bio-tmc2" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>Biomarker_System</th>
+           <th>ExtraTreesRegressor</th>
+       
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+     
+     
+     </div> <!-- end of tabpanel div -->
+     <div role="tabpanel" class="tab-pane fade " id="tmd2_tab">  
+             
+       <h4>Table <span class='tbl_num'></span>Top model diversity Landmarks_and_molprop_by_time</h4>
+       <table id="tbl-bio-tmd2" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>Biomarker_System</th>
+           <th>ExtraTreesRegressor</th>
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+     
+     
+     </div> <!-- end of tabpanel div -->
+     
      <div role="tabpanel" class="tab-pane fade " id="land_tab">  
              
        <h4>Table <span class='tbl_num'></span>Landmarks </h4>
@@ -1154,6 +1257,38 @@ var top_neg_ino = $("#tbl-top_neg_inotrope").DataTable( {
      
      </div> <!-- end of tabpanel div -->
      
+     <div role="tabpanel" class="tab-pane fade " id="tmc3_tab">  
+             
+       <h4>Table <span class='tbl_num'></span>Top model cytotox Landmarks</h4>
+       <table id="tbl-bio-tmc3" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>Biomarker_System</th>
+           <th>ExtraTreesRegressor</th>
+       
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+     
+     
+     </div> <!-- end of tabpanel div -->
+     <div role="tabpanel" class="tab-pane fade " id="tmd3_tab">  
+             
+       <h4>Table <span class='tbl_num'></span>Top model diversity Landmarks</h4>
+       <table id="tbl-bio-tmd3" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>Biomarker_System</th>
+           <th>ExtraTreesRegressor</th>
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+     
+     
+     </div> <!-- end of tabpanel div -->
+     
      <div role="tabpanel" class="tab-pane fade " id="lam_tab">  
              
        <h4>Table <span class='tbl_num'></span>Landmarks_and_molprop </h4>
@@ -1165,6 +1300,38 @@ var top_neg_ino = $("#tbl-top_neg_inotrope").DataTable( {
            <th>mean_r2</th>
            <th>method</th>
            <th>model</th>
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+     
+     
+     </div> <!-- end of tabpanel div -->
+     
+     <div role="tabpanel" class="tab-pane fade " id="tmc4_tab">  
+             
+       <h4>Table <span class='tbl_num'></span>Top model cytotox Landmarks_and_molprop</h4>
+       <table id="tbl-bio-tmc4" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>Biomarker_System</th>
+           <th>ExtraTreesRegressor</th>
+       
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+     
+     
+     </div> <!-- end of tabpanel div -->
+     <div role="tabpanel" class="tab-pane fade " id="tmd4_tab">  
+             
+       <h4>Table <span class='tbl_num'></span>Top model diversity Landmarks_and_molprop</h4>
+       <table id="tbl-bio-tmd4" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>Biomarker_System</th>
+           <th>ExtraTreesRegressor</th>
           </tr>
         </thead>  
       </table>
@@ -1286,7 +1453,204 @@ $(function() {
 	    
 	},"deferRender": true });
 	
-	//report-portal/report-ajaxtablejson/
+	
+	var tbl_bio_tmc1 = $("#tbl-bio-tmc1").DataTable( {
+		"paging":   true,
+	    "iDisplayLength": 20,
+	    "ordering": true,
+	    "order": [],
+	    "info":     false,
+	    "dom": 'Bfrtip',
+	    "scrollX": false,
+	    "bAutoWidth": false,
+	    "buttons": [
+	               {extend: 'csv', title: 'tbl_bio_tmc1'},
+	               {extend: 'print', title: 'tbl_bio_tmc1'}
+	               
+	          ],
+	    
+	    "ajax": {'url':'/report-portal/report-ajaxtablejson/',
+	    	     'type': 'GET',
+	    	     'data':{
+	    	    	     reportID: {{report.id}},
+	    	    	     file_name: 'gsk_prj4_t1/Landmarks_by_time_cytotoxtop_model.csv'
+	    	            },        	      
+	    
+	},"deferRender": true });
+	
+	var tbl_bio_tmd1 = $("#tbl-bio-tmd1").DataTable( {
+		"paging":   true,
+	    "iDisplayLength": 20,
+	    "ordering": true,
+	    "order": [],
+	    "info":     false,
+	    "dom": 'Bfrtip',
+	    "scrollX": false,
+	    "bAutoWidth": false,
+	    "buttons": [
+	               {extend: 'csv', title: 'tbl_bio_tmd1'},
+	               {extend: 'print', title: 'tbl_bio_tmd1'}
+	               
+	          ],
+	    
+	    "ajax": {'url':'/report-portal/report-ajaxtablejson/',
+	    	     'type': 'GET',
+	    	     'data':{
+	    	    	     reportID: {{report.id}},
+	    	    	     file_name: 'gsk_prj4_t1/Landmarks_by_time_diversitytop_model.csv'
+	    	            },        	      
+	    
+	},"deferRender": true });
+	
+	////////
+	var tbl_bio_tmc2 = $("#tbl-bio-tmc2").DataTable( {
+		"paging":   true,
+	    "iDisplayLength": 20,
+	    "ordering": true,
+	    "order": [],
+	    "info":     false,
+	    "dom": 'Bfrtip',
+	    "scrollX": false,
+	    "bAutoWidth": false,
+	    "buttons": [
+	               {extend: 'csv', title: 'tbl_bio_tmc2'},
+	               {extend: 'print', title: 'tbl_bio_tmc2'}
+	               
+	          ],
+	    
+	    "ajax": {'url':'/report-portal/report-ajaxtablejson/',
+	    	     'type': 'GET',
+	    	     'data':{
+	    	    	     reportID: {{report.id}},
+	    	    	     file_name: 'gsk_prj4_t1/LandmarksMol_by_time_cytotoxtop_model.csv'
+	    	            },        	      
+	    
+	},"deferRender": true });
+	
+	var tbl_bio_tmd2 = $("#tbl-bio-tmd2").DataTable( {
+		"paging":   true,
+	    "iDisplayLength": 20,
+	    "ordering": true,
+	    "order": [],
+	    "info":     false,
+	    "dom": 'Bfrtip',
+	    "scrollX": false,
+	    "bAutoWidth": false,
+	    "buttons": [
+	               {extend: 'csv', title: 'tbl_bio_tmd2'},
+	               {extend: 'print', title: 'tbl_bio_tmd2'}
+	               
+	          ],
+	    
+	    "ajax": {'url':'/report-portal/report-ajaxtablejson/',
+	    	     'type': 'GET',
+	    	     'data':{
+	    	    	     reportID: {{report.id}},
+	    	    	     file_name: 'gsk_prj4_t1/LandmarksMol_by_time_diversitytop_model.csv'
+	    	            },        	      
+	    
+	},"deferRender": true });
+	/////////////
+	
+	////////
+	var tbl_bio_tmc3 = $("#tbl-bio-tmc3").DataTable( {
+		"paging":   true,
+	    "iDisplayLength": 20,
+	    "ordering": true,
+	    "order": [],
+	    "info":     false,
+	    "dom": 'Bfrtip',
+	    "scrollX": false,
+	    "bAutoWidth": false,
+	    "buttons": [
+	               {extend: 'csv', title: 'tbl_bio_tmc3'},
+	               {extend: 'print', title: 'tbl_bio_tmc3'}
+	               
+	          ],
+	    
+	    "ajax": {'url':'/report-portal/report-ajaxtablejson/',
+	    	     'type': 'GET',
+	    	     'data':{
+	    	    	     reportID: {{report.id}},
+	    	    	     file_name: 'gsk_prj4_t1/Landmarks_cytotoxtop_model.csv'
+	    	            },        	      
+	    
+	},"deferRender": true });
+	
+	var tbl_bio_tmd3 = $("#tbl-bio-tmd3").DataTable( {
+		"paging":   true,
+	    "iDisplayLength": 20,
+	    "ordering": true,
+	    "order": [],
+	    "info":     false,
+	    "dom": 'Bfrtip',
+	    "scrollX": false,
+	    "bAutoWidth": false,
+	    "buttons": [
+	               {extend: 'csv', title: 'tbl_bio_tmd3'},
+	               {extend: 'print', title: 'tbl_bio_tmd3'}
+	               
+	          ],
+	    
+	    "ajax": {'url':'/report-portal/report-ajaxtablejson/',
+	    	     'type': 'GET',
+	    	     'data':{
+	    	    	     reportID: {{report.id}},
+	    	    	     file_name: 'gsk_prj4_t1/Landmarks_diversitytop_model.csv'
+	    	            },        	      
+	    
+	},"deferRender": true });
+	/////////////
+	
+	////////
+	var tbl_bio_tmc4 = $("#tbl-bio-tmc4").DataTable( {
+		"paging":   true,
+	    "iDisplayLength": 20,
+	    "ordering": true,
+	    "order": [],
+	    "info":     false,
+	    "dom": 'Bfrtip',
+	    "scrollX": false,
+	    "bAutoWidth": false,
+	    "buttons": [
+	               {extend: 'csv', title: 'tbl_bio_tmc4'},
+	               {extend: 'print', title: 'tbl_bio_tmc4'}
+	               
+	          ],
+	    
+	    "ajax": {'url':'/report-portal/report-ajaxtablejson/',
+	    	     'type': 'GET',
+	    	     'data':{
+	    	    	     reportID: {{report.id}},
+	    	    	     file_name: 'gsk_prj4_t1/LandmarksMol_cytotoxtop_model.csv'
+	    	            },        	      
+	    
+	},"deferRender": true });
+	
+	var tbl_bio_tmd4 = $("#tbl-bio-tmd4").DataTable( {
+		"paging":   true,
+	    "iDisplayLength": 20,
+	    "ordering": true,
+	    "order": [],
+	    "info":     false,
+	    "dom": 'Bfrtip',
+	    "scrollX": false,
+	    "bAutoWidth": false,
+	    "buttons": [
+	               {extend: 'csv', title: 'tbl_bio_tmd4'},
+	               {extend: 'print', title: 'tbl_bio_tmd4'}
+	               
+	          ],
+	    
+	    "ajax": {'url':'/report-portal/report-ajaxtablejson/',
+	    	     'type': 'GET',
+	    	     'data':{
+	    	    	     reportID: {{report.id}},
+	    	    	     file_name: 'gsk_prj4_t1/LandmarksMol_diversitytop_model.csv'
+	    	            },        	      
+	    
+	},"deferRender": true });
+	/////////////
 	
 });
 
