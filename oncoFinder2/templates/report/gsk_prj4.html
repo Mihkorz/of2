@@ -65,11 +65,12 @@
             {%endif%}
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#biomap">BioMAP inference</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#hit">Hit qualification</a></li>  
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#sim_analysis">Similarity scoring of GSK L1000 data in comparison to LINCS dataset</a></li>
             {%if 'gsk' in report.slug %}
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#conclusions">Discussion</a></li>
             {%endif%}
             <!--  
-            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#sim_analysis">Similarity to known drug- and knockdown-induced expression signatures</a></li>
+            
             
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#cor_analysis">Public domain screening</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#pt_analysis">Scoring of potential targets</a></li>
@@ -1766,6 +1767,139 @@ $(function() {
 </script>
 <!-- -----------------end of Hit qualification -->
 
+
+<!-- ---------------------------------Similarity--------------------------------------------- -->
+
+ <hr/> 
+<h2 id='sim_analysis'>Similarity scoring of GSK L1000 data in comparison to LINCS dataset</h2>
+<hr/>
+
+
+
+<center>
+<button type="button"  class="btn btn-success btn-lg center" id='btn_show_sim'>Show Data</button>
+</center>
+
+<div id='hide_sim' style='display:none; '> <!-- Div to hide and load on button click -->
+
+<h4>Table <span class='tbl_num'></span>Similarity scoring of GSK L1000 data in comparison to LINCS dataset </h4>
+       <table id="tbl-sim" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+<td>distil_id</td>
+<td>pert_id</td>
+<td>pert_dose</td>
+<td>pert_time</td>
+<td>pert_desc</td>
+<td>cell_line</td>
+<td>N35794-15-A3_3C_24h_20000nM</td>
+<td>N35794-15-A3_3C_24h_5000nM</td>
+<td>N35794-15-A3_3C_6h_20000nM</td>
+<td>N35794-15-A3_3C_6h_5000nM</td>
+<td>N35794-15-A3_SAg_24h_20000nM</td>
+<td>N35794-15-A3_SAg_24h_5000nM</td>
+<td>N35794-15-A3_SAg_6h_20000nM</td>
+<td>N35794-15-A3_SAg_6h_5000nM</td>
+<td>N36686-62-A1_3C_24h_20000nM</td>
+<td>N36686-62-A1_3C_24h_5000nM</td>
+<td>N36686-62-A1_3C_6h_20000nM</td>
+<td>N36686-62-A1_3C_6h_5000nM</td>
+<td>N36686-62-A1_SAg_24h_20000nM</td>
+<td>N36686-62-A1_SAg_24h_5000nM</td>
+<td>N36686-62-A1_SAg_6h_20000nM</td>
+<td>N36686-62-A1_SAg_6h_5000nM</td>
+<td>N36686-77-A1_3C_24h_10000nM</td>
+<td>N36686-77-A1_3C_24h_2500nM</td>
+<td>N36686-77-A1_3C_6h_10000nM</td>
+<td>N36686-77-A1_3C_6h_2500nM</td>
+<td>N36686-77-A1_SAg_24h_10000nM</td>
+<td>N36686-77-A1_SAg_24h_2500nM</td>
+<td>N36686-77-A1_SAg_6h_10000nM</td>
+<td>N36686-77-A1_SAg_6h_2500nM</td>
+<td>N37077-84-A1_3C_24h_20000nM</td>
+<td>N37077-84-A1_3C_24h_5000nM</td>
+<td>N37077-84-A1_3C_6h_20000nM</td>
+<td>N37077-84-A1_3C_6h_5000nM</td>
+<td>N37077-84-A1_SAg_24h_20000nM</td>
+<td>N37077-84-A1_SAg_24h_5000nM</td>
+<td>N37077-84-A1_SAg_6h_20000nM</td>
+<td>N37077-84-A1_SAg_6h_5000nM</td>
+<td>N38128-63-A2_3C_24h_20000nM</td>
+<td>N38128-63-A2_3C_24h_5000nM</td>
+<td>N38128-63-A2_3C_6h_20000nM</td>
+<td>N38128-63-A2_3C_6h_5000nM</td>
+<td>N38128-63-A2_SAg_24h_20000nM</td>
+<td>N38128-63-A2_SAg_24h_5000nM</td>
+<td>N38128-63-A2_SAg_6h_20000nM</td>
+<td>N38128-63-A2_SAg_6h_5000nM</td>
+<td>N40308-24-A2_3C_24h_20000nM</td>
+<td>N40308-24-A2_3C_24h_5000nM</td>
+<td>N40308-24-A2_3C_6h_20000nM</td>
+<td>N40308-24-A2_3C_6h_5000nM</td>
+<td>N40308-24-A2_SAg_24h_20000nM</td>
+<td>N40308-24-A2_SAg_24h_5000nM</td>
+<td>N40308-24-A2_SAg_6h_20000nM</td>
+<td>N40308-24-A2_SAg_6h_5000nM</td>
+<td>N49280-95-A4_3C_24h_20000nM</td>
+<td>N49280-95-A4_3C_24h_5000nM</td>
+<td>N49280-95-A4_3C_6h_20000nM</td>
+<td>N49280-95-A4_3C_6h_5000nM</td>
+<td>N49280-95-A4_SAg_24h_20000nM</td>
+<td>N49280-95-A4_SAg_24h_5000nM</td>
+<td>N49280-95-A4_SAg_6h_20000nM</td>
+<td>N49280-95-A4_SAg_6h_5000nM</td>
+</tr>
+        </thead>  
+      </table>
+      <br/><br/>
+
+
+
+
+
+</div>
+
+<script>
+$(function() {
+	
+	
+	$("#btn_show_sim").click(function(){
+		
+		$(this).hide();
+		$("#hide_sim").slideDown('slow');
+	});
+	
+	var tbl_sim = $("#tbl-sim").DataTable( {
+		"paging":   true,
+	    "iDisplayLength": 20,
+	    "ordering": true,
+	    "order": [],
+	    "info":     false,
+	    "dom": 'Bfrtip',
+	    "scrollX": true,
+	    "bAutoWidth": false,
+	    "buttons": [
+	               {extend: 'csv', title: 'tbl-sim'},
+	               {extend: 'print', title: 'tbl-sim'}
+	               
+	          ],
+	    
+	    "ajax": {'url':'/report-portal/report-deepgsktablejson/',
+	    	     'type': 'GET',
+	    	     'data':{
+	    	    	     reportID: {{report.id}},
+	    	    	     file_name: 'q2norm/correlation_top3.csv'
+	    	            },        	      
+	    
+	},"deferRender": true });
+	
+});
+
+
+</script> 
+
+<!-- -----------------end of Similarity -->
+
 <hr/>
   
   {%if report.conclusion_text%}
@@ -1844,6 +1978,7 @@ $(function() {
             {%endif%}
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#biomap">BioMAP inference</a></li>            
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#hit">Hit qualification</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#sim_analysis">Similarity scoring </a></li>
             {%if 'gsk' in report.slug %}
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#conclusions">Discussion</a></li>
             {%endif%}
