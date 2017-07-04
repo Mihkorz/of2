@@ -64,7 +64,7 @@ from report.views import ReportList, ReportDetail, ReportTest, \
                          ReportTfTableJson, ReportAjaxTfDetail, ReportDlFarmJson, ReportCorrelationTableJson, ReportSimilarityJson, \
                          ReportPotentialTargetsJson, ReportTfTrrustTableJson, ReportDSTableJson, ReportDSBoxplotJson, \
                          ReportTargetInferenceJson, ReportMesenteryJson, ReportDeepGSKJson, \
-                         ReportAjaxPathwayVennTableGSK, ReportShowAjaxTableJson
+                         ReportAjaxPathwayVennTableGSK, ReportShowAjaxTableJson, ReportShowAjaxTableColumns
 from food.views import FoodIndex, FoodSearch
 
 urlpatterns = patterns('',
@@ -259,6 +259,8 @@ urlpatterns = patterns('',
     url(r'^report-portal/report-mesenterytablejson/$', ReportMesenteryJson.as_view(), name="mesentery_table_json"),
     url(r'^report-portal/report-deepgsktablejson/$', ReportDeepGSKJson.as_view(), name="deepgsk_table_json"),
     url(r'^report-portal/report-ajaxtablejson/$', ReportShowAjaxTableJson.as_view(), name="ajax_table_json"),
+    url(r'^report-portal/report-ajaxtablecolumns/$', ReportShowAjaxTableColumns.as_view(), name="deepgsk_table_columns"),
+    
     ################### BLOOD NN ###############################################
     url(r'^nn-blood/$', nnBloodView.as_view(), name="nn-blood"),
     url(r'^nn-blood/result/$', nnBloodResult.as_view(), name="nn-blood"),
