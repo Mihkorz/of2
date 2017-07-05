@@ -175,6 +175,9 @@ class Report(models.Model):
     def count_ds_groups(self):
         return self.drugscoregroup_set.all().count()
     
+    def __unicode__(self):
+        return self.slug
+    
     
 
 def get_document_upload_path(instance, file_name):
@@ -198,6 +201,9 @@ class GeneGroup(models.Model):
     
     def henkel_norm_name(self):
         return self.name.replace('w', '')
+    
+    def __unicode__(self):
+        return self.name
 
 class PathwayGroup(models.Model):
     name = models.CharField(verbose_name='Pathway group name', max_length=250, blank=False)
@@ -208,6 +214,9 @@ class PathwayGroup(models.Model):
     
     def get_slug(self):
         return self.name.replace(' ', '_')
+    
+    def __unicode__(self):
+        return self.name
 
 class TfGroup(models.Model):
     name = models.CharField(verbose_name='Transcription Factor group name', max_length=250, blank=False)
@@ -220,6 +229,9 @@ class TfGroup(models.Model):
     def get_slug(self):
         return self.name.replace(' ', '_')
     
+    def __unicode__(self):
+        return self.name
+    
 class DeepLearning(models.Model):
     name = models.CharField(verbose_name='Deep learning name', max_length=250, blank=False)
     farmclass = models.FileField(upload_to=get_document_upload_path, max_length=300,
@@ -231,6 +243,9 @@ class DeepLearning(models.Model):
     def get_slug(self):
         return self.name.replace(' ', '_')
     
+    def __unicode__(self):
+        return self.name
+    
 class CorrelationGroup(models.Model):
     name = models.CharField(verbose_name='Correlation group name', max_length=250, blank=False)
     document = models.FileField(upload_to=get_document_upload_path, max_length=300,
@@ -240,6 +255,9 @@ class CorrelationGroup(models.Model):
     def get_slug(self):
         return self.name.replace(' ', '_')
     
+    def __unicode__(self):
+        return self.name
+    
 class DrugScoreGroup(models.Model):
     name = models.CharField(verbose_name='Drug Scoring name', max_length=250, blank=False)
     document = models.FileField(upload_to=get_document_upload_path, max_length=300,
@@ -247,4 +265,7 @@ class DrugScoreGroup(models.Model):
     report = models.ForeignKey(Report)
     
     def get_slug(self):
-        return self.name.replace(' ', '_')   
+        return self.name.replace(' ', '_')
+    
+    def __unicode__(self):
+        return self.name   
