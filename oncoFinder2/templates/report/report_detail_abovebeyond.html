@@ -51,9 +51,15 @@
             <li class="title">Table of contents: </li>
 
             
-            <!--<li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#input_data">Input data</a></li>
+            <!--
               <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#dl_analysis">Deep Learning</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#kinetic_analysis">Kinetic pathway modeling</a></li>-->
+            {%if report.input_data_text%}
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#input_data">Input data</a></li>
+            {%endif%}
+            {%if report.methods_text%}
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#methods">Methods</a></li>
+            {%endif%}
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#gene_analysis">Gene level analysis</a></li>
             <!--  <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tf_analysis">Transcription Factor Analysis</a></li>-->
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#path_analysis">Pathway Analysis</a></li>
@@ -119,6 +125,22 @@
 <img src='/media/report-portal/gsk_prj3_nocmp/prj3_nocmp.png' style="width:800px"/>
 </center>
 {%endif%}
+
+{%if report.input_data_text%}
+          <h2 id="input_data">Input data</h2>
+          <hr/>
+          {{report.input_data_text|safe}}
+          
+          <hr/>
+          {%endif%}
+          {%if report.methods_text%}
+          <h2 id="methods" >Methods</h2>
+          <hr/>
+          
+          {{report.methods_text|safe}}
+          
+          <hr/>
+          {%endif%}
 
 <!-------------------------------------  GENE level  -->          
           <hr/>
@@ -1120,6 +1142,9 @@ var top_neg_ino = $("#tbl-top_neg_inotrope").DataTable( {
             
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#conclusions">Discussion</a></li>
              -->
+             {%if report.methods_text%}
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#methods">Methods</a></li>
+            {%endif%}
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#gene_analysis">Gene level analysis</a></li>
             <!-- <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tf_analysis">Transcription Factor Analysis</a></li>
             -->
