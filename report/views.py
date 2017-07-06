@@ -2844,11 +2844,9 @@ class ReportTest(TemplateView):
         
         #######################  auto create report #############
         
-        rr = Report.objects.filter(title__icontains='gsk_prj4_t')
+        df = pd.read_csv('/home/mikhail/Downloads/logfc_AGE-old_v_young-GSE47460_GPL14550_1.csv', sep=None, index_col='SYMBOL')
         
-        for r in rr:
-            r.pval_theshold_path = 1
-            r.save()
+        df = df[['logFC', 'adj.P.Val']]
         
         
         raise Exception('stop exception')
