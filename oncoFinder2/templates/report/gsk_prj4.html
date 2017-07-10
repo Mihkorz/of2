@@ -456,6 +456,130 @@
 <!------------- End of Pathway Analysis -->
 
 
+<!-- ---------------------------------Deep Learning--------------------------------------------- -->
+ <hr/> 
+<h2 id='dl_analysis'>Deep Learning</h2>
+
+<hr/>
+<center>
+<button type="button"  class="btn btn-success btn-lg center" id='btn_show_dl'>Show Data</button>
+</center>
+
+<div id='hide_dl' style='display:none;'> <!-- Div to hide and load on button click -->
+
+<h3>Therapeutic use</h3>
+<hr/>
+   <!-- DL Nav tabs -->      
+   <ul class="nav nav-tabs" role="tablist">
+     <li role="presentation" class="active">
+         <a href="#overall_dlfc_tab" aria-controls="home1" role="tab" data-toggle="tab" id='dlfc_boot_overall'>
+           Overall
+         </a>
+       </li>
+     {%for group in report.genegroup_set.all%}
+       <li role="presentation" >
+         <a href="#{{group.get_slug}}_dlfc_tab" aria-controls="home1" role="tab" data-toggle="tab" id='dlfc_boot_{{group.get_slug}}'>
+           {{group.name}}
+         </a>
+       </li>
+     {%endfor%}
+   </ul>
+         
+   <div class="tab-content">
+     <div role="tabpanel" class="tab-pane fade in active" id="overall_dlfc_tab">
+     
+      <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active">
+          <a href="#overall_dlfc_tab10"  role="tab" data-toggle="tab" id='dlfc_boot_overall10'>
+          Drug 10</a>
+          </li>
+          <li role="presentation" >
+          <a href="#overall_dlfc_tab12"  role="tab" data-toggle="tab" id='dlfc_boot_overall12'>
+          Drug 12</a>
+          </li>
+          <li role="presentation" >
+          <a href="#overall_dlfc_tab15"  role="tab" data-toggle="tab" id='dlfc_boot_overall15'>
+          Drug 15</a>
+          </li>
+          <li role="presentation" >
+          <a href="#overall_dlfc_tab29"  role="tab" data-toggle="tab" id='dlfc_boot_overall29'>
+          Drug 29</a>
+          </li>
+      </ul>
+      
+      <div class="tab-content">
+        <div role="tabpanel" class="tab-pane fade in active" id="overall_dlfc_tab10">
+          <div id="dlfc_overall10" style="min-width: 800px; height: 500px; max-width: 800px; margin: 0 auto">
+            <span>Loading bar plot...</span>
+          </div>
+        </div>
+        <div role="tabpanel" class="tab-pane fade " id="overall_dlfc_tab12">
+          <div id="dlfc_overall12" style="min-width: 800px; height: 500px; max-width: 800px; margin: 0 auto">
+            <span>Loading bar plot...</span>
+          </div>
+        </div>
+        <div role="tabpanel" class="tab-pane fade " id="overall_dlfc_tab15">
+          <div id="dlfc_overall15" style="min-width: 800px; height: 500px; max-width: 800px; margin: 0 auto">
+            <span>Loading bar plot...</span>
+          </div>
+        </div>
+        <div role="tabpanel" class="tab-pane fade " id="overall_dlfc_tab29">
+          <div id="dlfc_overall29" style="min-width: 800px; height: 500px; max-width: 800px; margin: 0 auto">
+            <span>Loading bar plot...</span>
+          </div>
+        </div>
+      
+      
+      </div> <!-- end of inner tab content -->
+           
+                  
+     
+     </div>
+   
+    {%for group in report.genegroup_set.all%}
+     
+     <div role="tabpanel" class="tab-pane fade " id="{{group.get_slug}}_dlfc_tab">     
+             
+       <div id="dlfc_{{group.get_slug}}" style="min-width: 800px; height: 500px; max-width: 800px; margin: 0 auto">
+         <span>Loading bar plot...</span>
+       </div>     
+     
+     </div> <!-- end of tabpanel div -->
+    {%endfor%}
+   
+   </div> <!--  end of tab-content div -->
+
+
+</div>
+
+<script>
+$(function(){
+	
+    $("#btn_show_dl").click(function(){
+		
+		$(this).hide();
+		$("#hide_dl").slideDown('slow');
+	});
+    
+  //Group tabs
+    {%for group in report.tfgroup_set.all%}              
+        
+        $('#dlfc_boot_{{group.get_slug}}').click(function(){
+            	
+        	if($("#dlfc_{{group.get_slug}} span").html() == 'Loading bar plot...'){
+        		drawDLColumn({{report.id}}, 'dlfc_{{group.get_slug}}',
+      		                 '{{group.get_slug}}', 'fc');
+    		}     	
+         });        
+          
+    {%endfor%}
+	
+	
+	
+});
+
+</script>
+
 <!-- ---------------------------------Drug Scoring--------------------------------------------- -->
 {% if report.count_ds_groups > 0 %} 
  <hr/> 
@@ -807,248 +931,6 @@
 
 $(function() {
 	
-	
-var tbl_top_l1k	= $("#tbl-top_l1k").DataTable( {
-	"paging":   true,
-    "iDisplayLength": 20,
-    "ordering": true,
-    "order": [[ 4, "desc" ]],
-    "info":     false,
-    "dom": 'Bfrtip',
-    "scrollX": false,
-    "bAutoWidth": false,
-    "buttons": [
-               {extend: 'csv', title: 'PCA gene weights'},
-               {extend: 'print', title: 'PCA gene weights'}
-               
-          ],
-    
-    "ajax": {'url':'/report-portal/report-deepgsktablejson/',
-    	     'type': 'GET',
-    	     'data':{
-    	    	     reportID: {{report.id}},
-    	    	     file_name: 'colweights_l1k.txt'
-    	            },        	      
-    
-},"deferRender": true });
-
-var all_models = $("#tbl-all_models").DataTable( {
-	"paging":   true,
-    "iDisplayLength": 20,
-    "ordering": true,
-    "order": [[ 1, "desc" ]],
-    "info":     false,
-    "dom": 'Bfrtip',
-    "scrollX": false,
-    "bAutoWidth": false,
-    "buttons": [
-               {extend: 'csv', title: 'tbl-all_models'},
-               {extend: 'print', title: 'tbl-all_models'}
-               
-          ],
-    
-    "ajax": {'url':'/report-portal/report-deepgsktablejson/',
-    	     'type': 'GET',
-    	     'data':{
-    	    	     reportID: {{report.id}},
-    	    	     file_name: 'l1k_all_models.csv'
-    	            },        	      
-    
-},"deferRender": true });
-
-var top_featur = $("#tbl-top_featur").DataTable( {
-	"paging":   true,
-    "iDisplayLength": 20,
-    "ordering": true,
-    "order": [[ 1, "desc" ]],
-    "info":     false,
-    "dom": 'Bfrtip',
-    "scrollX": false,
-    "bAutoWidth": false,
-    "buttons": [
-               {extend: 'csv', title: 'tbl-top_featur'},
-               {extend: 'print', title: 'tbl-top_featur'}
-               
-          ],
-    
-    "ajax": {'url':'/report-portal/report-deepgsktablejson/',
-    	     'type': 'GET',
-    	     'data':{
-    	    	     reportID: {{report.id}},
-    	    	     file_name: 'l1k_Top_model_features.csv'
-    	            },        	      
-    
-},"deferRender": true });
-
-var tbl_featurfilter_tab = $("#tbl_featurfilter_tab").DataTable( {
-	"paging":   true,
-    "iDisplayLength": 20,
-    "ordering": true,
-    "order": [[ 1, "desc" ]],
-    "info":     false,
-    "dom": 'Bfrtip',
-    "scrollX": false,
-    "bAutoWidth": false,
-    "buttons": [
-               {extend: 'csv', title: 'tbl-all_inotrope'},
-               {extend: 'print', title: 'tbl-all_inotrope'}
-               
-          ],
-    
-    "ajax": {'url':'/report-portal/report-deepgsktablejson/',
-    	     'type': 'GET',
-    	     'data':{
-    	    	     reportID: {{report.id}},
-    	    	     file_name: 'DL-200-genes-DEG-reduced-2.csv'
-    	            },        	      
-    
-},"deferRender": true });
-
-var all_featur_ino = $("#tbl-all_inotrope").DataTable( {
-	"paging":   true,
-    "iDisplayLength": 20,
-    //"ordering": true,
-    "order": [[ 1, "desc" ]],
-    "info":     false,
-    "dom": 'Bfrtip',
-    "scrollX": false,
-    "bAutoWidth": false,
-    "buttons": [
-               {extend: 'csv', title: 'tbl-all_inotrope'},
-               {extend: 'print', title: 'tbl-all_inotrope'}
-               
-          ],
-    
-    "ajax": {'url':'/report-portal/report-deepgsktablejson/',
-    	     'type': 'GET',
-    	     'data':{
-    	    	     reportID: {{report.id}},
-    	    	     file_name: 'scores_inotropes_cut.csv'
-    	            },        	      
-    
-},"deferRender": true });
-
-var top_featur_ino = $("#tbl-top_inotrope").DataTable( {
-	"paging":   true,
-    "iDisplayLength": 20,
-    "ordering": true,
-    "order": [[ 1, "desc" ]],
-    "info":     false,
-    "dom": 'Bfrtip',
-    "scrollX": false,
-    "bAutoWidth": false,
-    "buttons": [
-               {extend: 'csv', title: 'tbl-top_inotrope'},
-               {extend: 'print', title: 'tbl-top_inotrope'}
-               
-          ],
-    
-    "ajax": {'url':'/report-portal/report-deepgsktablejson/',
-    	     'type': 'GET',
-    	     'data':{
-    	    	     reportID: {{report.id}},
-    	    	     file_name: 'S_523_bestmodel_inotrope.csv'
-    	            },        	      
-    
-},"deferRender": true });
-
-var all_pos_ino = $("#tbl-all_pos_inotrope").DataTable( {
-	"paging":   true,
-    "iDisplayLength": 20,
-    "ordering": true,
-    "order": [[ 1, "desc" ]],
-    "info":     false,
-    "dom": 'Bfrtip',
-    "scrollX": false,
-    "bAutoWidth": false,
-    "buttons": [
-               {extend: 'csv', title: 'tbl-all_pos_inotrope'},
-               {extend: 'print', title: 'tbl-all_pos_inotrope'}
-               
-          ],
-    
-    "ajax": {'url':'/report-portal/report-deepgsktablejson/',
-    	     'type': 'GET',
-    	     'data':{
-    	    	     reportID: {{report.id}},
-    	    	     file_name: 'full_scores_pos_cut.csv'
-    	            },        	      
-    
-},"deferRender": true });
-
-var top_pos_ino = $("#tbl-top_pos_inotrope").DataTable( {
-	"paging":   true,
-    "iDisplayLength": 20,
-    "ordering": true,
-    "order": [[ 1, "desc" ]],
-    "info":     false,
-    "dom": 'Bfrtip',
-    "scrollX": false,
-    "bAutoWidth": false,
-    "buttons": [
-               {extend: 'csv', title: 'tbl-top_pos_inotrope'},
-               {extend: 'print', title: 'tbl-top_pos_inotrope'}
-               
-          ],
-    
-    "ajax": {'url':'/report-portal/report-deepgsktablejson/',
-    	     'type': 'GET',
-    	     'data':{
-    	    	     reportID: {{report.id}},
-    	    	     file_name: 'inopos_topmodel.csv'
-    	            },        	      
-    
-},"deferRender": true });
-
-var all_neg_ino = $("#tbl-all_neg_inotrope").DataTable( {
-	"paging":   true,
-    "iDisplayLength": 20,
-    "ordering": true,
-    "order": [[ 1, "desc" ]],
-    "info":     false,
-    "dom": 'Bfrtip',
-    "scrollX": false,
-    "bAutoWidth": false,
-    "buttons": [
-               {extend: 'csv', title: 'tbl-all_neg_inotrope'},
-               {extend: 'print', title: 'tbl-all_neg_inotrope'}
-               
-          ],
-    
-    "ajax": {'url':'/report-portal/report-deepgsktablejson/',
-    	     'type': 'GET',
-    	     'data':{
-    	    	     reportID: {{report.id}},
-    	    	     file_name: 'full_scores_neg_cut.csv'
-    	            },        	      
-    
-},"deferRender": true });
-
-var top_neg_ino = $("#tbl-top_neg_inotrope").DataTable( {
-	"paging":   true,
-    "iDisplayLength": 20,
-    "ordering": true,
-    "order": [[ 1, "desc" ]],
-    "info":     false,
-    "dom": 'Bfrtip',
-    "scrollX": false,
-    "bAutoWidth": false,
-    "buttons": [
-               {extend: 'csv', title: 'tbl-top_neg_inotrope'},
-               {extend: 'print', title: 'tbl-top_neg_inotrope'}
-               
-          ],
-    
-    "ajax": {'url':'/report-portal/report-deepgsktablejson/',
-    	     'type': 'GET',
-    	     'data':{
-    	    	     reportID: {{report.id}},
-    	    	     file_name: 'inoneg_topmodel.csv'
-    	            },        	      
-    
-},"deferRender": true });
-
-
 });
 </script>
 
