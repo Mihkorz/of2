@@ -2314,20 +2314,23 @@ class ReportDlFarmJson(TemplateView):
         if lGname[0]!='overall':
             lGname[0] = lGname[0].replace('D', '') # in case of groups not overall 
         
-        """
+        
         if lGname[0]!='overall':
-            df_farm = df_farm[(df_farm['compound']== int(lGname[0])) & 
-                           (df_farm['concentration']==int(lGname[1])) &
-                            (df_farm['celltype']==lGname[2] )]
+            df_farm = df_farm[(df_farm['compound']== lGname[0]) & 
+                           (df_farm['concetration']==int(lGname[3].replace('nM', ''))) &
+                           #(df_farm['time']==lGname[2]) &
+                           (df_farm['celltype']==lGname[1] )]
         else:
             df_farm = df_farm[(df_farm['compound']== int(lGname[1]))]
-        """
-       
+            
         
+        
+       
+        df_farm = df_farm[(df_farm['time']==lGname[2])]
         
         
         if file_type == 'fc':
-            s_features = df_farm.iloc[:, 7:] # leave only columns with features, excluding 'Best threshold'
+            s_features = df_farm.iloc[:, 9:] # leave only columns with features, excluding 'Best threshold'
         if file_type == 'se':
             s_features = df_farm.iloc[:, 33:] # leave only columns with features, excluding 'Best threshold'
         
