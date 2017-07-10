@@ -562,15 +562,14 @@ $(function(){
 	});
     
   //Group tabs
-    {%for group in report.tfgroup_set.all%}              
+    {%for group in report.genegroup_set.all%}              
         
-        $('#dlfc_boot_{{group.get_slug}}').click(function(){
+        
             	
-        	if($("#dlfc_{{group.get_slug}} span").html() == 'Loading bar plot...'){
+        	
         		drawDLColumn({{report.id}}, 'dlfc_{{group.get_slug}}',
       		                 '{{group.get_slug}}', 'fc');
-    		}     	
-         });        
+    		       
           
     {%endfor%}
 	
