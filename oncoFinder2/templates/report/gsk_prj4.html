@@ -457,6 +457,8 @@
 
 
 <!-- ---------------------------------Deep Learning--------------------------------------------- -->
+
+{%if 'gsk_prj4_t1' in report.slug %}
  <hr/> 
 <h2 id='dl_analysis'>Deep Learning</h2>
 
@@ -471,11 +473,11 @@
 <hr/>
    <!-- DL Nav tabs -->      
    <ul class="nav nav-tabs" role="tablist">
-     <li role="presentation" class="active">
+     <!--  <li role="presentation" class="active">
          <a href="#overall_dlfc_tab" aria-controls="home1" role="tab" data-toggle="tab" id='dlfc_boot_overall'>
            Overall
          </a>
-       </li>
+       </li>-->
      {%for group in report.genegroup_set.all%}
        <li role="presentation" >
          <a href="#{{group.get_slug}}_dlfc_tab" aria-controls="home1" role="tab" data-toggle="tab" id='dlfc_boot_{{group.get_slug}}'>
@@ -487,7 +489,7 @@
          
    <div class="tab-content">
      <div role="tabpanel" class="tab-pane fade in active" id="overall_dlfc_tab">
-     
+     <!--  
       <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active">
           <a href="#overall_dlfc_tab10"  role="tab" data-toggle="tab" id='dlfc_boot_overall10'>
@@ -505,8 +507,8 @@
           <a href="#overall_dlfc_tab29"  role="tab" data-toggle="tab" id='dlfc_boot_overall29'>
           Drug 29</a>
           </li>
-      </ul>
-      
+      </ul>-->
+      <!--  
       <div class="tab-content">
         <div role="tabpanel" class="tab-pane fade in active" id="overall_dlfc_tab10">
           <div id="dlfc_overall10" style="min-width: 800px; height: 500px; max-width: 800px; margin: 0 auto">
@@ -530,7 +532,7 @@
         </div>
       
       
-      </div> <!-- end of inner tab content -->
+      </div> --><!-- end of inner tab content -->
            
                   
      
@@ -578,6 +580,7 @@ $(function(){
 });
 
 </script>
+{%endif%}
 
 <!-- ---------------------------------Drug Scoring--------------------------------------------- -->
 {% if report.count_ds_groups > 0 %} 
