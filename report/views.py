@@ -2317,7 +2317,7 @@ class ReportDlFarmJson(TemplateView):
         
         if lGname[0]!='overall':
             
-            df_farm = df_farm[(df_farm['filename']== group)]
+            df_farm = df_farm[(df_farm['fileName']== group)]
             """
             try:
                 df_farm = df_farm[(df_farm['compound']== lGname[0]) & 
