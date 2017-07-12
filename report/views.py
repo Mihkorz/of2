@@ -2316,10 +2316,16 @@ class ReportDlFarmJson(TemplateView):
         
         
         if lGname[0]!='overall':
-            df_farm = df_farm[(df_farm['compound']== lGname[0]) & 
+            try:
+                df_farm = df_farm[(df_farm['compound']== lGname[0]) & 
                            (df_farm['concetration']==int(lGname[3].replace('nM', ''))) &
-                           #(df_farm['time']==lGname[2]) &
+                           (df_farm['time']==lGname[2]) &
                            (df_farm['celltype']==lGname[1] )]
+            except:
+                df_farm = df_farm[(df_farm['compound']== lGname[0]+lGname[1]) & 
+                           (df_farm['concetration']==int(lGname[4].replace('nM', ''))) &
+                           (df_farm['time']==lGname[3]) &
+                           (df_farm['celltype']==lGname[2] )]
         else:
             df_farm = df_farm[(df_farm['compound']== int(lGname[1]))]
             
