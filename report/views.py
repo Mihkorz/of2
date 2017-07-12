@@ -2345,6 +2345,8 @@ class ReportDlFarmJson(TemplateView):
             s_features = df_farm.iloc[:, 33:] # leave only columns with features, excluding 'Best threshold'
         
         
+        
+        test_features = s_features.copy()
         s_features = s_features.mean()        
         s_features.sort(ascending=False)
         
