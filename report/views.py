@@ -2845,6 +2845,32 @@ class ReportTest(TemplateView):
     
     def get(self, request, *args, **kwargs):
         
+        
+        #######################  auto create report DEEP LEARNING #############
+        import os
+        from django.core.files.storage import default_storage
+        from django.core.files.base import ContentFile
+        from .models import DeepLearning
+        
+        rr = Report.objects.filter(title__icontains='gsk_prj4_t')
+        
+        for rep in rr:
+            
+            path = os.path.join('report-portal', rep.slug)
+            
+            file_proc = default_storage.save(path+"/pharm_scored.csv", ContentFile('') )
+            
+            dpg = DeepLearning(name='Deeplearning',
+                               report = rep,
+                               farmclass = file_proc)
+            
+            dpg.save()
+            
+            #raise Exception('cycle')
+        
+        raise Exception('haha');
+        
+        
         #######################  auto create report #############
         
         df = pd.read_csv('/home/mikhail/Downloads/logfc_AGE-old_v_young-GSE47460_GPL14550_1.csv', sep=None, index_col='SYMBOL')
