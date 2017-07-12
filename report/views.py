@@ -2317,6 +2317,8 @@ class ReportDlFarmJson(TemplateView):
         
         if lGname[0]!='overall':
             
+            df_farm_copy = df_farm.copy()
+            
             df_farm = df_farm[(df_farm['fileName']== group)]
             """
             try:
