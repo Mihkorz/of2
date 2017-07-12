@@ -2319,7 +2319,7 @@ class ReportDlFarmJson(TemplateView):
             
             df_farm_copy = df_farm.copy()
             
-            df_farm = df_farm[df_farm.fileName== group]
+            df_farm = df_farm[df_farm.fileName== self.request.GET['group_name']]
             """
             try:
                 df_farm = df_farm[(df_farm['compound']== lGname[0]) & 
