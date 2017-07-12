@@ -2348,6 +2348,9 @@ class ReportDlFarmJson(TemplateView):
         s_features = s_features.mean()        
         s_features.sort(ascending=False)
         
+        if group=='GDD_60917_SAg_6h_20000nM':
+            raise Exception('stop')
+        
         """
         aaa = s_features['Antineoplastic Agents']
         
