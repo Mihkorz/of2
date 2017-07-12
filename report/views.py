@@ -2338,7 +2338,7 @@ class ReportDlFarmJson(TemplateView):
         
         
        
-        df_farm = df_farm[(df_farm['time']==lGname[2])]
+        #df_farm = df_farm[(df_farm['time']==lGname[2])]
         
         
         if file_type == 'fc':
