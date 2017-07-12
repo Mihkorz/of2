@@ -2319,7 +2319,7 @@ class ReportDlFarmJson(TemplateView):
             
             df_farm_copy = df_farm.copy()
             
-            df_farm = df_farm[(df_farm['fileName']== group)]
+            df_farm = df_farm[df_farm.fileName== group]
             """
             try:
                 df_farm = df_farm[(df_farm['compound']== lGname[0]) & 
@@ -2864,30 +2864,17 @@ class ReportTest(TemplateView):
         
         
         #######################  auto create report DEEP LEARNING #############
-        import os
-        from django.core.files.storage import default_storage
-        from django.core.files.base import ContentFile
-        from .models import DeepLearning
+        df = pd.read_csv("/home/mikhail/Downloads/Aliper/pharm_scored.csv", index_col='Name', sep=None)
         
-        rr = Report.objects.filter(title__icontains='gsk_prj4_t')
+        df_farm_copy = df.copy()
         
-        for rep in rr:
-            
-            path = os.path.join('report-portal', rep.slug)
-            
-            file_proc = default_storage.save(path+"/pharm_scored.csv", ContentFile('') )
-            
-            dpg = DeepLearning(name='Deeplearning',
-                               report = rep,
-                               farmclass = file_proc)
-            
-            dpg.save()
-            
-            #raise Exception('cycle')
+        group = 'GDD_60917_SAg_6h_20000nM'
         
-        raise Exception('haha');
+        df = df[(df.fileName== group)]
         
+        #df = df[df['fileName'] == group]
         
+        raise Exception('stop')
         #######################  auto create report #############
         
         df = pd.read_csv('/home/mikhail/Downloads/logfc_AGE-old_v_young-GSE47460_GPL14550_1.csv', sep=None, index_col='SYMBOL')
