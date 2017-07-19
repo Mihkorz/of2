@@ -81,13 +81,17 @@
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#conclusions">Discussion</a></li>
             -->
           </ul>
-          
-          {%if report.input_data_text%}
-          <h2 id="input_data">Experimental design and RNA-seq data analysis</h2>
+ 
+ 
+          {%if report.header_data_text%}
+          <h2 id="input_data">Introduction</h2>
           <hr/>
-          {{report.input_data_text|safe}}
-
-          {%endif%}
+          {{report.header_data_text|safe}}
+          
+            
+          <hr/>
+          {%endif%}         
+          
           
 
 {%if 'dmso' in report.slug %}
