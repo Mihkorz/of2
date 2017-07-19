@@ -523,10 +523,10 @@ class ReportGeneBoxplotJson(TemplateView):
                 lSerie = [lower_whisker, lower_quartile, median, upper_quartile, upper_whisker]
                 
             
-                #lSerie[lSerie == -np.inf] = 0
+                lSerie[lSerie == -np.inf] = 0
                 
                 
-                #lSerie.replace([np.inf, -np.inf], 0)
+                lSerie.replace([np.inf, -np.inf], 0)
                  
                 series_tumour.append(lSerie)
                     
