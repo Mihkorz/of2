@@ -483,7 +483,10 @@ class ReportGeneBoxplotJson(TemplateView):
                 except:
                     df_group = pd.read_csv(group.document.path,
                                    index_col='SYMBOL', sep='\t')
-                df_list.append(df_group.loc[gene])
+                try:
+                    df_list.append(df_group.loc[gene])
+                except:
+                    pass
             
             series_tumour = []
             
@@ -2863,15 +2866,13 @@ class ReportTest(TemplateView):
         
         
         #######################  auto create report DEEP LEARNING #############
-        df = pd.read_csv("/home/mikhail/Downloads/Aliper/pharm_scored.csv", index_col='Name', sep=None)
+        df = pd.read_csv("/home/mikhail/Downloads/Ksyusha/GSE52463_dge_deseq2.csv", index_col='SYMBOL', sep=None)
         
-        df_farm_copy = df.copy()
+        df = df.reset_index().dropna().set_index('SYMBOL')
         
-        group = 'GDD_60917_SAg_6h_20000nM'
+        df1 = df.drop('MIR4523')
         
-        df = df[(df.fileName== group)]
-        
-        #df = df[df['fileName'] == group]
+        df1.to_csv("/home/mikhail/Downloads/Ksyusha/logfc_GSE52463_corrected.csv", inmdex=False)
         
         raise Exception('stop')
         #######################  auto create report #############
@@ -2879,6 +2880,8 @@ class ReportTest(TemplateView):
         df = pd.read_csv('/home/mikhail/Downloads/logfc_AGE-old_v_young-GSE47460_GPL14550_1.csv', sep=None, index_col='SYMBOL')
         
         df = df[['logFC', 'adj.P.Val']]
+        
+        df.to_csv()
         
         
         raise Exception('stop exception')
