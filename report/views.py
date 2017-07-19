@@ -527,6 +527,9 @@ class ReportGeneBoxplotJson(TemplateView):
                 
                 
                 lSerie.replace([np.inf, -np.inf], 0)
+                
+                lSerie = [x if x != np.inf else 0 for x in lSerie]
+                lSerie = [x if x != -np.inf else 0 for x in lSerie]
                  
                 series_tumour.append(lSerie)
                     
