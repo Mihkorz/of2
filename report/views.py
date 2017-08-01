@@ -2867,15 +2867,32 @@ class ReportTest(TemplateView):
     
     def get(self, request, *args, **kwargs):
         
-        
+        import os
         #######################  auto create report DEEP LEARNING #############
         df = pd.read_csv("/home/mikhail/Downloads/Ksyusha/GSE52463_dge_deseq2.csv", index_col='SYMBOL', sep=None)
         
-        df = df.reset_index().dropna().set_index('SYMBOL')
         
-        df1 = df.drop('MIR4523')
+        proj_dir = '/home/mikhail/Downloads/Ksyusha/fibrosis/path/'
         
-        df1.to_csv("/home/mikhail/Downloads/Ksyusha/logfc_GSE52463_corrected.csv", inmdex=False)
+        for subdir, dirs, files in os.walk(proj_dir):
+            
+            
+            for f in files:
+                aaaa = proj_dir+f
+                try:
+                    df = pd.read_csv(aaaa, sep='\t', index_col='pathway')
+                except:
+                    df = pd.read_csv(aaaa, sep='\t')
+                
+                df.index.name = 'Pathway'
+                
+                
+                
+                df = df.rename(index=str, columns={"sample": "Tumour"})
+                
+                df.to_csv(proj_dir+'corrected/'+f)
+            
+                #raise Exception('files')
         
         raise Exception('stop')
         #######################  auto create report #############

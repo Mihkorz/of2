@@ -65,6 +65,7 @@
             {%endif%}
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#biomap">BioMAP inference</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#hit">Hit qualification</a></li>  
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tox">Tox groups analysis</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#sim_analysis">Similarity to LINCS dataset</a></li>
             {%if 'gsk' in report.slug %}
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#conclusions">Discussion</a></li>
@@ -1651,6 +1652,89 @@ $(function() {
 </script>
 <!-- -----------------end of Hit qualification -->
 
+<!-- ---------------------------------Tox groups analysis--------------------------------------------- -->
+
+ <hr/> 
+<h2 id='tox'>Tox groups analysis</h2>
+<hr/>
+
+
+
+<center>
+<button type="button"  class="btn btn-success btn-lg center" id='btn_show_tox'>Show Data</button>
+</center>
+
+<div id='hide_tox' style='display:none;'> <!-- Div to hide and load on button click -->
+
+<center>
+<img src='/media/report-portal/gsk_prj4_t5/img_tox.png' />
+<p>
+&nbsp;
+</p>
+<hr style='width:50%' />
+
+</center>
+<h4>Table <span class='tbl_num'></span>Tox groups analysis </h4>
+       <table id="tbl-tox" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th>Gene</th>
+           <th>Mitotox</th>
+           <th>MRGX2 AG</th>
+           <th>Structural Cardiotox-Positive</th>
+           <th>Vasc. Tox Rat Positive</th>
+           <th>SAPAD CS deg.nec</th>
+
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
+
+</div>
+<script>
+
+$(function() {
+	
+	
+	$("#btn_show_tox").click(function(){
+		
+		$(this).hide();
+		$("#hide_tox").slideDown('slow', function(){
+			
+			var tbl_tox = $("#tbl-tox").DataTable( {
+				"paging":   true,
+			    "iDisplayLength": 20,
+			    "ordering": true,
+			    "order": [],
+			    "info":     false,
+			    "dom": 'Bfrtip',
+			    "scrollX": false,
+			    "bAutoWidth": false,
+			    "buttons": [
+			               {extend: 'csv', title: 'tbl-tox'},
+			               {extend: 'print', title: 'tbl-tox'}
+			               
+			          ],
+			    
+			    "ajax": {'url':'/report-portal/report-ajaxtablejson/',
+			    	     'type': 'GET',
+			    	     'data':{
+			    	    	     reportID: {{report.id}},
+			    	    	     file_name: 'gsk_prj4_t5/de_genes_binary.csv'
+			    	            },        	      
+			    
+			},"deferRender": true });
+		});
+	});
+	
+	
+	
+	
+});
+
+</script>
+<!-- -----------------end of Tox groups analysis -->
+
 
 <!-- ---------------------------------Similarity--------------------------------------------- -->
 
@@ -1832,6 +1916,7 @@ $(function() {
             {%endif%}
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#biomap">BioMAP inference</a></li>            
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#hit">Hit qualification</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tox">Tox groups analysis</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#sim_analysis">Similarity to LINCS dataset </a></li>
             {%if 'gsk' in report.slug %}
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#conclusions">Discussion</a></li>
