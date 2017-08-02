@@ -498,7 +498,7 @@ function drawPathwayTable(reportID, id, file_name1, file_name2, is_metabolic, or
 	
 	if(!is_metabolic){
 	
-		if(file_name1!='all'){
+		if(file_name1!='all' || file_name1!='tox'){
 			
 	
 	    $('#'+id).on( 'draw.dt', function () {
