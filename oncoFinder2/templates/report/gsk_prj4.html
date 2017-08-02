@@ -407,6 +407,7 @@
 <!-- Signaling Pathways level comparison Nav tabs -->
 <ul class="nav nav-tabs" role="tablist">
          <li role="presentation" class="active"><a href="#path_all_tab" aria-controls="settings" role="tab" data-toggle="tab">ALL</a></li>
+         <li role="presentation" ><a href="#path_tox_tab" aria-controls="settings" role="tab" data-toggle="tab">Tox</a></li>
          {%for perm in report.get_path_permutations%}
          <li role="presentation" ><a href="#path_{{perm.strip}}_tab" aria-controls="settings" role="tab" data-toggle="tab" id="venn_boot_path_{{perm.strip}}">{{perm}}</a></li>
          {%endfor%}
@@ -418,6 +419,23 @@
   <div role="tabpanel" class="tab-pane fade in active " id="path_all_tab" style='overflow-x: auto;'>     <br/> 
     <h4>Table . All signaling pathways</h4>
     <table id="tbl-path_all" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+           <th id='pathname_th'>Pathway</th>
+           {%for group in report.get_all_gene_groups_as_list%}
+            <!--  {% if forloop.counter > 1 %}<th>{{group}}</th> {%endif%}-->
+            <th>{{group}}</th>
+           {%endfor%}
+          </tr>
+        </thead>  
+      </table>       
+   <br/>
+  
+  </div>
+  
+  <div role="tabpanel" class="tab-pane fade  " id="path_tox_tab" style='overflow-x: auto;'>     <br/> 
+    <h4>Table . Tox signaling pathways</h4>
+    <table id="tbl-path_tox" class="path table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
           <tr>
            <th id='pathname_th'>Pathway</th>
@@ -2066,6 +2084,7 @@ $(function() {
 ///////////// SIGNALING PATHs
 
 $("#btn_show_path").click(function(){
+	
 	$(this).hide();
 	$("#hide_path").slideDown('slow');
 	
@@ -2073,6 +2092,12 @@ $("#btn_show_path").click(function(){
 			'tbl-path_all', 
 	         'all', 
 	         'all', false, '{{report.organism}}');
+	
+	
+	drawPathwayTable({{report.id}},
+			'tbl-path_tox', 
+	         'tox', 
+	         'tox', false, '{{report.organism}}');
 	
 });
 	

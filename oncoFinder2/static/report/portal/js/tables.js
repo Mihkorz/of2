@@ -469,7 +469,7 @@ function drawGeneTableScatter(reportID, id, file_name, categories, is_barplot){
 
 function drawPathwayTable(reportID, id, file_name1, file_name2, is_metabolic, organism){
 	
-	
+	alert(file_name1)
 	var table = $('#'+id).DataTable( {
     	"paging":   true,
     	"iDisplayLength": 20,

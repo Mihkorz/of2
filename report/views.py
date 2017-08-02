@@ -752,6 +752,81 @@ class ReportPathwayTableJson(TemplateView):
             
             #raise Exception('haha')            
             
+        elif file_name1 == file_name2 == 'tox':
+            
+            tox_paths = ['reactome_Toxicity_of_botulinum_toxin_type_B_BoNT_B__Main_Pathway',
+                        'reactome_Toxicity_of_botulinum_toxin_type_G_BoNT_G__Main_Pathway',
+                        'reactome_Toxicity_of_botulinum_toxin_type_C_BoNT_C__Main_Pathway',
+                        'reactome_Toxicity_of_botulinum_toxin_type_E_BoNT_E__Main_Pathway',
+                        'reactome_Toxicity_of_botulinum_toxin_type_A_BoNT_A__Main_Pathway',
+                        'reactome_Toxicity_of_botulinum_toxin_type_D_BoNT_D__Main_Pathway',
+                        'reactome_Toxicity_of_botulinum_toxin_type_F_BoNT_F__Main_Pathway',
+                        'reactome_Negative_regulators_of_RIG_I_MDA5_signaling_Main_Pathway',
+                        'NCI_Cellular_roles_of_Anthrax_toxin_Pathway_.MAPKKK_cascade.',
+                        'NCI_Cellular_roles_of_Anthrax_toxin_Pathway_.monocyte_activation.',
+                        'NCI_Cellular_roles_of_Anthrax_toxin_Pathway_.apoptosis.',
+                        'NCI_Cellular_roles_of_Anthrax_toxin_Pathway_.inflammatory_response.',
+                        'NCI_Cellular_roles_of_Anthrax_toxin_Pathway_.necrosis.',
+                        'NCI_Cellular_roles_of_Anthrax_toxin_Pathway_.negative_regulation_of_macrophage_activation.',
+                        'NCI_Cellular_roles_of_Anthrax_toxin_Pathway_.negative_regulation_of_myeloid_dendritic_cell_antigen_processing_and_presentation.',
+                        'NCI_Cellular_roles_of_Anthrax_toxin_Pathway_.negative_regulation_of_phagocytosis.',
+                        'NCI_Cellular_roles_of_Anthrax_toxin_Pathway_.platelet_activation.',
+                        'NCI_Cellular_roles_of_Anthrax_toxin_Pathway_.regulation_of_endothelial_cell_proliferation.',
+                        'NCI_Cellular_roles_of_Anthrax_toxin_Pathway_.macrophage_activation.',
+                        'NCI_IL2_mediated_signaling_events_Pathway_.natural_killer_cell_mediated_cytotoxicity.',
+                        'NCI_IL23_mediated_signaling_events_Pathway_.positive_regulation_of_T_cell_mediated_cytotoxicity.',
+                        'NCI_IL27_mediated_signaling_events_Pathway_.positive_regulation_of_T_cell_mediated_cytotoxicity.',
+                        'NCI_IL12_signaling_mediated_by_STAT4_Pathway_.natural_killer_cell_mediated_cytotoxicity.',
+                        'biocarta_ras_independent_pathway_in_nk_cell_mediated_cytotoxicity_Pathway_.positive_regulation_of_natural_killer_cell_mediated_cytotoxicity.',
+                        'biocarta_ras_independent_pathway_in_nk_cell_mediated_cytotoxicity_Main_Pathway',
+                        'KEGG_Natural_killer_cell_mediated_cytotoxicity_Main_Pathway',
+                        'KEGG_Graft_versus_host_disease_Main_Pathway',
+                        'KEGG_Huntington_s_disease_Main_Pathway',
+                        'KEGG_Vibrio_cholerae_infection_Main_Pathway',
+                        'KEGG_Chemical_carcinogenesis_Main_Pathway',
+                        'KEGG_Allograft_rejection_Main_Pathway',
+                        'biocarta_apoptotic_signaling_in_response_to_dna_damage_Main_Pathway',
+                        'biocarta_apoptotic_signaling_in_response_to_dna_damage_Pathway_.apoptosis.',
+                        'biocarta_mechanism_of_acetaminophen_activity_and_toxicity_Main_Pathway',
+                        'biocarta_mechanism_of_acetaminophen_activity_and_toxicity_Pathway_.fever.',
+                        'biocarta_mechanism_of_acetaminophen_activity_and_toxicity_Pathway_.inflammatory_response.',
+                        'biocarta_mechanism_of_acetaminophen_activity_and_toxicity_Pathway_.platelet_activation.',
+                        'biocarta_mechanism_of_acetaminophen_activity_and_toxicity_Pathway_.prostaglandin_biosynthetic_process.',
+                        'reactome_Uptake_and_function_of_anthrax_toxins_Main_Pathway',
+                        'reactome_Oxidative_Stress_Induced_Senescence_Main_Pathway',
+                        'mTOR_Pathway_Metabolism_Stress_Response_and_Apoptosis',
+                        'reactome_DNA_Damage_Telomere_Stress_Induced_Senescence_Main_Pathway',
+                        'Cellular_Apoptosis_Pathway',
+                        'Mitochondrial_Apoptosis_Pathway',
+                        'ATM_Pathway_Apoptosis',
+                        'ATM_Pathway_Apoptosis_and_Senescence',
+                        'Mitochondrial_Apoptosis_Pathway_Depolarization',
+                        'NCI_ATM_Pathway_.apoptosis.',
+                        'ceramide_ide_novoi_biosynthesis',
+                        'NCI_TNF_receptor_signaling_pathway__Main_Pathway',
+                        'TNF_Signaling_Pathway',
+                        'TNF_Signaling_Pathway_Apoptosis',
+                        'KEGG_TNF_signaling_Main_Pathway',
+                        'reactome_CYP2E1_reactions_Main_Pathway'
+                        ]
+            
+            lgroups = []
+            for group in report.pathwaygroup_set.all():
+                df_path = pd.read_csv(group.doc_proc.path, index_col='Pathway')
+                    
+                df_path = df_path.ix[tox_paths]     
+                lgroups.append(df_path)                
+            
+            df_output = pd.DataFrame()
+            
+            for idx, val in enumerate(lgroups):
+                
+                df_output[idx] = val['0'].round(decimals=2)
+            
+            df_output.reset_index(inplace=True)
+            
+            #raise Exception('tox table')
+        
         else:
             
             df_1 = pd.read_excel(settings.MEDIA_ROOT+"/../static/report/loreal/"+file_name1,
