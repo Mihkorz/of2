@@ -570,6 +570,17 @@
    
    </div> <!--  end of tab-content div -->
 
+<h4>Table <span class='tbl_granular'></span>Top diseases  </h4>
+       <table id="tbl_granular" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr style="min-width: 900px; width: 100%;">
+           <th>Perturbation</th>
+           <th>Disease	Score</th>
+        
+          </tr>
+        </thead>  
+      </table>
+      <br/><br/>
 
 </div>
 
@@ -580,6 +591,32 @@ $(function(){
 		
 		$(this).hide();
 		$("#hide_dl").slideDown('slow');
+		
+		
+		
+		var tbl_granular = $("#tbl_granular").DataTable( {
+			"paging":   true,
+		    "iDisplayLength": 20,
+		    "ordering": true,
+		    "order": [],
+		    "info":     false,
+		    "dom": 'Bfrtip',
+		    "scrollX": false,
+		    "bAutoWidth": false,
+		    "buttons": [
+		               {extend: 'csv', title: 'tbl_granular'},
+		               {extend: 'print', title: 'tbl_granular'}
+		               
+		          ],
+		    
+		    "ajax": {'url':'/report-portal/report-ajaxtablejson/',
+		    	     'type': 'GET',
+		    	     'data':{
+		    	    	     reportID: {{report.id}},
+		    	    	     file_name: '{{report.slug}}/granular_ds.txt'
+		    	            },        	      
+		    
+		},"deferRender": true });
 	});
     
   //Group tabs
