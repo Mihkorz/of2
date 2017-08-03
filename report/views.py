@@ -2897,12 +2897,19 @@ class ReportShowAjaxTableJson(TemplateView):
         
         report = Report.objects.get(pk=request.GET.get('reportID'))
         file_name = request.GET.get('file_name')
+        try:
+            df_gene = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+file_name, sep=',')
+        except:
+            df_gene = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+file_name, sep='\t')
+            
+        tab  = df_gene.columns[0]
         
-        df_gene = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+file_name, sep=None)
+        if '\t' in tab:
+            df_gene = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+file_name, sep='\t')
         
         output_json = df_gene.to_json(orient='values')
         response_data = {'data': json.loads(output_json)}
-        # raise Exception('fuck')
+        #raise Exception('fuck')
         return HttpResponse(json.dumps(response_data), content_type="application/json")
     
     
