@@ -799,7 +799,7 @@ class AjaxPathDetail(TemplateView):
                 
                 shifted_cmap = shiftedColorMap(cmap, start=0, midpoint=mid, stop=1, name='shrunk')
             
-            fig = plt.figure(figsize=(8,3))
+            fig = plt.figure(figsize=(8,0.8))
             ax1 = fig.add_axes([0.05, 0.80, 0.9, 0.15]) 
             
              
