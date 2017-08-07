@@ -832,7 +832,10 @@ class AjaxPathDetail(TemplateView):
             finalNodes.append(nod)
             
             if nod.nel!=0:
-                ffil = "#"+struct.pack('BBB',*scalarMap.to_rgba(np.log(nod.nel), bytes=True)[:3]).encode('hex').upper()
+                try:
+                    ffil = "#"+struct.pack('BBB',*scalarMap.to_rgba(np.log(nod.nel), bytes=True)[:3]).encode('hex').upper()
+                except:
+                    ffil = "grey"
             else:
                 ffil = "grey"
             G.add_node(nod.name, color='black',style='filled',
