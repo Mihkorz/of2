@@ -816,7 +816,8 @@ class AjaxPathDetail(TemplateView):
             try:
                 plt.savefig(settings.MEDIA_ROOT+'/path_scale.png')
             except:
-                raise Exception(str(mmin)+ '  max='+str(mmax)) 
+                #raise Exception(str(mmin)+ '  max='+str(mmax))
+                pass 
         
         finalNodes = []
         for nod in lNodes:
