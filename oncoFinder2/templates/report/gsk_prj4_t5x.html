@@ -853,7 +853,14 @@ $(function() {
 </center>
 
 <div id='hide_biomapcor' style='display:none;'> <!-- Div to hide and load on button click -->
-
+<br/>
+<p>
+For each system (3C and SAg) and time point in L1000 dataset we matched corresponding samples to BioMAP cytotox 
+and diversity dataset samples by drug and system. Then we calculated Pearson correlation coefficients for each 
+L1000 gene- BioMAP marker pair. Here in the table below for each BioMAP marker we selected Top-100 most correlated 
+(by absolute value) L1000 genes and the resulting set of Top-100 lists was aggregated.
+</p>
+<br/>
 <!-- BIO Nav tabs  -->     
    <ul class="nav nav-tabs" role="tablist">
      
@@ -916,7 +923,7 @@ $(function() {
      
      <div role="tabpanel" class="tab-pane fade in " id="3c_6h_diversity_tab">  
             
-       <h4 style="padding: 10px 0;">Table <span class='tbl_num'></span>TOP-50 3c_6h_diversity. <a href="/media/report-portal/gsk_prj4_t5/corr/corr.3c.6h.diversity.csv">Download full file</a></h4>
+       <h4 style="padding: 10px 0;">Table <span class='tbl_num'></span>TOP-70 3c_6h_diversity. <a href="/media/report-portal/gsk_prj4_t5/corr/corr.3c.6h.diversity.csv">Download full file</a></h4>
        <table id="tbl-3c_6h_diversity" class="path table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
 
@@ -944,7 +951,7 @@ $(function() {
      
      <div role="tabpanel" class="tab-pane fade in " id="3c_24h_diversity_tab">  
             
-       <h4 style="padding: 10px 0;">Table <span class='tbl_num'></span>TOP-50 3c_24h_diversity. <a href="/media/report-portal/gsk_prj4_t5/corr/corr.3c.24h.diversity.csv">Download full file</a></h4>
+       <h4 style="padding: 10px 0;">Table <span class='tbl_num'></span>TOP-70 3c_24h_diversity. <a href="/media/report-portal/gsk_prj4_t5/corr/corr.3c.24h.diversity.csv">Download full file</a></h4>
        <table id="tbl-3c_24h_diversity" class="path table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
 
@@ -972,7 +979,7 @@ $(function() {
      
      <div role="tabpanel" class="tab-pane fade in " id="sag_6h_diversity_tab">  
             
-       <h4 style="padding: 10px 0;">Table <span class='tbl_num'></span>TOP-50 sag_6h_diversity. <a href="/media/report-portal/gsk_prj4_t5/corr/corr.sag.6h.diversity.csv">Download full file</a></h4>
+       <h4 style="padding: 10px 0;">Table <span class='tbl_num'></span>TOP-70 sag_6h_diversity. <a href="/media/report-portal/gsk_prj4_t5/corr/corr.sag.6h.diversity.csv">Download full file</a></h4>
        <table id="tbl-sag_6h_diversity" class="path table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
 
@@ -1000,7 +1007,7 @@ $(function() {
      
      <div role="tabpanel" class="tab-pane fade in " id="sag_24h_diversity_tab">  
             
-       <h4 style="padding: 10px 0;">Table <span class='tbl_num'></span>TOP-50 sag_24h_diversity. <a href="/media/report-portal/gsk_prj4_t5/corr/corr.sag.24h.diversity.csv">Download full file</a></h4>
+       <h4 style="padding: 10px 0;">Table <span class='tbl_num'></span>TOP-70 sag_24h_diversity. <a href="/media/report-portal/gsk_prj4_t5/corr/corr.sag.24h.diversity.csv">Download full file</a></h4>
        <table id="tbl-sag_24h_diversity" class="path table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
 
