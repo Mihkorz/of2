@@ -455,11 +455,11 @@ $(function(){
 <hr/>
    <!-- DL Nav tabs -->      
    <ul class="nav nav-tabs" role="tablist">
-     <!--  <li role="presentation" class="active">
+      <li role="presentation" class="active">
          <a href="#overall_dlfc_tab" aria-controls="home1" role="tab" data-toggle="tab" id='dlfc_boot_overall'>
            Overall
          </a>
-       </li>-->
+       </li>
      {%for group in report.genegroup_set.all%}
        <li role="presentation" >
          <a href="#{{group.get_slug}}_dlfc_tab" aria-controls="home1" role="tab" data-toggle="tab" id='dlfc_boot_{{group.get_slug}}'>
@@ -471,6 +471,9 @@ $(function(){
          
    <div class="tab-content">
      <div role="tabpanel" class="tab-pane fade in active" id="overall_dlfc_tab">
+     <br/>
+     Loading...
+     <br/><br/><br/>
      <!--  
       <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active">
@@ -532,6 +535,8 @@ $(function(){
     {%endfor%}
    
    </div> <!--  end of tab-content div -->
+<br/>
+<hr style="width:70%" />
 
 <h4>Table <span class='tbl_granular'></span>Top diseases  </h4>
        <table id="tbl_granular" class="path table table-striped table-bordered" cellspacing="0" width="100%">
@@ -555,6 +560,56 @@ $(function(){
 		
 		$(this).hide();
 		$("#hide_dl").slideDown('slow');
+		
+		
+		//overall_dlfc_tab
+		$.ajax({
+	        type: 'GET',
+	        dataType: 'json',
+	        url: '/report-portal/report-deeplearningfarmcompjson/',
+	        data:{
+	   	         report_id: {{report.id}},
+	   	         type: 'fc'
+	           },
+	        success: function(res) {	        
+	        	arResponce = JSON.parse(res);
+	        	
+	        	var ulHTML = '<ul class="nav nav-tabs" role="tablist">';
+	        	var divHTML = '<div class="tab-content">';
+	        	
+	        	for(let i in arResponce){
+	        		let compound = arResponce[i];
+	        		if(i==0)   ulHTML+='<li role="presentation" class="active">';
+	        		else        ulHTML+='<li role="presentation" >';
+	        		
+	        		ulHTML+= '<a href="#overall_dlfc_tab'+compound+'"  role="tab" data-toggle="tab" id="dlfc_boot_overall'+compound+'">';
+	        		ulHTML+= compound;
+	        		ulHTML+= '</a></li>';
+	        		
+	        		
+	        		
+	        		if(i==0) divHTML+= '<div role="tabpanel" class="tab-pane fade in active" id="overall_dlfc_tab'+compound+'">';
+	        		else     divHTML+= '<div role="tabpanel" class="tab-pane fade " id="overall_dlfc_tab'+compound+'">';
+	        		divHTML+= '  <div id="dlfc_overall'+compound+'" style="min-width: 800px; height: 500px; max-width: 800px; margin: 0 auto">';
+	        		divHTML+= '    <span>Loading bar plot...</span>';
+	        		divHTML+= '  </div></div>';
+	        	    }
+	        	ulHTML+='</ul>';
+	        	divHTML+='</div>';
+	        	
+	        	$("#overall_dlfc_tab").html(ulHTML+divHTML).promise().done(function(){
+	        		for(let i in arResponce){
+	        			let compound = arResponce[i];
+	        		    drawDLColumn({{report.id}}, 'dlfc_overall'+compound,
+	        	              'overall_'+compound, 'fc');
+	        		}
+	        		
+	        	});
+	        	
+	        	}
+	           
+		});
+		
 		
 		
 		

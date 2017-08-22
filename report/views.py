@@ -2386,7 +2386,44 @@ class ReportAjaxTfDetail(TemplateView):
         
         return context
 
-   
+
+class ReportDlFarmGetCompoundsJson(TemplateView):
+    """
+    Get compound names for the Overall tab
+    """
+    template_name="report/report_detail.html"
+    
+    def dispatch(self, request, *args, **kwargs):
+        
+        return super(ReportDlFarmGetCompoundsJson, self).dispatch(request, *args, **kwargs)
+    
+    def get(self, request, *args, **kwargs):
+        
+        report = Report.objects.get(pk=self.request.GET['report_id'])
+        file_type = self.request.GET['type']
+        
+        deeplearning = report.deeplearning_set.all()[0]
+        
+
+        if file_type == 'fc':
+            try:
+                df_farm = pd.read_csv(deeplearning.farmclass.path, index_col='Name', sep=None)
+            except:
+                df_farm = pd.read_csv(deeplearning.farmclass.path, index_col='Name', sep='\t')
+            
+        elif file_type == 'se':
+            try:
+                df_farm = pd.read_csv(deeplearning.sideeff.path, index_col='Name', sep=None)
+            except:
+                df_farm = pd.read_csv(deeplearning.sideeff.path, index_col='Name', sep='\t')
+           
+        
+        compounds = list(set(df_farm['compound'].tolist())) # get distinct compounds
+        compounds.remove('0')
+        
+        response_data =  json.dumps(compounds)
+        return HttpResponse(json.dumps(response_data), content_type="application/json") 
+         
         
 class ReportDlFarmJson(TemplateView):
     template_name="report/report_detail.html"
@@ -2406,17 +2443,22 @@ class ReportDlFarmJson(TemplateView):
         deeplearning = report.deeplearning_set.all()[0]
         
         if file_type == 'fc':
-            df_farm = pd.read_csv(deeplearning.farmclass.path, index_col='Name', sep=None)
+            try:
+                df_farm = pd.read_csv(deeplearning.farmclass.path, index_col='Name', sep=None)
+            except:
+                df_farm = pd.read_csv(deeplearning.farmclass.path, index_col='Name', sep='\t')
             s_threshold = df_farm.iloc[0, 7:]
         elif file_type == 'se':
-            df_farm = pd.read_csv(deeplearning.sideeff.path, index_col='Name', sep=None)
+            try:
+                df_farm = pd.read_csv(deeplearning.sideeff.path, index_col='Name', sep=None)
+            except:
+                df_farm = pd.read_csv(deeplearning.sideeff.path, index_col='Name', sep='\t')
             s_threshold = df_farm.iloc[0, 33:]
         
         lGname = group.split('_')
         
         if lGname[0]!='overall':
             lGname[0] = lGname[0].replace('D', '') # in case of groups not overall 
-        
         
         if lGname[0]!='overall':
             
@@ -2436,7 +2478,7 @@ class ReportDlFarmJson(TemplateView):
                            (df_farm['celltype']==lGname[2] )]
             """
         else:
-            df_farm = df_farm[(df_farm['compound']== int(lGname[1]))]
+            df_farm = df_farm[(df_farm['compound']== lGname[1])]
             
         
         

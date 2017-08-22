@@ -61,7 +61,8 @@ from report.views import ReportList, ReportDetail, ReportTest, \
                          ReportGeneVolcanoJson, ReportGeneScatterJson, ReportGeneTableJson, ReportGeneTableScatterJson,\
                          ReportGeneBoxplotJson, ReportGeneBarplotJson, \
                          ReportAjaxPathwayVenn, ReportAjaxPathwayVennTable, ReportPathwayTableJson, ReportAjaxPathDetail, \
-                         ReportTfTableJson, ReportAjaxTfDetail, ReportDlFarmJson, ReportCorrelationTableJson, ReportSimilarityJson, \
+                         ReportTfTableJson, ReportAjaxTfDetail, ReportDlFarmGetCompoundsJson, ReportDlFarmJson, \
+                         ReportCorrelationTableJson, ReportSimilarityJson, \
                          ReportPotentialTargetsJson, ReportTfTrrustTableJson, ReportDSTableJson, ReportDSBoxplotJson, \
                          ReportTargetInferenceJson, ReportMesenteryJson, ReportDeepGSKJson, \
                          ReportAjaxPathwayVennTableGSK, ReportShowAjaxTableJson, ReportShowAjaxTableColumns
@@ -245,7 +246,8 @@ urlpatterns = patterns('',
     url(r'^report-portal/report-tftablejson/$', ReportTfTableJson.as_view(), name="tf_table_json"),
     url(r'^report-portal/report-tftrrusttablejson/$', ReportTfTrrustTableJson.as_view(), name="tftrrust_table_json"),
     url(r'^report-portal/report-ajaxtfdetail/$', ReportAjaxTfDetail.as_view(), name="report_ajax_tf_detail"),
-    
+       
+    url(r'^report-portal/report-deeplearningfarmcompjson/$', ReportDlFarmGetCompoundsJson.as_view(), name="df_farm_json"),
     url(r'^report-portal/report-deeplearningfarmjson/$', ReportDlFarmJson.as_view(), name="df_farm_json"),
     url(r'^report-portal/report-similaritytablejson/$', ReportSimilarityJson.as_view(), name="df_similarity_json"),
     url(r'^report-portal/report-potenttargetstablejson/$', ReportPotentialTargetsJson.as_view(), name="df_pottargets_json"),    
