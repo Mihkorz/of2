@@ -366,6 +366,14 @@
   
   <hr/>
   <h3>BioMAP diversity data</h3>
+  <br/>
+  <p>
+  Here we collected all BioMAP samples in complete diversity set and all mapped biomarkers to corresponding genes, 
+  then for each biomarker we calculated the ratio "Log Ratio"/"Significance prediction envelope at 95%"
+   aggregated", after that for genes present across several assays we took the mean of that ratio and mapped 
+   the resulting values onto the pathway database.
+  </p>
+  <br/>
   
   <div  style='overflow-x: auto;'>
     <table id="tbl-pathbiomap" class="path table table-striped table-bordered" cellspacing="0" width="100%">
@@ -2062,6 +2070,15 @@ $(function() {
 
 <div id='hide_tox' style='display:none;'> <!-- Div to hide and load on button click -->
 
+<br/>
+<p>
+Here we investigated the common and differential features among 5 Tox groups highlighted in the dataset
+ annotation table. All samples corresponding to drugs from a particular group (case) were aggregated 
+ and compared to "Rat clean" group (reference) that corresponds to perturbations with compounds that 
+ didn't demonstrate toxicity. Resulting lists of differentially expressed genes were compared across all 
+ 5 Tox groups and obrained overlaps are depicted below and listed in the table.
+</p>
+<br/>
 <center>
 <img src='/media/report-portal/gsk_prj4_t5/img_tox.png' />
 <p>
