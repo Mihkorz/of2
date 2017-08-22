@@ -56,13 +56,9 @@
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#kinetic_analysis">Kinetic pathway modeling</a></li>-->
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#gene_analysis">Gene level analysis</a></li>
             <!--  <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tf_analysis">Transcription Factor Analysis</a></li>-->
-            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#path_analysis">Pathway Analysis</a></li>
-            {%if 'above-and-beyond' in report.slug %}
-            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#ds_analysis">Drug Scoring</a></li>
-            {%endif%}
-            {%if 'l1k' in report.slug %}
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#path_analysis">Pathway Analysis</a></li>            
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#dl_analysis">Drug Repurposing</a></li>
-            {%endif%}
+           
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#biomap">BioMAP inference</a></li> 
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#biomap_l1000">L1000-BioMAP correlation</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#hit">Hit qualification</a></li>  
@@ -2310,12 +2306,10 @@ $(function() {
             <!-- <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tf_analysis">Transcription Factor Analysis</a></li>
             -->
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#path_analysis">Pathway Analysis</a></li>
-            {%if 'above-and-beyond' in report.slug %}
-            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#ds_analysis">Drug Scoring</a></li>
-            {%endif%}
-            {%if 'l1k' in report.slug %}
-            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#dl_analysis">Deep Learning</a></li>
-            {%endif%}
+            
+            
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#dl_analysis">Drug Repurposing</a></li>
+            
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#biomap">BioMAP inference</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#biomap_l1000">L1000-BioMAP correlation</a></li>            
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#hit">Hit qualification</a></li>
