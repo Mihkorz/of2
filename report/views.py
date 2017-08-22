@@ -2460,9 +2460,11 @@ class ReportDlFarmJson(TemplateView):
         if lGname[0]!='overall':
             lGname[0] = lGname[0].replace('D', '') # in case of groups not overall 
         
+        df_farm_copy = df_farm.copy()
+        
         if lGname[0]!='overall':
             
-            df_farm_copy = df_farm.copy()
+            
             
             df_farm = df_farm[df_farm.fileName== self.request.GET['group_name']]
             """
@@ -2479,7 +2481,9 @@ class ReportDlFarmJson(TemplateView):
             """
         else:
             df_farm = df_farm[(df_farm['compound']== lGname[1])]
-            
+            if df_farm.empty:
+                comp_name = '_'.join(lGname[1:])
+                df_farm = df_farm_copy[(df_farm_copy['compound']== comp_name)]
         
         
        
