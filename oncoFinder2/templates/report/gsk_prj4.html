@@ -2150,7 +2150,7 @@ $(function() {
 <!-- -----------------end of Tox groups analysis -->
 
 <!-- ---------------------------------Toxcast analysis--------------------------------------------- -->
-
+<div id="hide_section_tox_analysis" >
  <hr/> 
 <h2 id='tox_analysis'>Toxcast analysis</h2>
 <hr/>
@@ -2196,9 +2196,26 @@ to downward curve-fit analysis readout from ToxCast. Results can be found in two
       <br/><br/>
 
 </div>
+
+</div> <!-- end of hide section div -->
 <script>
 
 $(function() {
+	
+	// Hide Section if files are missing
+	$.ajax({
+        type: 'GET',
+        dataType: 'json',
+        url: '/report-portal/report-ajaxtablecolumns/',
+        data:{
+   	         reportID: {{report.id}},
+   	         file_name: 'granular_toxcast_3C.txt'
+           },
+        success: function(d) { },
+        error: function(e) {
+        	                $("#hide_section_tox_analysis").hide();
+                            }
+	});
 	
 	
 	$("#btn_show_tox_analysis").click(function(){
