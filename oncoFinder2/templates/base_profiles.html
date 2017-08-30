@@ -53,7 +53,7 @@
           </li>
           <li class="dropdown">
             <a href="#" data-toggle="dropdown" class="dropdown-toggle of-menu-li-small">
-              <span class="glyphicon glyphicon-option-vertical"></span>
+              <span class="glyphicon glyphicon-cog"></span>
             </a>
             <ul class="dropdown-menu">
               <li><a href="/housekeeping/changelog">Changelog</a></li>
@@ -92,11 +92,10 @@
 
   </div>
 
-  {% include "environment.html" %}
+  
 
   <!-- Content -->
-  <div{% if APP_ENVIRONMENT == 'PROD' %}{% else %}
-    style="{% if APP_ENVIRONMENT == 'UAT' %}border-left: 6px dashed lightgreen;{% else %}border-left: 6px dashed lightblue;{% endif %}"{% endif %}>
+  <div{>
     {% block content %}{% endblock %}
   </div>
 

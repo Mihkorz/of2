@@ -90,27 +90,13 @@ class ReportDetail(DetailView):
         if 'inswx-report' in self.get_object().slug and (self.is_member(user, 'INSWX') or user.is_staff):
             self.template_name = 'report/inswx.html'
         
-                
-                
-        
-        
         #user.is_staff
         #raise Exception('stop')
         return super(ReportDetail, self).dispatch(request, *args, **kwargs)
     
     def get_context_data(self, **kwargs):
               
-        context = super(ReportDetail, self).get_context_data(**kwargs)
-        
-        """
-        df_logfc = pd.read_csv('/home/mikhail/Downloads/Aliper/DEG-OUTPUT-PROPER/expression-data-Doxorubicin-IPANDA.tsv_DEG.txt', sep='\t',
-                                 index_col='SYMBOL')
-        
-        df_logfc.to_csv('/home/mikhail/Downloads/Aliper/Doxorubicin-IPANDA.tsv_DEG.txt', sep=',')
-        raise Exception('stop')
-        """
-        context['test'] = "Test"
-        
+        context = super(ReportDetail, self).get_context_data(**kwargs)        
         return context
 
 class ReportGeneVolcanoJson(TemplateView):
@@ -134,7 +120,7 @@ class ReportGeneVolcanoJson(TemplateView):
         try:
             df_gene = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name)
             df_gene = df_gene[['gene', 'logFC', 'adj.P.Val', 'P.Value']]
-            #df_gene.rename(columns={'gene': 'Symbol'}, inplace=True)
+            
         except:
             try:
                 df_gene = pd.read_csv(settings.MEDIA_ROOT+"/"+file_name, sep=None)
@@ -224,24 +210,18 @@ class ReportGeneTableJson(TemplateView):
                 
                 
                 df_gene.fillna(1, inplace=True)
-                
-                
-                
+                    
             df_gene['logFC'] = df_gene['logFC'].round(decimals=2)
             
-            
-            df_gene_copy = df_gene.copy()        
+            df_gene_copy = df_gene.copy() 
         
-            
-            
             if 'nova_' in report.slug: # for Novartis reports filter only on p-value column
                 df_gene = df_gene[(df_gene['P.Value']<pval_tres) & (np.absolute(df_gene['logFC'])>logFC_tres)]
                 df_gene['adj.P.Val'] = df_gene['P.Value']
             else:
                 df_gene = df_gene[(df_gene['adj.P.Val']<pval_tres) & (np.absolute(df_gene['logFC'])>logFC_tres)]
                 
-                
-            
+
             if df_gene.empty:
                 if "NBA" in file_name:
                     df_gene = df_gene_copy[(np.absolute(df_gene_copy['logFC'])>logFC_tres)]
@@ -287,8 +267,7 @@ class ReportGeneTableJson(TemplateView):
             df_gene = df_gene.astype(str)
             df_gene = df_gene.apply(lambda x: x.str.replace(".",","))
             
-             
-        
+
         output_json = df_gene.to_json(orient='values')
         response_data = {'data': json.loads(output_json)}
         
@@ -382,8 +361,7 @@ class ReportGeneTableScatterJson(TemplateView):
                 df_gene = df_gene[df_gene['adj.P.Val']<pval_tres]
             except:
                 pass      
-            
-        
+ 
         else:
             report = Report.objects.get(pk=request.GET.get('reportID'))
             lgroups = []
@@ -418,9 +396,7 @@ class ReportGeneBoxplotJson(TemplateView):
         gene  = request.GET.get('gene')        
         report = Report.objects.get(pk=request.GET.get('reportID'))
         categories = request.GET.get('categories')
-        
-         
-        
+
         df_list = []
         
         try: #old report with precalculated box plot file
@@ -633,9 +609,7 @@ class ReportGeneBarplotJson(TemplateView):
         gene  = request.GET.get('gene')        
         report = Report.objects.get(pk=request.GET.get('reportID'))
         lcategories = [x.strip() for x in request.GET.get('categories').split(',')]
-        
-        
-        
+
         df_list = []
         cat_names = []
         
@@ -897,341 +871,131 @@ class ReportAjaxPathwayVenn(TemplateView):
         
         lgroup = group_names.split('vs')
         
-        name1 = lgroup[0]
-        name2 = lgroup[1]
-        try:
-            name3 = lgroup[2]
-            compare3 = True
-        except:
-            compare3 = False
-        try:
-            name4 = lgroup[3]
-            compare4 = True
-        except:
-            compare4 = False
-        #raise Exception('VENN!!!!')
-        
-        venn_cyrcles = []
-        
-        
-        if path_gene == 'pathways':
-            
-            group1 = PathwayGroup.objects.get(name=lgroup[0], report=report)
-            file_name1 = group1.doc_proc
-            df1 = pd.read_csv(file_name1, index_col='Pathway')
-            df1 = df1[np.absolute(df1['0'])>pas_tres]
-            if 'inswx-report' in report.slug:
-                df1 = df1[np.absolute(df1['p_ora'])<0.05]
-                
-            
-            group2 = PathwayGroup.objects.get(name=lgroup[1], report=report)
-            file_name2 = group2.doc_proc
-            df2 = pd.read_csv(file_name2, index_col='Pathway')
-            df2 = df2[np.absolute(df2['0'])>pas_tres]
-            if 'inswx-report' in report.slug:
-                df2 = df2[np.absolute(df2['p_ora'])<0.05]
-            
-            if compare3:
-                group3 = PathwayGroup.objects.get(name=lgroup[2], report=report)
-                file_name3 = group3.doc_proc
-                df3 = pd.read_csv(file_name3, index_col='Pathway')
-                df3 = df3[np.absolute(df3['0'])>pas_tres]
-                if 'inswx-report' in report.slug:
-                    df3 = df3[np.absolute(df3['p_ora'])<0.05]          
-            
-            if compare4:
-                group4 = PathwayGroup.objects.get(name=lgroup[3], report=report)
-                file_name4 = group4.doc_proc
-                df4 = pd.read_csv(file_name4, index_col='Pathway')
-                df4 = df4[np.absolute(df4['0'])>pas_tres]
-                if 'inswx-report' in report.slug:
-                    df4 = df4[np.absolute(df4['p_ora'])<0.05] 
-                
-                                    
-            
-            #raise Exception('VENN!!!!')           
-            
-            if is_metabolic=='true':
-                df1 = df1[df1['Database']=='metabolism']
-                df2 = df2[df2['Database']=='metabolism']
-                if compare3:
-                    df3 = df3[df3['Database']=='metabolism']
-                if compare4:
-                    df4 = df4[df4['Database']=='metabolism']
-            else:
-                df1 = df1[df1['Database']!='metabolism']
-                df2 = df2[df2['Database']!='metabolism']
-                if compare3:
-                    df3 = df3[df3['Database']!='metabolism']
-                if compare4:
-                    df4 = df4[df4['Database']!='metabolism']
-                
-        elif path_gene == 'genes':
-            
-            group1 = GeneGroup.objects.get(name=lgroup[0], report=report)
-            file_name1 = group1.doc_logfc.path
-            try:
-                df1 = pd.read_csv(file_name1, index_col='SYMBOL', sep=None)
-                df1 = df1[['logFC', 'adj.P.Val']]
-            except:
-                df1 = pd.read_csv(file_name1, index_col='SYMBOL', sep=None)
-                df1 = df1[['log2FoldChange', 'padj']]
-                df1.rename(columns={'log2FoldChange': 'logFC', 'padj': 'adj.P.Val'}, inplace=True)
-            df1.replace([np.inf, -np.inf], 0, inplace=True)
-            
-            
-            if (df1['adj.P.Val']>pval_tres).all():
-                df1 = df1[(np.absolute(df1['logFC'])>logFC_tres)]         
-            else:
-                df1 = df1[(df1['adj.P.Val']<pval_tres) & (np.absolute(df1['logFC'])>logFC_tres)]
-                   
-            df1 = pd.DataFrame(df1['logFC'])
-            df1.columns = ['0'] 
-            
-            group2 = GeneGroup.objects.get(name=lgroup[1], report=report)
-            file_name2 = group2.doc_logfc.path
-            try:
-                df2 = pd.read_csv(file_name2, index_col='SYMBOL', sep=None)
-                df2 = df2[['logFC', 'adj.P.Val']]
-            except:
-                df2 = pd.read_csv(file_name2, index_col='SYMBOL', sep=None)
-                df2 = df2[['log2FoldChange', 'padj']]
-                df2.rename(columns={'log2FoldChange': 'logFC', 'padj': 'adj.P.Val'}, inplace=True)
-            df2.replace([np.inf, -np.inf], 0, inplace=True)
-            
-            if (df2['adj.P.Val']>pval_tres).all():
-                df2 = df2[(np.absolute(df2['logFC'])>logFC_tres)]
-            else:
-                df2 = df2[(df2['adj.P.Val']<pval_tres) & (np.absolute(df2['logFC'])>logFC_tres)]
-            
-            df2 = pd.DataFrame(df2['logFC'])
-            df2.columns = ['0']
-            
-            if compare3:
-                group3 = GeneGroup.objects.get(name=lgroup[2], report=report)
-                file_name3 = group3.doc_logfc.path
-                try:
-                    df3 = pd.read_csv(file_name3, index_col='SYMBOL', sep=None)
-                    df3 = df3[['logFC', 'adj.P.Val']]
-                except:
-                    df3 = pd.read_csv(file_name3, index_col='SYMBOL', sep=None)
-                    df3 = df3[['log2FoldChange', 'padj']]
-                    df3.rename(columns={'log2FoldChange': 'logFC', 'padj': 'adj.P.Val'}, inplace=True)
-                df3.replace([np.inf, -np.inf], 0, inplace=True)
-                
-                if (df3['adj.P.Val']>pval_tres).all():
-                    df3 = df3[(np.absolute(df3['logFC'])>logFC_tres)]
-                else:
-                    df3 = df3[(df3['adj.P.Val']<pval_tres) & (np.absolute(df3['logFC'])>logFC_tres)]
-                    
-                df3 = pd.DataFrame(df3['logFC'])
-                df3.columns = ['0']
-                    
-            if compare4:
-                group4 = GeneGroup.objects.get(name=lgroup[3], report=report)
-                file_name4 = group4.doc_logfc.path
-                try:
-                    df4 = pd.read_csv(file_name4, index_col='SYMBOL', sep=None)
-                    df4 = df4[['logFC', 'adj.P.Val']]
-                except:
-                    df4 = pd.read_csv(file_name4, index_col='SYMBOL', sep=None)
-                    df4 = df4[['log2FoldChange', 'padj']]
-                    df4.rename(columns={'log2FoldChange': 'logFC', 'padj': 'adj.P.Val'}, inplace=True)
-                df4.replace([np.inf, -np.inf], 0, inplace=True)
-                if (df4['adj.P.Val']>pval_tres).all():
-                    df4 = df4[(np.absolute(df4['logFC'])>logFC_tres)]
-                else:
-                    df4 = df4[(df4['adj.P.Val']<pval_tres) & (np.absolute(df4['logFC'])>logFC_tres)]
-                    
-                df4 = pd.DataFrame(df4['logFC'])
-                df4.columns = ['0']        
-            
-        
-        elif path_gene == 'deeplearning': # For GSK prj2 only! not dynamic!
-            #raise Exception('extended')
-            if is_metabolic=='true':
-                df1 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/New_top_model_FC_whole.csv',
-                                  index_col='probeset')
-                df2 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/New_top_model_FC_EC.csv',
-                                  index_col='probeset')
-                df3 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/New_top_model_FC_SM.csv',
-                                  index_col='probeset')
-            else:
-                df1 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/New_top_model_FC_ext_whole.csv',
-                                  index_col='probeset')
-                df2 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/New_top_model_FC_ext_EC.csv',
-                                  index_col='probeset')
-                df3 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/New_top_model_FC_ext_SM.csv',
-                                  index_col='probeset')
-                #raise Exception('extended')
-            
-            
-            df1 = df1.sort(columns='mean', ascending=False).head(1000)
-            df2 = df2.sort(columns='mean', ascending=False).head(1000)
-            df3 = df3.sort(columns='mean', ascending=False).head(1000)
-            
-            df1.rename(columns={'mean': '0'}, inplace=True)
-            df2.rename(columns={'mean': '0'}, inplace=True)
-            df3.rename(columns={'mean': '0'}, inplace=True)
-            #raise Exception('deeplearning')
-        
+        venn_circles = []
         dict_s = {}
-        list_s = [name1, name2]
-        if compare3:
-            list_s.append(name3) 
-        if compare4:
-            list_s.append(name4)
         
+        for group in lgroup:
+            """
+            Creating Circles
+            """    
+            if path_gene == 'pathways': 
+                """
+                Pathway group
+                """            
+                groupObj = PathwayGroup.objects.get(name=group, report=report)
+                file_name = groupObj.doc_proc
+                df = pd.read_csv(file_name, index_col='Pathway')
+                df = df[np.absolute(df['0'])>pas_tres]
+                if 'inswx-report' in report.slug:
+                    df = df[np.absolute(df['p_ora'])<0.05]
+                    
+                if is_metabolic=='true':
+                    df = df[df['Database']=='metabolism']                    
+                else:
+                    df = df[df['Database']!='metabolism']
             
-        st1_tumour = df1['0']
-        st1_tumour_up = st1_tumour[st1_tumour>0]
-        st1_tumour_down = st1_tumour[st1_tumour<0]
-        if regulation == 'updown':
-            venn_cyrcles.append({'sets': [name1], 'size': (st1_tumour_up.count()+st1_tumour_down.count()),
-                                     'id': '1+updown+'+name1+'+'+is_metabolic})
-        elif regulation == 'up':
-            venn_cyrcles.append({'sets': [name1], 'size': (st1_tumour_up.count()),
-                                     'id': '1+up+'+name1+'+'+is_metabolic})
-        elif regulation == 'down':
-            venn_cyrcles.append({'sets': [name1], 'size': (st1_tumour_down.count()),
-                                     'id': '1+down+'+name1+'+'+is_metabolic})
-        dict_s[name1] = st1_tumour
-        dict_s[name1+' up'] = st1_tumour_up.index
-        dict_s[name1+' down'] = st1_tumour_down.index        
-          
-           
-        st2_tumour = df2['0']
-        st2_tumour_up = st2_tumour[st2_tumour>0]
-        st2_tumour_down = st2_tumour[st2_tumour<0]
-        if regulation == 'updown':
-            venn_cyrcles.append({'sets': [name2], 'size': (st2_tumour_up.count()+st2_tumour_down.count()),
-                                     'id': '1+updown+'+name2+'+'+is_metabolic})
-        elif regulation == 'up':
-            venn_cyrcles.append({'sets': [name2], 'size': (st2_tumour_up.count()),
-                                     'id': '1+up+'+name2+'+'+is_metabolic})
-        elif regulation == 'down':
-            venn_cyrcles.append({'sets': [name2], 'size': (st2_tumour_down.count()),
-                                     'id': '1+down+'+name2+'+'+is_metabolic})    
-        dict_s[name2] = st2_tumour
-        dict_s[name2+' up'] = st2_tumour_up.index
-        dict_s[name2+' down'] = st2_tumour_down.index
-        
-        if compare3:  
-            st3_tumour = df3['0']
-            st3_tumour_up = st3_tumour[st3_tumour>0]
-            st3_tumour_down = st3_tumour[st3_tumour<0]
-            if regulation == 'updown':
-                    venn_cyrcles.append({'sets': [name3], 'size': (st3_tumour_up.count()+st3_tumour_down.count()),
-                                     'id': '1+updown+'+name3+'+'+is_metabolic})
-            elif regulation == 'up':
-                    venn_cyrcles.append({'sets': [name3], 'size': (st3_tumour_up.count()),
-                                     'id': '1+up+'+name3+'+'+is_metabolic})
-            elif regulation == 'down':
-                    venn_cyrcles.append({'sets': [name3], 'size': (st3_tumour_down.count()),
-                                     'id': '1+down+'+name3+'+'+is_metabolic})
-            dict_s[name3] = st3_tumour
-            dict_s[name3+' up'] = st3_tumour_up.index
-            dict_s[name3+' down'] = st3_tumour_down.index
-        
-        if compare4:  
-            st4_tumour = df4['0']
-            st4_tumour_up = st4_tumour[st4_tumour>0]
-            st4_tumour_down = st4_tumour[st4_tumour<0]
-            if regulation == 'updown':
-                    venn_cyrcles.append({'sets': [name4], 'size': (st4_tumour_up.count()+st4_tumour_down.count()),
-                                     'id': '1+updown+'+name4+'+'+is_metabolic})
-            elif regulation == 'up':
-                    venn_cyrcles.append({'sets': [name4], 'size': (st4_tumour_up.count()),
-                                     'id': '1+up+'+name4+'+'+is_metabolic})
-            elif regulation == 'down':
-                    venn_cyrcles.append({'sets': [name4], 'size': (st4_tumour_down.count()),
-                                     'id': '1+down+'+name4+'+'+is_metabolic})
-            dict_s[name4] = st4_tumour
-            dict_s[name4+' up'] = st4_tumour_up.index
-            dict_s[name4+' down'] = st4_tumour_down.index
-        
-        #raise Exception('VENN!!')        
+            elif path_gene == 'genes':
+                """
+                Gene group
+                """                  
             
-        combinations_2= list(itertools.combinations(list_s, 2)) # get all pairs of items
-        for idx, combination in enumerate(combinations_2):
+                groupObj = GeneGroup.objects.get(name=group, report=report)
+                file_name = groupObj.doc_logfc.path
+                df = pd.read_csv(file_name, index_col='SYMBOL', sep=None)
+                try:
+                    df = df[['logFC', 'adj.P.Val']]
+                except:
+                    df = df[['log2FoldChange', 'padj']]
+                    df.rename(columns={'log2FoldChange': 'logFC', 'padj': 'adj.P.Val'}, inplace=True)
                 
-            index1_up = dict_s[combination[0]+' up']
-            index1_down = dict_s[combination[0]+' down']
-            index2_up = dict_s[combination[1]+' up']                
-            index2_down = dict_s[combination[1]+' down']
+                df.replace([np.inf, -np.inf], 0, inplace=True)            
+            
+                if (df['adj.P.Val']>pval_tres).all():
+                    df = df[(np.absolute(df['logFC'])>logFC_tres)]         
+                else:
+                    df = df[(df['adj.P.Val']<pval_tres) & (np.absolute(df['logFC'])>logFC_tres)]
+                   
+                df = pd.DataFrame(df['logFC'])
+                df.columns = ['0']
+            
+            elif path_gene == 'deeplearning': # For GSK prj2 only! not dynamic!
+            
+                if is_metabolic=='true':
+                    df1 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/New_top_model_FC_whole.csv',
+                                  index_col='probeset')
+                    df2 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/New_top_model_FC_EC.csv',
+                                  index_col='probeset')
+                    df3 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/New_top_model_FC_SM.csv',
+                                  index_col='probeset')
+                else:
+                    df1 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/New_top_model_FC_ext_whole.csv',
+                                  index_col='probeset')
+                    df2 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/New_top_model_FC_ext_EC.csv',
+                                  index_col='probeset')
+                    df3 = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/Extended/New_top_model_FC_ext_SM.csv',
+                                  index_col='probeset')
+                    #raise Exception('extended')
+            
+            
+                df1 = df1.sort(columns='mean', ascending=False).head(1000)
+                df2 = df2.sort(columns='mean', ascending=False).head(1000)
+                df3 = df3.sort(columns='mean', ascending=False).head(1000)
+            
+                df1.rename(columns={'mean': '0'}, inplace=True)
+                df2.rename(columns={'mean': '0'}, inplace=True)
+                df3.rename(columns={'mean': '0'}, inplace=True)
+                #raise Exception('deeplearning') 
+                
+            
+            """
+            End of path_gene condition
+            """
+            st_tumour = df['0']
+            st_tumour_up = st_tumour[st_tumour>0]
+            st_tumour_down = st_tumour[st_tumour<0]
             if regulation == 'updown':
-                intersection = len(index1_up.intersection(index2_up))+len(index1_down.intersection(index2_down))
-                id_x = '2+updown+'+combination[0]+'vs'+ combination[1]+'+'+is_metabolic
+                venn_circles.append({'sets': [group], 'size': (st_tumour_up.count()+st_tumour_down.count()),
+                                     'id': '1+updown+'+group+'+'+is_metabolic})
             elif regulation == 'up':
-                intersection = len(index1_up.intersection(index2_up))
-                id_x = '2+up+'+combination[0]+'vs'+ combination[1]+'+'+is_metabolic
+                venn_circles.append({'sets': [group], 'size': (st_tumour_up.count()),
+                                     'id': '1+up+'+group+'+'+is_metabolic})
             elif regulation == 'down':
-                intersection = len(index1_down.intersection(index2_down))
-                id_x = '2+down+'+combination[0]+'vs'+ combination[1]+'+'+is_metabolic
-            venn_cyrcles.append({'sets': [combination[0], combination[1]],
-                                     'size': intersection,
-                                     'id': id_x })
-            #raise Exception('comb')
-        if compare3:    
-            combinations_3= list(itertools.combinations(list_s, 3)) # get all triplets of items
-            for idx, combination in enumerate(combinations_3):
+                venn_circles.append({'sets': [group], 'size': (st_tumour_down.count()),
+                                     'id': '1+down+'+group+'+'+is_metabolic})
+            dict_s[group] = st_tumour
+            dict_s[group+' up'] = st_tumour_up.index
+            dict_s[group+' down'] = st_tumour_down.index  
+            
+        """
+        Creating Intersections
+        """    
+        for comb in range(2, len(lgroup)+1): 
+            
+            combinations = list(itertools.combinations(lgroup, comb))
+            for _, combination in enumerate(combinations):
                 
-                index1_up = dict_s[combination[0]+' up']
-                index1_down = dict_s[combination[0]+' down']
-                index2_up = dict_s[combination[1]+' up']                
-                index2_down = dict_s[combination[1]+' down']
-                index3_up = dict_s[combination[2]+' up']                
-                index3_down = dict_s[combination[2]+' down']
+                lup = [set(dict_s[combination[i]+' up']) for i in range(comb)]
+                ldown = [set(dict_s[combination[i]+' down']) for i in range(comb)]
                 
-                inter_up = (index1_up.intersection(index2_up)).intersection(index3_up)
-                inter_down = (index1_down.intersection(index2_down)).intersection(index3_down)
+                intersections_up = set.intersection(*lup)
+                intersections_down = set.intersection(*ldown)                
+                intersection_name = 'vs'.join(combination)                
+                
                 if regulation == 'updown':
-                    intersection = len(inter_up)+len(inter_down)
-                    id_x = '3+updown+'+combination[0]+'vs'+combination[1]+'vs'+combination[2]+'+'+is_metabolic
+                    intersection = len(intersections_up)+len(intersections_down)
+                    idx = str(comb)+'+updown+'+intersection_name+'+'+is_metabolic
                 elif regulation == 'up':
-                    intersection = len(inter_up)
-                    id_x = '3+up+'+combination[0]+'vs'+combination[1]+'vs'+combination[2]+'+'+is_metabolic
+                    intersection = len(intersections_up)
+                    idx = str(comb)+'+up+'+intersection_name+'+'+is_metabolic
                 elif regulation == 'down':
-                    intersection = len(inter_down)
-                    id_x = '3+down+'+combination[0]+'vs'+combination[1]+'vs'+combination[2]+'+'+is_metabolic
-                venn_cyrcles.append({'sets': [combination[0], combination[1], combination[2]],
-                                     'size': intersection,
-                                     'id': id_x})
-            
-        if compare4:    
-            combinations_4= list(itertools.combinations(list_s, 4)) # get all triplets of items
-            for idx, combination in enumerate(combinations_4):
+                    intersection = len(intersections_down)
+                    idx = str(comb)+'+down+'+intersection_name+'+'+is_metabolic
                 
-                index1_up = dict_s[combination[0]+' up']
-                index1_down = dict_s[combination[0]+' down']
-                index2_up = dict_s[combination[1]+' up']                
-                index2_down = dict_s[combination[1]+' down']
-                index3_up = dict_s[combination[2]+' up']                
-                index3_down = dict_s[combination[2]+' down']
-                index4_up = dict_s[combination[3]+' up']                
-                index4_down = dict_s[combination[3]+' down']
-                
-                inter_up = (index1_up.intersection(index2_up)).intersection(index3_up).intersection(index4_up)
-                inter_down = (index1_down.intersection(index2_down)).intersection(index3_down).intersection(index4_down)
-                if regulation == 'updown':
-                    intersection = len(inter_up)+len(inter_down)
-                    id_x = '4+updown+'+combination[0]+'vs'+combination[1]+'vs'+combination[2]+'vs'+combination[3]+'+'+is_metabolic
-                elif regulation == 'up':
-                    intersection = len(inter_up)
-                    id_x = '4+up+'+combination[0]+'vs'+combination[1]+'vs'+combination[2]+'vs'+combination[3]+'+'+is_metabolic
-                elif regulation == 'down':
-                    intersection = len(inter_down)
-                    id_x = '4+down+'+combination[0]+'vs'+combination[1]+'vs'+combination[2]+'vs'+combination[3]+'+'+is_metabolic
-                venn_cyrcles.append({'sets': [combination[0], combination[1], combination[2], combination[3]],
+                venn_circles.append({'sets': combination,
                                      'size': intersection,
-                                     'id': id_x})
- 
-            #raise Exception('venn all')
-        #raise Exception('VENN!!')
+                                     'id': idx})
 
-        response_data= venn_cyrcles
-
-        return HttpResponse(json.dumps(response_data), content_type="application/json")
+        return HttpResponse(json.dumps(venn_circles), content_type="application/json")
     
 class ReportAjaxPathwayVennTable(TemplateView):
     template_name="website/report_ajax_venn.html"
@@ -1245,12 +1009,47 @@ class ReportAjaxPathwayVennTable(TemplateView):
         is_metabolic = self.request.GET.get('is_metabolic')
         path_gene = self.request.GET.get('path_gene')
         
-        lMembers = members.split('vs')
+        lgroup = members.split('vs')
         
         report = Report.objects.get(pk=self.request.GET.get('reportID'))
         pval_tres = report.pval_theshold_compare
         logFC_tres = report.logcf_theshold_compare
         pas_tres = report.pas_theshold
+        
+        for group in lgroup:
+            
+            if path_gene == 'pathways':
+                groupObj = PathwayGroup.objects.get(group, report=report)
+                df = pd.read_csv(groupObj.doc_proc.path, index_col='Pathway')
+                df = df[np.absolute(df['0'])>pas_tres]
+                if 'inswx-report' in report.slug and path_gene == 'pathways':
+                    df_1 = df[np.absolute(df['p_ora'])<0.05]
+                    
+                if is_metabolic=='true':
+                    df = df[df['Database']=='metabolism']
+                else:                
+                    df = df[df['Database']!='metabolism']
+            
+            elif path_gene =='genes':
+                
+                groupObj = GeneGroup.objects.get(name=group, report=report)
+                
+                try:
+                    df = pd.read_csv(groupObj.doc_logfc.path,  index_col='SYMBOL', sep=None)
+                    df = df[['logFC', 'adj.P.Val']]
+                except:
+                    df = pd.read_csv(groupObj.doc_logfc.path,  index_col='SYMBOL', sep=None)
+                    df = df[['log2FoldChange', 'padj']]
+                    df.rename(columns={'log2FoldChange': 'logFC', 'padj': 'adj.P.Val'}, inplace=True)
+                
+                if (df['adj.P.Val']>pval_tres).all():
+                    df = df[(np.absolute(df['logFC'])>logFC_tres)]
+                else:            
+                    df = df[(df['adj.P.Val']<pval_tres) & (np.absolute(df['logFC'])>logFC_tres)]
+                df = pd.DataFrame(df['logFC'])
+                df.columns = ['0']
+        
+        raise Exception('table')
         
         if inter_num == 1:
             if path_gene == 'pathways':
@@ -2942,7 +2741,7 @@ class ReportDeepGSKJson(TemplateView):
         report = Report.objects.get(pk=request.GET.get('reportID'))
         file_name = request.GET.get('file_name')
         
-        df_gene = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/'+file_name, sep=None)
+        df_gene = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/'+file_name)
         
         df_gene.fillna('NA', inplace=True)
         
@@ -2994,13 +2793,9 @@ class ReportShowAjaxTableColumns(TemplateView):
         
         report = Report.objects.get(pk=request.GET.get('reportID'))
         file_name = request.GET.get('file_name')
-        try:
-            df_gene = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/'+file_name)
-        except:
-            df_gene = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/'+file_name, sep='\t')
         
+        df_gene = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/'+file_name)
         
-        df_gene.rename(columns={"Unnamed: 0": ''}, inplace=True)
         
         output_json = json.dumps(list(df_gene.columns))
         

@@ -62,7 +62,8 @@
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#biomap">BioMAP inference</a></li> 
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#biomap_l1000">L1000-BioMAP correlation</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#hit">Hit qualification</a></li>  
-            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tox">Tox groups analysis</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tox">Tox groups analysis</a></li> 
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tox_analysis">Toxcast analysis</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#sim_analysis">Similarity to LINCS dataset</a></li>
             {%if 'gsk' in report.slug %}
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#conclusions">Discussion</a></li>
@@ -2148,6 +2149,176 @@ $(function() {
 </script>
 <!-- -----------------end of Tox groups analysis -->
 
+<!-- ---------------------------------Toxcast analysis--------------------------------------------- -->
+
+ <hr/> 
+<h2 id='tox_analysis'>Toxcast analysis</h2>
+<hr/>
+
+
+
+<center>
+<button type="button"  class="btn btn-success btn-lg center" id='btn_show_tox_analysis'>Show Data</button>
+</center>
+
+<div id='hide_tox_analysis' style='display:none;'> <!-- Div to hide and load on button click -->
+
+<br/>
+<p>
+We collected ToxCast data for SAg and 3C systems from EPA. For SAg we found 10 common biomarkers 
+that are present in investigated dataset, these include: CD38, CD40, CD69, CD62E/E-Selectin, CXCL8/IL-8, 
+CCL2/MCP-1, CXCL9/MIG, PBMC Cytotoxicity, Proliferation, SRB. For 3C we found 12 common biomarkers: CD62E/E-Selectin,
+CXCL8/IL-8, CCL2/MCP-1, CXCL9/MIG, PBMC Cytotoxicity, Proliferation, SRB, CD54/ICAM-1, HLA-DR, CD141/Thrombomodulin, 
+CD142/Tissue Factor, CD106/VCAM-1, CD87/uPAR. For each drug perturbation from BioMAP we correlated log-ratio/conf.envelope 
+to downward curve-fit analysis readout from ToxCast. Results can be found in two following tables.
+</p>
+<br/>
+
+<h4>Table <span class='tbl_num'></span>3C results </h4>
+  <div style="overflow-x:auto;">
+       <table id="tbl-diversity_toxcast_3C" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          
+        </thead>  
+      </table>
+  </div>
+      <br/><br/>
+      
+      <hr style="width:50%" />
+  <h4>Table <span class='tbl_num'></span>SAg results </h4>
+  <div style="overflow-x:auto;">
+       <table id="tbl-diversity_toxcast_SAg" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          
+        </thead>  
+      </table>
+  </div>
+      <br/><br/>
+
+</div>
+<script>
+
+$(function() {
+	
+	
+	$("#btn_show_tox_analysis").click(function(){
+		
+		$(this).hide();
+		$("#hide_tox_analysis").slideDown('slow', function(){
+			
+			
+			/////////////////////////// 3C
+			$.ajax({
+		        type: 'GET',
+		        dataType: 'json',
+		        url: '/report-portal/report-ajaxtablecolumns/',
+		        data:{
+		   	         reportID: {{report.id}},
+		   	         file_name: 'granular_toxcast_3C.txt'
+		           },
+		        success: function(d) {
+		        	
+		        	let thead = '<tr>';
+		        	
+		        	for (let col of d.columns) {
+		        		
+		        		thead+='<th>'+col+'</th>';
+		        	}
+		        	
+		        	thead+='</tr>';
+		        	
+		        	$("#tbl-diversity_toxcast_3C").find("thead").html(thead);
+		        	
+		        	var tbl_diversity_toxcast_3C = $("#tbl-diversity_toxcast_3C").DataTable( {
+		        		"paging":   true,
+		        	    "iDisplayLength": 20,
+		        	    "ordering": true,
+		        	    "order": [],
+		        	    "info":     false,
+		        	    "dom": 'Bfrtip',
+		        	    "scrollX": false,
+		        	    "bAutoWidth": false,
+		        	    "buttons": [
+		        	               {extend: 'csv', title: 'tbl-diversity_toxcast_3C'},
+		        	               {extend: 'print', title: 'tbl-diversity_toxcast_3C'}
+		        	               
+		        	          ],
+		        	    
+		        	    "ajax": {'url':'/report-portal/report-deepgsktablejson/',
+		        	    	     'type': 'GET',
+		        	    	     'data':{
+		        	    	    	     reportID: {{report.id}},
+		        	    	    	     file_name: 'granular_toxcast_3C.txt'
+		        	    	            },        	      
+		        	    
+		        	},"deferRender": true });
+		        }
+		    });
+			
+			////////////////////////// SAg
+			
+			$.ajax({
+		        type: 'GET',
+		        dataType: 'json',
+		        url: '/report-portal/report-ajaxtablecolumns/',
+		        data:{
+		   	         reportID: {{report.id}},
+		   	         file_name: 'granular_toxcast_SAg.txt'
+		           },
+		        success: function(d) {
+		        	
+		        	let thead = '<tr>';
+		        	
+		        	for (let col of d.columns) {
+		        		
+		        		thead+='<th>'+col+'</th>';
+		        	}
+		        	
+		        	thead+='</tr>';
+		        	
+		        	$("#tbl-diversity_toxcast_SAg").find("thead").html(thead);
+		        	
+		        	var tbl_diversity_toxcast_3C = $("#tbl-diversity_toxcast_SAg").DataTable( {
+		        		"paging":   true,
+		        	    "iDisplayLength": 20,
+		        	    "ordering": true,
+		        	    "order": [],
+		        	    "info":     false,
+		        	    "dom": 'Bfrtip',
+		        	    "scrollX": false,
+		        	    "bAutoWidth": false,
+		        	    "buttons": [
+		        	               {extend: 'csv', title: 'tbl-diversity_toxcast_SAg'},
+		        	               {extend: 'print', title: 'tbl-diversity_toxcast_SAg'}
+		        	               
+		        	          ],
+		        	    
+		        	    "ajax": {'url':'/report-portal/report-deepgsktablejson/',
+		        	    	     'type': 'GET',
+		        	    	     'data':{
+		        	    	    	     reportID: {{report.id}},
+		        	    	    	     file_name: 'granular_toxcast_SAg.txt'
+		        	    	            },        	      
+		        	    
+		        	},"deferRender": true });
+		        }
+		    });
+			
+			
+		});
+		
+	});
+			
+			
+	
+	
+	
+	
+});
+
+</script>
+<!-- -----------------end of Toxcast analysis analysis -->
+
 
 <!-- ---------------------------------Similarity--------------------------------------------- -->
 
@@ -2331,6 +2502,7 @@ $(function() {
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#biomap_l1000">L1000-BioMAP correlation</a></li>            
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#hit">Hit qualification</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tox">Tox groups analysis</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tox_analysis">Toxcast analysis</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#sim_analysis">Similarity to LINCS dataset </a></li>
             {%if 'gsk' in report.slug %}
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#conclusions">Discussion</a></li>

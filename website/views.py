@@ -18,10 +18,10 @@ class IndexPage(TemplateView):
     
     
     def dispatch(self, request, *args, **kwargs):
-        #if request.user.is_authenticated():
-        #    return redirect('profiles_index', slug=request.user.username)
-        #else:
-        return super(IndexPage, self).dispatch(request, *args, **kwargs)
+        if request.user.is_authenticated():
+            return redirect('profiles_index', slug=request.user.username)
+        else:
+            return super(IndexPage, self).dispatch(request, *args, **kwargs)
     
     def get_context_data(self, **kwargs):
               
@@ -60,9 +60,6 @@ class LoginPage(TemplateView):
     def get_context_data(self, **kwargs):
               
         context = super(LoginPage, self).get_context_data(**kwargs)
-        
-        
-        context['test'] = "TEst"
         
         return context
 

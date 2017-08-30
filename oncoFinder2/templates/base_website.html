@@ -29,7 +29,7 @@
         </a>
       </div>
       <div class="navbar-right ws_signin_but">
-        <button type="submit" class="btn btn-default" onClick="location.href='/login'">Sign in</button>
+        <button type="submit" class="btn btn-default" onClick="location.href='/login?next=/'">Sign in</button>
       </div>
       <ul class="nav navbar-nav navbar-right ws_upp_menu">
         <li><a href="/">Home</a></li>
@@ -38,11 +38,10 @@
     </div>
   </div>
 
-  {% include "environment.html" %}
+  
 
   <!-- Content -->
-  <div{% if APP_ENVIRONMENT == 'PROD' %}{% else %}
-      style="{% if APP_ENVIRONMENT == 'UAT' %}border-left: 6px dashed lightgreen;{% else %}border-left: 6px dashed lightblue;{% endif %}"{% endif %}>
+  <div>
       {% block content %}{% endblock %}
   </div>
 
