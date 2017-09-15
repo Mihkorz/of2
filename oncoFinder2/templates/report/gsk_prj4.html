@@ -805,6 +805,26 @@ $(function(){
 
 <div id='hide_biomap' style='display:none;'> <!-- Div to hide and load on button click -->
 
+<div class="row">
+  <div class="col-lg-12 text-center">
+    <img src='/media/report-portal/gsk_prj4_t5/g_distribution/gsk_aring.png'  />    
+    <h4>Distribution of ARING</h4>
+    <hr style="width:50%"/>
+    
+    <img src='/media/report-portal/gsk_prj4_t5/g_distribution/gsk_clogp.png'  />    
+    <h4>Distribution of CLOGP</h4>
+    <hr style="width:50%"/>
+    
+    <img src='/media/report-portal/gsk_prj4_t5/g_distribution/gsk_mw.png'  />    
+    <h4>Distribution of MW</h4>
+    <hr style="width:50%"/>
+    
+    <img src='/media/report-portal/gsk_prj4_t5/g_distribution/gsk_tpsa.png'  />    
+    <h4>Distribution of TPSA</h4>
+    <hr style="width:50%"/> 
+  </div>
+</div>
+
 
 <span id="docs-internal-guid-cf75ab3e-f99b-284f-fc64-f1995dd70398">
 <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span style="font-size: 11pt; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; vertical-align: baseline; white-space: pre-wrap;">In this section we present the results of the experiment aimed at inferring BioMAP cytotox and diversity biomarkers independently from L1000 dataset using drug perturbation response data. We utilised 280 different model architectures that vary by feature selection method (S_523, f_score, fisher_score, reliefF), number of input features (200, 300, 500, 978) and algorithm (ElasticNet, Linear regression, KNN, RF, ExtraTrees, SVR, MLP). As an input for a models we utilised robust z-scores for landmark genes from L1000 dataset and as an output the ratio ‘Log-Ratio/Confidence interval’ for BioMAP cytotox and diversity data. Robust z-scores were averaged for perturbation replicates. Input L1000 samples and output BioMAP samples were matched by drug and concentration. Also for L1000 dataset we experimented with addition of provided molecular properties (# of aromatic rings, clogp, molecular weight, TPSA) as extra features.</span>
