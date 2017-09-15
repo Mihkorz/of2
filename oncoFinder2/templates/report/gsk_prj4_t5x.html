@@ -550,7 +550,24 @@ $(function(){
      
      
      </div> <!-- end of tabpanel div -->
-    
+
+ <div style="overflow-x:auto" >     
+     <h4 style="padding: 10px 0;">Table <span class='tbl_num'></span>Permutation feature importance results for Cytotox data</h4>
+       <table id="tbl-indef_cytotox" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+
+        </thead>  
+    </table>
+      <br/><br/>
+      
+  <h4 style="padding: 10px 0;">Table <span class='tbl_num'></span>Permutation feature importance results for Diversity data</h4>
+       <table id="tbl-indfer_diversity" class="path table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+
+        </thead>  
+    </table>
+      <br/><br/>
+</div>      
    
    </div> <!--  end of tab-content div -->
 
@@ -862,6 +879,93 @@ $(function() {
 	    
 	},"deferRender": true });
 	/////////////
+	
+	$.ajax({
+        type: 'GET',
+        dataType: 'json',
+        url: '/report-portal/report-ajaxtablecolumns/',
+        data:{
+   	         reportID: {{report.id}},
+   	         file_name: '../gsk_prj4_t5/cytotox_pfi.csv'
+           },
+        success: function(d) {	        	
+        	let thead = '<tr>';	        	
+        	for (let col of d.columns) {	        		
+        		thead+='<th>'+col+'</th>';
+        	}
+        	thead+='</tr>';
+        	
+        	$("#tbl-indef_cytotox").find("thead").html(thead);
+        	
+        	var tbl_sim = $("#tbl-indef_cytotox").DataTable( {
+        		"paging":   true,
+        	    "iDisplayLength": 20,
+        	    "ordering": true,
+        	    "order": [],
+        	    "info":     false,
+        	    "dom": 'Bfrtip',
+        	    "scrollX": false,
+        	    "bAutoWidth": false,
+        	    "buttons": [
+        	               {extend: 'csv', title: 'tbl-cytotox'},
+        	               {extend: 'print', title: 'tbl-cytotox'}
+        	               
+        	          ],
+        	    
+        	    "ajax": {'url':'/report-portal/report-deepgsktablejson/',
+        	    	     'type': 'GET',
+        	    	     'data':{
+        	    	    	     reportID: {{report.id}},
+        	    	    	     file_name: '../gsk_prj4_t5/cytotox_pfi.csv'
+        	    	            },        	      
+        	    
+        	},"deferRender": true });
+        }
+    });
+	
+	///////////////////////////
+	$.ajax({
+        type: 'GET',
+        dataType: 'json',
+        url: '/report-portal/report-ajaxtablecolumns/',
+        data:{
+   	         reportID: {{report.id}},
+   	         file_name: '../gsk_prj4_t5/diversity_pfi.csv'
+           },
+        success: function(d) {	        	
+        	let thead = '<tr>';	        	
+        	for (let col of d.columns) {	        		
+        		thead+='<th>'+col+'</th>';
+        	}
+        	thead+='</tr>';
+        	
+        	$("#tbl-indfer_diversity").find("thead").html(thead);
+        	
+        	var tbl_sim = $("#tbl-indfer_diversity").DataTable( {
+        		"paging":   true,
+        	    "iDisplayLength": 20,
+        	    "ordering": true,
+        	    "order": [],
+        	    "info":     false,
+        	    "dom": 'Bfrtip',
+        	    "scrollX": false,
+        	    "bAutoWidth": false,
+        	    "buttons": [
+        	               {extend: 'csv', title: 'tbl-diversity'},
+        	               {extend: 'print', title: 'tbl-diversity'}
+        	               
+        	          ],
+        	    
+        	    "ajax": {'url':'/report-portal/report-deepgsktablejson/',
+        	    	     'type': 'GET',
+        	    	     'data':{
+        	    	    	     reportID: {{report.id}},
+        	    	    	     file_name: '../gsk_prj4_t5/diversity_pfi.csv'
+        	    	            },        	      
+        	    
+        	},"deferRender": true });
+        }
+    });
 	
 });
 
