@@ -65,7 +65,7 @@
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tox">Tox groups analysis</a></li> 
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tox_analysis">Toxcast analysis</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#sim_analysis">Similarity to LINCS dataset</a></li>
-            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#barcodes"> Barcodes for L1000 data</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#barcodes">Barcodes for L1000 data</a></li>
            
             {%if 'gsk' in report.slug %}
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#conclusions">Discussion</a></li>
@@ -139,15 +139,12 @@
 </center>
 
 <div id='hide_genes' style='display:none;'> <!-- Div to hide and load on button click -->
-{%if 'above-and-beyond' in report.slug %}
-<center>
-<img src='/media/report-portal/above-and-beyond/gene1.png' />
-<h4>PCA plot with outlier</h4>
-<br/>
-<img src='/media/report-portal/above-and-beyond/gene2.png' />
-<h4>PCA plot without outlier</h4>
-</center>
-{%endif%}
+
+<p>
+Provided samples were distributed into comparison groups. 
+Each comparison included stimulated or perturbed data and unstimulated controls. 
+For gene level analysis each comparison was analyzed by limma algorithm.
+</p>
 
            
    <!-- GENE Nav tabs -->      
@@ -296,7 +293,11 @@
 </center>
 
 <div id='hide_path' style='display:none;'> <!-- Div to hide and load on button click -->
-         
+
+<p>Pathway level analysis was performed on several curated pathway databases 
+(KEGG, NCI, Reactome, SABiosciences) comprising 3117 signaling and metabolic pathways in total. 
+To estimate pathway activation we used iPANDA algorithm.
+        </p><br/>
 <h3>Signaling Pathways</h3>
 <hr/> 
 
@@ -2431,12 +2432,22 @@ $(function() {
 
 <br/>
 <p>
-We collected ToxCast data for SAg and 3C systems from EPA. For SAg we found 10 common biomarkers 
-that are present in investigated dataset, these include: CD38, CD40, CD69, CD62E/E-Selectin, CXCL8/IL-8, 
-CCL2/MCP-1, CXCL9/MIG, PBMC Cytotoxicity, Proliferation, SRB. For 3C we found 12 common biomarkers: CD62E/E-Selectin,
-CXCL8/IL-8, CCL2/MCP-1, CXCL9/MIG, PBMC Cytotoxicity, Proliferation, SRB, CD54/ICAM-1, HLA-DR, CD141/Thrombomodulin, 
-CD142/Tissue Factor, CD106/VCAM-1, CD87/uPAR. For each drug perturbation from BioMAP we correlated log-ratio/conf.envelope 
-to downward curve-fit analysis readout from ToxCast. Results can be found in two following tables.
+<span id="docs-internal-guid-6b4a8ad0-bfc2-e431-5957-c9307582ad8c">
+<p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:8pt;background-color:#ffffff;"><span style="font-size: 10.5pt; font-family: Arial; background-color: transparent; vertical-align: baseline; white-space: pre-wrap;">We collected ToxCast data for SAg and 3C systems from EPA. For SAg we found 10 common biomarkers that are present in investigated dataset, these include: CD38, CD40, CD69, CD62E/E-Selectin, CXCL8/IL-8, CCL2/MCP-1, CXCL9/MIG, PBMC Cytotoxicity, Proliferation, SRB. For 3C we found 12 common biomarkers: CD62E/E-Selectin, CXCL8/IL-8, CCL2/MCP-1, CXCL9/MIG, PBMC Cytotoxicity, Proliferation, SRB, CD54/ICAM-1, HLA-DR, CD141/Thrombomodulin, CD142/Tissue Factor, CD106/VCAM-1, CD87/uPAR. For each drug perturbation from BioMAP we correlated log-ratio/conf.envelope to downward curve-fit analysis readout from ToxCast. Results can be found in two following tables.</span>
+</p><br>
+<p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span style="font-size: 11pt; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: 700; vertical-align: baseline; white-space: pre-wrap;">Input:</span><span style="font-size: 11pt; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; vertical-align: baseline; white-space: pre-wrap;"> 
+Biomap datatable (<a href='/media/report-portal/gsk_prj4_t5/diversity_plus.biomarker_scores.renamed_features.csv' >Download file</a>): 
+biomarkers as rows, perturbations as columns; ToxCast tables with readouts 
+for 3C (<a href='/media/report-portal/gsk_prj4_t5/toxcast.3C_down.csv' >Download file</a>) 
+and SAg(<a href='/media/report-portal/gsk_prj4_t5/toxcast.SAg_down.csv' >Download file</a>): 
+biomarkers as columns, perturbations as rows.</span>
+</p><br>
+<p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span style="font-size: 11pt; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: 700; vertical-align: baseline; white-space: pre-wrap;">Processing:</span><span style="font-size: 11pt; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; vertical-align: baseline; white-space: pre-wrap;"> Within each of the two systems (3C, SAg) for each compound perturbation pair (GSKvsToxCast) rows (biomarkers) from BioMAP datatable were matched to columns (biomarkers) of ToxCast table. For each compound pair (GSKvsToxCast) this resulted in two vectors of length 10 (in case of SAg system) and 12 (in case of 3C system). Pearson correlation was calculated for all possible compound perturbation pairs (GSKvsToxCast).</span>
+</p><br>
+<p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span style="font-size: 11pt; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: 700; vertical-align: baseline; white-space: pre-wrap;">Output:</span><span style="font-size: 11pt; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; vertical-align: baseline; white-space: pre-wrap;"> A table (with ToxCast perturbations as rows and BioMAP perturbations as columns) populated with Pearson correlation values. As the calculations for 3C and SAg were done independently, two separate tables were generated.</span>
+</p>
+<div><span style="font-size: 11pt; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; vertical-align: baseline; white-space: pre-wrap;"><br></span>
+</div></span>
 </p>
 <br/>
 
@@ -2986,7 +2997,7 @@ $(function() {
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tox">Tox groups analysis</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tox_analysis">Toxcast analysis</a></li>
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#sim_analysis">Similarity to LINCS dataset </a></li>
-            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#barcodes"> Barcodes for L1000 data</a></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#barcodes">Barcodes for L1000 data</a></li>
             {%if 'gsk' in report.slug %}
             <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#conclusions">Discussion</a></li>
             {%endif%}
