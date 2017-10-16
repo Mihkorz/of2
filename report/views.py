@@ -90,6 +90,9 @@ class ReportDetail(DetailView):
         if 'inswx-report' in self.get_object().slug and (self.is_member(user, 'INSWX') or user.is_staff):
             self.template_name = 'report/inswx.html'
         
+        if 'estee_lauder' in self.get_object().slug and (self.is_member(user, 'Estee') or user.is_staff):            
+            self.template_name = 'report/report_detail_abovebeyond.html'
+        
                 
                 
         
