@@ -560,7 +560,10 @@ class ReportGeneBoxplotJson(TemplateView):
                     ldf_norm.append(df_norm_a549.loc[gene])
                     ldf_norm.append(df_norm_mcf7.loc[gene])
             else:
-                ldf_norm.append(df_group.loc[gene])
+                try:
+                    ldf_norm.append(df_group.loc[gene])
+                except:
+                    pass
                 
                            
               
