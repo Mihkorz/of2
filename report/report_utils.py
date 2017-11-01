@@ -131,7 +131,7 @@ class ReportGeneratePDF(DetailView):
         """
              GENE LEVEL
         """
-        
+        """
         head = document.add_heading("Gene level analysis", 2)
         head.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
         p = document.add_paragraph()
@@ -181,11 +181,12 @@ class ReportGeneratePDF(DetailView):
         
         # End of GENE LEVEL
         
-        
+        print "Gene done"
+        """
         """
         PATHWAY LEVEL
         """ 
-        
+        """
         head = document.add_heading("Pathway level analysis", 2)
         head.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
         p = document.add_paragraph()
@@ -275,6 +276,7 @@ class ReportGeneratePDF(DetailView):
             #raise Exception('path stop')
         """
         """
+        print "path done"
         ################################ BioMAP diversity data
         head = document.add_heading("Pathway level analysis. BioMAP diversity data", 2)
         head.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
@@ -343,12 +345,12 @@ class ReportGeneratePDF(DetailView):
 
         #end of BioMAP diversity data
         # END OF PATHWAY
-        
-        
+        print "path biomap done"
+        """
         """
         Drug Repurposing
         """
-        
+        """
         head = document.add_heading("Drug Repurposing", 2)
         head.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
         p = document.add_paragraph()
@@ -373,11 +375,12 @@ class ReportGeneratePDF(DetailView):
             for j in range(df.shape[-1]):
                 t.cell(i+1,j).text = str(df.values[i,j])
                 
-        
+        print "repurpose done"
+        """
         """
         BioMAP inference
         """ 
-        """
+        
         head = document.add_heading("BioMAP inference", 2)
         head.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
         p = document.add_paragraph()
@@ -620,7 +623,7 @@ class ReportGeneratePDF(DetailView):
                 t.cell(i+1,j).text = str(df.values[i,j])
         
         
-        """
+        
         # end of BioMAP inference
         
         """
