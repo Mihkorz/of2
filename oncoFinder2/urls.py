@@ -66,6 +66,8 @@ from report.views import ReportList, ReportDetail, ReportTest, \
                          ReportPotentialTargetsJson, ReportTfTrrustTableJson, ReportDSTableJson, ReportDSBoxplotJson, \
                          ReportTargetInferenceJson, ReportMesenteryJson, ReportDeepGSKJson, \
                          ReportAjaxPathwayVennTableGSK, ReportShowAjaxTableJson, ReportShowAjaxTableColumns
+from report.report_utils import ReportGeneratePDF
+
 from food.views import FoodIndex, FoodSearch
 
 urlpatterns = patterns('',
@@ -261,8 +263,10 @@ urlpatterns = patterns('',
     url(r'^report-portal/report-mesenterytablejson/$', ReportMesenteryJson.as_view(), name="mesentery_table_json"),
     url(r'^report-portal/report-deepgsktablejson/$', ReportDeepGSKJson.as_view(), name="deepgsk_table_json"),
     url(r'^report-portal/report-ajaxtablejson/$', ReportShowAjaxTableJson.as_view(), name="ajax_table_json"),
-    url(r'^report-portal/report-ajaxtablecolumns/$', ReportShowAjaxTableColumns.as_view(), name="deepgsk_table_columns"),
+    url(r'^report-portal/report-ajaxtablecolumns/$', ReportShowAjaxTableColumns.as_view(), name="deepgsk_table_columns"), 
     
+    
+    url(r'^report-portal/generate_pdf/(?P<slug>[-\w]+)/$', ReportGeneratePDF.as_view(), name="generate_pdf"),
     ################### BLOOD NN ###############################################
     url(r'^nn-blood/$', nnBloodView.as_view(), name="nn-blood"),
     url(r'^nn-blood/result/$', nnBloodResult.as_view(), name="nn-blood"),
