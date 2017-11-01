@@ -380,7 +380,7 @@ class ReportGeneratePDF(DetailView):
         """
         BioMAP inference
         """ 
-        
+        """
         head = document.add_heading("BioMAP inference", 2)
         head.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
         p = document.add_paragraph()
@@ -625,11 +625,11 @@ class ReportGeneratePDF(DetailView):
         
         
         # end of BioMAP inference
-        
+        """
         """
         L1000-BioMAP correlation
         """ 
-        """
+        
         head = document.add_heading("L1000-BioMAP correlation", 2)
         head.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
         p = document.add_paragraph()
@@ -767,7 +767,7 @@ class ReportGeneratePDF(DetailView):
             for j in range(df.shape[-1]):
                 t.cell(i+1,j).text = str(df.values[i,j])
         
-        """
+        
         document.save(settings.MEDIA_ROOT+'/report-pdf/'+report.slug+'.docx')
         raise Exception('stop')
         
