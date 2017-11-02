@@ -107,6 +107,7 @@ class ReportGeneratePDF(DetailView):
         df_sag = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/'+file_name, sep='\t')
         
         df_3c.fillna(0, inplace=True)
+        df_3c = df_3c.head(100)
         df_val = df_3c.iloc[:,2:]
         df_val= df_val.round(decimals=2)
         
@@ -134,6 +135,7 @@ class ReportGeneratePDF(DetailView):
         
         
         df_sag.fillna(0, inplace=True)
+        df_sag = df_sag.head(100)
         df_val = df_sag.iloc[:,2:]
         df_val= df_val.round(decimals=2)
         
