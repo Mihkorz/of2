@@ -278,6 +278,7 @@ class ReportGeneratePDF(DetailView):
         """
         print "path done"
         ################################ BioMAP diversity data
+        """
         head = document.add_heading("Pathway level analysis. BioMAP diversity data", 2)
         head.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
         p = document.add_paragraph()
@@ -345,6 +346,7 @@ class ReportGeneratePDF(DetailView):
 
         #end of BioMAP diversity data
         # END OF PATHWAY
+        """
         print "path biomap done"
         
         """
