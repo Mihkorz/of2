@@ -58,7 +58,7 @@ from mirna.views import MirnaSetCalculationParameters
 from core.celery_views import Celery, TaskStatus
 
 from report.views import ReportList, ReportDetail, ReportTest, \
-                         ReportGeneVolcanoJson, ReportGeneScatterJson, ReportGeneTableJson, ReportGeneTableScatterJson,\
+                         ReportGeneVolcanoJson, ReportSaveVolcanoSVG, ReportGeneScatterJson, ReportGeneTableJson, ReportGeneTableScatterJson,\
                          ReportGeneBoxplotJson, ReportGeneBarplotJson, \
                          ReportAjaxPathwayVenn, ReportAjaxPathwayVennTable, ReportPathwayTableJson, ReportAjaxPathDetail, \
                          ReportTfTableJson, ReportAjaxTfDetail, ReportDlFarmGetCompoundsJson, ReportDlFarmJson, \
@@ -232,7 +232,8 @@ urlpatterns = patterns('',
     url(r'^report-portal/test/$', ReportTest.as_view(), name="report-index"),
     url(r'^report-portal/report/(?P<slug>[-\w]+)/$', ReportDetail.as_view(), name="report-detail"),
     
-    url(r'^report-portal/report-genevolcanojson/$', ReportGeneVolcanoJson.as_view(), name="gene-volcano-json"),
+    url(r'^report-portal/report-genevolcanojson/$', ReportGeneVolcanoJson.as_view(), name="gene-volcano-json"), 
+    url(r'^report-portal/report-savevulcanosvg/$', ReportSaveVolcanoSVG.as_view(), name="save-volcano-svg"),
     url(r'^report-portal/report-genescatterjson/$', ReportGeneScatterJson.as_view(), name="gene_scatter_json"),
     url(r'^report-portal/report-genetablejson/$', ReportGeneTableJson.as_view(), name="gene_table_json"),
     url(r'^report-portal/report-genetablescatterjson/$', ReportGeneTableScatterJson.as_view(), name="gene_table_scatter_json"),

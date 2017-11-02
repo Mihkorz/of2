@@ -233,7 +233,7 @@ function drawVolcanoPlot(renderTo,  reportID, file_name){
 	            hideOn: "mouseleave"
 	        });
 	    });
-
+        
 	    circles.on("mouseenter", function() {
 	        d3.select(this).classed("hover", true).moveToFront();
 	    });
@@ -253,6 +253,16 @@ function drawVolcanoPlot(renderTo,  reportID, file_name){
 	    paths.on("mouseleave", forwardEvent);
 
 	});
+	
+	var html = d3.select("svg")
+	.attr("version", 1.1)
+	.attr("xmlns", "http://www.w3.org/2000/svg")
+	.node().parentNode.innerHTML;
+
+
+	var imgsrc = 'data:image/svg+xml;base64,'+ btoa(html);
+	console.log(imgsrc)
+	$.post('/report-portal/report-savevulcanosvg/', {imgbase64: imgsrc})
 
 }
 

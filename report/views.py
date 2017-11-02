@@ -184,7 +184,27 @@ class ReportGeneVolcanoJson(TemplateView):
     def get(self, request, *args, **kwargs):
         
         raise Exception('See POST request!')      
-                
+
+class ReportSaveVolcanoSVG(TemplateView): 
+    template_name="report/report_detail.html"
+    
+    def dispatch(self, request, *args, **kwargs):
+        
+        return super(ReportSaveVolcanoSVG, self).dispatch(request, *args, **kwargs)
+    
+    def post(self, request, *args, **kwargs):
+        
+        from PIL import Image
+        from io import BytesIO
+        import base64
+        
+        imgbase64 = request.POST.get('imgbase64')
+        imgbase64 += "=" * ((4 - len(imgbase64) % 4) % 4)
+        im = Image.open(BytesIO(base64.b64decode(imgbase64)))
+        
+        raise Exception('ReportSaveVolcanoSVG')
+    
+                  
     
 class ReportGeneTableJson(TemplateView): 
     template_name="report/report_detail.html"
