@@ -106,7 +106,7 @@ class ReportGeneratePDF(DetailView):
         
         file_name = 'q2norm/correlation_top3.csv'
         df_sim = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/'+file_name)
-        df_sim = df_sim.head(100)
+        df_sim = df_sim.head(80)
         df_sim.fillna(0, inplace=True)
         df_val = df_sim.iloc[:,6:]
         df_val= df_val.round(decimals=2)
