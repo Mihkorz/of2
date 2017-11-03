@@ -92,6 +92,110 @@ class ReportGeneratePDF(DetailView):
         
         document = Document()
         
+        deeplearning = report.deeplearning_set.all()[0]
+        df_farm = pd.read_csv(deeplearning.farmclass.path, index_col='Name', sep=None)
+        """
+        Drug Repurposing Therapeutic use
+        """
+        head = document.add_heading("Drug Repurposing", 2)
+        head.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        p = document.add_paragraph()
+        
+        for gene_group in self.object.genegroup_set.all():
+            
+            df_farm1 = df_farm[df_farm.fileName== gene_group.name]
+            s_features = df_farm1.iloc[:, 9:]
+            s_features = s_features.mean()         
+            s_features.sort(ascending=False)
+            
+            s_features = s_features[s_features>0] 
+            
+            df_output = pd.DataFrame(s_features)
+            df_output.reset_index(inplace=True)
+            df_output.columns = ['Pharm class', 'Value']
+            
+            
+            
+            p = document.add_paragraph()
+            p = document.add_heading('Therapeutic use for '+gene_group.name, level=4)
+            p = document.add_paragraph()
+        
+            t = document.add_table(df_output.shape[0]+1, df_output.shape[1])   
+                 
+            t.style = 'TableGrid'
+            # add the header rows.
+            for j in range(df_output.shape[-1]):
+                print "table head "+ str(j)
+                t.cell(0,j).text = df_output.columns[j]
+
+                # add the rest of the data frame
+                for i in range(df_output.shape[0]):
+                    print "table body "+ str(i)
+                    for j in range(df_output.shape[-1]):
+                        t.cell(i+1,j).text = str(df_output.values[i,j])
+            
+         
+        
+        p = document.add_paragraph()
+        p = document.add_paragraph()
+        
+        head = document.add_heading("Top diseases", 4)
+        
+        file_name = 'granular_ds.txt'
+        df = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/'+file_name, sep='\t')
+        
+        df.sort_values(by="Score", ascending=False, inplace=True)
+        df =  pd.DataFrame(df[:50])
+        ############################## DOWN
+        t = document.add_table(df.shape[0]+1, df.shape[1])            
+        t.style = 'TableGrid'
+        # add the header rows.
+        for j in range(df.shape[-1]):
+            t.cell(0,j).text = df.columns[j]
+
+        # add the rest of the data frame
+        for i in range(df.shape[0]):
+            for j in range(df.shape[-1]):
+                t.cell(i+1,j).text = str(df.values[i,j])   
+        
+        document.save(settings.MEDIA_ROOT+'/report-pdf/Drug/'+report.slug+'.docx')
+        raise Exception('toxgroup')
+        
+        """
+        Tox groups analysis
+        """
+        head = document.add_heading("Similarity to LINCS dataset", 2)
+        head.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        p = document.add_paragraph()
+        p = document.add_paragraph("Here we investigated the common and differential features among 5 Tox groups highlighted in the dataset annotation table. All samples corresponding to drugs from a particular group (case) were aggregated and compared to 'Rat clean' group (reference) that corresponds to perturbations with compounds that didn't demonstrate toxicity. Resulting lists of differentially expressed genes were compared across all 5 Tox groups and obrained overlaps are depicted below and listed in the table.")
+        p = document.add_paragraph()
+        
+        document.add_picture(settings.MEDIA_ROOT+'/report-portal/gsk_prj4_t5/img_tox.png', width=Inches(5.0))
+        p = document.add_paragraph('Differentially expressed genes distribution across 5 distinct Tox groups')
+        
+        file_name = 'gsk_prj4_t5/de_genes_binary.csv'
+        df_output = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+file_name)
+        
+        p = document.add_paragraph()
+        p = document.add_heading('Tox groups analysis', level=4)
+        p = document.add_paragraph()
+        
+        t = document.add_table(df_output.shape[0]+1, df_output.shape[1])   
+                 
+        t.style = 'TableGrid'
+        # add the header rows.
+        for j in range(df_output.shape[-1]):
+            print "table head "+ str(j)
+            t.cell(0,j).text = df_output.columns[j]
+
+        # add the rest of the data frame
+        for i in range(df_output.shape[0]):
+            print "table body "+ str(i)
+            for j in range(df_output.shape[-1]):
+                t.cell(i+1,j).text = str(df_output.values[i,j])
+        
+        document.save(settings.MEDIA_ROOT+'/report-pdf/Tox_groups_analysis.docx')
+        raise Exception('toxgroup')
         """
          Similarity to LINCS dataset
         """
