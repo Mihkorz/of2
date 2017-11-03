@@ -1,3 +1,4 @@
+{% load filters %} 
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -47,9 +48,13 @@
             <span style="font-size:13pt">{{report.organization}}</span>
             <br/><br/>
             <!-- <h4 style='font-weight:bold; font-size:12pt;'>Data Quality Assessment: </h4>-->
- 
-            <button id='saveButton'>Export Vulcano to PNG</button>
             
+            {%for batch in report.genegroup_set.all|batch:15%}
+              
+            
+            <button id='saveButton{{forloop.counter}}'>Export Vulcano to PNG</button>
+              
+            {%endfor%}
             <ul class="list-unstyled" style='font-size: 11pt; margin: 50px 0 0 0;' >
             <li class="title">Table of contents: </li>
 
@@ -3261,8 +3266,10 @@ $("#btn_show_tf").click(function(){
 
     
      // Set-up the export button
-        d3.select('#saveButton').on('click', function(){
-        	{%for group in report.genegroup_set.all%}
+     {%for batch in report.genegroup_set.all|batch:15%}
+     
+        d3.select('#saveButton{{forloop.counter}}').on('click', function(){
+        	{%for group in batch%}
         	
         	var svg = d3.select('#{{group.name}}_volcano svg');
         	var width = 300, height = 300;
@@ -3274,6 +3281,7 @@ $("#btn_show_tf").click(function(){
         	}
         	{%endfor%}
         });
+        {%endfor%}
 
         // Below are the functions that handle actual exporting:
         // getSVGString ( svgNode ) and svgString2Image( svgString, width, height, format, callback )

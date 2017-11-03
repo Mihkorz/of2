@@ -2574,7 +2574,8 @@ class ReportDlFarmJson(TemplateView):
         response_data =  json.dumps(output)
         return HttpResponse(json.dumps(response_data), content_type="application/json") 
     
-    
+
+           
 class ReportSimilarityJson(TemplateView): 
     template_name="report/report_detail.html"
     
