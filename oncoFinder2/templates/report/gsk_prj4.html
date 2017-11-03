@@ -3,6 +3,9 @@
   <head>
     <title> {{report.title_short}} | Insilico Medicine</title>
     <link href="/static/bower_components/bootstrap-stylus/dist/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <script src="https://cdn.rawgit.com/eligrey/canvas-toBlob.js/f1a01896135ab378aa5c0118eadd81da55e698d8/canvas-toBlob.js"></script>
+	 <script src="https://cdn.rawgit.com/eligrey/FileSaver.js/e9d941381475b5df8b7d7691013401e171014e89/FileSaver.min.js"></script>
+	 
     <script src="//code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script>
     <script src="/static/js/oncofinder2.js" type="text/javascript"></script>
     <script src="/static/bower_components/bootstrap-stylus/dist/bootstrap.min.js" type="text/javascript"></script>
@@ -45,7 +48,7 @@
             <br/><br/>
             <!-- <h4 style='font-weight:bold; font-size:12pt;'>Data Quality Assessment: </h4>-->
  
-            
+            <button id='saveButton'>Export Vulcano to PNG</button>
             
             <ul class="list-unstyled" style='font-size: 11pt; margin: 50px 0 0 0;' >
             <li class="title">Table of contents: </li>
@@ -481,52 +484,7 @@ $(function(){
      <div role="tabpanel" class="tab-pane fade in active" id="overall_dlfc_tab">
      <br/>
      Loading...
-     <br/><br/><br/>
-     <!--  
-      <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation" class="active">
-          <a href="#overall_dlfc_tab10"  role="tab" data-toggle="tab" id='dlfc_boot_overall10'>
-          Drug 10</a>
-          </li>
-          <li role="presentation" >
-          <a href="#overall_dlfc_tab12"  role="tab" data-toggle="tab" id='dlfc_boot_overall12'>
-          Drug 12</a>
-          </li>
-          <li role="presentation" >
-          <a href="#overall_dlfc_tab15"  role="tab" data-toggle="tab" id='dlfc_boot_overall15'>
-          Drug 15</a>
-          </li>
-          <li role="presentation" >
-          <a href="#overall_dlfc_tab29"  role="tab" data-toggle="tab" id='dlfc_boot_overall29'>
-          Drug 29</a>
-          </li>
-      </ul>-->
-      <!--  
-      <div class="tab-content">
-        <div role="tabpanel" class="tab-pane fade in active" id="overall_dlfc_tab10">
-          <div id="dlfc_overall10" style="min-width: 800px; height: 500px; max-width: 800px; margin: 0 auto">
-            <span>Loading bar plot...</span>
-          </div>
-        </div>
-        <div role="tabpanel" class="tab-pane fade " id="overall_dlfc_tab12">
-          <div id="dlfc_overall12" style="min-width: 800px; height: 500px; max-width: 800px; margin: 0 auto">
-            <span>Loading bar plot...</span>
-          </div>
-        </div>
-        <div role="tabpanel" class="tab-pane fade " id="overall_dlfc_tab15">
-          <div id="dlfc_overall15" style="min-width: 800px; height: 500px; max-width: 800px; margin: 0 auto">
-            <span>Loading bar plot...</span>
-          </div>
-        </div>
-        <div role="tabpanel" class="tab-pane fade " id="overall_dlfc_tab29">
-          <div id="dlfc_overall29" style="min-width: 800px; height: 500px; max-width: 800px; margin: 0 auto">
-            <span>Loading bar plot...</span>
-          </div>
-        </div>
-      
-      
-      </div> --><!-- end of inner tab content -->
-           
+     <br/><br/><br/>           
                   
      
      </div>
@@ -3068,12 +3026,12 @@ $(function() {
 		$("#hide_genes").slideDown('slow');
 		 
 		{%for group in report.genegroup_set.all%}
-		  {%if forloop.counter = 1%}
+		  
 		
 		     drawVolcanoPlot('{{group.get_slug}}_volcano', {{report.id}}, '{{group.doc_logfc}}');
 	         drawGeneTable({{report.id}}, 'tbl-{{group.get_slug}}', '{{group.doc_logfc}}', categories='{{group.get_slug}}'); 
 	     
-	       {%endif%}
+	      
 	     {%endfor%}
 	     
 	     drawGeneTable({{report.id}}, 'tbl-gene_all', 'all', categories='{{report.get_all_gene_groups_norm_as_list}}');
@@ -3302,23 +3260,121 @@ $("#btn_show_tf").click(function(){
     
 
     
- /* METABOLIC PATHs
-  drawPathwayTable({{report.id}},
-		  'tbl-meta_all', 
-	         'all', 
-	         'all', true, '{{report.organism}}');
- 
-	{%for perm in report.get_path_permutations%}
-	drawVenn({{report.id}},
-		'venn_meta-{{perm.strip}}-up',
-		'{{perm.strip}}',
-		true, 'up', 'venn_meta_dinamic_{{perm.strip}}', 'pathways', '{{report.organism}}');
-	drawVenn({{report.id}},
-			'venn_meta-{{perm.strip}}-down',
-			'{{perm.strip}}',
-			true, 'down', 'venn_meta_dinamic_{{perm.strip}}', 'pathways', '{{report.organism}}');
-    {%endfor%}
-*/
+     // Set-up the export button
+        d3.select('#saveButton').on('click', function(){
+        	{%for group in report.genegroup_set.all%}
+        	
+        	var svg = d3.select('#{{group.name}}_volcano svg');
+        	var width = 300, height = 300;
+        	var svgString = getSVGString(svg.node());
+        	svgString2Image( svgString, 2*width, 2*height, 'png', save{{ forloop.counter }} ); // passes Blob and filesize String to the callback
+
+        	function save{{ forloop.counter }}( dataBlob, filesize ){
+        		saveAs( dataBlob, '{{group.name}}.png' ); // FileSaver.js function
+        	}
+        	{%endfor%}
+        });
+
+        // Below are the functions that handle actual exporting:
+        // getSVGString ( svgNode ) and svgString2Image( svgString, width, height, format, callback )
+        function getSVGString( svgNode ) {
+        	svgNode.setAttribute('xlink', 'http://www.w3.org/1999/xlink');
+        	var cssStyleText = getCSSStyles( svgNode );
+        	appendCSS( cssStyleText, svgNode );
+
+        	var serializer = new XMLSerializer();
+        	var svgString = serializer.serializeToString(svgNode);
+        	svgString = svgString.replace(/(\w+)?:?xlink=/g, 'xmlns:xlink='); // Fix root xlink without namespace
+        	svgString = svgString.replace(/NS\d+:href/g, 'xlink:href'); // Safari NS namespace fix
+
+        	return svgString;
+
+        	function getCSSStyles( parentElement ) {
+        		var selectorTextArr = [];
+
+        		// Add Parent element Id and Classes to the list
+        		selectorTextArr.push( '#'+parentElement.id );
+        		for (var c = 0; c < parentElement.classList.length; c++)
+        				if ( !contains('.'+parentElement.classList[c], selectorTextArr) )
+        					selectorTextArr.push( '.'+parentElement.classList[c] );
+
+        		// Add Children element Ids and Classes to the list
+        		var nodes = parentElement.getElementsByTagName("*");
+        		for (var i = 0; i < nodes.length; i++) {
+        			var id = nodes[i].id;
+        			if ( !contains('#'+id, selectorTextArr) )
+        				selectorTextArr.push( '#'+id );
+
+        			var classes = nodes[i].classList;
+        			for (var c = 0; c < classes.length; c++)
+        				if ( !contains('.'+classes[c], selectorTextArr) )
+        					selectorTextArr.push( '.'+classes[c] );
+        		}
+
+        		// Extract CSS Rules
+        		var extractedCSSText = "";
+        		for (var i = 0; i < document.styleSheets.length; i++) {
+        			var s = document.styleSheets[i];
+        			
+        			try {
+        			    if(!s.cssRules) continue;
+        			} catch( e ) {
+        		    		if(e.name !== 'SecurityError') throw e; // for Firefox
+        		    		continue;
+        		    	}
+
+        			var cssRules = s.cssRules;
+        			for (var r = 0; r < cssRules.length; r++) {
+        				if ( contains( cssRules[r].selectorText, selectorTextArr ) )
+        					extractedCSSText += cssRules[r].cssText;
+        			}
+        		}
+        		
+
+        		return extractedCSSText;
+
+        		function contains(str,arr) {
+        			return arr.indexOf( str ) === -1 ? false : true;
+        		}
+
+        	}
+
+        	function appendCSS( cssText, element ) {
+        		var styleElement = document.createElement("style");
+        		styleElement.setAttribute("type","text/css"); 
+        		styleElement.innerHTML = cssText;
+        		var refNode = element.hasChildNodes() ? element.children[0] : null;
+        		element.insertBefore( styleElement, refNode );
+        	}
+        }
+
+
+        function svgString2Image( svgString, width, height, format, callback ) {
+        	var format = format ? format : 'png';
+
+        	var imgsrc = 'data:image/svg+xml;base64,'+ btoa( unescape( encodeURIComponent( svgString ) ) ); // Convert SVG string to data URL
+
+        	var canvas = document.createElement("canvas");
+        	var context = canvas.getContext("2d");
+
+        	canvas.width = width;
+        	canvas.height = height;
+
+        	var image = new Image();
+        	image.onload = function() {
+        		context.clearRect ( 0, 0, width, height );
+        		context.drawImage(image, 0, 0, width, height);
+
+        		canvas.toBlob( function(blob) {
+        			var filesize = Math.round( blob.length/1024 ) + ' KB';
+        			if ( callback ) callback( blob, filesize );
+        		});
+
+        		
+        	};
+
+        	image.src = imgsrc;
+        }
 });
 
 </script>
