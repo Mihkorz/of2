@@ -279,7 +279,10 @@ class ReportGeneratePDF(DetailView):
             
             #raise Exception('path stop')
         
+        document.save(settings.MEDIA_ROOT+'/report-pdf/'+report.slug+'.docx')
+        print "path biomap done"
         
+        raise Exception('GENE PATH')
         print "path done"
         ################################ BioMAP diversity data
         
@@ -352,10 +355,7 @@ class ReportGeneratePDF(DetailView):
         # END OF PATHWAY
         
         
-        document.save(settings.MEDIA_ROOT+'/report-pdf/'+report.slug+'.docx')
-        print "path biomap done"
         
-        raise Exception('GENE PATH')
         
         """
         DL
