@@ -92,6 +92,29 @@ class ReportGeneratePDF(DetailView):
         
         document = Document()
         
+        """
+        Header
+        """
+        head = document.add_heading(report.title, 0)
+        head.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        
+        paragraph = document.add_paragraph('Organization: \nGSK')
+        paragraph_format = paragraph.paragraph_format
+        paragraph_format.alignment = WD_ALIGN_PARAGRAPH.LEFT
+        
+        paragraph = document.add_paragraph()
+        paragraph = document.add_paragraph()
+        paragraph = document.add_paragraph()
+        paragraph = document.add_paragraph()
+        paragraph = document.add_paragraph()
+        paragraph = document.add_paragraph()
+        
+        
+        
+        p = document.add_paragraph()
+        run = p.add_run()
+        run.add_break(WD_BREAK.PAGE)
+        
         
         """
              GENE LEVEL
