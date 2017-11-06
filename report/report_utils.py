@@ -122,8 +122,14 @@ class ReportGeneratePDF(DetailView):
         df_up = df_output.copy()
         df_down = df_output.copy()
         df_tox = df_output.copy()
-        df_down.sort_values(by="PAS", ascending=True, inplace=True)
-        df_up.sort_values(by="PAS", ascending=False, inplace=True)
+        try:
+            df_down.sort_values(by="PAS", ascending=True, inplace=True)
+        except:
+            df_down.sort_values(by="N6948-21-1_20000nM", ascending=True, inplace=True)
+        try:
+            df_up.sort_values(by="PAS", ascending=False, inplace=True)
+        except:
+            df_down.sort_values(by="N6948-21-1_20000nM", ascending=True, inplace=True)
         df_up =  pd.DataFrame(df_up[:20])
         df_down = pd.DataFrame(df_down[:20])
             
