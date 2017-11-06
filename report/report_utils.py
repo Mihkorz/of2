@@ -110,8 +110,10 @@ class ReportGeneratePDF(DetailView):
             
         file_name = 'biomap_diversity.pathway_scores.csv' 
         df_path = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/'+file_name, sep=None)
-        df_path.columns = ['Pathway', 'PAS']
-            
+        try:
+            df_path.columns = ['Pathway', 'PAS']
+        except:
+            df_path.columns = ['Pathway', 'N6948-21-1_20000nM', 'N12721-44-A1_20000nM']
         
         df_output = df_path        
         
