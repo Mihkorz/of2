@@ -92,77 +92,7 @@ class ReportGeneratePDF(DetailView):
         
         document = Document()
         
-        """
-        PATHWAY LEVEL
-        """ 
         
-        head = document.add_heading("Pathway level analysis", 2)
-        head.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        p = document.add_paragraph()
-        p = document.add_paragraph('Here we collected all BioMAP samples in complete diversity set and all mapped biomarkers to corresponding genes, then for each biomarker we calculated the ratio "Log Ratio"/"Significance prediction envelope at 95%" aggregated", after that for genes present across several assays we took the mean of that ratio and mapped the resulting values onto the pathway database.')
-        p = document.add_paragraph()
-        
-        
-            
-        p = document.add_paragraph()
-        p = document.add_heading('BioMAP diversity data', level=3)
-        p = document.add_paragraph() 
-            
-        file_name = 'biomap_diversity.pathway_scores.csv' 
-        df_path = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/'+file_name, sep='\t')
-            
-        df1_tumour = df_path[[x for x in df_path.columns if 'Tumour' in x]]
-        s1_tumour = df1_tumour.mean(axis=1).round(decimals=2)
-            
-        df_output = pd.DataFrame()        
-        df_output['PAS'] = s1_tumour
-            
-            
-        df_up = df_output.copy()
-        df_down = df_output.copy()
-        df_tox = df_output.copy()
-        df_down.sort_values(by="PAS", ascending=True, inplace=True)
-        df_up.sort_values(by="PAS", ascending=False, inplace=True)
-        df_up =  pd.DataFrame(df_up[:20])
-        df_down = pd.DataFrame(df_down[:20])
-            
-        df_tox = df_tox.ix[self.tox_paths] 
-            
-            
-        df_up.reset_index(inplace=True)
-        df_up.columns = ['Pathway', 'PAS']
-            
-        paragraph1 = document.add_heading('Top 20 up-regulated pathways', level=4)
-            
-        t = document.add_table(df_up.shape[0]+1, df_up.shape[1])            
-        t.style = 'TableGrid'
-        # add the header rows.
-        for j in range(df_up.shape[-1]):
-            t.cell(0,j).text = df_up.columns[j]
-
-        # add the rest of the data frame
-        for i in range(df_up.shape[0]):
-            for j in range(df_up.shape[-1]):
-                t.cell(i+1,j).text = str(df_up.values[i,j])
-            
-        ############################## DOWN
-        df_down.reset_index(inplace=True)
-        df_down.columns = ['Pathway', 'PAS']
-            
-            
-        #paragraph = doc.add_paragraph(col)
-        paragraph1 = document.add_heading('Top 20 down-regulated pathways', level=4)
-            
-        t = document.add_table(df_down.shape[0]+1, df_down.shape[1])            
-        t.style = 'TableGrid'
-        # add the header rows.
-        for j in range(df_down.shape[-1]):
-            t.cell(0,j).text = df_down.columns[j]
-
-        # add the rest of the data frame
-        for i in range(df_down.shape[0]):
-            for j in range(df_down.shape[-1]):
-                t.cell(i+1,j).text = str(df_down.values[i,j])
                     
          
         head = document.add_heading("Toxcast analysis", 2)
