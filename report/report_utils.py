@@ -155,19 +155,7 @@ class ReportGeneratePDF(DetailView):
         
             
             
-        #paragraph = doc.add_paragraph(col)
-        paragraph1 = document.add_heading('Top 20 down-regulated pathways', level=4)
-            
-        t = document.add_table(df_down.shape[0]+1, df_down.shape[1])            
-        t.style = 'TableGrid'
-        # add the header rows.
-        for j in range(df_down.shape[-1]):
-            t.cell(0,j).text = df_down.columns[j]
-
-        # add the rest of the data frame
-        for i in range(df_down.shape[0]):
-            for j in range(df_down.shape[-1]):
-                t.cell(i+1,j).text = str(df_down.values[i,j])
+        
                     
          
         head = document.add_heading("Toxcast analysis", 2)
