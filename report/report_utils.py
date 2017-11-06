@@ -163,7 +163,74 @@ class ReportGeneratePDF(DetailView):
                 for j in range(df_down.shape[-1]):
                     t.cell(i+1,j).text = str(df_down.values[i,j])
                     
-           
+         
+          head = document.add_heading("Toxcast analysis", 2)
+        head.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        p = document.add_paragraph()
+        p = document.add_paragraph('We collected ToxCast data for SAg and 3C systems from EPA. For SAg we found 10 common biomarkers that are present in investigated dataset, these include: CD38, CD40, CD69, CD62E/E-Selectin, CXCL8/IL-8, CCL2/MCP-1, CXCL9/MIG, PBMC Cytotoxicity, Proliferation, SRB. For 3C we found 12 common biomarkers: CD62E/E-Selectin, CXCL8/IL-8, CCL2/MCP-1, CXCL9/MIG, PBMC Cytotoxicity, Proliferation, SRB, CD54/ICAM-1, HLA-DR, CD141/Thrombomodulin, CD142/Tissue Factor, CD106/VCAM-1, CD87/uPAR. For each drug perturbation from BioMAP we correlated log-ratio/conf.envelope to downward curve-fit analysis readout from ToxCast. Results can be found in two following tables.')
+        p = document.add_paragraph('Input:\n Biomap datatable (Download file):\n biomarkers as rows, perturbations as columns; ToxCast tables with readouts for 3C \n and SAg: \n biomarkers as columns, perturbations as rows.')
+        p = document.add_paragraph('Processing: Within each of the two systems (3C, SAg) for each compound perturbation pair (GSKvsToxCast) rows (biomarkers) from BioMAP datatable were matched to columns (biomarkers) of ToxCast table. For each compound pair (GSKvsToxCast) this resulted in two vectors of length 10 (in case of SAg system) and 12 (in case of 3C system). Pearson correlation was calculated for all possible compound perturbation pairs (GSKvsToxCast).')
+        p = document.add_paragraph('Output: A table (with ToxCast perturbations as rows and BioMAP perturbations as columns) populated with Pearson correlation values. As the calculations for 3C and SAg were done independently, two separate tables were generated.')
+        
+        
+        file_name = 'granular_toxcast_3C.txt' 
+        df_3c = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/'+file_name, sep='\t')
+        file_name = 'granular_toxcast_SAg.txt' 
+        df_sag = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/'+file_name, sep='\t')
+        
+        df_3c.fillna(0, inplace=True)
+        df_3c = df_3c.head(100)
+        df_val = df_3c.iloc[:,2:]
+        df_val= df_val.round(decimals=2)
+        
+        df_output = df_3c.iloc[:, :2]
+        df_output = pd.concat([df_output, df_val], axis=1)
+        
+        p = document.add_paragraph()
+        p = document.add_heading('3C results', level=4)
+        p = document.add_paragraph()
+        
+        t = document.add_table(df_output.shape[0]+1, df_output.shape[1])   
+                 
+        t.style = 'TableGrid'
+        # add the header rows.
+        for j in range(df_output.shape[-1]):
+            print "table head "+ str(j)
+            t.cell(0,j).text = df_output.columns[j]
+
+        # add the rest of the data frame
+        for i in range(df_output.shape[0]):
+            print "table body "+ str(i)
+            for j in range(df_output.shape[-1]):
+                t.cell(i+1,j).text = str(df_output.values[i,j])
+        
+        
+        
+        df_sag.fillna(0, inplace=True)
+        df_sag = df_sag.head(100)
+        df_val = df_sag.iloc[:,2:]
+        df_val= df_val.round(decimals=2)
+        
+        df_output = df_sag.iloc[:, :2]
+        df_output = pd.concat([df_output, df_val], axis=1)
+        
+        p = document.add_paragraph()
+        p = document.add_heading('SAg results', level=4)
+        p = document.add_paragraph()
+        
+        t = document.add_table(df_output.shape[0]+1, df_output.shape[1])   
+                 
+        t.style = 'TableGrid'
+        # add the header rows.
+        for j in range(df_output.shape[-1]):
+            print "table head "+ str(j)
+            t.cell(0,j).text = df_output.columns[j]
+
+        # add the rest of the data frame
+        for i in range(df_output.shape[0]):
+            print "table body "+ str(i)
+            for j in range(df_output.shape[-1]):
+                t.cell(i+1,j).text = str(df_output.values[i,j])  
         
         document.save(settings.MEDIA_ROOT+'/report-pdf/'+report.slug+'.docx')
         print "path biomap done"
