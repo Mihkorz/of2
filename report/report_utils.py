@@ -92,6 +92,43 @@ class ReportGeneratePDF(DetailView):
         
         document = Document()
         
+        
+        """
+        Hit qualification
+        """
+        head = document.add_heading("Hit qualification", 2)
+        head.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        p = document.add_paragraph()
+        
+        p = document.add_paragraph('Here we utilised our already established methodology to estimate the probability of failure in clinical trials (Artemov et al., 2016). On Figures 1 and 2 you can see the overall statistic for provided L1000 dataset. In "Hit qualification table" you can see the actual score of drug perturbations analysed in this report. ')
+        
+        document.add_picture(settings.MEDIA_ROOT+'/report-portal/gsk_prj4_t1/hit1.png', width=Inches(5.0))
+        p = document.add_paragraph('Figure 1. Probability of success for drug perturbations from provided L1000 dataset.')
+        document.add_picture(settings.MEDIA_ROOT+'/report-portal/gsk_prj4_t1/hit2.png', width=Inches(5.0))
+        p = document.add_paragraph('Figure 2. Probability of failure for drug perturbations from provided L1000 dataset.')
+        head = document.add_heading("Hit qualification", 4)
+        
+        file_name = 'clinical_trial/predCT.csv'
+        df = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/'+file_name)
+        
+        ############################## DOWN
+        t = document.add_table(df.shape[0]+1, df.shape[1])            
+        t.style = 'TableGrid'
+        # add the header rows.
+        for j in range(df.shape[-1]):
+            t.cell(0,j).text = df.columns[j]
+
+        # add the rest of the data frame
+        for i in range(df.shape[0]):
+            for j in range(df.shape[-1]):
+                t.cell(i+1,j).text = str(df.values[i,j])
+                
+        
+        document.save(settings.MEDIA_ROOT+'/report-pdf/Hit/'+report.slug+'.docx')
+        print "hit done"
+        
+        raise Exception('HIT')
+        # End of HIT        
          
         """
         Header
