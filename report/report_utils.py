@@ -92,6 +92,239 @@ class ReportGeneratePDF(DetailView):
         
         document = Document()
         
+        
+        """
+             GENE LEVEL
+        """
+        
+        head = document.add_heading("Gene level analysis", 2)
+        head.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        p = document.add_paragraph()
+        p = document.add_paragraph("Provided samples were distributed into comparison groups. Each comparison included stimulated or perturbed data and unstimulated controls. For gene level analysis each comparison was analyzed by limma algorithm.")
+        p = document.add_paragraph()
+        
+        
+        for gene_group in self.object.genegroup_set.all():
+            p = document.add_paragraph()
+            p = document.add_paragraph(gene_group.name+" vs Normal")
+            p = document.add_paragraph() 
+            
+            df_gene = pd.read_csv(gene_group.doc_logfc)
+            df_gene_copy = df_gene.copy()
+            df_gene = df_gene[['SYMBOL', 'logFC', 'adj.P.Val']]
+            
+              
+            
+            df_gene = df_gene[(df_gene['adj.P.Val']<report.pval_theshold_plot) & (np.absolute(df_gene['logFC'])>report.logcf_theshold_plot)]
+            if df_gene.empty:
+                df_gene = df_gene_copy[(df_gene_copy['P.Value']<report.pval_theshold_plot) & (np.absolute(df_gene_copy['logFC'])>report.logcf_theshold_plot)]    
+                df_gene['adj.P.Val'] = df_gene['P.Value']
+                df_gene = df_gene[['SYMBOL', 'logFC', 'adj.P.Val']] 
+            
+            df_gene['logFC'] = df_gene['logFC'].round(decimals=2)
+            df_gene['adj.P.Val'] = df_gene['adj.P.Val'].map('{:,.2e}'.format)
+            df_gene['adj.P.Val'] = df_gene['adj.P.Val'].apply(str)
+            
+            df_up = df_gene.copy()
+            df_down = df_gene.copy()
+            df_down.sort_values(by=['logFC'], ascending=True, inplace=True)
+            df_up.sort_values(by=['logFC'], ascending=False, inplace=True)
+            df_up =  pd.DataFrame(df_up[:20])
+            df_down = pd.DataFrame(df_down[:20])
+            
+            df_output = df_up.append(df_down)
+            df_output.drop_duplicates(inplace=True)
+           
+            document.add_picture(settings.MEDIA_ROOT+'/report-pdf/oncoPNG/'+report.slug+'/'+gene_group.name+'.png', width=Inches(5.0))
+            
+            p = document.add_heading('Top 20 up-regulated and down-regulated genes', level=4)
+            
+            t = document.add_table(df_output.shape[0]+1, df_output.shape[1])            
+            t.style = 'TableGrid'
+            # add the header rows.
+            for j in range(df_output.shape[-1]):
+                t.cell(0,j).text = df_output.columns[j]
+
+            # add the rest of the data frame
+            for i in range(df_output.shape[0]):
+                for j in range(df_output.shape[-1]):
+                    t.cell(i+1,j).text = str(df_output.values[i,j])
+            
+            #raise Exception(gene_group)
+        
+        # End of GENE LEVEL
+        
+        print "Gene done"
+        
+        """
+        PATHWAY LEVEL
+        """ 
+        
+        head = document.add_heading("Pathway level analysis", 2)
+        head.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        p = document.add_paragraph()
+        p = document.add_paragraph("Pathway level analysis was performed on several curated pathway databases (KEGG, NCI, Reactome, SABiosciences) comprising 3117 signaling and metabolic pathways in total. To estimate pathway activation we used iPANDA algorithm.")
+        p = document.add_paragraph()
+        
+        for path_group in self.object.pathwaygroup_set.all():
+            
+            p = document.add_paragraph()
+            p = document.add_heading(path_group.name, level=3)
+            p = document.add_paragraph() 
+            
+            df_path = pd.read_csv(path_group.document, sep='\t', index_col='Pathway')
+            
+            df1_tumour = df_path[[x for x in df_path.columns if 'Tumour' in x]]
+            s1_tumour = df1_tumour.mean(axis=1).round(decimals=2)
+            
+            df_output = pd.DataFrame()        
+            df_output['PAS'] = s1_tumour
+            
+            
+            df_up = df_output.copy()
+            df_down = df_output.copy()
+            df_tox = df_output.copy()
+            df_down.sort_values(by="PAS", ascending=True, inplace=True)
+            df_up.sort_values(by="PAS", ascending=False, inplace=True)
+            df_up =  pd.DataFrame(df_up[:20])
+            df_down = pd.DataFrame(df_down[:20])
+            
+            df_tox = df_tox.ix[self.tox_paths] 
+            
+            
+            df_up.reset_index(inplace=True)
+            df_up.columns = ['Pathway', 'PAS']
+            
+            paragraph1 = document.add_heading('Top 20 up-regulated pathways', level=4)
+            
+            t = document.add_table(df_up.shape[0]+1, df_up.shape[1])            
+            t.style = 'TableGrid'
+            # add the header rows.
+            for j in range(df_up.shape[-1]):
+                t.cell(0,j).text = df_up.columns[j]
+
+            # add the rest of the data frame
+            for i in range(df_up.shape[0]):
+                for j in range(df_up.shape[-1]):
+                    t.cell(i+1,j).text = str(df_up.values[i,j])
+            
+            ############################## DOWN
+            df_down.reset_index(inplace=True)
+            df_down.columns = ['Pathway', 'PAS']
+            
+            
+            #paragraph = doc.add_paragraph(col)
+            paragraph1 = document.add_heading('Top 20 down-regulated pathways', level=4)
+            
+            t = document.add_table(df_down.shape[0]+1, df_down.shape[1])            
+            t.style = 'TableGrid'
+            # add the header rows.
+            for j in range(df_down.shape[-1]):
+                t.cell(0,j).text = df_down.columns[j]
+
+            # add the rest of the data frame
+            for i in range(df_down.shape[0]):
+                for j in range(df_down.shape[-1]):
+                    t.cell(i+1,j).text = str(df_down.values[i,j])
+                    
+            ############################## TOX
+            df_tox.reset_index(inplace=True)
+            df_tox.columns = ['Pathway', 'PAS']
+            
+            
+            #paragraph = doc.add_paragraph(col)
+            paragraph1 = document.add_heading('Tox signaling pathways', level=4)
+            
+            t = document.add_table(df_tox.shape[0]+1, df_tox.shape[1])            
+            t.style = 'TableGrid'
+            # add the header rows.
+            for j in range(df_tox.shape[-1]):
+                t.cell(0,j).text = df_tox.columns[j]
+
+            # add the rest of the data frame
+            for i in range(df_tox.shape[0]):
+                for j in range(df_tox.shape[-1]):
+                    t.cell(i+1,j).text = str(df_tox.values[i,j])
+            
+            #raise Exception('path stop')
+        
+        
+        print "path done"
+        ################################ BioMAP diversity data
+        
+        head = document.add_heading("Pathway level analysis. BioMAP diversity data", 2)
+        head.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        p = document.add_paragraph()
+        p = document.add_paragraph('Here we collected all BioMAP samples in complete diversity set and all mapped biomarkers to corresponding genes, then for each biomarker we calculated the ratio "Log Ratio"/"Significance prediction envelope at 95%" aggregated", after that for genes present across several assays we took the mean of that ratio and mapped the resulting values onto the pathway database.')
+        p = document.add_paragraph()
+        
+        file_name = 'biomap_diversity.pathway_scores.csv'
+        df_path = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/'+file_name, index_col='PATHWAY', encoding='utf-8')
+        df_path.fillna(0, inplace=True)
+        
+        
+        
+        for path_group in df_path.columns:
+            
+            df_path1 = pd.DataFrame(df_path[path_group])
+            df_path1.columns = [['PAS']]
+            
+            p = document.add_paragraph()
+            p = document.add_heading(path_group, level=3)
+            p = document.add_paragraph()
+            
+            df_up = df_path1.copy()
+            df_down = df_path1.copy()
+            df_down.sort_values(by="PAS", ascending=True, inplace=True)
+            df_up.sort_values(by="PAS", ascending=False, inplace=True)
+            df_up =  pd.DataFrame(df_up[:20])
+            df_down = pd.DataFrame(df_down[:20])
+
+            df_up.reset_index(inplace=True)
+            df_up.columns = ['Pathway', 'PAS']
+            df_up['Pathway'] = df_up['Pathway'].map(lambda x: x.encode('unicode-escape').decode('utf-8'))
+            
+            paragraph1 = document.add_heading('Top 20 up-regulated pathways', level=4)
+            
+            t = document.add_table(df_up.shape[0]+1, df_up.shape[1])            
+            t.style = 'TableGrid'
+            # add the header rows.
+            for j in range(df_up.shape[-1]):
+                t.cell(0,j).text = df_up.columns[j]
+
+            # add the rest of the data frame
+            for i in range(df_up.shape[0]):
+                for j in range(df_up.shape[-1]):
+                    t.cell(i+1,j).text = str(df_up.values[i,j])
+            
+            ############################## DOWN
+            df_down.reset_index(inplace=True)
+            df_down.columns = ['Pathway', 'PAS']
+            df_down['Pathway'] = df_down['Pathway'].map(lambda x: x.encode('unicode-escape').decode('utf-8'))
+            
+            
+            #paragraph = doc.add_paragraph(col)
+            paragraph1 = document.add_heading('Top 20 down-regulated pathways', level=4)
+            
+            t = document.add_table(df_down.shape[0]+1, df_down.shape[1])            
+            t.style = 'TableGrid'
+            # add the header rows.
+            for j in range(df_down.shape[-1]):
+                t.cell(0,j).text = df_down.columns[j]
+
+            # add the rest of the data frame
+            for i in range(df_down.shape[0]):
+                for j in range(df_down.shape[-1]):
+                    t.cell(i+1,j).text = str(df_down.values[i,j]) 
+
+        #end of BioMAP diversity data
+        document.save(settings.MEDIA_ROOT+'/report-pdf/'+report.slug+'.docx')
+        print "path biomap done"
+        
+        raise Exception('GENE PATH')
+        # END OF PATHWAY
+        
+        
         """
         PATHWAY LEVEL
         """ 
@@ -360,229 +593,7 @@ class ReportGeneratePDF(DetailView):
         
         
         
-        """
-             GENE LEVEL
-        """
         
-        head = document.add_heading("Gene level analysis", 2)
-        head.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        p = document.add_paragraph()
-        p = document.add_paragraph("Provided samples were distributed into comparison groups. Each comparison included stimulated or perturbed data and unstimulated controls. For gene level analysis each comparison was analyzed by limma algorithm.")
-        p = document.add_paragraph()
-        
-        
-        for gene_group in self.object.genegroup_set.all():
-            p = document.add_paragraph()
-            p = document.add_paragraph(gene_group.name+" vs Normal")
-            p = document.add_paragraph() 
-            
-            df_gene = pd.read_csv(gene_group.doc_logfc)
-            df_gene = df_gene[['SYMBOL', 'logFC', 'adj.P.Val']]
-            
-            df_gene = df_gene[(df_gene['adj.P.Val']<report.pval_theshold_plot) & (np.absolute(df_gene['logFC'])>report.logcf_theshold_plot)]
-            
-            df_gene['logFC'] = df_gene['logFC'].round(decimals=2)
-            df_gene['adj.P.Val'] = df_gene['adj.P.Val'].map('{:,.2e}'.format)
-            df_gene['adj.P.Val'] = df_gene['adj.P.Val'].apply(str)
-            
-            df_up = df_gene.copy()
-            df_down = df_gene.copy()
-            df_down.sort_values(by=['logFC'], ascending=True, inplace=True)
-            df_up.sort_values(by=['logFC'], ascending=False, inplace=True)
-            df_up =  pd.DataFrame(df_up[:20])
-            df_down = pd.DataFrame(df_down[:20])
-            
-            df_output = df_up.append(df_down)
-            df_output.drop_duplicates(inplace=True)
-            
-            
-            document.add_picture(settings.MEDIA_ROOT+'/report-pdf/oncoPNG/'+report.slug+'/'+gene_group.name+'.png', width=Inches(5.0))
-            
-            p = document.add_heading('Top 20 up-regulated and down-regulated genes', level=4)
-            
-            t = document.add_table(df_output.shape[0]+1, df_output.shape[1])            
-            t.style = 'TableGrid'
-            # add the header rows.
-            for j in range(df_output.shape[-1]):
-                t.cell(0,j).text = df_output.columns[j]
-
-            # add the rest of the data frame
-            for i in range(df_output.shape[0]):
-                for j in range(df_output.shape[-1]):
-                    t.cell(i+1,j).text = str(df_output.values[i,j])
-            
-            #raise Exception(gene_group)
-        
-        # End of GENE LEVEL
-        
-        print "Gene done"
-        
-        """
-        PATHWAY LEVEL
-        """ 
-        
-        head = document.add_heading("Pathway level analysis", 2)
-        head.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        p = document.add_paragraph()
-        p = document.add_paragraph("Pathway level analysis was performed on several curated pathway databases (KEGG, NCI, Reactome, SABiosciences) comprising 3117 signaling and metabolic pathways in total. To estimate pathway activation we used iPANDA algorithm.")
-        p = document.add_paragraph()
-        
-        for path_group in self.object.pathwaygroup_set.all():
-            
-            p = document.add_paragraph()
-            p = document.add_heading(path_group.name, level=3)
-            p = document.add_paragraph() 
-            
-            df_path = pd.read_csv(path_group.document, sep='\t', index_col='Pathway')
-            
-            df1_tumour = df_path[[x for x in df_path.columns if 'Tumour' in x]]
-            s1_tumour = df1_tumour.mean(axis=1).round(decimals=2)
-            
-            df_output = pd.DataFrame()        
-            df_output['PAS'] = s1_tumour
-            
-            
-            df_up = df_output.copy()
-            df_down = df_output.copy()
-            df_tox = df_output.copy()
-            df_down.sort_values(by="PAS", ascending=True, inplace=True)
-            df_up.sort_values(by="PAS", ascending=False, inplace=True)
-            df_up =  pd.DataFrame(df_up[:20])
-            df_down = pd.DataFrame(df_down[:20])
-            
-            df_tox = df_tox.ix[self.tox_paths] 
-            
-            
-            df_up.reset_index(inplace=True)
-            df_up.columns = ['Pathway', 'PAS']
-            
-            paragraph1 = document.add_heading('Top 20 up-regulated pathways', level=4)
-            
-            t = document.add_table(df_up.shape[0]+1, df_up.shape[1])            
-            t.style = 'TableGrid'
-            # add the header rows.
-            for j in range(df_up.shape[-1]):
-                t.cell(0,j).text = df_up.columns[j]
-
-            # add the rest of the data frame
-            for i in range(df_up.shape[0]):
-                for j in range(df_up.shape[-1]):
-                    t.cell(i+1,j).text = str(df_up.values[i,j])
-            
-            ############################## DOWN
-            df_down.reset_index(inplace=True)
-            df_down.columns = ['Pathway', 'PAS']
-            
-            
-            #paragraph = doc.add_paragraph(col)
-            paragraph1 = document.add_heading('Top 20 down-regulated pathways', level=4)
-            
-            t = document.add_table(df_down.shape[0]+1, df_down.shape[1])            
-            t.style = 'TableGrid'
-            # add the header rows.
-            for j in range(df_down.shape[-1]):
-                t.cell(0,j).text = df_down.columns[j]
-
-            # add the rest of the data frame
-            for i in range(df_down.shape[0]):
-                for j in range(df_down.shape[-1]):
-                    t.cell(i+1,j).text = str(df_down.values[i,j])
-                    
-            ############################## TOX
-            df_tox.reset_index(inplace=True)
-            df_tox.columns = ['Pathway', 'PAS']
-            
-            
-            #paragraph = doc.add_paragraph(col)
-            paragraph1 = document.add_heading('Tox signaling pathways', level=4)
-            
-            t = document.add_table(df_tox.shape[0]+1, df_tox.shape[1])            
-            t.style = 'TableGrid'
-            # add the header rows.
-            for j in range(df_tox.shape[-1]):
-                t.cell(0,j).text = df_tox.columns[j]
-
-            # add the rest of the data frame
-            for i in range(df_tox.shape[0]):
-                for j in range(df_tox.shape[-1]):
-                    t.cell(i+1,j).text = str(df_tox.values[i,j])
-            
-            #raise Exception('path stop')
-        
-        document.save(settings.MEDIA_ROOT+'/report-pdf/'+report.slug+'.docx')
-        print "path biomap done"
-        
-        raise Exception('GENE PATH')
-        print "path done"
-        ################################ BioMAP diversity data
-        
-        head = document.add_heading("Pathway level analysis. BioMAP diversity data", 2)
-        head.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        p = document.add_paragraph()
-        p = document.add_paragraph('Here we collected all BioMAP samples in complete diversity set and all mapped biomarkers to corresponding genes, then for each biomarker we calculated the ratio "Log Ratio"/"Significance prediction envelope at 95%" aggregated", after that for genes present across several assays we took the mean of that ratio and mapped the resulting values onto the pathway database.')
-        p = document.add_paragraph()
-        
-        file_name = 'biomap_diversity.pathway_scores.csv'
-        df_path = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/'+file_name, index_col='PATHWAY', encoding='utf-8')
-        df_path.fillna(0, inplace=True)
-        
-        
-        
-        for path_group in df_path.columns:
-            
-            df_path1 = pd.DataFrame(df_path[path_group])
-            df_path1.columns = [['PAS']]
-            
-            p = document.add_paragraph()
-            p = document.add_heading(path_group, level=3)
-            p = document.add_paragraph()
-            
-            df_up = df_path1.copy()
-            df_down = df_path1.copy()
-            df_down.sort_values(by="PAS", ascending=True, inplace=True)
-            df_up.sort_values(by="PAS", ascending=False, inplace=True)
-            df_up =  pd.DataFrame(df_up[:20])
-            df_down = pd.DataFrame(df_down[:20])
-
-            df_up.reset_index(inplace=True)
-            df_up.columns = ['Pathway', 'PAS']
-            df_up['Pathway'] = df_up['Pathway'].map(lambda x: x.encode('unicode-escape').decode('utf-8'))
-            
-            paragraph1 = document.add_heading('Top 20 up-regulated pathways', level=4)
-            
-            t = document.add_table(df_up.shape[0]+1, df_up.shape[1])            
-            t.style = 'TableGrid'
-            # add the header rows.
-            for j in range(df_up.shape[-1]):
-                t.cell(0,j).text = df_up.columns[j]
-
-            # add the rest of the data frame
-            for i in range(df_up.shape[0]):
-                for j in range(df_up.shape[-1]):
-                    t.cell(i+1,j).text = str(df_up.values[i,j])
-            
-            ############################## DOWN
-            df_down.reset_index(inplace=True)
-            df_down.columns = ['Pathway', 'PAS']
-            df_down['Pathway'] = df_down['Pathway'].map(lambda x: x.encode('unicode-escape').decode('utf-8'))
-            
-            
-            #paragraph = doc.add_paragraph(col)
-            paragraph1 = document.add_heading('Top 20 down-regulated pathways', level=4)
-            
-            t = document.add_table(df_down.shape[0]+1, df_down.shape[1])            
-            t.style = 'TableGrid'
-            # add the header rows.
-            for j in range(df_down.shape[-1]):
-                t.cell(0,j).text = df_down.columns[j]
-
-            # add the rest of the data frame
-            for i in range(df_down.shape[0]):
-                for j in range(df_down.shape[-1]):
-                    t.cell(i+1,j).text = str(df_down.values[i,j]) 
-
-        #end of BioMAP diversity data
-        # END OF PATHWAY
         
         
         
