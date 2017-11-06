@@ -109,7 +109,7 @@ class ReportGeneratePDF(DetailView):
         p = document.add_paragraph() 
             
         file_name = 'biomap_diversity.pathway_scores.csv' 
-        df_path = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/'+file_name, sep='\t')
+        df_path = pd.read_csv(settings.MEDIA_ROOT+'/report-portal/'+report.slug+'/'+file_name, sep=None)
         df_path.columns = ['Pathway', 'PAS']
             
         
