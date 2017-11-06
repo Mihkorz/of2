@@ -128,8 +128,7 @@ class ReportGeneratePDF(DetailView):
         df_tox = df_tox.ix[self.tox_paths] 
             
             
-        df_up.reset_index(inplace=True)
-        df_up.columns = ['Pathway', 'PAS']
+        
             
         paragraph1 = document.add_heading('Top 20 up-regulated pathways', level=4)
             
@@ -145,8 +144,7 @@ class ReportGeneratePDF(DetailView):
                 t.cell(i+1,j).text = str(df_up.values[i,j])
             
         ############################## DOWN
-        df_down.reset_index(inplace=True)
-        df_down.columns = ['Pathway', 'PAS']
+        
             
             
         #paragraph = doc.add_paragraph(col)
