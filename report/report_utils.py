@@ -164,7 +164,7 @@ class ReportGeneratePDF(DetailView):
                     t.cell(i+1,j).text = str(df_down.values[i,j])
                     
          
-          head = document.add_heading("Toxcast analysis", 2)
+        head = document.add_heading("Toxcast analysis", 2)
         head.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
         p = document.add_paragraph()
         p = document.add_paragraph('We collected ToxCast data for SAg and 3C systems from EPA. For SAg we found 10 common biomarkers that are present in investigated dataset, these include: CD38, CD40, CD69, CD62E/E-Selectin, CXCL8/IL-8, CCL2/MCP-1, CXCL9/MIG, PBMC Cytotoxicity, Proliferation, SRB. For 3C we found 12 common biomarkers: CD62E/E-Selectin, CXCL8/IL-8, CCL2/MCP-1, CXCL9/MIG, PBMC Cytotoxicity, Proliferation, SRB, CD54/ICAM-1, HLA-DR, CD141/Thrombomodulin, CD142/Tissue Factor, CD106/VCAM-1, CD87/uPAR. For each drug perturbation from BioMAP we correlated log-ratio/conf.envelope to downward curve-fit analysis readout from ToxCast. Results can be found in two following tables.')
