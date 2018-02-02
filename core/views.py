@@ -1077,6 +1077,28 @@ class Test(TemplateView):
     
     def get_context_data(self, **kwargs):
         
+        sets = ['A375_drug_BRD-K55703048_24h_10um', 'A375_drug_BRD-K55703048_6h_10um', 'A549_drug_BRD-K55703048_6h_10um', 
+                'HCC515_drug_BRD-K55703048_6h_10um', 'HEPG2_drug_BRD-K55703048_6h_10um', 'HT29_drug_BRD-K55703048_6h_10um', 
+                'MCF7_drug_BRD-K55703048_24h_10um', 'MCF7_drug_BRD-K55703048_6h_10um', 'PC3_drug_BRD-K55703048_24h_10um', 
+                'PC3_drug_BRD-K55703048_6h_10um', 'VCAP_drug_BRD-K55703048_24h_10um', 'VCAP_drug_BRD-K55703048_6h_10um']
+        
+        
+        for sss in sets:
+            
+            df = read_csv('/home/mikhail/Downloads/Latrepirdine/pathways/'+sss+'_score_pv.tab', sep='\t', index_col='SYMBOL')
+            
+            df.index.rename('Pathway', inplace=True)
+            
+            df.rename(columns={'score_mean': 'Tumour_score_mean'}, inplace=True)
+            
+            #df['logFC'] = np.log2(df['logFC'])
+            
+            df.to_csv('/home/mikhail/Downloads/Latrepirdine/pathways/processed/'+sss+'_score_pv.tab')
+            
+            #raise Exception('cycle')
+        
+        raise Exception('Phil report')
+        
         from sklearn import preprocessing
         from pandas import concat
         ppp = Pathway.objects.filter(organism='human', database='aging')

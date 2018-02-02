@@ -92,6 +92,9 @@ class ReportDetail(DetailView):
         
         if 'estee_lauder' in self.get_object().slug and (self.is_member(user, 'Estee') or user.is_staff):            
             self.template_name = 'report/report_detail_abovebeyond.html'
+            
+        if 'latrepirdine' in self.get_object().slug and (self.is_member(user, 'Juvenescence') or user.is_staff):            
+            self.template_name = 'report/report_detail_latrepirdine.html'
         
                 
                 
@@ -3047,6 +3050,9 @@ class ReportTest(TemplateView):
         return super(ReportTest, self).dispatch(request, *args, **kwargs)
     
     def get(self, request, *args, **kwargs):
+        
+        
+        raise Exception('hack')
         
         import os
         #######################  auto create report DEEP LEARNING #############

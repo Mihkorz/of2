@@ -67,6 +67,7 @@ from report.views import ReportList, ReportDetail, ReportTest, \
                          ReportTargetInferenceJson, ReportMesenteryJson, ReportDeepGSKJson, \
                          ReportAjaxPathwayVennTableGSK, ReportShowAjaxTableJson, ReportShowAjaxTableColumns
 from report.report_utils import ReportGeneratePDF
+from report.hack import Hackathon
 
 from food.views import FoodIndex, FoodSearch
 
@@ -278,4 +279,6 @@ urlpatterns = patterns('',
 
     ################### Housekeeping ###############################################
     url(r'^housekeeping/', include('housekeeping.urls')),
+    
+    url(r'^hack/$', Hackathon.as_view(), name="hack"),
 )
