@@ -95,6 +95,9 @@ class ReportDetail(DetailView):
             
         if 'latrepirdine' in self.get_object().slug and (self.is_member(user, 'Juvenescence') or self.is_member(user, 'INSWX') or user.is_staff):            
             self.template_name = 'report/report_detail_latrepirdine.html'
+            
+        if 'hnscc' in self.get_object().slug and (self.is_member(user, 'Hopkins') or user.is_staff):            
+            self.template_name = 'report/report_detail_hnscc_metastasis.html'
         
                 
                 
@@ -316,6 +319,7 @@ class ReportGeneTableJson(TemplateView):
              
         
         output_json = df_gene.to_json(orient='values')
+        #raise Exception('science')
         response_data = {'data': json.loads(output_json)}
         
         return HttpResponse(json.dumps(response_data), content_type="application/json")
