@@ -779,7 +779,9 @@ class ReportPathwayTableJson(TemplateView):
                 df_output[idx] = val['0'].round(decimals=2)
                 if 'inswx-report' in report.slug:
                     df_output[str(idx)+'_pval'] = val['p_ora']
-                    #raise Exception('output')
+                if 'hnscc-lymph-nodes' in report.slug:
+                    df_output[str(idx)+'_pval'] = val['p-value']
+                    #raise Exception('hnscc-lymph-nodes')
             
             try:
                 df_output.drop(['Target_drugs_pathway'], inplace=True)
@@ -1980,6 +1982,10 @@ class ReportAjaxPathDetail(TemplateView):
 
         
         db_to_exclude = ['primary_old', 'kegg', 'kegg_10', 'kegg_adjusted_10']
+        
+        if 'hnscc-lymph-nodes' in report.slug:
+            path_name = path_name.replace('Main_', '')
+            
         
         if report.id==2:
             pathway = Pathway.objects.filter(organism=organism, name=path_name).exclude(database__in=['primary_old'])[0]

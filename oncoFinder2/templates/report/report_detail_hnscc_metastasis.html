@@ -601,6 +601,7 @@ var tbl_unique_n1_down	= $("#tbl-unique-n1-down").DataTable( {
            {%for group in report.get_all_gene_groups_as_list%}
             <!--  {% if forloop.counter > 1 %}<th>{{group}}</th> {%endif%}-->
             <th>{{group}}</th>
+            <th>{{group}} p-val</th>
            {%endfor%}
           </tr>
         </thead>  
