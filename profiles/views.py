@@ -366,7 +366,7 @@ class DocumentDetail(DetailView):
                     df = read_excel(filename, sheetname="Patient report")
                     context['patient_report'] = df.to_html(classes=['ds1b_table', 'table', 'table-striped', 'table-bordered'])
                 except:
-                    raise
+                    pass
             
                 tumour_cols = [col for col in df.columns if 'Tumour' in col]
                 context['tumour_cols'] = tumour_cols
