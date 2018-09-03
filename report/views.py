@@ -98,6 +98,9 @@ class ReportDetail(DetailView):
             
         if 'hnscc' in self.get_object().slug and (self.is_member(user, 'Hopkins') or user.is_staff):            
             self.template_name = 'report/report_detail_hnscc_metastasis.html'
+            
+        if 'trpa' in self.get_object().slug and (self.is_member(user, 'TRPA_group') or user.is_staff):            
+            self.template_name = 'report/report_detail_abovebeyond.html'
         
                 
                 
@@ -3061,6 +3064,9 @@ class ReportTest(TemplateView):
     
     def get(self, request, *args, **kwargs):
         
+        from core.models import Gene
+        
+        paths = Gene.objects.filter(name='TFEB').count()
         
         raise Exception('hack')
         
