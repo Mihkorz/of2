@@ -60,16 +60,18 @@ function drawVolcanoPlot(renderTo,  reportID, file_name){
 	// to show the axes labels. We also reserve a bit of space on the top
 	// and on the right to avoid that data points on the edges will be
 	// cut off from the SVG container.
-	var svg = d3.select("#"+renderTo).append("svg")
+	//var svg = d3.select("#"+renderTo).append("svg")
+	var svg = d3.select("div[id='"+renderTo+"']").append("svg")
 	    .style("width", width + margin.left + margin.right)
 	    .style("height", height + margin.top + margin.bottom);
+	
+	
 
 	// We create the svg group that will contain the volcano plot and
 	// we translate all the contained object
 	var plot = svg.append("g")
 	    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-	
 	d3.json('/report-portal/report-genevolcanojson/')
 	.header("X-CSRFToken", getCookie('csrftoken'))
 	.header("Content-Type", "application/x-www-form-urlencoded")
@@ -78,7 +80,7 @@ function drawVolcanoPlot(renderTo,  reportID, file_name){
 	//d3.json("/static/report/bc/GSE55633_gene_expressions_de.json", function (error, root) {	
 		if (error) throw error;
 		
-		$("#"+renderTo+' span').remove();
+		$("div[id='"+renderTo+"'] span").remove();
 		
 		// VOLCANO plot main code here!
 		

@@ -1,4 +1,6 @@
 function drawGeneBoxplot(reportID, name, renderTo, gene, categories){
+	
+	alert(renderTo)
 
 // BOX PLOT FOR GENES
 	categories+=", Reference"

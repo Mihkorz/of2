@@ -81,6 +81,9 @@ class ReportDetail(DetailView):
                 self.template_name = 'report/gsk_prj2_4d_high.html'
             if '4d_medium_low' in self.get_object().slug:
                 self.template_name = 'report/gsk_prj2_4d_medium_low.html'
+        if 'GSK_L1000_4Q18_' in self.get_object().slug and (self.is_member(user, 'GSK') or user.is_staff):
+            self.template_name = 'report/GSK_L1000_4Q18.html'
+        
         if 'nova' in self.get_object().slug and (self.is_member(user, 'Novartis') or user.is_staff):
             self.template_name = 'report/report_detail_novartis_prj1.html'
             
@@ -107,7 +110,7 @@ class ReportDetail(DetailView):
         
         
         #user.is_staff
-        #raise Exception('stop')
+        #ыфауенraise Exception('stop')
         return super(ReportDetail, self).dispatch(request, *args, **kwargs)
     
     def get_context_data(self, **kwargs):
@@ -755,7 +758,7 @@ class ReportPathwayTableJson(TemplateView):
             
             lgroups = []
             for group in report.pathwaygroup_set.all():
-                df_path = pd.read_csv(group.doc_proc.path, index_col='Pathway')
+                df_path = pd.read_csv(group.doc_proc.path, index_col=0)
                 
                 if is_metabolic:
                     df_path = df_path[df_path['Database']=='metabolism']
@@ -3063,6 +3066,42 @@ class ReportTest(TemplateView):
         return super(ReportTest, self).dispatch(request, *args, **kwargs)
     
     def get(self, request, *args, **kwargs):
+        
+        from django.core.files.storage import default_storage
+        from django.core.files.base import ContentFile
+        import os
+        
+        reports = Report.objects.filter(title__startswith='GSK_L1000_4Q18_t')
+        
+        for rep in reports:
+            
+            for gg in rep.genegroup_set.all():
+                gg.name = gg.name.replace('.', '')
+                
+                gg.save()
+             
+            for pg in rep.pathwaygroup_set.all():
+                
+                pg.name = pg.name.replace('.', '')
+                
+                df_doc = pd.read_csv(pg.document, index_col=0)
+                
+                if not 'DataBase' in df_doc.columns:
+                    df_doc['Database'] = 'database'
+                    
+                tumour_columns = [col for col in df_doc.columns if 'Tumour' in col] #get sample columns
+                
+                mean = df_doc[tumour_columns].mean(1)
+                df_doc['0'] = mean
+                df_doc.drop([x for x in df_doc.columns if 'Tumour' in x ], axis=1, inplace=True)
+                
+                path = os.path.join('report-portal', pg.report.slug, 'PAS')
+                file_proc = default_storage.save(path+"/proc_"+pg.name+".csv", ContentFile('') )
+                df_doc.to_csv(settings.MEDIA_ROOT+"/"+file_proc, encoding='utf-8')
+                pg.doc_proc = file_proc
+                            
+                pg.save()
+        raise Exception('safety stop')
         
         ####################### auto create report for GSK ####################
         import os
