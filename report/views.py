@@ -3064,11 +3064,57 @@ class ReportTest(TemplateView):
     
     def get(self, request, *args, **kwargs):
         
-        from core.models import Gene
+        ####################### auto create report for GSK ####################
+        import os
         
-        paths = Gene.objects.filter(name='TFEB').count()
+        rootdir = settings.MEDIA_ROOT+"/report-portal/"
         
-        raise Exception('hack')
+    
+        
+        for i in range(1,29):
+            
+            if i not in [30,31]:
+                
+                new_report = Report.objects.get_or_create(title='GSK_L1000_4Q18_t'+str(i),
+                                    title_short='GSK_L1000_4Q18_t'+str(i),
+                                     slug='GSK_L1000_4Q18_t'+str(i),
+                                      organization='GSK', norm_name='Normal' )
+                
+                #new_report.save()
+            
+                proj_dir = rootdir+'GSK_L1000_4Q18_t'+str(i)
+                
+                aaaa = proj_dir+'/raw/'
+                
+                #raise Exception('stop')
+        
+                for subdir, dirs, files in os.walk(proj_dir+'/raw/'):
+                
+                    for file in files:
+                        
+                        group_name = file.replace('.txt', '')
+                        
+                        new_gg = GeneGroup(name=group_name)
+                        new_gg.document.name = 'report-portal/'+'GSK_L1000_4Q18_t'+str(i)+'/raw/'+group_name+'.txt'
+                        new_gg.doc_logfc.name = 'report-portal/'+'GSK_L1000_4Q18_t'+str(i)+'/DEG/'+group_name+'.txt_DEG.txt'
+                        new_gg.report = new_report[0]
+                        new_gg.save()
+                        
+                        new_pg = PathwayGroup(name=group_name)
+                        new_pg.document.name = 'report-portal/'+'GSK_L1000_4Q18_t'+str(i)+'/PAS/'+group_name+'.txt_PAS.txt'
+                        new_pg.report = new_report[0]
+                        new_pg.save()
+                        
+                        print file
+                 
+                groups = new_report[0].genegroup_set.all()[:4]
+                vers=''
+                for gg in groups:
+                    vers+=gg.name+'vs'
+                vers = vers[:-2]
+                new_report[0].compare_groups = vers
+                new_report[0].save()
+        raise Exception('auto create report')
         
         import os
         #######################  auto create report DEEP LEARNING #############
