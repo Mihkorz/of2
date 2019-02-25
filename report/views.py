@@ -3070,6 +3070,55 @@ class ReportTest(TemplateView):
         from django.core.files.storage import default_storage
         from django.core.files.base import ContentFile
         import os
+        import itertools
+        
+        reports = Report.objects.filter(title__startswith='GSK_L1000_4Q18_t')
+        
+        for rep in reports:
+            
+            comp = []
+            cell = []
+            conc = []
+            time = []
+            
+            for gg in rep.genegroup_set.all():
+                    comp.append(gg.name.split('_')[1])
+                    cell.append(gg.name.split('_')[0])
+                    conc.append(gg.name.split('_')[3].replace('.txt', ''))
+                    time.append(gg.name.split('_')[2])
+                    
+            lcomp = list(set(comp))
+            lcell = list(set(cell))
+            lconc = list(set(conc))
+            ltime = list(set(time))
+            
+            lpermut = []
+            
+            for r in itertools.product(lcell, ltime, lconc):   
+                lpermut.append([r[0], r[1]+'_'+r[2]])
+            
+            lcompare = []
+            
+            for permut in lpermut:
+                strGroup = ''
+                s = len(lcomp) - 1
+                for i, comp in enumerate(lcomp):
+                    if strGroup:
+                        strGroup = strGroup+'vs'+permut[0]+'_'+comp+'_'+permut[1]
+                    else:
+                        strGroup = permut[0]+'_'+comp+'_'+permut[1]
+                    if i == s:
+                        lcompare.append(strGroup)
+            
+            
+            rep.compare_groups = (', ').join(lcompare)
+            
+            rep.save()
+            #raise Exception('cycle')
+                
+            
+        
+        raise Exception ('comparison groups')
         
         reports = Report.objects.filter(title__startswith='GSK_L1000_4Q18_t')
         
