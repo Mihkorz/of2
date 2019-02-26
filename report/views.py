@@ -3076,6 +3076,24 @@ class ReportTest(TemplateView):
         
         for rep in reports:
             
+            rep.compare_groups = rep.compare_groups.replace('_25uM', '_2_5uM')
+            
+            rep.save()
+            
+            for gg in rep.genegroup_set.all():
+                if '_25uM' in gg.name:
+                    gg.name = gg.name.replace('_25uM', '_2_5uM')
+                    
+                    gg.save()
+                
+            for pg in rep.pathwaygroup_set.all():
+                if '_25uM' in pg.name:
+                    pg.name = pg.name.replace('_25uM', '_2_5uM')
+                    
+                    pg.save()
+        raise Exception('25uM')
+        for rep in reports:
+            
             comp = []
             cell = []
             conc = []
