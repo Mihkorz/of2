@@ -544,7 +544,7 @@ class ReportGeneBoxplotJson(TemplateView):
                 
                 # Now we take log2 if needed
                 apply_log = True
-                if 'gsk_prj2_' in report.slug: # expression data already with log2 applied
+                if 'gsk_prj2_' in report.slug or 'GSK_L1000_4Q18_' in report.slug: # expression data already with log2 applied
                     apply_log = False
                     
                 if apply_log:
