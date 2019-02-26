@@ -81,7 +81,7 @@ class ReportDetail(DetailView):
                 self.template_name = 'report/gsk_prj2_4d_high.html'
             if '4d_medium_low' in self.get_object().slug:
                 self.template_name = 'report/gsk_prj2_4d_medium_low.html'
-        if 'GSK_L1000_4Q18_' in self.get_object().slug and (self.is_member(user, 'GSK') or user.is_staff):
+        if 'GSK_L1000_4Q18_' in self.get_object().slug and (self.is_member(user, 'GSK5') or user.is_staff):
             self.template_name = 'report/GSK_L1000_4Q18.html'
         
         if 'nova' in self.get_object().slug and (self.is_member(user, 'Novartis') or user.is_staff):
